@@ -32,6 +32,7 @@
           ./nixos/dev.nix
           ./nixos/laptop.nix
           ./nixos/misc.nix
+          # ./nixos/optimus.nix
           ./overlays
         ];
       specialArgs = { inherit inputs system; };
