@@ -18,6 +18,7 @@
           ./nixos/dev.nix
           ./nixos/game.nix
           ./nixos/misc.nix
+          ./nixos/theme.nix
           ./nixos/xserver.nix
           ./overlays
         ];
@@ -34,6 +35,7 @@
           ./nixos/laptop.nix
           ./nixos/misc.nix
           # ./nixos/optimus.nix
+          ./nixos/theme.nix
           ./nixos/xserver.nix
           ./overlays
         ];
