@@ -1,6 +1,8 @@
 { pkgs, config, ... }:
 
-{
+let
+  inherit (config.my) username;
+in {
   environment.systemPackages = with pkgs; [
     binutils
     cmake
@@ -15,14 +17,10 @@
     python3Full
   ];
 
-  # Enable adb
   programs.adb.enable = true;
 
-  virtualisation = {
-    # Enable Docker.
-    docker.enable = true;
-  };
+  virtualisation.docker.enable = true;
 
-  # Added user to groups.
-  users.users.thiagoko.extraGroups = [ "docker" ];
+  # Added user to groups
+  users.users.${username}.extraGroups = [ "docker" ];
 }

@@ -1,11 +1,18 @@
 { config, pkgs, lib, ... }:
 
-{
+with lib;
+
+let
+  inherit (config.my) username;
+  btrfsInInitrd = any (fs: fs == "btrfs") config.boot.initrd.supportedFilesystems;
+  btrfsInSystem = any (fs: fs == "btrfs") config.boot.supportedFilesystems;
+  enableBtrfs = btrfsInInitrd || btrfsInSystem;
+in {
   # Enable unfree packages
   nixpkgs.config.allowUnfree = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.thiagoko = {
+  users.users.${username} = {
      isNormalUser = true;
      uid = 1000;
      extraGroups = [ "wheel" "networkmanager" "video" ];
@@ -78,7 +85,15 @@
     dates = "daily";
   };
 
+  environment.systemPackages = with pkgs; optional enableBtrfs [ btrfs-progs ];
+
   services = {
+    # Enable btrfs scrub if some mount uses this fs
+    btrfs.autoScrub = mkIf enableBtrfs {
+      enable = true;
+      interval = "weekly";
+    };
+
     # Kill process consuming too much memory before it crawls the machine
     earlyoom.enable = true;
 
