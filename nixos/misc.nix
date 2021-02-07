@@ -93,6 +93,11 @@
       SystemMaxUse=500M
     '';
 
+    # Suspend when power key is pressed
+    logind.extraConfig = ''
+      HandlePowerKey=suspend-then-hibernate
+    '';
+
     # Enable NTP
     # Using mkDefault since it doesn't work in VMs
     timesyncd.enable = lib.mkDefault true;

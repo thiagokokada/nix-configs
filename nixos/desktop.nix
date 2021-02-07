@@ -13,6 +13,15 @@
   ];
 
   hardware = {
+    # Extra OpenGL options
+    opengl = {
+      extraPackages = with pkgs; [
+        libvdpau-va-gl
+        vaapiIntel
+        vaapiVdpau
+      ];
+    };
+
     pulseaudio = {
       enable = true;
       extraConfig = ''
