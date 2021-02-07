@@ -12,6 +12,7 @@
       system = "x86_64-linux";
       modules =
         [
+          ./nixos/desktop.nix
           ./nixos/misc.nix
         ];
     };
