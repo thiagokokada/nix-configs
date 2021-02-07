@@ -7,7 +7,7 @@
     (final: prev: rec {
       unstable = import inputs.unstable {
         inherit system;
-        config = { allowUnfree = true; };
+        config = prev.config;
       };
 
       emacsCustom = (pkgs.emacsPackagesGen pkgs.emacsPgtkGcc).emacsWithPackages
