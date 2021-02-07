@@ -13,10 +13,11 @@
       system = "x86_64-linux";
       modules =
         [
+          ./nixos/cli.nix
           ./nixos/desktop.nix
           ./nixos/dev.nix
-          ./nixos/misc.nix
           ./nixos/game.nix
+          ./nixos/misc.nix
           ./overlays
         ];
       specialArgs = { inherit inputs system; };
@@ -26,6 +27,7 @@
       system = "x86_64-linux";
       modules =
         [
+          ./nixos/cli.nix
           ./nixos/desktop.nix
           ./nixos/dev.nix
           ./nixos/laptop.nix

@@ -10,9 +10,8 @@
         config = { allowUnfree = true; };
       };
 
-      emacsCustom = (pkgs.emacsPackagesGen pkgs.emacsPgtkGcc).emacsWithPackages (epkgs: [
-        epkgs.vterm
-      ]);
+      emacsCustom = (pkgs.emacsPackagesGen pkgs.emacsPgtkGcc).emacsWithPackages
+        (epkgs: [ epkgs.vterm ]);
 
       neovimCustom = pkgs.neovim.override ({
         withNodeJs = true;
