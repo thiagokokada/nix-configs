@@ -1,4 +1,4 @@
-.PHONY: clean activate-home build-vm-desktop build-vm-laptop build-home
+.PHONY: clean activate-home build-vm-desktop build-vm-laptop build-home update
 
 all: build-vm-desktop build-vm-laptop build-home
 
@@ -13,6 +13,9 @@ build-vm-laptop:
 
 build-home:
 	nix build '.#home'
+
+update:
+	nix flake update
 
 activate-home: build-home
 	./result/activate
