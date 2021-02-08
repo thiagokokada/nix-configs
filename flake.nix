@@ -51,13 +51,17 @@
     };
 
     # https://github.com/nix-community/home-manager/issues/1510
-    homeConfigurations.home = home.lib.homeManagerConfiguration {
+    homeConfigurations.home = home.lib.homeManagerConfiguration rec {
       configuration = ./home-manager/home.nix;
       system = "x86_64-linux";
       homeDirectory = "/home/thiagoko";
       username = "thiagoko";
+      # https://github.com/nix-community/home-manager/pull/1790
+      # extraSpecialArgs = { inherit inputs system; };
     };
 
-    home = self.homeConfigurations.home.activationPackage;
+    # home = self.homeConfigurations.home.activationPackage;
+    home = throw
+      "Disabled until https://github.com/nix-community/home-manager/pull/1790 is merged";
   };
 }

@@ -1,10 +1,11 @@
-{ config, pkgs, ... }:
+{ ... }:
 
 {
   imports = [
     ./git.nix
     ./htop.nix
     ./kitty.nix
+    ./neovim.nix
     ./nnn.nix
     ./ssh.nix
     ./theme.nix

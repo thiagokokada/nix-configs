@@ -59,9 +59,7 @@
       bell_on_tab = true;
 
       # Misc
-      # TODO: Use neovim from module
-      # editor = "${config.programs.neovim.finalPackage}/bin/nvim";
-      editor = "nvim";
+      editor = "${config.programs.neovim.finalPackage}/bin/nvim";
       strip_trailing_spaces = "smart";
       clipboard_control =
         "write-clipboard write-primary read-clipboard read-primary";
