@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, inputs, ... }:
 
 with lib;
 
@@ -8,6 +8,11 @@ let
   btrfsInSystem = any (fs: fs == "btrfs") config.boot.supportedFilesystems;
   enableBtrfs = btrfsInInitrd || btrfsInSystem;
 in {
+  # Set the $NIX_PATH entry for nixpkgs. This is necessary in
+  # this setup with flakes, otherwise commands like `nix-shell
+  # -p pkgs.htop` will keep using an old version of nixpkgs.
+  nix.nixPath = [ "nixpkgs=${inputs.nixpkgs}" ];
+
   # Enable unfree packages
   nixpkgs.config.allowUnfree = true;
 
