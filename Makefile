@@ -1,12 +1,18 @@
-.PHONY: clean test
+.PHONY: clean activate-home build-vm-desktop build-vm-laptop build-home
 
-all: test-desktop test-laptop
+all: build-vm-desktop build-vm-laptop build-home
 
 clean:
 	rm -rf result *.qcow2
 
-test-desktop:
+build-vm-desktop:
 	nixos-rebuild build-vm --flake '.#desktop'
 
-test-laptop:
+build-vm-laptop:
 	nixos-rebuild build-vm --flake '.#laptop'
+
+build-home:
+	nix build '.#home'
+
+activate-home: build-home
+	./result/activate

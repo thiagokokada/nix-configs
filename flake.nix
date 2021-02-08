@@ -49,5 +49,15 @@
         ];
       specialArgs = { inherit inputs system; };
     };
+
+    # https://github.com/nix-community/home-manager/issues/1510
+    homeConfigurations.home = home.lib.homeManagerConfiguration {
+      configuration = ./home-manager/home.nix;
+      system = "x86_64-linux";
+      homeDirectory = "/home/thiagoko";
+      username = "thiagoko";
+    };
+
+    home = self.homeConfigurations.home.activationPackage;
   };
 }
