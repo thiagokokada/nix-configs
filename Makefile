@@ -15,7 +15,7 @@ build-home:
 	nix build '.#home'
 
 update:
-	nix flake update
+	nix flake update --recreate-lock-file --commit-lock-file
 
 activate-home: build-home
 	./result/activate
