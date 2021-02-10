@@ -14,6 +14,7 @@
     ./nnn.nix
     ./ssh.nix
     ./theme.nix
+    ./tmux.nix
     ./zsh.nix
     ../modules/theme.nix
   ];
