@@ -18,7 +18,9 @@
     },
     "home": {
       "inputs": {
-        "nixpkgs": "nixpkgs"
+        "nixpkgs": [
+          "nixpkgs"
+        ]
       },
       "locked": {
         "lastModified": 1612902587,
@@ -37,7 +39,9 @@
     },
     "home-unstable": {
       "inputs": {
-        "nixpkgs": "nixpkgs_2"
+        "nixpkgs": [
+          "unstable"
+        ]
       },
       "locked": {
         "lastModified": 1612882769,
@@ -55,34 +59,6 @@
       }
     },
     "nixpkgs": {
-      "locked": {
-        "lastModified": 1612919583,
-        "narHash": "sha256-QADoa3iAZWTmQsGkUgDKQHvnJl9XvSka+umLVwcIThM=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "54735277753062e0feeaab8069909efdfc6bc7be",
-        "type": "github"
-      },
-      "original": {
-        "id": "nixpkgs",
-        "type": "indirect"
-      }
-    },
-    "nixpkgs_2": {
-      "locked": {
-        "lastModified": 1612919583,
-        "narHash": "sha256-QADoa3iAZWTmQsGkUgDKQHvnJl9XvSka+umLVwcIThM=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "54735277753062e0feeaab8069909efdfc6bc7be",
-        "type": "github"
-      },
-      "original": {
-        "id": "nixpkgs",
-        "type": "indirect"
-      }
-    },
-    "nixpkgs_3": {
       "locked": {
         "lastModified": 1612818125,
         "narHash": "sha256-HhSwmXxow5cSbKOJXSvTuJrsVRbLva9bInCnnGNjvQQ=",
@@ -103,7 +79,7 @@
         "emacs": "emacs",
         "home": "home",
         "home-unstable": "home-unstable",
-        "nixpkgs": "nixpkgs_3",
+        "nixpkgs": "nixpkgs",
         "unstable": "unstable"
       }
     },
