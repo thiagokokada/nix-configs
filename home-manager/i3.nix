@@ -64,7 +64,7 @@ in {
   imports = [
     ./dunst.nix
     # ./i3status-rust.nix
-    # ./rofi.nix
+    ./rofi.nix
   ];
 
   xsession.enable = true;
