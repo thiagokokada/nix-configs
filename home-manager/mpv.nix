@@ -2,8 +2,8 @@
 
 {
   # TODO: Use backport modules programs.mpv.package instead of overlay
-  # imports = [ "${inputs.home}/modules/programs/mpv.nix" ];
-  # disabledModules = [ "${inputs.home-unstable}/modules/programs/mpv.nix" ];
+  # imports = [ "${inputs.home-unstable}/modules/programs/mpv.nix" ];
+  # disabledModules = [ "${inputs.home}/modules/programs/mpv.nix" ];
 
   nixpkgs.overlays = [
     (final: prev: with pkgs; {

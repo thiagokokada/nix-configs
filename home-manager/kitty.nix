@@ -4,9 +4,12 @@
   programs.kitty = {
     enable = true;
     keybindings = { "ctrl+shift+0" = "change_font_size_all 0"; };
+    font = {
+      package = (pkgs.nerdfonts.override { fonts = [ "Hack" ]; });
+      name = "Hack Nerd Font";
+    };
     settings = with config.theme.colors; {
       # Font
-      font = "Hack Nerd Font";
       font_size = "12.0";
 
       # Colors

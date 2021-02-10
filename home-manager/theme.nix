@@ -17,7 +17,6 @@
 
   home.packages = with pkgs;
     with config.theme.fonts; [
-      (nerdfonts.override { fonts = [ "Hack" ]; })
       font-awesome_5
       gui.package
       hack-font

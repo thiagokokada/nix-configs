@@ -9,6 +9,7 @@
   imports = [
     ./git.nix
     ./htop.nix
+    ./i3.nix
     ./kitty.nix
     ./mpv.nix
     ./neovim.nix
