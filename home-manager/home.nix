@@ -1,11 +1,6 @@
-{ inputs, system, ... }:
+{ ... }:
 
 {
-  # Allow Home-Manager to access some inputs from Flakes
-  _module.args = {
-    inherit inputs system;
-  };
-
   imports = [
     ./git.nix
     ./htop.nix
@@ -18,6 +13,7 @@
     ./theme.nix
     ./tmux.nix
     ./zsh.nix
+    ../modules/device.nix
     ../modules/theme.nix
   ];
 

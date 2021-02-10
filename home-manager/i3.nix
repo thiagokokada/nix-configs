@@ -16,10 +16,8 @@ let
 
     browser = "firefox";
     fileManager = "${terminal} ${pkgs.nnn}/bin/nnn";
-    # TODO: import i3status-rust module from HM unstable
-    # statusCommand = with config;
-    #   "${programs.i3status-rust.package}/bin/i3status-rs ${xdg.configHome}/i3status-rust/config-i3.toml";
-    statusCommand = "${pkgs.i3status}/bin/i3status";
+    statusCommand = with config;
+      "${programs.i3status-rust.package}/bin/i3status-rs ${xdg.configHome}/i3status-rust/config-i3.toml";
     menu = "${rofi} -show drun";
     # light needs to be installed in system, so not defining a path here
     light = "light";
@@ -63,7 +61,7 @@ let
 in {
   imports = [
     ./dunst.nix
-    # ./i3status-rust.nix
+    ./i3status-rust.nix
     ./rofi.nix
   ];
 
