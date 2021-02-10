@@ -62,7 +62,7 @@ let
   };
 in {
   imports = [
-    # ./dunst.nix
+    ./dunst.nix
     # ./i3status-rust.nix
     # ./rofi.nix
   ];
