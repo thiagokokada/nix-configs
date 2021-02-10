@@ -4,9 +4,18 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-20.09";
     unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-    home.url = "github:nix-community/home-manager/release-20.09";
-    home-unstable.url = "github:nix-community/home-manager/master";
-    emacs.url = "github:nix-community/emacs-overlay/e3da699893c4be3b946d3586143b03450f9680ee";
+    home = {
+      url = "github:nix-community/home-manager/release-20.09";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    home-unstable = {
+      url = "github:nix-community/home-manager/master";
+      inputs.nixpkgs.follows = "unstable";
+    };
+    emacs = {
+      url = "github:nix-community/emacs-overlay/e3da699893c4be3b946d3586143b03450f9680ee";
+      inputs.nixpkgs.follows = "unstable";
+    };
   };
 
   outputs = { self, nixpkgs, home, ... }@inputs: {
