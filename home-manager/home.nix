@@ -10,6 +10,7 @@
     ./git.nix
     ./htop.nix
     ./kitty.nix
+    ./mpv.nix
     ./neovim.nix
     ./nnn.nix
     ./ssh.nix
