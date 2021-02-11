@@ -30,7 +30,6 @@
           ./nixos/home.nix
           ./nixos/misc.nix
           ./nixos/pc.nix
-          ./nixos/theme.nix
           ./nixos/xserver.nix
           ./modules/my.nix
           ./overlays
@@ -50,7 +49,6 @@
           ./nixos/home.nix
           ./nixos/misc.nix
           # ./nixos/optimus.nix
-          ./nixos/theme.nix
           ./nixos/xserver.nix
           ./modules/my.nix
           ./overlays

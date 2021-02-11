@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 {
   theme = {
@@ -24,6 +24,30 @@
       noto-fonts-cjk
       noto-fonts-emoji
     ];
+
+  systemd.user.services = {
+    xsettingsd = let
+      mkKeyValue = (k: v: ''${k} "${v}"'');
+      configFile = with lib.generators;
+        with config.gtk;
+        toKeyValue { mkKeyValue = mkKeyValue; } {
+          "Net/IconThemeName" = "${iconTheme.name}";
+          "Net/ThemeName" = "${theme.name}";
+          "Gtk/CursorThemeName" = "Adwaita";
+        };
+    in {
+      Unit = {
+        Description =
+          "Provides settings to X11 applications via the XSETTINGS specification";
+        After = [ "graphical-session-pre.target" ];
+        PartOf = [ "graphical-session.target" ];
+      };
+      Install = { WantedBy = [ "graphical-session.target" ]; };
+      Service = {
+        ExecStart = "${pkgs.kbdd}/bin/xsettingsd --config=${configFile}";
+      };
+    };
+  };
 
   gtk = {
     enable = true;

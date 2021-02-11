@@ -24,6 +24,28 @@
       # Recommended for modesetting drivers
       useGlamor = true;
 
+      # Configure LightDM
+      displayManager = {
+        lightdm = {
+          enable = true;
+          greeters = {
+            gtk = {
+              enable = true;
+              clock-format = "%a %d/%m %H:%M:%S";
+              iconTheme = {
+                package = pkgs.arc-icon-theme;
+                name = "Arc";
+              };
+              indicators = [ "~clock" "~session" "~power" ];
+              theme = {
+                package = pkgs.arc-theme;
+                name = "Arc-Dark";
+              };
+            };
+          };
+        };
+      };
+
       # Enable libinput
       libinput = {
         enable = true;
