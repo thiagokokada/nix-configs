@@ -6,12 +6,12 @@ let
     options = {
       package = mkOption {
         type = with types; nullOr package;
-        description = "GTK theme";
+        description = "Theme package";
       };
 
       name = mkOption {
         type = types.str;
-        description = "GTK theme name";
+        description = "Theme name";
       };
     };
   };

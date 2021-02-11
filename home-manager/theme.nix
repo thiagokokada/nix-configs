@@ -30,10 +30,11 @@
       mkKeyValue = (k: v: ''${k} "${v}"'');
       configFile = with lib.generators;
         with config.gtk;
+        with config.xsession;
         toKeyValue { mkKeyValue = mkKeyValue; } {
           "Net/IconThemeName" = "${iconTheme.name}";
           "Net/ThemeName" = "${theme.name}";
-          "Gtk/CursorThemeName" = "Adwaita";
+          "Gtk/CursorThemeName" = "${pointerCursor.name}";
         };
     in {
       Unit = {
@@ -49,6 +50,11 @@
     };
   };
 
+  xsession.pointerCursor = {
+    package = pkgs.gnome3.adwaita-icon-theme;
+    name = "Adwaita";
+  };
+
   gtk = {
     enable = true;
     font = {
@@ -59,7 +65,7 @@
       package = pkgs.arc-icon-theme;
       name = "Arc";
     };
-    theme = with config.theme.gtk; {
+    theme = {
       name = "Arc-Dark";
       package = pkgs.arc-theme;
     };
