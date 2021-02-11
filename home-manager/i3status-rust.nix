@@ -6,8 +6,6 @@ let
   shortPath = with lib.strings;
     (path: concatStringsSep "/" (map (substring 0 1) (splitString "/" path)));
 in {
-  imports = [ "${inputs.home-unstable}/modules/programs/i3status-rust.nix" ];
-
   programs.i3status-rust = {
     enable = true;
     package = pkgs.unstable.i3status-rust;

@@ -23,16 +23,16 @@
         ]
       },
       "locked": {
-        "lastModified": 1612902587,
-        "narHash": "sha256-VZ7Z1OMFf5ReObu3CCVBsC2DWloTYDjqW1onUKejVrE=",
-        "owner": "nix-community",
+        "lastModified": 1613001402,
+        "narHash": "sha256-g36+5hUov8f+hBlfQZvvoqh0o3d1RJDFiDehRfW2UXA=",
+        "owner": "thiagokokada",
         "repo": "home-manager",
-        "rev": "209566c752c4428c7692c134731971193f06b37c",
+        "rev": "eda1b85be3ddbb553b08349d574a8982f788ece3",
         "type": "github"
       },
       "original": {
-        "owner": "nix-community",
-        "ref": "release-20.09",
+        "owner": "thiagokokada",
+        "ref": "release-20.09_backports-from-unstable",
         "repo": "home-manager",
         "type": "github"
       }

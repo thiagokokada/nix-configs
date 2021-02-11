@@ -5,7 +5,7 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-20.09";
     unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     home = {
-      url = "github:nix-community/home-manager/release-20.09";
+      url = "github:thiagokokada/home-manager/release-20.09_backports-from-unstable";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     home-unstable = {

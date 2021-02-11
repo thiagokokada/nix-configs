@@ -1,25 +1,17 @@
 { config, lib, pkgs, inputs, ... }:
 
 {
-  # TODO: Use backport modules programs.mpv.package instead of overlay
-  # imports = [ "${inputs.home-unstable}/modules/programs/mpv.nix" ];
-  # disabledModules = [ "${inputs.home}/modules/programs/mpv.nix" ];
-
-  nixpkgs.overlays = [
-    (final: prev: with pkgs; {
-      mpv = wrapMpv (pkgs.mpv-unwrapped.override { vapoursynthSupport = true; }) {
-        extraMakeWrapperArgs = [
-          "--prefix"
-          "LD_LIBRARY_PATH"
-          ":"
-          "${vapoursynth-mvtools}/lib/vapoursynth"
-        ];
-      };
-    })
-  ];
-
   programs.mpv = {
     enable = true;
+
+    package = with pkgs; wrapMpv (mpv-unwrapped.override { vapoursynthSupport = true; }) {
+      extraMakeWrapperArgs = [
+        "--prefix"
+        "LD_LIBRARY_PATH"
+        ":"
+        "${vapoursynth-mvtools}/lib/vapoursynth"
+      ];
+    };
 
     config = {
       osd-font-size = 14;
