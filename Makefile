@@ -1,3 +1,6 @@
+#! /usr/bin/env nix-shell
+#! nix-shell -i "make -f" -p gnumake
+
 .PHONY: clean activate-home build-vm-desktop build-vm-laptop build-home update
 
 all: build-vm-desktop build-vm-laptop build-home
