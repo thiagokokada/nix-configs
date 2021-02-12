@@ -18,7 +18,6 @@
     pv
     python3Packages.youtube-dl
     ripgrep
-    sloccount
     stow
     tealdeer
     tig

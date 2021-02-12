@@ -4,17 +4,13 @@ let
   inherit (config.my) username;
 in {
   environment.systemPackages = with pkgs; [
-    binutils
-    cmake
     docker-compose
     emacsCustom
-    expect
     gcc
-    gitFull
-    github-cli
+    git
     gnumake
     neovimCustom
-    python3Full
+    python3
   ];
 
   programs.adb.enable = true;

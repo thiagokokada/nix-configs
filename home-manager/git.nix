@@ -1,4 +1,4 @@
-{ config, lib, ... }:
+{ config, lib, pkgs, ... }:
 
 {
   programs.git = {
@@ -6,6 +6,7 @@
 
     userName = "Thiago Kenji Okada";
     userEmail = "thiagokokada@gmail.com";
+    package = pkgs.gitFull;
 
     aliases = {
       branch-cleanup = ''
@@ -44,4 +45,6 @@
   };
 
   programs.zsh.shellAliases = { gk = "run-bg gitk"; };
+
+  home.packages = with pkgs; [ github-cli ];
 }
