@@ -13,6 +13,7 @@
     ./neovim.nix
     ./nnn.nix
     ./ssh.nix
+    ./sway.nix
     ./theme.nix
     ./tmux.nix
     ./zsh.nix
