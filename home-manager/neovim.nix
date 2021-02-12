@@ -1,15 +1,6 @@
-{ config, lib, pkgs, inputs, system, ... }:
+{ config, lib, pkgs, ... }:
 
 {
-  nixpkgs.overlays = [
-    (final: prev: rec {
-      unstable = import inputs.unstable {
-        inherit system;
-        config = prev.config;
-      };
-    })
-  ];
-
   programs.neovim = {
     enable = true;
 
