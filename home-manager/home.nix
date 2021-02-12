@@ -1,6 +1,6 @@
-{ ... }:
+{ lib, super, ... }:
 
-{
+with lib; {
   imports = [
     ./dev.nix
     ./emacs.nix
@@ -20,6 +20,9 @@
     ../modules/device.nix
     ../modules/theme.nix
   ];
+
+  # Inherit device type from NixOS or homeConfigurations
+  device = super.device;
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
