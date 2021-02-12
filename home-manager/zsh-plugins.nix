@@ -7,6 +7,7 @@
       ref = "master";
       rev = "15a02d6b0dc22b4d4e70cfec9242dee8501404ff";
     };
+    file = "zit.zsh";
   }
   {
     name = "zim-completion";
@@ -15,6 +16,7 @@
       ref = "master";
       rev = "db9c17717864e424e3e0e2f69afa4b83db78b559";
     };
+    file = "init.zsh";
   }
   {
     name = "zim-environment";
@@ -23,6 +25,7 @@
       ref = "master";
       rev = "016d897e909eca6efc6f8bb95b4b952e0b4a5424";
     };
+    file = "init.zsh";
   }
   {
     name = "zim-input";
@@ -31,6 +34,7 @@
       ref = "master";
       rev = "2f95e2aeed9b4cc3e383adcb41c7a9e8d9f8d89d";
     };
+    file = "init.zsh";
   }
   {
     name = "zim-git";
@@ -39,6 +43,7 @@
       ref = "master";
       rev = "2f29e24ba27da901770e8008ace9f18292fddd6e";
     };
+    file = "init.zsh";
   }
   {
     name = "zim-ssh";
@@ -47,6 +52,7 @@
       ref = "master";
       rev = "f4182fa0a790e59ffe02beaa96e5ac3a36c72f26";
     };
+    file = "init.zsh";
   }
   {
     name = "zim-utility";
@@ -55,6 +61,7 @@
       ref = "master";
       rev = "5fc2348ff5688972cdc87a2010796525e9656966";
     };
+    file = "init.zsh";
   }
   {
     name = "pure";
@@ -63,6 +70,7 @@
       ref = "main";
       rev = "b83ad6dcb0726feec1cce550d84fc710e2ef7912";
     };
+    file = "pure.plugin.zsh";
   }
   {
     name = "autopair";
@@ -71,14 +79,16 @@
       ref = "master";
       rev = "34a8bca0c18fcf3ab1561caef9790abffc1d3d49";
     };
+    file = "autopair.plugin.zsh";
   }
   {
     name = "zsh-completions";
     src = fetchGit {
       url = "https://github.com/zsh-users/zsh-completions";
       ref = "master";
-      rev = "6fe9995fd953d042bb3704610f421b270ceb2319";
+      rev = "c7baec49d3e044121f7a37b65a84461ef8dac2de";
     };
+    file = "zsh-completions.plugin.zsh";
   }
   {
     name = "zsh-syntax-highlighting";
@@ -87,6 +97,7 @@
       ref = "master";
       rev = "5eb494852ebb99cf5c2c2bffee6b74e6f1bf38d0";
     };
+    file = "zsh-syntax-highlighting.plugin.zsh";
   }
   {
     name = "zsh-history-substring-search";
@@ -95,5 +106,6 @@
       ref = "master";
       rev = "0f80b8eb3368b46e5e573c1d91ae69eb095db3fb";
     };
+    file = "zsh-history-substring-search.plugin.zsh";
   }
 ]
