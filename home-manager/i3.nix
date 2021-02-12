@@ -153,14 +153,14 @@ in {
 
   home.packages = with pkgs; [
     dex
+    ffmpegthumbnailer
     kbdd
     libnotify
     maim
     mons
     nnn
+    pcmanfm
     playerctl
-    xorg.xkill
-    xorg.xset
     xsecurelock
     xss-lock
   ];

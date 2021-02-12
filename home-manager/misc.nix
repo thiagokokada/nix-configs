@@ -6,6 +6,35 @@
 
   imports = [ ../overlays ];
 
+  home.packages = with pkgs; [
+    coreutils
+    curl
+    dos2unix
+    jq
+    moreutils
+    nox
+    p7zip
+    page
+    pv
+    python3Packages.youtube-dl
+    ripgrep
+    sloccount
+    stow
+    tealdeer
+    tig
+    unrar
+    unstable.each
+    unzip
+    wget
+    wmctrl
+    xclip
+    xorg.xdpyinfo
+    xorg.xhost
+    xorg.xkill
+    xorg.xset
+    zip
+  ];
+
   programs.zsh.shellAliases = {
     "hm" = "home-manager";
   };

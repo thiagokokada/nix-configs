@@ -6,10 +6,6 @@
     desktop-file-utils
     firefox
     smartmontools
-    xorg.xdpyinfo
-    xorg.xhost
-    xorg.xkill
-    xorg.xset
   ];
 
   hardware = {

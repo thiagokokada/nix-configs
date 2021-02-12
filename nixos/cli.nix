@@ -16,6 +16,7 @@
     lm_sensors
     lshw
     lsof
+    mediainfo
     netcat-gnu
     openssl
     p7zip

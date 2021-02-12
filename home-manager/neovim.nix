@@ -8,7 +8,7 @@
     vimAlias = true;
     vimdiffAlias = true;
 
-    extraPackages = with pkgs; [ coreutils ctags unstable.fzf git ];
+    extraPackages = with pkgs; [ universal-ctags unstable.fzf git ];
 
     configure = {
       customRC = ''
