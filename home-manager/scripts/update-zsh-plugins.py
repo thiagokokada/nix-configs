@@ -5,7 +5,9 @@
 # export GITHUB_TOKEN=...
 # $ ./update-zsh-plugins.py | tee ../zsh-plugins.nix
 
+import functools
 import os
+import sys
 from textwrap import dedent
 
 import requests
@@ -41,11 +43,20 @@ GH_TEMPLATE = """\
 """
 
 
+@functools.lru_cache(maxsize=None)
+def get_gh_headers():
+    if token := os.environ.get("GITHUB_TOKEN"):
+        return {"Authorization": f"token {token}"}
+    else:
+        print(
+            "[WARNING] No GITHUB_TOKEN set. May hit GitHub rate limit!", file=sys.stderr
+        )
+        return None
+
+
 def get_rev_from_gh_repo(repo, ref="master"):
-    token = os.environ.get("GITHUB_TOKEN", "")
     r = requests.get(
-        f"https://api.github.com/repos/{repo}/commits/{ref}",
-        headers={"Authorization": f"token {token}"},
+        f"https://api.github.com/repos/{repo}/commits/{ref}", headers=get_gh_headers(),
     )
     return r.json()["sha"]
 
