@@ -17,5 +17,9 @@ build-home:
 update:
 	nix flake update --recreate-lock-file --commit-lock-file
 
+run-vm:
+	export QEMU_OPTS="-cpu host -smp 2 -m 4096M -machine type=q35,accel=kvm"
+	./result/bin/run-nixos-vm
+
 activate-home: build-home
 	./result/activate

@@ -61,6 +61,7 @@ let
 in {
   imports = [
     ./dunst.nix
+    ./gammastep.nix
     ./i3status-rust.nix
     ./rofi.nix
   ];
