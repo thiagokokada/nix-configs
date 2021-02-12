@@ -63,6 +63,7 @@ in {
     ./dunst.nix
     ./gammastep.nix
     ./i3status-rust.nix
+    ./picom.nix
     ./rofi.nix
   ];
 
