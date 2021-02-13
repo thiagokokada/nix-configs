@@ -29,9 +29,11 @@
         ./nixos/dev.nix
         ./nixos/game.nix
         ./nixos/home.nix
+        ./nixos/locale.nix
         ./nixos/misc.nix
         ./nixos/pc.nix
         ./nixos/security.nix
+        ./nixos/system.nix
         ./nixos/xserver.nix
         ./modules/device.nix
         ./modules/my.nix
@@ -61,8 +63,10 @@
         ./nixos/dev.nix
         ./nixos/laptop.nix
         ./nixos/home.nix
+        ./nixos/locale.nix
         ./nixos/misc.nix
         # ./nixos/optimus.nix
+        ./nixos/system.nix
         ./nixos/xserver.nix
         ./modules/device.nix
         ./modules/my.nix
