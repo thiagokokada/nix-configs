@@ -21,7 +21,7 @@
   };
 
   outputs = { self, nixpkgs, home, ... }@inputs: {
-    nixosConfigurations.desktop = nixpkgs.lib.nixosSystem rec {
+    nixosConfigurations.miku-nixos = nixpkgs.lib.nixosSystem rec {
       system = "x86_64-linux";
       modules = [
         ./nixos/cli.nix
@@ -37,12 +37,23 @@
         ./modules/my.nix
         ./overlays
         home.nixosModules.home-manager
-        ({ ... }: { device.type = "desktop"; })
+        ({ pkgs, ... }: {
+          device.type = "desktop";
+          networking.hostName = "miku-nixos";
+
+          # Use the systemd-boot EFI boot loader.
+          boot.loader.systemd-boot.enable = true;
+          boot.loader.systemd-boot.consoleMode = "max";
+          boot.loader.efi.canTouchEfiVariables = true;
+
+          # Select which kernel to use.
+          boot.kernelPackages = pkgs.linux-zen-with-muqss;
+        })
       ];
       specialArgs = { inherit inputs system; };
     };
 
-    nixosConfigurations.laptop = nixpkgs.lib.nixosSystem rec {
+    nixosConfigurations.mikudayo-nixos = nixpkgs.lib.nixosSystem rec {
       system = "x86_64-linux";
       modules = [
         ./nixos/cli.nix
@@ -57,7 +68,14 @@
         ./modules/my.nix
         ./overlays
         home.nixosModules.home-manager
-        ({ ... }: { device.type = "notebook"; })
+        ({ pkgs, ... }: {
+          device.type = "notebook";
+          networking.hostName = "mikudayo-nixos";
+
+          # Use the systemd-boot EFI boot loader.
+          boot.loader.systemd-boot.enable = true;
+          boot.loader.efi.canTouchEfiVariables = true;
+        })
       ];
       specialArgs = { inherit inputs system; };
     };

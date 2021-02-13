@@ -1,18 +1,18 @@
 #! /usr/bin/env nix-shell
 #! nix-shell -i "make -f" -p gnumake
 
-.PHONY: clean activate-home build-vm-desktop build-vm-laptop build-home update
+.PHONY: clean activate-home build-vm-miku-nixos build-vm-mikudayo-nixos build-home update
 
-all: build-vm-desktop build-vm-laptop build-home
+all: build-vm-miku-nixos build-vm-mikudayo-nixos build-home
 
 clean:
 	rm -rf result *.qcow2
 
-build-vm-desktop:
-	nixos-rebuild build-vm --flake '.#desktop'
+build-vm-miku-nixos:
+	nixos-rebuild build-vm --flake '.#miku-nixos'
 
-build-vm-laptop:
-	nixos-rebuild build-vm --flake '.#laptop'
+build-vm-mikudayo-nixos:
+	nixos-rebuild build-vm --flake '.#mikudayo-nixos'
 
 build-home:
 	nix build '.#home'

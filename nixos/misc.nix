@@ -25,6 +25,18 @@ in {
      password = "changeme";
   };
 
+  # Select internationalisation properties.
+  i18n.defaultLocale = "en_US.UTF-8";
+
+  # Set X11 keyboard layout.
+  services.xserver = {
+    layout = "us,br";
+    xkbVariant = "intl,abnt2";
+  };
+
+  # Set your time zone.
+  time.timeZone = "America/Sao_Paulo";
+
   # This value determines the NixOS release with which your system is to be
   # compatible, in order to avoid breaking some software such as database
   # servers. You should change this only after NixOS release notes say you
