@@ -22,7 +22,10 @@ with lib; {
   ];
 
   # Inherit device type from NixOS or homeConfigurations
-  device = super.device;
+  device.type = super.device.type;
+  device.mountPoints = mkIf (super ? fileSystems)
+    (lists.subtractLists [ "/boot" "/tmp" "/nix" ]
+      (mapAttrsToList (n: _: n) super.fileSystems));
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;

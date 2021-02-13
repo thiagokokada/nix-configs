@@ -1,8 +1,6 @@
 { config, lib, pkgs, inputs, ... }:
 
 let
-  mountPointsToShow = config.device.mountPoints;
-
   shortPath = with lib.strings;
     (path: concatStringsSep "/" (map (substring 0 1) (splitString "/" path)));
 in {
@@ -54,14 +52,14 @@ in {
         format = "{ssid} {speed_up} {speed_down}";
       };
 
-      disksBlocks = map (m: {
+      disksBlocks = with config.device; map (m: {
         block = "disk_space";
         path = m;
         alias = shortPath m;
         info_type = "available";
         unit = "GiB";
         format = "{icon}{alias} {available}G";
-      }) mountPointsToShow;
+      }) mountPoints;
 
       memoryBlock = {
         block = "memory";
