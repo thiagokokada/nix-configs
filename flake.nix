@@ -31,6 +31,7 @@
         ./nixos/home.nix
         ./nixos/misc.nix
         ./nixos/pc.nix
+        ./nixos/security.nix
         ./nixos/xserver.nix
         ./modules/device.nix
         ./modules/my.nix
