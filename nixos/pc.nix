@@ -4,9 +4,8 @@ let
   inherit (config.my) username;
   archive = "/mnt/archive/${username}";
 in with config.users.users.${username}; {
-  imports = [
-    "${inputs.unstable}/nixos/modules/hardware/opentabletdriver.nix"
-  ];
+  imports =
+    [ "${inputs.unstable}/nixos/modules/hardware/opentabletdriver.nix" ];
 
   # Enable opentabletdriver.
   hardware.opentabletdriver = with pkgs; {
@@ -26,9 +25,7 @@ in with config.users.users.${username}; {
     extraModprobeConfig = "options vfio-pci ids=10de:1c02,10de:10f1";
 
     # Enable IOMMU
-    kernelParams = [
-      "intel_iommu=on"
-    ];
+    kernelParams = [ "intel_iommu=on" ];
   };
 
   # Enable libvirtd.
@@ -56,9 +53,7 @@ in with config.users.users.${username}; {
   };
 
   # Add user to libvirtd group.
-  users.users.${username} = {
-     extraGroups = [ "libvirtd" ];
-  };
+  users.users.${username} = { extraGroups = [ "libvirtd" ]; };
 
   # Some misc packages
   environment.systemPackages = with pkgs; [
@@ -126,7 +121,7 @@ in with config.users.users.${username}; {
     # Enable rtorrent
     rtorrent = {
       enable = true;
-      downloadDir =  "${archive}/Downloads";
+      downloadDir = "${archive}/Downloads";
       user = username;
       group = group;
       port = 60001;
@@ -154,7 +149,8 @@ in with config.users.users.${username}; {
   };
 
   systemd.services.flood = with pkgs.unstable; {
-    description = "A web UI for rTorrent with a Node.js backend and React frontend.";
+    description =
+      "A web UI for rTorrent with a Node.js backend and React frontend.";
     after = [ "rtorrent.service" ];
     wantedBy = [ "multi-user.target" ];
     serviceConfig = {
@@ -162,7 +158,7 @@ in with config.users.users.${username}; {
       Group = group;
       Type = "simple";
       Restart = "on-failure";
-      ExecStart="${nodePackages.flood}/bin/flood";
+      ExecStart = "${nodePackages.flood}/bin/flood";
     };
   };
 
@@ -174,7 +170,10 @@ in with config.users.users.${username}; {
     # Enable bridge.
     bridges = {
       br0 = {
-        interfaces = [ "eno1" ];
+        interfaces = if config.networking.usePredictableInterfaceNames then
+          [ "eno1" ]
+        else
+          [ "eth0" ];
       };
     };
 
@@ -187,4 +186,18 @@ in with config.users.users.${username}; {
 
   # Reduce latency.
   powerManagement.cpuFreqGovernor = "performance";
+
+  systemd.services.setupWin10Vm = {
+    after = [ "libvirtd.service" ];
+    requires = [ "libvirtd.service" ];
+    wantedBy = [ "multi-user.target" ];
+    serviceConfig = {
+      Type = "oneshot";
+      RemainAfterExit = "yes";
+    };
+    script = ''
+      uuid="$(${pkgs.libvirt}/bin/virsh domuuid win10 || true)"
+      ${pkgs.libvirt}/bin/virsh define <(sed "s/@UUID@/$uuid/" ${./win10.xml})
+    '';
+  };
 }
