@@ -41,12 +41,7 @@ let
     '';
   };
 in {
-  imports = [
-    ./gammastep.nix
-    ./i3status-rust.nix
-    ./mako.nix
-    ./wofi.nix
-  ];
+  imports = [ ./gammastep.nix ./i3status-rust.nix ./mako.nix ./wofi.nix ];
 
   wayland.windowManager.sway = with commonOptions; {
     enable = true;
@@ -120,5 +115,12 @@ in {
 
   services = { udiskie.enable = true; };
 
-  home.packages = with pkgs; [ dex mako swayidle swaylock wl-clipboard ];
+  home.packages = with pkgs; [
+    dex
+    mako
+    swayidle
+    swaylock
+    wl-clipboard
+    wdisplays
+  ];
 }

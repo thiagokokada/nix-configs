@@ -1,21 +1,12 @@
 { pkgs, config, ... }:
 
 {
-  environment.systemPackages = with pkgs; [
-    chromium
-    desktop-file-utils
-    firefox
-    smartmontools
-  ];
+  environment.systemPackages = with pkgs; [ smartmontools ];
 
   hardware = {
     # Extra OpenGL options
     opengl = {
-      extraPackages = with pkgs; [
-        libvdpau-va-gl
-        vaapiIntel
-        vaapiVdpau
-      ];
+      extraPackages = with pkgs; [ libvdpau-va-gl vaapiIntel vaapiVdpau ];
     };
 
     pulseaudio = {

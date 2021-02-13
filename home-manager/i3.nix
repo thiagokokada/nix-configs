@@ -152,15 +152,18 @@ in {
   };
 
   home.packages = with pkgs; [
+    arandr
     dex
     ffmpegthumbnailer
     kbdd
     libnotify
+    lxappearance
     maim
     mons
     nnn
-    pcmanfm
     playerctl
+    wmctrl
+    xclip
     xsecurelock
     xss-lock
   ];

@@ -2,6 +2,7 @@
 
 with lib; {
   imports = [
+    ./desktop.nix
     ./dev.nix
     ./emacs.nix
     ./git.nix

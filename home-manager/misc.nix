@@ -25,12 +25,6 @@
     unstable.each
     unzip
     wget
-    wmctrl
-    xclip
-    xorg.xdpyinfo
-    xorg.xhost
-    xorg.xkill
-    xorg.xset
     zip
   ];
 
