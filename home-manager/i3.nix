@@ -92,8 +92,6 @@ in {
     };
   };
 
-  xdg.userDirs.enable = true;
-
   services = { udiskie.enable = true; };
 
   systemd.user.services = {
