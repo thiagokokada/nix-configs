@@ -2,7 +2,7 @@
 
 let
   inherit (config.my) username;
-  targetDisk = "/dev/sda";
+  targetDisk = "/dev/disk/by-id/dm-name-enc-win10";
   reservedGuestCpus = "2-5";
   startVmScript = name:
     pkgs.writeShellScriptBin "start-${name}" ''
@@ -84,6 +84,12 @@ in {
       onShutdown = "shutdown";
       qemuVerbatimConfig = ''
         nographics_allow_host_audio = 1
+        cgroup_device_acl = [
+          "/dev/null", "/dev/full", "/dev/zero",
+          "/dev/random", "/dev/urandom",
+          "/dev/ptmx", "/dev/kvm", "/dev/kqemu",
+          "/dev/rtc","/dev/hpet",
+        ]
       '';
     };
   };
@@ -94,7 +100,8 @@ in {
   systemd.services.setup-win10-vm = {
     after = [ "libvirtd.service" ];
     requires = [ "libvirtd.service" ];
-    wantedBy = [ "multi-user.target" ];
+    # Run this manually to avoid overwritting manually setup configuration
+    # wantedBy = [ "multi-user.target" ];
     serviceConfig = {
       Type = "oneshot";
       RemainAfterExit = "yes";

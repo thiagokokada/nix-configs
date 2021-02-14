@@ -18,8 +18,9 @@
 
   networking.hostName = "miku-nixos";
 
-  boot.initrd = {
-    luks.devices."root" = {
+  boot.initrd.luks.devices = {
+    "enc-win10".device = "/dev/disk/by-uuid/4c14148f-87b3-4bfe-a65b-062681574241";
+    "root" = {
       device = "/dev/disk/by-uuid/02e41fb9-1611-461f-ba7c-4e44d828cf8d";
       preLVM = true;
       allowDiscards = true;
