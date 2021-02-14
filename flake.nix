@@ -14,8 +14,7 @@
       inputs.nixpkgs.follows = "unstable";
     };
     emacs = {
-      url =
-        "github:nix-community/emacs-overlay/e3da699893c4be3b946d3586143b03450f9680ee";
+      url = "github:nix-community/emacs-overlay/master";
       inputs.nixpkgs.follows = "unstable";
     };
   };
