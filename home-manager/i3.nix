@@ -151,6 +151,10 @@ in {
     };
   };
 
+  xresources.properties = {
+    "Xft.dpi" = "135";
+  };
+
   home.packages = with pkgs; [
     arandr
     dex
