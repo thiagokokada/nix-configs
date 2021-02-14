@@ -35,21 +35,13 @@
         ./nixos/security.nix
         ./nixos/system.nix
         ./nixos/xserver.nix
+        ./hosts/miku-nixos
         ./modules/device.nix
         ./modules/my.nix
         ./overlays
         home.nixosModules.home-manager
         ({ pkgs, ... }: {
           device.type = "desktop";
-          networking.hostName = "miku-nixos";
-
-          # Use the systemd-boot EFI boot loader.
-          boot.loader.systemd-boot.enable = true;
-          boot.loader.systemd-boot.consoleMode = "max";
-          boot.loader.efi.canTouchEfiVariables = true;
-
-          # Select which kernel to use.
-          boot.kernelPackages = pkgs.linux-zen-with-muqss;
         })
       ];
       specialArgs = { inherit inputs system; };
@@ -74,11 +66,6 @@
         home.nixosModules.home-manager
         ({ pkgs, ... }: {
           device.type = "notebook";
-          networking.hostName = "mikudayo-nixos";
-
-          # Use the systemd-boot EFI boot loader.
-          boot.loader.systemd-boot.enable = true;
-          boot.loader.efi.canTouchEfiVariables = true;
         })
       ];
       specialArgs = { inherit inputs system; };
