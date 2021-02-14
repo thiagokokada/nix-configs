@@ -14,7 +14,9 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  networking.hostName = "miku-nixos"; # Define your hostname.
+  boot.kernelPackages = pkgs.linux-zen-with-muqss;
+
+  networking.hostName = "miku-nixos";
 
   boot.initrd = {
     luks.devices."root" = {
