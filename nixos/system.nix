@@ -2,11 +2,7 @@
 
 with config.boot;
 with lib;
-let
-  btrfsInInitrd = any (fs: fs == "btrfs") initrd.supportedFilesystems;
-  btrfsInSystem = any (fs: fs == "btrfs") supportedFilesystems;
-  enableBtrfs = btrfsInInitrd || btrfsInSystem;
-in {
+{
   boot = {
     # Mount /tmp using tmpfs for performance
     tmpOnTmpfs = true;
@@ -51,13 +47,14 @@ in {
     dates = "daily";
   };
 
-  environment.systemPackages = with pkgs; optional enableBtrfs [ btrfs-progs ];
+  environment.systemPackages = with pkgs; [ btrfs-progs ];
 
   services = {
     # Enable btrfs scrub if some mount uses this fs
-    btrfs.autoScrub = mkIf enableBtrfs {
+    btrfs.autoScrub = {
       enable = true;
       interval = "weekly";
+      fileSystems = [ "/mnt/archive" "/mnt/data" ];
     };
 
     # Kill process consuming too much memory before it crawls the machine
@@ -80,8 +77,7 @@ in {
     '';
 
     # Enable NTP
-    # Using mkDefault since it doesn't work in VMs
-    timesyncd.enable = lib.mkDefault true;
+    timesyncd.enable = true;
 
     # Set I/O scheduler
     # mq-deadline is set for NVMe, since scheduler doesn't make much sense on it
