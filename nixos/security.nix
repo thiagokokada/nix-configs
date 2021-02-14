@@ -12,9 +12,9 @@ let
     SystemCallArchitectures = "native";
   };
   strictHardeningFlags = safeHardeningFlags // {
-    PrivateControlGroups = true;
     PrivateDevices = true;
     ProtectClock = true;
+    ProtectControlGroups = true;
     ProtectHome = true;
     ProtectHostname = true;
     ProtectKernelLogs = true;
