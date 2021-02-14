@@ -2,6 +2,7 @@
 
 let
   inherit (config.my) username;
+  targetDisk = "/dev/sda";
   reservedGuestCpus = "2-5";
   startVmScript = name:
     pkgs.writeShellScriptBin "start-${name}" ''
@@ -100,7 +101,8 @@ in {
     };
     script = ''
       uuid="$(${pkgs.libvirt}/bin/virsh domuuid win10 || true)"
-      ${pkgs.libvirt}/bin/virsh define <(sed "s/@UUID@/$uuid/" ${./win10.xml})
+      xml=$(sed -e "s|@UUID@|$uuid|" -e "s|@DISK@|${targetDisk}|" ${./win10.xml})
+      ${pkgs.libvirt}/bin/virsh define <(echo "$xml")
     '';
   };
 

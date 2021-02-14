@@ -68,23 +68,9 @@
   </pm>
   <devices>
     <emulator>/run/libvirt/nix-emulators/qemu-system-x86_64</emulator>
-    <disk type='file' device='cdrom'>
-      <driver name='qemu' type='raw'/>
-      <source file='/mnt/data/libvirt/isos/Win10_1909_EnglishInternational_x64.iso'/>
-      <target dev='sda' bus='sata'/>
-      <readonly/>
-      <address type='drive' controller='0' bus='0' target='0' unit='0'/>
-    </disk>
-    <disk type='file' device='cdrom'>
-      <driver name='qemu' type='raw'/>
-      <source file='/mnt/data/libvirt/isos/virtio-win-0.1.173.iso'/>
-      <target dev='sdb' bus='sata'/>
-      <readonly/>
-      <address type='drive' controller='0' bus='0' target='0' unit='1'/>
-    </disk>
     <disk type='block' device='disk'>
       <driver name='qemu' type='raw' cache='none' io='threads' iothread='1'/>
-      <source dev='/dev/disk/by-id/dm-name-vg-windows'/>
+      <source dev='@DISK@'/>
       <target dev='vda' bus='virtio'/>
       <boot order='1'/>
       <address type='pci' domain='0x0000' bus='0x06' slot='0x00' function='0x0'/>
