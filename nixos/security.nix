@@ -36,7 +36,7 @@ in {
       ProtectHome = false;
     };
     rtorrent.serviceConfig = strictHardeningFlags // {
-      ProtectHome = "read-only";
+      ProtectHome = false;
     };
     plex.serviceConfig = strictHardeningFlags;
     samba-nmbd.serviceConfig = safeHardeningFlags // unrestrictNetworkFlags;

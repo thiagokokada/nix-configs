@@ -123,4 +123,11 @@ in with config.users.users.${username}; {
       allowedUDPPorts = [ 137 138 ];
     };
   };
+
+  systemd.tmpfiles.rules = [
+    "d ${archive}/Downloads 0775 ${username} ${group}"
+    "d ${archive}/Music 0775 ${username} ${group}"
+    "d ${archive}/Photos 0775 ${username} ${group}"
+    "d ${archive}/Videos 0775 ${username} ${group}"
+  ];
 }
