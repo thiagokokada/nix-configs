@@ -23,17 +23,17 @@
       fsType = "vfat";
     };
 
-  fileSystems."/mnt/archive" =
-    { device = "/dev/disk/by-uuid/e31225d0-1879-4242-b054-61c11feaadda";
-      fsType = "btrfs";
-    };
+  # fileSystems."/mnt/archive" =
+  #   { device = "/dev/disk/by-uuid/e31225d0-1879-4242-b054-61c11feaadda";
+  #     fsType = "btrfs";
+  #   };
 
   boot.initrd.luks.devices."enc-archive".device = "/dev/disk/by-uuid/3b236ccb-ec53-4280-8040-00c42feceba8";
 
-  fileSystems."/mnt/data" =
-    { device = "/dev/disk/by-uuid/f71560b7-b662-4814-8f26-4e8ca8ae7da4";
-      fsType = "btrfs";
-    };
+  # fileSystems."/mnt/data" =
+  #   { device = "/dev/disk/by-uuid/f71560b7-b662-4814-8f26-4e8ca8ae7da4";
+  #     fsType = "btrfs";
+  #   };
 
   boot.initrd.luks.devices."enc-data".device = "/dev/disk/by-uuid/303be66c-74df-41ec-9b5c-c7312bdc582b";
 

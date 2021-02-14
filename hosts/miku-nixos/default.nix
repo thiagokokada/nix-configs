@@ -18,7 +18,7 @@
 
   boot.initrd = {
     luks.devices."root" = {
-      device = "/dev/disk/by-uuid/02e41fb9-1611-461f-ba7c-4e44d828cf8d"; 
+      device = "/dev/disk/by-uuid/02e41fb9-1611-461f-ba7c-4e44d828cf8d";
       preLVM = true;
       allowDiscards = true;
     };
