@@ -20,7 +20,9 @@ let
     EOF
   '';
 in {
-  environment.systemPackages = [ nixos-clean-up ];
+  environment.systemPackages = with pkgs; [ cachix nixos-clean-up ];
+
+  nix.trustedUsers = [ "root" "@wheel" ];
 
   boot = {
     # Mount /tmp using tmpfs for performance
