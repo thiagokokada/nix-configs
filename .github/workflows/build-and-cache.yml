@@ -31,5 +31,4 @@ jobs:
           authToken: '${{ secrets.CACHIX_TOKEN }}'
       - run: nix-shell -p nixFlakes --run 'nix build .#nixosConfigurations.miku-nixos.config.system.build.toplevel --experimental-features "nix-command flakes"'
       - run: nix-shell -p nixFlakes --run 'nix build .#nixosConfigurations.mikudayo-nixos.config.system.build.toplevel --experimental-features "nix-command flakes"'
-      # TODO: Config homeConfigurations.home to use cachix
-      # - run: nix-shell -p nixFlakes --run 'nix build .#home --experimental-features "nix-command flakes"'
+      - run: nix-shell -p nixFlakes --run 'nix build .#home --experimental-features "nix-command flakes"'
