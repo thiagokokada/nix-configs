@@ -42,6 +42,8 @@
         vimAlias = true;
         viAlias = true;
       });
+
+      plex = unstable.plex;
     })
   ];
 }
