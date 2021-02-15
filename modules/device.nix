@@ -12,6 +12,7 @@ with lib;
       type = with types; nullOr (listOf str);
       description = "Available mount points";
       example = [ "/" "/mnt/backup" ];
+      default = null;
     };
   };
 }
