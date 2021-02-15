@@ -1,5 +1,7 @@
 # nix-configs
 
+![build-and-cache](https://github.com/thiagokokada/nix-configs/workflows/build-and-cache/badge.svg)
+
 *My Nix{OS} configuration files*
 
 ## Overview
