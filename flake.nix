@@ -36,6 +36,7 @@
         ./nixos/system.nix
         ./nixos/xserver.nix
         ./hosts/miku-nixos
+        ./cachix.nix
         ./modules/device.nix
         ./modules/my.nix
         ./overlays
@@ -58,6 +59,7 @@
         # ./nixos/optimus.nix
         ./nixos/system.nix
         ./nixos/xserver.nix
+        ./cachix.nix
         ./hosts/mikudayo-nixos
         ./modules/device.nix
         ./modules/my.nix
