@@ -16,7 +16,6 @@
     };
 
     sessionVariables = {
-      PATH = "$HOME/.local/bin:$PATH";
       # Reduce time to wait for multi-key sequences
       KEYTIMEOUT = 1;
       # Set right prompt to show time
@@ -60,6 +59,14 @@
       # zsh-history-substring-search
       bindkey "$terminfo[kcuu1]" history-substring-search-up
       bindkey "$terminfo[kcud1]" history-substring-search-down
+
+      # source contents from ~/.zshrc.d/*.zsh
+      for file in $HOME/.zshrc.d/*.zsh; do
+        [[ -f "$file" ]] && source "$file"
+      done
+
+      # load after ~/.zshrc.d files to make sure that ~/.local/bin is the first in $PATH
+      export PATH="$HOME/.local/bin:$PATH"
     '';
 
     plugins = import ./zsh-plugins.nix { inherit fetchGit; };
