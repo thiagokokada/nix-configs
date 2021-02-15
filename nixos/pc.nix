@@ -19,12 +19,6 @@ in with config.users.users.${username}; {
   environment.systemPackages = with pkgs; [ btrfs-progs hdparm rtorrent samba ];
 
   services = {
-    btrfs.autoScrub = {
-      enable = true;
-      interval = "weekly";
-      fileSystems = [ "/mnt/archive" "/mnt/data" ];
-    };
-
     # Enable irqbalance service
     irqbalance.enable = true;
 

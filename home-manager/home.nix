@@ -29,7 +29,8 @@ with lib; {
   else if (super ? fileSystems) then
     (lists.subtractLists [ "/boot" "/tmp" "/nix" ]
       (mapAttrsToList (n: _: n) super.fileSystems))
-  else [ "/" ];
+  else
+    [ "/" ];
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;

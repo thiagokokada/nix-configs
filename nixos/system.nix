@@ -3,6 +3,10 @@
 with config.boot;
 with lib;
 let
+  btrfsInInitrd = any (fs: fs == "btrfs") initrd.supportedFilesystems;
+  btrfsInSystem = any (fs: fs == "btrfs") supportedFilesystems;
+  enableBtrfs = btrfsInInitrd || btrfsInSystem;
+
   nixos-clean-up = pkgs.writeShellScriptBin "nixos-clean-up" ''
     set -euo pipefail
 
@@ -68,6 +72,11 @@ in {
   };
 
   services = {
+    btrfs.autoScrub = mkIf enableBtrfs {
+      enable = true;
+      interval = "weekly";
+    };
+
     # Kill process consuming too much memory before it crawls the machine
     earlyoom.enable = true;
 

@@ -10,6 +10,8 @@
       ./hardware-configuration.nix
     ];
 
+  device.type = "desktop";
+
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -25,6 +27,12 @@
       preLVM = true;
       allowDiscards = true;
     };
+  };
+
+  services.btrfs.autoScrub = {
+    enable = true;
+    interval = "weekly";
+    fileSystems = [ "/mnt/archive" "/mnt/data" ];
   };
 }
 

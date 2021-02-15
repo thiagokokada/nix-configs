@@ -40,9 +40,6 @@
         ./modules/my.nix
         ./overlays
         home.nixosModules.home-manager
-        ({ pkgs, ... }: {
-          device.type = "desktop";
-        })
       ];
       specialArgs = { inherit inputs system; };
     };
@@ -66,10 +63,6 @@
         ./modules/my.nix
         ./overlays
         home.nixosModules.home-manager
-        ({ pkgs, ... }: {
-          device.type = "notebook";
-          device.mountPoints = [ "/" ];
-        })
       ];
       specialArgs = { inherit inputs system; };
     };
