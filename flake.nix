@@ -26,6 +26,7 @@
         ./nixos/cli.nix
         ./nixos/desktop.nix
         ./nixos/dev.nix
+        ./nixos/fonts.nix
         ./nixos/game.nix
         ./nixos/home.nix
         ./nixos/locale.nix
@@ -52,8 +53,9 @@
         ./nixos/cli.nix
         ./nixos/desktop.nix
         ./nixos/dev.nix
-        ./nixos/laptop.nix
+        ./nixos/fonts.nix
         ./nixos/home.nix
+        ./nixos/laptop.nix
         ./nixos/locale.nix
         ./nixos/misc.nix
         # ./nixos/optimus.nix
