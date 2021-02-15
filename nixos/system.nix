@@ -16,8 +16,6 @@ let
     EOF
   '';
 in {
-  environment.systemPackages = with pkgs; [ btrfs-progs nixos-clean-up ];
-
   boot = {
     # Mount /tmp using tmpfs for performance
     tmpOnTmpfs = true;
@@ -63,13 +61,6 @@ in {
   };
 
   services = {
-    # Enable btrfs scrub if some mount uses this fs
-    btrfs.autoScrub = {
-      enable = true;
-      interval = "weekly";
-      fileSystems = [ "/mnt/archive" "/mnt/data" ];
-    };
-
     # Kill process consuming too much memory before it crawls the machine
     earlyoom.enable = true;
 
