@@ -28,6 +28,7 @@ jobs:
       - uses: cachix/cachix-action@v8
         with:
           name: thiagokokada-nix-configs
+          extraPullNames: 'nix-community'
           authToken: '${{ secrets.CACHIX_TOKEN }}'
       - run: nix-shell -p nixFlakes --run 'nix build .#nixosConfigurations.miku-nixos.config.system.build.toplevel --experimental-features "nix-command flakes"'
       - run: nix-shell -p nixFlakes --run 'nix build .#nixosConfigurations.mikudayo-nixos.config.system.build.toplevel --experimental-features "nix-command flakes"'
