@@ -57,7 +57,12 @@ in {
   # Enable NixOS auto-upgrade
   system.autoUpgrade = {
     enable = true;
-    dates = "daily";
+    flake = "/etc/nixos";
+    dates = "Mon,Wed,Fri,Sun 22:00";
+    flags = [
+      "--recreate-lock-file"
+      "--commit-lock-file"
+    ];
   };
 
   services = {
