@@ -61,9 +61,11 @@
       bindkey "$terminfo[kcud1]" history-substring-search-down
 
       # source contents from ~/.zshrc.d/*.zsh
-      for file in $HOME/.zshrc.d/*.zsh; do
+      setopt +o nomatch
+      for file in "$HOME/.zshrc.d/"*.zsh; do
         [[ -f "$file" ]] && source "$file"
       done
+      setopt -o nomatch
 
       # load after ~/.zshrc.d files to make sure that ~/.local/bin is the first in $PATH
       export PATH="$HOME/.local/bin:$PATH"
