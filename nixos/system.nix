@@ -16,6 +16,8 @@ let
     EOF
   '';
 in {
+  environment.systemPackages = [ nixos-clean-up ];
+
   boot = {
     # Mount /tmp using tmpfs for performance
     tmpOnTmpfs = true;
