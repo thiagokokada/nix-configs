@@ -11,8 +11,6 @@ with lib;
     mountPoints = mkOption {
       type = with types; nullOr (listOf str);
       description = "Available mount points";
-      # TODO: extract this from hardware-configuration.nix when possible
-      default = [ "/" ];
       example = [ "/" "/mnt/backup" ];
     };
   };
