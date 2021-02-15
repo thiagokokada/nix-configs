@@ -9,16 +9,10 @@
   <memory unit='KiB'>16777216</memory>
   <currentMemory unit='KiB'>16777216</currentMemory>
   <vcpu placement='static'>3</vcpu>
-  <iothreads>1</iothreads>
   <cputune>
     <vcpupin vcpu='0' cpuset='3'/>
     <vcpupin vcpu='1' cpuset='4'/>
     <vcpupin vcpu='2' cpuset='5'/>
-    <emulatorpin cpuset='2'/>
-    <iothreadpin iothread='1' cpuset='0-1'/>
-    <vcpusched vcpus='0' scheduler='fifo' priority='1'/>
-    <vcpusched vcpus='1' scheduler='fifo' priority='1'/>
-    <vcpusched vcpus='2' scheduler='fifo' priority='1'/>
   </cputune>
   <os>
     <type arch='x86_64' machine='pc-q35-5.1'>hvm</type>
@@ -69,7 +63,7 @@
   <devices>
     <emulator>/run/libvirt/nix-emulators/qemu-system-x86_64</emulator>
     <disk type='block' device='disk'>
-      <driver name='qemu' type='raw' cache='none' io='threads' iothread='1'/>
+      <driver name='qemu' type='raw' cache='none'/>
       <source dev='@DISK@'/>
       <target dev='vda' bus='virtio'/>
       <boot order='1'/>
