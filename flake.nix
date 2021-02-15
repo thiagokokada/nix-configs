@@ -61,6 +61,7 @@
         # ./nixos/optimus.nix
         ./nixos/system.nix
         ./nixos/xserver.nix
+        ./hosts/mikudayo-nixos
         ./modules/device.nix
         ./modules/my.nix
         ./overlays
