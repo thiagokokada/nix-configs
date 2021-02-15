@@ -2,7 +2,22 @@
 
 with config.boot;
 with lib;
-{
+let
+  nixos-clean-up = pkgs.writeShellScriptBin "nixos-clean-up" ''
+    set -euo pipefail
+
+    sudo -s -- <<EOF
+    find -H /nix/var/nix/gcroots/auto -type l | xargs readlink | grep "/result$" | xargs rm -f
+    nix-collect-garbage -d
+    nixos-rebuild boot --fast
+    if [[ "''${1:-}" == "--optimize" ]]; then
+      nix-store --optimize
+    fi
+    EOF
+  '';
+in {
+  environment.systemPackages = with pkgs; [ btrfs-progs nixos-clean-up ];
+
   boot = {
     # Mount /tmp using tmpfs for performance
     tmpOnTmpfs = true;
@@ -46,8 +61,6 @@ with lib;
     enable = true;
     dates = "daily";
   };
-
-  environment.systemPackages = with pkgs; [ btrfs-progs ];
 
   services = {
     # Enable btrfs scrub if some mount uses this fs
