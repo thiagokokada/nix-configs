@@ -3,14 +3,6 @@
 let
   inherit (config.my) username;
 in {
-  # Set the $NIX_PATH entry for nixpkgs. This is necessary in
-  # this setup with flakes, otherwise commands like `nix-shell
-  # -p pkgs.htop` will keep using an old version of nixpkgs.
-  nix.nixPath = [ "nixpkgs=${inputs.nixpkgs}" ];
-
-  # Enable unfree packages
-  nixpkgs.config.allowUnfree = true;
-
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.${username} = {
      isNormalUser = true;
@@ -26,11 +18,21 @@ in {
   # should.
   system.stateVersion = "20.09"; # Did you read the comment?
 
-  # Enable Flakes
   nix = {
+    # Enable Flakes
     package = pkgs.nixFlakes;
     extraOptions = ''
       experimental-features = nix-command flakes
     '';
+
+    # Set the $NIX_PATH entry for nixpkgs. This is necessary in
+    # this setup with flakes, otherwise commands like `nix-shell
+    # -p pkgs.htop` will keep using an old version of nixpkgs
+    nixPath = [ "nixpkgs=${inputs.nixpkgs}" ];
+    # Same as above, but for `nix shell nixpkgs#htop`
+    registry.nixpkgs.flake = inputs.nixpkgs;
   };
+
+  # Enable unfree packages
+  nixpkgs.config.allowUnfree = true;
 }
