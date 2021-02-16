@@ -17,9 +17,11 @@
 
   home.packages = with pkgs;
     with config.theme.fonts; [
+      dejavu_fonts
       font-awesome_5
       gui.package
       hack-font
+      liberation_ttf
       noto-fonts
       noto-fonts-cjk
       noto-fonts-emoji
