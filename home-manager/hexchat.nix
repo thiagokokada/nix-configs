@@ -5,20 +5,6 @@
 
   programs.hexchat = {
     enable = true;
-    overwriteConfigFiles = true;
-    channels = {
-      freenode = {
-        autojoin = [ "#nixos" "#home-manager" ];
-        servers = [ "chat.freenode.net" "irc.freenode.net" ];
-      };
-    };
-
-    settings = {
-      irc_nick1 = "K0kada";
-      irc_nick2 = "k0kada_t";
-      irc_user_name = "K0kada";
-      dcc_dir = "${config.home.homeDirectory}/Downloads";
-    };
 
     theme = with pkgs; stdenv.mkDerivation rec {
       name = "hexchat-theme-monokai";
