@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 {
   imports =
@@ -20,4 +20,9 @@
   boot.kernelParams = [ "pci=noaer" ];
 
   networking.hostName = "mikudayo-nixos";
+
+  services.xserver = {
+    layout = "br,us";
+    xkbVariant = "abnt2,intl";
+  };
 }

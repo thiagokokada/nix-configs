@@ -12,7 +12,7 @@
   i18n.defaultLocale = "en_US.UTF-8";
 
   # Set X11 keyboard layout.
-  services.xserver = {
+  services.xserver = lib.mkDefault {
     layout = "us,br";
     xkbVariant = "intl,abnt2";
   };
