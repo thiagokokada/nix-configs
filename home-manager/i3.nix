@@ -162,7 +162,6 @@ in {
     lxappearance
     maim
     mons
-    nnn
     playerctl
     wmctrl
     xclip

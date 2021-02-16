@@ -1,15 +1,17 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, inputs, ... }:
 
 {
   home = {
-    packages = [ pkgs.nnn ];
+    packages = [ pkgs.nnnWithIcons ];
     sessionVariables = {
       NNN_PLUG = "c:fzcd;f:finder;m:mediainf;o:fzopen;t:nmount;v:imgview";
       NNN_BMS = "D:~/Downloads/;I:~/Pictures;P:~/Projects;m:/mnt;r:/";
     };
   };
 
-  programs.zsh.initExtra = ''
+  programs.zsh.initExtra = let
+    nnn = "${pkgs.nnnWithIcons}/bin/nnn";
+  in ''
     n()
     {
       # Block nesting of nnn in subshells
@@ -30,7 +32,7 @@
       # stty lwrap undef
       # stty lnext undef
 
-      nnn "$@"
+      ${nnn} "$@"
 
       if [ -f "$NNN_TMPFILE" ]; then
         . "$NNN_TMPFILE"

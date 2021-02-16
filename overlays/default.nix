@@ -43,6 +43,10 @@
         viAlias = true;
       });
 
+      nnnWithIcons = unstable.nnn.override ({
+        withNerdIcons = true;
+      });
+
       plex = unstable.plex;
     })
   ];
