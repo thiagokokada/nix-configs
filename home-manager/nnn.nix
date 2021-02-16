@@ -2,15 +2,20 @@
 
 {
   home = {
-    packages = [ pkgs.nnnWithIcons ];
+    packages = with pkgs; [ bat exa ffmpegthumbnailer mediainfo nnn sxiv ];
     sessionVariables = {
-      NNN_PLUG = "c:fzcd;f:finder;m:mediainf;o:fzopen;t:nmount;v:imgview";
-      NNN_BMS = "D:~/Downloads/;I:~/Pictures;P:~/Projects;m:/mnt;r:/";
+      NNN_PLUG = "c:fzcd;f:finder;o:fzopen;p:preview-tui;t:nmount;v:imgview";
+      NNN_BMS = "D:~/Downloads/;I:~/Pictures;V:~/Videos;P:~/Projects;m:/mnt;r:/";
+      USE_VIDEOTHUMB = 1;
     };
   };
 
-  programs.zsh.initExtra = let
-    nnn = "${pkgs.nnnWithIcons}/bin/nnn";
+  xdg.configFile."nnn/plugins" = {
+    source = pkgs.nnnPlugins;
+    recursive = true;
+  };
+
+  programs.zsh.initExtra = let nnn = "${pkgs.nnn}/bin/nnn";
   in ''
     n()
     {
@@ -32,7 +37,7 @@
       # stty lwrap undef
       # stty lnext undef
 
-      ${nnn} "$@"
+      ${nnn} -a "$@"
 
       if [ -f "$NNN_TMPFILE" ]; then
         . "$NNN_TMPFILE"

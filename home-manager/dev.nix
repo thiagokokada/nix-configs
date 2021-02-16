@@ -2,8 +2,10 @@
 
 {
   home.packages = with pkgs; [
+    bat
     elixir
     erlang
+    exa
     expect
     gnumake
     go

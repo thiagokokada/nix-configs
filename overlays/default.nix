@@ -1,4 +1,4 @@
-{ pkgs, inputs, system, ... }:
+{ pkgs, lib, inputs, system, ... }:
 
 {
   nixpkgs.overlays = [
@@ -43,9 +43,24 @@
         viAlias = true;
       });
 
-      nnnWithIcons = unstable.nnn.override ({
-        withNerdIcons = true;
-      });
+      nnn = unstable.nnn.override ({ withNerdIcons = true; });
+
+      nnnPlugins = with pkgs;
+        let inherit (nnn) version;
+        in stdenv.mkDerivation rec {
+          name = "nnn-plugins-${version}";
+          src = fetchFromGitHub {
+            owner = "jarun";
+            repo = "nnn";
+            rev = "v${version}";
+            sha256 = "sha256-Hpc8YaJeAzJoEi7aJ6DntH2VLkoR6ToP6tPYn3llR7k=";
+          };
+          buildPhase = "true";
+          installPhase = ''
+            mkdir -p $out
+            cp -rT plugins $out
+          '';
+        };
 
       plex = unstable.plex;
     })
