@@ -86,6 +86,7 @@ in {
         block = "battery";
         device = "DisplayDevice";
         driver = "upower";
+        format = "{percentage}% {time}";
       } else
         { };
 
@@ -120,7 +121,10 @@ in {
     in {
       i3 = {
         inherit settings;
-        blocks = [ windowBlock netBlock ] ++ disksBlocks ++ [
+        blocks = lib.lists.flatten [
+          windowBlock
+          netBlock
+          disksBlocks
           memoryBlock
           loadBlock
           temperatureBlock
@@ -135,7 +139,10 @@ in {
 
       sway = {
         inherit settings;
-        blocks = [ windowBlock netBlock ] ++ disksBlocks ++ [
+        blocks = lib.lists.flatten [
+          windowBlock
+          netBlock
+          disksBlocks
           memoryBlock
           loadBlock
           temperatureBlock
