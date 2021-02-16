@@ -25,7 +25,7 @@
     qalculate-gtk
     shared-mime-info
     smartmontools
-    unstable.pulseeffects
+    unstable.pulseeffects-legacy
     unstable.tdesktop
     unstable.xdragon
     xarchiver
