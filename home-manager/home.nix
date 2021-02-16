@@ -6,6 +6,7 @@ with lib; {
     ./dev.nix
     ./emacs.nix
     ./git.nix
+    ./hexchat.nix
     ./htop.nix
     ./i3.nix
     ./kitty.nix

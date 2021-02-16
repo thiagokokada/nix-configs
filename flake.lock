@@ -37,6 +37,27 @@
         "type": "github"
       }
     },
+    "home-hexchat": {
+      "inputs": {
+        "nixpkgs": [
+          "unstable"
+        ]
+      },
+      "locked": {
+        "lastModified": 1613437539,
+        "narHash": "sha256-YwPpsioPfmBIb0b6Uk1o//GfJIMPjzXv0k5amWUvdGw=",
+        "owner": "thiagokokada",
+        "repo": "home-manager",
+        "rev": "60c0b55c139cc6fac1a22258e0186fd467b9e4bb",
+        "type": "github"
+      },
+      "original": {
+        "owner": "thiagokokada",
+        "ref": "hexchat-init",
+        "repo": "home-manager",
+        "type": "github"
+      }
+    },
     "home-unstable": {
       "inputs": {
         "nixpkgs": [
@@ -78,6 +99,7 @@
       "inputs": {
         "emacs": "emacs",
         "home": "home",
+        "home-hexchat": "home-hexchat",
         "home-unstable": "home-unstable",
         "nixpkgs": "nixpkgs",
         "unstable": "unstable"
