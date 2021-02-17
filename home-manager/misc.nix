@@ -36,6 +36,8 @@
   '';
 
   programs.zsh.shellAliases = {
-    "hm" = "home-manager";
+    # TODO: home-manager script is not useful in Flakes yet
+    # "hm" = "home-manager";
+    "nix-shell-unstable" = "nix-shell -I nixpkgs=channel:nixpkgs-unstable";
   };
 }
