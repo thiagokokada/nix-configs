@@ -3,10 +3,14 @@
 with lib;
 let inherit (config.my) username;
 in {
-  home-manager.useUserPackages = true;
-  home-manager.users.${username} = ../home-manager/home.nix;
-  home-manager.extraSpecialArgs = {
-    inherit inputs system;
-    super = config;
+  imports = [ inputs.home.nixosModules.home-manager ];
+
+  home-manager = {
+    useUserPackages = true;
+    users.${username} = ../home-manager/home.nix;
+    extraSpecialArgs = {
+      inherit inputs system;
+      super = config;
+    };
   };
 }

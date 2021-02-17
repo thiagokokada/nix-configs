@@ -26,50 +26,13 @@
   outputs = { self, nixpkgs, home, ... }@inputs: {
     nixosConfigurations.miku-nixos = nixpkgs.lib.nixosSystem rec {
       system = "x86_64-linux";
-      modules = [
-        ./nixos/cli.nix
-        ./nixos/desktop.nix
-        ./nixos/dev.nix
-        ./nixos/fonts.nix
-        ./nixos/game.nix
-        ./nixos/home.nix
-        ./nixos/locale.nix
-        ./nixos/misc.nix
-        ./nixos/pc.nix
-        ./nixos/security.nix
-        ./nixos/system.nix
-        ./nixos/xserver.nix
-        ./hosts/miku-nixos
-        ./cachix.nix
-        ./modules/device.nix
-        ./modules/my.nix
-        ./overlays
-        home.nixosModules.home-manager
-      ];
+      modules = [ ./hosts/miku-nixos ];
       specialArgs = { inherit inputs system; };
     };
 
     nixosConfigurations.mikudayo-nixos = nixpkgs.lib.nixosSystem rec {
       system = "x86_64-linux";
-      modules = [
-        ./nixos/cli.nix
-        ./nixos/desktop.nix
-        ./nixos/dev.nix
-        ./nixos/fonts.nix
-        ./nixos/home.nix
-        ./nixos/laptop.nix
-        ./nixos/locale.nix
-        ./nixos/misc.nix
-        # ./nixos/optimus.nix
-        ./nixos/system.nix
-        ./nixos/xserver.nix
-        ./cachix.nix
-        ./hosts/mikudayo-nixos
-        ./modules/device.nix
-        ./modules/my.nix
-        ./overlays
-        home.nixosModules.home-manager
-      ];
+      modules = [ ./hosts/mikudayo-nixos ];
       specialArgs = { inherit inputs system; };
     };
 

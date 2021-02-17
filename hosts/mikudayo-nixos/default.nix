@@ -5,10 +5,24 @@
 { config, pkgs, lib, ... }:
 
 {
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-    ];
+  imports = [
+    ./hardware-configuration.nix
+    ../../nixos/cli.nix
+    ../../nixos/desktop.nix
+    ../../nixos/dev.nix
+    ../../nixos/fonts.nix
+    ../../nixos/home.nix
+    ../../nixos/laptop.nix
+    ../../nixos/locale.nix
+    ../../nixos/misc.nix
+    # ../../nixos/optimus.nix
+    ../../nixos/system.nix
+    ../../nixos/xserver.nix
+    ../../cachix.nix
+    ../../modules/device.nix
+    ../../modules/my.nix
+    ../../overlays
+  ];
 
   device.type = "notebook";
   device.mountPoints = [ "/" ];

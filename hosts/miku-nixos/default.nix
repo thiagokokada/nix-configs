@@ -5,10 +5,25 @@
 { config, pkgs, ... }:
 
 {
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-    ];
+  imports = [
+    ./hardware-configuration.nix
+    ../../nixos/cli.nix
+    ../../nixos/desktop.nix
+    ../../nixos/dev.nix
+    ../../nixos/fonts.nix
+    ../../nixos/game.nix
+    ../../nixos/home.nix
+    ../../nixos/locale.nix
+    ../../nixos/misc.nix
+    ../../nixos/pc.nix
+    ../../nixos/security.nix
+    ../../nixos/system.nix
+    ../../nixos/xserver.nix
+    ../../cachix.nix
+    ../../modules/device.nix
+    ../../modules/my.nix
+    ../../overlays
+  ];
 
   device.type = "desktop";
 
@@ -21,7 +36,8 @@
   networking.hostName = "miku-nixos";
 
   boot.initrd.luks.devices = {
-    "enc-win10".device = "/dev/disk/by-uuid/4c14148f-87b3-4bfe-a65b-062681574241";
+    "enc-win10".device =
+      "/dev/disk/by-uuid/4c14148f-87b3-4bfe-a65b-062681574241";
     "root" = {
       device = "/dev/disk/by-uuid/02e41fb9-1611-461f-ba7c-4e44d828cf8d";
       preLVM = true;
