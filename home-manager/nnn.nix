@@ -1,13 +1,47 @@
 { config, lib, pkgs, inputs, ... }:
 
+# TODO: Convert this to a module
 {
+  nixpkgs.overlays = [
+    (final: prev: rec {
+      nnnWithIcons = pkgs.unstable.nnn.override ({ withNerdIcons = true; });
+
+      nnnCustom = pkgs.writeShellScriptBin "nnn" ''
+        export NNN_PLUG="c:fzcd;f:finder;o:fzopen;p:preview-tui;t:nmount;v:imgview";
+        export NNN_BMS="D:~/Downloads/;I:~/Pictures;V:~/Videos;P:~/Projects;m:/mnt;r:/";
+        export USE_VIDEOTHUMB=1;
+
+        ${pkgs.nnnWithIcons}/bin/nnn -a "$@"
+      '';
+
+      nnnPlugins = with pkgs;
+        let inherit (nnn) version;
+        in stdenv.mkDerivation rec {
+          name = "nnn-plugins-${version}";
+          src = fetchFromGitHub {
+            owner = "jarun";
+            repo = "nnn";
+            rev = "v${version}";
+            sha256 = "sha256-Hpc8YaJeAzJoEi7aJ6DntH2VLkoR6ToP6tPYn3llR7k=";
+          };
+          buildPhase = "true";
+          installPhase = ''
+            mkdir -p $out
+            cp -rT plugins $out
+          '';
+        };
+    })
+  ];
+
   home = {
-    packages = with pkgs; [ bat exa ffmpegthumbnailer mediainfo nnn sxiv ];
-    sessionVariables = {
-      NNN_PLUG = "c:fzcd;f:finder;o:fzopen;p:preview-tui;t:nmount;v:imgview";
-      NNN_BMS = "D:~/Downloads/;I:~/Pictures;V:~/Videos;P:~/Projects;m:/mnt;r:/";
-      USE_VIDEOTHUMB = 1;
-    };
+    packages = with pkgs; [
+      bat
+      exa
+      ffmpegthumbnailer
+      mediainfo
+      nnnCustom
+      sxiv
+    ];
   };
 
   xdg.configFile."nnn/plugins" = {
@@ -15,8 +49,7 @@
     recursive = true;
   };
 
-  programs.zsh.initExtra = let nnn = "${pkgs.nnn}/bin/nnn";
-  in ''
+  programs.zsh.initExtra = ''
     n()
     {
       # Block nesting of nnn in subshells
@@ -37,7 +70,7 @@
       # stty lwrap undef
       # stty lnext undef
 
-      ${nnn} -a "$@"
+      ${pkgs.nnnCustom} -a "$@"
 
       if [ -f "$NNN_TMPFILE" ]; then
         . "$NNN_TMPFILE"
