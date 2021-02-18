@@ -2,7 +2,7 @@
 #! nix-shell -i "make -f" -p gnumake nixFlakes
 
 .PHONY: clean activate-home build-vm-miku-nixos build-vm-mikudayo-nixos build-home update
-NIX_FLAGS := --experimental-features 'nix-command = flakes'
+NIX_FLAGS := --experimental-features 'nix-command flakes'
 
 all: build-miku-nixos build-mikudayo-nixos build-home
 
