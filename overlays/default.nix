@@ -11,7 +11,7 @@
       };
 
       # Backport from unstable to have Python 3 version
-      cpusetWithPatch = with unstable;
+      cpuset-with-patch = with unstable;
         cpuset.overrideAttrs (oldAttrs: {
           patches = (oldAttrs.patches or [ ]) ++ [
             (fetchpatch {
@@ -22,7 +22,7 @@
           ];
         });
 
-      emacsCustom = (pkgs.emacsPackagesGen pkgs.emacsPgtkGcc).emacsWithPackages
+      emacs-custom = (pkgs.emacsPackagesGen pkgs.emacsPgtkGcc).emacsWithPackages
         (epkgs: [ epkgs.vterm ]);
 
       fzf = unstable.fzf;
@@ -37,7 +37,7 @@
           ignoreConfigErrors = true;
         });
 
-      neovimCustom = pkgs.neovim.override ({
+      neovim-custom = pkgs.neovim.override ({
         withNodeJs = true;
         vimAlias = true;
         viAlias = true;

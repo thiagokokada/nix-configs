@@ -19,8 +19,8 @@ let
       # migrated by cset. Restrict the workqueue to use only cpu 0.
       echo 00 | tee /sys/bus/workqueue/devices/writeback/cpumask
 
-      ${pkgs.cpusetWithPatch}/bin/cset shield --reset
-      ${pkgs.cpusetWithPatch}/bin/cset shield --cpu "${reservedGuestCpus}" --kthread=on
+      ${pkgs.cpuset-with-patch}/bin/cset shield --reset
+      ${pkgs.cpuset-with-patch}/bin/cset shield --cpu "${reservedGuestCpus}" --kthread=on
       ${pkgs.libvirt}/bin/virsh start "${name}"
       EOF
     '';
@@ -32,7 +32,7 @@ let
       # All VMs offline
       echo ff | tee /sys/bus/workqueue/devices/writeback/cpumask
       ${pkgs.procps}/bin/sysctl vm.stat_interval=1
-      ${pkgs.cpusetWithPatch}/bin/cset shield --reset
+      ${pkgs.cpuset-with-patch}/bin/cset shield --reset
       EOF
     '';
 
@@ -55,7 +55,7 @@ in {
   environment.systemPackages = with pkgs; [
     (startVmScript "win10")
     (stopVmScript "win10")
-    cpusetWithPatch
+    cpuset-with-patch
     virtmanager
   ];
 

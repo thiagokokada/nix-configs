@@ -18,8 +18,7 @@
 
   programs.emacs = {
     enable = true;
-    package = (pkgs.emacsPackagesGen pkgs.emacsPgtkGcc).emacsWithPackages
-      (epkgs: [ epkgs.vterm ]);
+    package = pkgs.emacs-custom;
   };
 
   home.activation.clone-doom-emacs = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
