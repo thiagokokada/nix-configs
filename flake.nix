@@ -13,10 +13,6 @@
       url = "github:nix-community/home-manager/master";
       inputs.nixpkgs.follows = "unstable";
     };
-    home-hexchat = {
-      url = "github:thiagokokada/home-manager/hexchat-init";
-      inputs.nixpkgs.follows = "unstable";
-    };
     emacs = {
       url = "github:nix-community/emacs-overlay/master";
       inputs.nixpkgs.follows = "unstable";

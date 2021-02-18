@@ -1,12 +1,10 @@
 { config, lib, pkgs, inputs, ... }:
 
 {
-  imports = [ "${inputs.home-hexchat}/modules/programs/hexchat.nix" ];
+  home.packages = [ pkgs.hexchat ];
 
-  programs.hexchat = {
-    enable = true;
-
-    theme = with pkgs; stdenv.mkDerivation rec {
+  xdg.configFile."hexchat" = {
+    source = with pkgs; stdenv.mkDerivation rec {
       name = "hexchat-theme-monokai";
       buildInputs = [ pkgs.unzip ];
       src = builtins.fetchurl {
@@ -16,5 +14,6 @@
       unpackPhase = "unzip ${src}";
       installPhase = "cp -r . $out";
     };
+    recursive = true;
   };
 }
