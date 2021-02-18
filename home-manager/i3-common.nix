@@ -221,9 +221,9 @@ in
       "${modifier}+Shift+r" = "restart";
 
       "XF86AudioRaiseVolume" =
-        "exec --no-startup-id ${pamixer} --increase 5";
+        "exec --no-startup-id ${pamixer} --set-limit 150 --allow-boost -i 5";
       "XF86AudioLowerVolume" =
-        "exec --no-startup-id ${pamixer} --decrease 5";
+        "exec --no-startup-id ${pamixer} --set-limit 150 --allow-boost -d 5";
       "XF86AudioMute" =
         "exec --no-startup-id ${pamixer} --toggle-mute";
       "XF86AudioMicMute" =

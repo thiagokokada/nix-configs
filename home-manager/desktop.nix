@@ -19,7 +19,7 @@
     kitty
     libreoffice-fresh
     lxmenu-data
-    pamixer
+    pamixer-unstable
     pavucontrol
     pcmanfm
     peek

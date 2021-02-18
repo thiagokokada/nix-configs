@@ -43,6 +43,16 @@
         viAlias = true;
       });
 
+      pamixer-unstable = pkgs.pamixer.overrideAttrs (oldAttrs: {
+        version = "unstable-2020-01-06";
+        src = pkgs.fetchFromGitHub {
+          owner = "cdemoulins";
+          repo = "pamixer";
+          rev = "7f245fd1a064147266a9118bdbadf52fdc1343ff";
+          sha256 = "sha256-m/bdXEKFIOyXTpzE8p7PIDk3Uril35+ljckSUQJLDvI=";
+        };
+      });
+
       plex = unstable.plex;
     })
   ];

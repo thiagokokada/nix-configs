@@ -93,7 +93,7 @@ in {
       soundBlock = {
         block = "sound";
         on_click = "pavucontrol";
-        max_vol = 100;
+        max_vol = 150;
       };
 
       keyboardBlock = {
