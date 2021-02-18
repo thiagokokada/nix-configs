@@ -2,7 +2,7 @@
 , lib
 , terminal
 , menu
-, pactl
+, pamixer
 , light
 , playerctl
 , fullScreenShot
@@ -221,13 +221,13 @@ in
       "${modifier}+Shift+r" = "restart";
 
       "XF86AudioRaiseVolume" =
-        "exec --no-startup-id ${pactl} set-sink-volume @DEFAULT_SINK@ +5%";
+        "exec --no-startup-id ${pamixer} --increase 5";
       "XF86AudioLowerVolume" =
-        "exec --no-startup-id ${pactl} set-sink-volume @DEFAULT_SINK@ -5%";
+        "exec --no-startup-id ${pamixer} --decrease 5";
       "XF86AudioMute" =
-        "exec --no-startup-id ${pactl} set-sink-mute @DEFAULT_SINK@ toggle";
+        "exec --no-startup-id ${pamixer} --toggle-mute";
       "XF86AudioMicMute" =
-        "exec --no-startup-id ${pactl}set-source-mute @DEFAULT_SOURCE@ toggle";
+        "exec --no-startup-id ${pamixer} --toggle-mute --default-source";
 
       "XF86MonBrightnessUp" = "exec --no-startup-id ${light} -A 5%";
       "XF86MonBrightnessDown" = "exec --no-startup-id ${light} -U 5%";

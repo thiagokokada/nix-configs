@@ -19,6 +19,7 @@
     kitty
     libreoffice-fresh
     lxmenu-data
+    pamixer
     pavucontrol
     pcmanfm
     peek
