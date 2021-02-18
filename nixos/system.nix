@@ -99,7 +99,7 @@ in {
     '';
 
     # Enable NTP
-    timesyncd.enable = true;
+    timesyncd.enable = lib.mkDefault true;
 
     # Set I/O scheduler
     # mq-deadline is set for NVMe, since scheduler doesn't make much sense on it
