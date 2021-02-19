@@ -25,8 +25,14 @@
     package = pkgs.jdk11;
   };
 
-  # This allows PulseAudio to run with realtime privileges (i.e: less cracks)
-  security.rtkit.enable = true;
+  security = {
+    # This allows PulseAudio to run with realtime privileges (i.e: less cracks)
+    rtkit.enable = true;
+    wrappers.noisetorch = {
+      source = "${pkgs.unstable.noisetorch}/bin/noisetorch";
+      capabilities = "CAP_SYS_RESOURCE=+ep";
+    };
+  };
 
   services = {
     smartd = {
