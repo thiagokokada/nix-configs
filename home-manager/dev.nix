@@ -11,11 +11,11 @@
     go
     nim
     nix-update
+    nixfmt
     nixpkgs-fmt
     nixpkgs-review
     python3Full
     rustup
-    shellcheck
     sloccount
   ];
 }

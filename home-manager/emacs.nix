@@ -3,19 +3,18 @@
 {
   # Emacs overlay
   home.packages = with pkgs; [
-    clojure-lsp
     emacs-all-the-icons-fonts
     fd
     findutils
     fzf
     hack-font
-    leiningen
-    nixfmt
     noto-fonts
-    python-language-server
-    rnix-lsp
-    shellcheck
     stow
+    unstable.clojure-lsp
+    unstable.leiningen
+    unstable.python-language-server
+    unstable.rnix-lsp
+    unstable.shellcheck
   ];
 
   programs.emacs = {
@@ -24,8 +23,8 @@
   };
 
   home.activation.clone-doom-emacs = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-    [ ! -d $HOME/.config/emacs ] \
-      && $DRY_RUN_CMD ${pkgs.git}/bin/git clone 'https://github.com/hlissner/doom-emacs/' "$HOME/.config/emacs" \
+    [ ! -d "$HOME/.config/emacs" ] \
+      && "$DRY_RUN_CMD" ${pkgs.git}/bin/git clone 'https://github.com/hlissner/doom-emacs/' "$HOME/.config/emacs" \
       || true
   '';
 
