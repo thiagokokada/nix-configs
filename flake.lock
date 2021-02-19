@@ -76,11 +76,11 @@
     },
     "nubank": {
       "locked": {
-        "lastModified": 1613752227,
-        "narHash": "sha256-YBpcFYFKrsdvLdP19lNdXH4Mq9UfoKjmvteDRQSikXA=",
+        "lastModified": 1613753570,
+        "narHash": "sha256-O9GtS6Jct5fdc4nGwY4mSWfzQcUSe/mNh5IaQcgINlQ=",
         "owner": "nubank",
         "repo": "nixpkgs",
-        "rev": "e089a1a57b5743a75e81e7a14edb03320d94a48e",
+        "rev": "d61604f7563999c5fbf064546ab3a9f35c9ece9a",
         "type": "github"
       },
       "original": {
