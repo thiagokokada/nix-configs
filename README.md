@@ -20,13 +20,14 @@ instead I choose to develop my own from the available examples and
 documentation. Some of the resources and repositories that helped me to
 build this config:
 
-- https://www.tweag.io/blog/2020-07-31-nixos-flakes/
-- https://nixos.wiki/wiki/Flakes
 - https://github.com/bqv/nixrc
 - https://github.com/colemickens/nixcfg
+- https://github.com/hlissner/dotfiles
 - https://github.com/lucasew/nixcfg
 - https://github.com/Mic92/dotfiles
 - https://github.com/nrdxp/nixflk
+- https://nixos.wiki/wiki/Flakes
+- https://www.tweag.io/blog/2020-07-31-nixos-flakes/
 
 I decided to build from scratch to have more understand what is happening. Also,
 this repo uses less "magic" than other repositories, preferring a copy-and-paste
