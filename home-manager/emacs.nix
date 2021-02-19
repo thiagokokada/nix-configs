@@ -8,8 +8,10 @@
     fd
     findutils
     fzf
+    hack-font
     leiningen
     nixfmt
+    noto-fonts
     python-language-server
     rnix-lsp
     shellcheck
