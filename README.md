@@ -42,17 +42,48 @@ but it should also work in standalone mode.
 Most of the configuration files are based on my old (but still supported)
 [dotfiles repository](https://github.com/thiagokokada/dotfiles).
 
-## Usage
+## Installation
 
-For now, most of "documentation" is available in this repo's `Makefile`. It
-should be called as a script since it will automatically download its
-dependencies using `nix-shell`.
-
-For example, to build `miku-nixos` configuration run:
+Thanks to some issues in NixOS ISO, it is necessary to use `unstable` ISO for
+now. Boot it and do the following process to allow instalation:
 
 ```sh
-$ ./Makefile build-miku-nixos
+$ sudo git clone https://github.com/thiagokokada/nix-configs/ /etc/nixos
+$ sudo chown -R 1000:100 /etc/nixos # optional if you want to edit your config without root
+$ nix-shell -p nixFlakes
+$ sudo nixos-install --flake "/etc/nixos#hostName" --impure
 ```
+
+The `--impure` flag is necessary since NixOS installer doesn't know where to
+find `<nixpkgs>` inside the Live environment. Subsequent `nixos-rebuild` calls
+can be done without `--impure` flag.
+
+Another option is to build a configuration and switch manually:
+
+```sh
+
+$ nix-shell -p nixFlakes
+$ nix build --experimental-features 'nix-command flakes' "#nixosConfigurations.hostName.config.system.toplevel"
+$ sudo ./result/bin/switch-to-configuration
+```
+
+This is untested though, and there maybe some issues (bootloader, root password,
+etc.).
+
+## Testing
+
+You can build a VM to test configurations with safety using the available
+`Makefile`. It should be called as a script since it will automatically
+download its dependencies using `nix-shell`.
+
+For example, to build `miku-nixos` configuration inside a VM run:
+
+```sh
+$ ./Makefile build-vm-miku-nixos
+```
+
+You can use the `start-vm.sh` script to start a VM with sufficient resources
+so you can test if everything is running alright.
 
 ## Interesting Tidbits
 
