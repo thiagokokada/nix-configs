@@ -11,7 +11,6 @@
     noto-fonts
     stow
     unstable.clojure-lsp
-    unstable.leiningen
     unstable.python-language-server
     unstable.rnix-lsp
     unstable.shellcheck

@@ -3,12 +3,14 @@
 {
   home.packages = with pkgs; [
     bat
+    clojure
     elixir
     erlang
     exa
     expect
     gnumake
     go
+    leiningen
     nim
     nix-update
     nixfmt
