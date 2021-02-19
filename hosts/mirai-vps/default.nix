@@ -10,6 +10,7 @@ in {
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
       ../../nixos/cli.nix
+      ../../nixos/dev.nix
       ../../nixos/misc.nix
       ../../nixos/security.nix
       ../../nixos/system.nix
