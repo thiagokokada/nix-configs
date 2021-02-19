@@ -35,7 +35,7 @@
 
     nixosConfigurations.mikudayo-nubank = nixpkgs.lib.nixosSystem rec {
       system = "x86_64-linux";
-      modules = [ ./hosts/mikudayo-nixos ./nixos/nubank.nix ];
+      modules = [ ./hosts/mikudayo-nubank ];
       specialArgs = { inherit inputs system; };
     };
 
