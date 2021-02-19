@@ -10,7 +10,6 @@ in {
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
       ../../nixos/cli.nix
-      ../../nixos/dev.nix
       ../../nixos/misc.nix
       ../../nixos/security.nix
       ../../nixos/system.nix
@@ -28,6 +27,7 @@ in {
       programs.home-manager.enable = true;
       home.stateVersion = "20.09";
       imports = [
+        ../../home-manager/git.nix
         ../../home-manager/irssi.nix
         ../../home-manager/neovim.nix
         ../../home-manager/tmux.nix
