@@ -5,7 +5,6 @@
     enable = true;
     networks = {
       rizon = {
-        nick = "somerizonnick";
         server = {
           address = "irc.rizon.net";
           port = 6697;
@@ -19,6 +18,12 @@
     };
     extraConfig = ''
       settings = {
+        core = {
+          real_name = "HisNameSake";
+          user_name = "hisnamesake";
+          nick = "hisnamesake";
+          alternate_nick = "hisnamesakealt";
+        };
         "irc/dcc" = {
           dcc_autoget = "yes";
           dcc_autoresume = "yes";
