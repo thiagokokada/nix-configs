@@ -32,7 +32,6 @@
       specialArgs = { inherit inputs system; };
     };
 
-    # https://github.com/nix-community/home-manager/issues/1510
     homeConfigurations.home = home.lib.homeManagerConfiguration rec {
       configuration = ./home-manager/home.nix;
       system = "x86_64-linux";
@@ -43,7 +42,5 @@
         super = { device.type = "desktop"; };
       };
     };
-
-    home = self.homeConfigurations.home.activationPackage;
   };
 }

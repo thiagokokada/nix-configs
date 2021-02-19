@@ -13,7 +13,7 @@ result/bin/run-%:
 	nix $(NIX_FLAGS) build '.#nixosConfigurations.$(subst run-,,$(@F)).config.system.build.vm'
 
 result/bin/activate:
-	nix $(NIX_FLAGS) build '.#home'
+	nix $(NIX_FLAGS) build '.#homeConfigurations.home.activationPackage'
 
 build-vm-miku-nixos: result/bin/run-miku-nixos
 
