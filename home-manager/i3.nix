@@ -57,15 +57,17 @@ let
         "Return" = "mode default";
       };
     };
+
+    extraConfig = ''
+      # app specific fixes
+      # https://github.com/ValveSoftware/steam-for-linux/issues/1040
+      for_window [class="^Steam$"] floating enable
+      for_window [class="^Steam$" title="^Steam$"] floating disable
+    '';
   };
 in {
-  imports = [
-    ./dunst.nix
-    ./gammastep.nix
-    ./i3status-rust.nix
-    ./picom.nix
-    ./rofi.nix
-  ];
+  imports =
+    [ ./dunst.nix ./gammastep.nix ./i3status-rust.nix ./picom.nix ./rofi.nix ];
 
   xsession.enable = true;
   xsession.windowManager.i3 = with commonOptions; {
@@ -149,9 +151,7 @@ in {
     };
   };
 
-  xresources.properties = {
-    "Xft.dpi" = "135";
-  };
+  xresources.properties = { "Xft.dpi" = "135"; };
 
   home.packages = with pkgs; [
     arandr

@@ -212,7 +212,7 @@ in
       "${modifier}+a" = "focus parent";
 
       "${modifier}+Shift+minus" = "move scratchpad";
-      "${modifier}+minus" = "show scratchpad";
+      "${modifier}+minus" = "scratchpad show";
 
       "${modifier}+r" = ''mode "${resizeMode}"'';
       "${modifier}+Escape" = ''mode "${powerManagementMode}"'';
