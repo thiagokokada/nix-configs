@@ -13,7 +13,7 @@ result/bin/run-%:
 	nix $(NIX_FLAGS) build '.#nixosConfigurations.$(subst run-,,$(@F)).config.system.build.vm'
 
 result/bin/activate:
-	nix $(NIX_FLAGS) build '.#home'
+	nix $(NIX_FLAGS) build '.#homeConfigurations.home-linux.activationPackage'
 
 build-vm-miku-nixos: result/bin/run-miku-nixos
 
@@ -21,7 +21,7 @@ build-vm-mikudayo-nixos: result/bin/run-mikudayo-nixos
 
 build-vm-mikudayo-nubank: result/bin/run-mikudayo-nubank
 
-build-home: result/bin/activate
+build-home-linux: result/bin/activate
 
 update:
 	nix $(NIX_FLAGS) flake update --recreate-lock-file --commit-lock-file

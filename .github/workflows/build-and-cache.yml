@@ -37,4 +37,4 @@ jobs:
         run: git config --global init.defaultBranch master
       - run: nix-shell -p nixFlakes --run 'nix build .#nixosConfigurations.miku-nixos.config.system.build.toplevel --experimental-features "nix-command flakes"'
       - run: nix-shell -p nixFlakes --run 'nix build .#nixosConfigurations.mikudayo-nixos.config.system.build.toplevel --experimental-features "nix-command flakes"'
-      - run: nix-shell -p nixFlakes --run 'nix build .#home --experimental-features "nix-command flakes"'
+      - run: nix-shell -p nixFlakes --run 'nix build .#homeConfigurations.home-linux.activationPackage --experimental-features "nix-command flakes"'
