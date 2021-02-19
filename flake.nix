@@ -39,6 +39,12 @@
       specialArgs = { inherit inputs system; };
     };
 
+    nixosConfigurations.mirai-vps = nixpkgs.lib.nixosSystem rec {
+      system = "x86_64-linux";
+      modules = [ ./hosts/mirai-vps ];
+      specialArgs = { inherit inputs system; };
+    };
+
     # https://github.com/nix-community/home-manager/issues/1510
     homeConfigurations.home-linux = home.lib.homeManagerConfiguration rec {
       configuration = ./home-manager/home.nix;

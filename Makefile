@@ -21,6 +21,8 @@ build-vm-mikudayo-nixos: result/bin/run-mikudayo-nixos
 
 build-vm-mikudayo-nubank: result/bin/run-mikudayo-nubank
 
+build-vm-mirai-vps: result/bin/run-mirai-vps
+
 build-home-linux: result/bin/activate
 
 update:
