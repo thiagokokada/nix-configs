@@ -17,6 +17,10 @@
       url = "github:nix-community/emacs-overlay/master";
       inputs.nixpkgs.follows = "unstable";
     };
+    nubank = {
+      url = "github:nubank/nixpkgs/master";
+      flake = false;
+    };
   };
 
   outputs = { self, nixpkgs, home, ... }@inputs: {
@@ -32,6 +36,13 @@
       specialArgs = { inherit inputs system; };
     };
 
+    nixosConfigurations.mikudayo-nubank = nixpkgs.lib.nixosSystem rec {
+      system = "x86_64-linux";
+      modules = [ ./hosts/mikudayo-nixos ./nixos/nubank.nix ];
+      specialArgs = { inherit inputs system; };
+    };
+
+    # https://github.com/nix-community/home-manager/issues/1510
     homeConfigurations.home-linux = home.lib.homeManagerConfiguration rec {
       configuration = ./home-manager/home.nix;
       system = "x86_64-linux";
