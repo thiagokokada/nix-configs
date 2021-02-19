@@ -74,12 +74,29 @@
         "type": "github"
       }
     },
+    "nubank": {
+      "locked": {
+        "lastModified": 1613750182,
+        "narHash": "sha256-czCy68unH0gX4LOv+f4VWZ7RYgSd8p6vvi2W4a15zvw=",
+        "owner": "nubank",
+        "repo": "nixpkgs",
+        "rev": "6b7f6ace89584f5125eb8b7f5e7e2745134c5d8b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nubank",
+        "ref": "master",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
         "emacs": "emacs",
         "home": "home",
         "home-unstable": "home-unstable",
         "nixpkgs": "nixpkgs",
+        "nubank": "nubank",
         "unstable": "unstable"
       }
     },
