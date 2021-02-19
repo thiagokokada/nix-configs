@@ -105,22 +105,6 @@ in {
     };
   };
 
-  # Reduce disk usage.
-  nix = {
-    gc = {
-      automatic = true;
-      dates = "weekly";
-      options = "--delete-older-than 7d";
-    };
-    autoOptimiseStore = true;
-  };
-
-  # Enable NixOS auto-upgrade.
-  system.autoUpgrade = {
-    enable = true;
-    dates = "daily";
-  };
-
   systemd.tmpfiles.rules = with config.my; with config.services.plex; [
     "d /media/Music 2775 ${username} ${group}"
     "d /media/Photos 2775 ${username} ${group}"
