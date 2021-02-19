@@ -17,10 +17,7 @@
       url = "github:nix-community/emacs-overlay/master";
       inputs.nixpkgs.follows = "unstable";
     };
-    nubank = {
-      url = "github:nubank/nixpkgs/master";
-      flake = false;
-    };
+    nubank.url = "github:nubank/nixpkgs/master";
   };
 
   outputs = { self, nixpkgs, home, ... }@inputs: {
