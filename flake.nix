@@ -32,7 +32,7 @@
       specialArgs = { inherit inputs system; };
     };
 
-    homeConfigurations.home = home.lib.homeManagerConfiguration rec {
+    homeConfigurations.home-linux = home.lib.homeManagerConfiguration rec {
       configuration = ./home-manager/home.nix;
       system = "x86_64-linux";
       homeDirectory = "/home/thiagoko";
