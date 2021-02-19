@@ -4,14 +4,14 @@
   nixpkgs.overlays = [
     inputs.emacs.overlay
 
-    (final: prev: rec {
+    (final: prev: {
       unstable = import inputs.unstable {
         inherit system;
         config = prev.config;
       };
 
       # Backport from unstable to have Python 3 version
-      cpuset-with-patch = with unstable;
+      cpuset-with-patch = with final.unstable;
         cpuset.overrideAttrs (oldAttrs: {
           patches = (oldAttrs.patches or [ ]) ++ [
             (fetchpatch {
@@ -22,12 +22,12 @@
           ];
         });
 
-      emacs-custom = (pkgs.emacsPackagesGen pkgs.emacsPgtkGcc).emacsWithPackages
-        (epkgs: [ epkgs.vterm ]);
+      emacs-custom = with final; (emacsPackagesGen emacsPgtkGcc).emacsWithPackages
+        (epkgs: with epkgs; [ vterm ]);
 
-      fzf = unstable.fzf;
+      fzf = final.unstable.fzf;
 
-      linux-zen-with-muqss = with final;
+      linux-zen-with-muqss = with prev;
         linuxPackagesFor (linux_zen.override {
           structuredExtraConfig = with lib.kernel; {
             PREEMPT = yes;
@@ -37,15 +37,15 @@
           ignoreConfigErrors = true;
         });
 
-      neovim-custom = pkgs.neovim.override ({
+      neovim-custom = prev.neovim.override ({
         withNodeJs = true;
         vimAlias = true;
         viAlias = true;
       });
 
-      pamixer-unstable = pkgs.pamixer.overrideAttrs (oldAttrs: {
+      pamixer-unstable = with prev; pamixer.overrideAttrs (oldAttrs: {
         version = "unstable-2020-01-06";
-        src = pkgs.fetchFromGitHub {
+        src = fetchFromGitHub {
           owner = "cdemoulins";
           repo = "pamixer";
           rev = "7f245fd1a064147266a9118bdbadf52fdc1343ff";
@@ -53,7 +53,7 @@
         };
       });
 
-      plex = unstable.plex;
+      plex = final.unstable.plex;
     })
   ];
 }
