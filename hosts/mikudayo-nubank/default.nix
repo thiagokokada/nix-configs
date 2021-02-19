@@ -4,7 +4,8 @@
 
 { config, pkgs, ... }:
 
-{
+let inherit (config.my) username;
+in {
   imports = [
     ./hardware-configuration.nix
     ../../nixos/cli.nix
@@ -15,7 +16,7 @@
     ../../nixos/laptop.nix
     ../../nixos/locale.nix
     ../../nixos/misc.nix
-    ../../nixos/nubank.nix
+    ../../nixos/yubikey.nix
     # ../../nixos/optimus.nix
     ../../nixos/system.nix
     ../../nixos/xserver.nix
@@ -26,6 +27,8 @@
   ];
 
   device.type = "notebook";
+
+  home-manager.users.${username}.imports = [ ../../home-manager/nubank.nix ];
 
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
