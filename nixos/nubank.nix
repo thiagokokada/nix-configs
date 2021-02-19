@@ -5,11 +5,6 @@
 
   nixpkgs.overlays = [ (import inputs.nubank) ];
 
-  nixpkgs.config = {
-    # For Slack/Zoom.
-    allowUnfree = true;
-  };
-
   environment.systemPackages = with pkgs;
     [ nubank.dart nubank.flutter nubank.hover unstable.slack unstable.zoom-us ]
     ++ nubank.all-tools;
