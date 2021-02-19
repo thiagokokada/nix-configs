@@ -22,8 +22,9 @@
   };
 
   home.activation.clone-doom-emacs = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-    [ ! -d $HOME/.config/emacs ] && \
-      $DRY_RUN_CMD ${pkgs.git}/bin/git clone 'https://github.com/hlissner/doom-emacs/' "$HOME/.config/emacs"
+    [ ! -d $HOME/.config/emacs ] \
+      && $DRY_RUN_CMD ${pkgs.git}/bin/git clone 'https://github.com/hlissner/doom-emacs/' "$HOME/.config/emacs" \
+      || true
   '';
 
   home.sessionPath = [ "$HOME/.config/emacs/bin" ];
