@@ -26,7 +26,6 @@
     qalculate-gtk
     shared-mime-info
     smartmontools
-    unstable.tdesktop
     unstable.xdragon
     xarchiver
     xdotool
