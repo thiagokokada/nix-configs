@@ -23,7 +23,6 @@
           real_name = "HisNameSake";
           user_name = "hisnamesake";
           nick = "hisnamesake";
-          alternate_nick = "hisnamesakealt";
         };
         "irc/dcc" = {
           dcc_autoget = "yes";
