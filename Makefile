@@ -1,29 +1,13 @@
 #! /usr/bin/env nix-shell
 #! nix-shell -i "make -f" -p gnumake nixFlakes
 
-.PHONY: clean activate-home build-vm-miku-nixos build-vm-mikudayo-nixos build-home update
+.PHONY: all clean home-linux update
 NIX_FLAGS := --experimental-features 'nix-command flakes'
 
-all: build-vm-miku-nixos build-vm-mikudayo-nixos build-home
+all: build-miku-nixos build-mikudayo-nixos build-mirai-vps build-home-linux
 
 clean:
 	rm -rf result *.qcow2
-
-result/bin/run-%:
-	nix $(NIX_FLAGS) build '.#nixosConfigurations.$(subst run-,,$(@F)).config.system.build.vm'
-
-result/bin/activate:
-	nix $(NIX_FLAGS) build '.#homeConfigurations.home-linux.activationPackage'
-
-build-vm-miku-nixos: result/bin/run-miku-nixos
-
-build-vm-mikudayo-nixos: result/bin/run-mikudayo-nixos
-
-build-vm-mikudayo-nubank: result/bin/run-mikudayo-nubank
-
-build-vm-mirai-vps: result/bin/run-mirai-vps
-
-build-home-linux: result/bin/activate
 
 update:
 	nix $(NIX_FLAGS) flake update --recreate-lock-file --commit-lock-file
@@ -31,5 +15,15 @@ update:
 install:
 	nixos-install --system ./result
 
-activate-home: result/bin/activate
-	./result/activate
+home-linux: build-home-linux
+	./result/bin/activate
+
+# Those targets are technically .PHONY, but if I set them to .PHONY I can't use %
+build-%:
+	nix $(NIX_FLAGS) build '.#nixosConfigurations.$(subst build-,,$(@F)).config.system.build.toplevel'
+
+build-vm-%:
+	nix $(NIX_FLAGS) build '.#nixosConfigurations.$(subst build-,,$(@F)).config.system.build.vm'
+
+build-home-%:
+	nix $(NIX_FLAGS) build '.#homeConfigurations.$(subst build-,,$(@F)).activationPackage'
