@@ -97,7 +97,8 @@
         "home-unstable": "home-unstable",
         "nixpkgs": "nixpkgs",
         "nubank": "nubank",
-        "unstable": "unstable"
+        "unstable": "unstable",
+        "unstable-bump-kotatogram": "unstable-bump-kotatogram"
       }
     },
     "unstable": {
@@ -112,6 +113,22 @@
       "original": {
         "owner": "NixOS",
         "ref": "nixpkgs-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "unstable-bump-kotatogram": {
+      "locked": {
+        "lastModified": 1613847534,
+        "narHash": "sha256-1lxUhedCQRsptevr0TwYpZYvM5GB3mkmI9KAFbbycw0=",
+        "owner": "thiagokokada",
+        "repo": "nixpkgs",
+        "rev": "c5bebb751da77d918a33fcb5b39f732469a17d5b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "thiagokokada",
+        "ref": "bump-kotato-desktop",
         "repo": "nixpkgs",
         "type": "github"
       }

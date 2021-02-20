@@ -4,6 +4,7 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-20.09";
     unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+    unstable-bump-kotatogram.url = "github:thiagokokada/nixpkgs/bump-kotato-desktop";
     home = {
       url =
         "github:thiagokokada/home-manager/release-20.09_backports-from-unstable";
