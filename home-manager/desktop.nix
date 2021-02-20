@@ -17,6 +17,7 @@
     gthumb
     inkscape
     kitty
+    kotatogram-desktop
     libreoffice-fresh
     lxmenu-data
     pamixer-unstable
