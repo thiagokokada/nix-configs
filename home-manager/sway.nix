@@ -84,7 +84,7 @@ in {
         };
       };
 
-      output = { "*" = { scale = "1.35"; }; };
+      output = { "*" = { scale = "1.25"; }; };
     };
 
     extraSessionCommands = ''
