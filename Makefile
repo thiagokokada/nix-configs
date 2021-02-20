@@ -1,7 +1,7 @@
 #! /usr/bin/env nix-shell
 #! nix-shell -i "make -f" -p gnumake nixFlakes
 
-.PHONY: all clean home-linux update
+.PHONY: all clean home-linux update update-zsh-plugins
 NIX_FLAGS := --experimental-features 'nix-command flakes'
 
 all: build-miku-nixos build-mikudayo-nixos build-mirai-vps build-home-linux
@@ -11,6 +11,9 @@ clean:
 
 update:
 	nix $(NIX_FLAGS) flake update --recreate-lock-file --commit-lock-file
+
+update-zsh-plugins:
+	./home-manager/scripts/update-zsh-plugins.py | tee ./home-manager/zsh-plugins.nix
 
 install:
 	nixos-install --system ./result

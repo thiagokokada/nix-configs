@@ -41,7 +41,7 @@
     src = fetchGit {
       url = "https://github.com/zimfw/git";
       ref = "master";
-      rev = "2f29e24ba27da901770e8008ace9f18292fddd6e";
+      rev = "921e2d06d68a0120c6d01a17656810e95aa9bfac";
     };
     file = "init.zsh";
   }
@@ -68,7 +68,7 @@
     src = fetchGit {
       url = "https://github.com/sindresorhus/pure";
       ref = "main";
-      rev = "b83ad6dcb0726feec1cce550d84fc710e2ef7912";
+      rev = "ff356fa2c7ea745bc4bc56a98632bac55c6c74a1";
     };
     file = "pure.plugin.zsh";
   }
