@@ -6,6 +6,7 @@
     networks = {
       rizon = {
         server = {
+          user = "hisnamesake";
           address = "irc.rizon.net";
           port = 6697;
           autoConnect = true;
