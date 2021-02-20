@@ -27,11 +27,6 @@
 
       fzf = final.unstable.fzf;
 
-      kotatogram-desktop = (import inputs.unstable-bump-kotatogram {
-        inherit system;
-        config = prev.config;
-      }).kotatogram-desktop;
-
       linux-zen-with-muqss = with prev;
         linuxPackagesFor (linux_zen.override {
           structuredExtraConfig = with lib.kernel; {
