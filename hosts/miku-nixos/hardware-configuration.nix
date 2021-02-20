@@ -25,7 +25,9 @@
 
   fileSystems."/mnt/archive" =
     { device = "/dev/disk/by-uuid/e31225d0-1879-4242-b054-61c11feaadda";
-      # fsType = "btrfs";
+      # In case of issues changing the configuration just comment fsType
+      # https://github.com/NixOS/nixpkgs/issues/113152
+      fsType = "btrfs";
       options = [ "subvol=/" "compress=zstd" "nofail" ];
     };
 
@@ -33,7 +35,9 @@
 
   fileSystems."/mnt/data" =
     { device = "/dev/disk/by-uuid/f71560b7-b662-4814-8f26-4e8ca8ae7da4";
-      # fsType = "btrfs";
+      # In case of issues changing the configuration just comment fsType
+      # https://github.com/NixOS/nixpkgs/issues/113152
+      fsType = "btrfs";
       options = [ "subvol=/" "compress=zstd" "nofail" ];
     };
 

@@ -44,11 +44,4 @@
       allowDiscards = true;
     };
   };
-
-  services.btrfs.autoScrub = {
-    enable = true;
-    interval = "weekly";
-    fileSystems = [ "/mnt/archive" "/mnt/data" ];
-  };
 }
-
