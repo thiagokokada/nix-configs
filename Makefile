@@ -19,7 +19,7 @@ install:
 	nixos-install --system ./result
 
 home-linux: build-home-linux
-	./result/bin/activate
+	./result/activate
 
 # Those targets are technically .PHONY, but if I set them to .PHONY I can't use %
 build-%:
