@@ -36,8 +36,10 @@ let
       "Ctrl+Shift+space" = "exec ${makoctl} dismiss -a";
     };
 
-    extraConfig = ''
+    extraConfig = with config.xsession.pointerCursor; ''
       hide_edge_borders --i3 smart
+
+      seat seat0 xcursor_theme ${name} ${toString size}
     '';
   };
 in {
@@ -84,7 +86,7 @@ in {
         };
       };
 
-      output = { "*" = { scale = "1.35"; }; };
+      output = { "*" = { scale = "1.4"; }; };
     };
 
     extraSessionCommands = ''
