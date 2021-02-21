@@ -151,7 +151,7 @@ in {
     };
   };
 
-  xresources.properties = { "Xft.dpi" = "125"; };
+  xresources.properties = { "Xft.dpi" = "135"; };
 
   home.packages = with pkgs; [
     arandr
