@@ -4,6 +4,7 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-20.09";
     unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+    noisetorch-module.url = "github:thiagokokada/nixpkgs/noisetorch-module-init";
     home = {
       url =
         "github:thiagokokada/home-manager/release-20.09_backports-from-unstable";

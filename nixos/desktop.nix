@@ -1,6 +1,9 @@
-{ pkgs, config, ... }:
+{ pkgs, config, inputs, ... }:
 
 {
+  imports =
+    [ "${inputs.noisetorch-module}/nixos/modules/programs/noisetorch.nix" ];
+
   environment.systemPackages = with pkgs; [ smartmontools ];
 
   hardware = {
@@ -20,18 +23,20 @@
     };
   };
 
-  programs.java = {
-    enable = true;
-    package = pkgs.jdk11;
+  programs = {
+    java = {
+      enable = true;
+      package = pkgs.jdk11;
+    };
+    noisetorch = {
+      enable = true;
+      package = pkgs.unstable.noisetorch;
+    };
   };
 
   security = {
     # This allows PulseAudio to run with realtime privileges (i.e: less cracks)
     rtkit.enable = true;
-    wrappers.noisetorch = {
-      source = "${pkgs.unstable.noisetorch}/bin/noisetorch";
-      capabilities = "CAP_SYS_RESOURCE=+ep";
-    };
   };
 
   services = {

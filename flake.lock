@@ -74,6 +74,22 @@
         "type": "github"
       }
     },
+    "noisetorch-module": {
+      "locked": {
+        "lastModified": 1614014315,
+        "narHash": "sha256-v51tjMo0AAoaqwI7QRgdWrNYY9yxDmEBR8EAM7kzePg=",
+        "owner": "thiagokokada",
+        "repo": "nixpkgs",
+        "rev": "1fce8878581683952ab2c6cfb7b00f40f06c6852",
+        "type": "github"
+      },
+      "original": {
+        "owner": "thiagokokada",
+        "ref": "noisetorch-module-init",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "nubank": {
       "locked": {
         "lastModified": 1613753570,
@@ -96,6 +112,7 @@
         "home": "home",
         "home-unstable": "home-unstable",
         "nixpkgs": "nixpkgs",
+        "noisetorch-module": "noisetorch-module",
         "nubank": "nubank",
         "unstable": "unstable"
       }
