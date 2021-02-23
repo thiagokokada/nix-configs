@@ -31,9 +31,10 @@
   xdg.userDirs.enable = true;
 
   home.activation.xdg-user-dirs-update = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-    "$DRY_RUN_CMD" \
-      XDG_CONFIG_HOME=/dev/null ${pkgs.xdg-user-dirs}/bin/xdg-user-dirs-update \
-      || true
+    if [ -z "''${DRY_RUN:-}" ]; then
+      XDG_CONFIG_HOME=$(${pkgs.coreutils}/bin/mktemp -d) \
+        ${pkgs.xdg-user-dirs}/bin/xdg-user-dirs-update
+    fi
   '';
 
   programs.zsh.shellAliases = {
