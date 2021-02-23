@@ -34,6 +34,9 @@ this repo uses less "magic" than other repositories, preferring a copy-and-paste
 approach. This may be less DRY, however it helps understanding what is
 happening.
 
+Also, remember that Flakes is **heavily experimental**, so you shouldn't try this
+approach until you have some experience in Nix.
+
 ## Dotfiles
 
 This repository also includes my `home-manager` configuration. It is
