@@ -62,17 +62,6 @@ in {
     autoOptimiseStore = true;
   };
 
-  # Enable NixOS auto-upgrade
-  system.autoUpgrade = {
-    enable = true;
-    flake = "/etc/nixos";
-    dates = "Mon,Wed,Fri,Sun 22:00";
-    flags = [
-      "--recreate-lock-file"
-      "--commit-lock-file"
-    ];
-  };
-
   services = {
     btrfs.autoScrub = mkIf enableBtrfs {
       enable = true;

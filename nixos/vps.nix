@@ -112,6 +112,18 @@ in {
     "d /media/Other 2775 ${username} ${group}"
   ];
 
+  # Enable NixOS auto-upgrade
+  system.autoUpgrade = {
+    enable = true;
+    flake = "/etc/nixos";
+    dates = "Mon,Wed,Fri,Sun 22:00";
+    flags = [
+      "--update-input" "nixpkgs"
+      "--update-input" "unstable"
+      "--no-write-lock-file"
+    ];
+  };
+
   services = {
     plex = {
       enable = true;
