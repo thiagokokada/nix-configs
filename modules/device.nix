@@ -1,7 +1,6 @@
-{ pkgs, lib, ... }:
+{ config, pkgs, lib, ... }:
 
-with lib;
-{
+with lib; {
   options.device = {
     type = mkOption {
       type = types.enum [ "desktop" "notebook" ];
@@ -15,10 +14,14 @@ with lib;
       default = [ "eth0" ];
     };
     mountPoints = mkOption {
-      type = with types; nullOr (listOf str);
+      type = with types; (listOf str);
       description = "Available mount points";
       example = [ "/" "/mnt/backup" ];
-      default = null;
+      default = if (config ? fileSystems) then
+        (lists.subtractLists [ "/boot" "/tmp" "/nix" ]
+          (mapAttrsToList (n: _: n) config.fileSystems))
+      else
+        [ "/" ];
     };
   };
 }
