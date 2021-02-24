@@ -115,8 +115,9 @@ in {
   # Enable NixOS auto-upgrade
   system.autoUpgrade = {
     enable = true;
+    allowReboot = true;
     flake = "/etc/nixos";
-    dates = "Mon,Wed,Fri,Sun 22:00";
+    dates = "4:40";
     flags = [
       "--update-input" "nixpkgs"
       "--update-input" "unstable"
