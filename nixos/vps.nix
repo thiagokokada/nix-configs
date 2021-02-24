@@ -119,8 +119,7 @@ in {
     flake = "/etc/nixos";
     dates = "4:40";
     flags = [
-      "--update-input" "nixpkgs"
-      "--update-input" "unstable"
+      "--recreate-lock-file"
       "--no-write-lock-file"
     ];
   };
