@@ -45,12 +45,13 @@ in {
         show_marks = "visible";
       };
 
-      netBlock = {
+      netBlocks = with config.device; map (d: {
         block = "net";
+        device = d;
         hide_missing = true;
         hide_inactive = true;
         format = "{ssid} {speed_up} {speed_down}";
-      };
+      }) netDevices;
 
       disksBlocks = with config.device; map (m: {
         block = "disk_space";
@@ -124,7 +125,7 @@ in {
         inherit settings;
         blocks = lib.lists.flatten [
           windowBlock
-          netBlock
+          netBlocks
           disksBlocks
           memoryBlock
           loadBlock
@@ -142,7 +143,7 @@ in {
         inherit settings;
         blocks = lib.lists.flatten [
           windowBlock
-          netBlock
+          netBlocks
           disksBlocks
           memoryBlock
           loadBlock

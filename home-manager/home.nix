@@ -25,6 +25,7 @@ with lib; {
 
   # Inherit device type from NixOS or homeConfigurations
   device.type = super.device.type;
+  device.netDevices = super.device.netDevices;
   device.mountPoints =
     if ((super ? device.mountPoints) && (super.device.mountPoints != null)) then
       super.device.mountPoints

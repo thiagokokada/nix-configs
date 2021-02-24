@@ -24,8 +24,11 @@
     ../../overlays
   ];
 
-  device.type = "notebook";
-  device.mountPoints = [ "/" ];
+  device = {
+    type = "notebook";
+    netDevices = [ "enp3s0" "wlan0" ];
+    mountPoints = [ "/" ];
+  };
 
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;

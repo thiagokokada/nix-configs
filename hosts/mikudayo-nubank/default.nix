@@ -26,7 +26,10 @@ in {
     ../../overlays
   ];
 
-  device.type = "notebook";
+  device = {
+    type = "notebook";
+    netDevices = [ "enp62s0u1u2" "wlan0" ];
+  };
 
   home-manager.users.${username}.imports = [ ../../home-manager/nubank.nix ];
 

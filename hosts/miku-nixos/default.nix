@@ -25,7 +25,10 @@
     ../../overlays
   ];
 
-  device.type = "desktop";
+  device = {
+    type = "desktop";
+    netDevices = [ "eno1" ];
+  };
 
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
