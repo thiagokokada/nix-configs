@@ -20,7 +20,12 @@ let
     EOF
   '';
 in {
-  environment.systemPackages = with pkgs; [ cachix nixos-clean-up ];
+  environment.systemPackages = with pkgs; [
+    cachix
+    git # otherwise rebuild may not work if we depend on fetchGit
+    neovim-custom
+    nixos-clean-up
+  ];
 
   nix.trustedUsers = [ "root" "@wheel" ];
 

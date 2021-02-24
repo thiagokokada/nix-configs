@@ -5,10 +5,6 @@ let
 in {
   environment.systemPackages = with pkgs; [
     docker-compose
-    gcc
-    git
-    gnumake
-    neovim-custom
     python3
   ];
 
