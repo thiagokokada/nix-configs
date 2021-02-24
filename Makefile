@@ -26,7 +26,7 @@ build-%:
 	nix $(NIX_FLAGS) build '.#nixosConfigurations.$(subst build-,,$(@F)).config.system.build.toplevel'
 
 build-vm-%:
-	nix $(NIX_FLAGS) build '.#nixosConfigurations.$(subst build-,,$(@F)).config.system.build.vm'
+	nix $(NIX_FLAGS) build '.#nixosConfigurations.$(subst build-vm-,,$(@F)).config.system.build.vm'
 
 build-home-%:
 	nix $(NIX_FLAGS) build '.#homeConfigurations.$(subst build-,,$(@F)).activationPackage'
