@@ -8,7 +8,13 @@ in {
     python3
   ];
 
-  programs.adb.enable = true;
+  programs = {
+    adb.enable = true;
+    # java = {
+    #   enable = true;
+    #   package = pkgs.jdk11;
+    # };
+  };
 
   virtualisation.docker.enable = true;
 

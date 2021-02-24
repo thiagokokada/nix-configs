@@ -24,10 +24,6 @@
   };
 
   programs = {
-    java = {
-      enable = true;
-      package = pkgs.jdk11;
-    };
     noisetorch = {
       enable = true;
       package = pkgs.unstable.noisetorch;
