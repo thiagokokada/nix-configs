@@ -11,16 +11,15 @@
     firefox
     gammastep
     gimp
-    gnome3.baobab
     gnome3.evince
     gnome3.gnome-disk-utility
-    gnome3.gnome-themes-standard
     gthumb
     inkscape
     kitty
     kotatogram-desktop
     libreoffice-fresh
     lxmenu-data
+    ncdu
     pamixer-unstable
     pavucontrol
     pcmanfm

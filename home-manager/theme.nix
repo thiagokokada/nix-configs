@@ -19,6 +19,7 @@
     with config.theme.fonts; [
       dejavu_fonts
       font-awesome_5
+      gnome3.gnome-themes-standard
       gui.package
       hack-font
       liberation_ttf
