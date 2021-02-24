@@ -20,12 +20,17 @@ let
     EOF
   '';
 in {
-  environment.systemPackages = with pkgs; [
-    cachix
-    git # otherwise rebuild may not work if we depend on fetchGit
-    neovim-custom
-    nixos-clean-up
-  ];
+  environment = {
+    # To get zsh completion for system packages
+    pathsToLink = [ "/share/zsh" ];
+    systemPackages = with pkgs; [
+      cachix
+      git # otherwise rebuild may not work if we depend on fetchGit
+      neovim-custom
+      nixos-clean-up
+      zsh
+    ];
+  };
 
   nix.trustedUsers = [ "root" "@wheel" ];
 
