@@ -25,7 +25,6 @@
     pcmanfm
     peek
     qalculate-gtk
-    shared-mime-info
     smartmontools
     unstable.mcomix3
     unstable.xdragon
@@ -36,4 +35,20 @@
     xorg.xkill
     xorg.xset
   ];
+
+  xdg.mimeApps = {
+    enable = true;
+    defaultApplications = {
+      "application/pdf" = "org.gnome.Evince.desktop";
+      "image/gif" = "org.gnome.gThumb.desktop";
+      "image/jpeg" = "org.gnome.gThumb.desktop";
+      "image/png" = "org.gnome.gThumb.desktop";
+      "inode/directory" = "pcmanfm.desktop";
+      "text/html" = "firefox.desktop";
+      "x-scheme-handler/http" = "firefox.desktop";
+      "x-scheme-handler/https" = "firefox.desktop";
+      "x-scheme-handler/about" = "firefox.desktop";
+      "x-scheme-handler/unknown" = "firefox.desktop";
+    };
+  };
 }
