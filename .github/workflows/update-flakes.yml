@@ -22,7 +22,6 @@ jobs:
         id: cpr
         uses: peter-evans/create-pull-request@v3
         with:
-          token: ${{ secrets.PAT_TOKEN }}
           commit-message: Update flakes
           branch: flake-updates
           delete-branch: true
