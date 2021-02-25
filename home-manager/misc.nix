@@ -30,7 +30,7 @@
 
   xdg.userDirs = {
     enable = true;
-    createDirs = true;
+    createDirectories = true;
   };
 
   programs.zsh.shellAliases = {
