@@ -43,6 +43,8 @@
         viAlias = true;
       });
 
+      open-browser = prev.callPackage ../packages/open-browser { };
+
       pamixer-unstable = with prev; pamixer.overrideAttrs (oldAttrs: {
         version = "unstable-2020-01-06";
         src = fetchFromGitHub {

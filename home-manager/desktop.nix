@@ -20,6 +20,7 @@
     libreoffice-fresh
     lxmenu-data
     ncdu
+    open-browser
     pamixer-unstable
     pavucontrol
     pcmanfm
@@ -44,11 +45,13 @@
       "image/jpeg" = "org.gnome.gThumb.desktop";
       "image/png" = "org.gnome.gThumb.desktop";
       "inode/directory" = "pcmanfm.desktop";
-      "text/html" = "firefox.desktop";
-      "x-scheme-handler/http" = "firefox.desktop";
-      "x-scheme-handler/https" = "firefox.desktop";
-      "x-scheme-handler/about" = "firefox.desktop";
-      "x-scheme-handler/unknown" = "firefox.desktop";
+      "text/html" = "open-browser.desktop";
+      "text/plain" = "emacs.desktop";
+      "text/x-makefile" = "emacs.desktop";
+      "x-scheme-handler/about" = "open-browser.desktop";
+      "x-scheme-handler/http" = "open-browser.desktop";
+      "x-scheme-handler/https" = "open-browser.desktop";
+      "x-scheme-handler/unknown" = "open-browser.desktop";
     };
   };
 }
