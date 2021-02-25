@@ -23,11 +23,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1614286068,
-        "narHash": "sha256-Da1SMbgISQpYecYsKbeX/Kw1QyrQfK7weJssJiOJ/jQ=",
+        "lastModified": 1614286239,
+        "narHash": "sha256-5E6saDi/v0UsVBEYfJ8HsOcq8a2k13X47hWSypV9Shc=",
         "owner": "thiagokokada",
         "repo": "home-manager",
-        "rev": "2b9cfa334dc285925398cea10f8e5da459435ca4",
+        "rev": "26a06b8b10051920a0948acba2457c7e1b4d5eda",
         "type": "github"
       },
       "original": {
