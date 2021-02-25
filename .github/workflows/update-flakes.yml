@@ -1,9 +1,9 @@
-name: "Update flakes"
+name: update-flakes
 on:
   repository_dispatch:
   workflow_dispatch:
   schedule:
-    - cron: "40 4 * * *"
+    - cron: "40 4 * * 0,2,4,6"
 
 jobs:
   update-flakes:
@@ -22,6 +22,7 @@ jobs:
         id: cpr
         uses: peter-evans/create-pull-request@v3
         with:
+          token: ${{ secrets.PAT_TOKEN }}
           commit-message: Update flakes
           branch: flake-updates
           delete-branch: true
