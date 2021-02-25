@@ -18,6 +18,7 @@ in {
     ../../nixos/misc.nix
     ../../nixos/yubikey.nix
     # ../../nixos/optimus.nix
+    ../../nixos/optimus-disable.nix
     ../../nixos/system.nix
     ../../nixos/xserver.nix
     ../../cachix.nix

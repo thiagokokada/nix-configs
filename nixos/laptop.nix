@@ -42,7 +42,7 @@
 
   # Configure special hardware in laptops
   hardware = {
-    # Enable bluetooth.
+    # Enable bluetooth
     bluetooth.enable = true;
 
     pulseaudio = {
@@ -54,9 +54,9 @@
 
   };
 
-  # Enable programs that need special configuration.
+  # Enable programs that need special configuration
   programs = {
-    # Enable NetworkManager applet.
+    # Enable NetworkManager applet
     nm-applet.enable = true;
   };
 
@@ -68,9 +68,9 @@
     };
   };
 
-  # Enable laptop specific services.
+  # Enable laptop specific services
   services = {
-    # Enable Blueman to manage Bluetooth.
+    # Enable Blueman to manage Bluetooth
     blueman.enable = true;
 
     # Only suspend on lid closed when laptop is disconnected
@@ -80,6 +80,7 @@
       lidSwitchExternalPower = "ignore";
     };
 
+    # Reduce power consumption
     tlp.enable = true;
   };
 }

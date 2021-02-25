@@ -16,6 +16,7 @@
     ../../nixos/locale.nix
     ../../nixos/misc.nix
     # ../../nixos/optimus.nix
+    ../../nixos/optimus-disable.nix
     ../../nixos/system.nix
     ../../nixos/xserver.nix
     ../../cachix.nix
