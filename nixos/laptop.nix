@@ -79,5 +79,7 @@
       lidSwitchDocked = "ignore";
       lidSwitchExternalPower = "ignore";
     };
+
+    tlp.enable = true;
   };
 }
