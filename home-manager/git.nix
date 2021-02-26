@@ -4,6 +4,9 @@
   programs.git = {
     enable = true;
 
+    # Enable better diffs
+    delta.enable = true;
+
     userName = "Thiago Kenji Okada";
     userEmail = "thiagokokada@gmail.com";
     package = pkgs.gitFull;
@@ -25,7 +28,7 @@
       "Thumbs.db"
     ];
 
-    includes = [{ path = "~/.config/git/local"; }];
+    includes = [ { path = "~/.config/git/local"; } ];
 
     extraConfig = {
       branch = { sort = "-committerdate"; };
@@ -44,7 +47,11 @@
     };
   };
 
-  programs.zsh.shellAliases = { gk = "run-bg gitk"; };
+  programs.gh = {
+    enable = true;
+    editor = "nvim";
+    gitProtocol = "ssh";
+  };
 
-  home.packages = with pkgs; [ github-cli ];
+  programs.zsh.shellAliases = { gk = "run-bg gitk"; };
 }
