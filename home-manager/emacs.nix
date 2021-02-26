@@ -6,7 +6,6 @@
     emacs-all-the-icons-fonts
     fd
     findutils
-    fzf
     gcc # needed by native compile
     hack-font
     noto-fonts
