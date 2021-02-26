@@ -10,5 +10,10 @@
     extraConfig = ''
       AddKeysToAgent yes
     '';
+    matchBlocks = {
+      "github.com" = {
+        identityFile = "$HOME/.ssh/github";
+      };
+    };
   };
 }
