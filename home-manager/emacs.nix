@@ -1,23 +1,45 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, inputs, ... }:
 
 {
+  imports = [ inputs.nix-doom-emacs.hmModule ];
+
   # Emacs overlay
   home.packages = with pkgs; [
     emacs-all-the-icons-fonts
     fd
     findutils
-    gcc # needed by native compile
     hack-font
     noto-fonts
-    stow
     unstable.clojure-lsp
     unstable.python-language-server
     unstable.rnix-lsp
     unstable.shellcheck
   ];
 
-  programs.emacs = {
+  programs.doom-emacs = {
     enable = true;
-    package = pkgs.emacs-custom;
+    doomPrivateDir = ./doom.d;
+    # emacsPackage = pkgs.emacsPgtkGcc;
+  };
+
+  programs.zsh = {
+    shellAliases = {
+      em = "run-bg emacs";
+      et = "emacs -nw";
+    };
+    initExtra = ''
+      emp() {
+        local arg
+        for arg in $@; do
+          if [[ -d "$arg" ]]; then
+            touch "$arg/.projectile"
+          elif [[ -f "$arg" ]]; then
+            local dirname=$(dirname )
+            touch "$(dirname \"$arg\")/.projectile"
+          fi
+        done
+        em $@
+      }
+    '';
   };
 }
