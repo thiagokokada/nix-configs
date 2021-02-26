@@ -12,7 +12,7 @@
     '';
     matchBlocks = {
       "github.com" = {
-        identityFile = "$HOME/.ssh/github";
+        identityFile = with config.home; "${homeDirectory}/.ssh/github";
       };
     };
   };
