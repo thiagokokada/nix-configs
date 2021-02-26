@@ -5,6 +5,11 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-20.09";
     unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     noisetorch-module.url = "github:thiagokokada/nixpkgs/noisetorch-module-init";
+    nix-doom-emacs ={
+      url = "github:vlaci/nix-doom-emacs/master";
+      inputs.nixpkgs.follows = "unstable";
+      inputs.emacs-overlay.follows = "emacs";
+    };
     home = {
       url =
         "github:thiagokokada/home-manager/release-20.09_backports-from-unstable";

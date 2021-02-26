@@ -22,9 +22,6 @@
           ];
         });
 
-      emacs-custom = with final; (emacsPackagesGen emacsPgtkGcc).emacsWithPackages
-        (epkgs: with epkgs; [ vterm ]);
-
       fzf = final.unstable.fzf;
 
       linux-zen-with-muqss = with prev;
