@@ -14,6 +14,12 @@
       "github.com" = {
         identityFile = with config.home; "${homeDirectory}/.ssh/github";
       };
+      "git.sr.ht" = {
+        identityFile = with config.home; "${homeDirectory}/.ssh/sourcehut";
+      };
+      "gitlab.com" = {
+        identityFile = with config.home; "${homeDirectory}/.ssh/gitlab";
+      };
     };
   };
 }
