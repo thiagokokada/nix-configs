@@ -77,6 +77,6 @@
 
   qt = {
     enable = true;
-    platformTheme = "gnome";
+    platformTheme = "gtk";
   };
 }
