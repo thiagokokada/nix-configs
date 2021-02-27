@@ -49,7 +49,9 @@ Most of the configuration files are based on my old (but still supported)
 ## Installation
 
 Thanks to some issues in NixOS ISO, it is necessary to use `unstable` ISO for
-now. Boot it and do the following process to allow instalation:
+now. After following the instructions in
+[manual](https://nixos.org/manual/nixos/stable/#sec-installation) to prepare the
+system and partition the disk, run the following process to install:
 
 ```sh
 $ sudo git clone https://github.com/thiagokokada/nix-configs/ /etc/nixos
