@@ -17,8 +17,7 @@
 
 This config is not based on any previous available Flake-based Nix{OS} config,
 instead I choose to develop my own from the available examples and
-documentation. Some of the resources and repositories that helped me to
-build this config:
+documentation. Some of the repositories that helped me to build this config:
 
 - https://github.com/bqv/nixrc
 - https://github.com/colemickens/nixcfg
@@ -26,15 +25,19 @@ build this config:
 - https://github.com/lucasew/nixcfg
 - https://github.com/Mic92/dotfiles
 - https://github.com/nrdxp/nixflk
-- https://nixos.wiki/wiki/Flakes
-- https://www.tweag.io/blog/2020-07-31-nixos-flakes/
+
+Also, some extra resources and documentation about Flakes:
+
+- [Flakes in NixOS Wiki](https://nixos.wiki/wiki/Flakes)
+- [Nix Flakes blog posts from @eldostra](https://www.tweag.io/blog/2020-05-25-flakes/)
+- [Nix 2.4/3.0 documentation](https://nixos.org/manual/nix/unstable/)
 
 I decided to build from scratch to have more understand what is happening. Also,
 this repo uses less "magic" than other repositories, preferring a copy-and-paste
 approach. This may be less DRY, however it helps understanding what is
 happening.
 
-Also, remember that Flakes is **heavily experimental**, so you shouldn't try this
+**Remember**: Flakes is *heavily experimental*, so you shouldn't try this
 approach until you have some experience in Nix.
 
 ## Dotfiles
