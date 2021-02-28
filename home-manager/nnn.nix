@@ -70,7 +70,7 @@
       # stty lwrap undef
       # stty lnext undef
 
-      ${pkgs.nnnCustom} -a "$@"
+      ${pkgs.nnnCustom}/bin/nnn -a "$@"
 
       if [ -f "$NNN_TMPFILE" ]; then
         . "$NNN_TMPFILE"
