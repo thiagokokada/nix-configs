@@ -15,7 +15,6 @@
     ../../nixos/laptop.nix
     ../../nixos/locale.nix
     ../../nixos/misc.nix
-    ../../nixos/optimus-disable.nix
     ../../nixos/system.nix
     ../../nixos/xserver.nix
     ../../cachix.nix
@@ -23,6 +22,7 @@
     ../../modules/my.nix
     ../../overlays
     # inputs.hardware.nixosModules.common-gpu-nvidia
+    inputs.hardware.nixosModules.common-gpu-nvidia-disable
     inputs.hardware.nixosModules.common-cpu-intel
   ];
 
