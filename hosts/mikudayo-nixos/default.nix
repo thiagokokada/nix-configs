@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, inputs, ... }:
 
 {
   imports = [
@@ -15,7 +15,6 @@
     ../../nixos/laptop.nix
     ../../nixos/locale.nix
     ../../nixos/misc.nix
-    # ../../nixos/optimus.nix
     ../../nixos/optimus-disable.nix
     ../../nixos/system.nix
     ../../nixos/xserver.nix
@@ -23,12 +22,22 @@
     ../../modules/device.nix
     ../../modules/my.nix
     ../../overlays
+    # inputs.hardware.nixosModules.common-gpu-nvidia
+    inputs.hardware.nixosModules.common-cpu-intel
   ];
 
   device = {
     type = "notebook";
     netDevices = [ "enp3s0" "wlan0" ];
     mountPoints = [ "/" ];
+  };
+
+  hardware.nvidia.prime = {
+    # Bus ID of the Intel GPU. You can find it using lspci, either under 3D or VGA
+    intelBusId = "PCI:0:2:0";
+
+    # Bus ID of the NVIDIA GPU. You can find it using lspci, either under 3D or VGA
+    nvidiaBusId = "PCI:1:0:0";
   };
 
   # Use the systemd-boot EFI boot loader.

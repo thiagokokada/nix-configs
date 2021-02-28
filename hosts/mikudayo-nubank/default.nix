@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
+{ config, pkgs, inputs, ... }:
 
 let inherit (config.my) username;
 in {
@@ -17,7 +17,6 @@ in {
     ../../nixos/locale.nix
     ../../nixos/misc.nix
     ../../nixos/yubikey.nix
-    # ../../nixos/optimus.nix
     ../../nixos/optimus-disable.nix
     ../../nixos/system.nix
     ../../nixos/xserver.nix
@@ -25,11 +24,21 @@ in {
     ../../modules/device.nix
     ../../modules/my.nix
     ../../overlays
+    # inputs.hardware.nixosModules.common-gpu-nvidia
+    inputs.hardware.nixosModules.common-cpu-intel
   ];
 
   device = {
     type = "notebook";
     netDevices = [ "enp62s0u1u2" "wlan0" ];
+  };
+
+  hardware.nvidia.prime = {
+    # Bus ID of the Intel GPU. You can find it using lspci, either under 3D or VGA
+    intelBusId = "PCI:0:2:0";
+
+    # Bus ID of the NVIDIA GPU. You can find it using lspci, either under 3D or VGA
+    nvidiaBusId = "PCI:1:0:0";
   };
 
   home-manager.users.${username}.imports = [ ../../home-manager/nubank.nix ];

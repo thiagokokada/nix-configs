@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
+{ config, pkgs, inputs, ... }:
 
 {
   imports = [
@@ -23,6 +23,7 @@
     ../../modules/device.nix
     ../../modules/my.nix
     ../../overlays
+    inputs.hardware.nixosModules.common-cpu-intel
   ];
 
   device = {
@@ -30,13 +31,8 @@
     netDevices = [ "eno1" ];
   };
 
-  boot = {
-    # Early load i195 for better resolution in init
-    initrd.kernelModules = [ "i915" ];
-
-    # Fix quirk in Renesas USB hub
-    kernelParams = [ "pci=noaer" ];
-  };
+  # Fix quirk in Renesas USB hub
+  boot.kernelParams = [ "pci=noaer" ];
 
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;

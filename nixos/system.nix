@@ -57,10 +57,8 @@ in {
     value = "1048576";
   }];
 
-  hardware = {
-    # Enable CPU microcode for Intel
-    cpu.intel.updateMicrocode = true;
-  };
+  # Enable firmware-linux-nonfree
+  hardware.enableRedistributableFirmware = true;
 
   # Reduce disk usage
   nix = {
