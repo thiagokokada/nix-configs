@@ -4,11 +4,9 @@
   programs.rofi = {
     enable = true;
     terminal = "${pkgs.kitty}/bin/kitty";
-    package = with pkgs.unstable;
-      rofi.override { plugins = [ rofi-calc rofi-emoji ]; };
+    package = with pkgs; rofi.override { plugins = [ rofi-calc rofi-emoji ]; };
     font = with config.theme.fonts; "${gui.package} 14";
-    theme = let
-      l = config.lib.formats.rasi.mkLiteral;
+    theme = let l = config.lib.formats.rasi.mkLiteral;
     in with config.theme.colors; {
       "*" = {
         background-color = l base00;
@@ -35,9 +33,7 @@
         padding = l "8px 16px";
       };
 
-      entry = {
-        padding = l "16px";
-      };
+      entry = { padding = l "16px"; };
 
       listview = {
         cycle = true;
