@@ -38,13 +38,10 @@ let
 
 in {
   boot = {
-    # Early load i195 for better resolution in init.
-    initrd.kernelModules = [ "i915" ];
+    # Do not load NVIDIA drivers
+    blacklistedKernelModules = [ "nvidia" "nouveau" ];
 
-    # Do not load NVIDIA drivers.
-    blacklistedKernelModules = [ "nvidia" "nouveau" "hid-uclogic" ];
-
-    # Load VFIO related modules.
+    # Load VFIO related modules
     kernelModules = [ "vfio_virqfd" "vfio_pci" "vfio_iommu_type1" "vfio" ];
     extraModprobeConfig = "options vfio-pci ids=10de:1c02,10de:10f1";
 

@@ -30,11 +30,17 @@
     netDevices = [ "eno1" ];
   };
 
+  boot = {
+    # Early load i195 for better resolution in init
+    initrd.kernelModules = [ "i915" ];
+
+    # Fix quirk in Renesas USB hub
+    kernelParams = [ "pci=noaer" ];
+  };
+
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-
-  networking.hostName = "miku-nixos";
 
   boot.initrd.luks.devices = {
     "enc-win10".device =
@@ -45,4 +51,6 @@
       allowDiscards = true;
     };
   };
+
+  networking.hostName = "miku-nixos";
 }
