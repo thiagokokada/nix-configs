@@ -26,7 +26,6 @@
     pcmanfm
     peek
     qalculate-gtk
-    smartmontools
     unstable.mcomix3
     unstable.xdragon
     xarchiver

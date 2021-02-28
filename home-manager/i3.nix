@@ -159,7 +159,6 @@ in {
     ffmpegthumbnailer
     kbdd
     libnotify
-    lxappearance
     maim
     mons
     playerctl
