@@ -22,6 +22,7 @@
       gnome3.gnome-themes-standard
       gui.package
       hack-font
+      hicolor-icon-theme
       liberation_ttf
       noto-fonts
       noto-fonts-cjk
