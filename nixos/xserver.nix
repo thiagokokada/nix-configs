@@ -28,6 +28,7 @@
       displayManager = {
         lightdm = {
           enable = true;
+          background = pkgs.nixos-artwork.wallpapers.dracula.gnomeFilePath;
           greeters = {
             gtk = {
               enable = true;
