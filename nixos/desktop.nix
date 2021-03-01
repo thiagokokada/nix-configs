@@ -23,6 +23,10 @@
   security = {
     # This allows PulseAudio to run with realtime privileges (i.e: less cracks)
     rtkit.enable = true;
+    wrappers.noisetorch = {
+      source = "${pkgs.unstable.noisetorch}/bin/noisetorch";
+      capabilities = "CAP_SYS_RESOURCE=+ep";
+    };
   };
 
   services = {

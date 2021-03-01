@@ -13,12 +13,6 @@
   console.useXkbConfig = true;
 
   services = {
-    # Enable dbus
-    dbus = {
-      enable = true;
-      packages = with pkgs; [ gnome3.dconf ];
-    };
-
     # Allow automounting
     gvfs.enable = true;
 
