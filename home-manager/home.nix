@@ -14,6 +14,7 @@ with lib; {
     ./mpv.nix
     ./neovim.nix
     ./nnn.nix
+    ./pulseeffects.nix
     ./ssh.nix
     ./sway.nix
     ./theme.nix
