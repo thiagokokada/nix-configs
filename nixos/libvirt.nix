@@ -1,5 +1,4 @@
 { config, lib, pkgs, ... }:
-
 let
   inherit (config.my) username;
   targetDisk = "/dev/disk/by-id/dm-name-enc-win10";
@@ -36,7 +35,8 @@ let
       EOF
     '';
 
-in {
+in
+{
   boot = {
     # Do not load NVIDIA drivers
     blacklistedKernelModules = [ "nvidia" "nouveau" ];
@@ -64,10 +64,11 @@ in {
     # Enable bridge
     bridges = {
       br0 = {
-        interfaces = if config.networking.usePredictableInterfaceNames then
-          [ "eno1" ]
-        else
-          [ "eth0" ];
+        interfaces =
+          if config.networking.usePredictableInterfaceNames then
+            [ "eno1" ]
+          else
+            [ "eth0" ];
       };
     };
   };

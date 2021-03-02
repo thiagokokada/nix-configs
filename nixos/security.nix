@@ -1,5 +1,4 @@
 { pkgs, ... }:
-
 let
   # Mostly safe to block unless the service is doing something very strange
   safeHardeningFlags = {
@@ -24,7 +23,8 @@ let
   };
   restrictNetworkFlags = { RestrictAddressFamilies = "AF_UNIX"; };
   unrestrictNetworkFlags = { RestrictAddressFamilies = ""; };
-in {
+in
+{
   # systemd-analyze --user security
   systemd.user.services = {
     opentabletdriver.serviceConfig = safeHardeningFlags;

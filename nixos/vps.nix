@@ -1,5 +1,4 @@
 { config, lib, pkgs, ... }:
-
 let
   privateKeyFile = "/etc/wireguard/wg-priv";
   wgGenerateConfig = pkgs.writeShellScriptBin "wg-generate-config" ''
@@ -81,7 +80,8 @@ let
     main $@
   '';
 
-in {
+in
+{
   # enable NAT
   networking.nat.enable = true;
   networking.nat.externalInterface = "ens3";
@@ -130,7 +130,7 @@ in {
       openFirewall = true;
     };
 
-    openssh ={
+    openssh = {
       enable = true;
       passwordAuthentication = false;
     };

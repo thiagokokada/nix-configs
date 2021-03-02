@@ -17,11 +17,12 @@ with lib; {
       type = with types; (listOf str);
       description = "Available mount points";
       example = [ "/" "/mnt/backup" ];
-      default = if (config ? fileSystems) then
-        (lists.subtractLists [ "/boot" "/tmp" "/nix" ]
-          (mapAttrsToList (n: _: n) config.fileSystems))
-      else
-        [ "/" ];
+      default =
+        if (config ? fileSystems) then
+          (lists.subtractLists [ "/boot" "/tmp" "/nix" ]
+            (mapAttrsToList (n: _: n) config.fileSystems))
+        else
+          [ "/" ];
     };
   };
 }

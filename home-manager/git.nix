@@ -28,7 +28,7 @@
       "Thumbs.db"
     ];
 
-    includes = [ { path = "~/.config/git/local"; } ];
+    includes = [{ path = "~/.config/git/local"; }];
 
     extraConfig = {
       branch = { sort = "-committerdate"; };

@@ -13,8 +13,8 @@
 , alt ? "Mod1"
 , modifier ? "Mod4"
 , extraBindings ? { }
-, extraWindowOptions ? {  }
-, extraFocusOptions ? {  }
+, extraWindowOptions ? { }
+, extraFocusOptions ? { }
 , extraModes ? { }
 , extraConfig ? ""
 , workspaces ? [

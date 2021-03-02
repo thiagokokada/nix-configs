@@ -1,5 +1,4 @@
 { config, lib, pkgs, ... }:
-
 let
   wofiConfig = {
     key_left = "Control_L-h";
@@ -56,7 +55,8 @@ let
       color: ${base00};
     }
   '';
-in {
+in
+{
   xdg.configFile."wofi/style.css".text = wofiTheme;
   xdg.configFile."wofi/config".text = lib.generators.toKeyValue { } wofiConfig;
   home.packages = with pkgs; [ j4-dmenu-desktop wofi ];

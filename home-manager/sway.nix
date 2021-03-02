@@ -4,45 +4,48 @@ let
   alt = "Mod1";
   modifier = "Mod4";
 
-  commonOptions = let
-    makoctl = "${pkgs.mako}/bin/makoctl";
-    screenShotName = with config.xdg.userDirs;
-      "${pictures}/$(${pkgs.coreutils}/bin/date +%Y-%m-%d_%H-%M-%S)-screenshot.png";
-  in import ./i3-common.nix rec {
-    inherit config lib modifier alt;
-    browser = "firefox";
-    fileManager = "${terminal} ${pkgs.nnnCustom}/bin/nnn";
-    statusCommand = with config;
-      "${programs.i3status-rust.package}/bin/i3status-rs ${xdg.configHome}/i3status-rust/config-sway.toml";
-    menu =
-      "${pkgs.j4-dmenu-desktop}/bin/j4-dmenu-desktop --dmenu='${pkgs.wofi}/bin/wofi --show drun'";
-    # light needs to be installed in system, so not defining a path here
-    light = "light";
-    pamixer = "${pkgs.pamixer-unstable}/bin/pamixer";
-    playerctl = "${pkgs.playerctl}/bin/playerctl";
-    terminal = "${pkgs.kitty}/bin/kitty";
+  commonOptions =
+    let
+      makoctl = "${pkgs.mako}/bin/makoctl";
+      screenShotName = with config.xdg.userDirs;
+        "${pictures}/$(${pkgs.coreutils}/bin/date +%Y-%m-%d_%H-%M-%S)-screenshot.png";
+    in
+    import ./i3-common.nix rec {
+      inherit config lib modifier alt;
+      browser = "firefox";
+      fileManager = "${terminal} ${pkgs.nnnCustom}/bin/nnn";
+      statusCommand = with config;
+        "${programs.i3status-rust.package}/bin/i3status-rs ${xdg.configHome}/i3status-rust/config-sway.toml";
+      menu =
+        "${pkgs.j4-dmenu-desktop}/bin/j4-dmenu-desktop --dmenu='${pkgs.wofi}/bin/wofi --show drun'";
+      # light needs to be installed in system, so not defining a path here
+      light = "light";
+      pamixer = "${pkgs.pamixer-unstable}/bin/pamixer";
+      playerctl = "${pkgs.playerctl}/bin/playerctl";
+      terminal = "${pkgs.kitty}/bin/kitty";
 
-    fullScreenShot = ''
-      ${pkgs.grim}/bin/grim "${screenShotName}" && \
-      ${pkgs.libnotify}/bin/notify-send -u normal -t 5000 'Full screenshot taken'
-    '';
-    areaScreenShot = ''
-      ${pkgs.grim}/bin/grim -g "$(${pkgs.slurp}/bin/slurp)" "${screenShotName}" && \
-      ${pkgs.libnotify}/bin/notify-send -u normal -t 5000 'Area screenshot taken'
-    '';
+      fullScreenShot = ''
+        ${pkgs.grim}/bin/grim "${screenShotName}" && \
+        ${pkgs.libnotify}/bin/notify-send -u normal -t 5000 'Full screenshot taken'
+      '';
+      areaScreenShot = ''
+        ${pkgs.grim}/bin/grim -g "$(${pkgs.slurp}/bin/slurp)" "${screenShotName}" && \
+        ${pkgs.libnotify}/bin/notify-send -u normal -t 5000 'Area screenshot taken'
+      '';
 
-    extraBindings = {
-      "Ctrl+space" = "exec ${makoctl} dismiss";
-      "Ctrl+Shift+space" = "exec ${makoctl} dismiss -a";
+      extraBindings = {
+        "Ctrl+space" = "exec ${makoctl} dismiss";
+        "Ctrl+Shift+space" = "exec ${makoctl} dismiss -a";
+      };
+
+      extraConfig = with config.xsession.pointerCursor; ''
+        hide_edge_borders --i3 smart
+
+        seat seat0 xcursor_theme ${name} ${toString size}
+      '';
     };
-
-    extraConfig = with config.xsession.pointerCursor; ''
-      hide_edge_borders --i3 smart
-
-      seat seat0 xcursor_theme ${name} ${toString size}
-    '';
-  };
-in {
+in
+{
   imports = [ ./gammastep.nix ./i3status-rust.nix ./mako.nix ./wofi.nix ];
 
   wayland.windowManager.sway = with commonOptions; {
@@ -54,18 +57,20 @@ in {
       startup = [
         { command = "${pkgs.dex}/bin/dex --autostart"; }
         {
-          command = let
-            swayidle = "${pkgs.swayidle}/bin/swayidle";
-            swaylock = "${pkgs.swaylock}/bin/swaylock";
-            swaymsg = "${pkgs.sway}/bin/swaymsg";
-          in ''
-            ${swayidle} -w \
-            timeout 600 '${swaylock} -f -c 000000' \
-            timeout 605 '${swaymsg} "output * dpms off"' \
-            resume '${swaymsg} "output * dpms on"' \
-            before-sleep '${swaylock} -f -c 000000' \
-            lock '${swaylock} -f -c 000000'
-          '';
+          command =
+            let
+              swayidle = "${pkgs.swayidle}/bin/swayidle";
+              swaylock = "${pkgs.swaylock}/bin/swaylock";
+              swaymsg = "${pkgs.sway}/bin/swaymsg";
+            in
+            ''
+              ${swayidle} -w \
+              timeout 600 '${swaylock} -f -c 000000' \
+              timeout 605 '${swaymsg} "output * dpms off"' \
+              resume '${swaymsg} "output * dpms on"' \
+              before-sleep '${swaylock} -f -c 000000' \
+              lock '${swaylock} -f -c 000000'
+            '';
         }
       ];
 

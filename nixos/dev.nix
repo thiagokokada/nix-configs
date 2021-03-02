@@ -1,8 +1,8 @@
 { pkgs, config, ... }:
-
 let
   inherit (config.my) username;
-in {
+in
+{
   environment.systemPackages = with pkgs; [
     docker-compose
     python3

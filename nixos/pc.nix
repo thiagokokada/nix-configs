@@ -1,9 +1,9 @@
 { pkgs, config, lib, inputs, ... }:
-
 let
   inherit (config.my) username;
   archive = "/mnt/archive/${username}";
-in with config.users.users.${username}; {
+in
+with config.users.users.${username}; {
   imports = [
     ./libvirt.nix
     "${inputs.unstable}/nixos/modules/hardware/opentabletdriver.nix"

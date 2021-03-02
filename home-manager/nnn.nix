@@ -16,7 +16,8 @@
 
       nnnPlugins = with pkgs;
         let inherit (nnn) version;
-        in stdenv.mkDerivation rec {
+        in
+        stdenv.mkDerivation rec {
           name = "nnn-plugins-${version}";
           src = fetchFromGitHub {
             owner = "jarun";

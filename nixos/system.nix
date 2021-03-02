@@ -19,7 +19,8 @@ let
     fi
     EOF
   '';
-in {
+in
+{
   environment = {
     # To get zsh completion for system packages
     pathsToLink = [ "/share/zsh" ];

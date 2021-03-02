@@ -1,15 +1,15 @@
 { config, pkgs, lib, inputs, ... }:
-
 let
   inherit (config.my) username;
-in {
+in
+{
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.${username} = {
-     isNormalUser = true;
-     uid = 1000;
-     extraGroups = [ "wheel" "networkmanager" "video" ];
-     shell = pkgs.zsh;
-     password = "changeme";
+    isNormalUser = true;
+    uid = 1000;
+    extraGroups = [ "wheel" "networkmanager" "video" ];
+    shell = pkgs.zsh;
+    password = "changeme";
   };
 
   # This value determines the NixOS release with which your system is to be

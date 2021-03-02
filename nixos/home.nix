@@ -2,7 +2,8 @@
 
 with lib;
 let inherit (config.my) username;
-in {
+in
+{
   imports = [ inputs.home.nixosModules.home-manager ];
 
   home-manager = {

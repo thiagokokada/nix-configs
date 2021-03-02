@@ -10,7 +10,8 @@
           background = base00;
           foreground = base05;
         };
-      in {
+      in
+      {
         global = with config.theme.fonts; {
           font = "${gui.name} 8";
           markup = true;
