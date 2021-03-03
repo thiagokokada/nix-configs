@@ -4,7 +4,7 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-20.09";
     unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-    hardware.url = "github:thiagokokada/nixos-hardware/add-nvidia-disable-profile";
+    hardware.url = "github:NixOS/nixos-hardware/master";
     home = {
       url = "github:thiagokokada/home-manager/release-20.09_backports-from-unstable";
       inputs.nixpkgs.follows = "nixpkgs";

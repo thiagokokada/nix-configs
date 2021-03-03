@@ -18,16 +18,16 @@
     },
     "hardware": {
       "locked": {
-        "lastModified": 1614531106,
+        "lastModified": 1614792912,
         "narHash": "sha256-SNteffh445fpxvZRlXQ0ZWWTIlceXB/D39o6IaLEN1s=",
-        "owner": "thiagokokada",
+        "owner": "NixOS",
         "repo": "nixos-hardware",
-        "rev": "36094450fdff0a87fbe704cc456b849701972dae",
+        "rev": "3caaa0588e90e8f368fa1c5a002f24f2d4af4224",
         "type": "github"
       },
       "original": {
-        "owner": "thiagokokada",
-        "ref": "add-nvidia-disable-profile",
+        "owner": "NixOS",
+        "ref": "master",
         "repo": "nixos-hardware",
         "type": "github"
       }
