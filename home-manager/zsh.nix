@@ -1,4 +1,4 @@
-{ ... }:
+{ inputs, ... }:
 
 {
   programs.zsh = {
@@ -71,7 +71,58 @@
       export PATH="$HOME/.local/bin:$PATH"
     '';
 
-    plugins = import ./zsh-plugins.nix { inherit fetchGit; };
+    plugins = [
+      {
+        src = inputs.zit;
+        name = "zit";
+        file = "zit.zsh";
+      }
+      {
+        src = inputs.zim-completion;
+        name = "zim-completion";
+        file = "init.zsh";
+      }
+      {
+        src = inputs.zim-environment;
+        name = "zim-environment";
+        file = "init.zsh";
+      }
+      {
+        src = inputs.zim-input;
+        name = "zim-input";
+        file = "init.zsh";
+      }
+      {
+        src = inputs.zim-git;
+        name = "zim-git";
+        file = "init.zsh";
+      }
+      {
+        src = inputs.zim-ssh;
+        name = "zim-ssh";
+        file = "init.zsh";
+      }
+      {
+        src = inputs.pure;
+        name = "pure";
+      }
+      {
+        src = inputs.zsh-autopair;
+        name = "zsh-autopair";
+      }
+      {
+        src = inputs.zsh-completions;
+        name = "zsh-completions";
+      }
+      {
+        src = inputs.zsh-syntax-highlighting;
+        name = "zsh-syntax-highlighting";
+      }
+      {
+        src = inputs.zsh-history-substring-search;
+        name = "zsh-history-substring-search";
+      }
+    ];
   };
 
   programs.autojump.enable = true;

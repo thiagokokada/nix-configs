@@ -18,6 +18,52 @@
       inputs.nixpkgs.follows = "unstable";
     };
     nubank.url = "github:nubank/nixpkgs/master";
+
+    # ZSH plugins
+    zit = {
+      url = "github:thiagokokada/zit/master";
+      flake = false;
+    };
+    zim-completion = {
+      url = "github:zimfw/completion/master";
+      flake = false;
+    };
+    zim-environment = {
+      url = "github:zimfw/environment/master";
+      flake = false;
+    };
+    zim-input = {
+      url = "github:zimfw/input/master";
+      flake = false;
+    };
+    zim-git = {
+      url = "github:zimfw/git/master";
+      flake = false;
+    };
+    zim-ssh = {
+      url = "github:zimfw/ssh/master";
+      flake = false;
+    };
+    pure = {
+      url = "github:sindresorhus/pure/main";
+      flake = false;
+    };
+    zsh-autopair = {
+      url = "github:hlissner/zsh-autopair/master";
+      flake = false;
+    };
+    zsh-completions = {
+      url = "github:zsh-users/zsh-completions/master";
+      flake = false;
+    };
+    zsh-syntax-highlighting = {
+      url = "github:zsh-users/zsh-syntax-highlighting/master";
+      flake = false;
+    };
+    zsh-history-substring-search = {
+      url = "github:zsh-users/zsh-history-substring-search/master";
+      flake = false;
+    };
   };
 
   outputs = { self, nixpkgs, home, ... }@inputs: {
