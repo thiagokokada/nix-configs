@@ -103,6 +103,11 @@
         file = "init.zsh";
       }
       {
+        src = inputs.zim-utility;
+        name = "zim-utility";
+        file = "init.zsh";
+      }
+      {
         src = inputs.pure;
         name = "pure";
       }

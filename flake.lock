@@ -138,6 +138,7 @@
         "zim-git": "zim-git",
         "zim-input": "zim-input",
         "zim-ssh": "zim-ssh",
+        "zim-utility": "zim-utility",
         "zit": "zit",
         "zsh-autopair": "zsh-autopair",
         "zsh-completions": "zsh-completions",
@@ -243,6 +244,23 @@
         "owner": "zimfw",
         "ref": "master",
         "repo": "ssh",
+        "type": "github"
+      }
+    },
+    "zim-utility": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1606191973,
+        "narHash": "sha256-a6G9tnb4IvpiiWfISL20HLfdiL2b8AvgUVrJfeVucrU=",
+        "owner": "zimfw",
+        "repo": "utility",
+        "rev": "5fc2348ff5688972cdc87a2010796525e9656966",
+        "type": "github"
+      },
+      "original": {
+        "owner": "zimfw",
+        "ref": "master",
+        "repo": "utility",
         "type": "github"
       }
     },

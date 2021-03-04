@@ -44,6 +44,10 @@
       url = "github:zimfw/ssh/master";
       flake = false;
     };
+    zim-utility = {
+      url = "github:zimfw/utility/master";
+      flake = false;
+    };
     pure = {
       url = "github:sindresorhus/pure/main";
       flake = false;
