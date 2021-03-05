@@ -111,5 +111,5 @@ so you can test if everything is running alright.
 * Specially in Home-Manager, configuration between different components are
 shared, so for example changing the color from i3/sway/rofi/dunst/kitty/etc are
 all done changing just one file (see
-[get-base-16-theme.sh](https://github.com/thiagokokada/nix-configs/blob/master/home-manager/scripts/get-base16-theme.sh)
+[get-base-16-colors.sh](https://github.com/thiagokokada/nix-configs/blob/master/home-manager/scripts/get-base16-colors.sh)
 script for example).
