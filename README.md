@@ -67,6 +67,17 @@ The `--impure` flag is necessary since NixOS installer doesn't know where to
 find `<nixpkgs>` inside the Live environment. Subsequent `nixos-rebuild` calls
 can be done without `--impure` flag.
 
+**Optional:** to make the initial setup faster (i.e.: using Emacs from cache
+instead of building locally), you can setup cachix (untested):
+
+``` sh
+$ nix-shell -p cachix
+$ sudo cachix use nix-community
+$ sudo cachix use thiagokokada-nix-configs
+# TODO: Not sure if this works or it is actually needed
+$ sudo nixos-rebuild
+```
+
 Another option is to build a configuration and switch manually:
 
 ```sh
