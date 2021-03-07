@@ -45,7 +45,4 @@ jobs:
       - name: Set default git branch (to reduce log spam)
         run: git config --global init.defaultBranch master
 
-      - run: nix build '.#nixosConfigurations.miku-nixos.config.system.build.toplevel'
-      - run: nix build '.#nixosConfigurations.mikudayo-nixos.config.system.build.toplevel'
-      - run: nix build '.#nixosConfigurations.mirai-vps.config.system.build.toplevel'
-      - run: nix build '.#homeConfigurations.home-linux.activationPackage'
+      - run: make all

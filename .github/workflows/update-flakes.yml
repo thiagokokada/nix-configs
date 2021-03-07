@@ -46,16 +46,12 @@ jobs:
         run: |
           git config user.name '${{ github.actor }}'
           git config user.email '${{ github.actor }}@users.noreply.github.com'
-          nix flake update --recreate-lock-file --commit-lock-file
+          make update
 
       - name: Set default git branch (to reduce log spam)
         run: git config --global init.defaultBranch master
 
-      # TODO: avoid duplication with build-and-cache.yml
-      - run: nix build '.#nixosConfigurations.miku-nixos.config.system.build.toplevel'
-      - run: nix build '.#nixosConfigurations.mikudayo-nixos.config.system.build.toplevel'
-      - run: nix build '.#nixosConfigurations.mirai-vps.config.system.build.toplevel'
-      - run: nix build '.#homeConfigurations.home-linux.activationPackage'
+      - run: make all
 
       - name: Create Pull Request
         id: cpr
