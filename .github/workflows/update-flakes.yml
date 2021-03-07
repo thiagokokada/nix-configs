@@ -1,6 +1,5 @@
 name: update-flakes
 on:
-  repository_dispatch:
   workflow_dispatch:
   schedule:
     - cron: "40 4 * * 0,2,4,6"
@@ -62,10 +61,12 @@ jobs:
         id: cpr
         uses: peter-evans/create-pull-request@v3
         with:
-          commit-message: Update flakes
           branch: flake-updates
           delete-branch: true
           title: "Update flake.lock"
+        body: |
+          \#\# Run report
+          https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
 
       - name: Check outputs
         run: |
