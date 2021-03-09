@@ -4,9 +4,6 @@
   programs.git = {
     enable = true;
 
-    # Enable better diffs
-    delta.enable = true;
-
     userName = "Thiago Kenji Okada";
     userEmail = "thiagokokada@gmail.com";
     package = pkgs.gitFull;
