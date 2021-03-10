@@ -75,6 +75,9 @@
     # Enable Blueman to manage Bluetooth
     blueman.enable = true;
 
+    # For battery status reporting
+    upower.enable = true;
+
     # Only suspend on lid closed when laptop is disconnected
     logind = {
       lidSwitch = "suspend-then-hibernate";
