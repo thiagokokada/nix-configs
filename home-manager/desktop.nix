@@ -5,7 +5,6 @@
     arandr
     bitwarden
     calibre
-    chromium
     desktop-file-utils
     discord
     firefox
@@ -13,6 +12,7 @@
     gimp
     gnome3.evince
     gnome3.gnome-disk-utility
+    google-chrome
     gthumb
     inkscape
     kitty
