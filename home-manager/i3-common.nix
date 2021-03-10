@@ -259,10 +259,10 @@ in
       in
       {
         ${resizeMode} = (mapDirection {
-          leftCmd = "resize shrink width 10px or 10px";
-          downCmd = "resize grow height 10px or 10px";
-          upCmd = "resize shrink height 10px or 10px";
-          rightCmd = "resize grow width 10px or 10px";
+          leftCmd = "resize shrink width 10px or 10ppt";
+          downCmd = "resize grow height 10px or 10ppt";
+          upCmd = "resize shrink height 10px or 10ppt";
+          rightCmd = "resize grow width 10px or 10ppt";
         }) // exitMode;
         ${powerManagementMode} = {
           l = "mode default, exec loginctl lock-session";
