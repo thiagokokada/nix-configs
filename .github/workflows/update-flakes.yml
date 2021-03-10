@@ -60,9 +60,9 @@ jobs:
           branch: flake-updates
           delete-branch: true
           title: "Update flake.lock"
-        body: |
-          \#\# Run report
-          https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          body: |
+            \#\# Run report
+            https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
 
       - name: Check outputs
         run: |
