@@ -1,6 +1,6 @@
-{ lib, super, ... }:
+{ super, ... }:
 
-with lib; {
+{
   imports = [
     ./desktop.nix
     ./dev.nix
