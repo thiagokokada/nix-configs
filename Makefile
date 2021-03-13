@@ -1,5 +1,5 @@
 #! /usr/bin/env nix-shell
-#! nix-shell -i "make -f" -p gnumake nixFlakes
+#! nix-shell -I "nixpkgs=channel:nixpkgs-unstable" -i "make -f" -p gnumake nixUnstable
 
 .PHONY: all clean update install home-linux
 NIX_FLAGS := --experimental-features 'nix-command flakes'
@@ -10,7 +10,7 @@ clean:
 	rm -rf result *.qcow2
 
 update:
-	nix $(NIX_FLAGS) flake update --recreate-lock-file --commit-lock-file
+	nix $(NIX_FLAGS) flake update --commit-lock-file
 
 install:
 	nixos-install --system ./result
