@@ -12,6 +12,7 @@ in {
       ../../nixos/cli.nix
       ../../nixos/misc.nix
       ../../nixos/security.nix
+      ../../nixos/ssh.nix
       ../../nixos/system.nix
       ../../nixos/vps.nix
       ../../modules/my.nix

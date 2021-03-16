@@ -17,6 +17,7 @@
     ../../nixos/misc.nix
     ../../nixos/pc.nix
     ../../nixos/security.nix
+    ../../nixos/ssh.nix
     ../../nixos/system.nix
     ../../nixos/xserver.nix
     ../../cachix.nix

@@ -94,12 +94,6 @@ with config.users.users.${username}; {
         schedule2 = untied_directory,5,5,stop_untied=
       '';
     };
-
-    # Enable OpenSSH
-    openssh = {
-      enable = true;
-      passwordAuthentication = false;
-    };
   };
 
   systemd.services.flood = with pkgs.unstable; {
