@@ -44,7 +44,7 @@ let
     while (( # > 0 )); do
       case "$1" in
         (*.7z|*.001) ${pkgs.p7zip}/bin/7z x "$1" ;;
-        (*.rar) ${pkgs.unrar}/bin/unrar x -ad "$1" ;;
+        (*.rar) ${pkgs.p7zip}/bin/7z x "$1" ;;
         (*.tar.bz|*.tar.bz2|*.tbz|*.tbz2) ${pkgs.gnutar}/bin/tar -xvjf "$1" ;;
         (*.tar.gz|*.tgz) ${pkgs.gnutar}/bin/tar -xvzf "$1" ;;
         (*.tar.lzma|*.tlz) ${pkgs.coreutils}/bin/env XZ_OPT=-T0 ${pkgs.gnutar}/bin/tar --lzma -xvf "$1" ;;
