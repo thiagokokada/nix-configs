@@ -15,11 +15,6 @@
     };
   };
 
-  programs.java = {
-    enable = true;
-    package = pkgs.jdk11;
-  };
-
   security = {
     # This allows PulseAudio to run with realtime privileges (i.e: less cracks)
     rtkit.enable = true;

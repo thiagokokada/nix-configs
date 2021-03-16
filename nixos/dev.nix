@@ -10,11 +10,14 @@ in
 
   programs = {
     adb.enable = true;
-    # java = {
-    #   enable = true;
-    #   package = pkgs.jdk11;
-    # };
+    java = {
+      enable = true;
+      package = pkgs.jdk11;
+    };
   };
+
+  # Enable anti-aliasing in Java
+  environment.variables._JAVA_OPTIONS = "-Dawt.useSystemAAFontSettings=gasp";
 
   virtualisation.docker.enable = true;
 
