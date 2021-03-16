@@ -65,7 +65,7 @@ in
   nix = {
     gc = {
       automatic = true;
-      dates = "weekly";
+      dates = "3:15";
       options = "--delete-older-than 7d";
     };
     autoOptimiseStore = true;
