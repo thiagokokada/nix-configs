@@ -5,27 +5,39 @@ let
   archive = pkgs.writeScriptBin "archive" ''
     #!${pkgs.zsh}/bin/zsh
 
+    readonly name="$(${pkgs.coreutils}/bin/basename "$0")"
+
     if (( # < 2 )); then
-      print -u2 "usage: $(basename $0) <archive_name.ext> <file>..."
+      print -u2 "usage: $name <archive_name.ext> <file>..."
       return 2
     fi
 
+    # TODO: add support for rar
     case "$1" in
       (*.7z) ${pkgs.p7zip}/bin/7za a "$@" ;;
       (*.tar.bz|*.tar.bz2|*.tbz|*.tbz2) ${pkgs.gnutar}/bin/tar -cvjf "$@" ;;
       (*.tar.gz|*.tgz) ${pkgs.gnutar}/bin/tar -cvzf "$@" ;;
+      (*.tar.lzma|*.tlz) ${pkgs.coreutils}/bin/env XZ_OPT=-T0 ${pkgs.gnutar}/bin/tar --lzma -cvf "$@" ;;
+      (*.tar.xz|*.txz) ${pkgs.coreutils}/bin/env XZ_OPT=-T0 ${pkgs.gnutar}/bin/tar -cvJf "$@" ;;
       (*.tar) ${pkgs.gnutar}/bin/tar -cvf "$@" ;;
       (*.zip) ${pkgs.zip}/bin/zip -r "$@" ;;
       (*.zst) ${pkgs.zstd}/bin/zstd -c -T0 "''${@:2}" -o "$1" ;;
-      (*) print -u2 "$(basename $0): unknown archive type: $1" ;;
+      (*.bz|*.bz2) print -u2 "$0: .bzip2 is only useful for single files, and does not capture permissions. Use .tar.bz2" ;;
+      (*.gz) print -u2 "$0: .gz is only useful for single files, and does not capture permissions. Use .tar.gz" ;;
+      (*.lzma) print -u2 "$0: .lzma is only useful for single files, and does not capture permissions. Use .tar.lzma" ;;
+      (*.xz) print -u2 "$0: .xz is only useful for single files, and does not capture permissions. Use .tar.xz" ;;
+      (*.Z) print -u2 "$0: .Z is only useful for single files, and does not capture permissions." ;;
+      (*) print -u2 "$name: unknown archive type: $1" ;;
     esac
   '';
 
   unarchive = pkgs.writeScriptBin "unarchive" ''
     #!${pkgs.zsh}/bin/zsh
 
+    readonly name="$(${pkgs.coreutils}/bin/basename "$0")"
+
     if (( # < 1 )); then
-      print -u2 "usage: $(basename $0) <archive_name.ext>..."
+      print -u2 "usage: $name <archive_name.ext>..."
       return 2
     fi
 
@@ -35,13 +47,16 @@ let
         (*.rar) ${pkgs.unrar}/bin/unrar x -ad "$1" ;;
         (*.tar.bz|*.tar.bz2|*.tbz|*.tbz2) ${pkgs.gnutar}/bin/tar -xvjf "$1" ;;
         (*.tar.gz|*.tgz) ${pkgs.gnutar}/bin/tar -xvzf "$1" ;;
+        (*.tar.lzma|*.tlz) ${pkgs.coreutils}/bin/env XZ_OPT=-T0 ${pkgs.gnutar}/bin/tar --lzma -xvf "$1" ;;
+        (*.tar.xz|*.txz) ${pkgs.coreutils}/bin/env XZ_OPT=-T0 ${pkgs.gnutar}/bin/tar -xvJf "$1" ;;
         (*.tar) ${pkgs.gnutar}/bin/tar xvf "$1" ;;
-        (*.zip) ${pkgs.unzip}/bin/unzip "$1";;
+        (*.zip) ${pkgs.unzip}/bin/unzip "$1" ;;
         (*.zst) ${pkgs.zstd}/bin/zstd -T0 -d "$1" ;;
-        (*.gz) ${pkgs.gzip}/bin/gunzip "$1" ;;
+        (*.gz) ${pkgs.pigz}/bin/unpigz "$1" ;;
         (*.xz) ${pkgs.xz}/bin/unxz -T0 "$1" ;;
+        (*.bz|*.bz2) ${pkgs.pbzip2}/bin/pbunzip2 "$1" ;;
         (*.Z) ${pkgs.gzip}/bin/uncompress "$1" ;;
-        (*) print -u2 "$(basename $0): unknown archive type: $1" ;;
+        (*) print -u2 "$name: unknown archive type: $1" ;;
       esac
       shift
     done
