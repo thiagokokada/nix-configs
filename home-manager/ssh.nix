@@ -23,6 +23,8 @@
     };
   };
 
+  home.packages = with pkgs; [ mosh ];
+
   # `flutter pub get` fails with "Bad owner or permissions on $HOME/.ssh/config"
   # I don't know why
   home.file.".ssh/config" = {

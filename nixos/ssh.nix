@@ -6,4 +6,7 @@
     enable = true;
     passwordAuthentication = false;
   };
+
+  # Enable mosh
+  programs.mosh.enable = true;
 }
