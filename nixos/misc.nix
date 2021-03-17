@@ -1,17 +1,6 @@
-{ config, pkgs, lib, inputs, ... }:
-let
-  inherit (config.my) username;
-in
-{
-  # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.${username} = {
-    isNormalUser = true;
-    uid = 1000;
-    extraGroups = [ "wheel" "networkmanager" "video" ];
-    shell = pkgs.zsh;
-    password = "changeme";
-  };
+{ pkgs, lib, inputs, ... }:
 
+{
   # This value determines the NixOS release with which your system is to be
   # compatible, in order to avoid breaking some software such as database
   # servers. You should change this only after NixOS release notes say you

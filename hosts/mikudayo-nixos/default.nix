@@ -16,6 +16,7 @@
     ../../nixos/locale.nix
     ../../nixos/misc.nix
     ../../nixos/system.nix
+    ../../nixos/user.nix
     ../../nixos/xserver.nix
     ../../cachix.nix
     ../../modules/device.nix

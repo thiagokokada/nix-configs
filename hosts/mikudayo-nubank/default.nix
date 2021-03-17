@@ -16,9 +16,10 @@ in {
     ../../nixos/laptop.nix
     ../../nixos/locale.nix
     ../../nixos/misc.nix
-    ../../nixos/yubikey.nix
     ../../nixos/system.nix
+    ../../nixos/user.nix
     ../../nixos/xserver.nix
+    ../../nixos/yubikey.nix
     ../../cachix.nix
     ../../modules/device.nix
     ../../modules/my.nix

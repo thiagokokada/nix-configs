@@ -14,6 +14,7 @@ in {
       ../../nixos/security.nix
       ../../nixos/ssh.nix
       ../../nixos/system.nix
+      ../../nixos/user.nix
       ../../nixos/vps.nix
       ../../modules/my.nix
       ../../cachix.nix

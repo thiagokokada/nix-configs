@@ -19,6 +19,7 @@
     ../../nixos/security.nix
     ../../nixos/ssh.nix
     ../../nixos/system.nix
+    ../../nixos/user.nix
     ../../nixos/xserver.nix
     ../../cachix.nix
     ../../modules/device.nix
