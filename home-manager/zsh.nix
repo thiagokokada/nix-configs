@@ -1,5 +1,4 @@
 { pkgs, inputs, ... }:
-
 let
   # Based on https://github.com/zimfw/archive
   archive = pkgs.writeScriptBin "archive" ''
