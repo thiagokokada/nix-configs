@@ -51,6 +51,8 @@ jobs:
             ## Run report
             https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
 
+            [![update-flakes](https://github.com/thiagokokada/nix-configs/actions/workflows/update-flakes.yml/badge.svg?branch=flake-updates)](https://github.com/thiagoge.svg?branch=)](https://github.com/thiagokokada/nix-configs/actions/workflows/update-flakes.yml)
+
       - name: Check outputs
         run: |
           echo "Pull Request Number - ${{ steps.cpr.outputs.pull-request-number }}"
