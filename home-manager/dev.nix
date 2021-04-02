@@ -10,6 +10,7 @@
     expect
     gnumake
     go
+    hydra-check
     leiningen
     nim
     nix-update
