@@ -9,6 +9,7 @@
     gcc # needed by native compile
     hack-font
     noto-fonts
+    pandoc
     stow
     unstable.clojure-lsp
     unstable.python-language-server
