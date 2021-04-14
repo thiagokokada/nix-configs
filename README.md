@@ -9,9 +9,11 @@
 * nix configuration for my laptops, desktops and more
 * **nix flake**-powered
 * guaranteed to be **reproducible**
-* all of my **dotfiles**
+* most of my **dotfiles** (there are still some configs only available on my
+  [dotfiles](https://github.com/thiagokokada/dotfiles/) repo)
 
-**Note**: this readme assumes [you have enabled nixUnstable + flakes](https://www.tweag.io/blog/2020-07-31-nixos-flakes/).
+**Note**: this readme assumes [you have enabled nixUnstable +
+flakes](https://www.tweag.io/blog/2020-07-31-nixos-flakes/).
 
 ## Disclaimer
 
@@ -29,7 +31,8 @@ documentation. Some of the repositories that helped me to build this config:
 Also, some extra resources and documentation about Flakes:
 
 - [Flakes in NixOS Wiki](https://nixos.wiki/wiki/Flakes)
-- [Nix Flakes blog posts from @eldostra](https://www.tweag.io/blog/2020-05-25-flakes/)
+- [Nix Flakes blog posts from
+  @eldostra](https://www.tweag.io/blog/2020-05-25-flakes/)
 - [Nix 2.4/3.0 documentation](https://nixos.org/manual/nix/unstable/)
 
 I decided to build from scratch to have more understand what is happening. Also,
@@ -42,9 +45,9 @@ approach until you have some experience in Nix.
 
 ## Dotfiles
 
-This repository also includes my `home-manager` configuration. It is
-used to configure home in NixOS systems (using `home-manager` as a NixOS module)
-but it should also work in standalone mode.
+This repository also includes my `home-manager` configuration. It is used to
+configure home in NixOS systems (using `home-manager` as a NixOS module) but it
+should also work in standalone mode.
 
 Most of the configuration files are based on my old (but still supported)
 [dotfiles repository](https://github.com/thiagokokada/dotfiles).
@@ -93,8 +96,8 @@ etc.).
 ## Testing
 
 You can build a VM to test configurations with safety using the available
-`Makefile`. It should be called as a script since it will automatically
-download its dependencies using `nix-shell`.
+`Makefile`. It should be called as a script since it will automatically download
+its dependencies using `nix-shell`.
 
 For example, to build `miku-nixos` configuration inside a VM run:
 
@@ -102,8 +105,8 @@ For example, to build `miku-nixos` configuration inside a VM run:
 $ ./Makefile build-vm-miku-nixos
 ```
 
-You can use the `start-vm.sh` script to start a VM with sufficient resources
-so you can test if everything is running alright.
+You can use the `start-vm.sh` script to start a VM with sufficient resources so
+you can test if everything is running alright.
 
 ## Interesting Tidbits
 
