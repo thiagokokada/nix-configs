@@ -36,6 +36,8 @@ in
               disk_drive = " ";
               caffeine_on = "  ";
               caffeine_off = "  ";
+              notification_on = "  ";
+              notification_off = "  ";
             };
           };
         };
@@ -109,6 +111,22 @@ in
           driver = "kbddbus";
         };
 
+        # TODO: check if dunst is running?
+        notificationBlock =
+          let
+            dunstctl = "${pkgs.dunst}/bin/dunstctl";
+            grep = "${pkgs.gnugrep}/bin/grep";
+          in
+          {
+            block = "toggle";
+            command_state = "${dunstctl} is-paused | ${grep} -Fo 'false'";
+            command_on = "${dunstctl} set-paused false && ${dunstctl} is-paused";
+            command_off = "${dunstctl} set-paused true && ${dunstctl} is-paused";
+            icon_on = "notification_on";
+            icon_off = "notification_off";
+            interval = 5;
+          };
+
         dpmsBlock =
           let xset = "${pkgs.xorg.xset}/bin/xset";
           in
@@ -139,6 +157,7 @@ in
             memoryBlock
             loadBlock
             temperatureBlock
+            notificationBlock
             dpmsBlock
             backlightBlock
             batteryBlock

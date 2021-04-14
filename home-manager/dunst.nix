@@ -1,6 +1,8 @@
 { config, lib, pkgs, ... }:
 
 {
+  home.packages = with pkgs; [ dunst ];
+
   services.dunst = {
     enable = true;
     iconTheme = with config.gtk.iconTheme; { inherit name package; };
