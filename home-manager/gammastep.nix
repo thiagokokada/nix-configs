@@ -8,7 +8,7 @@
     duskTime = "18:30-19:30";
     package = pkgs.unstable.gammastep;
     temperature = {
-      day = 5500;
+      day = 5700;
       night = 3700;
     };
     settings = {
