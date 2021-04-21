@@ -1,6 +1,8 @@
 { config, lib, pkgs, ... }:
 
 {
+  home.packages = with pkgs; [ github-cli ];
+
   programs.git = {
     enable = true;
 
@@ -64,12 +66,6 @@
       push = { default = "simple"; };
       rebase = { autoStash = true; };
     };
-  };
-
-  programs.gh = {
-    enable = true;
-    editor = "nvim";
-    gitProtocol = "ssh";
   };
 
   programs.zsh.shellAliases = { gk = "run-bg gitk"; };
