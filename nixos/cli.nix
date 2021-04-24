@@ -23,6 +23,7 @@
     pciutils
     powertop
     psmisc
+    rlwrap
     telnet
     tmux
     unrar

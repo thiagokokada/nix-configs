@@ -22,4 +22,9 @@
     sloccount
     unstable.babashka
   ];
+
+  # https://github.com/babashka/babashka/issues/257
+  programs.zsh.shellAliases = {
+    bb = "rlwrap bb";
+  };
 }
