@@ -20,5 +20,6 @@
     python3Full
     rustup
     sloccount
+    unstable.babashka
   ];
 }
