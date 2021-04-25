@@ -17,6 +17,10 @@
     unstable.shellcheck
   ];
 
+  programs.zsh.shellAliases = {
+    "doom-upgrade" = "nice doom upgrade";
+  };
+
   programs.emacs = {
     enable = true;
     package = pkgs.emacs-custom;

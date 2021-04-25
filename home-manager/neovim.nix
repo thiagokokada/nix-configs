@@ -79,6 +79,8 @@
         plugin = fzf-vim;
         config = ''
           let g:fzf_layout = { 'down': '40%' }
+          let $FZF_DEFAULT_COMMAND = 'rg --files --hidden'
+
           function! RipgrepFzf(query, fullscreen)
             let command_fmt = 'rg --column --line-number --no-heading --color=always --smart-case -- %s || true'
             let initial_command = printf(command_fmt, shellescape(a:query))
@@ -91,7 +93,7 @@
                 \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
           command! -nargs=* -bang RG call RipgrepFzf(<q-args>, <bang>0)
 
-          nnoremap <Leader><Leader> :GitFiles --cached --others --exclude-standard<CR>
+          nnoremap <Leader><Leader> :Files<CR>
           nnoremap <Leader>b :Buffers<CR>
           nnoremap <Leader>/ :RG<space>
           nnoremap <silent> <Leader>* :Rg <C-R><C-W><CR>
