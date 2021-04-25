@@ -18,7 +18,7 @@
   ];
 
   programs.zsh.shellAliases = {
-    "doom-upgrade" = "nice doom upgrade";
+    "doom-up" = "nice doom upgrade";
   };
 
   programs.emacs = {
