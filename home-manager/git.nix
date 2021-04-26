@@ -34,7 +34,11 @@
 
     aliases = {
       branch-cleanup = ''
-        !git branch --merged | egrep -v "(^\*|master|dev)" | xargs git branch -d #'';
+        !git branch --merged | egrep -v "(^\*|master|dev)" | xargs git branch -d #
+      '';
+      fix-commit = ''
+        !git commit -F "$(git rev-parse --git-dir)/COMMIT_EDITMSG" --edit
+      '';
       pushf = "push --force-with-lease";
       logs = "log --show-signature";
     };
