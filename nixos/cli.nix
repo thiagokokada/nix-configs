@@ -17,6 +17,7 @@
     lshw
     lsof
     mediainfo
+    multitime
     netcat-gnu
     openssl
     p7zip
