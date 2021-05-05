@@ -27,17 +27,4 @@
   };
 
   home.packages = with pkgs; [ mosh ];
-
-  # `flutter pub get` fails with "Bad owner or permissions on $HOME/.ssh/config"
-  # I don't know why
-  home.file.".ssh/config" = {
-    force = true;
-  };
-
-  home.activation.copy-ssh-file = lib.hm.dag.entryAfter [ "linkGeneration" ] ''
-    file="$(readlink $HOME/.ssh/config)"
-    $DRY_RUN_CMD rm $VERBOSE_ARG -f "$HOME/.ssh/config"
-    $DRY_RUN_CMD cp $VERBOSE_ARG "$file" "$HOME/.ssh/config"
-    $DRY_RUN_CMD chmod 600 "$HOME/.ssh/config"
-  '';
 }
