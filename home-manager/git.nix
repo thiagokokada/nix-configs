@@ -23,6 +23,9 @@
           file-decoration-style = "none";
           hunk-header-decoration-style = "cyan box ul";
         };
+        delta = {
+          navigate = true;
+        };
         line-numbers = {
           line-numbers-left-style = "cyan";
           line-numbers-right-style = "cyan";

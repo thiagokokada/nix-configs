@@ -22,6 +22,8 @@
           ];
         });
 
+      delta = final.unstable.delta;
+
       emacs-custom = with final; (emacsPackagesGen emacsPgtkGcc).emacsWithPackages
         (epkgs: with epkgs; [ vterm ]);
 
