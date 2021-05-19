@@ -62,24 +62,23 @@ in
           (m: {
             block = "disk_space";
             path = m;
-            alias = shortPath m;
             info_type = "available";
-            unit = "GiB";
-            format = "{icon}{alias} {available}G";
+            unit = "GB";
+            format = "{icon} ${shortPath m} {available}";
           })
           mountPoints;
 
         memoryBlock = {
           block = "memory";
-          format_mem = "{MAg}G";
-          format_swap = "{SFg}G";
+          format_mem = "{mem_avail;G}";
+          format_swap = "{swap_free;G}";
         };
 
         loadBlock = { block = "load"; };
 
         temperatureBlock = {
           block = "temperature";
-          format = "{average}°C";
+          format = "{average}";
           collapsed = false;
           chip = "coretemp-*";
           good = 20;
