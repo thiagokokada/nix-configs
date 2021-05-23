@@ -103,7 +103,10 @@
       username = "thiagoko";
       extraSpecialArgs = {
         inherit inputs system;
-        super = { device.type = "desktop"; };
+        super = {
+          device.type = "desktop";
+          my.username = username;
+        };
       };
     };
   };
