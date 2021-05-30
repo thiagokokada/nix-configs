@@ -94,7 +94,7 @@ in
             block = "battery";
             device = "DisplayDevice";
             driver = "upower";
-            format = "{percentage}% {time}";
+            format = "{percentage} {time}";
           } else
             { };
 
