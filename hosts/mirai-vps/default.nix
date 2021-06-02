@@ -27,7 +27,7 @@ in {
     users.${username} = {
       # Let Home Manager install and manage itself.
       programs.home-manager.enable = true;
-      home.stateVersion = "20.09";
+      home.stateVersion = "21.05";
       imports = [
         ../../home-manager/git.nix
         ../../home-manager/irssi.nix

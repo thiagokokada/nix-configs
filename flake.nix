@@ -2,11 +2,11 @@
   description = "My Nix{OS} configuration files";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-20.09";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-21.05";
     unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     hardware.url = "github:NixOS/nixos-hardware/master";
     home = {
-      url = "github:thiagokokada/home-manager/release-20.09_backports-from-unstable";
+      url = "github:nix-community/home-manager/release-21.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     home-unstable = {
@@ -14,7 +14,7 @@
       inputs.nixpkgs.follows = "unstable";
     };
     emacs = {
-      url = "github:nix-community/emacs-overlay/69f6248df3ecb527fabbdf9bdb5264fb0ef47049";
+      url = "github:nix-community/emacs-overlay/master";
       inputs.nixpkgs.follows = "unstable";
     };
     nubank.url = "github:nubank/nixpkgs/master";

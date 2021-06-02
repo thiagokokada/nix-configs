@@ -4,7 +4,7 @@
 {
   nixpkgs.overlays = [
     (final: prev: rec {
-      nnnWithIcons = pkgs.unstable.nnn.override ({ withNerdIcons = true; });
+      nnnWithIcons = pkgs.nnn.override ({ withNerdIcons = true; });
 
       nnnCustom = pkgs.writeShellScriptBin "nnn" ''
         export NNN_PLUG="c:fzcd;f:finder;o:fzopen;p:preview-tui;t:nmount;v:imgview";

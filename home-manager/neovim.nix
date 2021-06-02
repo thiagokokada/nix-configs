@@ -8,7 +8,7 @@
     vimAlias = true;
     vimdiffAlias = true;
 
-    extraPackages = with pkgs; [ universal-ctags unstable.fzf git ];
+    extraPackages = with pkgs; [ universal-ctags fzf git ];
 
     extraConfig = ''
       "" General config
@@ -222,5 +222,9 @@
       vim-surround
       vim-vinegar
     ];
+  };
+
+  programs.zsh.sessionVariables = {
+    EDITOR = "nvim";
   };
 }

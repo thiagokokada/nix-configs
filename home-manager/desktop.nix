@@ -18,6 +18,7 @@ in {
     kitty
     libreoffice-fresh
     lxmenu-data
+    mcomix3
     ncdu
     open-browser
     pamixer-unstable
@@ -25,10 +26,9 @@ in {
     pcmanfm
     peek
     qalculate-gtk
-    unstable.mcomix3
-    unstable.xdragon
     xarchiver
     xdotool
+    xdragon
     xorg.xdpyinfo
     xorg.xhost
     xorg.xkill

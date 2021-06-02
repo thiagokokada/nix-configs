@@ -100,21 +100,25 @@ let
             toString ws
           } ${prefixCmd} "${name}"'')
       workspaces));
+
+  fonts = with config.theme.fonts; {
+    names = [
+      gui.name
+      "Font Awesome 5 Brands"
+      "Font Awesome 5 Free Solid"
+    ];
+    style = "Regular";
+    size = 8.0;
+  };
 in
 {
   helpers = { inherit mapDirection mapDirectionDefault mapWorkspacesStr; };
 
   config = {
-    inherit modifier menu terminal;
-
-    fonts = with config.theme.fonts; [
-      gui.name
-      "Font Awesome 5 Brands Regular 8"
-      "Font Awesome 5 Free Solid 8"
-    ];
+    inherit fonts modifier menu terminal;
 
     bars = with config.theme.colors; [{
-      inherit statusCommand;
+      inherit fonts statusCommand;
 
       position = "top";
       colors = {

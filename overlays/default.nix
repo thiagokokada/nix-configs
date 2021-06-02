@@ -10,8 +10,7 @@
         config = prev.config;
       };
 
-      # Backport from unstable to have Python 3 version
-      cpuset-with-patch = with final.unstable;
+      cpuset-with-patch = with prev;
         cpuset.overrideAttrs (oldAttrs: {
           patches = (oldAttrs.patches or [ ]) ++ [
             (fetchpatch {
@@ -22,12 +21,8 @@
           ];
         });
 
-      delta = final.unstable.delta;
-
       emacs-custom = with final; (emacsPackagesGen emacsPgtkGcc).emacsWithPackages
         (epkgs: with epkgs; [ vterm ]);
-
-      fzf = final.unstable.fzf;
 
       linux-zen-with-muqss = with prev;
         linuxPackagesFor (linux_zen.override {

@@ -10,6 +10,7 @@
     coreutils
     curl
     dos2unix
+    each
     jq
     moreutils
     nox
@@ -22,7 +23,6 @@
     tealdeer
     tig
     unrar
-    unstable.each
     unzip
     wget
     zip

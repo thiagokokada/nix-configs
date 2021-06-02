@@ -59,6 +59,7 @@
       color = { ui = true; };
       commit = { verbose = true; };
       core = {
+        editor = "nvim";
         whitespace = "trailing-space,space-before-tab,indent-with-non-tab";
       };
       checkout = { defaultRemote = "origin"; };

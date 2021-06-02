@@ -96,7 +96,7 @@ with config.users.users.${username}; {
     };
   };
 
-  systemd.services.flood = with pkgs.unstable; {
+  systemd.services.flood = with pkgs; {
     description =
       "A web UI for rTorrent with a Node.js backend and React frontend.";
     after = [ "rtorrent.service" ];
