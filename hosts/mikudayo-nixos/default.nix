@@ -11,6 +11,7 @@
     ../../nixos/desktop.nix
     ../../nixos/dev.nix
     ../../nixos/fonts.nix
+    ../../nixos/game.nix
     ../../nixos/home.nix
     ../../nixos/laptop.nix
     ../../nixos/locale.nix
@@ -22,8 +23,8 @@
     ../../modules/device.nix
     ../../modules/my.nix
     ../../overlays
-    # inputs.hardware.nixosModules.common-gpu-nvidia
-    inputs.hardware.nixosModules.common-gpu-nvidia-disable
+    inputs.hardware.nixosModules.common-gpu-nvidia
+    # inputs.hardware.nixosModules.common-gpu-nvidia-disable
     inputs.hardware.nixosModules.common-cpu-intel
   ];
 
