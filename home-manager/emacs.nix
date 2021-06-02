@@ -13,7 +13,6 @@
     stow
     unstable.clojure-lsp
     unstable.python-language-server
-    unstable.rnix-lsp
     unstable.shellcheck
   ];
 
