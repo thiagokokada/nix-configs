@@ -1,7 +1,8 @@
 { super, config, lib, pkgs, ... }:
 
 let inherit (super.my) username;
-in {
+in
+{
   home.packages = with pkgs; [
     arandr
     bitwarden

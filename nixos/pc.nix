@@ -4,10 +4,7 @@ let
   archive = "/mnt/archive/${username}";
 in
 with config.users.users.${username}; {
-  imports = [
-    ./libvirt.nix
-    "${inputs.unstable}/nixos/modules/hardware/opentabletdriver.nix"
-  ];
+  imports = [ ./libvirt.nix ];
 
   # Enable opentabletdriver.
   hardware.opentabletdriver = with pkgs; {

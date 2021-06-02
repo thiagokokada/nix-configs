@@ -1,14 +1,6 @@
 { pkgs, inputs, ... }:
 
 {
-  imports = [
-    "${inputs.unstable}/nixos/modules/services/x11/hardware/libinput.nix"
-  ];
-
-  disabledModules = [
-    "services/x11/hardware/libinput.nix"
-  ];
-
   # Configure the virtual console keymap from the xserver keyboard settings
   console.useXkbConfig = true;
 
