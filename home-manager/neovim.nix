@@ -1,14 +1,14 @@
 { config, lib, pkgs, ... }:
 
 {
+  home.packages = with pkgs; [ universal-ctags ];
+
   programs.neovim = {
     enable = true;
 
     viAlias = true;
     vimAlias = true;
     vimdiffAlias = true;
-
-    extraPackages = with pkgs; [ universal-ctags fzf git ];
 
     extraConfig = ''
       "" General config
