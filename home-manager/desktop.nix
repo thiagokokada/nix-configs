@@ -27,6 +27,7 @@ in
     pcmanfm
     peek
     qalculate-gtk
+    vlc
     xarchiver
     xdotool
     xdragon
