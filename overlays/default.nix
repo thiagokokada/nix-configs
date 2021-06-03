@@ -43,12 +43,12 @@
       open-browser = prev.callPackage ../packages/open-browser { };
 
       pamixer-unstable = with prev; pamixer.overrideAttrs (oldAttrs: {
-        version = "unstable-2020-01-06";
+        version = "unstable-2021-03-29";
         src = fetchFromGitHub {
           owner = "cdemoulins";
           repo = "pamixer";
-          rev = "7f245fd1a064147266a9118bdbadf52fdc1343ff";
-          sha256 = "sha256-m/bdXEKFIOyXTpzE8p7PIDk3Uril35+ljckSUQJLDvI=";
+          rev = "4ea2594cb8c605dccd00a381ba19680eba368e94";
+          sha256 = "sha256-kV4wIxm1WZvqqyfmgQ2cSbRJwJR154OW0MMDg2ntf6g=";
         };
       });
 
