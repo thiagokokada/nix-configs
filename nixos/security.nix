@@ -5,7 +5,6 @@ let
     LockPersonality = true;
     NoNewPrivileges = true;
     PrivateTmp = true;
-    RestrictAddressFamilies = "AF_UNIX AF_INET AF_INET6";
     RestrictNamespaces = true;
     RestrictRealtime = true;
     SystemCallArchitectures = "native";
@@ -21,7 +20,7 @@ let
     ProtectKernelTunables = true;
     ProtectSystem = true;
   };
-  restrictNetworkFlags = { RestrictAddressFamilies = "AF_UNIX"; };
+  restrictNetworkFlags = { RestrictAddressFamilies = "AF_UNIX AF_INET AF_INET6"; };
   unrestrictNetworkFlags = { RestrictAddressFamilies = ""; };
 in
 {
@@ -32,19 +31,19 @@ in
 
   # systemd-analyze security
   systemd.services = {
-    flood.serviceConfig = strictHardeningFlags // {
+    flood.serviceConfig = strictHardeningFlags // restrictNetworkFlags // {
       ProtectHome = false;
     };
-    rtorrent.serviceConfig = strictHardeningFlags // {
+    rtorrent.serviceConfig = strictHardeningFlags // restrictNetworkFlags // {
       ProtectHome = false;
     };
-    plex.serviceConfig = safeHardeningFlags // unrestrictNetworkFlags // {
+    plex.serviceConfig = safeHardeningFlags // {
       RestrictNamespaces = false;
     };
-    samba-nmbd.serviceConfig = safeHardeningFlags // unrestrictNetworkFlags;
-    samba-smbd.serviceConfig = safeHardeningFlags // unrestrictNetworkFlags;
-    samba-winbindd.serviceConfig = safeHardeningFlags // unrestrictNetworkFlags;
-    smartd.serviceConfig = strictHardeningFlags // {
+    samba-nmbd.serviceConfig = safeHardeningFlags;
+    samba-smbd.serviceConfig = safeHardeningFlags;
+    samba-winbindd.serviceConfig = safeHardeningFlags;
+    smartd.serviceConfig = strictHardeningFlags // restrictNetworkFlags // {
       ProtectClock = false;
       PrivateDevices = false;
       PrivateNetwork = true;
