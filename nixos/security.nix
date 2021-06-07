@@ -38,7 +38,7 @@ in
     rtorrent.serviceConfig = strictHardeningFlags // {
       ProtectHome = false;
     };
-    plex.serviceConfig = strictHardeningFlags // {
+    plex.serviceConfig = safeHardeningFlags // unrestrictNetworkFlags // {
       RestrictNamespaces = false;
     };
     samba-nmbd.serviceConfig = safeHardeningFlags // unrestrictNetworkFlags;
