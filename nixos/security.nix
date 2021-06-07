@@ -32,13 +32,15 @@ in
 
   # systemd-analyze security
   systemd.services = {
-    flood.serviceConfig = strictHardeningFlags // restrictNetworkFlags // {
+    flood.serviceConfig = strictHardeningFlags // {
       ProtectHome = false;
     };
     rtorrent.serviceConfig = strictHardeningFlags // {
       ProtectHome = false;
     };
-    plex.serviceConfig = strictHardeningFlags;
+    plex.serviceConfig = strictHardeningFlags // {
+      RestrictNamespaces = false;
+    };
     samba-nmbd.serviceConfig = safeHardeningFlags // unrestrictNetworkFlags;
     samba-smbd.serviceConfig = safeHardeningFlags // unrestrictNetworkFlags;
     samba-winbindd.serviceConfig = safeHardeningFlags // unrestrictNetworkFlags;
