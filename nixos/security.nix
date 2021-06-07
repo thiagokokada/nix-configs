@@ -27,7 +27,7 @@ in
 {
   # systemd-analyze --user security
   systemd.user.services = {
-    opentabletdriver.serviceConfig = safeHardeningFlags;
+    opentabletdriver.serviceConfig = safeHardeningFlags // unrestrictNetworkFlags;
   };
 
   # systemd-analyze security
