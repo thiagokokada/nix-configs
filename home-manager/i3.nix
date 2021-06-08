@@ -63,8 +63,16 @@ let
       extraConfig = ''
         # app specific fixes
         # https://github.com/ValveSoftware/steam-for-linux/issues/1040
-        for_window [class="^Steam$"] floating enable
-        for_window [class="^Steam$" title="^Steam$"] floating disable
+        for_window [class="^Steam$" title="^Friends$"] floating enable
+        for_window [class="^Steam$" title="Steam - News"] floating enable
+        for_window [class="^Steam$" title=".* - Chat"] floating enable
+        for_window [class="^Steam$" title="^Settings$"] floating enable
+        for_window [class="^Steam$" title=".* - event started"] floating enable
+        for_window [class="^Steam$" title=".* CD key"] floating enable
+        for_window [class="^Steam$" title="^Steam - Self Updater$"] floating enable
+        for_window [class="^Steam$" title="^Screenshot Uploader$"] floating enable
+        for_window [class="^Steam$" title="^Steam Guard - Computer Authorization Required$"] floating enable
+        for_window [title="^Steam Keyboard$"] floating enable
       '';
     };
 in
