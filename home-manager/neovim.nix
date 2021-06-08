@@ -74,7 +74,7 @@
 
     # To install non-packaged plugins, use
     # pkgs.vimUtils.buildVimPluginFrom2Nix { }
-    plugins = with pkgs.unstable.vimPlugins; [
+    plugins = with pkgs.vimPlugins; [
       {
         plugin = fzf-vim;
         config = ''
