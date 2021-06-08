@@ -2,8 +2,8 @@
 
 {
   environment.systemPackages = with pkgs; [
-    lutris
     piper
+    unstable.lutris
     unstable.osu-lazer
   ];
 
