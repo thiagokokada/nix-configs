@@ -45,8 +45,9 @@
     ignores = [
       "*.swp"
       "*~"
-      ".DS_Store"
+      ".clj-kondo"
       ".dir-locals.el"
+      ".DS_Store"
       ".lsp"
       ".projectile"
       "Thumbs.db"
