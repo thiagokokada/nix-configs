@@ -15,6 +15,7 @@ in
       enable = true;
       package = pkgs.jdk11;
     };
+    wireshark.enable = true;
   };
 
   # Enable anti-aliasing in Java
@@ -24,5 +25,5 @@ in
   virtualisation.libvirtd.enable = true;
 
   # Added user to groups
-  users.users.${username}.extraGroups = [ "docker" ];
+  users.users.${username}.extraGroups = [ "docker" "wireshark" ];
 }
