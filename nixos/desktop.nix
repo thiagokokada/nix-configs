@@ -19,6 +19,21 @@
         support32Bit = true;
       };
       pulse.enable = true;
+      # Use realtime priority
+      config.pipewire = {
+        "context.modules" = [
+          {
+            name = "libpipewire-module-rtkit";
+            args = {
+              "nice.level" = -15;
+              "rt.prio" = 88;
+              "rt.time.soft" = 200000;
+              "rt.time.hard" = 200000;
+            };
+            flags = [ "ifexists" "nofail" ];
+          }
+        ];
+      };
       # Bluetooth settings
       media-session.config.bluez-monitor.rules = [
         {
