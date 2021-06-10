@@ -19,8 +19,18 @@
         support32Bit = true;
       };
       pulse.enable = true;
-      # Use realtime priority
+      # Use realtime priority/low-latency config
       config.pipewire = {
+        "context.properties" = {
+          "link.max-buffers" = 16;
+          "log.level" = 2;
+          "default.clock.rate" = 48000;
+          "default.clock.quantum" = 32;
+          "default.clock.min-quantum" = 32;
+          "default.clock.max-quantum" = 32;
+          "core.daemon" = true;
+          "core.name" = "pipewire-0";
+        };
         "context.modules" = [
           {
             name = "libpipewire-module-rtkit";
@@ -32,6 +42,24 @@
             };
             flags = [ "ifexists" "nofail" ];
           }
+          { name = "libpipewire-module-protocol-native"; }
+          { name = "libpipewire-module-profiler"; }
+          { name = "libpipewire-module-metadata"; }
+          { name = "libpipewire-module-spa-device-factory"; }
+          { name = "libpipewire-module-spa-node-factory"; }
+          { name = "libpipewire-module-client-node"; }
+          { name = "libpipewire-module-client-device"; }
+          {
+            name = "libpipewire-module-portal";
+            flags = [ "ifexists" "nofail" ];
+          }
+          {
+            name = "libpipewire-module-access";
+            args = {};
+          }
+          { name = "libpipewire-module-adapter"; }
+          { name = "libpipewire-module-link-factory"; }
+          { name = "libpipewire-module-session-manager"; }
         ];
       };
       # Bluetooth settings
