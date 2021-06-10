@@ -175,7 +175,7 @@
       {
         plugin = vim-gutentags;
         config = ''
-          let g:gutentags_cache_dir="~/.config/nvim/gutentags"
+          let g:gutentags_cache_dir="~/.cache/nvim/gutentags"
           let g:gutentags_file_list_command = {
               \ 'markers': {
               \   '.git': 'git ls-files',
