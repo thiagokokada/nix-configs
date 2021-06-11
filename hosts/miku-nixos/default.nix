@@ -42,7 +42,7 @@
 
   # Kernel 5.10.x got stucked at boot on screen:
   # "EFI stub: loaded initrd from command line"
-  boot.kernelPackages = pkgs.linuxPackages_5_4;
+  boot.kernelPackages = pkgs.linuxPackages_latest;
 
   boot.initrd.luks.devices = {
     "enc-win10".device =
