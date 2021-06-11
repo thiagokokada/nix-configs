@@ -54,44 +54,33 @@ Most of the configuration files are based on my old (but still supported)
 
 ## Installation
 
-Thanks to some issues in NixOS ISO, it is necessary to use `unstable` ISO for
-now. After following the instructions in
+After following the instructions in
 [manual](https://nixos.org/manual/nixos/stable/#sec-installation) to prepare the
 system and partition the disk, run the following process to install:
 
 ```sh
-$ sudo git clone https://github.com/thiagokokada/nix-configs/ /etc/nixos
-$ sudo chown -R 1000:100 /etc/nixos # optional if you want to edit your config without root
+$ sudo git clone https://github.com/thiagokokada/nix-configs/ /mnt/etc/nixos
+$ sudo chown -R 1000:1000 /mnt/etc/nixos # optional if you want to edit your config without root
 $ nix-shell -p nixFlakes
-$ sudo nixos-install --flake "/etc/nixos#hostName" --impure
+$ nix build --experimental-features 'nix-command flakes' "#nixosConfigurations.hostName.config.system.toplevel"
+$ sudo nixos-install --system ./result
 ```
 
-The `--impure` flag is necessary since NixOS installer doesn't know where to
-find `<nixpkgs>` inside the Live environment. Subsequent `nixos-rebuild` calls
-can be done without `--impure` flag.
-
 **Optional:** to make the initial setup faster (i.e.: using Emacs from cache
-instead of building locally), you can setup cachix (untested):
+instead of building locally), you can setup cachix:
 
 ``` sh
 $ nix-shell -p cachix
 $ sudo cachix use nix-community
 $ sudo cachix use thiagokokada-nix-configs
-# TODO: Not sure if this works or it is actually needed
+# Add `imports = [ ./cachix.nix ]` to /etc/nixos/configuration.nix and run
 $ sudo nixos-rebuild
 ```
 
-Another option is to build a configuration and switch manually:
+### Troubleshooting
 
-```sh
-
-$ nix-shell -p nixFlakes
-$ nix build --experimental-features 'nix-command flakes' "#nixosConfigurations.hostName.config.system.toplevel"
-$ sudo ./result/bin/switch-to-configuration
-```
-
-This is untested though, and there maybe some issues (bootloader, root password,
-etc.).
+In case of lack of space during the initial build (since it is done in `tmpfs`),
+you can comment parts of the configuration.
 
 ## Testing
 
