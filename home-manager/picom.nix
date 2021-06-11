@@ -6,7 +6,7 @@
     experimentalBackends = true;
     fade = true;
     fadeDelta = 2;
-    backend = "xrender";
+    backend = "glx";
     vSync = true;
     extraOptions = ''
       unredir-if-possible = true;
