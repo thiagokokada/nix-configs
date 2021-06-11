@@ -49,7 +49,7 @@ in {
   boot.loader.efi.canTouchEfiVariables = true;
   boot.initrd.luks.devices = {
     enc-pv = {
-      device = "/dev/disk/by-uuid/c7002ec7-b9a9-47a1-858a-a8ec3d18c343";
+      device = "/dev/disk/by-uuid/c7b7b6ed-a413-47f8-91fe-8d5260c91faf";
       preLVM = true;
       allowDiscards = true;
     };
