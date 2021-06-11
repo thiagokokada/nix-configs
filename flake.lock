@@ -18,16 +18,16 @@
     },
     "hardware": {
       "locked": {
-        "lastModified": 1623143341,
-        "narHash": "sha256-a8NjpJVvJkb3ehu/KP1OaWwlRexom2D7lQEH5uCO9yA=",
-        "owner": "NixOS",
+        "lastModified": 1623441850,
+        "narHash": "sha256-yaVNtMsKPuYceEuEFE5eTA4GBVlQOj5nmZjQ64RK2V4=",
+        "owner": "thiagokokada",
         "repo": "nixos-hardware",
-        "rev": "fccbee72df707c3fb074854668deee6e1ff02351",
+        "rev": "b0f31689acd3c7da53ad003ff392205c3131efa3",
         "type": "github"
       },
       "original": {
-        "owner": "NixOS",
-        "ref": "master",
+        "owner": "thiagokokada",
+        "ref": "remove-intel-drivers-from-nvidia-disable",
         "repo": "nixos-hardware",
         "type": "github"
       }
