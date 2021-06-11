@@ -44,6 +44,10 @@ in {
 
   home-manager.users.${username}.imports = [ ../../home-manager/nubank.nix ];
 
+  # FIXME: Without this it is using intel drivers, however this is bizarre since
+  # this should be the default already
+  services.xserver.videoDrivers = [ "modesetting" ];
+
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
