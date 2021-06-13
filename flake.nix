@@ -4,7 +4,7 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-21.05";
     unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-    hardware.url = "github:thiagokokada/nixos-hardware/remove-intel-drivers-from-nvidia-disable";
+    hardware.url = "github:NixOS/nixos-hardware/master";
     home = {
       url = "github:nix-community/home-manager/release-21.05";
       inputs.nixpkgs.follows = "nixpkgs";
