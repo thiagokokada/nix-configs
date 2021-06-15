@@ -31,7 +31,7 @@ in {
 
   device = {
     type = "notebook";
-    netDevices = [ "enp62s0u1u2" "wlan0" ];
+    netDevices = [ "enp56s0u2u2" "wlan0" ];
   };
 
   hardware.nvidia.prime = {
