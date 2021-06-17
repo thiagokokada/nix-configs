@@ -6,7 +6,7 @@ in
 with config.users.users.${username}; {
   imports = [ ./libvirt.nix ];
 
-  # Enable opentabletdriver.
+  # Enable opentabletdriver
   hardware.opentabletdriver = with pkgs; {
     enable = true;
     package = unstable.opentabletdriver;
