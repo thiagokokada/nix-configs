@@ -125,6 +125,7 @@ in
   };
 
   services = {
+    fail2ban.enable = true;
     plex = {
       enable = true;
       openFirewall = true;
