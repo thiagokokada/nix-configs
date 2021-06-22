@@ -10,17 +10,6 @@
         config = prev.config;
       };
 
-      cpuset-with-patch = with prev;
-        cpuset.overrideAttrs (oldAttrs: {
-          patches = (oldAttrs.patches or [ ]) ++ [
-            (fetchpatch {
-              url =
-                "https://github.com/lpechacek/cpuset/files/5792001/cpuset2.txt";
-              sha256 = "0rrgfixznhyymahakz31i396nj26qx9mcdavhm5cpkcfiqmk8nzl";
-            })
-          ];
-        });
-
       emacs-custom = with final; (emacsPackagesGen emacsPgtkGcc).emacsWithPackages
         (epkgs: with epkgs; [ vterm ]);
 

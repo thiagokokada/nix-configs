@@ -2,8 +2,7 @@
 let
   inherit (config.my) username;
   targetDisk = "/dev/disk/by-id/dm-name-enc-win10";
-  reservedGuestCpus = "2-5";
-  startVmScript = name:
+  startVmScript = name: allowedCpus:
     pkgs.writeShellScriptBin "start-${name}" ''
       sudo -s -- <<EOF
       # Make sure we have sufficient memory for hugepages
@@ -18,20 +17,26 @@ let
       # migrated by cset. Restrict the workqueue to use only cpu 0.
       echo 00 | tee /sys/bus/workqueue/devices/writeback/cpumask
 
-      ${pkgs.cpuset-with-patch}/bin/cset shield --reset
-      ${pkgs.cpuset-with-patch}/bin/cset shield --cpu "${reservedGuestCpus}" --kthread=on
+      # https://www.reddit.com/r/VFIO/comments/ebe3l5/deprecated_isolcpus_workaround/fem8jgk?utm_source=share&utm_medium=web2x&context=3
+      ${pkgs.systemd}/bin/systemctl set-property --runtime -- user.slice AllowedCPUs=${allowedCpus}
+      ${pkgs.systemd}/bin/systemctl set-property --runtime -- system.slice AllowedCPUs=${allowedCpus}
+      ${pkgs.systemd}/bin/systemctl set-property --runtime -- init.scope AllowedCPUs=${allowedCpus}
       ${pkgs.libvirt}/bin/virsh start "${name}"
       EOF
     '';
 
-  stopVmScript = name:
+  stopVmScript = name: allCpus:
     pkgs.writeShellScriptBin "stop-${name}" ''
       sudo -s -- <<EOF
       ${pkgs.libvirt}/bin/virsh shutdown "${name}"
       # All VMs offline
       echo ff | tee /sys/bus/workqueue/devices/writeback/cpumask
       ${pkgs.procps}/bin/sysctl vm.stat_interval=1
-      ${pkgs.cpuset-with-patch}/bin/cset shield --reset
+
+      # https://www.reddit.com/r/VFIO/comments/ebe3l5/deprecated_isolcpus_workaround/fem8jgk?utm_source=share&utm_medium=web2x&context=3
+      ${pkgs.systemd}/bin/systemctl set-property --runtime -- user.slice AllowedCPUs=${allCpus}
+      ${pkgs.systemd}/bin/systemctl set-property --runtime -- system.slice AllowedCPUs=${allCpus}
+      ${pkgs.systemd}/bin/systemctl set-property --runtime -- init.scope AllowedCPUs=${allCpus}
       EOF
     '';
 
@@ -50,9 +55,8 @@ in
   };
 
   environment.systemPackages = with pkgs; [
-    (startVmScript "win10")
-    (stopVmScript "win10")
-    cpuset-with-patch
+    (startVmScript "win10" "0-1")
+    (stopVmScript "win10" "0-5")
     virtmanager
   ];
 
