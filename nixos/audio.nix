@@ -1,11 +1,14 @@
 { config, lib, pkgs, ... }:
 
 {
-  environment.systemPackages = with pkgs; [ pulseeffects-pw ];
-
   security = {
     # This allows PipeWire to run with realtime privileges (i.e: less cracks)
     rtkit.enable = true;
+  };
+
+  programs.noisetorch = {
+    enable = true;
+    package = with pkgs.unstable; noisetorch;
   };
 
   services = {
