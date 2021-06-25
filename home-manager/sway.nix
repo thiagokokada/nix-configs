@@ -95,6 +95,7 @@ in
     };
 
     extraSessionCommands = ''
+      export XDG_CURRENT_DESKTOP=sway
       # Breaks Chromium/Electron
       # export GDK_BACKEND=wayland
       # Firefox
