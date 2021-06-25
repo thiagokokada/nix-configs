@@ -12,4 +12,17 @@
     };
     gnome.gnome-keyring.enable = true;
   };
+
+  xdg = {
+    # For sway screensharing
+    # https://nixos.wiki/wiki/Firefox
+    portal = {
+      enable = true;
+      extraPortals = with pkgs; [
+        xdg-desktop-portal-gtk
+        xdg-desktop-portal-wlr
+      ];
+      gtkUsePortal = true;
+    };
+  };
 }
