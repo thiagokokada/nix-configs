@@ -6,11 +6,17 @@
   environment.systemPackages = with pkgs; [ smartmontools ];
 
   services = {
+    # Enable Gnome Keyring
+    gnome.gnome-keyring.enable = true;
+
+    # Enable systemd-resolved
+    resolved.enable = true;
+
+    # Enable SMART monitoring
     smartd = {
       enable = true;
       notifications.x11.enable = true;
     };
-    gnome.gnome-keyring.enable = true;
   };
 
   xdg = {
