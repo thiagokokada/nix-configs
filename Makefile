@@ -1,7 +1,7 @@
 #! /usr/bin/env nix-shell
-#! nix-shell -I "nixpkgs=channel:nixpkgs-unstable" -i "make -f" -p gnumake nixUnstable
+#! nix-shell -I "nixpkgs=channel:nixpkgs-unstable" -i "make -f" -p gnumake nixUnstable nixpkgs-fmt
 
-.PHONY: all clean update install home-linux
+.PHONY: all clean update install home-linux format
 NIX_FLAGS := --experimental-features 'nix-command flakes'
 
 all: build-miku-nixos build-mikudayo-nixos build-mirai-vps build-home-linux
@@ -14,6 +14,9 @@ update:
 
 install:
 	nixos-install --system ./result
+
+format:
+	nixpkgs-fmt -- **/*.nix
 
 home-linux: build-home-linux
 	./result/activate
