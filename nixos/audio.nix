@@ -45,7 +45,7 @@
           }
           {
             name = "libpipewire-module-access";
-            args = {};
+            args = { };
           }
           { name = "libpipewire-module-adapter"; }
           { name = "libpipewire-module-link-factory"; }
@@ -56,7 +56,7 @@
       media-session.config.bluez-monitor.rules = [
         {
           # Matches all cards
-          matches = [ { "device.name" = "~bluez_card.*"; } ];
+          matches = [{ "device.name" = "~bluez_card.*"; }];
           actions = {
             "update-props" = {
               "bluez5.reconnect-profiles" = [ "hfp_hf" "hsp_hs" "a2dp_sink" ];

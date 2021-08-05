@@ -15,7 +15,7 @@ in
       enable = true;
       package = pkgs.jdk11;
     };
-    wireshark= {
+    wireshark = {
       enable = true;
       package = pkgs.wireshark;
     };
