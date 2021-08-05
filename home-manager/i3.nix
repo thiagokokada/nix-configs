@@ -166,18 +166,26 @@ in
 
   xresources.properties = { "Xft.dpi" = "135"; };
 
-  home.packages = with pkgs; [
-    arandr
-    dex
-    ffmpegthumbnailer
-    kbdd
-    libnotify
-    maim
-    mons
-    playerctl
-    wmctrl
-    xclip
-    xsecurelock
-    xss-lock
-  ];
+  home = {
+    keyboard = {
+      layout = "us(intl),br";
+      # Remap Caps Lock to Esc, and use Super+Space to change layouts
+      options = [ "caps:escape" "grp:win_space_toggle" ];
+    };
+
+    packages = with pkgs; [
+      arandr
+      dex
+      ffmpegthumbnailer
+      kbdd
+      libnotify
+      maim
+      mons
+      playerctl
+      wmctrl
+      xclip
+      xsecurelock
+      xss-lock
+    ];
+  };
 }

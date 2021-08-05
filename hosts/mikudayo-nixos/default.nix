@@ -4,6 +4,9 @@
 
 { config, pkgs, lib, inputs, ... }:
 
+with lib;
+let inherit (config.my) username;
+in
 {
   imports = [
     ./hardware-configuration.nix
@@ -50,8 +53,6 @@
 
   networking.hostName = "mikudayo-nixos";
 
-  services.xserver = {
-    layout = "br,us";
-    xkbVariant = "abnt2,intl";
-  };
+  # Use custom keyboard map
+  home-manager.users.${username}.home.keyboard.layout = lib.mkForce "br,us(intl)";
 }

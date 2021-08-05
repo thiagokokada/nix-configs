@@ -51,9 +51,6 @@
       # Use i3 as default sessionu;
       displayManager.defaultSession = "none+i3";
       windowManager.i3.enable = true;
-
-      # Remap Caps Lock to Esc, and use Super+Space to change layouts
-      xkbOptions = "caps:escape,grp:win_space_toggle";
     };
   };
 
