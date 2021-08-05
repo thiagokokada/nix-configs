@@ -168,7 +168,8 @@ in
 
   home = {
     keyboard = {
-      layout = "us(intl),br";
+      layout = "us,br";
+      variant = "intl,abnt2";
       # Remap Caps Lock to Esc, and use Super+Space to change layouts
       options = [ "caps:escape" "grp:win_space_toggle" ];
     };

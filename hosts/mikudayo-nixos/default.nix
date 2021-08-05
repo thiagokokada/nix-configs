@@ -54,5 +54,10 @@ in
   networking.hostName = "mikudayo-nixos";
 
   # Use custom keyboard map
-  home-manager.users.${username}.home.keyboard.layout = lib.mkForce "br,us(intl)";
+  home-manager.users.${username} = {
+    home.keyboard = {
+      layout = lib.mkForce "br,us";
+      variant = "abnt2,intl";
+    };
+  };
 }
