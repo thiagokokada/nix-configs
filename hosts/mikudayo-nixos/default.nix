@@ -57,7 +57,7 @@ in
   home-manager.users.${username} = {
     home.keyboard = {
       layout = lib.mkForce "br,us";
-      variant = "abnt2,intl";
+      variant = lib.mkForce "abnt2,intl";
     };
   };
 }
