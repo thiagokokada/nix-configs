@@ -2,11 +2,11 @@
   "nodes": {
     "emacs": {
       "locked": {
-        "lastModified": 1627952498,
-        "narHash": "sha256-tyts1PVtFgy+6vtJt0j9F4Y9kuxxYz7A/35YiGd+NSY=",
+        "lastModified": 1628300689,
+        "narHash": "sha256-djGtYExdgw7MYefX+ICyMPgA/U/vsuVTzGceEsvB5qA=",
         "owner": "nix-community",
         "repo": "emacs-overlay",
-        "rev": "216b3fd0fbe39b79e16468b322348b841c3bc43c",
+        "rev": "70d863e2dc58b70ce0b1ff428e4967f7aef45042",
         "type": "github"
       },
       "original": {
@@ -18,11 +18,11 @@
     },
     "hardware": {
       "locked": {
-        "lastModified": 1627666012,
-        "narHash": "sha256-Dx93VcfFwFlUex2Me4i+lS2IFwNrSVEvTvZuP/vmmXQ=",
+        "lastModified": 1628078080,
+        "narHash": "sha256-NKYtXUH32TlhOyhi41ZLtkBYh+7z24FpONDOInG4QR8=",
         "owner": "NixOS",
         "repo": "nixos-hardware",
-        "rev": "09ed30ff3bb67f5efe9c77e0d79aca01793526ca",
+        "rev": "8296b88560d8ac07a885452e094cd454de90ea9b",
         "type": "github"
       },
       "original": {
@@ -60,11 +60,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1627592512,
-        "narHash": "sha256-+bauwACGl+/dTQB047XImRz5P6Lp6vxl5ruiKjtENxo=",
+        "lastModified": 1628287034,
+        "narHash": "sha256-pWMEpQQcKxBy0OKskFLXJHEyGYJIiMu/BUQjCWxGF38=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "7f976da06840c268cc291a021bab7532b923713c",
+        "rev": "b0d769691cc379c9ab91d3acec5d14e75c02c02b",
         "type": "github"
       },
       "original": {
@@ -76,11 +76,11 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1627805549,
-        "narHash": "sha256-+LHhcpzw6vAxF6q0VSLkZSEGpDC02JN21KM8eUWz+is=",
+        "lastModified": 1628186972,
+        "narHash": "sha256-wWXlIQdZq/EtlBAGFJ62YHYEnJclxCuUOUGnrQqJ3zg=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "16bf3980bfa0d8929639be93fa8491ebad9d61ec",
+        "rev": "733682c32929293341f113f297b64ea6319e9089",
         "type": "github"
       },
       "original": {
@@ -148,11 +148,11 @@
     },
     "unstable": {
       "locked": {
-        "lastModified": 1627876884,
-        "narHash": "sha256-H6MzuidFip+F0Am4toJQI7o7ZklYL+nLOJEF1xtSgeg=",
+        "lastModified": 1628293053,
+        "narHash": "sha256-vRyP/9sX+K39mPHqWC13WzKCr8lxtuswU4DDGcN41zU=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "2a6732c38dfa8c1a3c8288f2b47a28cbea57a304",
+        "rev": "bd807ed5dec14377f87f63c3f467adf93f03de2e",
         "type": "github"
       },
       "original": {
@@ -182,11 +182,11 @@
     "zim-environment": {
       "flake": false,
       "locked": {
-        "lastModified": 1627654673,
-        "narHash": "sha256-bH35WkFuhDGclV+txyTbOOk5DDjJQYNh+j+g/LCpDf8=",
+        "lastModified": 1627998113,
+        "narHash": "sha256-AINMqQydlegk7tn1f1rGY/4UyY/QTk7WIpYuhMuKXvk=",
         "owner": "zimfw",
         "repo": "environment",
-        "rev": "e1845b3e869bd4d39c25ee45b0d96974ff7d9eba",
+        "rev": "f759e17c664722336c06577ff4354076abb4df44",
         "type": "github"
       },
       "original": {
@@ -199,11 +199,11 @@
     "zim-git": {
       "flake": false,
       "locked": {
-        "lastModified": 1623426431,
-        "narHash": "sha256-BuENnSWp69xf2brlIlP3b5T+b0Ja8/aWpJJdc1ncX0o=",
+        "lastModified": 1627999696,
+        "narHash": "sha256-Hc0hhLukibECo6w0BhoMf1MAPDYAidgEUfPL4D8Lcp8=",
         "owner": "zimfw",
         "repo": "git",
-        "rev": "4ccee06ccf1cd7e00b591436a1b31f2c0ed2a9c3",
+        "rev": "225d13a6e23518ef0e07c79964d54bc2015a326c",
         "type": "github"
       },
       "original": {
@@ -318,11 +318,11 @@
     "zsh-history-substring-search": {
       "flake": false,
       "locked": {
-        "lastModified": 1627924814,
-        "narHash": "sha256-TphdUaqTx5zrDLxfCPzNEoYgfRqaLLthmY8wMptTP7U=",
+        "lastModified": 1627971553,
+        "narHash": "sha256-8kiPBtgsjRDqLWt0xGJ6vBBLqCWEIyFpYfd+s1prHWk=",
         "owner": "zsh-users",
         "repo": "zsh-history-substring-search",
-        "rev": "4f2f17cc46f21924cad9f3ca5019d7909c94d066",
+        "rev": "4abed97b6e67eb5590b39bcd59080aa23192f25d",
         "type": "github"
       },
       "original": {
