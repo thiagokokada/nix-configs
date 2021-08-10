@@ -78,6 +78,12 @@
     };
 
     # Reduce power consumption
-    tlp.enable = true;
+    tlp = {
+      enable = true;
+      settings = {
+        # Disable USB autosuspend, since this seems to cause issues
+        USB_AUTOSUSPEND = 0;
+      };
+    };
   };
 }
