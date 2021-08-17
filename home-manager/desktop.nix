@@ -35,6 +35,7 @@ in
     xorg.xhost
     xorg.xkill
     xorg.xset
+    zoom-us
   ];
 
   programs.firefox = {
