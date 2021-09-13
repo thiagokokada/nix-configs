@@ -4,6 +4,7 @@ let inherit (super.my) username;
 in
 {
   home.packages = with pkgs; [
+    android-file-transfer
     arandr
     bitwarden
     calibre
