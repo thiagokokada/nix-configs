@@ -56,6 +56,7 @@
     includes = [{ path = "~/.config/git/local"; }];
 
     extraConfig = {
+      init = { defaultBranch = "master"; };
       branch = { sort = "-committerdate"; };
       color = { ui = true; };
       commit = { verbose = true; };
