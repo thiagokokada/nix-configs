@@ -70,10 +70,7 @@ $ sudo nixos-install --system ./result
 instead of building locally), you can setup cachix:
 
 ``` sh
-$ nix-shell -p cachix
-$ sudo cachix use nix-community
-$ sudo cachix use thiagokokada-nix-configs
-# Add `imports = [ ./cachix.nix ]` to /etc/nixos/configuration.nix and run
+# Add `imports = [ /mnt/etc/nixos/cachix.nix ]` to /etc/nixos/configuration.nix and run
 $ sudo nixos-rebuild
 ```
 
