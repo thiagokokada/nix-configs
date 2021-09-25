@@ -26,6 +26,7 @@ in
     curl
     dos2unix
     each
+    jo
     jq
     moreutils
     nix-where-is

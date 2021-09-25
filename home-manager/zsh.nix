@@ -193,7 +193,6 @@ in
     ];
   };
 
-  programs.autojump.enable = true;
   programs.dircolors.enable = true;
   programs.fzf = {
     enable = true;
