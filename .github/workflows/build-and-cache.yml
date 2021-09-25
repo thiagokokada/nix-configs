@@ -33,4 +33,8 @@ jobs:
       - name: Set default git branch (to reduce log spam)
         run: git config --global init.defaultBranch master
 
-      - run: ./Makefile all
+      - name: Check if all '.nix' files are formatted correctly
+        run: ./Makefile format-check
+
+      - name: Build Nix configs
+        run: ./Makefile all

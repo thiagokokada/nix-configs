@@ -5,7 +5,8 @@
 { config, pkgs, inputs, ... }:
 
 let inherit (config.my) username;
-in {
+in
+{
   imports = [
     ./hardware-configuration.nix
     ../../nixos/cli.nix

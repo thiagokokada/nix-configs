@@ -39,7 +39,8 @@ jobs:
       - name: Set default git branch (to reduce log spam)
         run: git config --global init.defaultBranch master
 
-      - run: ./Makefile all
+      - name: Build Nix configs
+        run: ./Makefile all
 
       - name: Create Pull Request
         id: cpr
