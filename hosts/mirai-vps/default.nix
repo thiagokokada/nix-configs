@@ -5,9 +5,11 @@
 { config, pkgs, inputs, system, ... }:
 
 let inherit (config.my) username;
-in {
+in
+{
   imports =
-    [ # Include the results of the hardware scan.
+    [
+      # Include the results of the hardware scan.
       ./hardware-configuration.nix
       ../../nixos/cli.nix
       ../../nixos/misc.nix

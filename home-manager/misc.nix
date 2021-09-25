@@ -1,5 +1,20 @@
 { config, lib, pkgs, ... }:
 
+let
+  nix-where-is = pkgs.writeShellScriptBin "nix-where-is" ''
+    set -euo pipefail
+
+    readonly program_name="''${1:-}"
+
+    if [[ -z "''${program_name}" ]]; then
+      echo "usage: $(basename ''${0}) PROGRAM"
+      exit 1
+    fi
+
+    readonly symbolic_link="$(which "''${program_name}")"
+    readlink -f "''${symbolic_link}"
+  '';
+in
 {
   nixpkgs.config = import ./nixpkgs-config.nix;
   xdg.configFile."nixpkgs/config.nix".source = ./nixpkgs-config.nix;
@@ -13,6 +28,7 @@
     each
     jq
     moreutils
+    nix-where-is
     nox
     p7zip
     page

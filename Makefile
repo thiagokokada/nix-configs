@@ -1,5 +1,5 @@
 #! /usr/bin/env nix-shell
-#! nix-shell -I "nixpkgs=channel:nixpkgs-unstable" -i "make -f" -p gnumake nixUnstable nixpkgs-fmt
+#! nix-shell -I "nixpkgs=channel:nixpkgs-unstable" -i "make -f" -p gnumake nixUnstable findutils nixpkgs-fmt
 
 .PHONY: all clean update install home-linux format
 NIX_FLAGS := --experimental-features 'nix-command flakes'
@@ -15,8 +15,11 @@ update:
 install:
 	nixos-install --system ./result
 
+format-check:
+	find -name '*.nix' ! -name 'hardware-configuration.nix' ! -name 'cachix.nix' -exec nixpkgs-fmt --check {} \+
+
 format:
-	nixpkgs-fmt -- **/*.nix
+	find -name '*.nix' ! -name 'hardware-configuration.nix' ! -name 'cachix.nix' -exec nixpkgs-fmt {} \+
 
 home-linux: build-home-linux
 	./result/activate
