@@ -1,10 +1,10 @@
 #! /usr/bin/env nix-shell
 #! nix-shell -I "nixpkgs=channel:nixpkgs-unstable" -i "make -f" -p gnumake nixUnstable findutils nixpkgs-fmt
 
-.PHONY: all clean update install home-linux format
+.PHONY: all clean update install format format-check activate run-vm-% build-% build-vm-% build-hm-% run-vm-%
 NIX_FLAGS := --experimental-features 'nix-command flakes'
 
-all: build-miku-nixos build-mikudayo-nixos build-mirai-vps build-home-linux
+all: build-miku-nixos build-mikudayo-nixos build-mirai-vps build-hm-home-linux
 
 clean:
 	rm -rf result *.qcow2
@@ -21,15 +21,25 @@ format-check:
 format:
 	find -name '*.nix' ! -name 'hardware-configuration.nix' ! -name 'cachix.nix' -exec nixpkgs-fmt {} \+
 
-home-linux: build-home-linux
+activate:
+ifeq (,$(wildcard ./result/activate))
+	@>&2 echo "Nothing to activate. Run 'make build-<hostname>' or 'make build-hm-<name>' first!"
+	@exit 1
+endif
 	./result/activate
 
-# Those targets are technically .PHONY, but if I set them to .PHONY I can't use %
 build-%:
-	nix $(NIX_FLAGS) build '.#nixosConfigurations.$(subst build-,,$(@F)).config.system.build.toplevel'
+	nix $(NIX_FLAGS) build '.#nixosConfigurations.$*.config.system.build.toplevel'
 
 build-vm-%:
-	nix $(NIX_FLAGS) build '.#nixosConfigurations.$(subst build-vm-,,$(@F)).config.system.build.vm'
+	nix $(NIX_FLAGS) build '.#nixosConfigurations.$*.config.system.build.vm'
 
-build-home-%:
-	nix $(NIX_FLAGS) build '.#homeConfigurations.$(subst build-,,$(@F)).activationPackage'
+build-hm-%:
+	nix $(NIX_FLAGS) build '.#homeConfigurations.$*.activationPackage'
+
+run-vm-%: build-vm-%
+	QEMU_OPTS="-cpu host -smp 2 -m 4096M -machine type=q35,accel=kvm" ./result/bin/run-$*-vm
+
+# Local Variables:
+# mode: Makefile
+# End:
