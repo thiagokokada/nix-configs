@@ -35,6 +35,7 @@ in
     page
     pv
     python3Packages.youtube-dl
+    rar
     ripgrep
     stow
     tealdeer

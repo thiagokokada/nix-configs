@@ -42,6 +42,8 @@
       });
 
       plex = final.unstable.plex;
+
+      rar = prev.callPackage ../packages/rar { };
     })
   ];
 }

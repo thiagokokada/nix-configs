@@ -11,9 +11,9 @@ let
       return 2
     fi
 
-    # TODO: add support for rar
     case "$1" in
       (*.7z) ${pkgs.p7zip}/bin/7za a "$@" ;;
+      (*.rar) ${pkgs.rar}/bin/rar a "$@" ;;
       (*.tar.bz|*.tar.bz2|*.tbz|*.tbz2) ${pkgs.gnutar}/bin/tar -cvjf "$@" ;;
       (*.tar.gz|*.tgz) ${pkgs.gnutar}/bin/tar -cvzf "$@" ;;
       (*.tar.lzma|*.tlz) ${pkgs.coreutils}/bin/env XZ_OPT=-T0 ${pkgs.gnutar}/bin/tar --lzma -cvf "$@" ;;
