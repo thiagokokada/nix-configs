@@ -41,6 +41,7 @@ in
     tealdeer
     tig
     unar
+    unzip
     wget
     zip
   ];
