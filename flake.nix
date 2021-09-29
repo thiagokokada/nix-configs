@@ -97,7 +97,7 @@
 
     # https://github.com/nix-community/home-manager/issues/1510
     homeConfigurations.home-linux = home.lib.homeManagerConfiguration rec {
-      configuration = ./home-manager/home.nix;
+      configuration = ./home-manager;
       system = "x86_64-linux";
       homeDirectory = "/home/thiagoko";
       username = "thiagoko";

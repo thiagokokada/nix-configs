@@ -8,7 +8,7 @@ in
 
   home-manager = {
     useUserPackages = true;
-    users.${username} = ../home-manager/home.nix;
+    users.${username} = ../home-manager;
     extraSpecialArgs = {
       inherit inputs system;
       super = config;
