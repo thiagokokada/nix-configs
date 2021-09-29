@@ -39,8 +39,7 @@ in
     stow
     tealdeer
     tig
-    unrar
-    unzip
+    unar
     wget
     zip
   ];

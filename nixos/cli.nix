@@ -20,18 +20,15 @@
     multitime
     netcat-gnu
     openssl
-    p7zip
     pciutils
     powertop
     psmisc
     rlwrap
     telnet
     tmux
-    unrar
-    unzip
+    unar
     usbutils
     wget
-    zip
   ];
 
   # Enable programs that need special configuration.
