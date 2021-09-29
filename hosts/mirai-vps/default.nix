@@ -33,6 +33,7 @@ in
       imports = [
         ../../home-manager/git.nix
         ../../home-manager/irssi.nix
+        ../../home-manager/misc.nix
         ../../home-manager/neovim.nix
         ../../home-manager/tmux.nix
         ../../home-manager/zsh.nix

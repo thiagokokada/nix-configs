@@ -2,6 +2,7 @@
 
 {
   imports = [
+    ./cli.nix
     ./desktop.nix
     ./dev.nix
     ./emacs.nix

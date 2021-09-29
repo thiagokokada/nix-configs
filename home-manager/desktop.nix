@@ -53,21 +53,28 @@ in
     };
   };
 
-  xdg.mimeApps = {
-    enable = true;
-    defaultApplications = {
-      "application/pdf" = "org.gnome.Evince.desktop";
-      "image/gif" = "org.gnome.gThumb.desktop";
-      "image/jpeg" = "org.gnome.gThumb.desktop";
-      "image/png" = "org.gnome.gThumb.desktop";
-      "inode/directory" = "pcmanfm.desktop";
-      "text/html" = "open-browser.desktop";
-      "text/plain" = "emacs.desktop";
-      "text/x-makefile" = "emacs.desktop";
-      "x-scheme-handler/about" = "open-browser.desktop";
-      "x-scheme-handler/http" = "open-browser.desktop";
-      "x-scheme-handler/https" = "open-browser.desktop";
-      "x-scheme-handler/unknown" = "open-browser.desktop";
+  xdg = {
+    mimeApps = {
+      enable = true;
+      defaultApplications = {
+        "application/pdf" = "org.gnome.Evince.desktop";
+        "image/gif" = "org.gnome.gThumb.desktop";
+        "image/jpeg" = "org.gnome.gThumb.desktop";
+        "image/png" = "org.gnome.gThumb.desktop";
+        "inode/directory" = "pcmanfm.desktop";
+        "text/html" = "open-browser.desktop";
+        "text/plain" = "emacs.desktop";
+        "text/x-makefile" = "emacs.desktop";
+        "x-scheme-handler/about" = "open-browser.desktop";
+        "x-scheme-handler/http" = "open-browser.desktop";
+        "x-scheme-handler/https" = "open-browser.desktop";
+        "x-scheme-handler/unknown" = "open-browser.desktop";
+      };
+    };
+
+    userDirs = {
+      enable = true;
+      createDirectories = true;
     };
   };
 }
