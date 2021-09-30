@@ -98,7 +98,7 @@
     };
 
     # https://github.com/nix-community/home-manager/issues/1510
-    homeConfigurations ={
+    homeConfigurations = {
       home-linux = home.lib.homeManagerConfiguration rec {
         configuration = ./home-manager;
         system = "x86_64-linux";
