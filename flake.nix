@@ -116,13 +116,17 @@
       home-macos = home.lib.homeManagerConfiguration rec {
         configuration = {
           imports = [
+            ./home-manager/cli.nix
+            ./home-manager/git.nix
+            ./home-manager/htop.nix
             ./home-manager/misc.nix
             ./home-manager/neovim.nix
+            ./home-manager/ssh.nix
+            ./home-manager/tmux.nix
             ./home-manager/zsh.nix
           ];
 
           programs.home-manager.enable = true;
-          home.stateVersion = "20.09";
         };
         system = "x86_64-darwin";
         homeDirectory = "/Users/${username}";

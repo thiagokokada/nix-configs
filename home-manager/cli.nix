@@ -17,6 +17,7 @@ let
 in
 {
   home.packages = with pkgs; [
+    aria2
     coreutils
     curl
     dos2unix
