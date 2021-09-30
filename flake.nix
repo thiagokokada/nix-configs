@@ -125,8 +125,6 @@
             ./home-manager/tmux.nix
             ./home-manager/zsh.nix
           ];
-
-          programs.home-manager.enable = true;
         };
         system = "x86_64-darwin";
         homeDirectory = "/Users/${username}";
