@@ -37,7 +37,6 @@ in
         ../../home-manager/neovim.nix
         ../../home-manager/tmux.nix
         ../../home-manager/zsh.nix
-        ../../overlays
       ];
     };
     extraSpecialArgs = {
