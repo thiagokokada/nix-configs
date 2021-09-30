@@ -1,25 +1,38 @@
-{ lib, stdenv, fetchurl, autoPatchelfHook }:
+{ lib, stdenv, fetchurl, autoPatchelfHook, installShellFiles }:
 
-stdenv.mkDerivation rec {
-  pname = "rar";
+let
   version = "6.0.2";
-
-  src = fetchurl {
-    url = "https://www.rarlab.com/rar/rarlinux-x64-${version}.tar.gz";
-    sha256 = "sha256-WAvrUGCgfwI51Mo/RYSSF0OLPPrTegUCuDEsnBeR9uQ=";
-  };
-
+  srcUrl = {
+    i686-linux = {
+      url = "https://www.rarlab.com/rar/rarlinux-${version}.tar.gz";
+      sha256 = "sha256-5iqk7eoo+hgltgscquob+wofzhuqz0m/8jf7bxdf9qa=";
+    };
+    x86_64-linux = {
+      url = "https://www.rarlab.com/rar/rarlinux-x64-${version}.tar.gz";
+      sha256 = "sha256-WAvrUGCgfwI51Mo/RYSSF0OLPPrTegUCuDEsnBeR9uQ=";
+    };
+    x86_64-darwin = {
+      url = "https://www.rarlab.com/rar/rarosx-${version}.tar.gz";
+      sha256 = "sha256-baZ71vYXIGs25f7PJ0ujoGUrsWZRmFLhvDI0KoVktsg=";
+    };
+  }.${stdenv.system} or (throw "Unsupported system: ${stdenv.system}");
   manSrc = fetchurl {
     url = "https://aur.archlinux.org/cgit/aur.git/plain/rar.1?h=rar&id=8e39a12e88d8a3b168c496c44c18d443c876dd10";
     name = "rar.1";
     sha256 = "sha256-93cSr9oAsi+xHUtMsUvICyHJe66vAImS2tLie7nt8Uw=";
   };
+in
+stdenv.mkDerivation rec {
+  pname = "rar";
+  inherit version;
+
+  src = fetchurl srcUrl;
 
   dontBuild = true;
 
   buildInputs = [ stdenv.cc.cc.lib ];
 
-  nativeBuildInputs = [ autoPatchelfHook ];
+  nativeBuildInputs = [ autoPatchelfHook installShellFiles ];
 
   installPhase = ''
     runHook preInstall
@@ -29,9 +42,11 @@ stdenv.mkDerivation rec {
     install -Dm644 {acknow.txt,license.txt} -t "$out/share/doc/rar"
     install -Dm644 rarfiles.lst -t "$out/etc"
 
-    install -Dm644 ${manSrc} "$out/share/man/man1/rar.1"
+    runHook postInstall
+  '';
 
-    runHook postCheck
+  postInstall = ''
+    installManPage ${manSrc}
   '';
 
   meta = with lib; {
@@ -39,6 +54,6 @@ stdenv.mkDerivation rec {
     homepage = "https://www.rarlab.com/";
     license = licenses.unfree;
     maintainers = with maintainers; [ thiagokokada ];
-    platforms = platforms.linux;
+    platforms = with platforms; linux ++ darwin;
   };
 }
