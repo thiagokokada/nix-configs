@@ -71,41 +71,45 @@
   };
 
   outputs = { self, nixpkgs, home, ... }@inputs: {
-    nixosConfigurations.miku-nixos = nixpkgs.lib.nixosSystem rec {
-      system = "x86_64-linux";
-      modules = [ ./hosts/miku-nixos ];
-      specialArgs = { inherit inputs system; };
-    };
+    nixosConfigurations = {
+      miku-nixos = nixpkgs.lib.nixosSystem rec {
+        system = "x86_64-linux";
+        modules = [ ./hosts/miku-nixos ];
+        specialArgs = { inherit inputs system; };
+      };
 
-    nixosConfigurations.mikudayo-nixos = nixpkgs.lib.nixosSystem rec {
-      system = "x86_64-linux";
-      modules = [ ./hosts/mikudayo-nixos ];
-      specialArgs = { inherit inputs system; };
-    };
+      mikudayo-nixos = nixpkgs.lib.nixosSystem rec {
+        system = "x86_64-linux";
+        modules = [ ./hosts/mikudayo-nixos ];
+        specialArgs = { inherit inputs system; };
+      };
 
-    nixosConfigurations.mikudayo-nubank = nixpkgs.lib.nixosSystem rec {
-      system = "x86_64-linux";
-      modules = [ ./hosts/mikudayo-nubank ];
-      specialArgs = { inherit inputs system; };
-    };
+      mikudayo-nubank = nixpkgs.lib.nixosSystem rec {
+        system = "x86_64-linux";
+        modules = [ ./hosts/mikudayo-nubank ];
+        specialArgs = { inherit inputs system; };
+      };
 
-    nixosConfigurations.mirai-vps = nixpkgs.lib.nixosSystem rec {
-      system = "x86_64-linux";
-      modules = [ ./hosts/mirai-vps ];
-      specialArgs = { inherit inputs system; };
+      mirai-vps = nixpkgs.lib.nixosSystem rec {
+        system = "x86_64-linux";
+        modules = [ ./hosts/mirai-vps ];
+        specialArgs = { inherit inputs system; };
+      };
     };
 
     # https://github.com/nix-community/home-manager/issues/1510
-    homeConfigurations.home-linux = home.lib.homeManagerConfiguration rec {
-      configuration = ./home-manager;
-      system = "x86_64-linux";
-      homeDirectory = "/home/thiagoko";
-      username = "thiagoko";
-      extraSpecialArgs = {
-        inherit inputs system;
-        super = {
-          device.type = "desktop";
-          my.username = username;
+    homeConfigurations ={
+      home-linux = home.lib.homeManagerConfiguration rec {
+        configuration = ./home-manager;
+        system = "x86_64-linux";
+        homeDirectory = "/home/thiagoko";
+        username = "thiagoko";
+        extraSpecialArgs = {
+          inherit inputs system;
+          super = {
+            device.type = "desktop";
+            my.username = username;
+          };
         };
       };
     };
