@@ -39,5 +39,7 @@ in
     unzip
     wget
     zip
+  ] ++ lib.optionals (!stdenv.isDarwin) [
+    unar
   ];
 }
