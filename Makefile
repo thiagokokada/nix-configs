@@ -4,7 +4,11 @@
 .PHONY: all clean update format format-check install activate run-vm-% build-% build-vm-% build-hm-% run-vm-%
 NIX_FLAGS := --experimental-features 'nix-command flakes'
 
+ifeq ($(shell uname),Darwin)
+all: build-hm-home-macos
+else
 all: build-miku-nixos build-mikudayo-nixos build-mirai-vps build-hm-home-linux
+endif
 
 clean:
 	rm -rf result *.qcow2
