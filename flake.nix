@@ -102,7 +102,30 @@
       home-linux = home.lib.homeManagerConfiguration rec {
         configuration = ./home-manager;
         system = "x86_64-linux";
-        homeDirectory = "/home/thiagoko";
+        homeDirectory = "/home/${username}";
+        username = "thiagoko";
+        extraSpecialArgs = {
+          inherit inputs system;
+          super = {
+            device.type = "desktop";
+            my.username = username;
+          };
+        };
+      };
+
+      home-macos = home.lib.homeManagerConfiguration rec {
+        configuration = {
+          imports = [
+            ./home-manager/misc.nix
+            ./home-manager/neovim.nix
+            ./home-manager/zsh.nix
+          ];
+
+          programs.home-manager.enable = true;
+          home.stateVersion = "20.09";
+        };
+        system = "x86_64-darwin";
+        homeDirectory = "/Users/${username}";
         username = "thiagoko";
         extraSpecialArgs = {
           inherit inputs system;
