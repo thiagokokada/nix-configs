@@ -17,6 +17,7 @@ let
 in
 {
   home.packages = with pkgs; [
+    aria2
     coreutils
     curl
     dos2unix
@@ -35,7 +36,6 @@ in
     stow
     tealdeer
     tig
-    unar
     unzip
     wget
     zip

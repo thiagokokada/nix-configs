@@ -26,7 +26,8 @@
     rlwrap
     telnet
     tmux
-    unar
+    unrar
+    unzip
     usbutils
     wget
   ];
