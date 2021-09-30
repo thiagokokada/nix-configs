@@ -12,16 +12,21 @@
     pandoc
     stow
     unstable.clojure-lsp
-    unstable.python-language-server
     unstable.shellcheck
+  ] ++ lib.optionals (!stdenv.isDarwin) [
+    unstable.python-language-server
   ];
 
   programs.zsh.shellAliases = {
     "doom-up" = "nice doom upgrade";
+    "em" = "run-bg emacs";
+    "et" = "emacs -nw";
   };
 
   programs.emacs = {
     enable = true;
-    package = pkgs.emacs-custom;
+    package = with pkgs; if stdenv.isDarwin
+    then emacsGcc
+    else emacs-custom;
   };
 }

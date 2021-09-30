@@ -117,6 +117,7 @@
         configuration = {
           imports = [
             ./home-manager/cli.nix
+            ./home-manager/emacs.nix
             ./home-manager/git.nix
             ./home-manager/htop.nix
             ./home-manager/misc.nix
