@@ -35,7 +35,6 @@ in
     stow
     tealdeer
     tig
-    unar
     unzip
     wget
     zip
