@@ -26,8 +26,12 @@ in
 
   # Add some Nix related packages
   home.packages = with pkgs; [
-    nox
+    hydra-check
+    nix-update
     nix-where-is
+    nixpkgs-fmt
+    nixpkgs-review
+    nox
   ];
 
   # To make cachix work you need add the current user as a trusted-user on Nix
