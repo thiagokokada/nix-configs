@@ -16,6 +16,7 @@
     pv
     rar
     ripgrep
+    rlwrap
     tealdeer
     telnet
     tig

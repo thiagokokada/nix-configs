@@ -118,6 +118,7 @@
       home-macos = home.lib.homeManagerConfiguration rec {
         configuration = {
           imports = [
+            ./home-manager/dev.nix
             ./home-manager/emacs.nix
             ./home-manager/minimal.nix
           ];
