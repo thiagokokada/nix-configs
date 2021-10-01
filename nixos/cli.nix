@@ -3,7 +3,6 @@
 {
   # CLI packages.
   environment.systemPackages = with pkgs; [
-    aria2
     bc
     bind
     curl

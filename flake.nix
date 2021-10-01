@@ -117,15 +117,8 @@
       home-macos = home.lib.homeManagerConfiguration rec {
         configuration = {
           imports = [
-            ./home-manager/cli.nix
             ./home-manager/emacs.nix
-            ./home-manager/git.nix
-            ./home-manager/htop.nix
-            ./home-manager/misc.nix
-            ./home-manager/neovim.nix
-            ./home-manager/ssh.nix
-            ./home-manager/tmux.nix
-            ./home-manager/zsh.nix
+            ./home-manager/minimal.nix
           ];
         };
         system = "x86_64-darwin";
