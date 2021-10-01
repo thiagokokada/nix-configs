@@ -10,12 +10,14 @@
     jo
     jq
     moreutils
+    netcat-gnu
     p7zip
     page
     pv
     rar
     ripgrep
     tealdeer
+    telnet
     tig
     unzip
     wget
