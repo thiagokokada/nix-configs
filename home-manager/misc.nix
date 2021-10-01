@@ -1,7 +1,11 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, super, ... }:
 
 {
-  imports = [ ../overlays ];
+  imports = [
+    ../overlays
+    ../modules/device.nix
+    ../modules/meta.nix
+  ];
 
   nixpkgs.config = import ./nixpkgs-config.nix;
   xdg.configFile."nixpkgs/config.nix".source = ./nixpkgs-config.nix;
@@ -18,4 +22,8 @@
   # the Home Manager release notes for a list of state version
   # changes in each release.
   home.stateVersion = lib.mkForce "21.05";
+
+  # Inherit config from NixOS or homeConfigurations
+  device = super.device;
+  meta = super.meta;
 }
