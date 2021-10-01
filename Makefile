@@ -5,10 +5,14 @@
 NIX_FLAGS := --experimental-features 'nix-command flakes'
 
 ifeq ($(shell uname),Darwin)
-all: build-hm-home-macos
+all: all-macos
 else
-all: build-miku-nixos build-mikudayo-nixos build-mirai-vps build-hm-home-linux
+all: all-linux
 endif
+
+all-linux: build-miku-nixos build-mikudayo-nixos build-mirai-vps build-hm-home-linux
+
+all-macos: build-hm-home-macos
 
 clean:
 	rm -rf result *.qcow2

@@ -40,7 +40,7 @@ jobs:
         run: git config --global init.defaultBranch master
 
       - name: Build Nix configs
-        run: ./Makefile all
+        run: ./Makefile all-linux
 
       - name: Create Pull Request
         id: cpr
