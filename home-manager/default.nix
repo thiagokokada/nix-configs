@@ -21,9 +21,11 @@
     ./tmux.nix
     ./zsh.nix
     ../modules/device.nix
+    ../modules/meta.nix
     ../modules/theme.nix
   ];
 
   # Inherit device config from NixOS or homeConfigurations
   device = super.device;
+  meta = super.meta;
 }

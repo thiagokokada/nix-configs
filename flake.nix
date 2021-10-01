@@ -109,6 +109,7 @@
           super = {
             device.type = "desktop";
             meta.username = username;
+            meta.configPath = "${homeDirectory}/Projects/nix-configs";
           };
         };
       };
@@ -135,6 +136,7 @@
           super = {
             device.type = "desktop";
             meta.username = username;
+            meta.configPath = "${homeDirectory}/Projects/nix-configs";
           };
         };
       };

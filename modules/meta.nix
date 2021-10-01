@@ -8,5 +8,10 @@ with lib;
       type = types.str;
       default = "thiagoko";
     };
+    configPath = mkOption {
+      description = "Location of this config";
+      type = types.path;
+      default = "/etc/nixos";
+    };
   };
 }
