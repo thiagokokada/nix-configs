@@ -11,7 +11,7 @@
     ./htop.nix
     ./i3.nix
     ./kitty.nix
-    ./misc.nix
+    ./meta.nix
     ./mpv.nix
     ./neovim.nix
     ./nnn.nix

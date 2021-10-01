@@ -12,7 +12,7 @@ in
       # Include the results of the hardware scan.
       ./hardware-configuration.nix
       ../../nixos/cli.nix
-      ../../nixos/misc.nix
+      ../../nixos/meta.nix
       ../../nixos/security.nix
       ../../nixos/ssh.nix
       ../../nixos/system.nix

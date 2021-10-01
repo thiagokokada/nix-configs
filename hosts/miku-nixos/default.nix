@@ -14,7 +14,7 @@
     ../../nixos/game.nix
     ../../nixos/home.nix
     ../../nixos/locale.nix
-    ../../nixos/misc.nix
+    ../../nixos/meta.nix
     ../../nixos/pc.nix
     ../../nixos/security.nix
     ../../nixos/ssh.nix

@@ -16,7 +16,7 @@ in
     ../../nixos/home.nix
     ../../nixos/laptop.nix
     ../../nixos/locale.nix
-    ../../nixos/misc.nix
+    ../../nixos/meta.nix
     ../../nixos/system.nix
     ../../nixos/user.nix
     ../../nixos/xserver.nix

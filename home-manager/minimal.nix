@@ -7,7 +7,7 @@
     ./cli.nix
     ./git.nix
     ./htop.nix
-    ./misc.nix
+    ./meta.nix
     ./neovim.nix
     ./ssh.nix
     ./tmux.nix
