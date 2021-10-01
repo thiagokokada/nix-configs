@@ -2,7 +2,8 @@
 
 let
   babashka = pkgs.unstable.babashka;
-in {
+in
+{
   home.packages = with pkgs; [
     babashka
     clojure
