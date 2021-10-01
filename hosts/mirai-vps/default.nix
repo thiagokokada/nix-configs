@@ -18,6 +18,7 @@ in
       ../../nixos/system.nix
       ../../nixos/user.nix
       ../../nixos/vps.nix
+      ../../modules/device.nix
       ../../modules/meta.nix
       ../../cachix.nix
       ../../overlays
