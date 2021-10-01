@@ -1,3 +1,5 @@
 result
 result-*
 *.qcow2
+# Looks like a temporary file, but not sure
+doom-emacs/flycheck_config.el
