@@ -30,6 +30,10 @@ in
     nix-where-is
   ];
 
+  # To make cachix work you need add the current user as a trusted-user on Nix
+  # sudo echo "trusted-users = $(whoami)" >> /etc/nix/nix.conf
+  # Another option is to add a group by prefixing it by @, e.g.:
+  # sudo echo "trusted-users = @wheel" >> /etc/nix/nix.conf
   caches.cachix = [
     { name = "nix-community"; sha256 = "1r0dsyhypwqgw3i5c2rd5njay8gqw9hijiahbc2jvf0h52viyd9i"; }
     { name = "thiagokokada-nix-configs"; sha256 = "01kzz81ab24a2z0lf0rfjly8k8kgxr7p0x8b7xai3hzakmbmb6nx"; }
