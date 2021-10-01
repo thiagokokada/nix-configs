@@ -1,4 +1,4 @@
-{ config, lib, pkgs, super, ... }:
+{ lib, pkgs, super, inputs, ... }:
 
 let
   nix-where-is = pkgs.writeShellScriptBin "nix-where-is" ''
@@ -21,12 +21,18 @@ in
     ../overlays
     ../modules/device.nix
     ../modules/meta.nix
+    inputs.declarative-cachix.homeManagerModules.declarative-cachix
   ];
 
   # Add some Nix related packages
   home.packages = with pkgs; [
     nox
     nix-where-is
+  ];
+
+  caches.cachix = [
+    { name = "nix-community"; sha256 = "1r0dsyhypwqgw3i5c2rd5njay8gqw9hijiahbc2jvf0h52viyd9i"; }
+    { name = "thiagokokada-nix-configs"; sha256 = "01kzz81ab24a2z0lf0rfjly8k8kgxr7p0x8b7xai3hzakmbmb6nx"; }
   ];
 
   # Set custom nixpkgs config (e.g.: allowUnfree), both for this

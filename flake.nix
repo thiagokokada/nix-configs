@@ -13,6 +13,7 @@
       url = "github:nix-community/home-manager/master";
       inputs.nixpkgs.follows = "unstable";
     };
+    declarative-cachix.url = "github:jonascarpay/declarative-cachix/master";
     emacs = {
       url = "github:nix-community/emacs-overlay/master";
       inputs.nixpkgs.follows = "unstable";
