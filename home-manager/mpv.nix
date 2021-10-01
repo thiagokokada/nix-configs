@@ -1,6 +1,8 @@
 { config, lib, pkgs, inputs, ... }:
 
 {
+  home.packages = with pkgs; [ python3Packages.youtube-dl ];
+
   programs.mpv = {
     enable = true;
 
