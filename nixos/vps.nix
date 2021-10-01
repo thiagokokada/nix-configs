@@ -105,7 +105,7 @@ in
     };
   };
 
-  systemd.tmpfiles.rules = with config.my; with config.services.plex; [
+  systemd.tmpfiles.rules = with config.meta; with config.services.plex; [
     "d /media/Music 2775 ${username} ${group}"
     "d /media/Photos 2775 ${username} ${group}"
     "d /media/Movies 2775 ${username} ${group}"

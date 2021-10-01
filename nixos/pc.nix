@@ -1,6 +1,6 @@
 { pkgs, config, lib, inputs, ... }:
 let
-  inherit (config.my) username;
+  inherit (config.meta) username;
   archive = "/mnt/archive/${username}";
 in
 with config.users.users.${username}; {

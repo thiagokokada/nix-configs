@@ -1,6 +1,6 @@
 { config, lib, pkgs, ... }:
 let
-  inherit (config.my) username;
+  inherit (config.meta) username;
 in
 {
   # Define a user account. Don't forget to set a password with ‘passwd’.

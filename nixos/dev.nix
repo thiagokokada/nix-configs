@@ -1,6 +1,6 @@
 { pkgs, config, ... }:
 let
-  inherit (config.my) username;
+  inherit (config.meta) username;
 in
 {
   environment.systemPackages = with pkgs; [

@@ -2,7 +2,7 @@
 
 with lib;
 {
-  options.my = {
+  options.meta = {
     username = mkOption {
       description = "Main username";
       type = types.str;

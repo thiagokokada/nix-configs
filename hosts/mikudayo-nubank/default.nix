@@ -4,7 +4,7 @@
 
 { config, pkgs, inputs, ... }:
 
-let inherit (config.my) username;
+let inherit (config.meta) username;
 in
 {
   imports = [
@@ -23,7 +23,7 @@ in
     ../../nixos/yubikey.nix
     ../../cachix.nix
     ../../modules/device.nix
-    ../../modules/my.nix
+    ../../modules/meta.nix
     ../../overlays
     # inputs.hardware.nixosModules.common-gpu-nvidia
     inputs.hardware.nixosModules.common-gpu-nvidia-disable

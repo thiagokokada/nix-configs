@@ -1,6 +1,6 @@
 { super, config, lib, pkgs, ... }:
 
-let inherit (super.my) username;
+let inherit (config.home) username;
 in
 {
   home.packages = with pkgs; [

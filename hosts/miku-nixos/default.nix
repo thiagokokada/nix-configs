@@ -23,7 +23,7 @@
     ../../nixos/xserver.nix
     ../../cachix.nix
     ../../modules/device.nix
-    ../../modules/my.nix
+    ../../modules/meta.nix
     ../../overlays
     inputs.hardware.nixosModules.common-cpu-intel
   ];

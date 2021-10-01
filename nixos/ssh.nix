@@ -1,5 +1,5 @@
 { config, lib, pkgs, ... }:
-let inherit (config.my) username;
+let inherit (config.meta) username;
 in
 {
   # Enable OpenSSH

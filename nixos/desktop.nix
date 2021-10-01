@@ -1,7 +1,7 @@
 { pkgs, config, ... }:
 
 let
-  inherit (config.my) username;
+  inherit (config.meta) username;
 in
 {
   imports = [ ./audio.nix ];

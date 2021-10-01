@@ -108,7 +108,7 @@
           inherit inputs system;
           super = {
             device.type = "desktop";
-            my.username = username;
+            meta.username = username;
           };
         };
       };
@@ -134,7 +134,7 @@
           inherit inputs system;
           super = {
             device.type = "desktop";
-            my.username = username;
+            meta.username = username;
           };
         };
       };

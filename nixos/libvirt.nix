@@ -1,6 +1,6 @@
 { config, lib, pkgs, ... }:
 let
-  inherit (config.my) username;
+  inherit (config.meta) username;
   targetDisk = "/dev/disk/by-id/dm-name-enc-win10";
   startVmScript = name: allowedCpus:
     pkgs.writeShellScriptBin "start-${name}" ''

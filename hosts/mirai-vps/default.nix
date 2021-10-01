@@ -4,7 +4,7 @@
 
 { config, pkgs, inputs, system, ... }:
 
-let inherit (config.my) username;
+let inherit (config.meta) username;
 in
 {
   imports =
@@ -18,7 +18,7 @@ in
       ../../nixos/system.nix
       ../../nixos/user.nix
       ../../nixos/vps.nix
-      ../../modules/my.nix
+      ../../modules/meta.nix
       ../../cachix.nix
       ../../overlays
       inputs.home.nixosModules.home-manager
