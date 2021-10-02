@@ -22,24 +22,28 @@
   home.sessionPath = [ "$HOME/.config/emacs/bin" ];
 
   programs.zsh = {
-    initExtra = ''
-      emp() {
-        local p
-        for p in $@; do
-          if [[ -d "$p" ]]; then
-            touch "$p"/.projectile
-          elif [[ -f "$p" ]]; then
-            touch $(dirname "$p")/.projectile
-          fi
-        done
-        em $@
-      }
-    '';
+    initExtra =
+      let
+        emacs = "${config.programs.emacs.package}/bin/emacs";
+      in
+      ''
+        em() { run-bg ${emacs} "$@" }
+        et() { ${emacs} -nw "$@" }
+        emp() {
+          local p
+          for p in $@; do
+            if [[ -d "$p" ]]; then
+              touch "$p"/.projectile
+            elif [[ -f "$p" ]]; then
+              touch $(dirname "$p")/.projectile
+            fi
+          done
+          em $@
+        }
+      '';
 
     shellAliases = {
-      "doom-up" = "nice doom upgrade";
-      "em" = "run-bg emacs";
-      "et" = "emacs -nw";
+      "doom-up!" = "nice doom upgrade";
     };
   };
 

@@ -100,39 +100,46 @@ in
       zstyle ':zim:ssh' ids /dev/null
     '';
 
-    initExtra = ''
-      # helpers
-      close-fd() { "$@" </dev/null &>/dev/null }
-      run-bg() { "$@" </dev/null &>/dev/null &! }
-      open() { run-bg xdg-open "$@" }
-      restart() { pkill "$1"; run-bg "$@" }
-      get-ip() { curl -Ss "https://ifconfig.me" }
-      get-ip!() { curl -Ss "https://ipapi.co/$(get-ip)/yaml" }
+    initExtra = with pkgs;
+      let
+        open =
+          # macOS already has `open`
+          if stdenv.isDarwin then
+            ""
+          else
+            ''open() { run-bg ${xdg-utils}/bin/xdg-open "$@" }'';
+      in
+      ''
+        # helpers
+        run-bg() { "$@" </dev/null &>/dev/null &! }
+        ${open}
+        get-ip() { ${curl}/bin/curl -Ss "https://ifconfig.me" }
+        get-ip!() { ${curl}/bin/curl -Ss "https://ipapi.co/$(get-ip)/yaml" }
 
-      # try to correct the spelling of commands
-      setopt correct
-      # Disable C-S/C-Q
-      setopt noflowcontrol
+        # try to correct the spelling of commands
+        setopt correct
+        # Disable C-S/C-Q
+        setopt noflowcontrol
 
-      # Edit in vim
-      autoload -U edit-command-line
-      zle -N edit-command-line
-      bindkey -M vicmd v edit-command-line
+        # Edit in vim
+        autoload -U edit-command-line
+        zle -N edit-command-line
+        bindkey -M vicmd v edit-command-line
 
-      # zsh-history-substring-search
-      bindkey "$terminfo[kcuu1]" history-substring-search-up
-      bindkey "$terminfo[kcud1]" history-substring-search-down
+        # zsh-history-substring-search
+        bindkey "$terminfo[kcuu1]" history-substring-search-up
+        bindkey "$terminfo[kcud1]" history-substring-search-down
 
-      # source contents from ~/.zshrc.d/*.zsh
-      setopt +o nomatch
-      for file in "$HOME/.zshrc.d/"*.zsh; do
-        [[ -f "$file" ]] && source "$file"
-      done
-      setopt -o nomatch
+        # source contents from ~/.zshrc.d/*.zsh
+        setopt +o nomatch
+        for file in "$HOME/.zshrc.d/"*.zsh; do
+          [[ -f "$file" ]] && source "$file"
+        done
+        setopt -o nomatch
 
-      # load after ~/.zshrc.d files to make sure that ~/.local/bin is the first in $PATH
-      export PATH="$HOME/.local/bin:$PATH"
-    '';
+        # load after ~/.zshrc.d files to make sure that ~/.local/bin is the first in $PATH
+        export PATH="$HOME/.local/bin:$PATH"
+      '';
 
     plugins = [
       {
