@@ -101,6 +101,7 @@
     # https://github.com/nix-community/home-manager/issues/1510
     homeConfigurations = {
       home-linux = home.lib.homeManagerConfiguration rec {
+        stateVersion = "21.05";
         configuration = ./home-manager;
         system = "x86_64-linux";
         homeDirectory = "/home/${username}";
@@ -116,6 +117,7 @@
       };
 
       home-macos = home.lib.homeManagerConfiguration rec {
+        stateVersion = "21.05";
         configuration = {
           imports = [
             ./home-manager/dev.nix
