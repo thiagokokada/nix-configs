@@ -6,35 +6,8 @@ let
   btrfsInInitrd = any (fs: fs == "btrfs") initrd.supportedFilesystems;
   btrfsInSystem = any (fs: fs == "btrfs") supportedFilesystems;
   enableBtrfs = btrfsInInitrd || btrfsInSystem;
-
-  nixos-clean-up = pkgs.writeShellScriptBin "nixos-clean-up" ''
-    set -euo pipefail
-
-    sudo -s -- <<EOF
-    find -H /nix/var/nix/gcroots/auto -type l | xargs readlink | grep "/result$" | xargs rm -f
-    nix-collect-garbage -d
-    nixos-rebuild boot --fast
-    if [[ "''${1:-}" == "--optimize" ]]; then
-      nix-store --optimize
-    fi
-    EOF
-  '';
 in
 {
-  environment = {
-    # To get zsh completion for system packages
-    pathsToLink = [ "/share/zsh" ];
-    systemPackages = with pkgs; [
-      cachix
-      git # otherwise rebuild may not work if we depend on fetchGit
-      neovim-custom
-      nixos-clean-up
-      zsh
-    ];
-  };
-
-  nix.trustedUsers = [ "root" "@wheel" ];
-
   boot = {
     # Mount /tmp using tmpfs for performance
     tmpOnTmpfs = true;

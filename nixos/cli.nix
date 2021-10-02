@@ -2,34 +2,40 @@
 
 {
   # CLI packages.
-  environment.systemPackages = with pkgs; [
-    bc
-    bind
-    curl
-    dos2unix
-    ffmpeg
-    file
-    glxinfo
-    htop
-    linuxPackages.cpupower
-    lm_sensors
-    lshw
-    lsof
-    mediainfo
-    multitime
-    netcat-gnu
-    openssl
-    pciutils
-    powertop
-    psmisc
-    rlwrap
-    telnet
-    tmux
-    unrar
-    unzip
-    usbutils
-    wget
-  ];
+  environment = {
+    # To get zsh completion for system packages
+    pathsToLink = [ "/share/zsh" ];
+
+    systemPackages = with pkgs; [
+      bc
+      bind
+      curl
+      dos2unix
+      ffmpeg
+      file
+      glxinfo
+      htop
+      linuxPackages.cpupower
+      lm_sensors
+      lshw
+      lsof
+      mediainfo
+      multitime
+      neovim-custom
+      netcat-gnu
+      openssl
+      pciutils
+      powertop
+      psmisc
+      rlwrap
+      telnet
+      tmux
+      unrar
+      unzip
+      usbutils
+      wget
+    ];
+  };
 
   # Enable programs that need special configuration.
   programs = {
