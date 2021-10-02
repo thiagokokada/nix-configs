@@ -5,6 +5,7 @@
     aria2
     coreutils
     curl
+    daemonize
     dos2unix
     each
     jo
