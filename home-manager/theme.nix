@@ -1,6 +1,9 @@
 { config, pkgs, lib, ... }:
 
 {
+  # TODO: remove when HM 21.11 is released
+  imports = [ ../modules/xsettingsd.nix ];
+
   theme = {
     fonts = {
       gui = {
@@ -29,31 +32,13 @@
       noto-fonts-emoji
     ];
 
-  systemd.user.services = {
-    xsettingsd =
-      let
-        mkKeyValue = (k: v: ''${k} "${v}"'');
-        configFile = with lib.generators;
-          with config.gtk;
-          with config.xsession;
-          toKeyValue { mkKeyValue = mkKeyValue; } {
-            "Net/IconThemeName" = "${iconTheme.name}";
-            "Net/ThemeName" = "${theme.name}";
-            "Gtk/CursorThemeName" = "${pointerCursor.name}";
-          };
-      in
-      {
-        Unit = {
-          Description =
-            "Provides settings to X11 applications via the XSETTINGS specification";
-          After = [ "graphical-session-pre.target" ];
-          PartOf = [ "graphical-session.target" ];
-        };
-        Install = { WantedBy = [ "graphical-session.target" ]; };
-        Service = {
-          ExecStart = "${pkgs.kbdd}/bin/xsettingsd --config=${configFile}";
-        };
-      };
+  services.xsettingsd = {
+    enable = true;
+    settings = with config; {
+      "Net/IconThemeName" = gtk.iconTheme.name;
+      "Net/ThemeName" = gtk.theme.name;
+      "Gtk/CursorThemeName" = xsession.pointerCursor.name;
+    };
   };
 
   xsession.pointerCursor = {
