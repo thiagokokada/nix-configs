@@ -21,7 +21,8 @@ let
       string = ''"${value}"'';
     }.${builtins.typeOf value};
 
-in {
+in
+{
   meta.maintainers = [ maintainers.imalison ];
 
   options = {
@@ -59,10 +60,11 @@ in {
         type = types.nullOr types.package;
         internal = true;
         readOnly = true;
-        default = if cfg.settings == { } then
-          null
-        else
-          pkgs.writeText "xsettingsd.conf" (renderSettings cfg.settings);
+        default =
+          if cfg.settings == { } then
+            null
+          else
+            pkgs.writeText "xsettingsd.conf" (renderSettings cfg.settings);
       };
     };
   };
