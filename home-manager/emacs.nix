@@ -1,5 +1,8 @@
 { config, lib, pkgs, ... }:
 
+let
+  doomConfigPath = "${config.meta.configPath}/doom-emacs";
+in
 {
   imports = [ ../modules/meta.nix ];
 
@@ -55,10 +58,20 @@
   };
 
   xdg.configFile."doom".source =
-    config.lib.file.mkOutOfStoreSymlink "${config.meta.configPath}/doom-emacs";
+    config.lib.file.mkOutOfStoreSymlink doomConfigPath;
 
-  home.activation.installDoom = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-    [ ! -d $HOME/.config/emacs ] && \
-      $DRY_RUN_CMD ${pkgs.git}/bin/git clone https://github.com/hlissner/doom-emacs/ $HOME/.config/emacs
-  '';
+  home.activation = {
+    installDoom = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+      readonly emacs_dir="${config.home.homeDirectory}";
+      [ ! -d "$emacs_dir" ] && \
+        $DRY_RUN_CMD ${pkgs.git}/bin/git clone https://github.com/hlissner/doom-emacs/ "$emacs_dir"
+    '';
+
+    checkDoomConfigLocation = lib.hm.dag.entryAfter [ "linkGeneration" ] ''
+      if [ ! -e "${config.xdg.configFile."doom".target}" ]; then
+        >&2 echo "[ERROR] doom-emacs config is pointing to a non-existing path: ${doomConfigPath}"
+        $DRY_RUN_CMD exit 1
+      fi
+    '';
+  };
 }
