@@ -2,7 +2,7 @@
 
 {
   # TODO: remove when HM 21.11 is released
-  imports = [ ../modules/xsettingsd.nix ];
+  imports = [ ../modules/home-manager/xsettingsd.nix ];
 
   theme = {
     fonts = {

@@ -1,7 +1,7 @@
 { config, lib, pkgs, inputs, ... }:
 
 {
-  imports = [ ../modules/nnn.nix ];
+  imports = [ ../modules/home-manager/nnn.nix ];
 
   programs.nnn = {
     enable = true;
