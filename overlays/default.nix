@@ -33,7 +33,8 @@
 
       plex = final.unstable.plex;
 
-      rar = prev.callPackage ../packages/rar { };
+      # TODO: remove it from 21.11
+      rar = final.unstable.rar;
     })
   ];
 }
