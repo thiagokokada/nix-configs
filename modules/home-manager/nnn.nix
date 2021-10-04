@@ -55,6 +55,7 @@ in
         type = types.package;
         default = pkgs.nnn;
         defaultText = literalExample "pkgs.nnn";
+        example = literalExample "pkgs.nnn.override ({ withNerdIcons = true; });";
         description = ''
           Package containing the <command>nnn</command> program.
         '';
@@ -80,7 +81,7 @@ in
             D = "~/Downloads";
             p = "~/Pictures";
             v = "~/Videos";
-          }
+          };
         '';
         default = { };
       };

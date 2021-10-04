@@ -11,6 +11,8 @@
       D = "~/Downloads";
       p = "~/Pictures";
       v = "~/Videos";
+      m = "/mnt";
+      "/" = "/";
     };
     extraPackages = with pkgs; [
       bat
