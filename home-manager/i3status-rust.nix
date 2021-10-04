@@ -112,7 +112,6 @@ in
           driver = "kbddbus";
         };
 
-        # TODO: check if dunst is running?
         notificationBlock =
           let
             dunstctl = "${pkgs.dunst}/bin/dunstctl";
