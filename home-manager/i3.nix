@@ -17,7 +17,7 @@ let
       inherit config lib modifier alt;
 
       browser = "firefox";
-      fileManager = "${terminal} ${pkgs.nnnCustom}/bin/nnn";
+      fileManager = "${terminal} ${config.programs.nnn.finalPackage}/bin/nnn";
       statusCommand = with config;
         "${programs.i3status-rust.package}/bin/i3status-rs ${xdg.configHome}/i3status-rust/config-i3.toml";
       menu = "${rofi} -show drun";

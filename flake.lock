@@ -106,6 +106,23 @@
         "type": "github"
       }
     },
+    "nnn-plugins": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1618311913,
+        "narHash": "sha256-dAoXn0+muTuml9s6WXsv7LSY6p2hy8/G1XsBmbR+fTE=",
+        "owner": "jarun",
+        "repo": "nnn",
+        "rev": "f4c5b1a937c922915fb69abfb7c54f4daa6e06d3",
+        "type": "github"
+      },
+      "original": {
+        "owner": "jarun",
+        "ref": "v4.0",
+        "repo": "nnn",
+        "type": "github"
+      }
+    },
     "nubank": {
       "locked": {
         "lastModified": 1628617088,
@@ -147,6 +164,7 @@
         "home": "home",
         "home-unstable": "home-unstable",
         "nixpkgs": "nixpkgs",
+        "nnn-plugins": "nnn-plugins",
         "nubank": "nubank",
         "pure": "pure",
         "unstable": "unstable",

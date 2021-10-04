@@ -1,53 +1,35 @@
 { config, lib, pkgs, inputs, ... }:
 
-# TODO: Convert this to a module
 {
-  nixpkgs.overlays = [
-    (final: prev: rec {
-      nnnWithIcons = pkgs.nnn.override ({ withNerdIcons = true; });
+  imports = [ ../modules/nnn.nix ];
 
-      nnnCustom = pkgs.writeShellScriptBin "nnn" ''
-        export NNN_PLUG="c:fzcd;f:finder;o:fzopen;p:preview-tui;t:nmount;v:imgview";
-        export NNN_BMS="D:~/Downloads/;I:~/Pictures;V:~/Videos;P:~/Projects;m:/mnt;r:/";
-        export USE_VIDEOTHUMB=1;
-
-        ${pkgs.nnnWithIcons}/bin/nnn -a "$@"
-      '';
-
-      nnnPlugins = with pkgs;
-        let inherit (nnn) version;
-        in
-        stdenv.mkDerivation rec {
-          name = "nnn-plugins-${version}";
-          src = fetchFromGitHub {
-            owner = "jarun";
-            repo = "nnn";
-            rev = "v${version}";
-            sha256 = "sha256-Hpc8YaJeAzJoEi7aJ6DntH2VLkoR6ToP6tPYn3llR7k=";
-          };
-          buildPhase = "true";
-          installPhase = ''
-            mkdir -p $out
-            cp -rT plugins $out
-          '';
-        };
-    })
-  ];
-
-  home = {
-    packages = with pkgs; [
+  programs.nnn = {
+    enable = true;
+    package = pkgs.nnn.override ({ withNerdIcons = true; });
+    bookmarks = {
+      d = "~/Documents";
+      D = "~/Downloads";
+      p = "~/Pictures";
+      v = "~/Videos";
+    };
+    extraPackages = with pkgs; [
       bat
       exa
       ffmpegthumbnailer
       mediainfo
-      nnnCustom
       sxiv
     ];
-  };
-
-  xdg.configFile."nnn/plugins" = {
-    source = pkgs.nnnPlugins;
-    recursive = true;
+    plugins = {
+      src = "${inputs.nnn-plugins}/plugins";
+      mappings = {
+        c = "fzcd";
+        f = "finder";
+        o = "fzopen";
+        p = "preview-tui";
+        t = "nmount";
+        v = "imgview";
+      };
+    };
   };
 
   programs.zsh.initExtra = ''
@@ -71,7 +53,7 @@
       # stty lwrap undef
       # stty lnext undef
 
-      ${pkgs.nnnCustom}/bin/nnn -a "$@"
+      ${config.programs.nnn.finalPackage}/bin/nnn -a "$@"
 
       if [ -f "$NNN_TMPFILE" ]; then
         . "$NNN_TMPFILE"

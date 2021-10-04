@@ -19,7 +19,11 @@
       inputs.nixpkgs.follows = "unstable";
     };
     nubank.url = "github:nubank/nixpkgs/master";
-
+    # nnn plugins
+    nnn-plugins = {
+      url = "github:jarun/nnn/v4.0";
+      flake = false;
+    };
     # ZSH plugins
     zit = {
       url = "github:thiagokokada/zit/master";
