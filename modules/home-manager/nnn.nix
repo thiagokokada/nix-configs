@@ -82,7 +82,7 @@ in
             v = "~/Videos";
           }
         '';
-        default = {};
+        default = { };
       };
 
       extraPackages = mkOption {
@@ -91,7 +91,7 @@ in
         description = ''
           Extra packages available to nnn.
         '';
-        default = [];
+        default = [ ];
       };
 
       plugins = mkOption {
@@ -99,7 +99,7 @@ in
         description = ''
           Manage nnn plugins.
         '';
-        default = { src = null; mappings = {}; };
+        default = { src = null; mappings = { }; };
       };
     };
   };
@@ -118,7 +118,8 @@ in
           ''
         ];
       });
-    in mkIf cfg.enable {
+    in
+    mkIf cfg.enable {
       programs.nnn.finalPackage = nnnPackage;
       home.packages = [
         nnnPackage
