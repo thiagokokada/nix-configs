@@ -23,7 +23,7 @@ let
       menu = "${rofi} -show drun";
       # light needs to be installed in system, so not defining a path here
       light = "light";
-      pamixer = "${pkgs.unstable.pamixer}/bin/pamixer";
+      pamixer = "${pkgs.pamixer}/bin/pamixer";
       playerctl = "${pkgs.playerctl}/bin/playerctl";
       terminal = "${pkgs.kitty}/bin/kitty";
 

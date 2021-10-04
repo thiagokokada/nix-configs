@@ -34,6 +34,7 @@
       plex = final.unstable.plex;
 
       # TODO: remove it from 21.11
+      pamixer = final.unstable.pamixer;
       rar = final.unstable.rar;
     })
   ];
