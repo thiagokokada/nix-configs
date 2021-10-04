@@ -20,7 +20,7 @@ let
         "${pkgs.j4-dmenu-desktop}/bin/j4-dmenu-desktop --dmenu='${pkgs.wofi}/bin/wofi --show drun'";
       # light needs to be installed in system, so not defining a path here
       light = "light";
-      pamixer = "${pkgs.pamixer-unstable}/bin/pamixer";
+      pamixer = "${pkgs.unstable.pamixer}/bin/pamixer";
       playerctl = "${pkgs.playerctl}/bin/playerctl";
       terminal = "${pkgs.kitty}/bin/kitty";
 

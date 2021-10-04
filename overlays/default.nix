@@ -31,16 +31,6 @@
 
       open-browser = prev.callPackage ../packages/open-browser { };
 
-      pamixer-unstable = with prev; pamixer.overrideAttrs (oldAttrs: {
-        version = "unstable-2021-03-29";
-        src = fetchFromGitHub {
-          owner = "cdemoulins";
-          repo = "pamixer";
-          rev = "4ea2594cb8c605dccd00a381ba19680eba368e94";
-          sha256 = "sha256-kV4wIxm1WZvqqyfmgQ2cSbRJwJR154OW0MMDg2ntf6g=";
-        };
-      });
-
       plex = final.unstable.plex;
 
       rar = prev.callPackage ../packages/rar { };

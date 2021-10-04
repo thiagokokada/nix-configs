@@ -23,11 +23,11 @@ in
     mcomix3
     ncdu
     open-browser
-    pamixer-unstable
     pavucontrol
     pcmanfm
     peek
     qalculate-gtk
+    unstable.pamixer
     vlc
     xarchiver
     xdotool
