@@ -3,6 +3,8 @@
 {
   imports = [ ../modules/home-manager/nnn.nix ];
 
+  home.packages = [ (pkgs.nerdfonts.override { fonts = [ "Hack" ]; }) ];
+
   programs.nnn = {
     enable = true;
     package = pkgs.nnn.override ({ withNerdIcons = true; });
@@ -17,8 +19,10 @@
     extraPackages = with pkgs; [
       bat
       exa
-      ffmpegthumbnailer
+      fzf
       mediainfo
+    ] ++ lib.optionals (!stdenv.isDarwin) [
+      ffmpegthumbnailer
       sxiv
     ];
     plugins = {

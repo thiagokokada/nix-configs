@@ -127,6 +127,7 @@
             ./home-manager/dev.nix
             ./home-manager/emacs.nix
             ./home-manager/minimal.nix
+            ./home-manager/nnn.nix
           ];
         };
         system = "x86_64-darwin";
