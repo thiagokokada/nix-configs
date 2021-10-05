@@ -53,7 +53,7 @@ in
   programs.emacs = {
     enable = true;
     package = with pkgs; if stdenv.isDarwin
-    then emacsGcc
+    then emacs # TODO: change to emacsGcc when it is more stable
     else emacs-custom;
   };
 
