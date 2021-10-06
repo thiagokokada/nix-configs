@@ -122,14 +122,7 @@
 
       home-macos = home.lib.homeManagerConfiguration rec {
         stateVersion = "21.05";
-        configuration = {
-          imports = [
-            ./home-manager/dev.nix
-            ./home-manager/emacs.nix
-            ./home-manager/minimal.nix
-            ./home-manager/nnn.nix
-          ];
-        };
+        configuration = ./home-manager/macos.nix;
         system = "x86_64-darwin";
         homeDirectory = "/Users/${username}";
         username = "thiagoko";
