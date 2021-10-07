@@ -13,7 +13,9 @@
       url = "github:nix-community/home-manager/master";
       inputs.nixpkgs.follows = "unstable";
     };
+    flake-utils.url = "github:numtide/flake-utils";
     declarative-cachix.url = "github:jonascarpay/declarative-cachix/master";
+    # overlays
     emacs = {
       url = "github:nix-community/emacs-overlay/master";
       inputs.nixpkgs.follows = "unstable";
@@ -75,7 +77,7 @@
     };
   };
 
-  outputs = { self, nixpkgs, home, ... }@inputs: {
+  outputs = { self, nixpkgs, home, flake-utils, ... }@inputs: {
     nixosConfigurations = {
       miku-nixos = nixpkgs.lib.nixosSystem rec {
         system = "x86_64-linux";
@@ -136,5 +138,22 @@
         };
       };
     };
-  };
+  } // flake-utils.lib.eachDefaultSystem (system:
+    let
+      pkgs = import nixpkgs { inherit system; };
+    in
+    {
+      devShell = pkgs.mkShell {
+        buildInputs = with pkgs; [
+          coreutils
+          findutils
+          git
+          gnumake
+          neovim
+          nixFlakes
+          nixpkgs-fmt
+        ];
+      };
+    }
+  );
 }
