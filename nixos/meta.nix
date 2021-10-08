@@ -18,9 +18,6 @@ in
   # TODO: remove on 21.11
   imports = [ "${inputs.unstable}/nixos/modules/programs/git.nix" ];
 
-  # Add wheel to Nix trusted users
-  nix.trustedUsers = [ "root" "@wheel" ];
-
   # Add some Nix related packages
   environment.systemPackages = with pkgs; [
     cachix
@@ -43,18 +40,32 @@ in
   system.stateVersion = "21.05"; # Did you read the comment?
 
   nix = {
+    # Add wheel to Nix trusted users
+    trustedUsers = [ "root" "@wheel" ];
+
     # Enable Flakes
+    # TODO: remove after Nix 2.4 is stable
     package = pkgs.nixFlakes;
     extraOptions = ''
       experimental-features = nix-command flakes
+      # Useful for nix-direnv, however not sure if this will
+      # generate too much garbage
+      # keep-outputs = true
+      # keep-derivations = true
     '';
 
     # Set the $NIX_PATH entry for nixpkgs. This is necessary in
     # this setup with flakes, otherwise commands like `nix-shell
     # -p pkgs.htop` will keep using an old version of nixpkgs
-    nixPath = [ "nixpkgs=${inputs.nixpkgs}" ];
+    nixPath = [
+      "nixpkgs=${inputs.nixpkgs}"
+      "nixpkgs-unstable=${inputs.unstable}"
+    ];
     # Same as above, but for `nix shell nixpkgs#htop`
-    registry.nixpkgs.flake = inputs.nixpkgs;
+    registry = {
+      nixpkgs.flake = inputs.nixpkgs;
+      nixpkgs-unstable.flake = inputs.unstable;
+    };
   };
 
   # Enable unfree packages
