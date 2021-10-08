@@ -200,10 +200,19 @@ in
     ];
   };
 
-  programs.dircolors.enable = true;
-  programs.fzf = {
-    enable = true;
-    fileWidgetOptions = [ "--preview 'head {}'" ];
-    historyWidgetOptions = [ "--sort" ];
+  programs = {
+    dircolors.enable = true;
+    direnv = {
+      enable = true;
+      nix-direnv = {
+        enable = true;
+        enableFlakes = true;
+      };
+    };
+    fzf = {
+      enable = true;
+      fileWidgetOptions = [ "--preview 'head {}'" ];
+      historyWidgetOptions = [ "--sort" ];
+    };
   };
 }
