@@ -1,7 +1,8 @@
 { config, lib, pkgs, inputs, ... }:
 
 {
-  imports = [ ../modules/home-manager/nnn.nix ];
+  # TODO: remove it on 21.11
+  imports = [ "${inputs.home-unstable}/modules/programs/nnn.nix" ];
 
   home.packages = [ (pkgs.nerdfonts.override { fonts = [ "Hack" ]; }) ];
 
