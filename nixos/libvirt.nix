@@ -84,10 +84,11 @@ in
   virtualisation = {
     libvirtd = {
       enable = true;
-      qemuOvmf = true;
-      qemuOvmfPackage = pkgs.OVMF-secureBoot;
       onBoot = "ignore";
       onShutdown = "shutdown";
+      qemuOvmf = true;
+      qemuOvmfPackage = pkgs.OVMF-secureBoot;
+      qemuRunAsRoot = false;
       qemuVerbatimConfig = ''
         nographics_allow_host_audio = 1
         cgroup_device_acl = [
