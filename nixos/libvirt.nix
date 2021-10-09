@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, inputs, ... }:
 let
   inherit (config.meta) username;
   targetDisk = "/dev/disk/by-id/dm-name-enc-win10";
@@ -42,6 +42,9 @@ let
 
 in
 {
+  imports = [ ../modules/nixos/libvirtd.nix ];
+  disabledModules = [ "virtualisation/libvirtd.nix" ];
+
   boot = {
     # Do not load NVIDIA drivers
     blacklistedKernelModules = [ "nvidia" "nouveau" ];
@@ -82,6 +85,7 @@ in
     libvirtd = {
       enable = true;
       qemuOvmf = true;
+      qemuOvmfPackage = pkgs.OVMF-secureBoot;
       onBoot = "ignore";
       onShutdown = "shutdown";
       qemuVerbatimConfig = ''
