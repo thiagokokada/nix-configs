@@ -42,8 +42,12 @@ let
 
 in
 {
-  imports = [ ../modules/nixos/libvirtd.nix ];
-  disabledModules = [ "virtualisation/libvirtd.nix" ];
+  # TODO: Remove when this is merged: https://github.com/NixOS/nixpkgs/pull/141115
+  nixpkgs.overlays = [
+    (final: prev: {
+      OVMF = prev.OVMF.override { secureBoot = true; };
+    })
+  ];
 
   boot = {
     # Do not load NVIDIA drivers
@@ -87,7 +91,6 @@ in
       onBoot = "ignore";
       onShutdown = "shutdown";
       qemuOvmf = true;
-      qemuOvmfPackage = pkgs.OVMF-secureBoot;
       qemuRunAsRoot = false;
       qemuVerbatimConfig = ''
         nographics_allow_host_audio = 1
