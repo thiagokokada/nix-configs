@@ -172,6 +172,10 @@ in
         assertion = config.security.polkit.enable;
         message = "The libvirtd module currently requires Polkit to be enabled ('security.polkit.enable = true').";
       }
+      {
+        assertion = cfg.qemuOvmfPackage ? fd;
+        message = "The option `virtualisation.libvirtd.qemuOvmfPackage` needs a package that have a `fd` output.";
+      }
     ];
 
     environment = {
