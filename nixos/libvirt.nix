@@ -110,11 +110,7 @@ in
     };
     script = ''
       uuid="$(${pkgs.libvirt}/bin/virsh domuuid win10 || true)"
-      xml=$(sed \
-        -e "s|@UUID@|$uuid|" \
-        -e "s|@DISK@|${targetDisk}|" \
-        -e "s|@OVMF@|${pkgs.OVMF-secureBoot.fd}/FV/OVMF_CODE.fd|" \
-        ${./win10.xml})
+      xml=$(sed -e "s|@UUID@|$uuid|" -e "s|@DISK@|${targetDisk}|" ${./win10.xml})
       ${pkgs.libvirt}/bin/virsh define <(echo "$xml")
     '';
   };
