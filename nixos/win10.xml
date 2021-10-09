@@ -140,9 +140,10 @@
     <input type='keyboard' bus='virtio'>
       <address type='pci' domain='0x0000' bus='0x00' slot='0x0f' function='0x0'/>
     </input>
-    <sound model='ich9'>
-      <address type='pci' domain='0x0000' bus='0x00' slot='0x1b' function='0x0'/>
-    </sound>
+    <!-- TODO: This is broken for some reason -->
+    <!-- <sound model='ich9'> -->
+    <!--   <address type='pci' domain='0x0000' bus='0x00' slot='0x1b' function='0x0'/> -->
+    <!-- </sound> -->
     <hostdev mode='subsystem' type='pci' managed='yes'>
       <source>
         <address domain='0x0000' bus='0x01' slot='0x00' function='0x0'/>
