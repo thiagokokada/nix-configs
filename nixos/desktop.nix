@@ -8,18 +8,7 @@ in
 
   environment.systemPackages = with pkgs; [ smartmontools gnome.simple-scan ];
 
-  hardware.sane = {
-    enable = true;
-    extraBackends = [ pkgs.hplipWithPlugin ];
-  };
-
-  users.users.${username} = { extraGroups = [ "sane" "lp" ]; };
-
   services = {
-    printing = {
-      enable = true;
-      drivers = [ pkgs.hplip ];
-    };
     smartd = {
       enable = true;
       notifications.x11.enable = true;

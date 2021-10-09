@@ -6,18 +6,34 @@ in
 with config.users.users.${username}; {
   imports = [ ./libvirt.nix ];
 
-  # Enable opentabletdriver
-  hardware.opentabletdriver = with pkgs; {
-    enable = true;
-    package = unstable.opentabletdriver;
-  };
-
   # Some misc packages
   environment.systemPackages = with pkgs; [ btrfs-progs hdparm rtorrent samba ];
+
+  hardware = {
+    # Enable opentabletdriver
+    opentabletdriver = with pkgs; {
+      enable = true;
+      package = unstable.opentabletdriver;
+    };
+
+    # Enable scanner support
+    sane = {
+      enable = true;
+      extraBackends = [ pkgs.hplipWithPlugin ];
+    };
+  };
+
+  users.users.${username} = { extraGroups = [ "sane" "lp" ]; };
 
   services = {
     # Enable irqbalance service
     irqbalance.enable = true;
+
+    # Enable printing
+    printing = {
+      enable = true;
+      drivers = [ pkgs.hplip ];
+    };
 
     # Enable Plex Media Server
     plex = {
