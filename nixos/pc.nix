@@ -4,7 +4,7 @@ let
   archive = "/mnt/archive/${username}";
 in
 with config.users.users.${username}; {
-  imports = [ ./libvirt.nix ];
+  imports = [ ./libvirt ];
 
   # Some misc packages
   environment.systemPackages = with pkgs; [ btrfs-progs hdparm rtorrent samba ];
