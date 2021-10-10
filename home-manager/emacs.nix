@@ -17,6 +17,7 @@ in
     pandoc
     stow
     unstable.clojure-lsp
+    unstable.rnix-lsp
     unstable.shellcheck
   ] ++ lib.optionals (!stdenv.isDarwin) [
     unstable.python-language-server
