@@ -17,7 +17,7 @@
     ./nnn.nix
     ./ssh.nix
     ./sway.nix
-    ./theme.nix
+    ./theme
     ./tmux.nix
     ./zsh.nix
     ../modules/device.nix
