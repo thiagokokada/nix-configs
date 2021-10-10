@@ -21,7 +21,6 @@ in
     libreoffice-fresh
     lxmenu-data
     mcomix3
-    ncdu
     open-browser
     pamixer
     pavucontrol

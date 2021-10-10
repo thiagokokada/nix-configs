@@ -8,6 +8,7 @@
     daemonize
     dos2unix
     each
+    gdu
     jo
     jq
     moreutils
