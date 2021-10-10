@@ -1,7 +1,7 @@
 { config, lib, pkgs, inputs, ... }:
 let
   inherit (config.meta) username;
-  targetDisk = "/dev/disk/by-id/dm-name-enc-win10";
+  targetDisk = "/dev/disk/by-id/dm-name-enc-windows";
   startVmScript = name: allowedCpus:
     pkgs.writeShellScriptBin "start-${name}" ''
       sudo -s -- <<EOF
@@ -62,8 +62,8 @@ in
   };
 
   environment.systemPackages = with pkgs; [
-    (startVmScript "win10" "0-1")
-    (stopVmScript "win10" "0-5")
+    (startVmScript "windows" "0-1")
+    (stopVmScript "windows" "0-5")
     virtmanager
   ];
 
@@ -107,7 +107,7 @@ in
   # Add user to libvirtd group.
   users.users.${username} = { extraGroups = [ "libvirtd" ]; };
 
-  systemd.services.setup-win10-vm = {
+  systemd.services.setup-windows-vm = {
     after = [ "libvirtd.service" ];
     requires = [ "libvirtd.service" ];
     # Run this manually to avoid overwritting manually setup configuration
@@ -117,8 +117,8 @@ in
       RemainAfterExit = "yes";
     };
     script = ''
-      uuid="$(${pkgs.libvirt}/bin/virsh domuuid win10 || true)"
-      xml=$(sed -e "s|@UUID@|$uuid|" -e "s|@DISK@|${targetDisk}|" ${./win10.xml})
+      uuid="$(${pkgs.libvirt}/bin/virsh domuuid windows || true)"
+      xml=$(sed -e "s|@UUID@|$uuid|" -e "s|@DISK@|${targetDisk}|" ${./windows.xml})
       ${pkgs.libvirt}/bin/virsh define <(echo "$xml")
     '';
   };
