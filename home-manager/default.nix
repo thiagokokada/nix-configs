@@ -12,7 +12,7 @@
     ./i3.nix
     ./kitty.nix
     ./meta.nix
-    ./mpv.nix
+    ./mpv
     ./neovim.nix
     ./nnn.nix
     ./ssh.nix

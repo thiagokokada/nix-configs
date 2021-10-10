@@ -57,7 +57,7 @@
     bindings = {
       F1 = "seek -85";
       F2 = "seek 85";
-      I = "vf toggle vapoursynth=${./scripts/motion-based-interpolation.vpy}";
+      I = "vf toggle vapoursynth=${./motion-based-interpolation.vpy}";
     };
   };
 }
