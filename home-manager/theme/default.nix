@@ -12,7 +12,7 @@
       };
     };
 
-    colors = builtins.fromJSON (builtins.readFile ./colors.json);
+    colors = with builtins; fromJSON (readFile ./colors.json);
   };
 
   # Enable fonts in home.packages to be available to applications

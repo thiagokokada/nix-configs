@@ -19,6 +19,7 @@
     ./sway.nix
     ./theme
     ./tmux.nix
+    ./vscode
     ./zsh.nix
     ../modules/device.nix
     ../modules/meta.nix
