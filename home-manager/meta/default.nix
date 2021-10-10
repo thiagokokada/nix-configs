@@ -18,9 +18,9 @@ in
 {
   # Import overlays
   imports = [
-    ../overlays
-    ../modules/device.nix
-    ../modules/meta.nix
+    ../../overlays
+    ../../modules/device.nix
+    ../../modules/meta.nix
     inputs.declarative-cachix.homeManagerModules.declarative-cachix
   ];
 
