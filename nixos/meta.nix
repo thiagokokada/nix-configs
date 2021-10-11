@@ -1,4 +1,4 @@
-{ pkgs, lib, inputs, self, ... }:
+{ pkgs, lib, inputs, ... }:
 
 let
   nixos-clean-up = pkgs.writeShellScriptBin "nixos-clean-up" ''
@@ -63,10 +63,7 @@ in
     ];
     # Same as above, but for `nix shell nixpkgs#htop`
     registry = {
-      # This is self-referencing the flake.nix from this repo, that
-      # includes a `output.packages` with allowUnfree set-up.
-      # TODO: do the same to `nixpkgs-unstable` (for now use `--impure`)
-      nixpkgs.flake = self;
+      nixpkgs.flake = inputs.nixpkgs;
       nixpkgs-unstable.flake = inputs.unstable;
     };
   };
