@@ -78,73 +78,70 @@
   };
 
   outputs = { self, nixpkgs, home, flake-utils, ... }@inputs: {
-    nixosConfigurations = {
-      miku-nixos = nixpkgs.lib.nixosSystem rec {
-        system = "x86_64-linux";
-        modules = [ ./hosts/miku-nixos ];
-        specialArgs = { inherit inputs system; };
-      };
+    nixosConfigurations =
+      let
+        mkSystem = { modules, system ? "x86_64-linux" }:
+          nixpkgs.lib.nixosSystem {
+            inherit system modules;
+            specialArgs = { inherit inputs system; };
+          };
+      in
+      {
+        miku-nixos = mkSystem { modules = [ ./hosts/miku-nixos ]; };
 
-      mikudayo-nixos = nixpkgs.lib.nixosSystem rec {
-        system = "x86_64-linux";
-        modules = [ ./hosts/mikudayo-nixos ];
-        specialArgs = { inherit inputs system; };
-      };
+        mikudayo-nixos = mkSystem { modules = [ ./hosts/mikudayo-nixos ]; };
 
-      mikudayo-nubank = nixpkgs.lib.nixosSystem rec {
-        system = "x86_64-linux";
-        modules = [ ./hosts/mikudayo-nubank ];
-        specialArgs = { inherit inputs system; };
-      };
+        mikudayo-nubank = mkSystem { modules = [ ./hosts/mikudayo-nubank ]; };
 
-      mirai-vps = nixpkgs.lib.nixosSystem rec {
-        system = "x86_64-linux";
-        modules = [ ./hosts/mirai-vps ];
-        specialArgs = { inherit inputs system; };
+        mirai-vps = mkSystem { modules = [ ./hosts/mirai-vps ]; };
       };
-    };
 
     # https://github.com/nix-community/home-manager/issues/1510
-    homeConfigurations = {
-      home-linux = home.lib.homeManagerConfiguration rec {
-        stateVersion = "21.05";
-        configuration = ./home-manager;
-        system = "x86_64-linux";
-        homeDirectory = "/home/${username}";
-        username = "thiagoko";
-        extraSpecialArgs = {
-          inherit inputs system;
-          super = {
-            device.type = "desktop";
-            meta.username = username;
-            meta.configPath = "${homeDirectory}/Projects/nix-configs";
+    homeConfigurations =
+      let
+        mkHome =
+          { username
+          , homeDirectory
+          , configPath
+          , configuration ? ./home-manager
+          , deviceType ? "desktop"
+          , system ? "x86_64-linux"
+          }:
+          home.lib.homeManagerConfiguration rec {
+            inherit configuration username homeDirectory system;
+            stateVersion = "21.05";
+            extraSpecialArgs = {
+              inherit inputs system;
+              super = {
+                device.type = deviceType;
+                meta.username = username;
+                meta.configPath = configPath;
+              };
+            };
           };
+      in
+      {
+        home-linux = mkHome rec {
+          username = "thiagoko";
+          homeDirectory = "/home/${username}";
+          configPath = "${homeDirectory}/Projects/nix-config";
         };
-      };
 
-      home-macos = home.lib.homeManagerConfiguration rec {
-        stateVersion = "21.05";
-        configuration = ./home-manager/macos.nix;
-        system = "x86_64-darwin";
-        homeDirectory = "/Users/${username}";
-        username = "thiagoko";
-        extraSpecialArgs = {
-          inherit inputs system;
-          super = {
-            device.type = "desktop";
-            meta.username = username;
-            meta.configPath = "${homeDirectory}/Projects/nix-configs";
-          };
+        home-macos = mkHome rec {
+          configuration = ./home-manager/macos.nix;
+          system = "x86_64-darwin";
+          username = "thiagoko";
+          homeDirectory = "/Users/${username}";
+          configPath = "${homeDirectory}/Projects/nix-config";
         };
       };
-    };
   } // flake-utils.lib.eachDefaultSystem (system:
     let
       pkgs = import nixpkgs { inherit system; };
     in
     {
-      devShell = pkgs.mkShell {
-        buildInputs = with pkgs; [
+      devShell = with pkgs; mkShell {
+        buildInputs = [
           coreutils
           findutils
           git

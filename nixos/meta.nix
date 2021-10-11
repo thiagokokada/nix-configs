@@ -62,6 +62,7 @@ in
       "nixpkgs-unstable=${inputs.unstable}"
     ];
     # Same as above, but for `nix shell nixpkgs#htop`
+    # FIXME: for non-free packages you need to use `nix shell --impure`
     registry = {
       nixpkgs.flake = inputs.nixpkgs;
       nixpkgs-unstable.flake = inputs.unstable;
