@@ -96,6 +96,11 @@ in
       dotfiles-pull = "git -C $DOTFILES_PATH pull";
     };
 
+    profileExtra = ''
+      # Source .profile
+      [[ -e ~/.profile ]] && emulate sh -c '. ~/.profile'
+    '';
+
     initExtraBeforeCompInit = ''
       # zimfw config
       zstyle ':zim:input' double-dot-expand yes
