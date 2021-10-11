@@ -1,4 +1,4 @@
-{ config, lib, pkgs, inputs, ... }:
+{ config, lib, pkgs, ... }:
 
 {
   home.packages = with pkgs; [ python3Packages.youtube-dl ];

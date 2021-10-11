@@ -1,6 +1,8 @@
-{ lib, pkgs, super, inputs, ... }:
+{ lib, pkgs, self, super, ... }:
 
 let
+  inherit (self) inputs;
+
   nix-where-is = pkgs.writeShellScriptBin "nix-where-is" ''
     set -euo pipefail
 

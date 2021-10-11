@@ -1,16 +1,16 @@
-{ config, lib, pkgs, inputs, system, ... }:
+{ config, lib, pkgs, self, system, ... }:
 
-with lib;
-let inherit (config.meta) username;
+let
+  inherit (config.meta) username;
 in
 {
-  imports = [ inputs.home.nixosModules.home-manager ];
+  imports = [ self.inputs.home.nixosModules.home-manager ];
 
   home-manager = {
     useUserPackages = true;
     users.${username} = ../home-manager;
     extraSpecialArgs = {
-      inherit inputs system;
+      inherit self system;
       super = config;
     };
   };

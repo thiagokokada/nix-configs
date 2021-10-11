@@ -1,4 +1,4 @@
-{ config, lib, pkgs, inputs, ... }:
+{ config, lib, pkgs, ... }:
 let
   shortPath = with lib.strings;
     (path: concatStringsSep "/" (map (substring 0 1) (splitString "/" path)));

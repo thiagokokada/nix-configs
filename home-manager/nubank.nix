@@ -1,7 +1,7 @@
-{ config, lib, pkgs, inputs, ... }:
+{ config, lib, pkgs, self, ... }:
 
 {
-  nixpkgs.overlays = [ (import inputs.nubank) ];
+  nixpkgs.overlays = [ (import self.inputs.nubank) ];
 
   home.packages = with pkgs.unstable; [ slack ];
 

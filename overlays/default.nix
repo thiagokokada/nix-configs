@@ -1,5 +1,8 @@
-{ pkgs, lib, inputs, system, ... }:
+{ pkgs, lib, self, system, ... }:
 
+let
+  inherit (self) inputs;
+in
 {
   nixpkgs.overlays = [
     inputs.emacs.overlay

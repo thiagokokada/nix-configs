@@ -1,6 +1,8 @@
-{ pkgs, lib, inputs, ... }:
+{ pkgs, lib, self, ... }:
 
 let
+  inherit (self) inputs;
+
   nixos-clean-up = pkgs.writeShellScriptBin "nixos-clean-up" ''
     set -euo pipefail
 

@@ -2,9 +2,11 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, inputs, ... }:
+{ config, pkgs, ... }:
 
-let inherit (config.meta) username;
+let
+  inherit (config.meta) username;
+  inherit (self) inputs;
 in
 {
   imports = [

@@ -1,5 +1,7 @@
-{ pkgs, inputs, ... }:
+{ pkgs, self, ... }:
 let
+  inherit (self) inputs;
+
   # Based on https://github.com/zimfw/archive
   archive = pkgs.writeScriptBin "archive" ''
     #!${pkgs.zsh}/bin/zsh

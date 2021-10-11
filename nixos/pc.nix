@@ -1,4 +1,4 @@
-{ pkgs, config, lib, inputs, ... }:
+{ pkgs, config, lib, ... }:
 let
   inherit (config.meta) username;
   archive = "/mnt/archive/${username}";

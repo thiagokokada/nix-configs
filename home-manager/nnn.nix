@@ -1,5 +1,8 @@
-{ config, lib, pkgs, inputs, ... }:
+{ config, lib, pkgs, self, ... }:
 
+let
+  inherit (self) inputs;
+in
 {
   # TODO: remove it on 21.11
   imports = [ "${inputs.home-unstable}/modules/programs/nnn.nix" ];

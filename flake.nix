@@ -77,13 +77,13 @@
     };
   };
 
-  outputs = { self, nixpkgs, home, flake-utils, ... }@inputs: {
+  outputs = { self, nixpkgs, home, flake-utils, ... }: {
     nixosConfigurations =
       let
         mkSystem = { modules, system ? "x86_64-linux" }:
           nixpkgs.lib.nixosSystem {
             inherit system modules;
-            specialArgs = { inherit inputs system; };
+            specialArgs = { inherit self system; };
           };
       in
       {
@@ -111,7 +111,7 @@
             inherit configuration username homeDirectory system;
             stateVersion = "21.05";
             extraSpecialArgs = {
-              inherit inputs system;
+              inherit self system;
               super = {
                 device.type = deviceType;
                 meta.username = username;
