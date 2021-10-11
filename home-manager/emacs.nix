@@ -63,7 +63,7 @@ in
 
   home.activation = {
     installDoom = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-      readonly emacs_dir="${config.home.homeDirectory}";
+      readonly emacs_dir="${config.home.homeDirectory}/.config/emacs";
       [ ! -d "$emacs_dir" ] && \
         $DRY_RUN_CMD ${pkgs.git}/bin/git clone https://github.com/hlissner/doom-emacs/ "$emacs_dir"
     '';
