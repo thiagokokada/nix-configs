@@ -82,25 +82,25 @@
       miku-nixos = nixpkgs.lib.nixosSystem rec {
         system = "x86_64-linux";
         modules = [ ./hosts/miku-nixos ];
-        specialArgs = { inherit inputs system; };
+        specialArgs = { inherit inputs self system; };
       };
 
       mikudayo-nixos = nixpkgs.lib.nixosSystem rec {
         system = "x86_64-linux";
         modules = [ ./hosts/mikudayo-nixos ];
-        specialArgs = { inherit inputs system; };
+        specialArgs = { inherit inputs self system; };
       };
 
       mikudayo-nubank = nixpkgs.lib.nixosSystem rec {
         system = "x86_64-linux";
         modules = [ ./hosts/mikudayo-nubank ];
-        specialArgs = { inherit inputs system; };
+        specialArgs = { inherit inputs self system; };
       };
 
       mirai-vps = nixpkgs.lib.nixosSystem rec {
         system = "x86_64-linux";
         modules = [ ./hosts/mirai-vps ];
-        specialArgs = { inherit inputs system; };
+        specialArgs = { inherit inputs self system; };
       };
     };
 
@@ -140,11 +140,19 @@
     };
   } // flake-utils.lib.eachDefaultSystem (system:
     let
-      pkgs = import nixpkgs { inherit system; };
+      packages = import nixpkgs {
+        inherit system;
+        config.allowUnfree = true;
+      };
     in
     {
-      devShell = pkgs.mkShell {
-        buildInputs = with pkgs; [
+      # This is a hack to allow setting `nix.registry.nixpkgs.flake`
+      # with allowUnfree.
+      # Check `nixos/nixos/meta.nix` file
+      inherit packages;
+
+      devShell = with packages; mkShell {
+        buildInputs = [
           coreutils
           findutils
           git
