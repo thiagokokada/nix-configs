@@ -100,39 +100,34 @@
     homeConfigurations =
       let
         mkHome =
-          { username
-          , homeDirectory
-          , configPath
+          { username ? "thiagoko"
+          , homePath ? "/home"
+          , configPosfix ? "Projects/nix-configs"
           , configuration ? ./home-manager
           , deviceType ? "desktop"
           , system ? "x86_64-linux"
           }:
           home.lib.homeManagerConfiguration rec {
-            inherit configuration username homeDirectory system;
+            inherit configuration username system;
+            homeDirectory = "${homePath}/${username}";
             stateVersion = "21.05";
             extraSpecialArgs = {
               inherit self system;
               super = {
                 device.type = deviceType;
                 meta.username = username;
-                meta.configPath = configPath;
+                meta.configPath = "${homeDirectory}/${configPosfix}";
               };
             };
           };
       in
       {
-        home-linux = mkHome rec {
-          username = "thiagoko";
-          homeDirectory = "/home/${username}";
-          configPath = "${homeDirectory}/Projects/nix-config";
-        };
+        home-linux = mkHome { };
 
-        home-macos = mkHome rec {
+        home-macos = mkHome {
           configuration = ./home-manager/macos.nix;
           system = "x86_64-darwin";
-          username = "thiagoko";
-          homeDirectory = "/Users/${username}";
-          configPath = "${homeDirectory}/Projects/nix-config";
+          homePath = "/Users";
         };
       };
   } // flake-utils.lib.eachDefaultSystem (system:
