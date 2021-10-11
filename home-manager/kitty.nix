@@ -62,7 +62,11 @@
       bell_on_tab = true;
 
       # Misc
-      editor = "${config.programs.neovim.finalPackage}/bin/nvim";
+      editor =
+        if config.programs.neovim.enable then
+          "${config.programs.neovim.finalPackage}/bin/nvim"
+        else
+          "${pkgs.neovim}/bin/nvim";
       strip_trailing_spaces = "smart";
       clipboard_control =
         "write-clipboard write-primary read-clipboard read-primary";
