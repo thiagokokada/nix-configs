@@ -1,4 +1,4 @@
-{ pkgs, self, ... }:
+{ pkgs, lib, self, ... }:
 let
   inherit (self) inputs;
 
@@ -96,10 +96,19 @@ in
       dotfiles-pull = "git -C $DOTFILES_PATH pull";
     };
 
-    profileExtra = ''
-      # Source .profile
-      [[ -e ~/.profile ]] && emulate sh -c '. ~/.profile'
-    '';
+    profileExtra =
+      let
+        darwinFixes = lib.optionalString pkgs.stdenv.isDarwin ''
+          # https://stackoverflow.com/a/22779469
+          export LANG=en_US.UTF-8
+          # export LC_ALL=en_US.UTF-8
+        '';
+      in
+      ''
+        # Source .profile
+        [[ -e ~/.profile ]] && emulate sh -c '. ~/.profile'
+        ${darwinFixes}
+      '';
 
     initExtraBeforeCompInit = ''
       # zimfw config
@@ -109,12 +118,10 @@ in
 
     initExtra = with pkgs;
       let
-        open =
-          # macOS already has `open`
-          if stdenv.isDarwin then
-            ""
-          else
-            ''open() { run-bg ${xdg-utils}/bin/xdg-open "$@" }'';
+        # macOS already has `open`
+        open = lib.optionalString (!stdenv.isDarwin) ''
+          open() { run-bg ${xdg-utils}/bin/xdg-open "$@" }
+        '';
       in
       ''
         # helpers
