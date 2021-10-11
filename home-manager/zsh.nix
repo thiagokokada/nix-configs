@@ -99,9 +99,10 @@ in
     profileExtra =
       let
         darwinFixes = lib.optionalString pkgs.stdenv.isDarwin ''
-          # https://stackoverflow.com/a/22779469
-          export LANG=en_US.UTF-8
-          # export LC_ALL=en_US.UTF-8
+          # Fix issue with UTF-8 characters on systems that support
+          # UTF-8 correctly but doesn't set the locale for some reason,
+          # e.g.: macOS
+          [[ -z "$LANG" ]] && export LANG=C.UTF-8
         '';
       in
       ''
