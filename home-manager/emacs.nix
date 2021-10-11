@@ -31,7 +31,7 @@ in
         emacs = "${config.programs.emacs.package}/bin/emacs";
       in
       ''
-        em() { run-bg ${emacs} "$@" }
+        em() { ${emacs} "$@" &>/dev/null &! }
         et() { ${emacs} -nw "$@" }
         emp() {
           local p

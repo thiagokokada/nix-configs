@@ -73,5 +73,7 @@
     };
   };
 
-  programs.zsh.shellAliases = { gk = "run-bg gitk"; };
+  programs.zsh.shellAliases = {
+    gk = ''${config.programs.git.package}/bin/gitk "$@" &>/dev/null &!'';
+  };
 }
