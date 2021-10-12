@@ -27,12 +27,11 @@ in
 
       # lsp
       unstable.clojure-lsp
+      unstable.pyright
       unstable.rnix-lsp
 
       # shell
       unstable.shellcheck
-    ] ++ lib.optionals (!stdenv.isDarwin) [
-      unstable.python-language-server
     ];
 
     sessionPath = [ "${homeDirectory}/.config/emacs/bin" ];
