@@ -10,16 +10,26 @@ in
   # Emacs overlay
   home = {
     packages = with pkgs; [
+      # doom-emacs deps
       emacs-all-the-icons-fonts
       fd
       findutils
-      gcc # needed by native compile
+
+      # needed by native compile
+      gcc
+
+      # font for my config
       hack-font
       noto-fonts
+
+      # markdown mode
       pandoc
-      stow
+
+      # lsp
       unstable.clojure-lsp
       unstable.rnix-lsp
+
+      # shell
       unstable.shellcheck
     ] ++ lib.optionals (!stdenv.isDarwin) [
       unstable.python-language-server
