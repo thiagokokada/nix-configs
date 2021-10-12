@@ -13,7 +13,7 @@ endif
 
 all-linux: build-miku-nixos build-mikudayo-nixos build-mirai-vps build-hm-home-linux
 
-all-macos: build-hm-home-macos
+all-macos: build-darwin-miku-macos-vm build-hm-home-macos
 
 clean:
 	rm -rf result *.qcow2
@@ -43,6 +43,9 @@ endif
 
 build-%:
 	nix $(NIX_FLAGS) build '.#nixosConfigurations.$*.config.system.build.toplevel'
+
+build-darwin-%:
+	nix $(NIX_FLAGS) build '.#darwinConfigurations.$*.system'
 
 build-vm-%:
 	nix $(NIX_FLAGS) build '.#nixosConfigurations.$*.config.system.build.vm'

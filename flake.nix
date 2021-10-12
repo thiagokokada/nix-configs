@@ -2,7 +2,9 @@
   description = "My Nix{OS} configuration files";
 
   inputs = {
+    # main
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-21.05";
+    darwin.url = "github:NixOS/nixpkgs/nixpkgs-21.05-darwin";
     unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     hardware.url = "github:NixOS/nixos-hardware/master";
     home = {
@@ -13,19 +15,28 @@
       url = "github:nix-community/home-manager/master";
       inputs.nixpkgs.follows = "unstable";
     };
+    nix-darwin = {
+      url = "github:LnL7/nix-darwin/master";
+      inputs.nixpkgs.follows = "darwin";
+    };
+
+    # helpers
     flake-utils.url = "github:numtide/flake-utils";
     declarative-cachix.url = "github:jonascarpay/declarative-cachix/master";
+
     # overlays
     emacs = {
       url = "github:nix-community/emacs-overlay/master";
       inputs.nixpkgs.follows = "unstable";
     };
     nubank.url = "github:nubank/nixpkgs/master";
+
     # nnn plugins
     nnn-plugins = {
       url = "github:jarun/nnn/v4.0";
       flake = false;
     };
+
     # ZSH plugins
     zit = {
       url = "github:thiagokokada/zit/master";
@@ -77,7 +88,7 @@
     };
   };
 
-  outputs = { self, nixpkgs, home, flake-utils, ... }: {
+  outputs = { self, nixpkgs, nix-darwin, home, flake-utils, ... }: {
     nixosConfigurations =
       let
         mkSystem = { modules, system ? "x86_64-linux" }:
@@ -94,6 +105,18 @@
         mikudayo-nubank = mkSystem { modules = [ ./hosts/mikudayo-nubank ]; };
 
         mirai-vps = mkSystem { modules = [ ./hosts/mirai-vps ]; };
+      };
+
+    darwinConfigurations =
+      let
+        mkDarwin = { modules, system ? "x86_64-darwin" }:
+          nix-darwin.lib.darwinSystem {
+            inherit system modules;
+            specialArgs = { inherit self system; };
+          };
+      in
+      {
+        miku-macos-vm = mkDarwin { modules = [ ./hosts/miku-darwin-vm ]; };
       };
 
     # https://github.com/nix-community/home-manager/issues/1510
