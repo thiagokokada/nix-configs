@@ -26,12 +26,6 @@ in
           ignoreConfigErrors = true;
         });
 
-      neovim-custom = prev.neovim.override ({
-        withNodeJs = true;
-        vimAlias = true;
-        viAlias = true;
-      });
-
       open-browser = prev.callPackage ../packages/open-browser { };
 
       # TODO: remove it from 21.11

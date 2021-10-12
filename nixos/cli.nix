@@ -21,7 +21,6 @@
       lsof
       mediainfo
       multitime
-      neovim-custom
       netcat-gnu
       openssl
       pciutils
@@ -42,6 +41,13 @@
   programs = {
     iftop.enable = true;
     mtr.enable = true;
+    neovim = {
+      enable = true;
+      defaultEditor = true;
+      viAlias = true;
+      vimAlias = true;
+      withRuby = false;
+    };
     zsh = {
       enable = true;
       promptInit = ''
