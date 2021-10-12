@@ -10,10 +10,11 @@ in
   # Emacs overlay
   home = {
     packages = with pkgs; [
-      # doom-emacs deps
+      # doom-emacs main deps
       emacs-all-the-icons-fonts
       fd
       findutils
+      ripgrep
 
       # needed by native compile
       gcc
