@@ -2,7 +2,8 @@
 #! nix-shell -I "nixpkgs=channel:nixpkgs-unstable" -i "make -f" -p gnumake nixUnstable findutils nixpkgs-fmt
 
 .PHONY: all clean update format format-check install activate run-vm-% build-% build-vm-% build-hm-% run-vm-%
-NIX_FLAGS := --experimental-features 'nix-command flakes'
+EXTRA_FLAGS :=
+NIX_FLAGS := --experimental-features 'nix-command flakes' ${EXTRA_FLAGS}
 
 ifeq ($(shell uname),Darwin)
 all: all-macos
