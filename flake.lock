@@ -1,5 +1,21 @@
 {
   "nodes": {
+    "darwin": {
+      "locked": {
+        "lastModified": 1633976900,
+        "narHash": "sha256-tcQeC+WNEOKEyXd4ZBxyJjtLDkh4kxr/FF7nTWUVAEk=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "79c970a7bbc686467e49f707db803703b4d61ecb",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixpkgs-21.05-darwin",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "declarative-cachix": {
       "locked": {
         "lastModified": 1625560633,
@@ -105,6 +121,27 @@
         "type": "github"
       }
     },
+    "nix-darwin": {
+      "inputs": {
+        "nixpkgs": [
+          "darwin"
+        ]
+      },
+      "locked": {
+        "lastModified": 1631730143,
+        "narHash": "sha256-A8PaUyZu5WVp+IojG5q+39rjf5x57OFDYmVoDFPZLlY=",
+        "owner": "LnL7",
+        "repo": "nix-darwin",
+        "rev": "e1a3f7292f085fd588d11f94ed0f47968c16df0c",
+        "type": "github"
+      },
+      "original": {
+        "owner": "LnL7",
+        "ref": "master",
+        "repo": "nix-darwin",
+        "type": "github"
+      }
+    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1633853057,
@@ -173,12 +210,14 @@
     },
     "root": {
       "inputs": {
+        "darwin": "darwin",
         "declarative-cachix": "declarative-cachix",
         "emacs": "emacs",
         "flake-utils": "flake-utils",
         "hardware": "hardware",
         "home": "home",
         "home-unstable": "home-unstable",
+        "nix-darwin": "nix-darwin",
         "nixpkgs": "nixpkgs",
         "nnn-plugins": "nnn-plugins",
         "nubank": "nubank",
