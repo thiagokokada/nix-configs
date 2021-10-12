@@ -23,9 +23,15 @@ in
   # Enable anti-aliasing in Java
   environment.variables._JAVA_OPTIONS = "-Dawt.useSystemAAFontSettings=gasp";
 
-  virtualisation.docker.enable = true;
-  virtualisation.libvirtd.enable = true;
+  virtualisation = {
+    libvirtd.enable = true;
+    podman = {
+      enable = true;
+      dockerCompat = true;
+      dockerSocket.enable = true;
+    };
+  };
 
   # Added user to groups
-  users.users.${username}.extraGroups = [ "docker" "wireshark" ];
+  users.users.${username}.extraGroups = [ "podman" "wireshark" ];
 }
