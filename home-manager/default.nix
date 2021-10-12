@@ -4,7 +4,7 @@
   imports = [
     ./cli.nix
     ./desktop.nix
-    ./dev.nix
+    ./dev
     ./emacs.nix
     ./git.nix
     ./hexchat.nix

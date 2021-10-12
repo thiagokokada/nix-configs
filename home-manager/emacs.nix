@@ -1,29 +1,33 @@
 { config, lib, pkgs, ... }:
 
 let
+  inherit (config.home) homeDirectory;
   doomConfigPath = "${config.meta.configPath}/doom-emacs";
 in
 {
   imports = [ ../modules/meta.nix ];
 
   # Emacs overlay
-  home.packages = with pkgs; [
-    emacs-all-the-icons-fonts
-    fd
-    findutils
-    gcc # needed by native compile
-    hack-font
-    noto-fonts
-    pandoc
-    stow
-    unstable.clojure-lsp
-    unstable.rnix-lsp
-    unstable.shellcheck
-  ] ++ lib.optionals (!stdenv.isDarwin) [
-    unstable.python-language-server
-  ];
+  home = {
+    packages = with pkgs; [
+      emacs-all-the-icons-fonts
+      fd
+      findutils
+      gcc # needed by native compile
+      hack-font
+      noto-fonts
+      pandoc
+      stow
+      unstable.clojure-lsp
+      unstable.rnix-lsp
+      unstable.shellcheck
+    ] ++ lib.optionals (!stdenv.isDarwin) [
+      unstable.python-language-server
+    ];
 
-  home.sessionPath = [ "$HOME/.config/emacs/bin" ];
+    sessionPath = [ "${homeDirectory}/.config/emacs/bin" ];
+  };
+
 
   programs.zsh = {
     initExtra =

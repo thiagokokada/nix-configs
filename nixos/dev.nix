@@ -6,7 +6,6 @@ in
   environment.systemPackages = with pkgs; [
     docker-compose
     gnome3.gnome-boxes
-    python3
   ];
 
   programs = {

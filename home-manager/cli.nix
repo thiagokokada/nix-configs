@@ -16,9 +16,11 @@
     p7zip
     page
     pv
+    python3
     rar
     ripgrep
     rlwrap
+    sloccount
     tealdeer
     telnet
     tig

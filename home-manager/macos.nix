@@ -2,7 +2,7 @@
 
 {
   imports = [
-    ./dev.nix
+    ./dev
     ./emacs.nix
     ./minimal.nix
     ./nnn.nix

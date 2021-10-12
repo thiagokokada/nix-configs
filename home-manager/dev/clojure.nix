@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, pkgs, ... }:
 
 let
   babashka = pkgs.unstable.babashka;
@@ -7,15 +7,7 @@ in
   home.packages = with pkgs; [
     babashka
     clojure
-    elixir
-    expect
-    gnumake
-    go
     leiningen
-    nim
-    python3
-    rustup
-    sloccount
   ];
 
   # https://github.com/babashka/babashka/issues/257

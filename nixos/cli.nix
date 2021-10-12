@@ -27,6 +27,7 @@
       pciutils
       powertop
       psmisc
+      python3
       rlwrap
       telnet
       tmux
