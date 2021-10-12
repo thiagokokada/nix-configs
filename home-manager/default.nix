@@ -5,7 +5,7 @@
     ./cli.nix
     ./desktop.nix
     ./dev
-    ./emacs.nix
+    ./emacs
     ./git.nix
     ./hexchat.nix
     ./htop.nix

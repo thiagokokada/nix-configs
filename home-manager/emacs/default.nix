@@ -2,10 +2,10 @@
 
 let
   inherit (config.home) homeDirectory;
-  doomConfigPath = "${config.meta.configPath}/doom-emacs";
+  doomConfigPath = "${config.meta.configPath}/home-manager/emacs/doom-emacs";
 in
 {
-  imports = [ ../modules/meta.nix ];
+  imports = [ ../../modules/meta.nix ];
 
   # Emacs overlay
   home = {
@@ -27,7 +27,6 @@ in
 
     sessionPath = [ "${homeDirectory}/.config/emacs/bin" ];
   };
-
 
   programs.zsh = {
     initExtra =
