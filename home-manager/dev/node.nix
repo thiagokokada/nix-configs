@@ -6,10 +6,10 @@ in
 {
   home = {
     packages = with pkgs;
-    [
-      nodejs
-      (yarn.override { inherit nodejs; })
-    ];
+      [
+        nodejs
+        (yarn.override { inherit nodejs; })
+      ];
     sessionPath = [ "${homeDirectory}/.npm-packages/bin" ];
     sessionVariables = rec {
       NPM_PACKAGES = "${homeDirectory}/.npm-packages";
