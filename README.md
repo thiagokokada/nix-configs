@@ -60,7 +60,7 @@ After following the instructions in
 [manual](https://nixos.org/manual/nixos/stable/#sec-installation) to prepare the
 system and partition the disk, run the following process to install:
 
-```sh
+```console
 $ sudo git clone https://github.com/thiagokokada/nix-configs/ /mnt/etc/nixos
 $ sudo chown -R 1000:1000 /mnt/etc/nixos # optional if you want to edit your config without root
 $ nix-shell -p nixFlakes
@@ -72,8 +72,11 @@ $ sudo nixos-install --system ./result
 instead of building locally), you can setup cachix before running the commands
 above:
 
-```sh
-# Add `imports = [ /mnt/etc/nixos/cachix.nix ]` to /etc/nixos/configuration.nix and run
+Add `imports = [ /mnt/etc/nixos/cachix.nix ]` in the
+`/etc/nixos/configuration.nix` (yeah, this is the NixOS Live environment) and
+run:
+
+```console
 $ sudo nixos-rebuild
 ```
 
@@ -90,16 +93,16 @@ trigger a rebuild.
 ### nix-darwin
 
 You first need to run nix-darwin
-(installer)[https://github.com/LnL7/nix-darwin#install]:
+[installer](https://github.com/LnL7/nix-darwin#install):
 
-```sh
+```console
 $ nix-build https://github.com/LnL7/nix-darwin/archive/master.tar.gz -A installer
 $ ./result/bin/darwin-installer
 ```
 
 Afterwards run:
 
-```sh
+```console
 $ ./Makefile build-darwin-<hostname>
 $ sudo ./result/activate
 ```
@@ -108,7 +111,7 @@ $ sudo ./result/activate
 
 To build the Home Manager standalone and activate its configuration, run:
 
-```sh
+```console
 $ ./Makefile build-hm-<config>
 $ ./result/activate
 ```
@@ -121,7 +124,7 @@ its dependencies using `nix-shell`.
 
 For example, to build and run `miku-nixos` configuration inside a VM run:
 
-```sh
+```console
 $ ./Makefile run-vm-miku-nixos
 ```
 
