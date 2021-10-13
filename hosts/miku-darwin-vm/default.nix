@@ -10,8 +10,7 @@ in
     ../../nix-darwin/system.nix
     ../../nix-darwin/meta.nix
     ../../cachix.nix
-    ../../modules/device.nix
-    ../../modules/meta.nix
+    ../../modules
     ../../overlays
   ];
 

@@ -14,8 +14,7 @@ in
     ../../nixos/game.nix
     ../../nixos/laptop.nix
     ../../cachix.nix
-    ../../modules/device.nix
-    ../../modules/meta.nix
+    ../../modules
     ../../overlays
     inputs.hardware.nixosModules.common-gpu-nvidia
     # inputs.hardware.nixosModules.common-gpu-nvidia-disable

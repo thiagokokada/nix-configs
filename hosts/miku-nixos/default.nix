@@ -16,8 +16,7 @@ in
     ../../nixos/security.nix
     ../../nixos/ssh.nix
     ../../cachix.nix
-    ../../modules/device.nix
-    ../../modules/meta.nix
+    ../../modules
     ../../overlays
     inputs.hardware.nixosModules.common-cpu-intel
   ];
