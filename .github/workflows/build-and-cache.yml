@@ -36,6 +36,9 @@ jobs:
       - name: Check if all '.nix' files are formatted correctly
         run: ./Makefile format-check
 
+      - name: Validate Flakes
+        run: ./Makefile validate
+
       - name: Build Nix configs
         run: ./Makefile all-linux
 

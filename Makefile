@@ -3,7 +3,7 @@
 
 .PHONY: all clean update format format-check install activate run-vm-% build-% build-vm-% build-hm-% run-vm-%
 EXTRA_FLAGS :=
-NIX_FLAGS := --experimental-features 'nix-command flakes' ${EXTRA_FLAGS}
+NIX_FLAGS := --experimental-features 'nix-command flakes' $(EXTRA_FLAGS)
 
 ifeq ($(shell uname),Darwin)
 all: all-macos
@@ -20,6 +20,9 @@ clean:
 
 update:
 	nix $(NIX_FLAGS) flake update --commit-lock-file
+
+validate:
+	nix $(NIX_FLAGS) flake check .
 
 format-check:
 	find -name '*.nix' ! -name 'hardware-configuration.nix' ! -name 'cachix.nix' -exec nixpkgs-fmt --check {} \+
