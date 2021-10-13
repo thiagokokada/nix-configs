@@ -6,9 +6,7 @@ let
 in
 {
   imports = [
-    ../../nix-darwin/home.nix
-    ../../nix-darwin/system.nix
-    ../../nix-darwin/meta.nix
+    ../../nix-darwin
     ../../cachix.nix
     ../../modules
     ../../overlays
