@@ -54,6 +54,8 @@ Most of the configuration files are based on my old (but still supported)
 
 ## Installation
 
+### NixOS
+
 After following the instructions in
 [manual](https://nixos.org/manual/nixos/stable/#sec-installation) to prepare the
 system and partition the disk, run the following process to install:
@@ -62,22 +64,54 @@ system and partition the disk, run the following process to install:
 $ sudo git clone https://github.com/thiagokokada/nix-configs/ /mnt/etc/nixos
 $ sudo chown -R 1000:1000 /mnt/etc/nixos # optional if you want to edit your config without root
 $ nix-shell -p nixFlakes
-$ nix build --experimental-features 'nix-command flakes' "#nixosConfigurations.hostName.config.system.toplevel"
+$ ./Makefile build-<hostname>
 $ sudo nixos-install --system ./result
 ```
 
 **Optional:** to make the initial setup faster (i.e.: using Emacs from cache
-instead of building locally), you can setup cachix:
+instead of building locally), you can setup cachix before running the commands
+above:
 
-``` sh
+```sh
 # Add `imports = [ /mnt/etc/nixos/cachix.nix ]` to /etc/nixos/configuration.nix and run
 $ sudo nixos-rebuild
 ```
 
-### Troubleshooting
+#### Troubleshooting
 
 In case of lack of space during the initial build (since it is done in `tmpfs`),
-you can comment parts of the configuration.
+you can comment parts of the configuration. A good start would be to import only
+`hardware-configuration.nix`, `nixos/minimal.nix` and
+`home-manager/minimal.nix`.
+
+After installing it succesfully and rebooting, you can uncomment everything and
+trigger a rebuild.
+
+### nix-darwin
+
+You first need to run nix-darwin
+(installer)[https://github.com/LnL7/nix-darwin#install]:
+
+```sh
+$ nix-build https://github.com/LnL7/nix-darwin/archive/master.tar.gz -A installer
+$ ./result/bin/darwin-installer
+```
+
+Afterwards run:
+
+```sh
+$ ./Makefile build-darwin-<hostname>
+$ sudo ./result/activate
+```
+
+### Home Manager (standalone)
+
+To build the Home Manager standalone and activate its configuration, run:
+
+```sh
+$ ./Makefile build-hm-<config>
+$ ./result/activate
+```
 
 ## Testing
 
@@ -85,14 +119,11 @@ You can build a VM to test configurations with safety using the available
 `Makefile`. It should be called as a script since it will automatically download
 its dependencies using `nix-shell`.
 
-For example, to build `miku-nixos` configuration inside a VM run:
+For example, to build and run `miku-nixos` configuration inside a VM run:
 
 ```sh
-$ ./Makefile build-vm-miku-nixos
+$ ./Makefile run-vm-miku-nixos
 ```
-
-You can use the `start-vm.sh` script to start a VM with sufficient resources so
-you can test if everything is running alright.
 
 ## Interesting Tidbits
 
