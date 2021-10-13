@@ -10,17 +10,13 @@ in
 {
   imports = [
     ./hardware-configuration.nix
-    ../../nixos/cli.nix
     ../../nixos/desktop.nix
     ../../nixos/dev.nix
     ../../nixos/fonts.nix
     ../../nixos/game.nix
     ../../nixos/home.nix
     ../../nixos/laptop.nix
-    ../../nixos/locale.nix
-    ../../nixos/meta.nix
-    ../../nixos/system.nix
-    ../../nixos/user.nix
+    ../../nixos/minimal.nix
     ../../nixos/xserver.nix
     ../../cachix.nix
     ../../modules/device.nix

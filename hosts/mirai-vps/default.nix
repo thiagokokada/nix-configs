@@ -12,12 +12,9 @@ in
     [
       # Include the results of the hardware scan.
       ./hardware-configuration.nix
-      ../../nixos/cli.nix
-      ../../nixos/meta.nix
+      ../../nixos/minimal.nix
       ../../nixos/security.nix
       ../../nixos/ssh.nix
-      ../../nixos/system.nix
-      ../../nixos/user.nix
       ../../nixos/vps.nix
       ../../modules/device.nix
       ../../modules/meta.nix

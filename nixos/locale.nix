@@ -2,14 +2,14 @@
 
 {
   # Change some default locales
-  environment.variables = {
+  environment.variables = lib.mkDefault {
     LC_CTYPE = "pt_BR.UTF-8"; # Fix ç in us-intl.
     LC_TIME = "pt_BR.UTF-8";
     LC_COLLATE = "C"; # Use C style string sort.
   };
 
   # Select internationalisation properties.
-  i18n.defaultLocale = "en_US.UTF-8";
+  i18n.defaultLocale = lib.mkDefault "en_US.UTF-8";
 
   # Set X11 keyboard layout.
   services.xserver = lib.mkDefault {
@@ -20,5 +20,5 @@
   };
 
   # Set your time zone.
-  time.timeZone = "America/Sao_Paulo";
+  time.timeZone = lib.mkDefault "America/Sao_Paulo";
 }
