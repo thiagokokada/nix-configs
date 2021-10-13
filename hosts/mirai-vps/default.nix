@@ -6,7 +6,6 @@
 
 let
   inherit (config.meta) username;
-  inherit (self) inputs;
 in
 {
   imports =
@@ -24,15 +23,12 @@ in
       ../../modules/meta.nix
       ../../cachix.nix
       ../../overlays
-      inputs.home.nixosModules.home-manager
+      self.inputs.home.nixosModules.home-manager
     ];
 
   home-manager = {
     useUserPackages = true;
     users.${username} = {
-      # Let Home Manager install and manage itself.
-      programs.home-manager.enable = true;
-      home.stateVersion = "21.05";
       imports = [
         ../../home-manager/irssi.nix
         ../../home-manager/minimal.nix
