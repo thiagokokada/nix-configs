@@ -13,7 +13,9 @@ in
     gammastep
     gimp
     gnome.evince
+    gnome.file-roller
     gnome.gnome-disk-utility
+    gnome.nautilus
     google-chrome
     gthumb
     inkscape
@@ -24,11 +26,9 @@ in
     open-browser
     pamixer
     pavucontrol
-    pcmanfm
     peek
     qalculate-gtk
     vlc
-    xarchiver
     xdotool
     xdragon
     xorg.xdpyinfo
@@ -60,7 +60,7 @@ in
         "image/gif" = "org.gnome.gThumb.desktop";
         "image/jpeg" = "org.gnome.gThumb.desktop";
         "image/png" = "org.gnome.gThumb.desktop";
-        "inode/directory" = "pcmanfm.desktop";
+        "inode/directory" = "org.gnome.Nautilus.desktop";
         "text/html" = "open-browser.desktop";
         "text/plain" = "emacs.desktop";
         "text/x-makefile" = "emacs.desktop";
