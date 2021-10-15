@@ -20,6 +20,7 @@
     ./theme
     ./tmux.nix
     ./vscode
+    ./xterm.nix
     ./zsh.nix
     ../modules/device.nix
     ../modules/meta.nix
