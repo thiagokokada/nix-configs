@@ -7,8 +7,8 @@
     curl
     daemonize
     dos2unix
+    dua
     each
-    gdu
     jo
     jq
     moreutils
@@ -30,4 +30,8 @@
   ] ++ lib.optionals (!stdenv.isDarwin) [
     unar
   ];
+
+  programs.zsh.shellAliases = {
+    ncdu = "${pkgs.dua}/bin/dua interactive";
+  };
 }
