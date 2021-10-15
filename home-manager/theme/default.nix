@@ -25,7 +25,7 @@
     with config.theme.fonts; [
       dejavu_fonts
       font-awesome_5
-      gnome3.gnome-themes-standard
+      gnome.gnome-themes-standard
       gui.package
       hack-font
       hicolor-icon-theme
@@ -45,7 +45,7 @@
   };
 
   xsession.pointerCursor = {
-    package = pkgs.gnome3.adwaita-icon-theme;
+    package = pkgs.gnome.adwaita-icon-theme;
     name = "Adwaita";
     size = 32;
   };

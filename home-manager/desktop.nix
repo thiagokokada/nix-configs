@@ -12,8 +12,8 @@ in
     discord
     gammastep
     gimp
-    gnome3.evince
-    gnome3.gnome-disk-utility
+    gnome.evince
+    gnome.gnome-disk-utility
     google-chrome
     gthumb
     inkscape

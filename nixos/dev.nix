@@ -5,7 +5,7 @@ in
 {
   environment.systemPackages = with pkgs; [
     docker-compose
-    gnome3.gnome-boxes
+    gnome.gnome-boxes
   ];
 
   programs = {
