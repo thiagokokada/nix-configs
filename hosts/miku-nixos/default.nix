@@ -11,6 +11,7 @@ in
   imports = [
     ./hardware-configuration.nix
     ../../nixos
+    ../../nixos/cross-compiling.nix
     ../../nixos/game.nix
     ../../nixos/pc.nix
     ../../nixos/security.nix
