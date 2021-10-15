@@ -13,7 +13,7 @@ let
     import ./i3-common.nix rec {
       inherit config lib modifier alt;
       browser = "firefox";
-      fileManager = "${terminal} ${config.programs.nnn.finalPackage}/bin/nnn";
+      fileManager = "${terminal} ${config.programs.nnn.finalPackage}/bin/nnn -a -P p";
       statusCommand = with config;
         "${programs.i3status-rust.package}/bin/i3status-rs ${xdg.configHome}/i3status-rust/config-sway.toml";
       menu =
