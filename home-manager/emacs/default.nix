@@ -3,6 +3,7 @@
 let
   inherit (config.home) homeDirectory;
   doomConfigPath = "${config.meta.configPath}/home-manager/emacs/doom-emacs";
+  utils = import ../../utils { inherit pkgs; };
 in
 {
   imports = [ ../../modules/meta.nix ];
@@ -44,7 +45,7 @@ in
         emacs = "${config.programs.emacs.package}/bin/emacs";
       in
       ''
-        em() { ${emacs} "$@" &>/dev/null &! }
+        ${utils.makeBgCmd "em" emacs}
         et() { ${emacs} -nw "$@" }
         emp() {
           local p
