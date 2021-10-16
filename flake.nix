@@ -116,7 +116,7 @@
           };
       in
       {
-        miku-macos-vm = mkDarwin { modules = [ ./hosts/miku-darwin-vm ]; };
+        miku-macos-vm = mkDarwin { modules = [ ./hosts/miku-macos-vm ]; };
       };
 
     # https://github.com/nix-community/home-manager/issues/1510
