@@ -90,11 +90,7 @@ in
       ZSH_HIGHLIGHT_HIGHLIGHTERS = [ "main" "brackets" "cursor" ];
     };
 
-    shellAliases = {
-      "reload!" = "source $HOME/.zshrc";
-      dotfiles = "cd $DOTFILES_PATH";
-      dotfiles-pull = "git -C $DOTFILES_PATH pull";
-    };
+    shellAliases = { "reload!" = "source $HOME/.zshrc"; };
 
     profileExtra =
       let
