@@ -28,6 +28,8 @@ in
 
       open-browser = prev.callPackage ../packages/open-browser { };
 
+      nix-whereis = prev.callPackage ../packages/nix-whereis { };
+
       # TODO: remove it from 21.11
       pamixer = final.unstable.pamixer;
       rar = final.unstable.rar;

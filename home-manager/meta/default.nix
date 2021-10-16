@@ -2,9 +2,6 @@
 
 let
   inherit (self) inputs;
-
-  nix-whereis = pkgs.writeShellScriptBin "nix-whereis"
-    (lib.fileContents ./nix-whereis.sh);
 in
 {
   # Import overlays
