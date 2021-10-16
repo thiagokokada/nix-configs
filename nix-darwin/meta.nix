@@ -11,10 +11,10 @@ in
     trustedUsers = [ "root" "@wheel" ];
     # FIXME: doesn't seem to be working
     # https://github.com/LnL7/nix-darwin/issues/355
-    # package = pkgs.nixFlakes;
-    # extraOptions = ''
-    #   experimental-features = nix-command flakes
-    # '';
+    package = pkgs.nixFlakes;
+    extraOptions = ''
+      experimental-features = nix-command flakes
+    '';
 
     # Set the $NIX_PATH entry for nixpkgs. This is necessary in
     # this setup with flakes, otherwise commands like `nix-shell
