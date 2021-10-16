@@ -10,10 +10,6 @@ in
 
   programs = {
     adb.enable = true;
-    java = {
-      enable = true;
-      package = pkgs.jdk11;
-    };
     wireshark = {
       enable = true;
       package = pkgs.wireshark;
