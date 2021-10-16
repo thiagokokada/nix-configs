@@ -1,11 +1,12 @@
-{ super, config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 let
   inherit (pkgs) jdk;
   babashka = pkgs.unstable.babashka;
 in
 {
-  programs.java = {
+  # FIXME: why is this not working on macOS?
+  programs.java = lib.mkIf (!pkgs.stdenv.isDarwin) {
     enable = true;
     package = jdk;
   };
