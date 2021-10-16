@@ -1,12 +1,17 @@
 { config, pkgs, lib, ... }:
 
 let
-  inherit (pkgs) jdk;
+  jdk =
+    # TODO: remove this on 21.11 release
+    # Already fixed on master: https://github.com/NixOS/nixpkgs/pull/133806
+    if pkgs.stdenv.isDarwin then
+      pkgs.unstable.jdk
+    else
+      pkgs.jdk;
   babashka = pkgs.unstable.babashka;
 in
 {
-  # FIXME: why is this not working on macOS?
-  programs.java = lib.mkIf (!pkgs.stdenv.isDarwin) {
+  programs.java = {
     enable = true;
     package = jdk;
   };
