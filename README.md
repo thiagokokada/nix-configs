@@ -92,6 +92,21 @@ trigger a rebuild.
 
 ### nix-darwin
 
+Start by installing Nix:
+
+```console
+$ curl -L https://nixos.org/nix/install | sh -s -- --darwin-use-unencrypted-nix-store-volume --daemon
+```
+
+The two flags are important. The first one will allow installation on macOS
+10.15+ by creating an unencrypted APFS volume and mounting it over at `/nix`.
+See more details
+[here](https://nixos.org/manual/nix/stable/#sect-macos-installation). The second
+one will create a multi-user installation of nix. Not really necessary, but I
+had bad experiences in the past with single-user installations with nix-darwin.
+See more details
+[here](https://nixos.org/manual/nix/stable/#sect-multi-user-installation).
+
 You first need to run nix-darwin
 [installer](https://github.com/LnL7/nix-darwin#install):
 
@@ -104,10 +119,16 @@ Afterwards run:
 
 ```console
 $ ./Makefile build-darwin-<hostname>
-$ sudo ./result/activate
+$ ./result/sw/bin/darwin-rebuild switch --flake .
 ```
 
 ### Home Manager (standalone)
+
+Start by installing Nix:
+
+```console
+$ curl -L https://nixos.org/nix/install | sh -s -- --daemon
+```
 
 To build the Home Manager standalone and activate its configuration, run:
 
