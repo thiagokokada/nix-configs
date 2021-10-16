@@ -1,7 +1,7 @@
 { super, config, pkgs, ... }:
 
 let
-  jdk = pkgs.jdk11;
+  inherit (pkgs) jdk;
   babashka = pkgs.unstable.babashka;
 in
 {
