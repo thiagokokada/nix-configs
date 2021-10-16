@@ -6,14 +6,18 @@
   programs.mpv = {
     enable = true;
 
-    package = with pkgs; wrapMpv (mpv-unwrapped.override { vapoursynthSupport = true; }) {
-      extraMakeWrapperArgs = [
-        "--prefix"
-        "LD_LIBRARY_PATH"
-        ":"
-        "${vapoursynth-mvtools}/lib/vapoursynth"
-      ];
-    };
+    package = with pkgs;
+      if stdenv.isDarwin then
+        pkgs.mpv
+      else
+        wrapMpv (mpv-unwrapped.override { vapoursynthSupport = true; }) {
+          extraMakeWrapperArgs = [
+            "--prefix"
+            "LD_LIBRARY_PATH"
+            ":"
+            "${vapoursynth-mvtools}/lib/vapoursynth"
+          ];
+        };
 
     config = {
       osd-font-size = 14;
@@ -57,7 +61,8 @@
     bindings = {
       F1 = "seek -85";
       F2 = "seek 85";
-      I = "vf toggle vapoursynth=${./motion-based-interpolation.vpy}";
+      I = lib.mkIf (!pkgs.stdenv.isDarwin)
+        "vf toggle vapoursynth=${./motion-based-interpolation.vpy}";
     };
   };
 }
