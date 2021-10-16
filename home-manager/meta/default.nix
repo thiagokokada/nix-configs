@@ -3,19 +3,8 @@
 let
   inherit (self) inputs;
 
-  nix-where-is = pkgs.writeShellScriptBin "nix-where-is" ''
-    set -euo pipefail
-
-    readonly program_name="''${1:-}"
-
-    if [[ -z "''${program_name}" ]]; then
-      echo "usage: $(basename ''${0}) PROGRAM"
-      exit 1
-    fi
-
-    readonly symbolic_link="$(which "''${program_name}")"
-    readlink -f "''${symbolic_link}"
-  '';
+  nix-whereis = pkgs.writeShellScriptBin "nix-whereis"
+    (lib.fileContents ./nix-whereis.sh);
 in
 {
   # Import overlays
@@ -30,7 +19,7 @@ in
   home.packages = with pkgs; [
     hydra-check
     nix-update
-    nix-where-is
+    nix-whereis
     nixpkgs-fmt
     nixpkgs-review
   ];
