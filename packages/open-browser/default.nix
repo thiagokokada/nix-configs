@@ -1,6 +1,8 @@
 { config, lib, pkgs, ... }:
 
-with pkgs;
+let
+  inherit (pkgs) python3Packages makeDesktopItem;
+in
 python3Packages.buildPythonApplication rec {
   pname = "open-browser";
   version = "0.1";

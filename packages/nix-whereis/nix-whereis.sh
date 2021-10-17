@@ -5,7 +5,11 @@ set -euo pipefail
 readonly program_name="${1:-}"
 
 if [[ -z "$program_name" ]]; then
-    echo "usage: $(@coreutils@/bin/basename "$0") PROGRAM"
+    @coreutils@/bin/cat <<EOF
+usage: $(@coreutils@/bin/basename "$0") <name>
+
+Locate where in /nix/store a binary is stored.
+EOF
     exit 1
 fi
 

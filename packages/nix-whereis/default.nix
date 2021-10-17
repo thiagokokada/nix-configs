@@ -1,10 +1,9 @@
 { config, lib, pkgs, ... }:
 
-with pkgs;
-stdenv.mkDerivation {
+pkgs.stdenv.mkDerivation {
   name = "nix-whereis";
 
-  src = substituteAll {
+  src = with pkgs; substituteAll {
     src = ./nix-whereis.sh;
     isExecutable = true;
     inherit coreutils which bash;
