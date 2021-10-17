@@ -4,15 +4,14 @@ let
 
 in
 {
-  imports = [ ./windows.nix ];
-
-  # Enable secure boot
-  # TODO: Remove when this is merged: https://github.com/NixOS/nixpkgs/pull/141115
-  nixpkgs.overlays = [
-    (final: prev: {
-      OVMF = prev.OVMF.override { secureBoot = true; };
-    })
+  imports = [
+    ./windows.nix
+    # TODO: remove it after PR is merged
+    # https://github.com/NixOS/nixpkgs/pull/142032
+    ../../modules/nixos/libvirtd.nix
   ];
+
+  disabledModules = [ "virtualisation/libvirtd.nix" ];
 
   boot = {
     # Do not load NVIDIA drivers
@@ -47,17 +46,24 @@ in
       enable = true;
       onBoot = "ignore";
       onShutdown = "shutdown";
-      qemuOvmf = true;
-      qemuRunAsRoot = false;
-      qemuVerbatimConfig = ''
-        nographics_allow_host_audio = 1
-        cgroup_device_acl = [
-          "/dev/null", "/dev/full", "/dev/zero",
-          "/dev/random", "/dev/urandom",
-          "/dev/ptmx", "/dev/kvm", "/dev/kqemu",
-          "/dev/rtc","/dev/hpet",
-        ]
-      '';
+      qemu = {
+        ovmf = {
+          enable = true;
+          package = pkgs.OVMF-secureBoot;
+        };
+        # TODO: migrate to SWTPM on 21.11
+        # swtpm.enable = true;
+        runAsRoot = false;
+        verbatimConfig = ''
+          nographics_allow_host_audio = 1
+          cgroup_device_acl = [
+            "/dev/null", "/dev/full", "/dev/zero",
+            "/dev/random", "/dev/urandom",
+            "/dev/ptmx", "/dev/kvm", "/dev/kqemu",
+            "/dev/rtc","/dev/hpet",
+          ]
+        '';
+      };
     };
   };
 
