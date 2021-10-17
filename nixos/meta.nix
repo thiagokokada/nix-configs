@@ -2,19 +2,6 @@
 
 let
   inherit (self) inputs;
-
-  nixos-clean-up = pkgs.writeShellScriptBin "nixos-clean-up" ''
-    set -euo pipefail
-
-    sudo -s -- <<EOF
-    find -H /nix/var/nix/gcroots/auto -type l | xargs readlink | grep "/result$" | xargs rm -f
-    nix-collect-garbage -d
-    nixos-rebuild boot --fast
-    if [[ "''${1:-}" == "--optimize" ]]; then
-      nix-store --optimize
-    fi
-    EOF
-  '';
 in
 {
   # TODO: remove on 21.11
@@ -23,7 +10,7 @@ in
   # Add some Nix related packages
   environment.systemPackages = with pkgs; [
     cachix
-    nixos-clean-up
+    nixos-cleanup
   ];
 
   programs.git = {

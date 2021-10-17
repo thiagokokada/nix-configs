@@ -30,6 +30,8 @@ in
 
       nix-whereis = prev.callPackage ../packages/nix-whereis { };
 
+      nixos-cleanup = prev.callPackage ../packages/nixos-cleanup { };
+
       # TODO: remove it from 21.11
       pamixer = final.unstable.pamixer;
       rar = final.unstable.rar;
