@@ -8,7 +8,7 @@ rec {
   runBgCmd = command: args:
     "${command} ${args} </dev/null &>/dev/null &!";
 
-  # macOS seems to loose the current PWD for some reason if you
+  # macOS seems to lose the current PWD for some reason if you
   # close stdin, but without closing stdin you can't have a proper
   # background application.
   # This function should make it safer by expanding the paths.
