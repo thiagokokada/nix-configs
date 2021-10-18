@@ -164,7 +164,9 @@ in
     };
   };
 
-  xresources.properties = { "Xft.dpi" = "135"; };
+  xresources.properties = with config.theme.fonts; {
+    "Xft.dpi" = (toString dpi);
+  };
 
   home = {
     # Disable keyboard management via HM

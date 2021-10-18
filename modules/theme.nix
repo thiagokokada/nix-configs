@@ -23,6 +23,12 @@ in
         type = types.nullOr themeType;
         description = "GUI main font";
       };
+
+      dpi = mkOption {
+        type = types.int;
+        description = "Font dpi";
+        default = 135;
+      };
     };
 
     colors = mkOption {

@@ -91,7 +91,11 @@ in
         };
       };
 
-      output = { "*" = { scale = "1.4"; }; };
+      output = with config.theme.fonts; {
+        "*" = {
+          scale = (toString (dpi / 100.0));
+        };
+      };
     };
 
     extraSessionCommands = ''
