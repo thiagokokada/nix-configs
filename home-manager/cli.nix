@@ -3,7 +3,7 @@
 {
   home.packages = with pkgs; [
     aria2
-    binutils
+    (lib.hiPrio binutils) # fix conflict with gcc in darwin
     coreutils
     curl
     daemonize
