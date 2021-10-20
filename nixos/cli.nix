@@ -9,6 +9,7 @@
     systemPackages = with pkgs; [
       bc
       bind
+      binutils
       curl
       dos2unix
       ffmpeg

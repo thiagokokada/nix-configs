@@ -3,12 +3,15 @@
 {
   home.packages = with pkgs; [
     aria2
+    binutils
     coreutils
     curl
     daemonize
+    diffutils
     dos2unix
     dua
     each
+    findutils
     jo
     jq
     moreutils
