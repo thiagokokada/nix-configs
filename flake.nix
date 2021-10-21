@@ -31,6 +31,12 @@
     };
     nubank.url = "github:nubank/nixpkgs/master";
 
+    # htop-vim
+    htop-vim = {
+      url = "github:KoffeinFlummi/htop-vim/master";
+      flake = false;
+    };
+
     # nnn plugins
     nnn-plugins = {
       url = "github:jarun/nnn/v4.0";

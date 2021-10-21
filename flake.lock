@@ -121,6 +121,23 @@
         "type": "github"
       }
     },
+    "htop-vim": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1633988946,
+        "narHash": "sha256-G83+5GgEz41begDkdK8zNx48UleufFCJ9pOQ9nbtFNs=",
+        "owner": "KoffeinFlummi",
+        "repo": "htop-vim",
+        "rev": "ba6fd3891e9af60b41bd092524cc05f2469fec4b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "KoffeinFlummi",
+        "ref": "master",
+        "repo": "htop-vim",
+        "type": "github"
+      }
+    },
     "nix-darwin": {
       "inputs": {
         "nixpkgs": [
@@ -217,6 +234,7 @@
         "hardware": "hardware",
         "home": "home",
         "home-unstable": "home-unstable",
+        "htop-vim": "htop-vim",
         "nix-darwin": "nix-darwin",
         "nixpkgs": "nixpkgs",
         "nnn-plugins": "nnn-plugins",
