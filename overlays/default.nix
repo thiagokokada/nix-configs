@@ -16,16 +16,6 @@ in
       emacs-custom = with final; (emacsPackagesGen emacsPgtkGcc).emacsWithPackages
         (epkgs: with epkgs; [ vterm ]);
 
-      linux-zen-with-muqss = with prev;
-        linuxPackagesFor (linux_zen.override {
-          structuredExtraConfig = with lib.kernel; {
-            PREEMPT = yes;
-            PREEMPT_VOLUNTARY = lib.mkForce no;
-            SCHED_MUQSS = yes;
-          };
-          ignoreConfigErrors = true;
-        });
-
       open-browser = prev.callPackage ../packages/open-browser { };
 
       nix-autobahn = self.inputs.nix-autobahn.defaultPackage.${system};
