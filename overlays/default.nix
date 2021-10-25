@@ -13,9 +13,6 @@ in
         config = prev.config;
       };
 
-      emacs-custom = with final; (emacsPackagesGen emacsPgtkGcc).emacsWithPackages
-        (epkgs: with epkgs; [ vterm ]);
-
       open-browser = prev.callPackage ../packages/open-browser { };
 
       nix-autobahn = self.inputs.nix-autobahn.defaultPackage.${system};

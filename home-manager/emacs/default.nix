@@ -4,6 +4,8 @@ let
   inherit (config.home) homeDirectory;
   doomConfigPath = "${config.meta.configPath}/home-manager/emacs/doom-emacs";
   utils = import ../../utils { inherit pkgs; };
+  emacs-custom = with pkgs; (emacsPackagesGen emacsPgtkGcc).emacsWithPackages
+    (epkgs: with epkgs; [ vterm ]);
 in
 {
   imports = [ ../../modules/meta.nix ];
