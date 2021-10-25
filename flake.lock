@@ -59,6 +59,22 @@
       },
       "original": {
         "owner": "numtide",
+        "ref": "master",
+        "repo": "flake-utils",
+        "type": "github"
+      }
+    },
+    "flake-utils_2": {
+      "locked": {
+        "lastModified": 1623875721,
+        "narHash": "sha256-A8BU7bjS5GirpAUv4QA+QnJ4CceLHkcXdRp4xITDB0s=",
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "rev": "f7e004a55b120c02ecb6219596820fcd32ca8772",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
         "repo": "flake-utils",
         "type": "github"
       }
@@ -138,6 +154,28 @@
         "type": "github"
       }
     },
+    "nix-autobahn": {
+      "inputs": {
+        "flake-utils": "flake-utils_2",
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1626347411,
+        "narHash": "sha256-Q1WefDhkHBbsArFYuyCqLpFGU5Y2FXmabPqoRwPB1Sc=",
+        "owner": "Lassulus",
+        "repo": "nix-autobahn",
+        "rev": "74b45f936935433d3f8cc03be37b2ccf70f32a37",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Lassulus",
+        "ref": "master",
+        "repo": "nix-autobahn",
+        "type": "github"
+      }
+    },
     "nix-darwin": {
       "inputs": {
         "nixpkgs": [
@@ -156,6 +194,30 @@
         "owner": "LnL7",
         "ref": "master",
         "repo": "nix-darwin",
+        "type": "github"
+      }
+    },
+    "nix-ld": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "utils": [
+          "flake-utils"
+        ]
+      },
+      "locked": {
+        "lastModified": 1634471440,
+        "narHash": "sha256-dWhtT9CJWd4CLcy8oWXWdwY6vc4fJC4HIW+RuIL1nvg=",
+        "owner": "Mic92",
+        "repo": "nix-ld",
+        "rev": "55086c739b537e8257b7714aeffecaf7271932a6",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Mic92",
+        "ref": "main",
+        "repo": "nix-ld",
         "type": "github"
       }
     },
@@ -235,7 +297,9 @@
         "home": "home",
         "home-unstable": "home-unstable",
         "htop-vim": "htop-vim",
+        "nix-autobahn": "nix-autobahn",
         "nix-darwin": "nix-darwin",
+        "nix-ld": "nix-ld",
         "nixpkgs": "nixpkgs",
         "nnn-plugins": "nnn-plugins",
         "nubank": "nubank",

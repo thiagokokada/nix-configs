@@ -21,8 +21,20 @@
     };
 
     # helpers
-    flake-utils.url = "github:numtide/flake-utils";
+    flake-utils.url = "github:numtide/flake-utils/master";
     declarative-cachix.url = "github:jonascarpay/declarative-cachix/master";
+
+    # nix-ld
+    nix-ld = {
+      url = "github:Mic92/nix-ld/main";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.utils.follows = "flake-utils";
+    };
+    nix-autobahn = {
+      url = "github:Lassulus/nix-autobahn/master";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.utils.follows = "flake-utils";
+    };
 
     # overlays
     emacs = {

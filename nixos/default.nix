@@ -7,6 +7,7 @@
     ./fonts.nix
     ./home.nix
     ./minimal.nix
+    ./non-nix.nix
     ./xserver.nix
   ];
 }

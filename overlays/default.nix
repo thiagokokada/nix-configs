@@ -28,6 +28,8 @@ in
 
       open-browser = prev.callPackage ../packages/open-browser { };
 
+      nix-autobahn = self.inputs.nix-autobahn.defaultPackage.${system};
+
       nix-whereis = prev.callPackage ../packages/nix-whereis { };
 
       nixos-cleanup = prev.callPackage ../packages/nixos-cleanup { };
