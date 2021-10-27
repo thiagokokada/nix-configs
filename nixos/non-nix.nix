@@ -5,13 +5,9 @@
     self.inputs.nix-ld.nixosModules.nix-ld
   ];
 
-  environment = {
-    sessionVariables = {
-      NIX_CC = "${pkgs.stdenv.cc}";
-    };
-    systemPackages = with pkgs; [
-      nix-autobahn
-      nix-index
-    ];
-  };
+  environment.systemPackages = with pkgs; [
+    nix-alien
+    nix-index
+    nix-index-update
+  ];
 }

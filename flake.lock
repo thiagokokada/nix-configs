@@ -64,21 +64,6 @@
         "type": "github"
       }
     },
-    "flake-utils_2": {
-      "locked": {
-        "lastModified": 1623875721,
-        "narHash": "sha256-A8BU7bjS5GirpAUv4QA+QnJ4CceLHkcXdRp4xITDB0s=",
-        "owner": "numtide",
-        "repo": "flake-utils",
-        "rev": "f7e004a55b120c02ecb6219596820fcd32ca8772",
-        "type": "github"
-      },
-      "original": {
-        "owner": "numtide",
-        "repo": "flake-utils",
-        "type": "github"
-      }
-    },
     "hardware": {
       "locked": {
         "lastModified": 1633793047,
@@ -154,25 +139,28 @@
         "type": "github"
       }
     },
-    "nix-autobahn": {
+    "nix-alien": {
       "inputs": {
-        "flake-utils": "flake-utils_2",
+        "flake-utils": [
+          "flake-utils"
+        ],
         "nixpkgs": [
           "nixpkgs"
-        ]
+        ],
+        "poetry2nix": "poetry2nix"
       },
       "locked": {
-        "lastModified": 1626347411,
-        "narHash": "sha256-Q1WefDhkHBbsArFYuyCqLpFGU5Y2FXmabPqoRwPB1Sc=",
-        "owner": "Lassulus",
-        "repo": "nix-autobahn",
-        "rev": "74b45f936935433d3f8cc03be37b2ccf70f32a37",
+        "lastModified": 1635307407,
+        "narHash": "sha256-UWLIeHGDqwr6yQYa8y1iH2N07OotW3cTDX10y5tLTA4=",
+        "owner": "thiagokokada",
+        "repo": "nix-alien",
+        "rev": "e38842ec456c60b1faea162ddd78e9a3bc14774e",
         "type": "github"
       },
       "original": {
-        "owner": "Lassulus",
+        "owner": "thiagokokada",
         "ref": "master",
-        "repo": "nix-autobahn",
+        "repo": "nix-alien",
         "type": "github"
       }
     },
@@ -270,6 +258,31 @@
         "type": "github"
       }
     },
+    "poetry2nix": {
+      "inputs": {
+        "flake-utils": [
+          "nix-alien",
+          "flake-utils"
+        ],
+        "nixpkgs": [
+          "nix-alien",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1633382856,
+        "narHash": "sha256-hYlet806M9xJj4yxf0g5fhDT2IEUVIMAl7sqIeZ8DUM=",
+        "owner": "nix-community",
+        "repo": "poetry2nix",
+        "rev": "705cbfa10e3d9bfed2e59e0256844ae3704dbd7e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "poetry2nix",
+        "type": "github"
+      }
+    },
     "pure": {
       "flake": false,
       "locked": {
@@ -297,7 +310,7 @@
         "home": "home",
         "home-unstable": "home-unstable",
         "htop-vim": "htop-vim",
-        "nix-autobahn": "nix-autobahn",
+        "nix-alien": "nix-alien",
         "nix-darwin": "nix-darwin",
         "nix-ld": "nix-ld",
         "nixpkgs": "nixpkgs",

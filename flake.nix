@@ -30,10 +30,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.utils.follows = "flake-utils";
     };
-    nix-autobahn = {
-      url = "github:Lassulus/nix-autobahn/master";
+    nix-alien = {
+      url = "github:thiagokokada/nix-alien/master";
       inputs.nixpkgs.follows = "nixpkgs";
-      inputs.utils.follows = "flake-utils";
+      inputs.flake-utils.follows = "flake-utils";
     };
 
     # overlays
