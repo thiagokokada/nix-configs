@@ -13,8 +13,6 @@ in
         config = prev.config;
       };
 
-      inherit (self.inputs.nix-alien.packages.${system}) nix-alien nix-index-update;
-
       open-browser = prev.callPackage ../packages/open-browser { };
 
       nix-whereis = prev.callPackage ../packages/nix-whereis { };
