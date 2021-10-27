@@ -6,9 +6,7 @@
   ];
 
   nixpkgs.overlays = [
-    (final: prev: {
-      inherit (self.inputs.nix-alien.packages.${system}) nix-alien nix-index-update;
-    })
+    self.inputs.nix-alien.overlay
   ];
 
   environment.systemPackages = with pkgs; [
