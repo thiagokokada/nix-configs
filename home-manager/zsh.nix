@@ -129,10 +129,12 @@ in
 
         # try to correct the spelling of commands
         setopt correct
-        # Disable C-S/C-Q
+        # disable C-S/C-Q
         setopt noflowcontrol
+        # disable "no matches found" check
+        unsetopt nomatch
 
-        # Edit in vim
+        # edit in vim
         autoload -U edit-command-line
         zle -N edit-command-line
         bindkey -M vicmd v edit-command-line
@@ -142,11 +144,9 @@ in
         bindkey "$terminfo[kcud1]" history-substring-search-down
 
         # source contents from ~/.zshrc.d/*.zsh
-        setopt +o nomatch
         for file in "$HOME/.zshrc.d/"*.zsh; do
           [[ -f "$file" ]] && source "$file"
         done
-        setopt -o nomatch
 
         # load after ~/.zshrc.d files to make sure that ~/.local/bin is the first in $PATH
         export PATH="$HOME/.local/bin:$PATH"
