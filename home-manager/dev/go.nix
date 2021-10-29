@@ -1,14 +1,10 @@
-{ config, pkgs, ... }:
+{ config, ... }:
 
-let
-  inherit (config.home) homeDirectory;
-in
 {
-  home = {
-    packages = with pkgs; [ go ];
-    sessionPath = [ "${homeDirectory}/.go/bin" ];
-    sessionVariables = {
-      GOPATH = "${homeDirectory}/.go";
-    };
+  programs.go = {
+    enable = true;
+    goBin = ".go/bin";
+    goPath = ".go";
   };
+  home.sessionPath = [ config.home.sessionVariables.GOBIN ];
 }
