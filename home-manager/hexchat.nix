@@ -4,15 +4,10 @@
   home.packages = [ pkgs.hexchat ];
 
   xdg.configFile."hexchat" = {
-    source = with pkgs; stdenv.mkDerivation rec {
-      name = "hexchat-theme-monokai";
-      buildInputs = [ pkgs.unzip ];
-      src = builtins.fetchurl {
-        url = "https://dl.hexchat.net/themes/Monokai.hct";
-        sha256 = "0hdjck7wqnbbxalbf07mhlz421j48x41bvzdv2qbbc5px2anfhdq";
-      };
-      unpackPhase = "unzip ${src}";
-      installPhase = "cp -r . $out";
+    source = pkgs.fetchzip {
+      url = "https://dl.hexchat.net/themes/Monokai.hct#Monokai.zip";
+      sha256 = "sha256-WCdgEr8PwKSZvBMs0fN7E2gOjNM0c2DscZGSKSmdID0=";
+      stripRoot = false;
     };
     recursive = true;
   };
