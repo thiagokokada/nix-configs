@@ -8,19 +8,19 @@ in
   services.nix-daemon.enable = true;
 
   environment.systemPackages = [
-    (pkgs.writeScriptBin "nixUnstable" ''
+    (pkgs.writeScriptBin "nixFlakes" ''
       exec ${pkgs.nixUnstable}/bin/nix --experimental-features "nix-command flakes" "$@"
     '')
   ];
 
   nix = {
     trustedUsers = [ "root" "@wheel" ];
-    # FIXME: doesn't seem to be working
-    # https://github.com/LnL7/nix-darwin/issues/355
     package = pkgs.nixFlakes;
-    extraOptions = ''
-      experimental-features = nix-command flakes
-    '';
+    # FIXME: doesn't seem to be working, so we are using nixFlakes instead
+    # https://github.com/LnL7/nix-darwin/issues/355
+    # extraOptions = ''
+    #   experimental-features = nix-command flakes
+    # '';
 
     # Set the $NIX_PATH entry for nixpkgs. This is necessary in
     # this setup with flakes, otherwise commands like `nix-shell
