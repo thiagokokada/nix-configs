@@ -7,6 +7,12 @@ in
   # Auto upgrade nix package and the daemon service.
   services.nix-daemon.enable = true;
 
+  environment.systemPackages = [
+    (pkgs.writeScriptBin "nixUnstable" ''
+      exec ${pkgs.nixUnstable}/bin/nix --experimental-features "nix-command flakes" "$@"
+    '')
+  ];
+
   nix = {
     trustedUsers = [ "root" "@wheel" ];
     # FIXME: doesn't seem to be working
