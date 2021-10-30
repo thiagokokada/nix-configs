@@ -2,7 +2,7 @@
 let
   # See `man 5 systemd.exec`
   # Mostly safe to block unless the service is doing something very strange
-  hardenFlags = { overrides ? { } }:
+  hardenFlags = overrides@{ ... }:
     {
       LockPersonality = true;
       NoNewPrivileges = true;
@@ -29,31 +29,28 @@ let
   RestrictAddressFamilies = "AF_UNIX AF_INET AF_INET6"; # Restrict known address families
 in
 {
-  # systemd-analyze --user security
-  systemd.user.services = {
-    opentabletdriver.serviceConfig = hardenFlags { };
-  };
-
   # systemd-analyze security
   systemd.services = {
+    earlyoom.serviceConfig = hardenFlags {
+      inherit PrivateNetwork ProtectHome ProtectSystem;
+      PrivateDevices = false;
+    };
     flood.serviceConfig = hardenFlags {
-      overrides = { inherit ProtectSystem RestrictAddressFamilies; };
+      inherit ProtectSystem RestrictAddressFamilies;
     };
     rtorrent.serviceConfig = hardenFlags {
-      overrides = { inherit RestrictAddressFamilies; };
+      inherit RestrictAddressFamilies;
     };
     plex.serviceConfig = hardenFlags {
-      overrides = { RestrictNamespaces = false; };
+      RestrictNamespaces = false;
     };
     samba-nmbd.serviceConfig = hardenFlags { };
     samba-smbd.serviceConfig = hardenFlags { };
     samba-winbindd.serviceConfig = hardenFlags { };
     smartd.serviceConfig = hardenFlags {
-      overrides = {
-        inherit ProtectHome ProtectSystem PrivateNetwork;
-        ProtectClock = false;
-        PrivateDevices = false;
-      };
+      inherit ProtectHome ProtectSystem PrivateNetwork;
+      ProtectClock = false;
+      PrivateDevices = false;
     };
   };
 
