@@ -21,29 +21,28 @@ let
     ProtectSystem = true;
   };
   restrictNetworkFlags = { RestrictAddressFamilies = "AF_UNIX AF_INET AF_INET6"; };
-  unrestrictNetworkFlags = { RestrictAddressFamilies = ""; };
 in
 {
   # systemd-analyze --user security
   systemd.user.services = {
-    opentabletdriver.serviceConfig = safeHardeningFlags // unrestrictNetworkFlags;
+    opentabletdriver.serviceConfig = safeHardeningFlags;
   };
 
   # systemd-analyze security
   systemd.services = {
-    flood.serviceConfig = strictHardeningFlags // restrictNetworkFlags // {
+    flood.serviceConfig = safeHardeningFlags // restrictNetworkFlags // {
       ProtectHome = false;
     };
     rtorrent.serviceConfig = strictHardeningFlags // restrictNetworkFlags // {
       ProtectHome = false;
     };
-    plex.serviceConfig = safeHardeningFlags // {
+    plex.serviceConfig = safeHardeningFlags // restrictNetworkFlags // {
       RestrictNamespaces = false;
     };
     samba-nmbd.serviceConfig = safeHardeningFlags;
     samba-smbd.serviceConfig = safeHardeningFlags;
     samba-winbindd.serviceConfig = safeHardeningFlags;
-    smartd.serviceConfig = strictHardeningFlags // restrictNetworkFlags // {
+    smartd.serviceConfig = strictHardeningFlags // {
       ProtectClock = false;
       PrivateDevices = false;
       PrivateNetwork = true;
