@@ -1,5 +1,6 @@
 { pkgs, ... }:
 let
+  # See `man 5 systemd.exec`
   # Mostly safe to block unless the service is doing something very strange
   hardenFlags = { overrides ? { } }:
     {
@@ -13,14 +14,18 @@ let
       ProtectKernelLogs = true;
       ProtectKernelModules = true;
       ProtectKernelTunables = true;
+      ProtectProc = "invisible";
+      ProtectSystem = "full"; # Makes /boot, /usr and /etc read-only
+      ReadOnlyPaths = "/nix"; # Well, this is NixOS
       RestrictNamespaces = true;
       RestrictRealtime = true;
+      RestrictSUIDSGID = true;
       SystemCallArchitectures = "native";
     } // overrides;
   # Further hardening that may be applied depending on the case
   PrivateNetwork = true; # Creates a private 'lo' interface
   ProtectHome = true; # Protect /home from access
-  ProtectSystem = true; # Protect most of / from access
+  ProtectSystem = "strict"; # Makes most of / from write read-only
   RestrictAddressFamilies = "AF_UNIX AF_INET AF_INET6"; # Restrict known address families
 in
 {
@@ -35,7 +40,7 @@ in
       overrides = { inherit ProtectSystem RestrictAddressFamilies; };
     };
     rtorrent.serviceConfig = hardenFlags {
-      overrides = { inherit ProtectSystem RestrictAddressFamilies; };
+      overrides = { inherit RestrictAddressFamilies; };
     };
     plex.serviceConfig = hardenFlags {
       overrides = { RestrictNamespaces = false; };
