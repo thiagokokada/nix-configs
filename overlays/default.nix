@@ -27,6 +27,7 @@ in
       });
 
       # TODO: remove it from 21.11
+      delta = final.unstable.delta;
       pamixer = final.unstable.pamixer;
       rar = final.unstable.rar;
     })
