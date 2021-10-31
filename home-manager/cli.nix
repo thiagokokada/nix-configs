@@ -23,7 +23,7 @@
     rar
     ripgrep
     rlwrap
-    sloccount
+    scc
     tealdeer
     telnet
     tig
@@ -35,6 +35,8 @@
   ];
 
   programs.zsh.shellAliases = {
+    # For muscle memory...
     ncdu = "${pkgs.dua}/bin/dua interactive";
+    sloccount = "${pkgs.scc}/bin/scc";
   };
 }
