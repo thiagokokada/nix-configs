@@ -23,10 +23,10 @@
     rar
     ripgrep
     rlwrap
-    scc
     tealdeer
     telnet
     tig
+    tokei
     unzip
     wget
     zip
@@ -37,6 +37,6 @@
   programs.zsh.shellAliases = {
     # For muscle memory...
     ncdu = "${pkgs.dua}/bin/dua interactive";
-    sloccount = "${pkgs.scc}/bin/scc";
+    sloccount = "${pkgs.scc}/bin/tokei";
   };
 }
