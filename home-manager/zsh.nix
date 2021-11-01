@@ -127,6 +127,9 @@ in
         get-ip() { ${curl}/bin/curl -Ss "https://ifconfig.me" }
         get-ip!() { ${curl}/bin/curl -Ss "https://ipapi.co/$(get-ip)/yaml" }
 
+        # allow using nix-shell with zsh
+        ${pkgs.any-nix-shell}/bin/any-nix-shell zsh --info-right | source /dev/stdin
+
         # try to correct the spelling of commands
         setopt correct
         # disable C-S/C-Q

@@ -49,11 +49,6 @@
       vimAlias = true;
       withRuby = false;
     };
-    zsh = {
-      enable = true;
-      promptInit = ''
-        ${pkgs.any-nix-shell}/bin/any-nix-shell zsh --info-right | source /dev/stdin
-      '';
-    };
+    zsh.enable = true;
   };
 }
