@@ -12,6 +12,7 @@
     dua
     each
     findutils
+    gnused
     jo
     jq
     moreutils
