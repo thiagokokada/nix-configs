@@ -13,6 +13,7 @@
     each
     findutils
     gnused
+    ix
     jo
     jq
     moreutils
