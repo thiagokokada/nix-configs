@@ -182,7 +182,6 @@ in
       mons
       playerctl
       wmctrl
-      xclip
       xsecurelock
       xss-lock
     ];

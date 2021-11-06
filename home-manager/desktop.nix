@@ -29,6 +29,7 @@
     peek
     qalculate-gtk
     vlc
+    xclip
     xdotool
     xdragon
     xorg.xdpyinfo
@@ -37,6 +38,11 @@
     xorg.xset
     zoom-us
   ];
+
+  programs.zsh.shellAliases = {
+    copy = "${pkgs.xclip}/bin/xclip -selection c";
+    paste = "${pkgs.xclip}/bin/xclip -selection c -o";
+  };
 
   xdg = {
     mimeApps = {
