@@ -6,6 +6,10 @@
   programs.neovim = {
     enable = true;
 
+    withRuby = false;
+    withNodeJs = false;
+    withPython3 = true;
+
     viAlias = true;
     vimAlias = true;
     vimdiffAlias = true;
