@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ self, config, pkgs, ... }:
 let
   inherit (config.meta) username;
 
@@ -6,9 +6,8 @@ in
 {
   imports = [
     ./windows.nix
-    # TODO: remove it after PR is merged
-    # https://github.com/NixOS/nixpkgs/pull/142032
-    ../../modules/nixos/libvirtd.nix
+    # TODO: remove when 21.11 is released
+    "${self.inputs.unstable}/nixos/modules/virtualisation/libvirtd.nix"
   ];
 
   disabledModules = [ "virtualisation/libvirtd.nix" ];
