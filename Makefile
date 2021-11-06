@@ -25,10 +25,20 @@ validate:
 	nix $(NIX_FLAGS) flake check .
 
 format-check:
-	find -name '*.nix' ! -name 'hardware-configuration.nix' ! -name 'cachix.nix' -exec nixpkgs-fmt --check {} \+
+	find -name '*.nix' \
+		! -name 'hardware-configuration.nix' \
+		! -name 'cachix.nix' \
+		! -path './modules/home-manager/*' \
+		! -path './modules/nixos/*' \
+		-exec nixpkgs-fmt --check {} \+
 
 format:
-	find -name '*.nix' ! -name 'hardware-configuration.nix' ! -name 'cachix.nix' -exec nixpkgs-fmt {} \+
+	find -name '*.nix' \
+		! -name 'hardware-configuration.nix' \
+		! -name 'cachix.nix' \
+		! -path './modules/home-manager/*' \
+		! -path './modules/nixos/*' \
+		-exec nixpkgs-fmt {} \+
 
 install:
 ifeq (,$(wildcard ./result/nixos-version))
