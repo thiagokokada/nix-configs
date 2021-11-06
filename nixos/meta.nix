@@ -1,11 +1,8 @@
-{ pkgs, lib, self, ... }:
+{ pkgs, self, ... }:
 
-let
-  inherit (self) inputs;
-in
 {
   # TODO: remove on 21.11
-  imports = [ "${inputs.unstable}/nixos/modules/programs/git.nix" ];
+  imports = [ "${self.inputs.unstable}/nixos/modules/programs/git.nix" ];
 
   # Add some Nix related packages
   environment.systemPackages = with pkgs; [
@@ -28,35 +25,7 @@ in
   # should.
   system.stateVersion = "21.05"; # Did you read the comment?
 
-  nix = {
-    # Add wheel to Nix trusted users
-    trustedUsers = [ "root" "@wheel" ];
-
-    # Enable Flakes
-    # TODO: remove after Nix 2.4 is stable
-    package = pkgs.nixFlakes;
-    extraOptions = ''
-      experimental-features = nix-command flakes
-      # Useful for nix-direnv, however not sure if this will
-      # generate too much garbage
-      # keep-outputs = true
-      # keep-derivations = true
-    '';
-
-    # Set the $NIX_PATH entry for nixpkgs. This is necessary in
-    # this setup with flakes, otherwise commands like `nix-shell
-    # -p pkgs.htop` will keep using an old version of nixpkgs
-    nixPath = [
-      "nixpkgs=${inputs.nixpkgs}"
-      "nixpkgs-unstable=${inputs.unstable}"
-    ];
-    # Same as above, but for `nix shell nixpkgs#htop`
-    # FIXME: for non-free packages you need to use `nix shell --impure`
-    registry = {
-      nixpkgs.flake = inputs.nixpkgs;
-      nixpkgs-unstable.flake = inputs.unstable;
-    };
-  };
+  nix = import ../shared/nix.nix { inherit pkgs self; };
 
   # Enable unfree packages
   nixpkgs.config.allowUnfree = true;
