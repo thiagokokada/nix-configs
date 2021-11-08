@@ -76,6 +76,11 @@ in
           format_swap = "{swap_free;G}";
         };
 
+        cpuBlock = {
+          block = "cpu";
+          format = "{frequency}";
+        };
+
         loadBlock = { block = "load"; };
 
         temperatureBlock = {
@@ -150,11 +155,13 @@ in
       {
         i3 = {
           inherit settings;
+
           blocks = lib.lists.flatten [
             windowBlock
             netBlocks
             disksBlocks
             memoryBlock
+            cpuBlock
             loadBlock
             temperatureBlock
             notificationBlock
@@ -169,11 +176,13 @@ in
 
         sway = {
           inherit settings;
+
           blocks = lib.lists.flatten [
             windowBlock
             netBlocks
             disksBlocks
             memoryBlock
+            cpuBlock
             loadBlock
             temperatureBlock
             backlightBlock
