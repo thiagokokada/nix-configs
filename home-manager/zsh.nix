@@ -151,6 +151,10 @@ in
           [[ -f "$file" ]] && source "$file"
         done
 
+        # ensure that MANPATH includes a :
+        # https://askubuntu.com/a/693612
+        export MANPATH=":$MANPATH"
+
         # load after ~/.zshrc.d files to make sure that ~/.local/bin is the first in $PATH
         export PATH="$HOME/.local/bin:$PATH"
       '';
