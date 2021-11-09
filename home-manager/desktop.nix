@@ -7,7 +7,7 @@
     android-file-transfer
     arandr
     bitwarden
-    calibre
+    (calibre.override { unrarSupport = true; })
     desktop-file-utils
     discord
     gammastep
@@ -22,7 +22,7 @@
     kitty
     libreoffice-fresh
     lxmenu-data
-    mcomix3
+    (mcomix3.override { unrarSupport = true; })
     open-browser
     pamixer
     pavucontrol
