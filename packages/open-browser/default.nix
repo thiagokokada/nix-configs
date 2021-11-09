@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ pkgs, ... }:
 
 let
   inherit (pkgs) python3Packages makeDesktopItem;

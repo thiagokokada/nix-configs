@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ pkgs, ... }:
 
 pkgs.stdenv.mkDerivation {
   name = "nixos-cleanup";
