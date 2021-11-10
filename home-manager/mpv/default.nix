@@ -1,7 +1,9 @@
 { config, lib, pkgs, ... }:
 
 {
-  home.packages = with pkgs; [ python3Packages.youtube-dl ];
+  home.packages = with pkgs; [
+    (python3Packages.yt-dlp.override { withAlias = true; })
+  ];
 
   programs.mpv = {
     enable = true;
