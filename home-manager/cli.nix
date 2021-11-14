@@ -29,11 +29,10 @@
     telnet
     tig
     tokei
+    unstable.ouch
     unzip
     wget
     zip
-  ] ++ lib.optionals (!stdenv.isDarwin) [
-    unar
   ];
 
   programs.zsh.shellAliases = {
