@@ -21,6 +21,10 @@
     };
 
     # helpers
+    flake-compat = {
+      url = "github:edolstra/flake-compat";
+      flake = false;
+    };
     flake-utils.url = "github:numtide/flake-utils/master";
     declarative-cachix.url = "github:jonascarpay/declarative-cachix/master";
 
@@ -110,7 +114,7 @@
     };
   };
 
-  outputs = { self, nixpkgs, nix-darwin, home, flake-utils, ... }: {
+  outputs = { self, nixpkgs, unstable, nix-darwin, home, flake-utils, ... }: {
     nixosConfigurations =
       let
         mkSystem = { modules, system ? "x86_64-linux" }:
@@ -177,17 +181,16 @@
       };
   } // flake-utils.lib.eachDefaultSystem (system:
     let
-      pkgs = import nixpkgs { inherit system; };
+      # TODO: change it to nixpkgs on 21.11 release
+      pkgs = import unstable { inherit system; };
     in
     {
       devShell = with pkgs; mkShell {
         buildInputs = [
           coreutils
           findutils
-          git
           gnumake
-          neovim
-          nixFlakes
+          nix_2_4
           nixpkgs-fmt
         ];
       };

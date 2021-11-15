@@ -1,5 +1,5 @@
 #! /usr/bin/env nix-shell
-#! nix-shell -I "nixpkgs=channel:nixpkgs-unstable" -i "make -f" -p gnumake nixUnstable findutils nixpkgs-fmt
+#! nix-shell shell.nix -i "make -f"
 
 .PHONY: all clean update format format-check install activate run-vm-% build-% build-vm-% build-hm-% run-vm-%
 EXTRA_FLAGS :=
