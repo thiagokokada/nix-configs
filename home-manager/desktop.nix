@@ -6,7 +6,6 @@
   home.packages = with pkgs; [
     android-file-transfer
     arandr
-    bitwarden
     (calibre.override { unrarSupport = true; })
     desktop-file-utils
     discord
@@ -28,6 +27,7 @@
     pavucontrol
     peek
     qalculate-gtk
+    unstable.bitwarden
     vlc
     xclip
     xdotool
