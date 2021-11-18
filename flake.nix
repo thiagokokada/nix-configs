@@ -96,12 +96,16 @@
       url = "github:zsh-users/zsh-completions/master";
       flake = false;
     };
+    zsh-history-substring-search = {
+      url = "github:zsh-users/zsh-history-substring-search/master";
+      flake = false;
+    };
     zsh-syntax-highlighting = {
       url = "github:zsh-users/zsh-syntax-highlighting/master";
       flake = false;
     };
-    zsh-history-substring-search = {
-      url = "github:zsh-users/zsh-history-substring-search/master";
+    zsh-vi-mode = {
+      url = "github:jeffreytse/zsh-vi-mode/master";
       flake = false;
     };
   };

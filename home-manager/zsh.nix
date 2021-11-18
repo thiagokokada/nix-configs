@@ -1,7 +1,5 @@
 { pkgs, lib, self, ... }:
 let
-  inherit (self) inputs;
-
   # Based on https://github.com/zimfw/archive
   archive = pkgs.writeScriptBin "archive" ''
     #!${pkgs.zsh}/bin/zsh
@@ -137,11 +135,6 @@ in
         # disable "no matches found" check
         unsetopt nomatch
 
-        # edit in vim
-        autoload -U edit-command-line
-        zle -N edit-command-line
-        bindkey -M vicmd v edit-command-line
-
         # zsh-history-substring-search
         bindkey "$terminfo[kcuu1]" history-substring-search-up
         bindkey "$terminfo[kcud1]" history-substring-search-down
@@ -159,61 +152,65 @@ in
         export PATH="$HOME/.local/bin:$PATH"
       '';
 
-    plugins = [
+    plugins = with self.inputs; [
       {
-        src = inputs.zit;
+        src = zit;
         name = "zit";
         file = "zit.zsh";
       }
       {
-        src = inputs.zim-completion;
+        src = zim-completion;
         name = "zim-completion";
         file = "init.zsh";
       }
       {
-        src = inputs.zim-environment;
+        src = zim-environment;
         name = "zim-environment";
         file = "init.zsh";
       }
       {
-        src = inputs.zim-input;
+        src = zim-input;
         name = "zim-input";
         file = "init.zsh";
       }
       {
-        src = inputs.zim-git;
+        src = zim-git;
         name = "zim-git";
         file = "init.zsh";
       }
       {
-        src = inputs.zim-ssh;
+        src = zim-ssh;
         name = "zim-ssh";
         file = "init.zsh";
       }
       {
-        src = inputs.zim-utility;
+        src = zim-utility;
         name = "zim-utility";
         file = "init.zsh";
       }
       {
-        src = inputs.pure;
+        src = pure;
         name = "pure";
       }
       {
-        src = inputs.zsh-autopair;
+        src = zsh-autopair;
         name = "zsh-autopair";
       }
       {
-        src = inputs.zsh-completions;
+        src = zsh-completions;
         name = "zsh-completions";
       }
       {
-        src = inputs.zsh-syntax-highlighting;
+        src = zsh-history-substring-search;
+        name = "zsh-history-substring-search";
+      }
+      {
+        src = zsh-syntax-highlighting;
         name = "zsh-syntax-highlighting";
       }
       {
-        src = inputs.zsh-history-substring-search;
-        name = "zsh-history-substring-search";
+        src = zsh-vi-mode;
+        name = "zsh-vi-mode";
       }
     ];
   };
