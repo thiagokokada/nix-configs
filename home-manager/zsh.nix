@@ -205,6 +205,11 @@ in
         name = "zsh-syntax-highlighting";
       }
       {
+        src = zsh-system-clipboard;
+        name = "zsh-system-clipboard";
+      }
+      # Should be the last one
+      {
         src = zsh-history-substring-search;
         name = "zsh-history-substring-search";
       }

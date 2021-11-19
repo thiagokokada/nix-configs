@@ -104,6 +104,10 @@
       url = "github:zsh-users/zsh-syntax-highlighting/master";
       flake = false;
     };
+    zsh-system-clipboard = {
+      url = "github:kutsan/zsh-system-clipboard/master";
+      flake = false;
+    };
   };
 
   outputs = { self, nixpkgs, nix-darwin, home, flake-utils, ... }: {
