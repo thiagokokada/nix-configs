@@ -201,16 +201,12 @@ in
         name = "zsh-completions";
       }
       {
-        src = zsh-history-substring-search;
-        name = "zsh-history-substring-search";
-      }
-      {
         src = zsh-syntax-highlighting;
         name = "zsh-syntax-highlighting";
       }
       {
-        src = zsh-vi-mode;
-        name = "zsh-vi-mode";
+        src = zsh-history-substring-search;
+        name = "zsh-history-substring-search";
       }
     ];
   };

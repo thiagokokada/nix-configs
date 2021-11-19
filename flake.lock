@@ -328,8 +328,7 @@
         "zsh-autopair": "zsh-autopair",
         "zsh-completions": "zsh-completions",
         "zsh-history-substring-search": "zsh-history-substring-search",
-        "zsh-syntax-highlighting": "zsh-syntax-highlighting",
-        "zsh-vi-mode": "zsh-vi-mode"
+        "zsh-syntax-highlighting": "zsh-syntax-highlighting"
       }
     },
     "unstable": {
@@ -532,23 +531,6 @@
         "owner": "zsh-users",
         "ref": "master",
         "repo": "zsh-syntax-highlighting",
-        "type": "github"
-      }
-    },
-    "zsh-vi-mode": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1637064485,
-        "narHash": "sha256-Dn/si5Duku7nM5axHzGrQQj+qzCd5UtylqnlOwdKUss=",
-        "owner": "jeffreytse",
-        "repo": "zsh-vi-mode",
-        "rev": "d287665d1df1d39d54dff46810ea8e76adbca657",
-        "type": "github"
-      },
-      "original": {
-        "owner": "jeffreytse",
-        "ref": "master",
-        "repo": "zsh-vi-mode",
         "type": "github"
       }
     }

@@ -104,10 +104,6 @@
       url = "github:zsh-users/zsh-syntax-highlighting/master";
       flake = false;
     };
-    zsh-vi-mode = {
-      url = "github:jeffreytse/zsh-vi-mode/master";
-      flake = false;
-    };
   };
 
   outputs = { self, nixpkgs, nix-darwin, home, flake-utils, ... }: {
