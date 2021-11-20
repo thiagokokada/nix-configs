@@ -25,5 +25,10 @@ jobs:
       - name: Set default git branch (to reduce log spam)
         run: git config --global init.defaultBranch master
 
+      - name: Install up-to-date Bash
+        run: |
+          brew update
+          brew install bash
+
       - name: Build Nix configs
         run: ./Makefile all-macos
