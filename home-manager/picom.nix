@@ -3,6 +3,7 @@
 {
   services.picom = {
     enable = true;
+    package = pkgs.unstable.picom-next;
     experimentalBackends = true;
     fade = true;
     fadeDelta = 2;
