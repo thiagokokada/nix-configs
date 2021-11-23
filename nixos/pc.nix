@@ -110,17 +110,20 @@ with config.users.users.${username}; {
     };
   };
 
-  systemd.services.flood = with pkgs; {
-    description =
-      "A web UI for rTorrent with a Node.js backend and React frontend.";
-    after = [ "rtorrent.service" ];
-    wantedBy = [ "multi-user.target" ];
-    serviceConfig = {
-      User = username;
-      Group = group;
-      Type = "simple";
-      Restart = "on-failure";
-      ExecStart = "${nodePackages.flood}/bin/flood";
+  systemd.services = {
+    rtorrent.serviceConfig.Restart = lib.mkForce "always";
+    flood = with pkgs; {
+      description =
+        "A web UI for rTorrent with a Node.js backend and React frontend.";
+      after = [ "rtorrent.service" ];
+      wantedBy = [ "multi-user.target" ];
+      serviceConfig = {
+        User = username;
+        Group = group;
+        Type = "simple";
+        Restart = "always";
+        ExecStart = "${nodePackages.flood}/bin/flood";
+      };
     };
   };
 
