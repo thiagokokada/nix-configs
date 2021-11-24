@@ -16,6 +16,9 @@
     remotePlay.openFirewall = true;
   };
 
+  # Alternative driver for Xbox One/Series S/Series X controllers
+  hardware.xpadneo.enable = true;
+
   # Enable ratbagd (for piper).
   services.ratbagd = {
     enable = true;
