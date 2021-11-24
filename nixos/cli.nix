@@ -53,6 +53,7 @@
       withRuby = false;
       withNodeJs = false;
     };
+    traceroute.enable = true;
     zsh.enable = true;
   };
 }
