@@ -45,6 +45,9 @@
   };
 
   xdg = {
+    # Some applications like to overwrite this file, so let's just force it
+    configFile."mimeapps.list".force = true;
+
     mimeApps = {
       enable = true;
       defaultApplications = {
