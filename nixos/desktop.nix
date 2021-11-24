@@ -13,7 +13,10 @@ in
       enable = true;
       notifications.x11.enable = true;
     };
-    gnome.gnome-keyring.enable = true;
+    gnome = {
+      gnome-keyring.enable = true;
+      sushi.enable = true;
+    };
   };
 
   xdg = {
