@@ -14,4 +14,6 @@
 (package! lispyville)
 (package! lsp-ui :disable t)
 (package! sort-words)
+(package! tree-sitter)
+(package! tree-sitter-langs)
 (package! uuidgen)

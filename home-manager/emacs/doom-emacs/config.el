@@ -215,6 +215,14 @@
 (use-package! sort-words
   :defer t)
 
+;; tree-sitter
+(use-package! tree-sitter
+  :config
+  (cl-pushnew (expand-file-name "/.config/tree-sitter") tree-sitter-load-path)
+  (require 'tree-sitter-langs)
+  (global-tree-sitter-mode)
+  (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode))
+
 ;; uuidgen
 (use-package! uuid-gen
   :defer t)

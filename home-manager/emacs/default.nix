@@ -77,6 +77,12 @@ in
   xdg.configFile."doom".source =
     config.lib.file.mkOutOfStoreSymlink doomConfigPath;
 
+  xdg.configFile.".tree-sitter".source = (pkgs.runCommand "grammars" { } ''
+    mkdir -p $out/bin
+    ${lib.concatStringsSep "\n"
+      (lib.mapAttrsToList (name: src: "name=${name}; ln -s ${src}/parser $out/bin/\${name#tree-sitter-}.so") pkgs.tree-sitter.builtGrammars)};
+  '');
+
   home.activation = {
     installDoom = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
       readonly emacs_dir="${config.home.homeDirectory}/.config/emacs";
