@@ -6,6 +6,11 @@ in
 with config.users.users.${username}; {
   imports = [ ./libvirt ];
 
+  # Increase number of directories that Linux can monitor for Plex
+  boot.kernel.sysctl = {
+    "fs.inotify.max_user_watches" = 262144;
+  };
+
   # Some misc packages
   environment.systemPackages = with pkgs; [ btrfs-progs hdparm rtorrent samba ];
 
