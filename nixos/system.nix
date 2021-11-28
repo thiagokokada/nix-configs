@@ -42,6 +42,8 @@ in
       options = "--delete-older-than 7d";
     };
     autoOptimiseStore = true;
+    daemonIONiceLevel = 7;
+    daemonNiceLevel = 7;
   };
 
   services = {
