@@ -30,6 +30,7 @@
     tig
     tokei
     unstable.ouch
+    unstable.pipe-rename
     unzip
     wget
     zip
