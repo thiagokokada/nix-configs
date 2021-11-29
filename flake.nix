@@ -115,6 +115,13 @@
   };
 
   outputs = { self, nixpkgs, unstable, nix-darwin, home, flake-utils, ... }: {
+    defaultTemplate = self.templates.new-host;
+
+    templates.new-host = {
+      path = ./templates/new-host;
+      description = "Create a new host";
+    };
+
     nixosConfigurations =
       let
         mkSystem = { modules, system ? "x86_64-linux" }:
