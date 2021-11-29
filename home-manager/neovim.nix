@@ -16,10 +16,6 @@
 
     extraConfig = ''
       "" General config
-      " remap leader
-      let g:mapleader = "\<Space>"
-      let g:maplocalleader = ','
-
       " enable/disable paste mode
       set pastetoggle=<F4>
 
@@ -79,6 +75,18 @@
     # To install non-packaged plugins, use
     # pkgs.vimUtils.buildVimPluginFrom2Nix { }
     plugins = with pkgs.vimPlugins; [
+      {
+        plugin = sensible;
+        config = ''
+          "" FIXME: vim-sensible is a no-op in neovim. This is a hack since
+          "" there is no way currently to set a config before the plugins
+          "" initialize
+          "" See: https://github.com/nix-community/home-manager/pull/2391
+          " remap leader
+          let g:mapleader = "\<Space>"
+          let g:maplocalleader = ','
+        '';
+      }
       {
         plugin = fzf-vim;
         config = ''
