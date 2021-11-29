@@ -8,7 +8,6 @@ in
   trustedUsers = [ "root" "@wheel" ];
 
   # Enable Flakes
-  # TODO: remove after Nix 2.4 is stable
   package = pkgs.nixFlakes;
   extraOptions = ''
     experimental-features = nix-command flakes

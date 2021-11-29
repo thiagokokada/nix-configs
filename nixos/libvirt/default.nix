@@ -6,11 +6,7 @@ in
 {
   imports = [
     ./windows.nix
-    # TODO: remove when 21.11 is released
-    "${self.inputs.unstable}/nixos/modules/virtualisation/libvirtd.nix"
   ];
-
-  disabledModules = [ "virtualisation/libvirtd.nix" ];
 
   boot = {
     # Do not load NVIDIA drivers
@@ -48,7 +44,7 @@ in
       qemu = {
         ovmf = {
           enable = true;
-          package = pkgs.OVMF-secureBoot;
+          package = pkgs.OVMFFull;
         };
         # TODO: migrate to SWTPM on 21.11
         # swtpm.enable = true;

@@ -1,13 +1,7 @@
 { config, pkgs, lib, ... }:
 
 let
-  jdk =
-    # TODO: remove this on 21.11 release
-    # Already fixed on master: https://github.com/NixOS/nixpkgs/pull/133806
-    if pkgs.stdenv.isDarwin then
-      pkgs.unstable.jdk
-    else
-      pkgs.jdk;
+  jdk = pkgs.jdk11;
   babashka = pkgs.unstable.babashka;
 in
 {

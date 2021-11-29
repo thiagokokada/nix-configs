@@ -1,9 +1,6 @@
 { config, pkgs, ... }:
 
 {
-  imports = [ ../modules/nixos/neovim.nix ];
-  disabledModules = [ "programs/neovim.nix" ];
-
   # CLI packages.
   environment = {
     # To get zsh completion for system packages

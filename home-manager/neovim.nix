@@ -117,12 +117,10 @@
       }
       {
         plugin = onedark-vim;
-        optional = true;
         config = ''
           if (has("termguicolors"))
             set termguicolors
           endif
-          packadd! onedark-vim
           colorscheme onedark
         '';
       }

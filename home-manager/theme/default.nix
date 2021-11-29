@@ -1,9 +1,7 @@
 { config, pkgs, lib, ... }:
 
 {
-  # TODO: remove when HM 21.11 is released
   imports = [
-    ../../modules/home-manager/xsettingsd.nix
     ../../modules/theme.nix
   ];
 

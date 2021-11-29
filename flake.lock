@@ -1,21 +1,5 @@
 {
   "nodes": {
-    "darwin": {
-      "locked": {
-        "lastModified": 1637973395,
-        "narHash": "sha256-wp/QgsnnKJAIMZeQgJT1bWQ/OutZ+80lHwtpYAUWDfE=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "4f37689c8a219a9d756c5ff38525ad09349f422f",
-        "type": "github"
-      },
-      "original": {
-        "owner": "NixOS",
-        "ref": "nixpkgs-21.05-darwin",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
     "declarative-cachix": {
       "locked": {
         "lastModified": 1625560633,
@@ -103,16 +87,16 @@
         ]
       },
       "locked": {
-        "lastModified": 1637917894,
-        "narHash": "sha256-mzkyjq+OW1K5XHG43zrnjJX/K1ehahVWlKjMzWX/Vvg=",
+        "lastModified": 1637917557,
+        "narHash": "sha256-3u5bLyGn5NUG3RJA7/v1Bqa/QCFGqp/01Bh/4REf9m4=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "7efd99ef876c220848553ae10218685d5e5d79cb",
+        "rev": "4daff26495ca9ac67476cba8cf15c3e36d91ab18",
         "type": "github"
       },
       "original": {
         "owner": "nix-community",
-        "ref": "release-21.05",
+        "ref": "release-21.11",
         "repo": "home-manager",
         "type": "github"
       }
@@ -183,7 +167,7 @@
     "nix-darwin": {
       "inputs": {
         "nixpkgs": [
-          "darwin"
+          "nixpkgs"
         ]
       },
       "locked": {
@@ -227,16 +211,16 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1637875414,
-        "narHash": "sha256-Ica++SXFuLyxX9Q7YxhfZulUif6/gwM8AEQYlUxqSgE=",
+        "lastModified": 1638161295,
+        "narHash": "sha256-gLVjBxvI5tLMl2BzbGnpgVppnAxTrkrVeCyBQ5N6VQs=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "3bea86e918d8b54aa49780505d2d4cd9261413be",
+        "rev": "8e6b3914626900ad8f465c3e3541edbb86a95d41",
         "type": "github"
       },
       "original": {
         "owner": "NixOS",
-        "ref": "nixos-21.05",
+        "ref": "nixos-21.11",
         "repo": "nixpkgs",
         "type": "github"
       }
@@ -318,7 +302,6 @@
     },
     "root": {
       "inputs": {
-        "darwin": "darwin",
         "declarative-cachix": "declarative-cachix",
         "emacs": "emacs",
         "flake-compat": "flake-compat",

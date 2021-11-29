@@ -3,12 +3,11 @@
 
   inputs = {
     # main
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-21.05";
-    darwin.url = "github:NixOS/nixpkgs/nixpkgs-21.05-darwin";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-21.11";
     unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     hardware.url = "github:NixOS/nixos-hardware/master";
     home = {
-      url = "github:nix-community/home-manager/release-21.05";
+      url = "github:nix-community/home-manager/release-21.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     home-unstable = {
@@ -17,7 +16,7 @@
     };
     nix-darwin = {
       url = "github:LnL7/nix-darwin/master";
-      inputs.nixpkgs.follows = "darwin";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     # helpers
@@ -188,8 +187,7 @@
       };
   } // flake-utils.lib.eachDefaultSystem (system:
     let
-      # TODO: change it to nixpkgs on 21.11 release
-      pkgs = import unstable { inherit system; };
+      pkgs = import nixpkgs { inherit system; };
     in
     {
       devShell = with pkgs; mkShell {

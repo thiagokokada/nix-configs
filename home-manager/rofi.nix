@@ -40,19 +40,27 @@
         listview = {
           cycle = true;
           margin = l "0 0 -1px 0";
-          scrollbar = l "false";
+          scrollbar = false;
         };
 
         element = {
-          border = l "0 0 1px 0";
+          border = l "2px";
+          border-color = l base00;
           padding = l "8px";
         };
 
+        element-icon = {
+          size = l "28px";
+          border = l "0 4px";
+          border-color = l base00;
+        };
+
         "element selected" = {
-          background-color = l base0D;
+          border-color = l base0D;
           color = l base00;
         };
       };
+
     extraConfig = {
       show-icons = true;
       modi = "drun,emoji,ssh";
@@ -60,8 +68,8 @@
       kb-row-down = "Down,Control+j";
       kb-accept-entry = "Control+m,Return,KP_Enter";
       kb-remove-to-eol = "Control+Shift+e";
-      kb-mode-next = "Shift+Right,Control+Tab,Control+l";
-      kb-mode-previous = "Shift+Left,Control+Shift+Tab,Control+h";
+      kb-mode-next = "Shift+Right,Control+Tab";
+      kb-mode-previous = "Shift+Left,Control+Shift+Tab";
       kb-remove-char-back = "BackSpace";
     };
   };

@@ -1,9 +1,6 @@
 { pkgs, self, ... }:
 
 {
-  # TODO: remove on 21.11
-  imports = [ "${self.inputs.unstable}/nixos/modules/programs/git.nix" ];
-
   # Add some Nix related packages
   environment.systemPackages = with pkgs; [
     cachix

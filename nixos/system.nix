@@ -42,8 +42,9 @@ in
       options = "--delete-older-than 7d";
     };
     autoOptimiseStore = true;
-    daemonIONiceLevel = 7;
-    daemonNiceLevel = 7;
+    # Leave nix builds as a background task
+    daemonIOSchedClass = "idle";
+    daemonCPUSchedPolicy = "idle";
   };
 
   services = {
