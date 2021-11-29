@@ -39,14 +39,8 @@
           frame_color = base01;
           show_indicators = false;
           icon_position = "left";
-          min_icon_size = 64;
-          max_icon_size = 64;
-        };
-        shortcuts = {
-          close = "ctrl+space";
-          close_all = "ctrl+shift+space";
-          history = "ctrl+Escape";
-          context = "ctrl+shift+period";
+          min_icon_size = 48;
+          max_icon_size = 48;
         };
         urgency_low = { timeout = 5; } // theme;
         urgency_normal = { timeout = 10; } // theme;

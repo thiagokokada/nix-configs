@@ -6,6 +6,7 @@ let
 
   commonOptions =
     let
+      dunstctl = "${pkgs.dunst}/bin/dunstctl";
       rofi = "${config.programs.rofi.package}/bin/rofi";
       mons = "${pkgs.mons}/bin/mons";
       screenShotName = with config.xdg.userDirs;
@@ -42,6 +43,8 @@ let
         "${modifier}+c" =
           "exec ${rofi} -show calc -modi calc -no-show-match -no-sort";
         "${modifier}+Tab" = "exec ${rofi} -show window -modi window";
+        "Ctrl+space" = "exec ${dunstctl} close";
+        "Ctrl+Shift+space" = "exec ${dunstctl} close-all";
       };
 
       extraModes = with commonOptions.helpers; {
