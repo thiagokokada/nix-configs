@@ -172,9 +172,7 @@
       <address type='pci' domain='0x0000' bus='0x04' slot='0x00' function='0x0'/>
     </memballoon>
     <tpm model='tpm-tis'>
-      <backend type='passthrough'>
-        <device path='/dev/tpm0'/>
-      </backend>
+      <backend type='emulator' version='2.0'/>
     </tpm>
   </devices>
 </domain>

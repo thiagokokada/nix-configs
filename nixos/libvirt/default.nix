@@ -46,8 +46,7 @@ in
           enable = true;
           package = pkgs.OVMFFull;
         };
-        # TODO: migrate to SWTPM on 21.11
-        # swtpm.enable = true;
+        swtpm.enable = true;
         runAsRoot = false;
         verbatimConfig = ''
           nographics_allow_host_audio = 1
