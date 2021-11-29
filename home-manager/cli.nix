@@ -18,8 +18,10 @@
     jq
     moreutils
     netcat-gnu
+    ouch
     p7zip
     page
+    pipe-rename
     pv
     python3
     rar
@@ -29,8 +31,6 @@
     telnet
     tig
     tokei
-    unstable.ouch
-    unstable.pipe-rename
     unzip
     wget
     zip

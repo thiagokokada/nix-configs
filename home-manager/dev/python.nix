@@ -2,7 +2,7 @@
 
 {
   home.packages = with pkgs; [
+    black
     python3
-    unstable.black
   ];
 }
