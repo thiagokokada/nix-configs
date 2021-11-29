@@ -23,5 +23,5 @@ in
   virtualisation.libvirtd.enable = true;
 
   # Added user to groups
-  users.users.${username}.extraGroups = [ "docker" "wireshark" ];
+  users.users.${username}.extraGroups = [ "adbusers" "docker" "wireshark" ];
 }
