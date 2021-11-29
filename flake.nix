@@ -187,6 +187,7 @@
     {
       devShell = with pkgs; mkShell {
         buildInputs = [
+          bash
           coreutils
           findutils
           gnumake
