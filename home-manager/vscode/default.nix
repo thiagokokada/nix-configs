@@ -12,8 +12,8 @@
       golang.go
 
       # Python
-      # Broken until merged: https://github.com/NixOS/nixpkgs/pull/140564
-      # ms-python.python
+      ms-python.python
+      ms-python.vscode-pylance
 
       # Nix
       b4dm4n.vscode-nixpkgs-fmt
