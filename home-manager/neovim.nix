@@ -76,12 +76,11 @@
     # pkgs.vimUtils.buildVimPluginFrom2Nix { }
     plugins = with pkgs.vimPlugins; [
       {
-        plugin = sensible;
+        # FIXME: dummy plugin since there is no way currently to set a config
+        # before the plugins are initialized
+        # See: https://github.com/nix-community/home-manager/pull/2391
+        plugin = (pkgs.writeText "init-pre" "");
         config = ''
-          "" FIXME: vim-sensible is a no-op in neovim. This is a hack since
-          "" there is no way currently to set a config before the plugins
-          "" initialize
-          "" See: https://github.com/nix-community/home-manager/pull/2391
           " remap leader
           let g:mapleader = "\<Space>"
           let g:maplocalleader = ','
