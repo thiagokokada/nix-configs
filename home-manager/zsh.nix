@@ -1,4 +1,4 @@
-{ pkgs, lib, self, ... }:
+{ config, pkgs, lib, self, ... }:
 let
   # Based on https://github.com/zimfw/archive
   archive = pkgs.writeScriptBin "archive" ''
@@ -152,7 +152,7 @@ in
         export PATH="$HOME/.local/bin:$PATH"
       '';
 
-    plugins = with self.inputs; [
+    plugins = with self.inputs; lib.flatten [
       {
         src = zit;
         name = "zit";
@@ -204,10 +204,10 @@ in
         src = zsh-syntax-highlighting;
         name = "zsh-syntax-highlighting";
       }
-      {
+      (lib.optional (config.device.type != "server") {
         src = zsh-system-clipboard;
         name = "zsh-system-clipboard";
-      }
+      })
       # Should be the last one
       {
         src = zsh-history-substring-search;
