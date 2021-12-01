@@ -3,7 +3,7 @@
 {
   programs.kitty = {
     enable = true;
-    keybindings = { "ctrl+shift+0" = "change_font_size_all 0"; };
+    keybindings = { "ctrl+shift+0" = "change_font_size all 0"; };
     font = {
       package = (pkgs.nerdfonts.override { fonts = [ "Hack" ]; });
       name = "Hack Nerd Font";
@@ -53,12 +53,12 @@
       input_delay = 0;
 
       # Open URLs on click without modifier
-      open_url_modifiers = "no_op";
+      mouse_map = "left click ungrabbed mouse_click_url_or_select";
 
       # Bell
       visual_bell_duration = "0.0";
       enable_audio_bell = false;
-      window_alert_bell = true;
+      window_alert_on_bell = true;
       bell_on_tab = true;
 
       # Misc
