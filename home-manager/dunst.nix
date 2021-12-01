@@ -21,11 +21,13 @@
           sort = true;
           indicate_hidden = true;
           alignment = "left";
-          bounce_freq = 0;
           show_age_threshold = 60;
           word_wrap = true;
           ignore_newline = false;
-          geometry = "300x5-6+30";
+          width = 250;
+          height = 200;
+          origin = "top-right";
+          notification_limit = 5;
           transparency = 0;
           idle_threshold = 120;
           follow = "mouse";
@@ -34,7 +36,6 @@
           padding = 8;
           horizontal_padding = 8;
           separator_color = base03;
-          startup_notification = false;
           frame_width = 1;
           frame_color = base01;
           show_indicators = false;
