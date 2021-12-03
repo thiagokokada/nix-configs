@@ -8,6 +8,8 @@ in
 
   environment.systemPackages = with pkgs; [ smartmontools gnome.simple-scan ];
 
+  programs.gnome-disks.enable = true;
+
   services = {
     smartd = {
       enable = true;
