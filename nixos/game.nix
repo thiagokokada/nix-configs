@@ -6,6 +6,7 @@
 
   environment.systemPackages = with pkgs; [
     piper
+    retroarchFull
     unstable.lutris
     unstable.osu-lazer
   ];
