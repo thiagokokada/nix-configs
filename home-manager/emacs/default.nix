@@ -23,6 +23,7 @@ in
       gcc
 
       # font for my config
+      fira-code
       hack-font
       noto-fonts
 

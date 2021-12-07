@@ -24,6 +24,7 @@
 
 ;; font
 (setq doom-font (font-spec :family "Hack" :size 18)
+      doom-variable-pitch-font (font-spec :family "Fira Code")
       doom-big-font-increment 2
       doom-unicode-font (font-spec :family "Noto Sans Mono"))
 
