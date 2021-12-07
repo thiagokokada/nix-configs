@@ -11,7 +11,7 @@ in
   imports = [
     ./hardware-configuration.nix
     ../../nixos
-    ../../nixos/game.nix
+    ../../nixos/games.nix
     ../../nixos/laptop.nix
     ../../cachix.nix
     ../../modules
