@@ -39,6 +39,12 @@
       inputs.flake-utils.follows = "flake-utils";
     };
 
+    # nix-cage
+    nix-cage = {
+      url = "github:thiagokokada/nix-cage/master";
+      flake = false;
+    };
+
     # overlays
     emacs = {
       url = "github:nix-community/emacs-overlay/master";

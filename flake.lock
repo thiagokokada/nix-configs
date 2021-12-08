@@ -164,6 +164,23 @@
         "type": "github"
       }
     },
+    "nix-cage": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1638997826,
+        "narHash": "sha256-Bsq4zVH8mZhYvuvA383PhgLdMQuAe3O+u6zKP8c495A=",
+        "owner": "thiagokokada",
+        "repo": "nix-cage",
+        "rev": "f7062f0474760d116ccae5b103d587c5aa5e5c99",
+        "type": "github"
+      },
+      "original": {
+        "owner": "thiagokokada",
+        "ref": "master",
+        "repo": "nix-cage",
+        "type": "github"
+      }
+    },
     "nix-darwin": {
       "inputs": {
         "nixpkgs": [
@@ -311,6 +328,7 @@
         "home-unstable": "home-unstable",
         "htop-vim": "htop-vim",
         "nix-alien": "nix-alien",
+        "nix-cage": "nix-cage",
         "nix-darwin": "nix-darwin",
         "nix-ld": "nix-ld",
         "nixpkgs": "nixpkgs",

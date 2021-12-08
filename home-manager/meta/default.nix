@@ -15,10 +15,12 @@ in
   # Add some Nix related packages
   home.packages = with pkgs; [
     hydra-check
+    nix-cage
     nix-update
     nix-whereis
     nixpkgs-fmt
     nixpkgs-review
+    nixpkgs-review-cage
   ];
 
   # To make cachix work you need add the current user as a trusted-user on Nix
