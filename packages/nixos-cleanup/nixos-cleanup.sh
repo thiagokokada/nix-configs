@@ -1,4 +1,4 @@
-#!@bash@/bin/bash
+#!/usr/bin/env bash
 
 set -euo pipefail
 
@@ -11,7 +11,7 @@ sudo -s -- <<EOF
     @findutils@/bin/xargs rm -f
 nix-collect-garbage -d
 nixos-rebuild boot --fast
-if [[ "''${1:-}" == "--optimize" ]]; then
+if [[ "${1:-}" == "--optimize" ]]; then
     nix-store --optimize
 fi
 EOF

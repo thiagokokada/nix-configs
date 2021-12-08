@@ -15,11 +15,12 @@ in
   # Add some Nix related packages
   home.packages = with pkgs; [
     hydra-check
-    nix-cage
     nix-update
     nix-whereis
     nixpkgs-fmt
     nixpkgs-review
+  ] ++ lib.optionals (!stdenv.isDarwin) [
+    nix-cage
     nixpkgs-review-cage
   ];
 
