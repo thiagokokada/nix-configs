@@ -6,6 +6,7 @@ in
 {
   nixpkgs.overlays = [
     inputs.emacs.overlay
+    inputs.nix-cage.overlay
 
     (final: prev: {
       unstable = import inputs.unstable {
@@ -18,8 +19,6 @@ in
       nix-whereis = prev.callPackage ../packages/nix-whereis { };
 
       nixos-cleanup = prev.callPackage ../packages/nixos-cleanup { };
-
-      nix-cage = prev.callPackage inputs.nix-cage { };
 
       nixpkgs-review-cage = prev.callPackage ../packages/nixpkgs-review-cage { };
     })

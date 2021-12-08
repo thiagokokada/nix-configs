@@ -165,13 +165,20 @@
       }
     },
     "nix-cage": {
-      "flake": false,
+      "inputs": {
+        "flake-utils": [
+          "flake-utils"
+        ],
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
       "locked": {
-        "lastModified": 1638997826,
-        "narHash": "sha256-Bsq4zVH8mZhYvuvA383PhgLdMQuAe3O+u6zKP8c495A=",
+        "lastModified": 1639009958,
+        "narHash": "sha256-cxUhZi5iIf4z1BQ0dZ+8A+NUKLftVPuVODrGbxPPSps=",
         "owner": "thiagokokada",
         "repo": "nix-cage",
-        "rev": "f7062f0474760d116ccae5b103d587c5aa5e5c99",
+        "rev": "5e96d8fac117359de1fed99263dab0c7c803f7ef",
         "type": "github"
       },
       "original": {

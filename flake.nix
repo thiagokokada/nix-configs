@@ -42,7 +42,8 @@
     # nix-cage
     nix-cage = {
       url = "github:thiagokokada/nix-cage/master";
-      flake = false;
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.flake-utils.follows = "flake-utils";
     };
 
     # overlays
