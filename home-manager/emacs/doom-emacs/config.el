@@ -2,10 +2,6 @@
 
 ;; Place your private configuration here
 
-;; https://github.com/hlissner/doom-emacs/issues/5785
-(general-auto-unbind-keys :off)
-(remove-hook 'doom-after-init-modules-hook #'general-auto-unbind-keys)
-
 ;;; GENERAL
 
 ;; theme
