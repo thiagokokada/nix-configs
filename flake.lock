@@ -164,30 +164,6 @@
         "type": "github"
       }
     },
-    "nix-cage": {
-      "inputs": {
-        "flake-utils": [
-          "flake-utils"
-        ],
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1639062362,
-        "narHash": "sha256-fSTKWQhNcXufhHAaCoTDV5iIlwgzBvrJsvqAKsIHuFo=",
-        "owner": "thiagokokada",
-        "repo": "nix-cage",
-        "rev": "b831a0197efe69ae552182318f553e651474ff96",
-        "type": "github"
-      },
-      "original": {
-        "owner": "thiagokokada",
-        "ref": "master",
-        "repo": "nix-cage",
-        "type": "github"
-      }
-    },
     "nix-darwin": {
       "inputs": {
         "nixpkgs": [
@@ -246,6 +222,30 @@
         "owner": "NixOS",
         "ref": "nixos-21.11",
         "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs-review": {
+      "inputs": {
+        "flake-utils": [
+          "flake-utils"
+        ],
+        "nixpkgs": [
+          "unstable"
+        ]
+      },
+      "locked": {
+        "lastModified": 1639443729,
+        "narHash": "sha256-fWKwzaPrs7uKEYZ0l5cMUdGtzDUzcBxANgNBec1ifOU=",
+        "owner": "thiagokokada",
+        "repo": "nixpkgs-review",
+        "rev": "bfc1f0bfd4932c1e225122be4a3427aa4840afc8",
+        "type": "github"
+      },
+      "original": {
+        "owner": "thiagokokada",
+        "ref": "add-bubblewrap-sandbox",
+        "repo": "nixpkgs-review",
         "type": "github"
       }
     },
@@ -335,10 +335,10 @@
         "home-unstable": "home-unstable",
         "htop-vim": "htop-vim",
         "nix-alien": "nix-alien",
-        "nix-cage": "nix-cage",
         "nix-darwin": "nix-darwin",
         "nix-ld": "nix-ld",
         "nixpkgs": "nixpkgs",
+        "nixpkgs-review": "nixpkgs-review",
         "nnn-plugins": "nnn-plugins",
         "nubank": "nubank",
         "pure": "pure",

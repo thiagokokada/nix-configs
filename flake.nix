@@ -39,10 +39,10 @@
       inputs.flake-utils.follows = "flake-utils";
     };
 
-    # nix-cage
-    nix-cage = {
-      url = "github:thiagokokada/nix-cage/master";
-      inputs.nixpkgs.follows = "nixpkgs";
+    # nixpkgs-review
+    nixpkgs-review = {
+      url = "github:thiagokokada/nixpkgs-review/add-bubblewrap-sandbox";
+      inputs.nixpkgs.follows = "unstable";
       inputs.flake-utils.follows = "flake-utils";
     };
 
