@@ -235,11 +235,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1639443729,
-        "narHash": "sha256-fWKwzaPrs7uKEYZ0l5cMUdGtzDUzcBxANgNBec1ifOU=",
+        "lastModified": 1639500412,
+        "narHash": "sha256-o6C9e3it19RUrMetxNDjjfEnSEoKnb1d2Ac98WRb5yg=",
         "owner": "thiagokokada",
         "repo": "nixpkgs-review",
-        "rev": "bfc1f0bfd4932c1e225122be4a3427aa4840afc8",
+        "rev": "9001b946cf4700ab9936b24ea3d0a1a0d9c1f32c",
         "type": "github"
       },
       "original": {

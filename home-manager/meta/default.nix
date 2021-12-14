@@ -18,9 +18,8 @@ in
     nix-update
     nix-whereis
     nixpkgs-fmt
-  ]
-  ++ lib.optional (!stdenv.isDarwin) nixpkgs-review-sandbox
-  ++ lib.optional (stdenv.isDarwin) nixpkgs-review;
+    nixpkgs-review
+  ];
 
   # To make cachix work you need add the current user as a trusted-user on Nix
   # sudo echo "trusted-users = $(whoami)" >> /etc/nix/nix.conf

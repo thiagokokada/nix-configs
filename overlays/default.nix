@@ -13,13 +13,17 @@ in
         config = prev.config;
       };
 
-      inherit (inputs.nixpkgs-review.packages.${system}) nixpkgs-review nixpkgs-review-sandbox;
-
       open-browser = prev.callPackage ../packages/open-browser { };
 
       nix-whereis = prev.callPackage ../packages/nix-whereis { };
 
       nixos-cleanup = prev.callPackage ../packages/nixos-cleanup { };
+
+      nixpkgs-review =
+        if (prev.stdenv.isLinux) then
+          inputs.nixpkgs-review.packages.${system}.nixpkgs-review-sandbox
+        else
+          inputs.nixpkgs-review.packages.${system}.nixpkgs-review;
     })
   ];
 }
