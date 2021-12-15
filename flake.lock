@@ -122,23 +122,6 @@
         "type": "github"
       }
     },
-    "htop-vim": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1633988946,
-        "narHash": "sha256-G83+5GgEz41begDkdK8zNx48UleufFCJ9pOQ9nbtFNs=",
-        "owner": "KoffeinFlummi",
-        "repo": "htop-vim",
-        "rev": "ba6fd3891e9af60b41bd092524cc05f2469fec4b",
-        "type": "github"
-      },
-      "original": {
-        "owner": "KoffeinFlummi",
-        "ref": "master",
-        "repo": "htop-vim",
-        "type": "github"
-      }
-    },
     "nix-alien": {
       "inputs": {
         "flake-utils": [
@@ -252,16 +235,16 @@
     "nnn-plugins": {
       "flake": false,
       "locked": {
-        "lastModified": 1618311913,
-        "narHash": "sha256-dAoXn0+muTuml9s6WXsv7LSY6p2hy8/G1XsBmbR+fTE=",
+        "lastModified": 1637672625,
+        "narHash": "sha256-g9GaCc/IWKtih0/A2AZEPImjj7ymJIdYwC5I/6GUh5c=",
         "owner": "jarun",
         "repo": "nnn",
-        "rev": "f4c5b1a937c922915fb69abfb7c54f4daa6e06d3",
+        "rev": "65eddfe7b9f02f685145005a8ffd3feb8d102ced",
         "type": "github"
       },
       "original": {
         "owner": "jarun",
-        "ref": "v4.0",
+        "ref": "v4.4",
         "repo": "nnn",
         "type": "github"
       }
@@ -333,7 +316,6 @@
         "hardware": "hardware",
         "home": "home",
         "home-unstable": "home-unstable",
-        "htop-vim": "htop-vim",
         "nix-alien": "nix-alien",
         "nix-darwin": "nix-darwin",
         "nix-ld": "nix-ld",

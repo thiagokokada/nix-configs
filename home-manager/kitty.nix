@@ -77,6 +77,7 @@
 
       # For nnn
       allow_remote_control = true;
+      listen_on = "unix:/tmp/kitty";
     };
   };
 
