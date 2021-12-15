@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, self, ... }:
 
 {
   imports = [
@@ -9,5 +9,6 @@
     ./minimal.nix
     ./non-nix.nix
     ./xserver.nix
+    self.inputs.envfs.nixosModules.envfs
   ];
 }

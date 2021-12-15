@@ -32,6 +32,30 @@
         "type": "github"
       }
     },
+    "envfs": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "utils": [
+          "flake-utils"
+        ]
+      },
+      "locked": {
+        "lastModified": 1619257745,
+        "narHash": "sha256-WXIq4LPhppSfRvnUiuTUD43pCK9mlzBSHB0Xxsh03kU=",
+        "owner": "Mic92",
+        "repo": "envfs",
+        "rev": "42bed8a2959aea39ced7b117614f7d5e5126db51",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Mic92",
+        "ref": "main",
+        "repo": "envfs",
+        "type": "github"
+      }
+    },
     "flake-compat": {
       "flake": false,
       "locked": {
@@ -311,6 +335,7 @@
       "inputs": {
         "declarative-cachix": "declarative-cachix",
         "emacs": "emacs",
+        "envfs": "envfs",
         "flake-compat": "flake-compat",
         "flake-utils": "flake-utils",
         "hardware": "hardware",
