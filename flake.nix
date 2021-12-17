@@ -27,12 +27,7 @@
     flake-utils.url = "github:numtide/flake-utils/master";
     declarative-cachix.url = "github:jonascarpay/declarative-cachix/master";
 
-    # nix-ld
-    nix-ld = {
-      url = "github:Mic92/nix-ld/main";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.utils.follows = "flake-utils";
-    };
+    # nix-alien
     nix-alien = {
       url = "github:thiagokokada/nix-alien/master";
       inputs.nixpkgs.follows = "nixpkgs";

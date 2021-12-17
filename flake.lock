@@ -192,30 +192,6 @@
         "type": "github"
       }
     },
-    "nix-ld": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ],
-        "utils": [
-          "flake-utils"
-        ]
-      },
-      "locked": {
-        "lastModified": 1637574694,
-        "narHash": "sha256-UHYvqGnsU4h5/Kt3gbiRbaMcN7hJ8u7ey8t4qO8maUI=",
-        "owner": "Mic92",
-        "repo": "nix-ld",
-        "rev": "6faa38511602d9c1c5ae44eaa0fc531e4b657576",
-        "type": "github"
-      },
-      "original": {
-        "owner": "Mic92",
-        "ref": "main",
-        "repo": "nix-ld",
-        "type": "github"
-      }
-    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1639161226,
@@ -343,7 +319,6 @@
         "home-unstable": "home-unstable",
         "nix-alien": "nix-alien",
         "nix-darwin": "nix-darwin",
-        "nix-ld": "nix-ld",
         "nixpkgs": "nixpkgs",
         "nixpkgs-review": "nixpkgs-review",
         "nnn-plugins": "nnn-plugins",

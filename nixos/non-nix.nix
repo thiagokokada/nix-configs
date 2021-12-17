@@ -1,10 +1,6 @@
 { pkgs, self, system, ... }:
 
 {
-  imports = [
-    self.inputs.nix-ld.nixosModules.nix-ld
-  ];
-
   nixpkgs.overlays = [
     self.inputs.nix-alien.overlay
   ];
