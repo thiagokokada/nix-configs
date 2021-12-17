@@ -68,7 +68,10 @@ in
             unit = "GB";
             format = "{icon} ${shortPath m} {available}";
           })
-          mountPoints;
+          # Remove envfs entries
+          (builtins.filter
+            (m: (m != "/bin") && (m != "/usr/bin"))
+            mountPoints);
 
         memoryBlock = {
           block = "memory";
