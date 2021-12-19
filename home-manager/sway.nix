@@ -41,7 +41,8 @@ let
       extraConfig = with config.xsession.pointerCursor; ''
         hide_edge_borders --i3 smart
 
-        seat seat0 xcursor_theme ${name} ${toString size}
+        # XCURSOR_SIZE
+        seat seat0 xcursor_theme ${name} 24
       '';
     };
 in
@@ -91,9 +92,10 @@ in
         };
       };
 
-      output = with config.theme.fonts; {
+      output = {
         "*" = {
-          scale = (toString (dpi / 100.0));
+          # DPI
+          scale = (toString (125 / 100.0));
         };
       };
     };
