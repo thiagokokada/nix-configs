@@ -6,7 +6,7 @@ pkgs.stdenv.mkDerivation {
   src = with pkgs; substituteAll {
     src = ./nixos-cleanup.sh;
     isExecutable = true;
-    inherit findutils gnugrep bash;
+    inherit coreutils findutils gnugrep bash;
   };
 
   dontUnpack = true;
