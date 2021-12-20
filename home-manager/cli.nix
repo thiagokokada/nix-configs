@@ -39,6 +39,6 @@
   programs.zsh.shellAliases = {
     # For muscle memory...
     ncdu = "${pkgs.dua}/bin/dua interactive";
-    sloccount = "${pkgs.scc}/bin/tokei";
+    sloccount = "${pkgs.tokei}/bin/tokei";
   };
 }
