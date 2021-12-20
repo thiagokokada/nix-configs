@@ -12,6 +12,50 @@
 , statusCommand
 , alt ? "Mod1"
 , modifier ? "Mod4"
+, bars ? with config.theme.colors; [{
+    inherit fonts statusCommand;
+
+    position = "top";
+    colors = {
+      background = base00;
+      separator = base01;
+      statusline = base04;
+      activeWorkspace = {
+        border = base03;
+        background = base03;
+        text = base00;
+      };
+      bindingMode = {
+        border = base0A;
+        background = base0A;
+        text = base00;
+      };
+      focusedWorkspace = {
+        border = base0D;
+        background = base0D;
+        text = base00;
+      };
+      inactiveWorkspace = {
+        border = base01;
+        background = base01;
+        text = base05;
+      };
+      urgentWorkspace = {
+        border = base08;
+        background = base08;
+        text = base00;
+      };
+    };
+  }]
+, fonts ? with config.theme.fonts; {
+    names = [
+      gui.name
+      "Font Awesome 5 Brands"
+      "Font Awesome 5 Free Solid"
+    ];
+    style = "Regular";
+    size = 8.0;
+  }
 , extraBindings ? { }
 , extraWindowOptions ? { }
 , extraFocusOptions ? { }
@@ -100,58 +144,12 @@ let
             toString ws
           } ${prefixCmd} "${name}"'')
       workspaces));
-
-  fonts = with config.theme.fonts; {
-    names = [
-      gui.name
-      "Font Awesome 5 Brands"
-      "Font Awesome 5 Free Solid"
-    ];
-    style = "Regular";
-    size = 8.0;
-  };
 in
 {
   helpers = { inherit mapDirection mapDirectionDefault mapWorkspacesStr; };
 
   config = {
-    inherit fonts modifier menu terminal;
-
-    bars = with config.theme.colors; [{
-      inherit fonts statusCommand;
-
-      position = "top";
-      colors = {
-        background = base00;
-        separator = base01;
-        statusline = base04;
-        activeWorkspace = {
-          border = base03;
-          background = base03;
-          text = base00;
-        };
-        bindingMode = {
-          border = base0A;
-          background = base0A;
-          text = base00;
-        };
-        focusedWorkspace = {
-          border = base0D;
-          background = base0D;
-          text = base00;
-        };
-        inactiveWorkspace = {
-          border = base01;
-          background = base01;
-          text = base05;
-        };
-        urgentWorkspace = {
-          border = base08;
-          background = base08;
-          text = base00;
-        };
-      };
-    }];
+    inherit bars fonts modifier menu terminal;
 
     colors = with config.theme.colors; {
       background = base07;
