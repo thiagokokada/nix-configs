@@ -218,16 +218,16 @@
         ]
       },
       "locked": {
-        "lastModified": 1639746911,
+        "lastModified": 1639985945,
         "narHash": "sha256-ot+5sVFj1L0UQSt+ZMXX55pNLgO4AN8sIk4KV/dK8aw=",
-        "owner": "thiagokokada",
+        "owner": "Mic92",
         "repo": "nixpkgs-review",
-        "rev": "60a2d398724b4a738a56aad614d53d617a2c1bac",
+        "rev": "622a9e61695714acc7f2ced24aa6846dfdc80f3e",
         "type": "github"
       },
       "original": {
-        "owner": "thiagokokada",
-        "ref": "add-bubblewrap-sandbox",
+        "owner": "Mic92",
+        "ref": "master",
         "repo": "nixpkgs-review",
         "type": "github"
       }

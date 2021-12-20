@@ -36,7 +36,7 @@
 
     # nixpkgs-review
     nixpkgs-review = {
-      url = "github:thiagokokada/nixpkgs-review/add-bubblewrap-sandbox";
+      url = "github:Mic92/nixpkgs-review/master";
       inputs.nixpkgs.follows = "unstable";
       inputs.flake-utils.follows = "flake-utils";
     };
