@@ -11,23 +11,21 @@
       },
       "original": {
         "owner": "jonascarpay",
-        "ref": "master",
         "repo": "declarative-cachix",
         "type": "github"
       }
     },
     "emacs": {
       "locked": {
-        "lastModified": 1639878327,
-        "narHash": "sha256-nceK8yFIcdp7/t/qtBJPrpMMtH27kjCTJ0jKvPD144w=",
+        "lastModified": 1640021600,
+        "narHash": "sha256-Qi6j942SpdXuigcY2e9yhiksuYzAcuiKJ1hXu67sFo8=",
         "owner": "nix-community",
         "repo": "emacs-overlay",
-        "rev": "6043fc339dc0ea215b9b3ae41741af5847883dfb",
+        "rev": "83b82b876fb2c7d0a30befedb980f1088931ddfa",
         "type": "github"
       },
       "original": {
         "owner": "nix-community",
-        "ref": "master",
         "repo": "emacs-overlay",
         "type": "github"
       }
@@ -51,7 +49,6 @@
       },
       "original": {
         "owner": "Mic92",
-        "ref": "main",
         "repo": "envfs",
         "type": "github"
       }
@@ -83,23 +80,21 @@
       },
       "original": {
         "owner": "numtide",
-        "ref": "master",
         "repo": "flake-utils",
         "type": "github"
       }
     },
     "hardware": {
       "locked": {
-        "lastModified": 1639240632,
-        "narHash": "sha256-BAXhgnPOW1COIfZ9EOOFTdolalYS73MFHSRajgrSdZw=",
+        "lastModified": 1639986101,
+        "narHash": "sha256-Ow0+pkY7qMw6lMAvR1mEdUT9svJnrkbaRoqp4bkMTpg=",
         "owner": "NixOS",
         "repo": "nixos-hardware",
-        "rev": "2a7063461c3751d83869a2a0a8ebc59e34bec5b2",
+        "rev": "3f92db38374b2977aea8daf4c4fe2fa0eddbd60c",
         "type": "github"
       },
       "original": {
         "owner": "NixOS",
-        "ref": "master",
         "repo": "nixos-hardware",
         "type": "github"
       }
@@ -132,16 +127,15 @@
         ]
       },
       "locked": {
-        "lastModified": 1639774225,
-        "narHash": "sha256-pdXvYneQVzB14fD+Q283s17tXRyQMs2JMx4mZ4JeSYg=",
+        "lastModified": 1639891275,
+        "narHash": "sha256-2IMLVTtOHV9kBsirGPRpo8NE48Mjq20iXN7l7uy0YjE=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "8b44e81978a2bef60c83ecc0199ab2523310214a",
+        "rev": "3db603677509eb0b8c396a3234b1d4b70d023894",
         "type": "github"
       },
       "original": {
         "owner": "nix-community",
-        "ref": "master",
         "repo": "home-manager",
         "type": "github"
       }
@@ -166,7 +160,6 @@
       },
       "original": {
         "owner": "thiagokokada",
-        "ref": "master",
         "repo": "nix-alien",
         "type": "github"
       }
@@ -187,7 +180,6 @@
       },
       "original": {
         "owner": "LnL7",
-        "ref": "master",
         "repo": "nix-darwin",
         "type": "github"
       }
@@ -227,7 +219,6 @@
       },
       "original": {
         "owner": "Mic92",
-        "ref": "master",
         "repo": "nixpkgs-review",
         "type": "github"
       }
@@ -260,7 +251,6 @@
       },
       "original": {
         "owner": "nubank",
-        "ref": "master",
         "repo": "nixpkgs",
         "type": "github"
       }
@@ -302,7 +292,6 @@
       },
       "original": {
         "owner": "sindresorhus",
-        "ref": "main",
         "repo": "pure",
         "type": "github"
       }
@@ -367,7 +356,6 @@
       },
       "original": {
         "owner": "zimfw",
-        "ref": "master",
         "repo": "completion",
         "type": "github"
       }
@@ -384,7 +372,6 @@
       },
       "original": {
         "owner": "zimfw",
-        "ref": "master",
         "repo": "environment",
         "type": "github"
       }
@@ -401,7 +388,6 @@
       },
       "original": {
         "owner": "zimfw",
-        "ref": "master",
         "repo": "git",
         "type": "github"
       }
@@ -418,7 +404,6 @@
       },
       "original": {
         "owner": "zimfw",
-        "ref": "master",
         "repo": "input",
         "type": "github"
       }
@@ -435,7 +420,6 @@
       },
       "original": {
         "owner": "zimfw",
-        "ref": "master",
         "repo": "ssh",
         "type": "github"
       }
@@ -452,7 +436,6 @@
       },
       "original": {
         "owner": "zimfw",
-        "ref": "master",
         "repo": "utility",
         "type": "github"
       }
@@ -469,7 +452,6 @@
       },
       "original": {
         "owner": "thiagokokada",
-        "ref": "master",
         "repo": "zit",
         "type": "github"
       }
@@ -486,7 +468,6 @@
       },
       "original": {
         "owner": "hlissner",
-        "ref": "master",
         "repo": "zsh-autopair",
         "type": "github"
       }
@@ -503,7 +484,6 @@
       },
       "original": {
         "owner": "zsh-users",
-        "ref": "master",
         "repo": "zsh-completions",
         "type": "github"
       }
@@ -520,7 +500,6 @@
       },
       "original": {
         "owner": "zsh-users",
-        "ref": "master",
         "repo": "zsh-history-substring-search",
         "type": "github"
       }
@@ -537,7 +516,6 @@
       },
       "original": {
         "owner": "zsh-users",
-        "ref": "master",
         "repo": "zsh-syntax-highlighting",
         "type": "github"
       }
@@ -554,7 +532,6 @@
       },
       "original": {
         "owner": "kutsan",
-        "ref": "master",
         "repo": "zsh-system-clipboard",
         "type": "github"
       }

@@ -5,17 +5,17 @@
     # main
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-21.11";
     unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-    hardware.url = "github:NixOS/nixos-hardware/master";
+    hardware.url = "github:NixOS/nixos-hardware";
     home = {
       url = "github:nix-community/home-manager/release-21.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     home-unstable = {
-      url = "github:nix-community/home-manager/master";
+      url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "unstable";
     };
     nix-darwin = {
-      url = "github:LnL7/nix-darwin/master";
+      url = "github:LnL7/nix-darwin";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -24,36 +24,36 @@
       url = "github:edolstra/flake-compat";
       flake = false;
     };
-    flake-utils.url = "github:numtide/flake-utils/master";
-    declarative-cachix.url = "github:jonascarpay/declarative-cachix/master";
+    flake-utils.url = "github:numtide/flake-utils";
+    declarative-cachix.url = "github:jonascarpay/declarative-cachix";
 
     # nix-alien
     nix-alien = {
-      url = "github:thiagokokada/nix-alien/master";
+      url = "github:thiagokokada/nix-alien";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.flake-utils.follows = "flake-utils";
     };
 
     # nixpkgs-review
     nixpkgs-review = {
-      url = "github:Mic92/nixpkgs-review/master";
+      url = "github:Mic92/nixpkgs-review";
       inputs.nixpkgs.follows = "unstable";
       inputs.flake-utils.follows = "flake-utils";
     };
 
     # envfs
     envfs = {
-      url = "github:Mic92/envfs/main";
+      url = "github:Mic92/envfs";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.utils.follows = "flake-utils";
     };
 
     # overlays
     emacs = {
-      url = "github:nix-community/emacs-overlay/master";
+      url = "github:nix-community/emacs-overlay";
       inputs.nixpkgs.follows = "unstable";
     };
-    nubank.url = "github:nubank/nixpkgs/master";
+    nubank.url = "github:nubank/nixpkgs";
 
     # nnn plugins
     nnn-plugins = {
@@ -63,55 +63,55 @@
 
     # ZSH plugins
     zit = {
-      url = "github:thiagokokada/zit/master";
+      url = "github:thiagokokada/zit";
       flake = false;
     };
     zim-completion = {
-      url = "github:zimfw/completion/master";
+      url = "github:zimfw/completion";
       flake = false;
     };
     zim-environment = {
-      url = "github:zimfw/environment/master";
+      url = "github:zimfw/environment";
       flake = false;
     };
     zim-input = {
-      url = "github:zimfw/input/master";
+      url = "github:zimfw/input";
       flake = false;
     };
     zim-git = {
-      url = "github:zimfw/git/master";
+      url = "github:zimfw/git";
       flake = false;
     };
     zim-ssh = {
-      url = "github:zimfw/ssh/master";
+      url = "github:zimfw/ssh";
       flake = false;
     };
     zim-utility = {
-      url = "github:zimfw/utility/master";
+      url = "github:zimfw/utility";
       flake = false;
     };
     pure = {
-      url = "github:sindresorhus/pure/main";
+      url = "github:sindresorhus/pure";
       flake = false;
     };
     zsh-autopair = {
-      url = "github:hlissner/zsh-autopair/master";
+      url = "github:hlissner/zsh-autopair";
       flake = false;
     };
     zsh-completions = {
-      url = "github:zsh-users/zsh-completions/master";
+      url = "github:zsh-users/zsh-completions";
       flake = false;
     };
     zsh-history-substring-search = {
-      url = "github:zsh-users/zsh-history-substring-search/master";
+      url = "github:zsh-users/zsh-history-substring-search";
       flake = false;
     };
     zsh-syntax-highlighting = {
-      url = "github:zsh-users/zsh-syntax-highlighting/master";
+      url = "github:zsh-users/zsh-syntax-highlighting";
       flake = false;
     };
     zsh-system-clipboard = {
-      url = "github:kutsan/zsh-system-clipboard/master";
+      url = "github:kutsan/zsh-system-clipboard";
       flake = false;
     };
   };
