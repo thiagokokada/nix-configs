@@ -1,8 +1,5 @@
 { config, lib, pkgs, ... }:
 
-let
-  utils = import ../utils { inherit pkgs; };
-in
 {
   home.packages = with pkgs; [ github-cli ];
 
@@ -77,5 +74,5 @@ in
   };
 
   programs.zsh.initExtra =
-    (utils.makeBgCmd "gk" "${config.programs.git.package}/bin/gitk");
+    (lib.utils.makeBgCmd "gk" "${config.programs.git.package}/bin/gitk");
 }

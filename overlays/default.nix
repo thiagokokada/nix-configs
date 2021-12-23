@@ -8,6 +8,10 @@ in
     inputs.emacs.overlay
 
     (final: prev: {
+      lib = prev.lib.extend (finalLib: prevLib: {
+        utils = import ../utils { pkgs = final; };
+      });
+
       unstable = import inputs.unstable {
         inherit system;
         config = prev.config;
