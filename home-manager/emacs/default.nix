@@ -47,7 +47,7 @@ in
         emacs = "${config.programs.emacs.package}/bin/emacs";
       in
       ''
-        ${lib.utils.makeBgCmd "em" emacs}
+        ${pkgs.lib.utils.makeBgCmd "em" emacs}
         et() { ${emacs} -nw "$@" }
         emp() {
           local p
