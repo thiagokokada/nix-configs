@@ -113,8 +113,6 @@ in
     };
   };
 
-  services = { udiskie.enable = true; };
-
   systemd.user.services = {
     kbdd = {
       Unit = {

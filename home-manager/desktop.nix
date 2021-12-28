@@ -46,6 +46,11 @@
     paste = "${pkgs.xclip}/bin/xclip -selection c -o";
   };
 
+  services.udiskie = {
+    enable = true;
+    tray = "always";
+  };
+
   xdg = {
     # Some applications like to overwrite this file, so let's just force it
     configFile."mimeapps.list".force = true;

@@ -5,9 +5,6 @@
   console.useXkbConfig = true;
 
   services = {
-    # Allow automounting
-    gvfs.enable = true;
-
     xserver = {
       enable = true;
       # Recommended for modesetting drivers
