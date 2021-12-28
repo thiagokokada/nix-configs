@@ -5,9 +5,6 @@ in
 {
   programs.firefox = {
     enable = true;
-    # Until https://github.com/NixOS/nixpkgs/commit/c7b69587024dd597fe3dd5d8c8af08bd907367aa
-    # hits nixos-21.11.
-    package = self.inputs.staging.legacyPackages.${pkgs.hostPlatform.system}.firefox;
     profiles.${username} = {
       settings = {
         # https://wiki.archlinux.org/title/Firefox#Hardware_video_acceleration

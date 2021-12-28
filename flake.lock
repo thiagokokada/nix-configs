@@ -313,7 +313,6 @@
         "nnn-plugins": "nnn-plugins",
         "nubank": "nubank",
         "pure": "pure",
-        "staging": "staging",
         "unstable": "unstable",
         "zim-completion": "zim-completion",
         "zim-environment": "zim-environment",
@@ -327,22 +326,6 @@
         "zsh-history-substring-search": "zsh-history-substring-search",
         "zsh-syntax-highlighting": "zsh-syntax-highlighting",
         "zsh-system-clipboard": "zsh-system-clipboard"
-      }
-    },
-    "staging": {
-      "locked": {
-        "lastModified": 1640650206,
-        "narHash": "sha256-LtW5u3cMT2ingNUwVLqLUh/VxzgH48/TJDEy4SAXaIs=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "aec9f05c6775bed341b0cc8d05e737c64d20c78f",
-        "type": "github"
-      },
-      "original": {
-        "owner": "NixOS",
-        "ref": "staging-next-21.11",
-        "repo": "nixpkgs",
-        "type": "github"
       }
     },
     "unstable": {
