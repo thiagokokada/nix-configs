@@ -26,10 +26,10 @@
     pamixer
     pavucontrol
     peek
-    pinta
     qalculate-gtk
     shared-mime-info # for file types in e.g.: Nautilus
     unstable.bitwarden
+    unstable.pinta
     vlc
     xclip
     xdotool
