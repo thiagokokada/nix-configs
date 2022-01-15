@@ -4,6 +4,7 @@
   home.packages = with pkgs; [
     aria2
     (lib.hiPrio binutils) # fix conflict with gcc in darwin
+    bat
     coreutils
     curl
     daemonize
