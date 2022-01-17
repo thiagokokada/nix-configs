@@ -6,6 +6,7 @@
   home.packages = with pkgs; [
     android-file-transfer
     arandr
+    audacious
     (calibre.override { unrarSupport = true; })
     desktop-file-utils
     discord
