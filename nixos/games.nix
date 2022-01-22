@@ -11,17 +11,32 @@
     unstable.retroarchFull
   ];
 
-  # Enable steam
-  programs.steam = {
-    enable = true;
-    remotePlay.openFirewall = true;
+  programs = {
+    gamemode = {
+      enable = true;
+      settings = {
+        general = {
+          softrealtime = "auto";
+          renice = 10;
+        };
+        custom = {
+          start = "${pkgs.libnotify}/bin/notify-send 'GameMode started'";
+          end = "${pkgs.libnotify}/bin/notify-send 'GameMode ended'";
+        };
+      };
+    };
+
+    steam = {
+      enable = true;
+      remotePlay.openFirewall = true;
+    };
   };
 
   # Alternative driver for Xbox One/Series S/Series X controllers
   hardware.xpadneo.enable = true;
 
-  # Enable ratbagd (for piper).
-  services.ratbagd = {
-    enable = true;
+  services = {
+    # Enable ratbagd (i.e.: piper) for Logitech devices
+    ratbagd.enable = true;
   };
 }
