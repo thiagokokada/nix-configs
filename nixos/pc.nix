@@ -12,7 +12,13 @@ with config.users.users.${username}; {
   };
 
   # Some misc packages
-  environment.systemPackages = with pkgs; [ btrfs-progs hdparm rtorrent samba ];
+  environment.systemPackages = with pkgs; [
+    btrfs-progs
+    gnome.simple-scan
+    hdparm
+    rtorrent
+    samba
+  ];
 
   hardware = {
     # Enable opentabletdriver
@@ -22,10 +28,7 @@ with config.users.users.${username}; {
     };
 
     # Enable scanner support
-    sane = {
-      enable = true;
-      extraBackends = [ pkgs.hplipWithPlugin ];
-    };
+    sane.enable = true;
   };
 
   users.users.${username} = { extraGroups = [ "sane" "lp" ]; };
@@ -37,7 +40,7 @@ with config.users.users.${username}; {
     # Enable printing
     printing = {
       enable = true;
-      drivers = [ pkgs.hplip ];
+      drivers = with pkgs; [ epson_201207w ];
     };
 
     # Enable Plex Media Server

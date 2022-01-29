@@ -6,7 +6,7 @@ in
 {
   imports = [ ./audio.nix ];
 
-  environment.systemPackages = with pkgs; [ smartmontools gnome.simple-scan ];
+  environment.systemPackages = with pkgs; [ smartmontools ];
 
   programs.gnome-disks.enable = true;
 
