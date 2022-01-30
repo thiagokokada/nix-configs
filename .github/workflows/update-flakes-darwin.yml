@@ -1,3 +1,4 @@
+name: update-flakes-darwin
 on:
   workflow_run:
     workflows: ["update-flakes"]
