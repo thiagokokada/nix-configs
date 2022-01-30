@@ -30,7 +30,7 @@ in
       pandoc
 
       # lsp
-      unstable.clojure-lsp
+      clojure-lsp
       unstable.pyright
       unstable.rnix-lsp
 
