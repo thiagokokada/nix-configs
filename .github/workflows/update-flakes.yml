@@ -8,7 +8,7 @@ jobs:
   update-flakes:
     runs-on: ubuntu-latest
     steps:
-      - uses: easimon/maximize-build-space@v4
+      - uses: easimon/maximize-build-space@v5
         with:
           remove-dotnet: true
           remove-android: true
