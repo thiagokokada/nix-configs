@@ -15,20 +15,20 @@
     gnome.evince
     gnome.file-roller
     gnome.gnome-disk-utility
-    gnome.nautilus
     google-chrome
     gthumb
     inkscape
     kitty
     libreoffice-fresh
-    lxmenu-data
+    lxmenu-data # for pcmanfm installed applications
     (mcomix3.override { unrarSupport = true; })
     open-browser
     pamixer
     pavucontrol
+    pcmanfm
     peek
     qalculate-gtk
-    shared-mime-info # for file types in e.g.: Nautilus
+    shared-mime-info # for pcmanfm recognized file types
     unstable.bitwarden
     unstable.pinta
     vlc
@@ -63,7 +63,7 @@
         "image/gif" = "org.gnome.gThumb.desktop";
         "image/jpeg" = "org.gnome.gThumb.desktop";
         "image/png" = "org.gnome.gThumb.desktop";
-        "inode/directory" = "org.gnome.Nautilus.desktop";
+        "inode/directory" = "pcmanfm.desktop";
         "text/html" = "open-browser.desktop";
         "text/plain" = "emacs.desktop";
         "text/x-makefile" = "emacs.desktop";

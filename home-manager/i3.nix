@@ -103,11 +103,6 @@ in
           command = "${pkgs.dex}/bin/dex --autostart";
           notification = false;
         }
-        {
-          command = "${pkgs.gnome.nautilus}/bin/nautilus --gapplication-service";
-          always = true;
-          notification = false;
-        }
       ];
 
     };

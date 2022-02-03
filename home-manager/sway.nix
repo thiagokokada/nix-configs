@@ -73,10 +73,6 @@ in
               lock '${swaylock} -f -c 000000'
             '';
         }
-        {
-          command = "${pkgs.gnome.nautilus}/bin/nautilus --gapplication-service";
-          always = true;
-        }
       ];
 
       input = {
