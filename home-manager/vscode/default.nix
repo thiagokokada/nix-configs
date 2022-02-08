@@ -6,7 +6,7 @@
     package = pkgs.unstable.vscodium;
     extensions = with pkgs.unstable.vscode-extensions; [
       # Clojure
-      # betterthantomorrow.calva
+      betterthantomorrow.calva
 
       # Go
       golang.go
