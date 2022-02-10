@@ -11,7 +11,7 @@ else
 all: all-linux
 endif
 
-all-linux: build-miku-nixos build-mikudayo-nixos build-mirai-vps build-hm-home-linux
+all-linux: build-miku-nixos build-mirai-vps build-hm-home-linux
 
 all-macos: build-darwin-miku-macos-vm build-hm-home-macos
 

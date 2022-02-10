@@ -53,7 +53,6 @@
       url = "github:nix-community/emacs-overlay";
       inputs.nixpkgs.follows = "unstable";
     };
-    nubank.url = "github:nubank/nixpkgs";
 
     # nnn plugins
     nnn-plugins = {
@@ -136,8 +135,6 @@
         miku-nixos = mkSystem { modules = [ ./hosts/miku-nixos ]; };
 
         mikudayo-nixos = mkSystem { modules = [ ./hosts/mikudayo-nixos ]; };
-
-        mikudayo-nubank = mkSystem { modules = [ ./hosts/mikudayo-nubank ]; };
 
         mirai-vps = mkSystem { modules = [ ./hosts/mirai-vps ]; };
       };

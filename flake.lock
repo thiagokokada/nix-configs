@@ -240,21 +240,6 @@
         "type": "github"
       }
     },
-    "nubank": {
-      "locked": {
-        "lastModified": 1641226447,
-        "narHash": "sha256-9YrpSA6A37xX9sL+jKpW8Jo10LUQO/ZUwcLLESLOTMo=",
-        "owner": "nubank",
-        "repo": "nixpkgs",
-        "rev": "a86725d254854fd5d359bc359ab38e55b36eb269",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nubank",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
     "poetry2nix": {
       "inputs": {
         "flake-utils": [
@@ -311,7 +296,6 @@
         "nixpkgs": "nixpkgs",
         "nixpkgs-review": "nixpkgs-review",
         "nnn-plugins": "nnn-plugins",
-        "nubank": "nubank",
         "pure": "pure",
         "unstable": "unstable",
         "zim-completion": "zim-completion",
