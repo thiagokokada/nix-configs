@@ -3,8 +3,6 @@
 let
   inherit (config.home) homeDirectory;
   doomConfigPath = "${config.meta.configPath}/home-manager/emacs/doom-emacs";
-  emacs-custom = with pkgs; (emacsPackagesGen emacsPgtkGcc).emacsWithPackages
-    (epkgs: with epkgs; [ vterm ]);
 in
 {
   imports = [ ../../modules/meta.nix ];
@@ -67,11 +65,17 @@ in
     };
   };
 
-  programs.emacs = {
+  programs.emacs = with pkgs; let
+    emacsPkg =
+      if stdenv.isDarwin then
+        emacsGcc
+      else emacsPgtkGcc;
+    emacs-custom = with pkgs; (emacsPackagesGen emacsPkg).emacsWithPackages
+      (epkgs: with epkgs; [ vterm ]);
+  in
+  {
     enable = true;
-    package = with pkgs; if stdenv.isDarwin
-    then emacs # TODO: change to emacsGcc when it is more stable
-    else emacs-custom;
+    package = emacs-custom;
   };
 
   xdg.configFile."doom".source =
