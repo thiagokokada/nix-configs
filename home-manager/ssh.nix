@@ -12,6 +12,8 @@
     };
     extraConfig = ''
       AddKeysToAgent yes
+    '' + lib.optionalString pkgs.stdenv.isDarwin ''
+      UseKeychain yes
     '';
     matchBlocks = {
       "github.com" = {
