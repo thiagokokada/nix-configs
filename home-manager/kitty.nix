@@ -2,7 +2,7 @@
 
 {
   programs.kitty = {
-    enable = true;
+    enable = config.device.type != "vm";
     keybindings = { "ctrl+shift+0" = "change_font_size all 0"; };
     font = {
       package = (pkgs.nerdfonts.override { fonts = [ "Hack" ]; });

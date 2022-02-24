@@ -2,7 +2,7 @@
 
 {
   services.picom = {
-    enable = true;
+    enable = config.device.type != "vm";
     package = pkgs.unstable.picom-next;
     experimentalBackends = true;
     fade = true;

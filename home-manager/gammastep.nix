@@ -2,7 +2,7 @@
 
 {
   services.gammastep = {
-    enable = true;
+    enable = config.device.type != "vm";
     tray = true;
     dawnTime = "6:30-7:30";
     duskTime = "18:30-19:30";

@@ -26,7 +26,11 @@ let
       light = "light";
       pamixer = "${pkgs.pamixer}/bin/pamixer";
       playerctl = "${pkgs.playerctl}/bin/playerctl";
-      terminal = "${pkgs.kitty}/bin/kitty";
+      terminal =
+        if config.programs.kitty.enable then
+          "${pkgs.kitty}/bin/kitty"
+        else
+          "${pkgs.xterm}/bin/xterm";
 
       # Screenshots
       fullScreenShot = ''
@@ -80,8 +84,13 @@ let
     };
 in
 {
-  imports =
-    [ ./dunst.nix ./gammastep.nix ./i3status-rust.nix ./picom.nix ./rofi.nix ];
+  imports = [
+    ./dunst.nix
+    ./gammastep.nix
+    ./i3status-rust.nix
+    ./picom.nix
+    ./rofi.nix
+  ];
 
   xsession.enable = true;
   xsession.windowManager.i3 = with commonOptions; {
