@@ -2,6 +2,7 @@
 
 {
   imports = [
+    ./darwin.nix
     ./dev
     ./emacs
     ./minimal.nix
