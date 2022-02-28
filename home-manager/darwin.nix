@@ -15,5 +15,8 @@
       DSDontWriteNetworkStores = true;
       DSDontWriteUSBStores = true;
     };
+    # Disable mouse acceleration
+    com.apple.mouse.scalling = -1;
+    # com.apple.trackpad.scalling = -1;
   };
 }
