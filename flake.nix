@@ -125,8 +125,12 @@
 
     nixosConfigurations =
       let
-        mkSystem = { modules, system ? "x86_64-linux" }:
-          nixpkgs.lib.nixosSystem {
+        mkSystem =
+          { modules
+          , system ? "x86_64-linux"
+          , nixosSystem ? nixpkgs.lib.nixosSystem
+          }:
+          nixosSystem {
             inherit system modules;
             specialArgs = { inherit self system; };
           };
@@ -141,8 +145,12 @@
 
     darwinConfigurations =
       let
-        mkDarwin = { modules, system ? "x86_64-darwin" }:
-          nix-darwin.lib.darwinSystem {
+        mkDarwin =
+          { modules
+          , system ? "x86_64-darwin"
+          , darwinSystem ? nix-darwin.lib.darwinSystem
+          }:
+          darwinSystem {
             inherit system modules;
             specialArgs = { inherit self system; };
           };
@@ -161,8 +169,9 @@
           , configuration ? ./home-manager
           , deviceType ? "desktop"
           , system ? "x86_64-linux"
+          , homeManagerConfiguration ? home.lib.homeManagerConfiguration
           }:
-          home.lib.homeManagerConfiguration rec {
+          homeManagerConfiguration rec {
             inherit configuration username system;
             homeDirectory = "${homePath}/${username}";
             stateVersion = "21.11";
