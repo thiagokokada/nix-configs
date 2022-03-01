@@ -1,10 +1,16 @@
 { config, lib, pkgs, ... }:
 
+let
+  # fix conflict with gcc in darwin
+  binutils = (lib.hiPrio pkgs.binutils);
+in
 {
   home.packages = with pkgs; [
     aria2
-    (lib.hiPrio binutils) # fix conflict with gcc in darwin
     bat
+    bc
+    bind
+    binutils
     coreutils
     curl
     daemonize
@@ -12,13 +18,18 @@
     dos2unix
     dua
     each
+    file
     findutils
     gnused
+    inetutils
     ix
     jo
     jq
+    lsof
+    mediainfo
     moreutils
     netcat-gnu
+    openssl
     ouch
     p7zip
     page
@@ -29,7 +40,6 @@
     ripgrep
     rlwrap
     tealdeer
-    telnet
     tig
     tokei
     unzip

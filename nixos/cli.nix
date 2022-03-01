@@ -7,34 +7,14 @@
     pathsToLink = [ "/share/zsh" ];
 
     systemPackages = with pkgs; [
-      bc
-      bind
-      binutils
-      curl
-      dos2unix
-      ffmpeg
-      file
       glxinfo
-      htop
       linuxPackages.cpupower
       lm_sensors
       lshw
-      lsof
-      mediainfo
-      multitime
-      netcat-gnu
-      openssl
       pciutils
       powertop
       psmisc
-      python3
-      rlwrap
-      telnet
-      tmux
-      unrar
-      unzip
       usbutils
-      wget
     ];
   };
 
