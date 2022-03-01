@@ -70,7 +70,12 @@ in
       if stdenv.isDarwin then
         emacsGcc
       else emacsPgtkGcc;
-    emacs-custom = with pkgs; (emacsPackagesGen emacsPkg).emacsWithPackages
+    # TODO: remove this after 22.05
+    emacsPackagesFor' =
+      if builtins.hasAttr "emacsPackagesFor" pkgs
+      then pkgs.emacsPackagesFor
+      else pkgs.emacsPackagesGen;
+    emacs-custom = with pkgs; (emacsPackagesFor' emacsPkg).emacsWithPackages
       (epkgs: with epkgs; [ vterm ]);
   in
   {

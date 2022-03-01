@@ -115,7 +115,7 @@
     };
   };
 
-  outputs = { self, nixpkgs, unstable, nix-darwin, home, flake-utils, ... }: {
+  outputs = { self, nixpkgs, unstable, nix-darwin, home, home-unstable, flake-utils, ... }: {
     defaultTemplate = self.templates.new-host;
 
     templates.new-host = {
@@ -192,6 +192,7 @@
           configuration = ./home-manager/macos.nix;
           system = "x86_64-darwin";
           homePath = "/Users";
+          homeManagerConfiguration = home-unstable.lib.homeManagerConfiguration;
         };
       };
   } // flake-utils.lib.eachDefaultSystem (system:
