@@ -139,17 +139,20 @@ in
         bindkey "$terminfo[kcuu1]" history-substring-search-up
         bindkey "$terminfo[kcud1]" history-substring-search-down
 
+        # allow ad-hoc scripts to be add to PATH locally
+        export PATH="$HOME/.local/bin:$PATH"
+
         # source contents from ~/.zshrc.d/*.zsh
         for file in "$HOME/.zshrc.d/"*.zsh; do
           [[ -f "$file" ]] && source "$file"
         done
 
+        # avoid duplicated entries in PATH
+        typeset -U PATH
+
         # ensure that MANPATH includes a :
         # https://askubuntu.com/a/693612
         export MANPATH=":$MANPATH"
-
-        # load after ~/.zshrc.d files to make sure that ~/.local/bin is the first in $PATH
-        export PATH="$HOME/.local/bin:$PATH"
       '';
 
     plugins = with self.inputs; lib.flatten [
