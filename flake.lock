@@ -304,7 +304,6 @@
         "zim-input": "zim-input",
         "zim-ssh": "zim-ssh",
         "zim-utility": "zim-utility",
-        "zit": "zit",
         "zsh-autopair": "zsh-autopair",
         "zsh-completions": "zsh-completions",
         "zsh-history-substring-search": "zsh-history-substring-search",
@@ -421,22 +420,6 @@
       "original": {
         "owner": "zimfw",
         "repo": "utility",
-        "type": "github"
-      }
-    },
-    "zit": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1604344539,
-        "narHash": "sha256-7CwxbMV9Xo3CNwwMMl3UgVCFAG45IhYwXxbn+fgssVU=",
-        "owner": "thiagokokada",
-        "repo": "zit",
-        "rev": "15a02d6b0dc22b4d4e70cfec9242dee8501404ff",
-        "type": "github"
-      },
-      "original": {
-        "owner": "thiagokokada",
-        "repo": "zit",
         "type": "github"
       }
     },

@@ -61,10 +61,6 @@
     };
 
     # ZSH plugins
-    zit = {
-      url = "github:thiagokokada/zit";
-      flake = false;
-    };
     zim-completion = {
       url = "github:zimfw/completion";
       flake = false;

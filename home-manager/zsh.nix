@@ -157,11 +157,6 @@ in
 
     plugins = with self.inputs; lib.flatten [
       {
-        src = zit;
-        name = "zit";
-        file = "zit.zsh";
-      }
-      {
         src = zim-completion;
         name = "zim-completion";
         file = "init.zsh";
