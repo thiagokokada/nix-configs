@@ -1,10 +1,9 @@
-{ super, lib, ... }:
+{ ... }:
 
 {
   imports = [
     ./cli.nix
     ./desktop.nix
-    ./dev
     ./emacs
     ./git.nix
     ./hexchat.nix
