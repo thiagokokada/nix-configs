@@ -93,6 +93,12 @@ in
     profileExtra =
       let
         darwinFixes = lib.optionalString pkgs.stdenv.isDarwin ''
+          # Source nix-daemon profile since macOS updates can remove it from /etc/zshrc
+          # https://github.com/NixOS/nix/issues/3616
+          if [ -e '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh' ]; then
+            source '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh'
+          fi
+
           # Fix issue with UTF-8 characters on systems that support
           # UTF-8 correctly but doesn't set the locale for some reason,
           # e.g.: macOS
