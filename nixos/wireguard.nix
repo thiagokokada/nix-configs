@@ -1,11 +1,15 @@
 { lib, pkgs, ... }:
 let
-  privateKeyFile = "/etc/wireguard/wg-priv";
+  wgPath = "/etc/wireguard";
+  privateKeyFile = "${wgPath}/wg-priv";
+  publicKeyFile = "${wgPath}/wg-pub";
+  wgEndpoint = "mirai-vps.duckdns.org";
+  wgPort = 51820;
   wgGenerateConfig = pkgs.writeShellScriptBin "wg-generate-config" ''
     set -euo pipefail
 
-    ENDPOINT="mirai-vps.duckdns.org:51820"
-    SERVER_PUB_KEY="${privateKeyFile}"
+    ENDPOINT="${wgEndpoint}:${toString wgPort}"
+    SERVER_PUB_KEY="$(cat ${publicKeyFile})"
     DNS="8.8.8.8, 8.4.4.8"
 
     usage() {
@@ -18,6 +22,8 @@ let
     EOF
         exit 1
     }
+
+    echoerr() { echo "$@" 1>&2; }
 
     generate_config() {
       local -r profile="$1"
@@ -45,8 +51,6 @@ let
       ${pkgs.qrencode}/bin/qrencode -t ansiutf8 < "$profile.conf"
     }
 
-    echoerr() { echo "$@" 1>&2; }
-
     main() {
       local -r profile="$1"
       local -r ip_address="$2"
@@ -66,10 +70,10 @@ let
 
       >&2 cat <<EOF
     [INFO] Done! Do not forget to add the following in your /etc/nixos/configuration.nix:
-    networking.wireguard.interaces.*.peers = {
+    networking.wireguard.interaces.*.peers = [{
       publicKey = "$(cat "$profile.key.pub")";
       allowedIPs = [ "$2/32" ];
-    };
+    }];
     EOF
     }
 
@@ -77,13 +81,17 @@ let
       usage
     fi
 
+    pushd ${wgPath} >/dev/null
+    trap "popd >/dev/null" EXIT
     main $@
   '';
 in
 {
   environment.systemPackages = with pkgs; [
-    wireguard-tools
+    qrencode
     wgGenerateConfig
+    wireguard
+    wireguard-tools
   ];
 
   # enable NAT
@@ -93,17 +101,21 @@ in
       externalInterface = lib.mkDefault "ens3";
       internalInterfaces = [ "wg0" ];
     };
-    firewall.allowedUDPPorts = [ 51820 ];
+    firewall.allowedUDPPorts = [ wgPort ];
     wireguard.interfaces = {
       wg0 = {
         inherit privateKeyFile;
         ips = [ "10.100.0.1/24" ];
-        listenPort = 51820;
+        listenPort = wgPort;
 
         peers = [
           {
             publicKey = "ZQzoQB1VFiTnpbCrBKk13gx6GHvoYFcGvF8p/Po7N2o=";
             allowedIPs = [ "10.100.0.2/32" ];
+          }
+          {
+            publicKey = "QXuikaYy0E9rAKiK+YYjJbO4hdSMVoxEMzACNgVAIBY=";
+            allowedIPs = [ "10.100.0.3/32" ];
           }
         ];
       };
