@@ -8,10 +8,6 @@ let
   wgGenerateConfig = pkgs.writeShellScriptBin "wg-generate-config" ''
     set -euo pipefail
 
-    ENDPOINT="${wgEndpoint}:${toString wgPort}"
-    SERVER_PUB_KEY="$(cat ${publicKeyFile})"
-    DNS="8.8.8.8, 8.4.4.8"
-
     usage() {
         cat <<EOF
     Usage: $(basename "$0") PROFILE IP_ADDRESS
@@ -28,6 +24,17 @@ let
     generate_config() {
       local -r profile="$1"
       local -r address="$2"
+      local -r endpoint="${wgEndpoint}:${toString wgPort}"
+      local -r server_pub_key="$(cat ${publicKeyFile})"
+      local -r dns="8.8.8.8, 8.4.4.8"
+
+      pushd "${wgPath}/clients" >/dev/null
+      trap "popd >/dev/null" EXIT
+
+      if [[ -f "$profile.conf" ]]; then
+        echoerr "[WARNING] $profile profile already exists! Skipping config generation..."
+        return 1
+      fi
 
       umask 077
       ${pkgs.wireguard}/bin/wg genkey | tee "$profile.key" \
@@ -37,12 +44,12 @@ let
     [Interface]
     PrivateKey = $(cat "$profile.key")
     Address = $address/24
-    DNS = $DNS
+    DNS = $dns
 
     [Peer]
-    PublicKey = $SERVER_PUB_KEY
+    PublicKey = $server_pub_key
     AllowedIPs = 0.0.0.0/0
-    Endpoint = $ENDPOINT
+    Endpoint = $endpoint
     EOF
     }
 
@@ -55,14 +62,9 @@ let
       local -r profile="$1"
       local -r ip_address="$2"
 
-      if [[ -f "$profile.conf" ]]; then
-        echoerr "[WARNING] $profile profile already exists! Skipping config generation..."
-      else
-        generate_config "$profile" "$ip_address"
-        echoerr "[INFO] Generated config:"
-        cat "$profile.conf"
-      fi
-      echoerr
+      generate_config "$profile" "$ip_address"
+      echoerr "[INFO] Generated config:"
+      cat "$profile.conf"
 
       echoerr "[INFO] Generated qr-code:"
       generate_qr_code "$profile"
@@ -81,8 +83,6 @@ let
       usage
     fi
 
-    pushd ${wgPath} >/dev/null
-    trap "popd >/dev/null" EXIT
     main $@
   '';
 in
@@ -110,12 +110,8 @@ in
 
         peers = [
           {
-            publicKey = "ZQzoQB1VFiTnpbCrBKk13gx6GHvoYFcGvF8p/Po7N2o=";
+            publicKey = "2n3Vkr5APUYHa8qzAxbiwtg5WCKimzjX8PQ/hiWoXis=";
             allowedIPs = [ "10.100.0.2/32" ];
-          }
-          {
-            publicKey = "QXuikaYy0E9rAKiK+YYjJbO4hdSMVoxEMzACNgVAIBY=";
-            allowedIPs = [ "10.100.0.3/32" ];
           }
         ];
       };
