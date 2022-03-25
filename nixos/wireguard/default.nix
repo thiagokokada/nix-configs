@@ -19,11 +19,15 @@ let
 
     usage() {
         cat <<EOF
-    Usage: $(basename "$0") PROFILE IP_ADDRESS
-    Generate Wireguard config.
+    Usage: $(${pkgs.coreutils}/bin/basename "$0") PROFILE IP_ADDRESS
+    Generate Wireguard config and print it on terminal (with QR code for mobile devices).
 
-    Wireguard Host IP: ${wgHostIp}/${wgNetmask}
+    WARNING: this will show the client private key!
 
+    PROFILE should be an easy to remember name. This is used to generate filenames.
+
+    IP_ADDRESS should be a unique and valid IP inside the Wireguard network.
+    The current Host Wireguard's IP is '${wgHostIp}/${wgNetmask}'.
     EOF
         exit 1
     }
@@ -37,14 +41,13 @@ let
       local -r server_pub_key="$(cat ${publicKeyFile})"
       local -r dns="${wgDnsServers}"
 
-      pushd "${wgClientsPath}" >/dev/null
-      trap "popd >/dev/null" EXIT
-
       if [[ -f "$profile.conf" ]]; then
         echoerr "[WARNING] $profile profile already exists! Skipping config generation..."
         return
       fi
 
+      # Since those are private keys, they need to be only visible by root
+      # for security
       umask 077
       ${pkgs.wireguard}/bin/wg genkey | tee "$profile.key" \
         | ${pkgs.wireguard}/bin/wg pubkey > "$profile.key.pub"
@@ -76,6 +79,7 @@ let
         echoerr "[WARNING] $nixos_config file already exists! Skipping config file generation..."
         return
       fi
+      # "Undo" changes from `generate_config` function
       umask 022
       cat <<EOF > "$nixos_config"
     {
@@ -83,6 +87,8 @@ let
       allowedIPs = [ "$address/32" ];
     }
     EOF
+      # Most of times this script will run as root, but the NixOS config directory
+      # is not necessary owned by root
       ${pkgs.coreutils}/bin/chown "$owner" "$nixos_config"
     }
 
@@ -91,9 +97,16 @@ let
       local -r ip_address="$2"
       local -r nixos_config="${configPath}/nixos/wireguard/$profile.nix"
 
+      mkdir -p "${wgClientsPath}"
+      pushd "${wgClientsPath}" >/dev/null
+      trap "popd >/dev/null" EXIT
+
       generate_config "$profile" "$ip_address"
       echoerr "[INFO] Generated config:"
+      echoerr "============================================================"
       cat "$profile.conf"
+      echoerr "============================================================"
+      echoerr
 
       echoerr "[INFO] Generated qr-code:"
       generate_qr_code "$profile"
@@ -105,6 +118,11 @@ let
 
     if [[ "$#" -le 1 ]]; then
       usage
+    fi
+
+    if [[ "$EUID" -ne 0 ]];then
+      echoerr "[ERROR] Please run this script as root!"
+      exit 1
     fi
 
     main $@

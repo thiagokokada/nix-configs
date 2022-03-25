@@ -1,4 +1,4 @@
 {
-  publicKey = "LwKZWwhC+/7uqmTumM7u/ggifPQUVhS06HXsKSjHl2c=";
-  allowedIPs = [ "10.100.0.2/32" ];
+  publicKey = "VChHy0sfawmvnBpmXRH8phxzRkPsuF6KU8DcPa15NVM=";
+  allowedIPs = [ "10.100.0.3/32" ];
 }
