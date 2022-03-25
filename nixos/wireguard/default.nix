@@ -1,11 +1,18 @@
+{ externalInterface
+, wgEndpoint
+, wgPath ? "/etc/wireguard"
+, wgInterface ? "wg0"
+, wgPort ? 51820
+, wgHostIp ? "10.100.0.1"
+, wgNetmask ? "24"
+, wgDnsServers ? "8.8.8.8, 8.4.4.8"
+}:
 { config, lib, pkgs, ... }:
 let
   inherit (config.meta) configPath;
-  wgPath = "/etc/wireguard";
   privateKeyFile = "${wgPath}/wg-priv";
   publicKeyFile = "${wgPath}/wg-pub";
-  wgEndpoint = "mirai-vps.duckdns.org";
-  wgPort = 51820;
+  wgClientsPath = "${wgPath}/clients";
   wgGenerateConfig = pkgs.writeShellScriptBin "wg-generate-config" ''
     set -euo pipefail
 
@@ -14,8 +21,8 @@ let
     Usage: $(basename "$0") PROFILE IP_ADDRESS
     Generate Wireguard config.
 
-    Example:
-      $(basename "$0") profile-name 10.100.0.2
+    Server IP: ${wgHostIp}/${wgNetmask}
+
     EOF
         exit 1
     }
@@ -27,9 +34,9 @@ let
       local -r address="$2"
       local -r endpoint="${wgEndpoint}:${toString wgPort}"
       local -r server_pub_key="$(cat ${publicKeyFile})"
-      local -r dns="8.8.8.8, 8.4.4.8"
+      local -r dns="${wgDnsServers}"
 
-      pushd "${wgPath}/clients" >/dev/null
+      pushd "${wgClientsPath}" >/dev/null
       trap "popd >/dev/null" EXIT
 
       if [[ -f "$profile.conf" ]]; then
@@ -114,14 +121,14 @@ in
   networking = {
     nat = {
       enable = true;
-      externalInterface = lib.mkDefault "ens3";
-      internalInterfaces = [ "wg0" ];
+      inherit externalInterface;
+      internalInterfaces = [ wgInterface ];
     };
     firewall.allowedUDPPorts = [ wgPort ];
     wireguard.interfaces = {
-      wg0 = {
+      ${wgInterface} = {
         inherit privateKeyFile;
-        ips = [ "10.100.0.1/24" ];
+        ips = [ "${wgHostIp}/${wgNetmask}" ];
         listenPort = wgPort;
 
         peers = [
