@@ -1,5 +1,6 @@
-{ lib, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 let
+  inherit (config.meta) configPath;
   wgPath = "/etc/wireguard";
   privateKeyFile = "${wgPath}/wg-priv";
   publicKeyFile = "${wgPath}/wg-pub";
@@ -58,9 +59,29 @@ let
       ${pkgs.qrencode}/bin/qrencode -t ansiutf8 < "$profile.conf"
     }
 
+    generate_nix_config() {
+      local -r profile="$1"
+      local -r address="$2"
+      local -r nixos_config="$3"
+      local -r owner="$(stat -c '%U:%G' '${configPath}')"
+      if [[ -f "$nixos_config" ]]; then
+        echoerr "[WARNING] $nixos_config file already exists! Skipping config file generation..."
+        return
+      fi
+      umask 022
+      cat <<EOF > "$nixos_config"
+    {
+      publicKey = "$(cat "$profile.key.pub")";
+      allowedIPs = [ "$address/32" ];
+    }
+    EOF
+      chown "$owner" "$nixos_config"
+    }
+
     main() {
       local -r profile="$1"
       local -r ip_address="$2"
+      local -r nixos_config="${configPath}/nixos/wireguard/$profile.nix"
 
       generate_config "$profile" "$ip_address"
       echoerr "[INFO] Generated config:"
@@ -70,13 +91,8 @@ let
       generate_qr_code "$profile"
       echoerr
 
-      >&2 cat <<EOF
-    [INFO] Done! Do not forget to add the following in your /etc/nixos/configuration.nix:
-    networking.wireguard.interaces.*.peers = [{
-      publicKey = "$(cat "$profile.key.pub")";
-      allowedIPs = [ "$2/32" ];
-    }];
-    EOF
+      generate_nix_config "$profile" "$ip_address" "$nixos_config"
+      echoerr "[INFO] Done! Do not forget to import './$profile.nix' file in '$nixos_config'"
     }
 
     if [[ "$#" -le 1 ]]; then
@@ -109,10 +125,7 @@ in
         listenPort = wgPort;
 
         peers = [
-          {
-            publicKey = "2n3Vkr5APUYHa8qzAxbiwtg5WCKimzjX8PQ/hiWoXis=";
-            allowedIPs = [ "10.100.0.2/32" ];
-          }
+          (import ./s20.nix)
         ];
       };
     };
