@@ -1,7 +1,7 @@
 { ... }:
 {
   networking.wireguard.interfaces.wg0.peers = [{
-    publicKey = "ZQzoQB1VFiTnpbCrBKk13gx6GHvoYFcGvF8p/Po7N2o=";
+    publicKey = "AYUeTwwgm7JCKt0JHsrdD+3kIiXeQr84GME3aYTyCyE=";
     allowedIPs = [ "10.100.0.2/32" ];
   }];
 }
