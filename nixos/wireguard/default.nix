@@ -160,12 +160,14 @@ in
         # This allows the wireguard server to route your traffic to the internet and hence be like a VPN
         # For this to work you have to set the dnsserver IP of your router (or dnsserver of choice) in your clients
         postSetup = ''
-          ${pkgs.iptables}/bin/iptables -t nat -A POSTROUTING -o ${externalInterface} -j MASQUERADE
+          ${pkgs.iptables}/bin/iptables -A FORWARD -i ${wgInterface} -j ACCEPT
+          ${pkgs.iptables}/bin/iptables -t nat -A POSTROUTING -s '${wgHostIp}/${wgNetmask}' -o ${externalInterface} -j MASQUERADE
         '';
 
         # This undoes the above command
         postShutdown = ''
-          ${pkgs.iptables}/bin/iptables -t nat -D POSTROUTING -o ${externalInterface} -j MASQUERADE
+          ${pkgs.iptables}/bin/iptables -D FORWARD -i ${wgInterface} -j ACCEPT
+          ${pkgs.iptables}/bin/iptables -t nat -D POSTROUTING -s '${wgHostIp}/${wgNetmask}' -o ${externalInterface} -j MASQUERADE
         '';
 
         # Generate with `wg-generate-config` script
