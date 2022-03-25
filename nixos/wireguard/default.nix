@@ -75,10 +75,7 @@ let
       local -r address="$2"
       local -r nixos_config="$3"
       local -r owner="$(stat -c '%U:%G' '${configPath}')"
-      if [[ -f "$nixos_config" ]]; then
-        echoerr "[WARNING] $nixos_config file already exists! Skipping config file generation..."
-        return
-      fi
+
       # "Undo" changes from `generate_config` function
       umask 022
       cat <<EOF > "$nixos_config"
@@ -87,6 +84,7 @@ let
       allowedIPs = [ "$address/32" ];
     }
     EOF
+
       # Most of times this script will run as root, but the NixOS config directory
       # is not necessary owned by root
       ${pkgs.coreutils}/bin/chown "$owner" "$nixos_config"
