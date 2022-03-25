@@ -1,16 +1,15 @@
-{ lib, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 let
+  inherit (config.meta) configPath;
   wgPath = "/etc/wireguard";
+  externalInterface = "enps3";
+  wgInterface = "wg0";
   privateKeyFile = "${wgPath}/wg-priv";
   publicKeyFile = "${wgPath}/wg-pub";
   wgEndpoint = "mirai-vps.duckdns.org";
   wgPort = 51820;
   wgGenerateConfig = pkgs.writeShellScriptBin "wg-generate-config" ''
     set -euo pipefail
-
-    ENDPOINT="${wgEndpoint}:${toString wgPort}"
-    SERVER_PUB_KEY="$(cat ${publicKeyFile})"
-    DNS="8.8.8.8, 8.4.4.8"
 
     usage() {
         cat <<EOF
@@ -28,6 +27,9 @@ let
     generate_config() {
       local -r profile="$1"
       local -r address="$2"
+      local -r server_pub_key="$(cat ${publicKeyFile})"
+      local -r endpoint="${wgEndpoint}:${toString wgPort}"
+      local -r dns="8.8.8.8, 8.4.4.8"
 
       umask 077
       ${pkgs.wireguard}/bin/wg genkey | tee "$profile.key" \
@@ -37,12 +39,12 @@ let
     [Interface]
     PrivateKey = $(cat "$profile.key")
     Address = $address/24
-    DNS = $DNS
+    DNS = $dns
 
     [Peer]
-    PublicKey = $SERVER_PUB_KEY
+    PublicKey = $server_pub_key
     AllowedIPs = 0.0.0.0/0
-    Endpoint = $ENDPOINT
+    Endpoint = $endpoint
     EOF
     }
 
@@ -54,6 +56,8 @@ let
     main() {
       local -r profile="$1"
       local -r ip_address="$2"
+      local -r nixos_config="${configPath}/nixos/wireguard/$profile.nix"
+      local -r owner="$(stat -c '%U:%G' '${configPath}')"
 
       if [[ -f "$profile.conf" ]]; then
         echoerr "[WARNING] $profile profile already exists! Skipping config generation..."
@@ -68,25 +72,36 @@ let
       generate_qr_code "$profile"
       echoerr
 
-      >&2 cat <<EOF
-    [INFO] Done! Do not forget to add the following in your /etc/nixos/configuration.nix:
-    networking.wireguard.interaces.*.peers = [{
-      publicKey = "$(cat "$profile.key.pub")";
-      allowedIPs = [ "$2/32" ];
-    }];
+      umask 022
+      cat <<EOF > "$nixos_config"
+    { ... }:
+    {
+      networking.wireguard.interfaces.${wgInterface}.peers = [{
+        publicKey = "$(cat "$profile.key.pub")";
+        allowedIPs = [ "$2/32" ];
+      }];
+    }
     EOF
+
+      chown "$owner" "$nixos_config"
+      echoerr "[INFO] Done! Do not forget to import './$profile.nix' file in '$nixos_config'"
     }
 
     if [[ "$#" -le 1 ]]; then
       usage
     fi
 
-    pushd ${wgPath} >/dev/null
+    pushd "${wgPath}/clients" >/dev/null
     trap "popd >/dev/null" EXIT
     main $@
   '';
 in
 {
+  imports = [
+    ./mobile.nix
+    ./tablet.nix
+  ];
+
   environment.systemPackages = with pkgs; [
     qrencode
     wgGenerateConfig
@@ -97,9 +112,9 @@ in
   # enable NAT
   networking = {
     nat = {
+      inherit externalInterface;
       enable = true;
-      externalInterface = lib.mkDefault "ens3";
-      internalInterfaces = [ "wg0" ];
+      internalInterfaces = [ wgInterface ];
     };
     firewall.allowedUDPPorts = [ wgPort ];
     wireguard.interfaces = {
@@ -107,17 +122,6 @@ in
         inherit privateKeyFile;
         ips = [ "10.100.0.1/24" ];
         listenPort = wgPort;
-
-        peers = [
-          {
-            publicKey = "ZQzoQB1VFiTnpbCrBKk13gx6GHvoYFcGvF8p/Po7N2o=";
-            allowedIPs = [ "10.100.0.2/32" ];
-          }
-          {
-            publicKey = "QXuikaYy0E9rAKiK+YYjJbO4hdSMVoxEMzACNgVAIBY=";
-            allowedIPs = [ "10.100.0.3/32" ];
-          }
-        ];
       };
     };
   };

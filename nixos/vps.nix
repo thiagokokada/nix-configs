@@ -1,6 +1,6 @@
 { config, pkgs, ... }:
 {
-  imports = [ ./wireguard.nix ];
+  imports = [ ./wireguard ];
 
   systemd.tmpfiles.rules = with config.meta; with config.services.plex; [
     "d /media/Music 2775 ${username} ${group}"
