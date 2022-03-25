@@ -5,7 +5,8 @@
 , wgPort ? 51820
 , wgHostIp ? "10.100.0.1"
 , wgNetmask ? "24"
-, wgDnsServers ? "8.8.8.8, 8.4.4.8"
+, wgDnsServers ? wgHostIp
+, useHostDNS ? (wgDnsServers == wgHostIp)
 }:
 { config, lib, pkgs, ... }:
 let
@@ -21,7 +22,7 @@ let
     Usage: $(basename "$0") PROFILE IP_ADDRESS
     Generate Wireguard config.
 
-    Server IP: ${wgHostIp}/${wgNetmask}
+    Wireguard Host IP: ${wgHostIp}/${wgNetmask}
 
     EOF
         exit 1
@@ -41,7 +42,7 @@ let
 
       if [[ -f "$profile.conf" ]]; then
         echoerr "[WARNING] $profile profile already exists! Skipping config generation..."
-        return 1
+        return
       fi
 
       umask 077
@@ -82,7 +83,7 @@ let
       allowedIPs = [ "$address/32" ];
     }
     EOF
-      chown "$owner" "$nixos_config"
+      ${pkgs.coreutils}/bin/chown "$owner" "$nixos_config"
     }
 
     main() {
@@ -99,7 +100,7 @@ let
       echoerr
 
       generate_nix_config "$profile" "$ip_address" "$nixos_config"
-      echoerr "[INFO] Done! Do not forget to import './$profile.nix' file in '$nixos_config'"
+      echoerr "[INFO] Done! Do not forget to import './$profile.nix' file in '${configPath}/nixos/wireguard/default.nix'"
     }
 
     if [[ "$#" -le 1 ]]; then
@@ -117,24 +118,53 @@ in
     wireguard-tools
   ];
 
-  # enable NAT
+  boot.kernel.sysctl = {
+    "net.ipv4.ip_forward" = 1;
+  };
+
   networking = {
     nat = {
       enable = true;
       inherit externalInterface;
       internalInterfaces = [ wgInterface ];
     };
-    firewall.allowedUDPPorts = [ wgPort ];
+    firewall = {
+      # Port 53 is for DNS
+      allowedTCPPorts = lib.optional useHostDNS 53;
+      allowedUDPPorts = [ wgPort 53 ] ++ lib.optional useHostDNS 53;
+    };
     wireguard.interfaces = {
       ${wgInterface} = {
         inherit privateKeyFile;
         ips = [ "${wgHostIp}/${wgNetmask}" ];
         listenPort = wgPort;
 
+        # This allows the wireguard server to route your traffic to the internet and hence be like a VPN
+        # For this to work you have to set the dnsserver IP of your router (or dnsserver of choice) in your clients
+        postSetup = ''
+          ${pkgs.iptables}/bin/iptables -t nat -A POSTROUTING -o ${externalInterface} -j MASQUERADE
+        '';
+
+        # This undoes the above command
+        postShutdown = ''
+          ${pkgs.iptables}/bin/iptables -t nat -D POSTROUTING -o ${externalInterface} -j MASQUERADE
+        '';
+
+        # Generate with `wg-generate-config` script
         peers = [
           (import ./s20.nix)
+          (import ./tabs8.nix)
         ];
       };
     };
+  };
+
+  # If you want to use the host for DNS resolution (more secure), we need to
+  # enable dnsmasq to serve as a DNS server
+  services.dnsmasq = lib.mkIf useHostDNS {
+    enable = true;
+    extraConfig = ''
+      interface=${wgInterface}
+    '';
   };
 }
