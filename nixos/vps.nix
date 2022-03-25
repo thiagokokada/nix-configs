@@ -1,12 +1,6 @@
 { config, pkgs, ... }:
 {
-  imports = [
-    (import ./wireguard {
-      externalInterface = "enps3";
-      wgPath = "/etc/wireguard";
-      wgEndpoint = "mirai-vps.duckdns.org";
-    })
-  ];
+  imports = [ ./wireguard ];
 
   systemd.tmpfiles.rules = with config.meta; with config.services.plex; [
     "d /media/Music 2775 ${username} ${group}"
