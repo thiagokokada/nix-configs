@@ -5,8 +5,10 @@
 , wgPort ? 51820
 , wgHostIp ? "10.100.0.1"
 , wgNetmask ? "24"
-, wgDnsServers ? wgHostIp
-, useHostDNS ? (wgDnsServers == wgHostIp)
+, wgHostIp6 ? "fdc9:281f:04d7:9ee9::1"
+, wgNetmask6 ? "64"
+, wgDnsServers ? "${wgHostIp}, ${wgHostIp6}"
+, useHostDNS ? (wgDnsServers == "${wgHostIp}, ${wgHostIp6}")
 }:
 { config, lib, pkgs, ... }:
 let
@@ -20,17 +22,26 @@ let
     declare -r ENDPOINT="${externalUrl}:${toString wgPort}"
 
     usage() {
+        local -r program_name="$(${pkgs.coreutils}/bin/basename "$0")"
         cat <<EOF
-    Usage: $(${pkgs.coreutils}/bin/basename "$0") PROFILE IP_ADDRESS
+    Usage: $program_name PROFILE IP_ADDRESS [IPV6_ADDRESS]
     Generate Wireguard config and print it on terminal (with QR code for mobile devices).
 
     WARNING: this will show the client private key!
 
     PROFILE should be an easy to remember name. This is used to generate filenames.
 
-    IP_ADDRESS should be a unique and valid IP inside the Wireguard network.
-    The current Host Wireguard's IP is '${wgHostIp}/${wgNetmask}' and Wireguard's is being
-    served on '$ENDPOINT'.
+    IP_ADDRESS/IPV6_ADDRESS should be an unique and valid IP inside the Wireguard network.
+    The current host Wireguard configuration is:
+    - Endpoint: $ENDPOINT
+    - Host IPv4: ${wgHostIp}/${wgNetmask}
+    - Host IPv6: ${wgHostIp6}/${wgNetmask6}
+
+    Examples:
+    # If host IPv4 is '10.100.0.1/24'
+    $program_name device 10.100.0.2
+    # If host IPv4 is '10.100.0.1/24' and IPv6 is 'fdc9:281f:04d7:9ee9::1/64'
+    $program_name device 10.100.0.2 fdc9:281f:04d7:9ee9::2
     EOF
         exit 1
     }
@@ -39,7 +50,8 @@ let
 
     generate_config() {
       local -r profile="$1"
-      local -r address="$2"
+      local -r ip_address="$2"
+      local -r ipv6_address="$3"
       local -r server_pub_key="$(cat ${publicKeyFile})"
       local -r dns="${wgDnsServers}"
 
@@ -54,15 +66,22 @@ let
       ${pkgs.wireguard}/bin/wg genkey | tee "$profile.key" \
         | ${pkgs.wireguard}/bin/wg pubkey > "$profile.key.pub"
 
-      >&2 cat <<EOF >> "$profile.conf"
+      local ip_addresses
+      if [[ -z "$ipv6_address" ]]; then
+        ip_addresses="$ip_address/${wgNetmask}"
+      else
+        ip_addresses="$ip_address/${wgNetmask}, $ipv6_address/${wgNetmask6}"
+      fi
+
+      cat <<EOF >> "$profile.conf"
     [Interface]
     PrivateKey = $(cat "$profile.key")
-    Address = $address/24
+    Address = $ip_addresses
     DNS = $dns
 
     [Peer]
     PublicKey = $server_pub_key
-    AllowedIPs = 0.0.0.0/0
+    AllowedIPs = 0.0.0.0/0, ::/0
     Endpoint = $ENDPOINT
     EOF
     }
@@ -74,17 +93,25 @@ let
 
     generate_nixos_config() {
       local -r profile="$1"
-      local -r address="$2"
-      local -r nixos_config="$3"
+      local -r ip_address="$2"
+      local -r ipv6_address="$3"
+      local -r nixos_config="$4"
       # Get the current '<user>:<group>' from NixOS's config path
       local -r owner="$(stat -c '%U:%G' '${configPath}')"
+
+      local ip_addresses
+      if [[ -z "$ipv6_address" ]]; then
+        ip_addresses="\"$ip_address/32\""
+      else
+        ip_addresses="\"$ip_address/32\" \"$ipv6_address/128\""
+      fi
 
       # "Undo" changes from `generate_config` function
       umask 022
       cat <<EOF > "$nixos_config"
     {
       publicKey = "$(cat "$profile.key.pub")";
-      allowedIPs = [ "$address/32" ];
+      allowedIPs = [ $ip_addresses ];
     }
     EOF
 
@@ -96,12 +123,13 @@ let
     main() {
       local -r profile="$1"
       local -r ip_address="$2"
+      local -r ipv6_address="''${3:-}"
 
       mkdir -p "${wgClientsPath}"
       pushd "${wgClientsPath}" >/dev/null
       trap "popd >/dev/null" EXIT
 
-      generate_config "$profile" "$ip_address"
+      generate_config "$profile" "$ip_address" "$ipv6_address"
       echoerr "[INFO] Generated config:"
       echoerr "============================================================"
       cat "$profile.conf"
@@ -116,8 +144,8 @@ let
       mkdir -p "$nixos_config_path"
       local -r nixos_config="$nixos_config_path/$profile.nix"
 
-      generate_nixos_config "$profile" "$ip_address" "$nixos_config"
-      echoerr "[INFO] Done! Do not forget to import './$profile.nix' file in '${configPath}/nixos/wireguard/default.nix'"
+      generate_nixos_config "$profile" "$ip_address" "$ipv6_address" "$nixos_config"
+      echoerr "[INFO] Done! Do not forget to import './$profile.nix' file in '${configPath}/nixos/wireguard/${externalUrl}'"
     }
 
     if [[ "$#" -le 1 ]]; then
@@ -147,6 +175,7 @@ in
 
   boot.kernel.sysctl = {
     "net.ipv4.ip_forward" = 1;
+    "net.ipv6.conf.all.forwarding" = 1;
   };
 
   networking = {
@@ -163,20 +192,20 @@ in
     wireguard.interfaces = {
       ${wgInterface} = {
         inherit privateKeyFile;
-        ips = [ "${wgHostIp}/${wgNetmask}" ];
+        ips = [ "${wgHostIp}/${wgNetmask}" "${wgHostIp6}/${wgNetmask6}" ];
         listenPort = wgPort;
 
         # This allows the wireguard server to route your traffic to the internet and hence be like a VPN
         # For this to work you have to set the dnsserver IP of your router (or dnsserver of choice) in your clients
         postSetup = ''
-          ${pkgs.iptables}/bin/iptables -A FORWARD -i ${wgInterface} -j ACCEPT
           ${pkgs.iptables}/bin/iptables -t nat -A POSTROUTING -s '${wgHostIp}/${wgNetmask}' -o ${externalInterface} -j MASQUERADE
+          ${pkgs.iptables}/bin/ip6tables -t nat -A POSTROUTING -s '${wgHostIp6}/${wgNetmask6}' -o ${externalInterface} -j MASQUERADE
         '';
 
         # This undoes the above command
         postShutdown = ''
-          ${pkgs.iptables}/bin/iptables -D FORWARD -i ${wgInterface} -j ACCEPT
           ${pkgs.iptables}/bin/iptables -t nat -D POSTROUTING -s '${wgHostIp}/${wgNetmask}' -o ${externalInterface} -j MASQUERADE
+          ${pkgs.iptables}/bin/ip6tables -t nat -D POSTROUTING -s '${wgHostIp6}/${wgNetmask6}' -o ${externalInterface} -j MASQUERADE
         '';
       };
     };
