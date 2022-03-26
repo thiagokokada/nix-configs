@@ -3,7 +3,7 @@
   imports = [
     (import ./wireguard {
       externalInterface = "ens3";
-      wgEndpoint = "mirai-vps.duckdns.org";
+      externalUrl = "mirai-vps.duckdns.org";
     })
   ];
 

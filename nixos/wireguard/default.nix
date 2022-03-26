@@ -1,5 +1,5 @@
 { externalInterface
-, wgEndpoint
+, externalUrl
 , wgPath ? "/etc/wireguard"
 , wgInterface ? "wg0"
 , wgPort ? 51820
@@ -17,6 +17,8 @@ let
   wgGenerateConfig = pkgs.writeShellScriptBin "wg-generate-config" ''
     set -euo pipefail
 
+    declare -r ENDPOINT="${externalUrl}:${toString wgPort}"
+
     usage() {
         cat <<EOF
     Usage: $(${pkgs.coreutils}/bin/basename "$0") PROFILE IP_ADDRESS
@@ -27,7 +29,8 @@ let
     PROFILE should be an easy to remember name. This is used to generate filenames.
 
     IP_ADDRESS should be a unique and valid IP inside the Wireguard network.
-    The current Host Wireguard's IP is '${wgHostIp}/${wgNetmask}'.
+    The current Host Wireguard's IP is '${wgHostIp}/${wgNetmask}' and Wireguard's is being
+    served on '$ENDPOINT'.
     EOF
         exit 1
     }
@@ -37,7 +40,6 @@ let
     generate_config() {
       local -r profile="$1"
       local -r address="$2"
-      local -r endpoint="${wgEndpoint}:${toString wgPort}"
       local -r server_pub_key="$(cat ${publicKeyFile})"
       local -r dns="${wgDnsServers}"
 
@@ -61,7 +63,7 @@ let
     [Peer]
     PublicKey = $server_pub_key
     AllowedIPs = 0.0.0.0/0
-    Endpoint = $endpoint
+    Endpoint = $ENDPOINT
     EOF
     }
 
@@ -70,10 +72,11 @@ let
       ${pkgs.qrencode}/bin/qrencode -t ansiutf8 < "$profile.conf"
     }
 
-    generate_nix_config() {
+    generate_nixos_config() {
       local -r profile="$1"
       local -r address="$2"
       local -r nixos_config="$3"
+      # Get the current '<user>:<group>' from NixOS's config path
       local -r owner="$(stat -c '%U:%G' '${configPath}')"
 
       # "Undo" changes from `generate_config` function
@@ -93,7 +96,6 @@ let
     main() {
       local -r profile="$1"
       local -r ip_address="$2"
-      local -r nixos_config="${configPath}/nixos/wireguard/$profile.nix"
 
       mkdir -p "${wgClientsPath}"
       pushd "${wgClientsPath}" >/dev/null
@@ -110,7 +112,11 @@ let
       generate_qr_code "$profile"
       echoerr
 
-      generate_nix_config "$profile" "$ip_address" "$nixos_config"
+      local -r nixos_config_path="${configPath}/nixos/wireguard/${externalUrl}"
+      mkdir -p "$nixos_config_path"
+      local -r nixos_config="$nixos_config_path/$profile.nix"
+
+      generate_nixos_config "$profile" "$ip_address" "$nixos_config"
       echoerr "[INFO] Done! Do not forget to import './$profile.nix' file in '${configPath}/nixos/wireguard/default.nix'"
     }
 
@@ -127,6 +133,11 @@ let
   '';
 in
 {
+  imports = [
+    (import ./${externalUrl} { inherit wgInterface; })
+    ../../modules/meta.nix
+  ];
+
   environment.systemPackages = with pkgs; [
     qrencode
     wgGenerateConfig
@@ -167,12 +178,6 @@ in
           ${pkgs.iptables}/bin/iptables -D FORWARD -i ${wgInterface} -j ACCEPT
           ${pkgs.iptables}/bin/iptables -t nat -D POSTROUTING -s '${wgHostIp}/${wgNetmask}' -o ${externalInterface} -j MASQUERADE
         '';
-
-        # Generate with `wg-generate-config` script
-        peers = [
-          (import ./s20.nix)
-          (import ./tabs8.nix)
-        ];
       };
     };
   };
