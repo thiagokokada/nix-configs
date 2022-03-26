@@ -55,16 +55,15 @@ let
       local -r server_pub_key="$(cat ${publicKeyFile})"
       local -r dns="${wgDnsServers}"
 
-      if [[ -f "$profile.conf" ]]; then
-        echoerr "[WARNING] $profile profile already exists! Skipping config generation..."
-        return
+      if [[ -f "$profile.key" ]]; then
+        echoerr "[WARNING] '$profile' private key already exists! Skipping key generation..."
+      else
+        # Since those are private keys, they need to be only visible by root
+        # for security
+        umask 077
+        ${pkgs.wireguard}/bin/wg genkey | tee "$profile.key" \
+          | ${pkgs.wireguard}/bin/wg pubkey > "$profile.key.pub"
       fi
-
-      # Since those are private keys, they need to be only visible by root
-      # for security
-      umask 077
-      ${pkgs.wireguard}/bin/wg genkey | tee "$profile.key" \
-        | ${pkgs.wireguard}/bin/wg pubkey > "$profile.key.pub"
 
       local ip_addresses
       if [[ -z "$ipv6_address" ]]; then
@@ -73,7 +72,7 @@ let
         ip_addresses="$ip_address/${wgNetmask}, $ipv6_address/${wgNetmask6}"
       fi
 
-      cat <<EOF >> "$profile.conf"
+      cat <<EOF > "$profile.conf"
     [Interface]
     PrivateKey = $(cat "$profile.key")
     Address = $ip_addresses
@@ -148,7 +147,7 @@ let
       echoerr "[INFO] Done! Do not forget to import './$profile.nix' file in '${configPath}/nixos/wireguard/${externalUrl}'"
     }
 
-    if [[ "$#" -le 1 ]]; then
+    if [[ "$#" -lt 2 ]]; then
       usage
     fi
 
