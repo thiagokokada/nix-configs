@@ -161,7 +161,8 @@ let
 in
 {
   imports = [
-    (import ./${externalUrl} { inherit wgInterface; })
+    (import ./${
+    externalUrl} { inherit wgInterface; })
     ../../modules/meta.nix
   ];
 
