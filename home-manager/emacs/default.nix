@@ -28,8 +28,6 @@ in
       pandoc
 
       # lsp
-      unstable.clojure-lsp
-      unstable.pyright
       unstable.rnix-lsp
 
       # shell

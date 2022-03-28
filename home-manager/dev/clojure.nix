@@ -14,6 +14,7 @@ in
     babashka
     (clojure.override { inherit jdk; })
     (leiningen.override { inherit jdk; })
+    unstable.clojure-lsp
   ];
 
   # https://github.com/babashka/babashka/issues/257
