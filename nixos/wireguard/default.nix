@@ -20,6 +20,7 @@ let
     set -euo pipefail
 
     declare -r ENDPOINT="${externalUrl}:${toString wgPort}"
+    declare -r NIXOS_CONFIG_PATH="${configPath}/nixos/wireguard/${externalUrl}"
 
     usage() {
         local -r program_name="$(${pkgs.coreutils}/bin/basename "$0")"
@@ -60,9 +61,10 @@ let
       else
         # Since those are private keys, they need to be only visible by root
         # for security
-        umask 077
-        ${pkgs.wireguard}/bin/wg genkey | tee "$profile.key" \
-          | ${pkgs.wireguard}/bin/wg pubkey > "$profile.key.pub"
+        # Run inside a subshell so umask doesn't propagate to rest of script
+        (umask 077 && \
+          ${pkgs.wireguard}/bin/wg genkey | tee "$profile.key" \
+          | ${pkgs.wireguard}/bin/wg pubkey > "$profile.key.pub")
       fi
 
       local ip_addresses
@@ -105,8 +107,6 @@ let
         ip_addresses="\"$ip_address/32\" \"$ipv6_address/128\""
       fi
 
-      # "Undo" changes from `generate_config` function
-      umask 022
       cat <<EOF > "$nixos_config"
     {
       publicKey = "$(cat "$profile.key.pub")";
@@ -121,29 +121,26 @@ let
 
     main() {
       local -r profile="$1"
+      local -r client_profile="${wgClientsPath}/$profile"
       local -r ip_address="$2"
       local -r ipv6_address="''${3:-}"
 
       mkdir -p "${wgClientsPath}"
-      pushd "${wgClientsPath}" >/dev/null
-      trap "popd >/dev/null" EXIT
-
-      generate_config "$profile" "$ip_address" "$ipv6_address"
+      generate_config "$client_profile" "$ip_address" "$ipv6_address"
       echoerr "[INFO] Generated config:"
       echoerr "============================================================"
-      cat "$profile.conf"
+      cat "$client_profile.conf"
       echoerr "============================================================"
       echoerr
 
       echoerr "[INFO] Generated qr-code:"
-      generate_qr_code "$profile"
+      generate_qr_code "$client_profile"
       echoerr
 
-      local -r nixos_config_path="${configPath}/nixos/wireguard/${externalUrl}"
-      mkdir -p "$nixos_config_path"
-      local -r nixos_config="$nixos_config_path/$profile.nix"
+      mkdir -p "$NIXOS_CONFIG_PATH"
+      local -r nixos_config="$NIXOS_CONFIG_PATH/$profile.nix"
 
-      generate_nixos_config "$profile" "$ip_address" "$ipv6_address" "$nixos_config"
+      generate_nixos_config "$client_profile" "$ip_address" "$ipv6_address" "$nixos_config"
       echoerr "[INFO] Done! Do not forget to import './$profile.nix' file in '${configPath}/nixos/wireguard/${externalUrl}'"
     }
 
