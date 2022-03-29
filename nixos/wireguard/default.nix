@@ -40,9 +40,9 @@ let
 
     Examples:
     # If host IPv4 is '10.100.0.1/24'
-    $program_name device 10.100.0.2
+    $ $program_name device 10.100.0.2
     # If host IPv4 is '10.100.0.1/24' and IPv6 is 'fdc9:281f:04d7:9ee9::1/64'
-    $program_name device 10.100.0.2 fdc9:281f:04d7:9ee9::2
+    $ $program_name device 10.100.0.2 fdc9:281f:04d7:9ee9::2
     EOF
         exit 1
     }
