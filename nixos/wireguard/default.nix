@@ -61,10 +61,8 @@ let
       else
         # Since those are private keys, they need to be only visible by root
         # for security
-        # Run inside a subshell so umask doesn't propagate to rest of script
-        (umask 077 && \
-          ${pkgs.wireguard}/bin/wg genkey | tee "$profile.key" \
-          | ${pkgs.wireguard}/bin/wg pubkey > "$profile.key.pub")
+        ${pkgs.wireguard}/bin/wg genkey | tee "$profile.key" \
+          | ${pkgs.wireguard}/bin/wg pubkey > "$profile.key.pub"
       fi
 
       local ip_addresses
@@ -125,8 +123,12 @@ let
       local -r ip_address="$2"
       local -r ipv6_address="''${3:-}"
 
-      mkdir -p "${wgClientsPath}"
-      generate_config "$client_profile" "$ip_address" "$ipv6_address"
+      (
+        # Run inside a subshell so umask doesn't propagate to rest of script
+        umask 077
+        mkdir -p "${wgClientsPath}"
+        generate_config "$client_profile" "$ip_address" "$ipv6_address"
+      )
       echoerr "[INFO] Generated config:"
       echoerr "============================================================"
       cat "$client_profile.conf"
