@@ -48,7 +48,11 @@ in
     };
   };
 
-  time.timeZone = "Europe/Dublin";
+  time = {
+    # For Windows interop
+    hardwareClockInLocalTime = true;
+    timeZone = "Europe/Dublin";
+  };
 
   networking.hostName = "mikudayo-re-nixos";
 }
