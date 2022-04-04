@@ -134,6 +134,8 @@
       {
         miku-nixos = mkSystem { modules = [ ./hosts/miku-nixos ]; };
 
+        mikudayo-re-nixos = mkSystem { modules = [ ./hosts/mikudayo-re-nixos ]; };
+
         miku-vm = mkSystem { modules = [ ./hosts/miku-vm ]; };
 
         mirai-vps = mkSystem { modules = [ ./hosts/mirai-vps ]; };
