@@ -57,10 +57,10 @@ in
   # Newest LTS, fixes some issues
   boot.kernelPackages = pkgs.linuxPackages_5_15;
   # Add support for intel_pstate/intel_cpufreq driver
-  boot.kernelPatches = [{
-    name = "add_tigerlake_to_intel_pstate";
-    patch = ./add_tigerlake_to_intel_pstate.diff;
-  }];
+  # boot.kernelPatches = [{
+  #   name = "add_tigerlake_to_intel_pstate";
+  #   patch = ./add_tigerlake_to_intel_pstate.diff;
+  # }];
 
   boot.tmpOnTmpfs = false;
   powerManagement.cpuFreqGovernor = "schedutil";
