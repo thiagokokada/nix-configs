@@ -12,6 +12,9 @@ in
     # Mount /tmp using tmpfs for performance
     tmpOnTmpfs = lib.mkDefault true;
 
+    # If not using above, at least clean /tmp on each boot
+    cleanTmpDir = lib.mkDefault true;
+
     # Enable NTFS support
     supportedFilesystems = [ "ntfs" ];
 
