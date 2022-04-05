@@ -10,7 +10,7 @@ in
 {
   boot = {
     # Mount /tmp using tmpfs for performance
-    tmpOnTmpfs = true;
+    tmpOnTmpfs = lib.mkDefault true;
 
     # Enable NTFS support
     supportedFilesystems = [ "ntfs" ];

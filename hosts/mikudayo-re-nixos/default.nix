@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, self, ... }:
+{ config, pkgs, self, lib, ... }:
 
 let
   inherit (self) inputs;
@@ -54,14 +54,15 @@ in
     timeZone = "Europe/Dublin";
   };
 
-  # 16GiB, should be fine thanks to swap
-  boot.tmpOnTmpfsSize = 16 * 1024 * 1024 * 1024;
-
   # Newest LTS, fixes some issues
   boot.kernelPackages = pkgs.linuxPackages_5_15;
+  boot.kernelPatches = [{
+    name = "add_tigerlake_to_intel_pstate";
+    patch = ./add_tigerlake_to_intel_pstate.diff;
+  }];
 
-  # For some reason intel_pstate is not working
-  powerManagement.cpuFreqGovernor = "schedutil";
+  boot.cleanTmpDir = true;
+  boot.tmpOnTmpfs = false;
 
   networking.hostName = "mikudayo-re-nixos";
 }
