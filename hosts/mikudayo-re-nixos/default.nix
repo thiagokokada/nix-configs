@@ -54,5 +54,14 @@ in
     timeZone = "Europe/Dublin";
   };
 
+  # 16GiB, should be fine thanks to swap
+  boot.tmpOnTmpfsSize = 16 * 1024 * 1024 * 1024;
+
+  # Newest LTS, fixes some issues
+  boot.kernelPackages = pkgs.linuxPackages_5_15;
+
+  # For some reason intel_pstate is not working
+  powerManagement.cpuFreqGovernor = "schedutil";
+
   networking.hostName = "mikudayo-re-nixos";
 }
