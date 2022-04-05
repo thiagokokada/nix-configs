@@ -36,7 +36,7 @@ in
     nvidiaBusId = "PCI:1:0:0";
   };
 
-  # Use the systemd-boot EFI boot loader.
+  # Use the systemd-boot EFI boot loader
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
@@ -56,14 +56,8 @@ in
 
   # Newest LTS, fixes some issues
   boot.kernelPackages = pkgs.linuxPackages_5_15;
-  # Add support for intel_pstate/intel_cpufreq driver
-  # boot.kernelPatches = [{
-  #   name = "add_tigerlake_to_intel_pstate";
-  #   patch = ./add_tigerlake_to_intel_pstate.diff;
-  # }];
-
+  # Memory is kinda low to build some packages, really :P
   boot.tmpOnTmpfs = false;
-  powerManagement.cpuFreqGovernor = "schedutil";
 
   networking.hostName = "mikudayo-re-nixos";
 }
