@@ -73,8 +73,8 @@
     # Only suspend on lid closed when laptop is disconnected
     logind = {
       lidSwitch = "suspend-then-hibernate";
-      lidSwitchDocked = "ignore";
-      lidSwitchExternalPower = "ignore";
+      lidSwitchDocked = "lock";
+      lidSwitchExternalPower = "lock";
     };
 
     # Reduce power consumption
@@ -83,6 +83,11 @@
       settings = {
         # Disable USB autosuspend, since this seems to cause issues
         USB_AUTOSUSPEND = 0;
+        # Powersave on battery
+        CPU_SCALING_GOVERNOR_ON_AC = "performance";
+        CPU_SCALING_GOVERNOR_ON_BAT = "powersave";
+        ENERGY_PERF_POLICY_ON_AC = "performance";
+        ENERGY_PERF_POLICY_ON_BAT = "power";
       };
     };
   };
