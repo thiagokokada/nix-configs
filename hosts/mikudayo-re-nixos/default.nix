@@ -14,9 +14,6 @@ in
     ../../nixos/cross-compiling.nix
     ../../nixos/games.nix
     ../../nixos/laptop.nix
-    ../../cachix.nix
-    ../../modules
-    ../../overlays
     inputs.hardware.nixosModules.common-cpu-intel
     inputs.hardware.nixosModules.common-gpu-nvidia
   ];

@@ -12,9 +12,6 @@ in
     # Use `nixos-generate-config` to generate `hardware-configuration.nix` file
     ./hardware-configuration.nix
     ../../nixos
-    ../../cachix.nix
-    ../../modules
-    ../../overlays
     # inputs.hardware.nixosModules.common-cpu-intel
   ];
 

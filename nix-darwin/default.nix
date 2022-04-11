@@ -5,5 +5,7 @@
     ./home.nix
     ./system.nix
     ./meta.nix
+    ../modules
+    ../overlays
   ];
 }

@@ -16,9 +16,6 @@ in
       ../../nixos/security.nix
       ../../nixos/ssh.nix
       ../../nixos/vps.nix
-      ../../modules
-      ../../cachix.nix
-      ../../overlays
       self.inputs.home.nixosModules.home-manager
     ];
 

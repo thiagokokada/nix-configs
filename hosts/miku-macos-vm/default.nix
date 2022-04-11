@@ -7,9 +7,6 @@ in
 {
   imports = [
     ../../nix-darwin
-    ../../cachix.nix
-    ../../modules
-    ../../overlays
   ];
 
   device = {

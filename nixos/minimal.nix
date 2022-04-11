@@ -7,5 +7,7 @@
     ./meta.nix
     ./system.nix
     ./user.nix
+    ../modules
+    ../overlays
   ];
 }

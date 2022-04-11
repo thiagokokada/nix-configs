@@ -11,9 +11,6 @@ in
   imports = [
     ./hardware-configuration.nix
     ../../nixos
-    ../../cachix.nix
-    ../../modules
-    ../../overlays
   ];
 
   device = {
