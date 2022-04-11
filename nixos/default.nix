@@ -6,6 +6,7 @@
     ./dev.nix
     ./fonts.nix
     ./home.nix
+    ./laptop.nix
     ./minimal.nix
     ./non-nix.nix
     ./wayland.nix

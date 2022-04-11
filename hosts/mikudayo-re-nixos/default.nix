@@ -13,7 +13,6 @@ in
     ../../nixos
     ../../nixos/cross-compiling.nix
     ../../nixos/games.nix
-    ../../nixos/laptop.nix
     inputs.hardware.nixosModules.common-cpu-intel
     inputs.hardware.nixosModules.common-gpu-nvidia
   ];

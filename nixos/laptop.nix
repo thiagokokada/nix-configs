@@ -1,10 +1,13 @@
-{ pkgs, ... }:
+{ config, pkgs, ... }:
 
+let
+  enable = config.device.type == "laptop";
+in
 {
   networking = {
     # Use Network Manager
     networkmanager = {
-      enable = true;
+      inherit enable;
       wifi.backend = "iwd";
       dispatcherScripts = [{
         source =
@@ -45,13 +48,13 @@
   # Configure special hardware in laptops
   hardware = {
     # Enable bluetooth
-    bluetooth.enable = true;
+    bluetooth = { inherit enable; };
   };
 
   # Enable programs that need special configuration
   programs = {
     # Enable NetworkManager applet
-    nm-applet.enable = true;
+    nm-applet = { inherit enable; };
   };
 
   # Make nm-applet restart in case of failure
@@ -65,10 +68,10 @@
   # Enable laptop specific services
   services = {
     # Enable Blueman to manage Bluetooth
-    blueman.enable = true;
+    blueman = { inherit enable; };
 
     # For battery status reporting
-    upower.enable = true;
+    upower = { inherit enable; };
 
     # Only suspend on lid closed when laptop is disconnected
     logind = {
@@ -79,7 +82,7 @@
 
     # Reduce power consumption
     tlp = {
-      enable = true;
+      inherit enable;
       settings = {
         # Disable USB autosuspend, since this seems to cause issues
         USB_AUTOSUSPEND = 0;
