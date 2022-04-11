@@ -64,8 +64,8 @@ system and partition the disk, run the following process to install:
 $ sudo git clone https://github.com/thiagokokada/nix-configs/ /mnt/etc/nixos
 $ sudo chown -R 1000:1000 /mnt/etc/nixos # optional if you want to edit your config without root
 $ nix-shell -p nixFlakes
-$ ./Makefile build-<hostname>
-$ sudo nixos-install --system ./result
+$ nix flake new --template .#new-host # if this is a new hardware
+$ sudo nixos-install --flake /mnt/etc/nixos#hostname
 ```
 
 **Optional:** to make the initial setup faster (i.e.: using Emacs from cache
@@ -80,11 +80,8 @@ run:
 $ sudo nixos-rebuild
 ```
 
-#### Troubleshooting
-
-In case of lack of space during the initial build (since it is done in `tmpfs`),
-you can comment parts of the configuration. A good start would be to import only
-`hardware-configuration.nix`, `nixos/minimal.nix` and
+Another option is to comment parts of the configuration. A good start would
+be to import only `hardware-configuration.nix`, `nixos/minimal.nix` and
 `home-manager/minimal.nix`.
 
 After installing it succesfully and rebooting, you can uncomment everything and
