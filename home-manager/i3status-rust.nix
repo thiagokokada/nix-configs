@@ -11,7 +11,7 @@ in
     package = pkgs.i3status-rust;
     bars =
       let
-        isNotebook = config.device.type == "notebook";
+        isLaptop = config.device.type == "laptop";
 
         settings = {
           theme = {
@@ -97,10 +97,10 @@ in
           warning = 80;
         };
 
-        backlightBlock = if isNotebook then { block = "backlight"; } else { };
+        backlightBlock = if isLaptop then { block = "backlight"; } else { };
 
         batteryBlock =
-          if isNotebook then {
+          if isLaptop then {
             block = "battery";
             device = "DisplayDevice";
             driver = "upower";

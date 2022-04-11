@@ -19,7 +19,7 @@ in
   ];
 
   device = {
-    type = "notebook";
+    type = "laptop";
     netDevices = [ "enp3s0" "wlan0" ];
   };
 
