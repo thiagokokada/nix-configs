@@ -1,4 +1,4 @@
-{ config, lib, pkgs, super, ... }:
+{ config, lib, pkgs, super, self, ... }:
 
 let
   videoDrivers = super.services.xserver.videoDrivers or [ ];
@@ -8,6 +8,11 @@ let
     else "glx";
 in
 {
+  # TODO: remove this once this PR is merged:
+  # https://github.com/nix-community/home-manager/pull/2887
+  disabledModules = [ "services/picom.nix" ];
+  imports = [ "${self.inputs.home-picom-fix}/modules/services/picom.nix" ];
+
   services.picom = {
     inherit backend;
     enable = config.device.type != "vm";
