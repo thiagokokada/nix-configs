@@ -41,13 +41,6 @@
       inputs.flake-utils.follows = "flake-utils";
     };
 
-    # envfs
-    envfs = {
-      url = "github:Mic92/envfs";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.utils.follows = "flake-utils";
-    };
-
     # overlays
     emacs = {
       url = "github:nix-community/emacs-overlay";
