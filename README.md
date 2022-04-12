@@ -92,15 +92,9 @@ trigger a rebuild.
 Start by installing Nix:
 
 ```console
-$ curl -L https://nixos.org/nix/install | sh -s -- --darwin-use-unencrypted-nix-store-volume --daemon
+$ sh <(curl -L https://nixos.org/nix/install) --no-daemon
 ```
 
-The two flags are important. The first one will allow installation on macOS
-10.15+ by creating an unencrypted APFS volume and mounting it over at `/nix`.
-See more details
-[here](https://nixos.org/manual/nix/stable/#sect-macos-installation). The second
-one will create a multi-user installation of nix. Not really necessary, but I
-had bad experiences in the past with single-user installations with nix-darwin.
 See more details
 [here](https://nixos.org/manual/nix/stable/#sect-multi-user-installation).
 
