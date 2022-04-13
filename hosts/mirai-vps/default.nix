@@ -44,5 +44,11 @@ in
   # Define on which hard drive you want to install Grub.
   boot.loader.grub.device = "/dev/vda"; # or "nodev" for efi only
 
+  # Enable IPv6
+  boot.kernel.sysctl = {
+    "net.ipv6.conf.ens3.autoconf" = 0;
+    "net.ipv6.conf.ens3.accept_ra" = 0;
+  };
+
   networking.hostName = "mirai-vps";
 }
