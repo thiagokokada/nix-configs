@@ -18,12 +18,7 @@
   system.autoUpgrade = {
     enable = true;
     allowReboot = true;
-    flake = "/etc/nixos";
-    dates = "4:40";
-    flags = [
-      "--recreate-lock-file"
-      "--no-write-lock-file"
-    ];
+    flake = "github:thiagokokada/nix-configs";
   };
 
   services = {
