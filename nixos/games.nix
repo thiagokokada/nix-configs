@@ -8,7 +8,7 @@
     piper
     unstable.lutris
     unstable.osu-lazer
-    # unstable.retroarchFull
+    unstable.retroarchFull
   ];
 
   programs = {
