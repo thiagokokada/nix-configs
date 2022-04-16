@@ -14,10 +14,6 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "unstable";
     };
-    home-picom-fix = {
-      url = "github:thiagokokada/home-manager/remove-deprecated-option-picom";
-      inputs.nixpkgs.follows = "unstable";
-    };
     nix-darwin = {
       url = "github:LnL7/nix-darwin";
       inputs.nixpkgs.follows = "nixpkgs";

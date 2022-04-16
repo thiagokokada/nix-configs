@@ -8,10 +8,9 @@ let
     else "glx";
 in
 {
-  # TODO: remove this once this PR is merged:
-  # https://github.com/nix-community/home-manager/pull/2887
+  # TODO: remove this once HM 22.05 is released
   disabledModules = [ "services/picom.nix" ];
-  imports = [ "${self.inputs.home-picom-fix}/modules/services/picom.nix" ];
+  imports = [ "${self.inputs.home-unstable}/modules/services/picom.nix" ];
 
   services.picom = {
     inherit backend;
