@@ -29,9 +29,9 @@ in
   # Increase file handler limit
   security.pam.loginLimits = [{
     domain = "*";
-    type = "hard";
+    type = "-";
     item = "nofile";
-    value = "1048576";
+    value = "65536";
   }];
 
   # Enable firmware-linux-nonfree
