@@ -74,7 +74,7 @@
 
     # To install non-packaged plugins, use
     # pkgs.vimUtils.buildVimPluginFrom2Nix { }
-    plugins = with pkgs.vimPlugins; [
+    plugins = with pkgs; with vimPlugins; [
       {
         # FIXME: dummy plugin since there is no way currently to set a config
         # before the plugins are initialized
@@ -217,6 +217,15 @@
           map T <Plug>Sneak_T
         '';
       }
+      (vimUtils.buildVimPlugin {
+        name = "AdvancedSorters";
+        src = fetchFromGitHub {
+          owner = "inkarkat";
+          repo = "vim-AdvancedSorters";
+          rev = "1.30";
+          sha256 = "sha256-dpVfd0xaf9SAXxy0h6C8q4e7s7WTY8zz+JVDr4zVsQE=";
+        };
+      })
       auto-pairs
       gitgutter
       vim-automkdir
