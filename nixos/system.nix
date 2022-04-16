@@ -79,11 +79,11 @@ in
     timesyncd.enable = lib.mkDefault true;
 
     # Set I/O scheduler
-    # mq-deadline is set for NVMe, since scheduler doesn't make much sense on it
+    # kyber is set for NVMe, since scheduler doesn't make much sense on it
     # bfq for SATA SSDs/HDDs
     udev.extraRules = ''
       # set scheduler for NVMe
-      ACTION=="add|change", KERNEL=="nvme[0-9]*", ATTR{queue/scheduler}="mq-deadline"
+      ACTION=="add|change", KERNEL=="nvme[0-9]*", ATTR{queue/scheduler}="kyber"
       # set scheduler for SSD and eMMC
       ACTION=="add|change", KERNEL=="sd[a-z]|mmcblk[0-9]*", ATTR{queue/rotational}=="0", ATTR{queue/scheduler}="bfq"
       # set scheduler for rotating disks
