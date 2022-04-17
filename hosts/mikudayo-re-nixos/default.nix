@@ -56,4 +56,12 @@ in
   boot.tmpOnTmpfs = false;
 
   networking.hostName = "mikudayo-re-nixos";
+
+  services.tlp = {
+    settings = {
+      # After long sleep the audio device disappears
+      # POWER_SAVE is on AC by default
+      SOUND_POWER_SAVE_ON_AC = 0;
+    };
+  };
 }
