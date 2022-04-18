@@ -8,7 +8,7 @@
 
     userName = "Thiago Kenji Okada";
     userEmail = "thiagokokada@gmail.com";
-    package = pkgs.gitFull;
+    package = pkgs.unstable.gitFull;
 
     delta = {
       enable = true;
@@ -66,7 +66,10 @@
       };
       checkout = { defaultRemote = "origin"; };
       github = { user = "thiagokokada"; };
-      merge = { tool = "nvim -d"; };
+      merge = {
+        conflictstyle = "zdiff3";
+        tool = "nvim -d";
+      };
       pull = { rebase = true; };
       push = { default = "simple"; };
       rebase = { autoStash = true; };
