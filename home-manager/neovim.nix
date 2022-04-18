@@ -90,7 +90,7 @@
         plugin = fzf-vim;
         config = ''
           let g:fzf_layout = { 'down': '40%' }
-          let $FZF_DEFAULT_COMMAND = 'rg --files --hidden'
+          let $FZF_DEFAULT_COMMAND = 'rg --files --hidden --glob="!.git/"'
 
           function! RipgrepFzf(query, fullscreen)
             let command_fmt = 'rg --column --line-number --no-heading --color=always --smart-case -- %s || true'
