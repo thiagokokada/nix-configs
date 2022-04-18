@@ -66,7 +66,7 @@ in
   programs.emacs = with pkgs; let
     emacsPkg =
       if stdenv.isDarwin then
-        emacsGcc
+        emacsNativeComp
       else emacsPgtkGcc;
     # TODO: remove this after 22.05
     emacsPackagesFor' =
