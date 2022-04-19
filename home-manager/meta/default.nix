@@ -9,7 +9,7 @@ in
     ../../overlays
     ../../modules/device.nix
     ../../modules/meta.nix
-    inputs.declarative-cachix.homeManagerModules.declarative-cachix
+    inputs.declarative-cachix.homeManagerModules.declarative-cachix-experimental
   ];
 
   # Add some Nix related packages
@@ -20,6 +20,16 @@ in
     nixpkgs-fmt
     nixpkgs-review
   ];
+
+  # Add nix.conf for the standalone installations of HM
+  # Need to use `home.file.nixConf`, otherwise conflicts with declarative-nix
+  # will happen
+  # TODO: remove once https://github.com/nix-community/home-manager/issues/2324
+  # is fixed
+  home.file.nixConf = {
+    target = ".config/nix/nix.conf";
+    text = builtins.readFile ../../shared/nix.conf;
+  };
 
   # To make cachix work you need add the current user as a trusted-user on Nix
   # sudo echo "trusted-users = $(whoami)" >> /etc/nix/nix.conf

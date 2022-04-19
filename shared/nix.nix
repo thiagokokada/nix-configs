@@ -9,13 +9,7 @@ in
 
   # Enable Flakes
   package = pkgs.nixFlakes;
-  extraOptions = ''
-    experimental-features = nix-command flakes
-    # Useful for nix-direnv, however not sure if this will
-    # generate too much garbage
-    # keep-outputs = true
-    # keep-derivations = true
-  '';
+  extraOptions = builtins.readFile ./nix.conf;
 
   # Set the $NIX_PATH entry for nixpkgs. This is necessary in
   # this setup with flakes, otherwise commands like `nix-shell
