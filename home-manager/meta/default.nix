@@ -22,7 +22,7 @@ in
   ];
 
   # Add nix.conf for the standalone installations of HM
-  # Need to use `home.file.nixConf`, otherwise conflicts with declarative-nix
+  # Need to use `home.file.nixConf`, otherwise conflicts with declarative-cachix
   # will happen
   # TODO: remove once https://github.com/nix-community/home-manager/issues/2324
   # is fixed
