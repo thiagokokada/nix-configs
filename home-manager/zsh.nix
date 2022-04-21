@@ -226,7 +226,8 @@ in
       enable = true;
       nix-direnv = {
         enable = true;
-        enableFlakes = true;
+        # TODO: remove this on 22.05
+        enableFlakes = lib.mkIf (!pkgs.stdenv.isDarwin) true;
       };
     };
     fzf = {
