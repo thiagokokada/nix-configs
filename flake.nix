@@ -196,8 +196,9 @@
           coreutils
           findutils
           gnumake
-          nix_2_4
           nixpkgs-fmt
+          nixUnstable
+          yj
         ];
       };
     }

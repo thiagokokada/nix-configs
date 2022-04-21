@@ -224,7 +224,10 @@ in
     dircolors.enable = true;
     direnv = {
       enable = true;
-      nix-direnv.enable = true;
+      nix-direnv = {
+        enable = true;
+        enableFlakes = true;
+      };
     };
     fzf = {
       enable = true;
