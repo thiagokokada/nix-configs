@@ -39,6 +39,5 @@ jobs:
           title: Update flake.lock
 name: update-flakes
 "on":
-  - workflow_dispatch
-  - schedule:
-      - cron: 40 4 * * 0,2,4,6
+  schedule:
+    - cron: 40 4 * * 0,2,4,6
