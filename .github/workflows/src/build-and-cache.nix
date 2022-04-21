@@ -6,7 +6,7 @@ in
   name = "build-and-cache";
   on = [ "push" "workflow_dispatch" ];
   jobs = {
-    build-0-linux = {
+    build-linux = {
       inherit (constants.ubuntu) runs-on;
       steps = with steps; [
         maximimizeBuildSpaceStep
@@ -19,7 +19,7 @@ in
         (buildAllForSystemStep "linux")
       ];
     };
-    build-1-macos = {
+    build-macos = {
       inherit (constants.macos) runs-on;
       steps = with steps; [
         checkoutStep

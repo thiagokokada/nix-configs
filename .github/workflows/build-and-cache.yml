@@ -1,5 +1,5 @@
 jobs:
-  build-0-linux:
+  build-linux:
     runs-on: ubuntu-latest
     steps:
       - uses: easimon/maximize-build-space@v5
@@ -27,7 +27,7 @@ jobs:
         run: ./Makefile validate
       - name: Build Nix configs
         run: ./Makefile all-linux
-  build-1-macos:
+  build-macos:
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v3
