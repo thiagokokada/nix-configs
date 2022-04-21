@@ -1,7 +1,7 @@
 #! /usr/bin/env nix-shell
 #! nix-shell shell.nix -i "make -f"
 
-.PHONY: all clean update format format-check install activate run-vm-% build-% build-vm-% build-hm-% run-vm-%
+.PHONY: all actions clean update format format-check install activate run-vm-% build-% build-vm-% build-hm-% run-vm-%
 EXTRA_FLAGS :=
 NIX_FLAGS := --experimental-features 'nix-command flakes' $(EXTRA_FLAGS)
 
@@ -68,6 +68,9 @@ build-hm-%:
 
 run-vm-%: build-vm-%
 	QEMU_OPTS="-cpu host -smp 2 -m 4096M -machine type=q35,accel=kvm" ./result/bin/run-$*-vm
+
+actions:
+	cd .github/workflows && make
 
 # Local Variables:
 # mode: Makefile
