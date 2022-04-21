@@ -1,5 +1,6 @@
 result
 result-*
 *.qcow2
+.direnv/
 # Looks like a temporary file, but not sure
 doom-emacs/flycheck_config.el

@@ -5,3 +5,6 @@ all: build-and-cache.yml update-flakes.yml update-flakes-darwin.yml
 
 %.yml: src/%.nix src/steps.nix src/constants.nix
 	nix eval -f $< --json | yj -jy > $@
+
+clean:
+	rm -f *.yml
