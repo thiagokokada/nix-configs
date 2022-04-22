@@ -70,7 +70,7 @@ run-vm-%: build-vm-%
 	QEMU_OPTS="-cpu host -smp 2 -m 4096M -machine type=q35,accel=kvm" ./result/bin/run-$*-vm
 
 actions:
-	cd .github/workflows && make
+	make -C .github/workflows
 
 # Local Variables:
 # mode: Makefile
