@@ -15,8 +15,12 @@
   };
   installNixActionStep = {
     uses = "cachix/install-nix-action@v17";
-    # Need to define a channel, otherwise it wiill use bash from environment
-    "with".nix_path = "nixpkgs=channel:nixos-unstable";
+    "with" = {
+      # Need to define a channel, otherwise it wiill use bash from environment
+      nix_path = "nixpkgs=channel:nixos-unstable";
+      # Should avoid GitHub API rate limit
+      extra_nix_config = "access-tokens = github.com=\${{ secrets.GITHUB_TOKEN }}";
+    };
   };
   cachixActionStep = {
     uses = "cachix/cachix-action@v10";
