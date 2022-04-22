@@ -1,9 +1,10 @@
 #! /usr/bin/env nix-shell
 #! nix-shell shell.nix -i "make -f"
 
-.PHONY: all actions clean update format format-check install activate run-vm-% build-% build-vm-% build-hm-% run-vm-%
+.PHONY: all gh-actions clean update format format-check install activate run-vm-% build-% build-vm-% build-hm-% run-vm-%
 EXTRA_FLAGS :=
 NIX_FLAGS := --experimental-features 'nix-command flakes' $(EXTRA_FLAGS)
+PLATFORM := $(shell nix-instantiate --eval -E 'builtins.currentSystem' --json | jq -r)
 
 ifeq ($(shell uname),Darwin)
 all: all-macos
@@ -16,7 +17,7 @@ all-linux: build-miku-nixos build-mikudayo-re-nixos build-mirai-vps build-hm-hom
 all-macos: build-darwin-miku-macos-vm build-hm-home-macos
 
 clean:
-	rm -rf result *.qcow2
+	rm -rf result *.qcow2 .github/workflows/*
 
 update:
 	nix $(NIX_FLAGS) flake update --commit-lock-file
@@ -40,19 +41,10 @@ format:
 		! -path './modules/nixos/*' \
 		-exec nixpkgs-fmt {} \+
 
-install:
-ifeq (,$(wildcard ./result/nixos-version))
-	@>&2 echo "Nothing to install. Run 'make build-<hostname>' first!"
-	@exit 1
-endif
-	nixos-install --system ./result
+.github/workflows/%.yml: actions/build-and-cache.nix
+	nix $(NIX_FLAGS) run '.#githubActions.$(PLATFORM).$*' | tee $@
 
-activate:
-ifeq (,$(wildcard ./result/activate))
-	@>&2 echo "Nothing to activate. Run 'make build-<hostname>' or 'make build-hm-<name>' first!"
-	@exit 1
-endif
-	./result/activate
+gh-actions: .github/workflows/build-and-cache.yml .github/workflows/update-flakes.yml .github/workflows/update-flakes-darwin.yml
 
 build-%:
 	nix $(NIX_FLAGS) build '.#nixosConfigurations.$*.config.system.build.toplevel'
@@ -68,9 +60,6 @@ build-hm-%:
 
 run-vm-%: build-vm-%
 	QEMU_OPTS="-cpu host -smp 2 -m 4096M -machine type=q35,accel=kvm" ./result/bin/run-$*-vm
-
-actions:
-	make -C .github/workflows
 
 # Local Variables:
 # mode: Makefile

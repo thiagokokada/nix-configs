@@ -189,8 +189,23 @@
   } // flake-utils.lib.eachDefaultSystem (system:
     let
       pkgs = import nixpkgs { inherit system; };
+      buildGHActionsYAML = name:
+        let
+          file = import (./actions + "/${name}.nix");
+          json = builtins.toJSON file;
+        in
+        {
+          ${name} = pkgs.writeShellScriptBin name ''
+            echo ${pkgs.lib.escapeShellArg json} | ${pkgs.yj}/bin/yj -jy;
+          '';
+        };
     in
     {
+      githubActions =
+        (buildGHActionsYAML "build-and-cache") //
+          (buildGHActionsYAML "update-flakes") //
+          (buildGHActionsYAML "update-flakes-darwin");
+
       devShell = with pkgs; mkShell {
         buildInputs = [
           coreutils
@@ -198,7 +213,6 @@
           gnumake
           nixpkgs-fmt
           nixUnstable
-          yj
         ];
       };
     }
