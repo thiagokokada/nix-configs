@@ -61,6 +61,21 @@
         "type": "github"
       }
     },
+    "flake-utils_2": {
+      "locked": {
+        "lastModified": 1649676176,
+        "narHash": "sha256-OWKJratjt2RW151VUlJPRALb7OU2S5s+f0vLj4o1bHM=",
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "rev": "a4b154ebbdc88c8498a5c7b01589addc9e9cb678",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "type": "github"
+      }
+    },
     "hardware": {
       "locked": {
         "lastModified": 1650522846,
@@ -163,16 +178,15 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1650610227,
-        "narHash": "sha256-ofSO6FrMfC8+wmYy6ItxOfXpN0E6sumnQYQCauMjKvM=",
+        "lastModified": 1650683699,
+        "narHash": "sha256-do0ip38JBwbKNhwB+lfiDYrO/g/2pCKQe7dBXEoU9Fw=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "692729210d05e0ae2f33edfc072318520dd12666",
+        "rev": "79d81ff4a80deddca317e46faab31d9d6df88cd4",
         "type": "github"
       },
       "original": {
         "owner": "NixOS",
-        "ref": "nixos-21.11",
         "repo": "nixpkgs",
         "type": "github"
       }
@@ -200,6 +214,22 @@
         "type": "github"
       }
     },
+    "nixpkgs_2": {
+      "locked": {
+        "lastModified": 1650610227,
+        "narHash": "sha256-ofSO6FrMfC8+wmYy6ItxOfXpN0E6sumnQYQCauMjKvM=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "692729210d05e0ae2f33edfc072318520dd12666",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixos-21.11",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "nnn-plugins": {
       "flake": false,
       "locked": {
@@ -219,14 +249,8 @@
     },
     "poetry2nix": {
       "inputs": {
-        "flake-utils": [
-          "nix-alien",
-          "flake-utils"
-        ],
-        "nixpkgs": [
-          "nix-alien",
-          "nixpkgs"
-        ]
+        "flake-utils": "flake-utils_2",
+        "nixpkgs": "nixpkgs"
       },
       "locked": {
         "lastModified": 1650634391,
@@ -269,7 +293,7 @@
         "home-unstable": "home-unstable",
         "nix-alien": "nix-alien",
         "nix-darwin": "nix-darwin",
-        "nixpkgs": "nixpkgs",
+        "nixpkgs": "nixpkgs_2",
         "nixpkgs-review": "nixpkgs-review",
         "nnn-plugins": "nnn-plugins",
         "pure": "pure",
