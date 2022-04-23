@@ -1,6 +1,18 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, self, ... }:
 
 {
+  # TODO: remove on 22.05
+  disabledModules = [
+    "services/desktops/pipewire/pipewire.nix"
+    "services/desktops/pipewire/pipewire-media-session.nix"
+  ];
+
+  imports = [
+    "${self.inputs.unstable}/nixos/modules/services/desktops/pipewire/pipewire.nix"
+    "${self.inputs.unstable}/nixos/modules/services/desktops/pipewire/pipewire-media-session.nix"
+    "${self.inputs.unstable}/nixos/modules/services/desktops/pipewire/wireplumber.nix"
+  ];
+
   security = {
     # This allows PipeWire to run with realtime privileges (i.e: less cracks)
     rtkit.enable = true;
@@ -11,9 +23,12 @@
     package = with pkgs.unstable; noisetorch;
   };
 
-  services = {
+  services = with pkgs; {
     pipewire = {
       enable = true;
+      audio.enable = true;
+      # TODO: remove on 22.05
+      package = unstable.pipewire;
       alsa = {
         enable = true;
         support32Bit = true;
@@ -52,32 +67,29 @@
           { name = "libpipewire-module-session-manager"; }
         ];
       };
-      # Bluetooth settings
-      media-session.config.bluez-monitor.rules = [
-        {
-          # Matches all cards
-          matches = [{ "device.name" = "~bluez_card.*"; }];
-          actions = {
-            "update-props" = {
-              "bluez5.reconnect-profiles" = [ "hfp_hf" "hsp_hs" "a2dp_sink" ];
-              # mSBC is not expected to work on all headset + adapter combinations.
-              "bluez5.msbc-support" = true;
-              "bluez5.sbc-xq-support" = true;
-            };
-          };
-        }
-        {
-          matches = [
-            # Matches all sources
-            { "node.name" = "~bluez_input.*"; }
-            # Matches all outputs
-            { "node.name" = "~bluez_output.*"; }
-          ];
-          actions = {
-            "node.pause-on-idle" = false;
-          };
-        }
-      ];
+
+      # TODO: remove on 22.05
+      wireplumber = {
+        enable = true;
+        package = unstable.wireplumber;
+      };
     };
+  };
+
+  # Wireplumber config
+  environment.etc = {
+    "wireplumber/main.lua.d/51-alsa-config.lua".text = ''
+      apply_properties = {
+        ["node.pause-on-idle"] = true
+      }
+    '';
+    "wireplumber/bluetooth.lua.d/51-bluez-config.lua".text = ''
+      bluez_monitor.properties = {
+        ["bluez5.enable-sbc-xq"] = true,
+        ["bluez5.enable-msbc"] = true,
+        ["bluez5.enable-hw-volume"] = true,
+        ["bluez5.headset-roles"] = "[ hsp_hs hsp_ag hfp_hf hfp_ag ]"
+      }
+    '';
   };
 }
