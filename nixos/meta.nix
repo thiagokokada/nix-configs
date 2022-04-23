@@ -1,4 +1,4 @@
-{ pkgs, self, ... }:
+{ config, pkgs, self, ... }:
 
 {
   imports = [ ../cachix.nix ];
@@ -15,6 +15,10 @@
     config = {
       # Avoid git log spam while building this config
       init.defaultBranch = "master";
+      # Git 2.35.2 added a check for directories from a different owner, e.g.:
+      # fatal: unsafe repository ('/etc/nixos' is owned by someone else)
+      # This creates an exception just for the config path
+      safe.directory = config.meta.configPath;
     };
   };
 
