@@ -78,11 +78,6 @@
 
   # Wireplumber config
   environment.etc = {
-    "wireplumber/main.lua.d/51-alsa-config.lua".text = ''
-      apply_properties = {
-        ["node.pause-on-idle"] = true
-      }
-    '';
     "wireplumber/bluetooth.lua.d/51-bluez-config.lua".text = ''
       bluez_monitor.properties = {
         ["bluez5.enable-sbc-xq"] = true,
