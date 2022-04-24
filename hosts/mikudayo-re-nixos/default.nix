@@ -63,4 +63,17 @@ in
   boot.tmpOnTmpfs = false;
 
   networking.hostName = "mikudayo-re-nixos";
+
+  # Reinit audio after suspend, since sometimes the audio devices "disappears"
+  systemd.services.reinit-audio-after-suspend = rec {
+    description = "Reinit audio after suspend";
+    serviceConfig = {
+      ExecStart = "-${pkgs.alsa-utils}/bin/alsactl init";
+      Type = "simple";
+    };
+    wantedBy = [ "suspend.target" "hibernate.target" "hybrid-sleep.target" "suspend-than-hibernate.target" ];
+    unitConfig = {
+      After = wantedBy;
+    };
+  };
 }
