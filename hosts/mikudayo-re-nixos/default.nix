@@ -50,15 +50,8 @@ in
     timeZone = "Europe/Dublin";
   };
 
-  # Backport the latest kernel for fixes
-  # And the latest NVIDIA drivers, to allow building with newer kernels
-  nixpkgs.overlays = [
-    (final: prev: {
-      inherit (final.unstable) linuxPackages_latest nvidia_x11;
-    })
-  ];
-
-  boot.kernelPackages = pkgs.linuxPackages_latest;
+  # 5.15 is the latest LTS kernel, fixes some issues
+  boot.kernelPackages = pkgs.linuxPackages_5_15;
   # Memory is kinda low to build some packages, really :P
   boot.tmpOnTmpfs = false;
 
