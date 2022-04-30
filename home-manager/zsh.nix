@@ -126,7 +126,13 @@ in
       in
       ''
         # helpers
-        run-bg() { "$@" </dev/null &>/dev/null &! }
+        run-bg() {
+          exec 0>&-
+          exec 1>&-
+          exec 2>&-
+          "$@" &
+          disown $!
+        }
         ${open}
         get-ip() { ${curl}/bin/curl -Ss "https://ifconfig.me" }
         get-ip!() { ${curl}/bin/curl -Ss "https://ipapi.co/$(get-ip)/yaml" }
