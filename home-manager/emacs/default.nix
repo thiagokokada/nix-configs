@@ -67,7 +67,7 @@ in
     emacsPkg =
       if stdenv.isDarwin then
         emacsNativeComp
-      else emacsPgtkGcc;
+      else emacsPgtkNativeComp;
     # TODO: remove this after 22.05
     emacsPackagesFor' =
       if builtins.hasAttr "emacsPackagesFor" pkgs
