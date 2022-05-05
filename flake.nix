@@ -14,6 +14,12 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "unstable";
     };
+    # TODO: remove after this PR is merged
+    # https://github.com/nix-community/home-manager/pull/2939
+    home-fork = {
+      url = "github:thiagokokada/home-manager/sync-picom-with-nixos";
+      inputs.nixpkgs.follows = "unstable";
+    };
     nix-darwin = {
       url = "github:LnL7/nix-darwin";
       inputs.nixpkgs.follows = "nixpkgs";

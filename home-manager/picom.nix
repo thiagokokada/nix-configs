@@ -9,8 +9,11 @@ let
 in
 {
   # TODO: remove this once HM 22.05 is released
-  disabledModules = [ "services/picom.nix" ];
-  imports = [ "${self.inputs.home-unstable}/modules/services/picom.nix" ];
+  disabledModules = [
+    "services/compton.nix"
+    "services/picom.nix"
+  ];
+  imports = [ "${self.inputs.home-fork}/modules/services/picom.nix" ];
 
   services.picom = {
     inherit backend;
@@ -20,9 +23,9 @@ in
     fade = true;
     fadeDelta = 2;
     vSync = true;
-    extraOptions = ''
+    settings = {
       unredir-if-possible = true;
       unredir-if-possible-exclude = [ "name *= 'Firefox'" ];
-    '';
+    };
   };
 }

@@ -97,6 +97,27 @@
         "type": "github"
       }
     },
+    "home-fork": {
+      "inputs": {
+        "nixpkgs": [
+          "unstable"
+        ]
+      },
+      "locked": {
+        "lastModified": 1651790974,
+        "narHash": "sha256-AGhUVy10DSkefOAnIdqfgaCL2DwqAWRQaNp5N5300a8=",
+        "owner": "thiagokokada",
+        "repo": "home-manager",
+        "rev": "ba74bcbcc00dca1a58fa49b51304e19e9db7a2d1",
+        "type": "github"
+      },
+      "original": {
+        "owner": "thiagokokada",
+        "ref": "sync-picom-with-nixos",
+        "repo": "home-manager",
+        "type": "github"
+      }
+    },
     "home-unstable": {
       "inputs": {
         "nixpkgs": [
@@ -266,6 +287,7 @@
         "flake-utils": "flake-utils",
         "hardware": "hardware",
         "home": "home",
+        "home-fork": "home-fork",
         "home-unstable": "home-unstable",
         "nix-alien": "nix-alien",
         "nix-darwin": "nix-darwin",
