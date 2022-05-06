@@ -1,5 +1,7 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, super, ... }:
 let
+  videoDrivers = super.services.xserver.videoDrivers or [ ];
+
   # Aliases
   alt = "Mod1";
   modifier = "Mod4";
@@ -125,6 +127,11 @@ in
       base = true;
       gtk = true;
     };
+
+    extraOptions = lib.optionals (builtins.elem "nvidia" videoDrivers) [
+      "--unsupported-gpu"
+      "--my-next-gpu-wont-be-nvidia"
+    ];
   };
 
   home.packages = with pkgs; [
