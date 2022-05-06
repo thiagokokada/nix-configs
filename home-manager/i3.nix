@@ -178,6 +178,15 @@ in
     "Xft.dpi" = (toString dpi);
   };
 
+  # Compatiblity with sx
+  # File needs executable bit, and mkOutOfStoreSymlink seems to be the only way
+  # https://github.com/nix-community/home-manager/issues/242
+  xdg.configFile."sx/sxrc".source =
+    let
+      sxrc = "${config.meta.configPath}/home-manager/sx/sxrc";
+    in
+    config.lib.file.mkOutOfStoreSymlink sxrc;
+
   home = {
     # Disable keyboard management via HM
     keyboard = null;

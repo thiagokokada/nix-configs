@@ -5,33 +5,26 @@
   console.useXkbConfig = true;
 
   services = {
+    # Configure greetd, a lightweight session manager
+    greetd = {
+      enable = true;
+      settings = rec {
+        initial_session = {
+          command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --cmd sx";
+          user = "greeter";
+        };
+        default_session = initial_session;
+      };
+      vt = 7;
+    };
+
     xserver = {
       enable = true;
       # Recommended for modesetting drivers
       useGlamor = true;
 
-      # Configure LightDM
-      displayManager = {
-        lightdm = {
-          enable = true;
-          background = pkgs.nixos-artwork.wallpapers.dracula.gnomeFilePath;
-          greeters = {
-            gtk = {
-              enable = true;
-              clock-format = "%a %d/%m %H:%M:%S";
-              iconTheme = {
-                package = pkgs.arc-icon-theme;
-                name = "Arc";
-              };
-              indicators = [ "~clock" "~session" "~power" ];
-              theme = {
-                package = pkgs.arc-theme;
-                name = "Arc-Dark";
-              };
-            };
-          };
-        };
-      };
+      # Enable sx, a lightweight startx alternative
+      displayManager.sx.enable = true;
 
       # Enable libinput
       libinput = {
@@ -45,8 +38,7 @@
         };
       };
 
-      # Use i3 as default sessionu;
-      displayManager.defaultSession = "none+i3";
+      # Enable i3wm
       windowManager.i3.enable = true;
     };
   };
