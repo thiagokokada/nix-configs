@@ -20,10 +20,10 @@ clean:
 	rm -rf result *.qcow2 .github/workflows/*
 
 update:
-	nix $(NIX_FLAGS) flake update --commit-lock-file
+	nix flake update --commit-lock-file $(NIX_FLAGS)
 
 validate:
-	nix $(NIX_FLAGS) flake check .
+	nix flake check . $(NIX_FLAGS)
 
 format-check:
 	find -name '*.nix' \
@@ -42,21 +42,21 @@ format:
 		-exec nixpkgs-fmt {} \+
 
 .github/workflows/%.yml: actions/build-and-cache.nix
-	nix $(NIX_FLAGS) run '.#githubActions.$(PLATFORM).$*' | tee $@
+	nix run '.#githubActions.$(PLATFORM).$*' $(NIX_FLAGS) | tee $@
 
 gh-actions: .github/workflows/build-and-cache.yml .github/workflows/update-flakes.yml .github/workflows/update-flakes-darwin.yml
 
 build-%:
-	nix $(NIX_FLAGS) build '.#nixosConfigurations.$*.config.system.build.toplevel'
+	nix build '.#nixosConfigurations.$*.config.system.build.toplevel' $(NIX_FLAGS)
 
 build-darwin-%:
-	nix $(NIX_FLAGS) build '.#darwinConfigurations.$*.system'
+	nix build '.#darwinConfigurations.$*.system' $(NIX_FLAGS)
 
 build-vm-%:
-	nix $(NIX_FLAGS) build '.#nixosConfigurations.$*.config.system.build.vm'
+	nix build '.#nixosConfigurations.$*.config.system.build.vm' $(NIX_FLAGS)
 
 build-hm-%:
-	nix $(NIX_FLAGS) build '.#homeConfigurations.$*.activationPackage'
+	nix build '.#homeConfigurations.$*.activationPackage' $(NIX_FLAGS)
 
 run-vm-%: build-vm-%
 	QEMU_OPTS="-cpu host -smp 2 -m 4096M -machine type=q35,accel=kvm" ./result/bin/run-$*-vm
