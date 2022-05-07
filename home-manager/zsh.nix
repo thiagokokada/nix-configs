@@ -62,6 +62,12 @@ let
   '';
 in
 {
+  # TODO: remove this after 22.05, this looks like some issue with eval order
+  # and my HM 22.05 backports
+  nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
+    "rar"
+  ];
+
   home.packages = [ archive unarchive ];
 
   programs.zsh = {
