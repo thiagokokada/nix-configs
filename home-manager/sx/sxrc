@@ -1,3 +1,0 @@
-# This is for compatibility for sx, since home-manager sets mostly of the
-# environment on ~/.xsession file
-source ~/.xsession

@@ -82,6 +82,8 @@ let
         for_window [title="^Steam Keyboard$"] floating enable
       '';
     };
+
+  xsession = "${config.home.homeDirectory}/.xsession";
 in
 {
   imports = [
@@ -178,14 +180,9 @@ in
     "Xft.dpi" = (toString dpi);
   };
 
-  # Compatiblity with sx
-  # File needs executable bit, and mkOutOfStoreSymlink seems to be the only way
-  # https://github.com/nix-community/home-manager/issues/242
-  xdg.configFile."sx/sxrc".source =
-    let
-      sxrc = "${config.meta.configPath}/home-manager/sx/sxrc";
-    in
-    config.lib.file.mkOutOfStoreSymlink sxrc;
+  # Compatibility with xinit/sx
+  home.file.".xinitrc".source = config.lib.file.mkOutOfStoreSymlink xsession;
+  xdg.configFile."sx/sxrc".source = config.lib.file.mkOutOfStoreSymlink xsession;
 
   home = {
     # Disable keyboard management via HM
