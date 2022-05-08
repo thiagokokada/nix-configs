@@ -41,7 +41,7 @@ format:
 		! -path './modules/nixos/*' \
 		-exec nixpkgs-fmt {} \+
 
-.github/workflows/%.yml: actions/build-and-cache.nix
+.github/workflows/%.yml: actions/*.nix
 	nix run '.#githubActions.$(PLATFORM).$*' $(NIX_FLAGS) | tee $@
 
 gh-actions: .github/workflows/build-and-cache.yml .github/workflows/update-flakes.yml .github/workflows/update-flakes-darwin.yml
