@@ -37,9 +37,6 @@
           accelProfile = "flat";
         };
       };
-
-      # Enable i3wm
-      windowManager.i3.enable = true;
     };
   };
 
