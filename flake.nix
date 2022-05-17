@@ -34,14 +34,8 @@
     declarative-cachix.url = "github:jonascarpay/declarative-cachix";
 
     # nix-alien
-    poetry2nix = {
-      url = "github:nix-community/poetry2nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.flake-utils.follows = "flake-utils";
-    };
     nix-alien = {
       url = "github:thiagokokada/nix-alien";
-      inputs.poetry2nix.follows = "poetry2nix";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.flake-utils.follows = "flake-utils";
     };
