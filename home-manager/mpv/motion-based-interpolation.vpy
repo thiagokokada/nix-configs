@@ -5,9 +5,8 @@
 # source: https://github.com/mpv-player/mpv/issues/566
 # source: https://github.com/haasn/gentoo-conf/blob/nanodesu/home/nand/.mpv/filters/mvtools.vpy
 
-import vapoursynth
+from vapoursynth import core
 
-core = vapoursynth.get_core()
 core.std.LoadPlugin(path="libmvtools.so")
 # ref: http://avisynth.org.ru/mvtools/mvtools2.html#functions
 # default is 400, less means interpolation will only happen when it will work well
