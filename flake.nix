@@ -51,6 +51,7 @@
     emacs = {
       url = "github:nix-community/emacs-overlay";
       inputs.nixpkgs.follows = "unstable";
+      inputs.flake-utils.follows = "flake-utils";
     };
 
     # nnn plugins
