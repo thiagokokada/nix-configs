@@ -18,11 +18,6 @@
     rtkit.enable = true;
   };
 
-  programs.noisetorch = {
-    enable = true;
-    package = with pkgs.unstable; noisetorch;
-  };
-
   services = with pkgs; {
     pipewire = {
       enable = true;
