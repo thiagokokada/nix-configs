@@ -38,6 +38,8 @@
       url = "github:thiagokokada/nix-alien";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.flake-utils.follows = "flake-utils";
+      inputs.poetry2nix.inputs.nixpkgs.follows = "nixpkgs";
+      inputs.poetry2nix.inputs.flake-utils.follows = "flake-utils";
     };
 
     # nixpkgs-review
