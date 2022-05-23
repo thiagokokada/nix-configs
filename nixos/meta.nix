@@ -1,8 +1,6 @@
 { config, pkgs, self, ... }:
 
 {
-  imports = [ ../cachix.nix ];
-
   # Add some Nix related packages
   environment.systemPackages = with pkgs; [
     cachix
