@@ -172,7 +172,7 @@
           homeManagerConfiguration rec {
             inherit configuration username system;
             homeDirectory = "${homePath}/${username}";
-            stateVersion = "21.11";
+            stateVersion = "22.05";
             extraSpecialArgs = {
               inherit self system;
               super = {
