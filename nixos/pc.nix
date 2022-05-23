@@ -130,7 +130,7 @@ with config.users.users.${username}; {
         Group = group;
         Type = "simple";
         Restart = "always";
-        ExecStart = "${nodePackages.flood}/bin/flood";
+        ExecStart = "${pkgs.nodePackages.flood}/bin/flood";
       };
     };
   };

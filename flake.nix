@@ -112,11 +112,12 @@
   };
 
   outputs = { self, nixpkgs, unstable, nix-darwin, home, home-unstable, flake-utils, ... }: {
-    defaultTemplate = self.templates.new-host;
-
-    templates.new-host = {
-      path = ./templates/new-host;
-      description = "Create a new host";
+    templates = rec {
+      default = new-host;
+      new-host = {
+        path = ./templates/new-host;
+        description = "Create a new host";
+      };
     };
 
     nixosConfigurations =
@@ -212,8 +213,8 @@
           (buildGHActionsYAML "update-flakes") //
           (buildGHActionsYAML "update-flakes-darwin");
 
-      devShell = with pkgs; mkShell {
-        buildInputs = [
+      devShells.default = pkgs.mkShell {
+        buildInputs = with pkgs; [
           coreutils
           findutils
           gnumake
