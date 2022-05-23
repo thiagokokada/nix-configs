@@ -226,6 +226,15 @@
           sha256 = "sha256-dpVfd0xaf9SAXxy0h6C8q4e7s7WTY8zz+JVDr4zVsQE=";
         };
       })
+      (vimUtils.buildVimPlugin rec {
+        name = "lightline-trailing-whitespace";
+        src = fetchFromGitHub {
+          owner = "maximbaz";
+          repo = name;
+          rev = "869ba29edae15b44061cb4e8d964d66bcb2421ff";
+          sha256 = "sha256-g6Rmb9LTBw6hIEWBvcM6KYAv3ChEzC7gcy0OH95aTXM=";
+        };
+      })
       auto-pairs
       gitgutter
       vim-automkdir

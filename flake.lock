@@ -91,37 +91,16 @@
         ]
       },
       "locked": {
-        "lastModified": 1651519540,
-        "narHash": "sha256-3k6p8VsTwwRPQjE8rrMh+o2AZACZn/eeYJ7ivdQ/Iro=",
+        "lastModified": 1653153149,
+        "narHash": "sha256-8B/tWWZziFq4DqnAm9uO7M4Z4PNfllYg5+teX1e5yDQ=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "d93d56ab8c1c6aa575854a79b9d2f69d491db7d0",
+        "rev": "94780dd888881bf35165dfdd334a57ef6b14ead8",
         "type": "github"
       },
       "original": {
         "owner": "nix-community",
-        "ref": "release-21.11",
-        "repo": "home-manager",
-        "type": "github"
-      }
-    },
-    "home-fork": {
-      "inputs": {
-        "nixpkgs": [
-          "unstable"
-        ]
-      },
-      "locked": {
-        "lastModified": 1652440278,
-        "narHash": "sha256-yZW2XtM1TH6rl9m+prRPPeQV07b+2X/qWf7nqVXWuts=",
-        "owner": "thiagokokada",
-        "repo": "home-manager",
-        "rev": "d94b512d471c2e9e958f2d10c585826956b8fcaa",
-        "type": "github"
-      },
-      "original": {
-        "owner": "thiagokokada",
-        "ref": "sync-picom-with-nixos",
+        "ref": "master",
         "repo": "home-manager",
         "type": "github"
       }
@@ -194,16 +173,16 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1653087707,
-        "narHash": "sha256-zfno3snrzZTWQ2B7K53QHrGZwrjnJLTRPalymrSsziU=",
+        "lastModified": 1653328845,
+        "narHash": "sha256-NKc98+iX8YH500np1zWZSQ2C+FoD9sS/nuH02Rg2ats=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "cbd40c72b2603ab54e7208f99f9b35fc158bc009",
+        "rev": "7ae60dd7068478db5d936a3850b6df859aec21d0",
         "type": "github"
       },
       "original": {
         "owner": "NixOS",
-        "ref": "nixos-21.11",
+        "ref": "release-22.05",
         "repo": "nixpkgs",
         "type": "github"
       }
@@ -294,7 +273,6 @@
         "flake-utils": "flake-utils",
         "hardware": "hardware",
         "home": "home",
-        "home-fork": "home-fork",
         "home-unstable": "home-unstable",
         "nix-alien": "nix-alien",
         "nix-darwin": "nix-darwin",

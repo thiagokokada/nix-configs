@@ -19,33 +19,27 @@
   # Enable fonts in home.packages to be available to applications
   fonts.fontconfig.enable = true;
 
-  home.packages = with pkgs;
-    with config.theme.fonts; [
-      dejavu_fonts
-      font-awesome_5
-      gnome.gnome-themes-standard
-      gui.package
-      hack-font
-      hicolor-icon-theme
-      liberation_ttf
-      noto-fonts
-      noto-fonts-cjk
-      noto-fonts-emoji
-    ];
-
-  services.xsettingsd = {
-    enable = true;
-    settings = with config; {
-      "Net/IconThemeName" = gtk.iconTheme.name;
-      "Net/ThemeName" = gtk.theme.name;
-      "Gtk/CursorThemeName" = xsession.pointerCursor.name;
+  home = {
+    packages = with pkgs;
+      with config.theme.fonts; [
+        dejavu_fonts
+        font-awesome_5
+        gnome.gnome-themes-extra
+        gui.package
+        hack-font
+        hicolor-icon-theme
+        liberation_ttf
+        noto-fonts
+        noto-fonts-cjk
+        noto-fonts-emoji
+      ];
+    pointerCursor = {
+      package = pkgs.gnome.adwaita-icon-theme;
+      name = "Adwaita";
+      size = 32;
+      x11.enable = true;
+      gtk.enable = true;
     };
-  };
-
-  xsession.pointerCursor = {
-    package = pkgs.gnome.adwaita-icon-theme;
-    name = "Adwaita";
-    size = 32;
   };
 
   gtk = {

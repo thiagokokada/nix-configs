@@ -8,7 +8,7 @@
 
     userName = "Thiago Kenji Okada";
     userEmail = "thiagokokada@gmail.com";
-    package = pkgs.unstable.gitFull;
+    package = pkgs.gitFull;
 
     delta = {
       enable = true;

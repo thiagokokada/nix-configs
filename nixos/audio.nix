@@ -1,18 +1,6 @@
 { config, lib, pkgs, self, ... }:
 
 {
-  # TODO: remove on 22.05
-  disabledModules = [
-    "services/desktops/pipewire/pipewire.nix"
-    "services/desktops/pipewire/pipewire-media-session.nix"
-  ];
-
-  imports = [
-    "${self.inputs.unstable}/nixos/modules/services/desktops/pipewire/pipewire.nix"
-    "${self.inputs.unstable}/nixos/modules/services/desktops/pipewire/pipewire-media-session.nix"
-    "${self.inputs.unstable}/nixos/modules/services/desktops/pipewire/wireplumber.nix"
-  ];
-
   security = {
     # This allows PipeWire to run with realtime privileges (i.e: less cracks)
     rtkit.enable = true;
@@ -22,8 +10,6 @@
     pipewire = {
       enable = true;
       audio.enable = true;
-      # TODO: remove on 22.05
-      package = unstable.pipewire;
       alsa = {
         enable = true;
         support32Bit = true;
@@ -63,11 +49,7 @@
         ];
       };
 
-      # TODO: remove on 22.05
-      wireplumber = {
-        enable = true;
-        package = unstable.wireplumber;
-      };
+      wireplumber.enable = true;
     };
   };
 

@@ -236,11 +236,7 @@ in
     dircolors.enable = true;
     direnv = {
       enable = true;
-      nix-direnv = {
-        enable = true;
-        # TODO: remove this on 22.05
-        enableFlakes = lib.mkIf (!pkgs.stdenv.isDarwin) true;
-      };
+      nix-direnv.enable = true;
     };
     fzf = {
       enable = true;

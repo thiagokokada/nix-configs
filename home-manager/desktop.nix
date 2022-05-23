@@ -27,10 +27,10 @@
     pavucontrol
     pcmanfm
     peek
+    pinta
     qalculate-gtk
     shared-mime-info # for pcmanfm recognized file types
     unstable.bitwarden
-    unstable.pinta
     vlc
     xclip
     xdotool

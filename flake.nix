@@ -3,21 +3,17 @@
 
   inputs = {
     # main
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-21.11";
+    # TODO: change to nixos-22.05
+    nixpkgs.url = "github:NixOS/nixpkgs/release-22.05";
     unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     hardware.url = "github:NixOS/nixos-hardware";
     home = {
-      url = "github:nix-community/home-manager/release-21.11";
+      # TODO: change to release-22.05
+      url = "github:nix-community/home-manager/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     home-unstable = {
       url = "github:nix-community/home-manager";
-      inputs.nixpkgs.follows = "unstable";
-    };
-    # TODO: remove after this PR is merged
-    # https://github.com/nix-community/home-manager/pull/2939
-    home-fork = {
-      url = "github:thiagokokada/home-manager/sync-picom-with-nixos";
       inputs.nixpkgs.follows = "unstable";
     };
     nix-darwin = {
@@ -195,7 +191,6 @@
           configuration = ./home-manager/macos.nix;
           system = "x86_64-darwin";
           homePath = "/Users";
-          homeManagerConfiguration = home-unstable.lib.homeManagerConfiguration;
         };
       };
   } // flake-utils.lib.eachDefaultSystem (system:

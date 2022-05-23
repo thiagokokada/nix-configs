@@ -31,7 +31,7 @@ in
       unstable.rnix-lsp
 
       # shell
-      unstable.shellcheck
+      shellcheck
     ];
 
     sessionPath = [ "${homeDirectory}/.config/emacs/bin" ];
@@ -68,12 +68,7 @@ in
       if stdenv.isDarwin then
         emacsNativeComp
       else emacsPgtkNativeComp;
-    # TODO: remove this after 22.05
-    emacsPackagesFor' =
-      if builtins.hasAttr "emacsPackagesFor" pkgs
-      then pkgs.emacsPackagesFor
-      else pkgs.emacsPackagesGen;
-    emacs-custom = with pkgs; (emacsPackagesFor' emacsPkg).emacsWithPackages
+    emacs-custom = with pkgs; (pkgs.emacsPackagesFor emacsPkg).emacsWithPackages
       (epkgs: with epkgs; [ vterm ]);
   in
   {

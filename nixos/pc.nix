@@ -22,9 +22,9 @@ with config.users.users.${username}; {
 
   hardware = {
     # Enable opentabletdriver
-    opentabletdriver = with pkgs; {
+    opentabletdriver = {
       enable = true;
-      package = unstable.opentabletdriver;
+      package = pkgs.unstable.opentabletdriver;
     };
 
     # Enable scanner support
@@ -120,7 +120,7 @@ with config.users.users.${username}; {
 
   systemd.services = {
     rtorrent.serviceConfig.Restart = lib.mkForce "always";
-    flood = with pkgs; {
+    flood = {
       description =
         "A web UI for rTorrent with a Node.js backend and React frontend.";
       after = [ "rtorrent.service" ];
