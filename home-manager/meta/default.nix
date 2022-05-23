@@ -9,7 +9,6 @@ in
     ../../overlays
     ../../modules/device.nix
     ../../modules/meta.nix
-    inputs.declarative-cachix.homeManagerModules.declarative-cachix-experimental
   ];
 
   # Add some Nix related packages
@@ -21,24 +20,23 @@ in
     nixpkgs-review
   ];
 
-  # Add nix.conf for the standalone installations of HM
-  # Need to use `home.file.nixConf`, otherwise conflicts with declarative-cachix
-  # will happen
-  # TODO: remove once https://github.com/nix-community/home-manager/issues/2324
-  # is fixed
-  home.file.nixConf = {
-    target = ".config/nix/nix.conf";
-    text = builtins.readFile ../../shared/nix.conf;
-  };
-
   # To make cachix work you need add the current user as a trusted-user on Nix
   # sudo echo "trusted-users = $(whoami)" >> /etc/nix/nix.conf
   # Another option is to add a group by prefixing it by @, e.g.:
   # sudo echo "trusted-users = @wheel" >> /etc/nix/nix.conf
-  caches.cachix = [
-    { name = "nix-community"; sha256 = "00lpx4znr4dd0cc4w4q8fl97bdp7q19z1d3p50hcfxy26jz5g21g"; }
-    { name = "thiagokokada-nix-configs"; sha256 = "01kzz81ab24a2z0lf0rfjly8k8kgxr7p0x8b7xai3hzakmbmb6nx"; }
-  ];
+  nix = {
+    package = pkgs.nixFlakes;
+    settings = import ../../shared/nix-conf.nix // {
+      extra-substituters = [
+        "https://nix-community.cachix.org"
+        "https://thiagokokada-nix-configs.cachix.org"
+      ];
+      extra-trusted-public-keys = [
+        "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+        "thiagokokada-nix-configs.cachix.org-1:MwFfYIvEHsVOvUPSEpvJ3mA69z/NnY6LQqIQJFvNwOc="
+      ];
+    };
+  };
 
   # Set custom nixpkgs config (e.g.: allowUnfree), both for this
   # config and for ad-hoc nix commands invocation

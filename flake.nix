@@ -27,7 +27,6 @@
       flake = false;
     };
     flake-utils.url = "github:numtide/flake-utils";
-    declarative-cachix.url = "github:jonascarpay/declarative-cachix";
 
     # nix-alien
     poetry2nix = {
