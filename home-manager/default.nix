@@ -21,8 +21,5 @@
     ./vscode
     ./xterm.nix
     ./zsh.nix
-    ../modules/device.nix
-    ../modules/meta.nix
-    ../modules/theme.nix
   ];
 }

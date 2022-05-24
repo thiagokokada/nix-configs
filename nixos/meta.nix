@@ -1,6 +1,10 @@
 { config, pkgs, self, ... }:
 
 {
+  imports = [
+    ../overlays
+  ];
+
   # Add some Nix related packages
   environment.systemPackages = with pkgs; [
     cachix

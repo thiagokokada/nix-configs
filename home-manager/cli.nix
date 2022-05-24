@@ -20,6 +20,7 @@ in
     each
     file
     findutils
+    gnumake
     gnused
     inetutils
     ix

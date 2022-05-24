@@ -4,7 +4,10 @@ let
   archive = "/mnt/archive/${username}";
 in
 with config.users.users.${username}; {
-  imports = [ ./libvirt ];
+  imports = [
+    ./libvirt
+    ../modules/device.nix
+  ];
 
   # Increase number of directories that Linux can monitor for Plex
   boot.kernel.sysctl = {

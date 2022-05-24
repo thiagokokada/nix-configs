@@ -5,7 +5,6 @@
     elixir
     expect
     gcc
-    gnumake
     nim
   ];
 }

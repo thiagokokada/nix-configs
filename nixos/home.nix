@@ -4,7 +4,10 @@ let
   inherit (config.meta) username;
 in
 {
-  imports = [ self.inputs.home.nixosModules.home-manager ];
+  imports = [
+    self.inputs.home.nixosModules.home-manager
+    ../modules/meta.nix
+  ];
 
   home-manager = {
     useUserPackages = true;

@@ -4,6 +4,8 @@ let
   enable = config.device.type == "laptop";
 in
 {
+  imports = [ ../modules/device.nix ];
+
   networking = {
     # Use Network Manager
     networkmanager = {
