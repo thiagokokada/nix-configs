@@ -9,11 +9,6 @@
 * nix configuration for my laptops, desktops and more
 * **nix flake**-powered
 * guaranteed to be **reproducible**
-* most of my **dotfiles** (there are still some configs only available on my
-  [dotfiles](https://github.com/thiagokokada/dotfiles/) repo)
-
-**Note**: this readme assumes [you have enabled nixUnstable +
-flakes](https://www.tweag.io/blog/2020-07-31-nixos-flakes/).
 
 ## Disclaimer
 
@@ -49,9 +44,6 @@ This repository also includes my `home-manager` configuration. It is used to
 configure home in NixOS systems (using `home-manager` as a NixOS module) but it
 should also work in standalone mode.
 
-Most of the configuration files are based on my old (but still supported)
-[dotfiles repository](https://github.com/thiagokokada/dotfiles).
-
 ## Installation
 
 ### NixOS
@@ -68,21 +60,9 @@ $ nix flake new --template .#new-host # if this is a new hardware
 $ sudo nixos-install --flake /mnt/etc/nixos#hostname
 ```
 
-**Optional:** to make the initial setup faster (i.e.: using Emacs from cache
-instead of building locally), you can setup cachix before running the commands
-above:
-
-Add `imports = [ /mnt/etc/nixos/cachix.nix ]` in the
-`/etc/nixos/configuration.nix` (yeah, this is the NixOS Live environment) and
-run:
-
-```console
-$ sudo nixos-rebuild
-```
-
-Another option is to comment parts of the configuration. A good start would
-be to import only `hardware-configuration.nix`, `nixos/minimal.nix` and
-`home-manager/minimal.nix`.
+To speed-up the initial setup, you can comment parts of the configuration.
+A good start would be to import only `hardware-configuration.nix`,
+`nixos/minimal.nix` and `home-manager/minimal.nix`.
 
 After installing it succesfully and rebooting, you can uncomment everything and
 trigger a rebuild.
