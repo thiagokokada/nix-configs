@@ -61,8 +61,8 @@ let
       else
         # Since those are private keys, they need to be only visible by root
         # for security
-        ${pkgs.wireguard}/bin/wg genkey | tee "$profile.key" \
-          | ${pkgs.wireguard}/bin/wg pubkey > "$profile.key.pub"
+        ${pkgs.wireguard-tools}/bin/wg genkey | tee "$profile.key" \
+          | ${pkgs.wireguard-tools}/bin/wg pubkey > "$profile.key.pub"
       fi
 
       local ip_addresses
@@ -168,7 +168,6 @@ in
   environment.systemPackages = with pkgs; [
     qrencode
     wgGenerateConfig
-    wireguard
     wireguard-tools
   ];
 
