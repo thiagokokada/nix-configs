@@ -85,7 +85,7 @@
       },
       "original": {
         "owner": "nix-community",
-        "ref": "master",
+        "ref": "release-22.05",
         "repo": "home-manager",
         "type": "github"
       }
@@ -158,16 +158,16 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1653697009,
-        "narHash": "sha256-NnB2uV8RLpeSYV1x3ymdE1mDfnne45Zk6wXgz99vh7o=",
+        "lastModified": 1653733789,
+        "narHash": "sha256-VIYazYCWNvcFNns2XQkHx/mVmCZ3oebZv8W2LS1gLQE=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "71be98ead1690ecd54c133b6e179bdf360db0cb1",
+        "rev": "d1086907f56c5a6c33c0c2e8dc9f42ef6988294f",
         "type": "github"
       },
       "original": {
         "owner": "NixOS",
-        "ref": "release-22.05",
+        "ref": "nixos-22.05",
         "repo": "nixpkgs",
         "type": "github"
       }

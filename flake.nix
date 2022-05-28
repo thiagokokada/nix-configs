@@ -3,13 +3,11 @@
 
   inputs = {
     # main
-    # TODO: change to nixos-22.05
-    nixpkgs.url = "github:NixOS/nixpkgs/release-22.05";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-22.05";
     unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     hardware.url = "github:NixOS/nixos-hardware";
     home = {
-      # TODO: change to release-22.05
-      url = "github:nix-community/home-manager/master";
+      url = "github:nix-community/home-manager/release-22.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     home-unstable = {
