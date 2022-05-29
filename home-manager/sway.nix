@@ -132,7 +132,6 @@ in
       in
       lib.optionals (builtins.elem "nvidia" videoDrivers) [
         "--unsupported-gpu"
-        "--my-next-gpu-wont-be-nvidia"
       ];
   };
 
