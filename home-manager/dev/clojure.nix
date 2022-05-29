@@ -1,19 +1,15 @@
-{ config, pkgs, lib, ... }:
+{ pkgs, ... }:
 
 let
-  jdk = pkgs.jdk11;
-  babashka = pkgs.unstable.babashka;
+  inherit (pkgs) babashka;
 in
 {
-  programs.java = {
-    enable = true;
-    package = jdk;
-  };
+  imports = [ ./java.nix ];
 
   home.packages = with pkgs; [
     babashka
-    (clojure.override { inherit jdk; })
-    (leiningen.override { inherit jdk; })
+    clojure
+    leiningen
     unstable.clojure-lsp
   ];
 
