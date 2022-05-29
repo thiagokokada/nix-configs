@@ -4,6 +4,7 @@ let
 in
 {
   environment.systemPackages = with pkgs; [
+    distrobox
     docker-compose
     gnome.gnome-boxes
   ];
@@ -15,9 +16,6 @@ in
       package = pkgs.wireshark;
     };
   };
-
-  # Enable anti-aliasing in Java
-  environment.variables._JAVA_OPTIONS = "-Dawt.useSystemAAFontSettings=gasp";
 
   virtualisation.docker.enable = true;
   virtualisation.libvirtd.enable = true;
