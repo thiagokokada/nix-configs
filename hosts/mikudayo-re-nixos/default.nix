@@ -50,11 +50,6 @@ in
     timeZone = "Europe/Dublin";
   };
 
-  # 5.15 is the latest LTS kernel, fixes some issues
-  boot.kernelPackages = pkgs.linuxPackages_5_15;
-  # Memory is kinda low to build some packages, really :P
-  boot.tmpOnTmpfs = false;
-
   networking.hostName = "mikudayo-re-nixos";
 
   # Reinit audio after suspend, since sometimes the audio devices "disappears"
