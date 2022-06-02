@@ -2,6 +2,7 @@
 
 {
   imports = [
+    ../cachix.nix
     ../overlays
   ];
 
