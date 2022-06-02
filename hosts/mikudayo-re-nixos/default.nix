@@ -50,6 +50,7 @@ in
     timeZone = "Europe/Dublin";
   };
 
+  boot.kernelPackages = pkgs.linuxPackages_zen;
   networking.hostName = "mikudayo-re-nixos";
 
   # Reinit audio after suspend, since sometimes the audio devices "disappears"
