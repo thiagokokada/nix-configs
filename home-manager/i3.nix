@@ -119,6 +119,13 @@ in
     };
   };
 
+  # TODO: this depends on feh, and doesn't work in Wayland (e.g.: Sway)
+  services.random-background = {
+    enable = true;
+    display = "scale";
+    imageDirectory = "%h/Wallpapers";
+  };
+
   systemd.user.services = {
     kbdd = {
       Unit = {
