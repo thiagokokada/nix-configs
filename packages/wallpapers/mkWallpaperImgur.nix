@@ -4,9 +4,9 @@
 , fetchurl
 }:
 { name
-, ext
 , id
 , sha256
+, ext ? "jpg"
 }:
 
 stdenvNoCC.mkDerivation {
