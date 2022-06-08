@@ -14,6 +14,8 @@
     };
 
     colors = with builtins; fromJSON (readFile ./colors.json);
+
+    wallpaper = pkgs.wallpapers.witch-hat-atelier_coco;
   };
 
   # Enable fonts in home.packages to be available to applications

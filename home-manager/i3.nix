@@ -185,7 +185,7 @@ in
       Install = { WantedBy = [ "graphical-session.target" ]; };
 
       Service = {
-        ExecStart = "${pkgs.feh}/bin/feh --bg-scale ${pkgs.wallpapers.witch-hat-atelier_coco}";
+        ExecStart = "${pkgs.feh}/bin/feh --bg-scale ${config.theme.wallpaper}";
         Type = "oneshot";
       };
     };

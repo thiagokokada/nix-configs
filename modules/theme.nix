@@ -35,5 +35,10 @@ in
       type = with types; attrsOf str;
       description = "Base16 colors";
     };
+
+    wallpaper = mkOption {
+      type = types.path;
+      description = "Wallpaper path";
+    };
   };
 }
