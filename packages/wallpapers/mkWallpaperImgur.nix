@@ -25,5 +25,9 @@ stdenvNoCC.mkDerivation {
     runHook postInstall
   '';
 
-  meta.license = lib.licenses.unfree;
+  meta = with lib; {
+    description = "https://imgur.com/${id}";
+    platforms = platforms.all;
+    license = licenses.unfree;
+  };
 }
