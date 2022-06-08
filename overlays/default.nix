@@ -23,6 +23,8 @@ in
 
       nixos-cleanup = prev.callPackage ../packages/nixos-cleanup { };
 
+      wallpapers = prev.callPackage ../packages/wallpapers { };
+
       nixpkgs-review =
         if (prev.stdenv.isLinux) then
           inputs.nixpkgs-review.packages.${system}.nixpkgs-review-sandbox

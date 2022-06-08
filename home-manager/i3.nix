@@ -119,13 +119,6 @@ in
     };
   };
 
-  # TODO: this depends on feh, and doesn't work in Wayland (e.g.: Sway)
-  services.random-background = {
-    enable = true;
-    display = "scale";
-    imageDirectory = "%h/Wallpapers";
-  };
-
   systemd.user.services = {
     kbdd = {
       Unit = {
@@ -180,6 +173,21 @@ in
             "${lockscreen}/bin/lock-screen"
           ];
         };
+    };
+
+    wallpaper = {
+      Unit = {
+        Description = "Set wallpaper";
+        After = [ "graphical-session-pre.target" ];
+        PartOf = [ "graphical-session.target" ];
+      };
+
+      Install = { WantedBy = [ "graphical-session.target" ]; };
+
+      Service = {
+        ExecStart = "${pkgs.feh}/bin/feh --bg-scale ${pkgs.wallpapers.witch-hat-atelier_coco}";
+        Type = "oneshot";
+      };
     };
   };
 
