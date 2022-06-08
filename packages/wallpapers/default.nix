@@ -1,7 +1,7 @@
-{ pkgs, ... }:
+{ callPackage }:
 
 let
-  mkWallpaperImgur = pkgs.callPackage (import ./mkWallpaperImgur.nix) { };
+  mkWallpaperImgur = callPackage (import ./mkWallpaperImgur.nix) { };
 in
 {
   witch-hat-atelier_coco = mkWallpaperImgur {

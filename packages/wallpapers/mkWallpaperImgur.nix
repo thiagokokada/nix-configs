@@ -20,7 +20,7 @@ stdenvNoCC.mkDerivation {
   installPhase = ''
     runHook preInstall
 
-    install -Dm0644 $src $out
+    install -Dm0644 "$src" "$out"
 
     runHook postInstall
   '';

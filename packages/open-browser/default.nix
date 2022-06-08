@@ -1,9 +1,8 @@
-{ pkgs, ... }:
+{ python3
+, makeDesktopItem
+}:
 
-let
-  inherit (pkgs) python3Packages makeDesktopItem;
-in
-python3Packages.buildPythonApplication rec {
+python3.pkgs.buildPythonApplication rec {
   pname = "open-browser";
   version = "0.1";
 

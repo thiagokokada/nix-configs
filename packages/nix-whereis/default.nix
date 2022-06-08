@@ -1,9 +1,14 @@
-{ pkgs, ... }:
+{ stdenvNoCC
+, bash
+, coreutils
+, substituteAll
+, which
+}:
 
-pkgs.stdenv.mkDerivation {
+stdenvNoCC.mkDerivation {
   name = "nix-whereis";
 
-  src = with pkgs; substituteAll {
+  src = substituteAll {
     src = ./nix-whereis.sh;
     isExecutable = true;
     inherit coreutils which bash;
@@ -12,6 +17,10 @@ pkgs.stdenv.mkDerivation {
   dontUnpack = true;
 
   installPhase = ''
+    runHook preInstall
+
     install -Dm755 "$src" "$out/bin/nix-whereis"
+
+    runHook postInstall
   '';
 }

@@ -1,9 +1,15 @@
-{ pkgs, ... }:
+{ stdenvNoCC
+, bash
+, coreutils
+, findutils
+, gnugrep
+, substituteAll
+}:
 
-pkgs.stdenv.mkDerivation {
+stdenvNoCC.mkDerivation {
   name = "nixos-cleanup";
 
-  src = with pkgs; substituteAll {
+  src = substituteAll {
     src = ./nixos-cleanup.sh;
     isExecutable = true;
     inherit coreutils findutils gnugrep bash;
