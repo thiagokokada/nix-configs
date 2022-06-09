@@ -13,6 +13,7 @@
     home-unstable = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "unstable";
+      inputs.flake-compat.follows = "flake-compat";
     };
     nix-darwin = {
       url = "github:LnL7/nix-darwin";
