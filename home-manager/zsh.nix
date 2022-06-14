@@ -167,63 +167,31 @@ in
         export MANPATH=":$MANPATH"
       '';
 
-    plugins = with self.inputs; lib.flatten [
-      {
-        src = zim-completion;
-        name = "zim-completion";
-        file = "init.zsh";
-      }
-      {
-        src = zim-environment;
-        name = "zim-environment";
-        file = "init.zsh";
-      }
-      {
-        src = zim-input;
-        name = "zim-input";
-        file = "init.zsh";
-      }
-      {
-        src = zim-git;
-        name = "zim-git";
-        file = "init.zsh";
-      }
-      {
-        src = zim-ssh;
-        name = "zim-ssh";
-        file = "init.zsh";
-      }
-      {
-        src = zim-utility;
-        name = "zim-utility";
-        file = "init.zsh";
-      }
-      {
-        src = pure;
-        name = "pure";
-      }
-      {
-        src = zsh-autopair;
-        name = "zsh-autopair";
-      }
-      {
-        src = zsh-completions;
-        name = "zsh-completions";
-      }
-      {
-        src = zsh-syntax-highlighting;
-        name = "zsh-syntax-highlighting";
-      }
-      (lib.optional (config.device.type != "server") {
-        src = zsh-system-clipboard;
-        name = "zsh-system-clipboard";
-      })
-      # Should be the last one
-      {
-        src = zsh-history-substring-search;
-        name = "zsh-history-substring-search";
-      }
-    ];
+    plugins =
+      let
+        zshPlugin = name:
+          {
+            inherit name;
+            src = builtins.getAttr name self.inputs;
+          };
+        zimPlugin = name:
+          zshPlugin name // { file = "init.zsh"; };
+      in
+      lib.flatten [
+        (zimPlugin "zim-completion")
+        (zimPlugin "zim-input")
+        (zimPlugin "zim-git")
+        (zimPlugin "zim-ssh")
+        (zimPlugin "zim-utility")
+        (zshPlugin "pure")
+        (zshPlugin "zsh-autopair")
+        (zshPlugin "zsh-completions")
+        (zshPlugin "zsh-syntax-highlighting")
+        # Will fail without access if pbcopy/xclip/xsel/wl-clipboard/etc is unavailable
+        (lib.optional (config.device.type != "server") (zshPlugin "zsh-system-clipboard"))
+        # Should be the last one
+        (zshPlugin "zsh-history-substring-search")
+      ];
   };
 
   programs = {
