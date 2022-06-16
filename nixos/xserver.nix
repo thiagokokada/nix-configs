@@ -2,7 +2,8 @@
 
 {
   # less verbose boot log, otherwise it will write log messages over greetd
-  boot.kernelParams = lib.optionals config.services.greetd.enable [ "quiet" ];
+  boot.consoleLogLevel = 3;
+  boot.kernelParams = [ "quiet" "udev.log_priority=3" ];
 
   # Configure the virtual console keymap from the xserver keyboard settings
   console.useXkbConfig = true;
