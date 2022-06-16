@@ -111,6 +111,36 @@ in
         ${darwinFixes}
       '';
 
+    # TODO: compile the .zwc files from nix itself
+    loginExtra = ''
+      (
+        # Guard clause, to avoid compiling multiple times if opening
+        # multiple shells
+        if (( ''${+ZSH_COMPILING_FILES} )); then
+          return
+        fi
+        export ZSH_COMPILING_FILES=1
+
+        # Function to determine the need of a zcompile. If the .zwc file
+        # does not exist, or the base file is newer, we need to compile.
+        # These jobs are asynchronous, and will not impact the interactive shell
+        zcompare() {
+          if [[ -s $1 && ( ! -s $1.zwc || $1 -nt $1.zwc) ]]; then
+            zcompile $1
+          fi
+        }
+
+        setopt EXTENDED_GLOB
+
+        # zcompile ZSH config files
+        for file in ''${ZDOTDIR:-''${HOME}}/.{zlogin,zlogout,zprofile,zshenv,zshrc}; do
+          zcompare $file &> /dev/null
+        done
+
+        unset ZSH_COMPILING_FILES
+      ) &!
+    '';
+
     initExtraBeforeCompInit = ''
       # zimfw config
       zstyle ':zim:input' double-dot-expand yes
