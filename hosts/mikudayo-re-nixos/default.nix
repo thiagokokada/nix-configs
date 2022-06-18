@@ -44,6 +44,9 @@ in
     };
   };
 
+  # Configure hibernation
+  boot.resumeDevice = (builtins.head config.swapDevices).device;
+
   time = {
     # For Windows interop
     hardwareClockInLocalTime = true;

@@ -77,7 +77,15 @@ in
 
     # Only suspend on lid closed when laptop is disconnected
     logind = {
-      lidSwitch = "suspend-then-hibernate";
+      # For hibernate to work you need to set
+      # - `boot.resumeDevice` set to the swap partition/partition
+      #   containing swap file
+      # - If using swap file, also set
+      #  `boot.kernelParams = [ "resume_offset=XXX" ]`
+      lidSwitch =
+        if (config.boot.resumeDevice != "")
+        then "suspend-then-hibernate"
+        else "suspend";
       lidSwitchDocked = "lock";
       lidSwitchExternalPower = "lock";
     };
