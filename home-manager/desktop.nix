@@ -21,7 +21,6 @@
     kitty
     libreoffice-fresh
     lxmenu-data # for pcmanfm installed applications
-    (mcomix3.override { unrarSupport = true; })
     open-browser
     pamixer
     pavucontrol
@@ -31,6 +30,7 @@
     qalculate-gtk
     shared-mime-info # for pcmanfm recognized file types
     unstable.bitwarden
+    (unstable.mcomix.override { unrarSupport = true; })
     vlc
     xclip
     xdotool
