@@ -1,68 +1,6 @@
 { config, pkgs, lib, self, ... }:
-let
-  # Based on https://github.com/zimfw/archive
-  archive = pkgs.writeScriptBin "archive" ''
-    #!${pkgs.zsh}/bin/zsh
-
-    readonly name="$(${pkgs.coreutils}/bin/basename "$0")"
-
-    if (( # < 2 )); then
-      print -u2 "usage: $name <archive_name.ext> <file>..."
-      return 2
-    fi
-
-    case "$1" in
-      (*.7z) ${pkgs.p7zip}/bin/7za a "$@" ;;
-      (*.rar) ${pkgs.rar}/bin/rar a "$@" ;;
-      (*.tar.bz|*.tar.bz2|*.tbz|*.tbz2) ${pkgs.gnutar}/bin/tar -cvjf "$@" ;;
-      (*.tar.gz|*.tgz) ${pkgs.gnutar}/bin/tar -cvzf "$@" ;;
-      (*.tar.lzma|*.tlz) ${pkgs.coreutils}/bin/env XZ_OPT=-T0 ${pkgs.gnutar}/bin/tar --lzma -cvf "$@" ;;
-      (*.tar.xz|*.txz) ${pkgs.coreutils}/bin/env XZ_OPT=-T0 ${pkgs.gnutar}/bin/tar -cvJf "$@" ;;
-      (*.tar) ${pkgs.gnutar}/bin/tar -cvf "$@" ;;
-      (*.zip) ${pkgs.zip}/bin/zip -r "$@" ;;
-      (*.zst) ${pkgs.zstd}/bin/zstd -c -T0 "''${@:2}" -o "$1" ;;
-      (*.bz|*.bz2) print -u2 "$0: .bzip2 is only useful for single files, and does not capture permissions. Use .tar.bz2" ;;
-      (*.gz) print -u2 "$0: .gz is only useful for single files, and does not capture permissions. Use .tar.gz" ;;
-      (*.lzma) print -u2 "$0: .lzma is only useful for single files, and does not capture permissions. Use .tar.lzma" ;;
-      (*.xz) print -u2 "$0: .xz is only useful for single files, and does not capture permissions. Use .tar.xz" ;;
-      (*.Z) print -u2 "$0: .Z is only useful for single files, and does not capture permissions." ;;
-      (*) print -u2 "$name: unknown archive type: $1" ;;
-    esac
-  '';
-
-  unarchive = pkgs.writeScriptBin "unarchive" ''
-    #!${pkgs.zsh}/bin/zsh
-
-    readonly name="$(${pkgs.coreutils}/bin/basename "$0")"
-
-    if (( # < 1 )); then
-      print -u2 "usage: $name <archive_name.ext>..."
-      return 2
-    fi
-
-    while (( # > 0 )); do
-      case "$1" in
-        (*.7z|*.001) ${pkgs.p7zip}/bin/7z x "$1" ;;
-        (*.rar) ${pkgs.rar}/bin/unrar "$1" ;;
-        (*.tar.bz|*.tar.bz2|*.tbz|*.tbz2) ${pkgs.gnutar}/bin/tar -xvjf "$1" ;;
-        (*.tar.gz|*.tgz) ${pkgs.gnutar}/bin/tar -xvzf "$1" ;;
-        (*.tar.lzma|*.tlz) ${pkgs.coreutils}/bin/env XZ_OPT=-T0 ${pkgs.gnutar}/bin/tar --lzma -xvf "$1" ;;
-        (*.tar.xz|*.txz) ${pkgs.coreutils}/bin/env XZ_OPT=-T0 ${pkgs.gnutar}/bin/tar -xvJf "$1" ;;
-        (*.tar) ${pkgs.gnutar}/bin/tar xvf "$1" ;;
-        (*.zip) ${pkgs.unzip}/bin/unzip "$1" ;;
-        (*.zst) ${pkgs.zstd}/bin/zstd -T0 -d "$1" ;;
-        (*.gz) ${pkgs.pigz}/bin/unpigz "$1" ;;
-        (*.xz) ${pkgs.xz}/bin/unxz -T0 "$1" ;;
-        (*.bz|*.bz2) ${pkgs.pbzip2}/bin/pbunzip2 "$1" ;;
-        (*.Z) ${pkgs.gzip}/bin/uncompress "$1" ;;
-        (*) print -u2 "$name: unknown archive type: $1" ;;
-      esac
-      shift
-    done
-  '';
-in
 {
-  home.packages = [ archive unarchive ];
+  home.packages = with pkgs; [ archivers ];
 
   programs.zsh = {
     enable = true;

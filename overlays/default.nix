@@ -17,6 +17,8 @@ in
         config = prev.config;
       };
 
+      archivers = prev.callPackage ../packages/archivers { };
+
       open-browser = prev.callPackage ../packages/open-browser { };
 
       nix-whereis = prev.callPackage ../packages/nix-whereis { };
