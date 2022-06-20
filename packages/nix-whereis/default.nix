@@ -1,18 +1,14 @@
-{ stdenvNoCC
-, bash
+{ bash
 , coreutils
-, substituteAll
+, resholve
 , which
 }:
 
-stdenvNoCC.mkDerivation {
-  name = "nix-whereis";
+resholve.mkDerivation {
+  pname = "nix-whereis";
+  version = "0.0.1";
 
-  src = substituteAll {
-    src = ./nix-whereis.sh;
-    isExecutable = true;
-    inherit coreutils which bash;
-  };
+  src = ./nix-whereis.sh;
 
   dontUnpack = true;
 
@@ -23,4 +19,12 @@ stdenvNoCC.mkDerivation {
 
     runHook postInstall
   '';
+
+  solutions = {
+    nix-whereis = {
+      scripts = [ "bin/nix-whereis" ];
+      interpreter = "${bash}/bin/bash";
+      inputs = [ coreutils which ];
+    };
+  };
 }

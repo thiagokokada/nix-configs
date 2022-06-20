@@ -38,18 +38,18 @@ while [[ "${#:-0}" -gt 0 ]]; do
     esac
 done
 
-# sudo needs to be the one running on the current system
-# also use nix/nixos-rebuild from the current system
-sudo -s -- <<EOF
-@findutils@/bin/find -H /nix/var/nix/gcroots/auto -type l -exec @coreutils@/bin/readlink {} \; | \
-    @gnugrep@/bin/grep "/result$" | \
-    @findutils@/bin/xargs -L1 rm -rf
-if [[ "$UNSAFE" == 1 ]]; then
-    nix-store --ignore-liveness --delete /nix/var/nix/gcroots/booted-system
-fi
-nix-collect-garbage -d
-nixos-rebuild boot --fast
-if [[ "$OPTIMIZE" == 1 ]]; then
-    nix-store --optimize
-fi
-EOF
+cleanup() {
+    find -H /nix/var/nix/gcroots/auto -type l -exec readlink {} \; | \
+        grep "/result$" | \
+        xargs -L1 rm -rf
+    if [[ "$UNSAFE" == 1 ]]; then
+        nix-store --ignore-liveness --delete /nix/var/nix/gcroots/booted-system
+    fi
+    nix-collect-garbage -d
+    nixos-rebuild boot --fast
+    if [[ "$OPTIMIZE" == 1 ]]; then
+        nix-store --optimize
+    fi
+}
+
+sudo bash -c "$(declare -f cleanup); cleanup"

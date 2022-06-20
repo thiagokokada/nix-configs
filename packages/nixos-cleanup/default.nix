@@ -1,19 +1,16 @@
-{ stdenvNoCC
-, bash
+{ bash
 , coreutils
 , findutils
 , gnugrep
-, substituteAll
+, nix
+, resholve
 }:
 
-stdenvNoCC.mkDerivation {
-  name = "nixos-cleanup";
+resholve.mkDerivation {
+  pname = "nixos-cleanup";
+  version = "0.0.1";
 
-  src = substituteAll {
-    src = ./nixos-cleanup.sh;
-    isExecutable = true;
-    inherit coreutils findutils gnugrep bash;
-  };
+  src = ./nixos-cleanup.sh;
 
   dontUnpack = true;
 
@@ -24,4 +21,23 @@ stdenvNoCC.mkDerivation {
 
     runHook postInstall
   '';
+
+  solutions = {
+    nix-whereis = {
+      scripts = [ "bin/nixos-cleanup" ];
+      interpreter = "${bash}/bin/bash";
+      inputs = [ coreutils findutils gnugrep nix ];
+      fake = {
+        external = [
+          "nixos-rebuild"
+          # https://github.com/abathur/resholve/issues/29
+          "sudo"
+        ];
+      };
+      execer = [
+        "cannot:${nix}/bin/nix-store"
+        "cannot:${nix}/bin/nix-collect-garbage"
+      ];
+    };
+  };
 }
