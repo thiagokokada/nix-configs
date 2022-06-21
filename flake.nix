@@ -39,13 +39,6 @@
       inputs.poetry2nix.follows = "poetry2nix";
     };
 
-    # nixpkgs-review
-    nixpkgs-review = {
-      url = "github:Mic92/nixpkgs-review";
-      inputs.nixpkgs.follows = "unstable";
-      inputs.flake-utils.follows = "flake-utils";
-    };
-
     # overlays
     emacs = {
       url = "github:nix-community/emacs-overlay";

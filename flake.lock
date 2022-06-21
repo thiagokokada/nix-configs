@@ -178,29 +178,6 @@
         "type": "github"
       }
     },
-    "nixpkgs-review": {
-      "inputs": {
-        "flake-utils": [
-          "flake-utils"
-        ],
-        "nixpkgs": [
-          "unstable"
-        ]
-      },
-      "locked": {
-        "lastModified": 1653723801,
-        "narHash": "sha256-3H5Uiku8Z8p/2HtmQ547fssHvEuRdOQ/82E40zCK64Q=",
-        "owner": "Mic92",
-        "repo": "nixpkgs-review",
-        "rev": "9c6158465e14212133fd4259451c324ef9a8d079",
-        "type": "github"
-      },
-      "original": {
-        "owner": "Mic92",
-        "repo": "nixpkgs-review",
-        "type": "github"
-      }
-    },
     "nmd": {
       "flake": false,
       "locked": {
@@ -299,7 +276,6 @@
         "nix-alien": "nix-alien",
         "nix-darwin": "nix-darwin",
         "nixpkgs": "nixpkgs",
-        "nixpkgs-review": "nixpkgs-review",
         "nnn-plugins": "nnn-plugins",
         "poetry2nix": "poetry2nix",
         "pure": "pure",

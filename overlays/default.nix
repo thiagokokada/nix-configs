@@ -29,9 +29,9 @@ in
 
       nixpkgs-review =
         if (prev.stdenv.isLinux) then
-          inputs.nixpkgs-review.packages.${system}.nixpkgs-review-sandbox
+          final.unstable.nixpkgs-review.override { withSandboxSupport = true; }
         else
-          inputs.nixpkgs-review.packages.${system}.nixpkgs-review;
+          final.unstable.nixpkgs-review;
     })
   ];
 }
