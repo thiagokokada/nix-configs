@@ -30,19 +30,15 @@ Also, some extra resources and documentation about Flakes:
   @eldostra](https://www.tweag.io/blog/2020-05-25-flakes/)
 - [Nix 2.4/3.0 documentation](https://nixos.org/manual/nix/unstable/)
 
-I decided to build from scratch to have more understand what is happening. Also,
-this repo uses less "magic" than other repositories, preferring a copy-and-paste
-approach. This may be less DRY, however it helps understanding what is
-happening.
-
-**Remember**: Flakes is *heavily experimental*, so you shouldn't try this
-approach until you have some experience in Nix.
+**Remember**: Flakes is *experimental*, so you shouldn't try this approach
+until you have some experience in Nix.
 
 ## Dotfiles
 
-This repository also includes my `home-manager` configuration. It is used to
-configure home in NixOS systems (using `home-manager` as a NixOS module) but it
-should also work in standalone mode.
+This repository also includes my
+[`home-manager`](https://github.com/nix-community/home-manager/) configuration.
+It is used to configure home in NixOS systems (using `home-manager` as a NixOS
+module) but it should also work in standalone mode.
 
 ## Installation
 
@@ -56,7 +52,7 @@ system and partition the disk, run the following process to install:
 $ sudo git clone https://github.com/thiagokokada/nix-configs/ /mnt/etc/nixos
 $ sudo chown -R 1000:1000 /mnt/etc/nixos # optional if you want to edit your config without root
 $ nix-shell -p nixFlakes
-$ nix flake new --template .#new-host # if this is a new hardware
+$ nix flake new --template '.#new-host' # if this is a new hardware
 $ sudo nixos-install --flake /mnt/etc/nixos#hostname
 ```
 
@@ -72,7 +68,7 @@ trigger a rebuild.
 Start by installing Nix:
 
 ```console
-$ sh <(curl -L https://nixos.org/nix/install) --no-daemon
+$ sh <(curl -L https://nixos.org/nix/install) --daemon
 ```
 
 See more details
@@ -98,7 +94,7 @@ $ ./result/sw/bin/darwin-rebuild switch --flake .
 Start by installing Nix:
 
 ```console
-$ curl -L https://nixos.org/nix/install | sh -s -- --daemon
+$ sh <(curl -L https://nixos.org/nix/install) --daemon
 ```
 
 To build the Home Manager standalone and activate its configuration, run:
