@@ -19,7 +19,6 @@ rec {
     ''
       ${alias}() {
         local -a parsed_args
-        local arg_real_path
 
         for arg in "$@"; do
           if [[ -d "$arg" ]] || [[ -f "$arg" ]]; then

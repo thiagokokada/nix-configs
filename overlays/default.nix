@@ -9,7 +9,7 @@ in
 
     (final: prev: {
       lib = prev.lib.extend (finalLib: prevLib: {
-        utils = import ../utils { pkgs = final; };
+        utils = prev.callPackage ../utils { };
       });
 
       unstable = import inputs.unstable {
