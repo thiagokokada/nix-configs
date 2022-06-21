@@ -187,10 +187,11 @@
       };
   } // flake-utils.lib.eachDefaultSystem (system:
     let
+      inherit (import ./utils/pure.nix { }) recursiveMergeAttrs;
       pkgs = import nixpkgs { inherit system; };
       buildGHActionsYAML = name:
         let
-          file = import (./actions + "/${name}.nix");
+          file = import (./actions/${name}.nix);
           json = builtins.toJSON file;
         in
         {
@@ -200,10 +201,11 @@
         };
     in
     {
-      githubActions =
-        (buildGHActionsYAML "build-and-cache") //
-          (buildGHActionsYAML "update-flakes") //
-          (buildGHActionsYAML "update-flakes-darwin");
+      githubActions = recursiveMergeAttrs [
+        (buildGHActionsYAML "build-and-cache")
+        (buildGHActionsYAML "update-flakes")
+        (buildGHActionsYAML "update-flakes-darwin")
+      ];
 
       devShells.default = pkgs.mkShell {
         buildInputs = with pkgs; [
