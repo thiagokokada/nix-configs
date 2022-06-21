@@ -211,7 +211,7 @@
           findutils
           gnumake
           nixpkgs-fmt
-          nixUnstable
+          nixFlakes
         ];
       };
     }
