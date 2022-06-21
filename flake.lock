@@ -213,16 +213,16 @@
     "nnn-plugins": {
       "flake": false,
       "locked": {
-        "lastModified": 1637672625,
-        "narHash": "sha256-g9GaCc/IWKtih0/A2AZEPImjj7ymJIdYwC5I/6GUh5c=",
+        "lastModified": 1650978264,
+        "narHash": "sha256-uToAgWpGaTPTMYJh1D0xgvE23GSIshv1OBlWxXI07Mk=",
         "owner": "jarun",
         "repo": "nnn",
-        "rev": "65eddfe7b9f02f685145005a8ffd3feb8d102ced",
+        "rev": "3f58f6111c95a38f2bfbdde92c42bf54edeb5927",
         "type": "github"
       },
       "original": {
         "owner": "jarun",
-        "ref": "v4.4",
+        "ref": "v4.5",
         "repo": "nnn",
         "type": "github"
       }

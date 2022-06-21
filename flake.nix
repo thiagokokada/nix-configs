@@ -48,7 +48,7 @@
 
     # nnn plugins
     nnn-plugins = {
-      url = "github:jarun/nnn/v4.4";
+      url = "github:jarun/nnn/v4.5";
       flake = false;
     };
 
