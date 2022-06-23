@@ -86,7 +86,7 @@ in
         if (config.boot.resumeDevice != "")
         then "suspend-then-hibernate"
         else "suspend";
-      lidSwitchDocked = "lock";
+      lidSwitchDocked = "ignore";
       lidSwitchExternalPower = "lock";
     };
 
