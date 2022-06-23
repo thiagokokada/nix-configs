@@ -1,6 +1,6 @@
 # nix-configs
 
-![build-and-cache](https://github.com/thiagokokada/nix-configs/workflows/build-and-cache/badge.svg)
+[![build-and-cache](https://github.com/thiagokokada/nix-configs/actions/workflows/build-and-cache.yml/badge.svg)](https://github.com/thiagokokada/nix-configs/actions/workflows/build-and-cache.yml)
 
 *My Nix{OS} configuration files*
 
