@@ -1,8 +1,9 @@
 { pkgs, lib, config, ... }:
 
 let
-  isInSystemPkgs = with builtins;
-    name: elem name (map (p: p.name) config.environment.systemPackages);
+  nvidia-offload = lib.findFirst (p: lib.isDerivation p && p.name == "nvidia-offload")
+    null
+    config.environment.systemPackages;
 in
 {
   # Fix: MESA-INTEL: warning: Performance support disabled, consider sysctl dev.i915.perf_stream_paranoid=0
@@ -17,8 +18,8 @@ in
   ];
 
   # Use nvidia-offload script in gamemode
-  environment.variables.GAMEMODERUNEXEC = lib.mkIf (isInSystemPkgs "nvidia-offload")
-    "nvidia-offload";
+  environment.variables.GAMEMODERUNEXEC = lib.mkIf (nvidia-offload != null)
+    "${nvidia-offload}/bin/nvidia-offload";
 
   programs = {
     gamemode = {
