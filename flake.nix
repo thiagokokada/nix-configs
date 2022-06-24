@@ -195,7 +195,7 @@
         recursiveMergeAttrs [
           (mkHomeConfig { name = "home-linux"; })
           (mkHomeConfig {
-            name = "home-darwin";
+            name = "home-macos";
             configuration = ./home-manager/macos.nix;
             system = "x86_64-darwin";
             homePath = "/Users";
