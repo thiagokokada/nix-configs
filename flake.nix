@@ -5,7 +5,9 @@
     # main
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-22.05";
     unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
-    hardware.url = "github:NixOS/nixos-hardware";
+    # TODO: remove it once this PR is merged:
+    # https://github.com/NixOS/nixos-hardware/pull/427
+    hardware.url = "github:thiagokokada/nixos-hardware/fix-nvidia-offload";
     home = {
       url = "github:nix-community/home-manager/release-22.05";
       inputs.nixpkgs.follows = "nixpkgs";
