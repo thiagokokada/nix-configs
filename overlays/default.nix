@@ -17,6 +17,8 @@ in
         config = prev.config;
       };
 
+      gaming = self.inputs.nix-gaming.packages.${system};
+
       archivers = prev.callPackage ../packages/archivers { };
 
       open-browser = prev.callPackage ../packages/open-browser { };

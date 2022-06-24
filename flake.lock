@@ -162,6 +162,26 @@
         "type": "github"
       }
     },
+    "nix-gaming": {
+      "inputs": {
+        "nixpkgs": [
+          "unstable"
+        ]
+      },
+      "locked": {
+        "lastModified": 1655807496,
+        "narHash": "sha256-lidzQO2duQudsar5pRzcZHcOrIYExtqABegY+Q0bfdQ=",
+        "owner": "fufexan",
+        "repo": "nix-gaming",
+        "rev": "9c89cf15f7fc6fa70d84498c48deb3c570418079",
+        "type": "github"
+      },
+      "original": {
+        "owner": "fufexan",
+        "repo": "nix-gaming",
+        "type": "github"
+      }
+    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1655729248,
@@ -275,6 +295,7 @@
         "home-unstable": "home-unstable",
         "nix-alien": "nix-alien",
         "nix-darwin": "nix-darwin",
+        "nix-gaming": "nix-gaming",
         "nixpkgs": "nixpkgs",
         "nnn-plugins": "nnn-plugins",
         "poetry2nix": "poetry2nix",
