@@ -1,16 +1,24 @@
-{ pkgs, config, ... }:
+{ pkgs, lib, config, ... }:
 
+let
+  isInSystemPkgs = with builtins;
+    name: elem name (map (p: p.name) config.environment.systemPackages);
+in
 {
   # Fix: MESA-INTEL: warning: Performance support disabled, consider sysctl dev.i915.perf_stream_paranoid=0
   boot.kernelParams = [ "dev.i915.perf_stream_paranoid=0" ];
 
   environment.systemPackages = with pkgs; [
-    piper
     gaming.osu-stable
+    piper
     unstable.lutris
     unstable.osu-lazer
     unstable.retroarchFull
   ];
+
+  # Use nvidia-offload script in gamemode
+  environment.variables.GAMEMODERUNEXEC = lib.mkIf (isInSystemPkgs "nvidia-offload")
+    "nvidia-offload";
 
   programs = {
     gamemode = {
