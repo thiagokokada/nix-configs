@@ -12,9 +12,7 @@
         name = "Roboto";
       };
     };
-
     colors = with builtins; fromJSON (readFile ./colors.json);
-
     wallpaper = pkgs.wallpapers.witch-hat-atelier_coco;
   };
 
@@ -22,19 +20,19 @@
   fonts.fontconfig.enable = true;
 
   home = {
-    packages = with pkgs;
-      with config.theme.fonts; [
-        dejavu_fonts
-        font-awesome_5
-        gnome.gnome-themes-extra
-        gui.package
-        hack-font
-        hicolor-icon-theme
-        liberation_ttf
-        noto-fonts
-        noto-fonts-cjk
-        noto-fonts-emoji
-      ];
+    packages = with pkgs; [
+      config.theme.fonts.gui.package
+      dejavu_fonts
+      font-awesome_5
+      gnome.gnome-themes-extra
+      hack-font
+      hicolor-icon-theme
+      liberation_ttf
+      noto-fonts
+      noto-fonts-cjk
+      noto-fonts-emoji
+    ];
+
     pointerCursor = {
       package = pkgs.gnome.adwaita-icon-theme;
       name = "Adwaita";
@@ -63,5 +61,15 @@
   qt = {
     enable = true;
     platformTheme = "gtk";
+  };
+
+  # Export GTK configs, especially for GNOME4 applications
+  services.xsettingsd = {
+    enable = true;
+    settings = with config; {
+      "Net/IconThemeName" = gtk.iconTheme.name;
+      "Net/ThemeName" = gtk.theme.name;
+      "Gtk/CursorThemeName" = xsession.pointerCursor.name;
+    };
   };
 }
