@@ -13,6 +13,7 @@
     gammastep
     gimp
     gnome.evince
+    easyeffects
     gnome.file-roller
     gnome.gnome-disk-utility
     google-chrome
