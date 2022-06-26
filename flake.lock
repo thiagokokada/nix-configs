@@ -1,5 +1,21 @@
 {
   "nodes": {
+    "add-hintstyle-config": {
+      "locked": {
+        "lastModified": 1656242344,
+        "narHash": "sha256-FrbLdoYMA/U8L39QHrKwpMZ4BDy97f8Dzxu/7znE2uM=",
+        "owner": "thiagokokada",
+        "repo": "nixpkgs",
+        "rev": "659096dd89da4419200b917567f97906805b3131",
+        "type": "github"
+      },
+      "original": {
+        "owner": "thiagokokada",
+        "ref": "add-hintstyle-config",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "emacs": {
       "inputs": {
         "flake-utils": [
@@ -287,6 +303,7 @@
     },
     "root": {
       "inputs": {
+        "add-hintstyle-config": "add-hintstyle-config",
         "emacs": "emacs",
         "flake-compat": "flake-compat",
         "flake-utils": "flake-utils",

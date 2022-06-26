@@ -4,6 +4,8 @@
   inputs = {
     # main
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-22.05";
+    # TODO: remove once merged
+    add-hintstyle-config.url = "github:thiagokokada/nixpkgs/add-hintstyle-config";
     unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     hardware.url = "github:NixOS/nixos-hardware";
     home = {
@@ -189,7 +191,10 @@
                     meta.configPath = "${homeDirectory}/${configPosfix}";
                     fonts.fontconfig = {
                       antialias = true;
-                      hinting.enable = true;
+                      hinting = {
+                        enable = true;
+                        style = "hintslight";
+                      };
                       subpixel.lcdfilter = "rgb";
                     };
                   };

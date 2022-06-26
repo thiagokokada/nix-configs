@@ -1,6 +1,9 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, self, ... }:
 
 {
+  imports = [ "${self.inputs.add-hintstyle-config}/nixos/modules/config/fonts/fontconfig.nix" ];
+  disabledModules = [ "config/fonts/fontconfig.nix" ];
+
   fonts = {
     enableDefaultFonts = true;
     fontDir.enable = true;
