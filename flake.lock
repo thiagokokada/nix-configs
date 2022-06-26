@@ -56,16 +56,15 @@
     },
     "hardware": {
       "locked": {
-        "lastModified": 1656110731,
+        "lastModified": 1656240960,
         "narHash": "sha256-wpzJOzGL1XTGhq3+2N0jcPUy8woR+QTio81dh8mfwLQ=",
-        "owner": "thiagokokada",
+        "owner": "NixOS",
         "repo": "nixos-hardware",
-        "rev": "9194b8e949bed0be52729de9c1ed96674c0d3758",
+        "rev": "9aa5395bd55dca092f11b913ed972d12131d813f",
         "type": "github"
       },
       "original": {
-        "owner": "thiagokokada",
-        "ref": "fix-nvidia-offload",
+        "owner": "NixOS",
         "repo": "nixos-hardware",
         "type": "github"
       }
