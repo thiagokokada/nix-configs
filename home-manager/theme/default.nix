@@ -63,13 +63,20 @@
     platformTheme = "gtk";
   };
 
-  # Export GTK configs, especially for GNOME4 applications
   services.xsettingsd = {
     enable = true;
     settings = with config; {
+      # When running, most GNOME/GTK+ applications prefer those settings
+      # instead of *.ini files
       "Net/IconThemeName" = gtk.iconTheme.name;
       "Net/ThemeName" = gtk.theme.name;
       "Gtk/CursorThemeName" = xsession.pointerCursor.name;
+      # Applications like Java/Wine doesn't use Fontconfig settings,
+      # but uses it from here
+      "Xft/Hinting" = 1;
+      "Xft/HintStyle" = "hintslight";
+      "Xft/Antialias" = 1;
+      "Xft/RGBA" = "rgb";
     };
   };
 }
