@@ -40,6 +40,10 @@
       x11.enable = true;
       gtk.enable = true;
     };
+
+    # Application using libadwaita are **not** respecting config files *sigh*
+    # https://www.reddit.com/r/swaywm/comments/qodk20/gtk4_theming_not_working_how_do_i_configure_it/hzrv6gr/?context=3
+    sessionVariables.GTK_THEME = config.gtk.theme.name;
   };
 
   gtk = {
