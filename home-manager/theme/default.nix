@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }:
+{ super, config, pkgs, lib, ... }:
 
 {
   imports = [
@@ -77,10 +77,12 @@
       "Gtk/CursorThemeName" = xsession.pointerCursor.name;
       # Applications like Java/Wine doesn't use Fontconfig settings,
       # but uses it from here
-      "Xft/Hinting" = 1;
-      "Xft/HintStyle" = "hintslight";
-      "Xft/Antialias" = 1;
-      "Xft/RGBA" = "rgb";
+      "Xft/Hinting" = super.fonts.fontconfig.hinting.enable;
+      # TODO: this is harcoded in NixOS, needs a fix before using here
+      # https://github.com/NixOS/nixpkgs/blob/bd18e491a90adf3a103d808ddffd5c6fbb4622a5/nixos/modules/config/fonts/fontconfig.nix#L68
+      "Xft/HintStyle" = "hintstyle";
+      "Xft/Antialias" = super.fonts.fontconfig.antialias;
+      "Xft/RGBA" = super.fonts.fontconfig.subpixel.lcdfilter;
     };
   };
 }
