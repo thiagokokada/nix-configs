@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 
-import ./pure.nix { } //
+import ./attrsets.nix { inherit lib; } //
 import ./shell.nix { inherit pkgs; }
