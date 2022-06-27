@@ -77,5 +77,5 @@
   };
 
   programs.zsh.initExtra =
-    (pkgs.lib.utils.makeBgCmd "gk" "${config.programs.git.package}/bin/gitk");
+    (pkgs.lib.makeBgCmd "gk" "${config.programs.git.package}/bin/gitk");
 }

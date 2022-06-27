@@ -110,7 +110,7 @@
 
   outputs = { self, nixpkgs, unstable, nix-darwin, home, home-unstable, flake-utils, ... }:
     let
-      inherit (import ./utils/attrsets.nix { inherit (nixpkgs) lib; }) recursiveMergeAttrs;
+      inherit (import ./lib/attrsets.nix { inherit (nixpkgs) lib; }) recursiveMergeAttrs;
     in
     {
       templates = rec {

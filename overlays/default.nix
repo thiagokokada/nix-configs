@@ -8,9 +8,9 @@ in
     inputs.emacs.overlay
 
     (final: prev: {
-      lib = prev.lib.extend (finalLib: prevLib: {
-        utils = prev.callPackage ../utils { };
-      });
+      lib = prev.lib.extend (finalLib: prevLib:
+        (import ../lib { inherit (prev) pkgs lib; })
+      );
 
       unstable = import inputs.unstable {
         inherit system;
