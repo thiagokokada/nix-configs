@@ -202,6 +202,12 @@ in
   xsession.initExtra = lib.optionalString (super.hardware.nvidia.prime.sync.enable or false) ''
     ${pkgs.xorg.xrandr}/bin/xrandr --setprovideroutputsource modesetting NVIDIA-0
     ${pkgs.xorg.xrandr}/bin/xrandr --auto
+  ''
+  # Automatically loads a layout named `auto.sh` from arandr
+  + ''
+    if [ -f "$HOME/.screenlayout/auto.sh" ]; then
+      (PATH="${lib.makeBinPath [ pkgs.xorg.xrandr ]}" . "$HOME/.screenlayout/auto.sh")
+    fi
   '';
 
   home = {
