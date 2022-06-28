@@ -280,7 +280,7 @@
     "unstable": {
       "locked": {
         "lastModified": 1656239181,
-        "narHash": "sha256-oQ3ayOqm4TDUlnj5ef2LavL/9Bv8I5j88IzZIEZJX9g=",
+        "narHash": "sha256-wW1xRFBn376yGloXZ4QzBE4hjipMawpV18Lshd9QSPw=",
         "owner": "NixOS",
         "repo": "nixpkgs",
         "rev": "f2537a505d45c31fe5d9c27ea9829b6f4c4e6ac5",
