@@ -1,16 +1,9 @@
-{ config, lib, pkgs, super, self, ... }:
+{ config, lib, pkgs, ... }:
 
-let
-  videoDrivers = super.services.xserver.videoDrivers or [ ];
-  backend =
-    if (builtins.elem "nvidia" videoDrivers)
-    then "xrender"
-    else "glx";
-in
 {
   services.picom = {
-    inherit backend;
     enable = config.device.type != "vm";
+    backend = "glx";
     experimentalBackends = true;
     fade = true;
     fadeDelta = 2;

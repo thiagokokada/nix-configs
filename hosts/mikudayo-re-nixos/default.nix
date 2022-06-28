@@ -72,4 +72,19 @@ in
       After = wantedBy;
     };
   };
+
+  # https://nixos.wiki/wiki/Nvidia#booting_with_an_external_display
+  specialisation = {
+    external-display.configuration = {
+      system.nixos.tags = [ "external-display" ];
+      hardware.nvidia = {
+        prime = {
+          offload.enable = lib.mkForce false;
+          sync.enable = true;
+        };
+        modesetting.enable = true;
+        powerManagement.enable = lib.mkForce false;
+      };
+    };
+  };
 }

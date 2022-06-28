@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ super, config, lib, pkgs, ... }:
 let
   # Aliases
   alt = "Mod1";
@@ -198,6 +198,11 @@ in
   # Compatibility with xinit/sx
   home.file.".xinitrc".source = config.lib.file.mkOutOfStoreSymlink xsession;
   xdg.configFile."sx/sxrc".source = config.lib.file.mkOutOfStoreSymlink xsession;
+
+  xsession.initExtra = lib.optionalString (super.hardware.nvidia.prime.sync.enable or false) ''
+    ${pkgs.xorg.xrandr}/bin/xrandr --setprovideroutputsource modesetting NVIDIA-0
+    ${pkgs.xorg.xrandr}/bin/xrandr --auto
+  '';
 
   home = {
     # Disable keyboard management via HM
