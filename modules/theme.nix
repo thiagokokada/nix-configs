@@ -36,9 +36,16 @@ in
       description = "Base16 colors";
     };
 
-    wallpaper = mkOption {
-      type = types.path;
-      description = "Wallpaper path";
+    wallpaper = {
+      path = mkOption {
+        type = types.path;
+        description = "Wallpaper path";
+      };
+      scale = mkOption {
+        type = types.enum [ "tile" "center" "fill" "scale" ];
+        default = "scale";
+        description = "Wallpaper scaling";
+      };
     };
   };
 }

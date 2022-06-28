@@ -13,7 +13,7 @@
       };
     };
     colors = with builtins; fromJSON (readFile ./colors.json);
-    wallpaper = pkgs.wallpapers.witch-hat-atelier_coco;
+    wallpaper.path = lib.mkDefault pkgs.wallpapers.hatsune-miku_walking-4k;
   };
 
   # Enable fonts in home.packages to be available to applications

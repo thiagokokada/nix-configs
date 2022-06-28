@@ -75,6 +75,9 @@ in
     };
   };
 
+  # Use ultrawide wallpaper
+  home-manager.users.${config.meta.username}.theme.wallpaper.path = pkgs.wallpapers.hatsune-miku_stylized-ultrawide;
+
   # This allows you to dynamically switch between NVIDIA<->Intel using
   # nvidia-offload script
   specialisation = {

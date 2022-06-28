@@ -185,7 +185,7 @@ in
       Install = { WantedBy = [ "graphical-session.target" ]; };
 
       Service = {
-        ExecStart = "${pkgs.feh}/bin/feh --bg-scale ${config.theme.wallpaper}";
+        ExecStart = "${pkgs.feh}/bin/feh --bg-${config.theme.wallpaper.scale} ${config.theme.wallpaper.path}";
         Type = "oneshot";
       };
     };
