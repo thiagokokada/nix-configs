@@ -23,10 +23,12 @@ in
   };
 
   hardware.nvidia = {
+    modesetting.enable = true;
     # Enable experimental NVIDIA power management via systemd
     powerManagement.enable = true;
     prime = {
-      offload.enable = true;
+      offload.enable = false;
+      sync.enable = true;
 
       # Bus ID of the Intel GPU. You can find it using lspci, either under 3D or VGA
       intelBusId = "PCI:0:2:0";
@@ -73,18 +75,18 @@ in
     };
   };
 
-  # https://nixos.wiki/wiki/Nvidia#booting_with_an_external_display
+  # This allows you to dynamically switch between NVIDIA<->Intel using
+  # nvidia-offload script
   specialisation = {
-    external-display.configuration = {
-      system.nixos.tags = [ "external-display" ];
+    nvidia-offload.configuration = {
       hardware.nvidia = {
         prime = {
-          offload.enable = lib.mkForce false;
-          sync.enable = true;
+          offload.enable = lib.mkForce true;
+          sync.enable = lib.mkForce false;
         };
-        modesetting.enable = true;
-        powerManagement.enable = lib.mkForce false;
+        modesetting.enable = lib.mkForce false;
       };
+      system.nixos.tags = [ "nvidia-offload" ];
     };
   };
 }
