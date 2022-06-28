@@ -46,6 +46,10 @@ cleanup() {
         nix-store --ignore-liveness --delete /nix/var/nix/gcroots/booted-system
     fi
     nix-collect-garbage -d
+    # Clean-up old specializations entries in systemd-boot
+    if [[ -d "/boot/loader/entries" ]]; then
+        rm -f "/boot/loader/entries/nixos-generation-"*"-specialisation-"*".conf"
+    fi
     nixos-rebuild boot --fast
     if [[ "$OPTIMIZE" == 1 ]]; then
         nix-store --optimize
