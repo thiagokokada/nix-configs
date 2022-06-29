@@ -37,6 +37,10 @@
       " turn on omnicomplete
       set omnifunc=syntaxcomplete#Complete
 
+      " changes the cwd to the directory of the current
+      " buffer whenever you switch buffers
+      set autochdir
+
       " unsets the 'last search pattern'
       nnoremap <C-g> :noh<CR><CR>
 
