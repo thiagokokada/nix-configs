@@ -43,7 +43,7 @@ in
       };
       scale = mkOption {
         type = types.enum [ "tile" "center" "fill" "scale" ];
-        default = "scale";
+        default = "fill";
         description = "Wallpaper scaling";
       };
     };
