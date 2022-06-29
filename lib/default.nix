@@ -1,4 +1,4 @@
 { pkgs, lib, ... }:
 
 import ./attrsets.nix { inherit lib; } //
-import ./shell.nix { inherit pkgs; }
+import ./shell.nix { inherit pkgs lib; }
