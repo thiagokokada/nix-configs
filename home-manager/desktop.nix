@@ -19,7 +19,6 @@
     google-chrome
     gthumb
     inkscape
-    kitty
     libreoffice-fresh
     lxmenu-data # for pcmanfm installed applications
     open-browser

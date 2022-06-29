@@ -4,7 +4,7 @@ let
     (path: concatStringsSep "/" (map (substring 0 1) (splitString "/" path)));
 in
 {
-  imports = [ ../modules/device.nix ];
+  imports = [ ../../modules/device.nix ];
 
   programs.i3status-rust = {
     enable = true;

@@ -14,7 +14,7 @@ let
       displayLayoutMode =
         " : [h]  , [j]  , [k]  , [l]  , [d]uplicate, [m]irror, [s]econd-only, [o]ff";
     in
-    import ./i3-common.nix rec {
+    import ./common.nix rec {
       inherit config lib modifier alt;
 
       browser = "firefox";

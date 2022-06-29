@@ -8,14 +8,14 @@
     ./git.nix
     ./hexchat.nix
     ./htop.nix
-    ./i3.nix
+    ./i3
     ./kitty.nix
     ./meta
     ./mpv
     ./neovim.nix
     ./nnn.nix
     ./ssh.nix
-    ./sway.nix
+    ./sway
     ./theme
     ./tmux.nix
     ./vscode

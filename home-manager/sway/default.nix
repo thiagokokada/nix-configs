@@ -10,7 +10,7 @@ let
       screenShotName = with config.xdg.userDirs;
         "${pictures}/$(${pkgs.coreutils}/bin/date +%Y-%m-%d_%H-%M-%S)-screenshot.png";
     in
-    import ./i3-common.nix rec {
+    import ../i3/common.nix rec {
       inherit config lib modifier alt;
       browser = "firefox";
       fileManager = "${terminal} ${config.programs.nnn.finalPackage}/bin/nnn -a -P p";
@@ -47,7 +47,12 @@ let
     };
 in
 {
-  imports = [ ./gammastep.nix ./i3status-rust.nix ./mako.nix ./wofi.nix ];
+  imports = [
+    ../i3/gammastep.nix
+    ../i3/i3status-rust.nix
+    ./mako.nix
+    ./wofi.nix
+  ];
 
   wayland.windowManager.sway = with commonOptions; {
     enable = true;
