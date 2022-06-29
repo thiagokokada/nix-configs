@@ -21,6 +21,7 @@
     inkscape
     libreoffice-fresh
     lxmenu-data # for pcmanfm installed applications
+    lxrandr
     open-browser
     pamixer
     pavucontrol
