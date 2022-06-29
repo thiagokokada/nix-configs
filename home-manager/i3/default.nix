@@ -12,7 +12,7 @@ let
       screenShotName = with config.xdg.userDirs;
         "${pictures}/$(${pkgs.coreutils}/bin/date +%Y-%m-%d_%H-%M-%S)-screenshot.png";
       displayLayoutMode =
-        " : [h]  , [j]  , [k]  , [l]  , [d]uplicate, [m]irror, [s]econd-only, [o]ff";
+        " : [h]  , [j]  , [k]  , [l]  , [d]uplicate, [m]irror, [s]econd-only, primary-[o]nly";
     in
     import ./common.nix rec {
       inherit config lib modifier alt;
@@ -51,17 +51,21 @@ let
         "Ctrl+Shift+space" = "exec ${dunstctl} close-all";
       };
 
-      extraModes = with commonOptions.helpers; {
+      extraModes = with commonOptions.helpers; let
+        runMons = action:
+          "mode default, exec ${mons} ${action} && systemctl --user restart wallpaper.service";
+      in
+      {
         ${displayLayoutMode} = (mapDirection {
-          leftCmd = "mode default, exec ${mons} -e left";
-          downCmd = "mode default, exec ${mons} -e bottom";
-          upCmd = "mode default, exec ${mons} -e top";
-          rightCmd = "mode default, exec ${mons} -e right";
+          leftCmd = runMons "-e left";
+          downCmd = runMons "-e bottom";
+          upCmd = runMons "-e top";
+          rightCmd = runMons "-e right";
         }) // {
-          d = "mode default, exec ${mons} -d";
-          m = "mode default, exec ${mons} -m";
-          s = "mode default, exec ${mons} -s";
-          o = "mode default, exec ${mons} -o";
+          d = runMons "-d";
+          m = runMons "-m";
+          s = runMons "-s";
+          o = runMons "-o";
           "Escape" = "mode default";
           "Return" = "mode default";
         };
