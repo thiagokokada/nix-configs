@@ -102,7 +102,6 @@ in
     keyboard = null;
 
     packages = with pkgs; [
-      arandr
       dex
       feh
       ffmpegthumbnailer
