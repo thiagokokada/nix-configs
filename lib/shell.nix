@@ -55,7 +55,7 @@ rec {
       }
     '' else ''
       ${alias}() {
-        ${runBgCmd command ''"''${parsed_args[@]}"''}
+        ${runBgCmd command ''"$@"''}
       }
     '';
 }
