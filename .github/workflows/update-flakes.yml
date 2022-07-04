@@ -2,7 +2,7 @@ jobs:
   update-flakes:
     runs-on: ubuntu-latest
     steps:
-      - uses: easimon/maximize-build-space@v5
+      - uses: easimon/maximize-build-space@v6
         with:
           overprovision-lvm: true
           remove-android: true
