@@ -65,11 +65,12 @@
       ''
         # helpers
         run-bg() {
-          exec 0>&-
-          exec 1>&-
-          exec 2>&-
-          "$@" &
-          disown $!
+          (
+            exec 0>&-
+            exec 1>&-
+            exec 2>&-
+            "$@"
+          ) &!
         }
         ${open}
         get-ip() { ${curl}/bin/curl -Ss "https://ifconfig.me" }

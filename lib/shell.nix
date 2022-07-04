@@ -5,12 +5,14 @@ rec {
 
   # Run command in background
   # Keep in mind that args will follow shell splitting rules
+  # ZSH-only
   runBgCmd = command: args: ''
-    exec 0>&-
-    exec 1>&-
-    exec 2>&-
-    ${command} ${args} &
-    disown $!
+    (
+      exec 0>&-
+      exec 1>&-
+      exec 2>&-
+      ${command} ${args}
+    ) &!
   '';
 
   # macOS seems to lose the current PWD for some reason if you
