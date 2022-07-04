@@ -95,11 +95,6 @@
 (defadvice projectile-project-root (around ignore-remote first activate)
     (unless (file-remote-p default-directory) ad-do-it))
 
-;; vertico
-(after! orderless
-  ;; Enable fuzzy (flex)
-  (setq completion-styles '(orderless flex)))
-
 ;;; MAJOR MODES
 
 ;; adoc
