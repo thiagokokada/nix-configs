@@ -92,14 +92,7 @@
          :desc "Replace using regexp"
          "C-R" #'projectile-replace-regexp)))))
 
-(defadvice projectile-project-root (around ignore-remote first activate)
-    (unless (file-remote-p default-directory) ad-do-it))
-
 ;;; MAJOR MODES
-
-;; adoc
-(use-package! adoc-mode
-  :mode ("\\.adoc\\'"))
 
 ;; clojure
 (use-package! clojure-mode
@@ -126,23 +119,6 @@
   :after clojure-mode
   :config
   (set-lookup-handlers! 'clj-refactor-mode nil))
-
-;; graphql
-(use-package! graphql-mode
-  :mode ("\\.gql\\'" "\\.graphql\\'")
-  :config (setq-hook! 'graphql-mode-hook tab-width graphql-indent-level))
-
-;; hover
-(use-package! hover
-  :after dart-mode
-  :config
-  (setq hover-hot-reload-on-save t
-        hover-clear-buffer-on-hot-restart t
-        hover-screenshot-path "$HOME/Pictures")
-  (set-popup-rule! "\\*Hover\\*" :quit nil)
-  (defalias 'flutter-pub-get 'lsp-dart-pub-get)
-  (defalias 'flutter-pub-upgrade 'lsp-dart-pub-upgrade)
-  (defalias 'flutter-pub-outdated 'lsp-dart-pub-outdated))
 
 ;; lispyville
 (use-package! lispyville
@@ -172,14 +148,6 @@
 (use-package! ix
   :defer t)
 
-;; lsp
-(defun find-path-by-executable (exec)
-  (when-let (path (executable-find exec))
-    (file-name-directory
-     (directory-file-name
-      (file-name-directory
-       (file-chase-links path))))))
-
 (use-package! lsp-mode
   ; https://emacs-lsp.github.io/lsp-mode/tutorials/how-to-turn-off/
   :init (setq lsp-modeline-code-actions-mode t
@@ -189,9 +157,6 @@
               lsp-ui-doc-show-with-mouse nil
               lsp-headerline-breadcrumb-enable nil
               lsp-signature-render-documentation nil
-              lsp-python-ms-executable (executable-find "python-language-server")
-              lsp-dart-sdk-dir (find-path-by-executable "dart")
-              lsp-flutter-sdk-dir (find-path-by-executable "flutter")
               lsp-file-watch-threshold 10000)
   :config
   (advice-add #'lsp-rename :after (lambda (&rest _) (projectile-save-project-buffers)))
