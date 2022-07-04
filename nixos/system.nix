@@ -1,7 +1,7 @@
 { config, lib, pkgs, ... }:
 
 {
-  options.nixos.system.enable = lib.mkEnableOption "system config" // { default = true; };
+  options.nixos.system.enable = pkgs.lib.mkDefaultOption "system config";
 
   config =
     lib.mkIf config.nixos.system.enable {

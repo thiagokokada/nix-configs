@@ -7,7 +7,7 @@
   ];
 
   options.nixos.home = {
-    enable = lib.mkEnableOption "home config" // { default = true; };
+    enable = pkgs.lib.mkDefaultOption "home config";
     username = lib.mkOption {
       description = "Main username";
       type = lib.types.str;
