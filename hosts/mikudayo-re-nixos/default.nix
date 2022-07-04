@@ -50,9 +50,6 @@ in
     };
   };
 
-  # Configure hibernation
-  boot.resumeDevice = (builtins.head config.swapDevices).device;
-
   time = {
     # For Windows interop
     hardwareClockInLocalTime = true;
@@ -61,6 +58,9 @@ in
 
   boot.kernelPackages = pkgs.linuxPackages_xanmod;
   networking.hostName = "mikudayo-re-nixos";
+
+  # I think the usage of NVIDIA drivers is making lidSwitchDocked not working correctly
+  services.logind.lidSwitchExternalPower = "ignore";
 
   # Reinit audio after suspend, since sometimes the audio devices "disappears"
   systemd.services.reinit-audio-after-suspend = rec {

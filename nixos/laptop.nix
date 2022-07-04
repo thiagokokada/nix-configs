@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 let
   enable = config.device.type == "laptop";
@@ -44,8 +44,12 @@ in
     };
   };
 
+  # Configure hibernation
+  boot.resumeDevice = lib.mkIf (enable && config.swapDevices != [ ])
+    (lib.mkDefault (builtins.head config.swapDevices).device);
+
   # Install laptop related packages
-  environment.systemPackages = with pkgs; [ iw ];
+  environment.systemPackages = with pkgs; lib.optionals enable [ iw ];
 
   # Configure special hardware in laptops
   hardware = {
@@ -76,18 +80,18 @@ in
     upower = { inherit enable; };
 
     # Only suspend on lid closed when laptop is disconnected
-    logind = {
+    logind = lib.mkIf enable {
       # For hibernate to work you need to set
       # - `boot.resumeDevice` set to the swap partition/partition
       #   containing swap file
       # - If using swap file, also set
       #  `boot.kernelParams = [ "resume_offset=XXX" ]`
-      lidSwitch =
-        if (config.boot.resumeDevice != "")
+      lidSwitch = lib.mkDefault
+        (if (config.boot.resumeDevice != "")
         then "suspend-then-hibernate"
-        else "suspend";
-      lidSwitchDocked = "ignore";
-      lidSwitchExternalPower = "lock";
+        else "suspend");
+      lidSwitchDocked = lib.mkDefault "ignore";
+      lidSwitchExternalPower = lib.mkDefault "lock";
     };
 
     # Reduce power consumption
