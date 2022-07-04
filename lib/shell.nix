@@ -5,8 +5,13 @@ rec {
 
   # Run command in background
   # Keep in mind that args will follow shell splitting rules
-  runBgCmd = command: args:
-    "${command} ${args} </dev/null &>/dev/null &!";
+  runBgCmd = command: args: ''
+    exec 0>&-
+    exec 1>&-
+    exec 2>&-
+    ${command} ${args} &
+    disown $!
+  '';
 
   # macOS seems to lose the current PWD for some reason if you
   # close stdin, but without closing stdin you can't have a proper
