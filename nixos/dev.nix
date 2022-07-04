@@ -5,8 +5,8 @@ in
 {
   environment.systemPackages = with pkgs; [
     distrobox
-    docker-compose
     gnome.gnome-boxes
+    podman-compose
   ];
 
   programs = {
@@ -17,8 +17,13 @@ in
     };
   };
 
-  virtualisation.docker.enable = true;
-  virtualisation.libvirtd.enable = true;
+  virtualisation = {
+    podman = {
+      enable = true;
+      dockerCompat = true;
+    };
+    libvirtd.enable = true;
+  };
 
   # Added user to groups
   users.users.${username}.extraGroups = [ "adbusers" "docker" "wireshark" ];
