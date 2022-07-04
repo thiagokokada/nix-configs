@@ -47,12 +47,10 @@
   programs.doom-emacs = {
     enable = true;
     doomPrivateDir = ./doom-emacs;
-    # TODO: Need to fix ivory compilation
-    # emacsPackage = with pkgs;
-    #   if stdenv.isDarwin then
-    #     emacsNativeComp
-    #   else emacsPgtkNativeComp;
-    emacsPackage = pkgs.emacsNativeComp;
+    emacsPackage = with pkgs;
+      if stdenv.isDarwin then
+        emacsNativeComp
+      else emacsPgtkNativeComp;
     extraPackages = with pkgs; [
       fd
       findutils
