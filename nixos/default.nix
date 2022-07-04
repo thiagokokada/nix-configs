@@ -2,6 +2,7 @@
 
 {
   imports = [
+    ./audio.nix
     ./desktop.nix
     ./dev.nix
     ./fonts.nix
