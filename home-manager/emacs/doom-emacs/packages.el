@@ -14,3 +14,5 @@
 (package! lsp-ui :disable t)
 (package! sort-words)
 (package! uuidgen)
+;; TODO: not available on emacs-overlay yet
+(package! ts-fold :disable t)

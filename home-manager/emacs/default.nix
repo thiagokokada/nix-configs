@@ -1,24 +1,11 @@
-{ config, lib, pkgs, ... }:
+{ self, config, lib, pkgs, ... }:
 
-let
-  inherit (config.home) homeDirectory;
-  doomConfigPath = "${config.meta.configPath}/home-manager/emacs/doom-emacs";
-in
 {
-  imports = [ ../../modules/meta.nix ];
+  imports = [ self.inputs.nix-doom-emacs.hmModule ];
 
   # Emacs overlay
   home = {
     packages = with pkgs; [
-      # doom-emacs main deps
-      emacs-all-the-icons-fonts
-      fd
-      findutils
-      ripgrep
-
-      # needed by native compile
-      gcc
-
       # font for my config
       fira-code
       hack-font
@@ -33,14 +20,12 @@ in
       # shell
       shellcheck
     ];
-
-    sessionPath = [ "${homeDirectory}/.config/emacs/bin" ];
   };
 
   programs.zsh = {
     initExtra =
       let
-        emacs = "${config.programs.emacs.package}/bin/emacs";
+        emacs = "${config.programs.doom-emacs.package}/bin/emacs";
       in
       ''
         ${pkgs.lib.makeBgCmd "em" emacs}
@@ -57,46 +42,21 @@ in
           em $@
         }
       '';
-
-    shellAliases = {
-      "doom-up!" = "nice doom upgrade";
-    };
   };
 
-  programs.emacs = with pkgs; let
-    emacsPkg =
-      if stdenv.isDarwin then
-        emacsNativeComp
-      else emacsPgtkNativeComp;
-    emacs-custom = with pkgs; (pkgs.emacsPackagesFor emacsPkg).emacsWithPackages
-      (epkgs: with epkgs; [ vterm ]);
-  in
-  {
+  programs.doom-emacs = {
     enable = true;
-    package = emacs-custom;
-  };
-
-  xdg.configFile."doom".source =
-    config.lib.file.mkOutOfStoreSymlink doomConfigPath;
-
-  xdg.configFile.".tree-sitter".source = (pkgs.runCommand "grammars" { } ''
-    mkdir -p $out/bin
-    ${lib.concatStringsSep "\n"
-      (lib.mapAttrsToList (name: src: "name=${name}; ln -s ${src}/parser $out/bin/\${name#tree-sitter-}.so") pkgs.tree-sitter.builtGrammars)};
-  '');
-
-  home.activation = {
-    installDoom = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-      readonly emacs_dir="${config.home.homeDirectory}/.config/emacs";
-      [ ! -d "$emacs_dir" ] && \
-        $DRY_RUN_CMD ${pkgs.git}/bin/git clone https://github.com/hlissner/doom-emacs/ "$emacs_dir"
-    '';
-
-    checkDoomConfigLocation = lib.hm.dag.entryAfter [ "linkGeneration" ] ''
-      if [ ! -e "${config.xdg.configFile."doom".target}" ]; then
-        >&2 echo "[ERROR] doom-emacs config is pointing to a non-existing path: ${doomConfigPath}"
-        $DRY_RUN_CMD exit 1
-      fi
-    '';
+    doomPrivateDir = ./doom-emacs;
+    # TODO: Need to fix ivory compilation
+    # emacsPackage = with pkgs;
+    #   if stdenv.isDarwin then
+    #     emacsNativeComp
+    #   else emacsPgtkNativeComp;
+    emacsPackage = pkgs.emacsNativeComp;
+    extraPackages = with pkgs; [
+      fd
+      findutils
+      ripgrep
+    ];
   };
 }

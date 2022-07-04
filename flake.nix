@@ -42,10 +42,16 @@
       inputs.poetry2nix.follows = "poetry2nix";
     };
 
-    # overlays
+    # nix-doom-emacs
     emacs = {
       url = "github:nix-community/emacs-overlay";
       inputs.nixpkgs.follows = "unstable";
+      inputs.flake-utils.follows = "flake-utils";
+    };
+    nix-doom-emacs = {
+      url = "github:nix-community/nix-doom-emacs";
+      inputs.nixpkgs.follows = "unstable";
+      inputs.emacs-overlay.follows = "emacs";
       inputs.flake-utils.follows = "flake-utils";
     };
 
