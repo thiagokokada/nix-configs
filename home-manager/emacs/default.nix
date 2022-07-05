@@ -1,7 +1,7 @@
-{ self, config, lib, pkgs, ... }:
+{ flake, config, lib, pkgs, ... }:
 
 {
-  imports = [ self.inputs.nix-doom-emacs.hmModule ];
+  imports = [ flake.inputs.nix-doom-emacs.hmModule ];
 
   # Emacs overlay
   home = {

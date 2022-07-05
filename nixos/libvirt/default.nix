@@ -1,4 +1,4 @@
-{ self, config, pkgs, ... }:
+{ flake, config, pkgs, ... }:
 let
   inherit (config.meta) username;
 

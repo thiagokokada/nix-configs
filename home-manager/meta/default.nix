@@ -1,7 +1,7 @@
-{ lib, pkgs, self, super, ... }:
+{ lib, pkgs, flake, super, ... }:
 
 let
-  inherit (self) inputs;
+  inherit (flake) inputs;
 in
 {
   # Import overlays

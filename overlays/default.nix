@@ -1,7 +1,7 @@
-{ pkgs, lib, self, system, ... }:
+{ pkgs, lib, flake, system, ... }:
 
 let
-  inherit (self) inputs;
+  inherit (flake) inputs;
 in
 {
   nixpkgs.overlays = [
@@ -18,7 +18,7 @@ in
         config = prev.config;
       };
 
-      gaming = self.inputs.nix-gaming.packages.${system};
+      gaming = flake.inputs.nix-gaming.packages.${system};
 
       wallpapers = prev.callPackage ../packages/wallpapers { };
 

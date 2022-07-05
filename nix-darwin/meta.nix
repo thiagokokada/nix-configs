@@ -1,4 +1,4 @@
-{ pkgs, self, ... }:
+{ pkgs, flake, ... }:
 
 {
   # Auto upgrade nix package and the daemon service.
@@ -6,5 +6,5 @@
 
   # nix.settings is missing on nix-darwin
   # https://github.com/LnL7/nix-darwin/issues/433
-  # nix = import ../shared/nix.nix { inherit pkgs self; };
+  # nix = import ../shared/nix.nix { inherit pkgs flake; };
 }

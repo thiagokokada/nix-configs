@@ -137,7 +137,10 @@
               ${hostname} = nixosSystem {
                 inherit system;
                 modules = [ ./hosts/${hostname} ] ++ extraModules;
-                specialArgs = { inherit self system; };
+                specialArgs = {
+                  inherit system;
+                  flake = self;
+                };
               };
             };
         in
@@ -160,7 +163,10 @@
               ${hostname} = darwinSystem {
                 inherit system;
                 modules = [ ./hosts/${hostname} ] ++ extraModules;
-                specialArgs = { inherit self system; };
+                specialArgs = {
+                  inherit system;
+                  flake = self;
+                };
               };
             };
         in
@@ -187,7 +193,8 @@
                 homeDirectory = "${homePath}/${username}";
                 stateVersion = "22.05";
                 extraSpecialArgs = {
-                  inherit self system;
+                  inherit system;
+                  flake = self;
                   super = {
                     device.type = deviceType;
                     meta.username = username;

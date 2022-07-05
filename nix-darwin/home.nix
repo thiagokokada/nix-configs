@@ -1,11 +1,11 @@
-{ config, lib, pkgs, self, system, ... }:
+{ config, lib, pkgs, flake, system, ... }:
 
 let
   inherit (config.meta) username;
 in
 {
   imports = [
-    self.inputs.home.darwinModules.home-manager
+    flake.inputs.home.darwinModules.home-manager
   ];
 
   programs.zsh.enable = true;
@@ -21,7 +21,7 @@ in
     useUserPackages = true;
     users.${username} = ../home-manager/macos.nix;
     extraSpecialArgs = {
-      inherit self system;
+      inherit flake system;
       super = config;
     };
   };

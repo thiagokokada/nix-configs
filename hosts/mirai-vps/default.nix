@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, self, system, ... }:
+{ config, pkgs, flake, system, ... }:
 
 let
   inherit (config.meta) username;
@@ -16,7 +16,7 @@ in
       ../../nixos/security.nix
       ../../nixos/ssh.nix
       ../../nixos/vps.nix
-      self.inputs.home.nixosModules.home-manager
+      flake.inputs.home.nixosModules.home-manager
     ];
 
   home-manager = {
@@ -28,7 +28,7 @@ in
       ];
     };
     extraSpecialArgs = {
-      inherit self system;
+      inherit flake system;
       super = config;
     };
   };

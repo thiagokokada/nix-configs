@@ -1,4 +1,4 @@
-{ config, pkgs, lib, self, ... }:
+{ config, pkgs, lib, flake, ... }:
 {
   home.packages = with pkgs; [
     archivers
@@ -118,7 +118,7 @@
         zshPlugin = name:
           {
             inherit name;
-            src = zshCompilePlugin name (builtins.getAttr name self.inputs);
+            src = zshCompilePlugin name (builtins.getAttr name flake.inputs);
           };
         zimPlugin = name:
           zshPlugin name // { file = "init.zsh"; };

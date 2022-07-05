@@ -1,8 +1,8 @@
-{ pkgs, self, system, ... }:
+{ pkgs, flake, system, ... }:
 
 {
   nixpkgs.overlays = [
-    self.inputs.nix-alien.overlay
+    flake.inputs.nix-alien.overlay
   ];
 
   environment.systemPackages = with pkgs; [

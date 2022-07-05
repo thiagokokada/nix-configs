@@ -1,7 +1,7 @@
-{ pkgs, self, ... }:
+{ pkgs, flake, ... }:
 
 let
-  inherit (self) inputs;
+  inherit (flake) inputs;
 in
 {
   # Add wheel to Nix trusted users

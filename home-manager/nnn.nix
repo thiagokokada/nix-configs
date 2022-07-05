@@ -1,7 +1,7 @@
-{ config, lib, pkgs, self, ... }:
+{ config, lib, pkgs, flake, ... }:
 
 let
-  inherit (self) inputs;
+  inherit (flake) inputs;
 in
 {
   home.packages = [ (pkgs.nerdfonts.override { fonts = [ "Hack" ]; }) ];
