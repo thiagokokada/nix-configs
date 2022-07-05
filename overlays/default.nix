@@ -61,12 +61,7 @@ in
         else
           final.unstable.nixpkgs-review;
 
-      run-bg-alias = alias: command: prev.writeShellScriptBin alias ''
-        exec 0>&-
-        exec 1>&-
-        exec 2>&-
-        ${command} $@ &!
-      '';
+      run-bg-alias = name: command: prev.callPackage ../packages/run-bg-alias { inherit name command; };
     })
   ];
 }
