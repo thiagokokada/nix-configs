@@ -3,16 +3,15 @@
     "doom-emacs": {
       "flake": false,
       "locked": {
-        "lastModified": 1656519163,
-        "narHash": "sha256-iNg3DnQJB6iIWLBsFGcloFHwwQUgrJeIQeNJHD7nwIo=",
+        "lastModified": 1657023376,
+        "narHash": "sha256-huKtA8twjW3GkfA6NRvCjWMWUEN58ju4sL89rRQxOes=",
         "owner": "doomemacs",
         "repo": "doomemacs",
-        "rev": "c2f8476c8641fcc9a1371d873ed3b5924952a059",
+        "rev": "9ec60d9ab9eb5d9b098e2452395156b622cce624",
         "type": "github"
       },
       "original": {
         "owner": "doomemacs",
-        "ref": "master",
         "repo": "doomemacs",
         "type": "github"
       }
@@ -43,11 +42,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1656991399,
-        "narHash": "sha256-/yriocQgmxPMwijVfkt8aEaFv65xcgnQXAtqL4vH9CU=",
+        "lastModified": 1657016837,
+        "narHash": "sha256-knx83nZ0xax6U1zR3rEOwIz2matk85kntbVEJRQYNuw=",
         "owner": "nix-community",
         "repo": "emacs-overlay",
-        "rev": "7783abca6324f2dfdf8ca7d3632c376df416bf88",
+        "rev": "beec877720e2b09b0b1a96450286459bcd7e6435",
         "type": "github"
       },
       "original": {
@@ -289,7 +288,9 @@
     },
     "nix-doom-emacs": {
       "inputs": {
-        "doom-emacs": "doom-emacs",
+        "doom-emacs": [
+          "doom-emacs"
+        ],
         "doom-snippets": "doom-snippets",
         "emacs-overlay": [
           "emacs"
@@ -368,11 +369,11 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1656754140,
-        "narHash": "sha256-8thJUtZWIimyBtkYQ0tdmmnH0yJvOaw1K5W3OgKc6/A=",
+        "lastModified": 1656947410,
+        "narHash": "sha256-htDR/PZvjUJGyrRJsVqDmXR8QeoswBaRLzHt13fd0iY=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "09c32b0bda4db98d6454e910206188e85d5b04cc",
+        "rev": "e8d47977286a44955262adbc76f2c8a66e7419d5",
         "type": "github"
       },
       "original": {
@@ -551,6 +552,7 @@
     },
     "root": {
       "inputs": {
+        "doom-emacs": "doom-emacs",
         "emacs": "emacs",
         "flake-compat": "flake-compat",
         "flake-utils": "flake-utils",
