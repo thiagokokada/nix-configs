@@ -6,6 +6,7 @@
   # Emacs overlay
   home = {
     packages = with pkgs; [
+      (run-bg-alias "em" "${config.programs.doom-emacs.package}/bin/emacs")
       # font for my config
       fira-code
       hack-font
@@ -20,28 +21,6 @@
       # shell
       shellcheck
     ];
-  };
-
-  programs.zsh = {
-    initExtra =
-      let
-        emacs = "${config.programs.doom-emacs.package}/bin/emacs";
-      in
-      ''
-        ${pkgs.lib.makeBgCmd "em" emacs}
-        et() { ${emacs} -nw "$@" }
-        emp() {
-          local p
-          for p in $@; do
-            if [[ -d "$p" ]]; then
-              touch "$p"/.projectile
-            elif [[ -f "$p" ]]; then
-              touch $(dirname "$p")/.projectile
-            fi
-          done
-          em $@
-        }
-      '';
   };
 
   programs.doom-emacs = {

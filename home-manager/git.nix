@@ -1,7 +1,10 @@
 { config, lib, pkgs, ... }:
 
 {
-  home.packages = with pkgs; [ github-cli ];
+  home.packages = with pkgs; [
+    (run-bg-alias "gk" "${config.programs.git.package}/bin/gitk")
+    github-cli
+  ];
 
   programs.git = {
     enable = true;
@@ -75,7 +78,4 @@
       rebase = { autoStash = true; };
     };
   };
-
-  programs.zsh.initExtra =
-    (pkgs.lib.makeBgCmd "gk" "${config.programs.git.package}/bin/gitk");
 }

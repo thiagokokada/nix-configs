@@ -10,7 +10,7 @@ in
     (final: prev: {
       # namespaces
       lib = prev.lib.extend (finalLib: prevLib:
-        (import ../lib { inherit (prev) pkgs lib; })
+        (import ../lib { inherit (prev) lib; })
       );
 
       unstable = import inputs.unstable {
@@ -60,6 +60,13 @@ in
           final.unstable.nixpkgs-review.override { withSandboxSupport = true; }
         else
           final.unstable.nixpkgs-review;
+
+      run-bg-alias = alias: command: prev.writeShellScriptBin alias ''
+        exec 0>&-
+        exec 1>&-
+        exec 2>&-
+        ${command} $@ &!
+      '';
     })
   ];
 }

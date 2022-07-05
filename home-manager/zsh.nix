@@ -1,6 +1,10 @@
 { config, pkgs, lib, self, ... }:
 {
-  home.packages = with pkgs; [ archivers ];
+  home.packages = with pkgs; [
+    archivers
+  ] ++ lib.optionals (!stdenv.isDarwin) [
+    (run-bg-alias "open" "${xdg-utils}/bin/xdg-open")
+  ];
 
   programs.zsh = {
     enable = true;
@@ -55,56 +59,48 @@
       zstyle ':zim:ssh' ids /dev/null
     '';
 
-    initExtra = with pkgs;
-      let
-        # macOS already has `open`
-        open = lib.optionalString (!stdenv.isDarwin) ''
-          open() { run-bg ${xdg-utils}/bin/xdg-open "$@" }
-        '';
-      in
-      ''
-        # helpers
-        run-bg() {
-          (
-            exec 0>&-
-            exec 1>&-
-            exec 2>&-
-            "$@"
-          ) &!
-        }
-        ${open}
-        get-ip() { ${curl}/bin/curl -Ss "https://ifconfig.me" }
-        get-ip!() { ${curl}/bin/curl -Ss "https://ipapi.co/$(get-ip)/yaml" }
+    initExtra = with pkgs; ''
+      # helpers
+      run-bg() {
+        (
+          exec 0>&-
+          exec 1>&-
+          exec 2>&-
+          "$@"
+        ) &!
+      }
+      get-ip() { ${curl}/bin/curl -Ss "https://ifconfig.me" }
+      get-ip!() { ${curl}/bin/curl -Ss "https://ipapi.co/$(get-ip)/yaml" }
 
-        # allow using nix-shell with zsh
-        ${pkgs.any-nix-shell}/bin/any-nix-shell zsh --info-right | source /dev/stdin
+      # allow using nix-shell with zsh
+      ${any-nix-shell}/bin/any-nix-shell zsh --info-right | source /dev/stdin
 
-        # try to correct the spelling of commands
-        setopt correct
-        # disable C-S/C-Q
-        setopt noflowcontrol
-        # disable "no matches found" check
-        unsetopt nomatch
+      # try to correct the spelling of commands
+      setopt correct
+      # disable C-S/C-Q
+      setopt noflowcontrol
+      # disable "no matches found" check
+      unsetopt nomatch
 
-        # zsh-history-substring-search
-        bindkey "$terminfo[kcuu1]" history-substring-search-up
-        bindkey "$terminfo[kcud1]" history-substring-search-down
+      # zsh-history-substring-search
+      bindkey "$terminfo[kcuu1]" history-substring-search-up
+      bindkey "$terminfo[kcud1]" history-substring-search-down
 
-        # allow ad-hoc scripts to be add to PATH locally
-        export PATH="$HOME/.local/bin:$PATH"
+      # allow ad-hoc scripts to be add to PATH locally
+      export PATH="$HOME/.local/bin:$PATH"
 
-        # source contents from ~/.zshrc.d/*.zsh
-        for file in "$HOME/.zshrc.d/"*.zsh; do
-          [[ -f "$file" ]] && source "$file"
-        done
+      # source contents from ~/.zshrc.d/*.zsh
+      for file in "$HOME/.zshrc.d/"*.zsh; do
+        [[ -f "$file" ]] && source "$file"
+      done
 
-        # avoid duplicated entries in PATH
-        typeset -U PATH
+      # avoid duplicated entries in PATH
+      typeset -U PATH
 
-        # ensure that MANPATH includes a :
-        # https://askubuntu.com/a/693612
-        export MANPATH=":$MANPATH"
-      '';
+      # ensure that MANPATH includes a :
+      # https://askubuntu.com/a/693612
+      export MANPATH=":$MANPATH"
+    '';
 
     plugins =
       let
