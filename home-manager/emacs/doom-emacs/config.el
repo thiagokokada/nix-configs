@@ -92,6 +92,11 @@
          :desc "Replace using regexp"
          "C-R" #'projectile-replace-regexp)))))
 
+;; vertico
+(after! orderless
+  ;; Enable fuzzy (flex)
+  (setq completion-styles '(orderless flex)))
+
 ;;; MAJOR MODES
 
 ;; clojure
