@@ -315,18 +315,20 @@
         "org-yt": "org-yt",
         "php-extras": "php-extras",
         "revealjs": "revealjs",
-        "rotate-text": "rotate-text"
+        "rotate-text": "rotate-text",
+        "sln-mode": "sln-mode"
       },
       "locked": {
-        "lastModified": 1656689849,
-        "narHash": "sha256-0LdzPqMzwVaTI6NC/+khOUN5FAvE4mIJAsESW8s/Nsc=",
-        "owner": "nix-community",
+        "lastModified": 1657145008,
+        "narHash": "sha256-ifAxPpMuPxsj3ycaPsB6hHJ7Y9inrM9cgJZVEUHFVUw=",
+        "owner": "thiagokokada",
         "repo": "nix-doom-emacs",
-        "rev": "4717e4e835a424258e526888b3a1f475bfe98805",
+        "rev": "3aaef8392ca9538c98621b415f1b946d94c1fa54",
         "type": "github"
       },
       "original": {
-        "owner": "nix-community",
+        "owner": "thiagokokada",
+        "ref": "use-init-directory-emacs-29",
         "repo": "nix-doom-emacs",
         "type": "github"
       }
@@ -594,6 +596,22 @@
       "original": {
         "owner": "debug-ito",
         "repo": "rotate-text.el",
+        "type": "github"
+      }
+    },
+    "sln-mode": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1423727528,
+        "narHash": "sha256-XqkqPyEJuTtFslOz1fpTf/Klbd/zA7IGpzpmum/MGao=",
+        "owner": "sensorflo",
+        "repo": "sln-mode",
+        "rev": "0f91d1b957c7d2a7bab9278ec57b54d57f1dbd9c",
+        "type": "github"
+      },
+      "original": {
+        "owner": "sensorflo",
+        "repo": "sln-mode",
         "type": "github"
       }
     },

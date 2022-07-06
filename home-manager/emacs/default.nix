@@ -20,7 +20,7 @@
     doomPrivateDir = ./doom-emacs;
     emacsPackage = with pkgs;
       if stdenv.isDarwin then
-        emacsNativeComp
+        emacsGitNativeComp
       else emacsPgtkNativeComp;
     emacsPackagesOverlay = final: prev: {
       ts-fold = prev.ts;

@@ -53,7 +53,7 @@
       flake = false;
     };
     nix-doom-emacs = {
-      url = "github:nix-community/nix-doom-emacs";
+      url = "github:thiagokokada/nix-doom-emacs/use-init-directory-emacs-29";
       inputs.nixpkgs.follows = "unstable";
       inputs.doom-emacs.follows = "doom-emacs";
       inputs.emacs-overlay.follows = "emacs";

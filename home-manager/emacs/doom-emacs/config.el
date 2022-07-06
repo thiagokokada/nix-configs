@@ -57,6 +57,10 @@
 ;; company
 (setq company-selection-wrap-around t)
 
+;; enable smooth scrolling
+(when (> emacs-major-version 29)
+  (pixel-scroll-precision-mode))
+
 ;; dired
 (add-hook! dired-mode
   ;; Compress/Uncompress tar files
