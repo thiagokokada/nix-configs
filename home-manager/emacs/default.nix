@@ -5,7 +5,6 @@
 
   # Emacs overlay
   home = {
-    file.".emacs.d/early-init.el".source = ./early-init.el;
     packages = with pkgs; [
       (run-bg-alias "em" "${config.programs.doom-emacs.package}/bin/emacs")
       (writeShellScriptBin "et" "${config.programs.doom-emacs.package}/bin/emacs -nw $@")
