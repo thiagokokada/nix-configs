@@ -13,15 +13,6 @@
       fira-code
       hack-font
       noto-fonts
-
-      # markdown mode
-      pandoc
-
-      # lsp
-      unstable.rnix-lsp
-
-      # shell
-      shellcheck
     ];
   };
 

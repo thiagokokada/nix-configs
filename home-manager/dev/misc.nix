@@ -6,5 +6,8 @@
     expect
     gcc
     nim
+    pandoc
+    shellcheck
+    unstable.rnix-lsp
   ];
 }
