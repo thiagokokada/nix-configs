@@ -58,6 +58,7 @@
       inputs.doom-emacs.follows = "doom-emacs";
       inputs.emacs-overlay.follows = "emacs";
       inputs.flake-utils.follows = "flake-utils";
+      inputs.flake-compat.follows = "flake-compat";
     };
 
     # nnn plugins

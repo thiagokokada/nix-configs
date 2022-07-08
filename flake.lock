@@ -71,6 +71,22 @@
         "type": "github"
       }
     },
+    "evil-escape": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1588439096,
+        "narHash": "sha256-aB2Ge5o/93B18tPf4fN1c+O46CNh/nOqwLJbox4c8Gw=",
+        "owner": "hlissner",
+        "repo": "evil-escape",
+        "rev": "819f1ee1cf3f69a1ae920e6004f2c0baeebbe077",
+        "type": "github"
+      },
+      "original": {
+        "owner": "hlissner",
+        "repo": "evil-escape",
+        "type": "github"
+      }
+    },
     "evil-markdown": {
       "flake": false,
       "locked": {
@@ -296,10 +312,14 @@
           "emacs"
         ],
         "emacs-so-long": "emacs-so-long",
+        "evil-escape": "evil-escape",
         "evil-markdown": "evil-markdown",
         "evil-org-mode": "evil-org-mode",
         "evil-quick-diff": "evil-quick-diff",
         "explain-pause-mode": "explain-pause-mode",
+        "flake-compat": [
+          "flake-compat"
+        ],
         "flake-utils": [
           "flake-utils"
         ],
@@ -316,14 +336,16 @@
         "php-extras": "php-extras",
         "revealjs": "revealjs",
         "rotate-text": "rotate-text",
-        "sln-mode": "sln-mode"
+        "sln-mode": "sln-mode",
+        "ts-fold": "ts-fold",
+        "ws-butler": "ws-butler"
       },
       "locked": {
-        "lastModified": 1657145008,
-        "narHash": "sha256-ifAxPpMuPxsj3ycaPsB6hHJ7Y9inrM9cgJZVEUHFVUw=",
+        "lastModified": 1657319257,
+        "narHash": "sha256-CN7K1YJ6qtiYe6C4O5EetrobsMzflvcnIy4dxhFDbCk=",
         "owner": "thiagokokada",
         "repo": "nix-doom-emacs",
-        "rev": "3aaef8392ca9538c98621b415f1b946d94c1fa54",
+        "rev": "14c1ba4a1d84d94415dd3e5c112e1e4f9ab261e7",
         "type": "github"
       },
       "original": {
@@ -437,11 +459,11 @@
     "org": {
       "flake": false,
       "locked": {
-        "lastModified": 1656574173,
-        "narHash": "sha256-Qbsa1b/S26ZudQ0XUtV1YB1pVVd7d9ZIo3UFYTQhe5o=",
+        "lastModified": 1657029612,
+        "narHash": "sha256-enwqnerhZVpyQbeX0uKdZ4IVmZieq9ZgCbkDWy1HlNQ=",
         "owner": "emacs-straight",
         "repo": "org-mode",
-        "rev": "381a2ae4dd439b5f246873ae6630c1e303c35287",
+        "rev": "71359820221ec18d27fab28403d4fd3537ca0491",
         "type": "github"
       },
       "original": {
@@ -453,17 +475,17 @@
     "org-contrib": {
       "flake": false,
       "locked": {
-        "lastModified": 1654411077,
-        "narHash": "sha256-ywXAI+s+D701PvuDEQljDmFWrTPymqustSYVyf3NYRk=",
-        "ref": "refs/heads/master",
-        "rev": "c6aef31ccfc7c4418c3b51e98f7c3bd8e255f5e6",
-        "revCount": 2622,
-        "type": "git",
-        "url": "https://git.sr.ht/~bzg/org-contrib"
+        "lastModified": 1652646857,
+        "narHash": "sha256-IWIShWyVnbwXqGLQaDNvJ0KoepxhIrXWTjPyGPEkQ14=",
+        "owner": "emacsmirror",
+        "repo": "org-contrib",
+        "rev": "c1e0980fd7a57ca2042fd78acfb1dfb5c3bc03fa",
+        "type": "github"
       },
       "original": {
-        "type": "git",
-        "url": "https://git.sr.ht/~bzg/org-contrib"
+        "owner": "emacsmirror",
+        "repo": "org-contrib",
+        "type": "github"
       }
     },
     "org-yt": {
@@ -615,6 +637,22 @@
         "type": "github"
       }
     },
+    "ts-fold": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1657091443,
+        "narHash": "sha256-yr/aW7sYoOxajVb2gTgRrwaDwwg2gtHuP3wdrwjiaxo=",
+        "owner": "jcs-elpa",
+        "repo": "ts-fold",
+        "rev": "dcd5b9fe5c2cb72261ff6c714beb8d0198b8522b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "jcs-elpa",
+        "repo": "ts-fold",
+        "type": "github"
+      }
+    },
     "unstable": {
       "locked": {
         "lastModified": 1657020478,
@@ -643,6 +681,22 @@
       "original": {
         "owner": "numtide",
         "repo": "flake-utils",
+        "type": "github"
+      }
+    },
+    "ws-butler": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1634511126,
+        "narHash": "sha256-c0y0ZPtxxICPk+eaNbbQf6t+FRCliNY54CCz9QHQ8ZI=",
+        "owner": "hlissner",
+        "repo": "ws-butler",
+        "rev": "572a10c11b6cb88293de48acbb59a059d36f9ba5",
+        "type": "github"
+      },
+      "original": {
+        "owner": "hlissner",
+        "repo": "ws-butler",
         "type": "github"
       }
     },

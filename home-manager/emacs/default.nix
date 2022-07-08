@@ -22,10 +22,6 @@
       if stdenv.isDarwin then
         emacsGitNativeComp
       else emacsPgtkNativeComp;
-    emacsPackagesOverlay = final: prev: {
-      ts-fold = prev.ts;
-      tree-sitter-langs = prev.tree-sitter-langs.override { plugins = pkgs.unstable.tree-sitter.allGrammars; };
-    };
     extraPackages = with pkgs; [
       fd
       findutils
