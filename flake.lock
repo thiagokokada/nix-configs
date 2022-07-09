@@ -339,11 +339,11 @@
         "ws-butler": "ws-butler"
       },
       "locked": {
-        "lastModified": 1657319257,
-        "narHash": "sha256-CN7K1YJ6qtiYe6C4O5EetrobsMzflvcnIy4dxhFDbCk=",
+        "lastModified": 1657364413,
+        "narHash": "sha256-WTXLTecTk7EX/omHAshgPsKQudIqdeZamJO4WvzL5JM=",
         "owner": "thiagokokada",
         "repo": "nix-doom-emacs",
-        "rev": "14c1ba4a1d84d94415dd3e5c112e1e4f9ab261e7",
+        "rev": "6118a0c7159d741aa055ea0ddd498c5f3c897d33",
         "type": "github"
       },
       "original": {

@@ -22,10 +22,6 @@
       if stdenv.isDarwin then
         emacsGitNativeComp
       else emacsPgtkNativeComp;
-    # FIXME: why `tsc` is not being added to `load-path`?
-    extraConfig = with pkgs.emacsPackagesFor emacsPackage; ''
-      (add-to-list 'load-path "${tsc}/share/emacs/site-lisp/elpa/${tsc.name}/")
-    '';
     extraPackages = with pkgs; [
       fd
       findutils
