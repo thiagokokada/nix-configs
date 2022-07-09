@@ -8,6 +8,5 @@
     nim
     pandoc
     shellcheck
-    unstable.rnix-lsp
   ];
 }
