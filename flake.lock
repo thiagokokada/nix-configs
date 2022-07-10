@@ -339,16 +339,15 @@
         "ws-butler": "ws-butler"
       },
       "locked": {
-        "lastModified": 1657364413,
-        "narHash": "sha256-WTXLTecTk7EX/omHAshgPsKQudIqdeZamJO4WvzL5JM=",
-        "owner": "thiagokokada",
+        "lastModified": 1657487012,
+        "narHash": "sha256-f5Jif4H0MRO/WTYmyU8YXS0692xmnybQQR/uk7MAbwA=",
+        "owner": "nix-community",
         "repo": "nix-doom-emacs",
-        "rev": "6118a0c7159d741aa055ea0ddd498c5f3c897d33",
+        "rev": "fb38f1afc5dc194d3b68800817182bd867463e40",
         "type": "github"
       },
       "original": {
-        "owner": "thiagokokada",
-        "ref": "use-init-directory-emacs-29",
+        "owner": "nix-community",
         "repo": "nix-doom-emacs",
         "type": "github"
       }
