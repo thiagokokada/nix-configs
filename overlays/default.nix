@@ -23,21 +23,7 @@ in
       wallpapers = prev.callPackage ../packages/wallpapers { };
 
       # custom packages
-      arandr = prev.arandr.overrideAttrs (oldAttrs: {
-        patchPhase = ''
-          runHook prePatch
-
-          # Not sure why `patches` attribute is not working
-          # I am assuming it is because upstream overwrote this phase
-          # https://github.com/NixOS/nixpkgs/blob/e6d5267332e2206d6fb2866d7d9b91bfe41f2748/pkgs/tools/X11/arandr/default.nix#L19-L21
-          for p in $patches; do
-            patch -p1 < $p
-          done
-
-          ${oldAttrs.patchPhase or ""}
-
-          runHook postPatch
-        '';
+      arandr = final.unstable.arandr.overrideAttrs (oldAttrs: {
         patches = (oldAttrs.patches or [ ]) ++ [
           (prev.fetchpatch {
             name = "MR4_add_support_for_setting_refresh_rate.patch";
