@@ -4,22 +4,34 @@ let
   nvidia-offload = lib.findFirst (p: lib.isDerivation p && p.name == "nvidia-offload")
     null
     config.environment.systemPackages;
+  import-osu-songs = pkgs.writeShellApplication {
+    name = "import-osu-songs";
+    runtimeInputs = [ pkgs.coreutils ];
+    text = ''
+      declare -r osu_song_dir="$HOME/.osu/drive_c/osu/Songs"
+      mkdir -p "$osu_song_dir"
+      cp -v "''${@}" "$osu_song_dir"
+    '';
+  };
 in
 {
   # Fix: MESA-INTEL: warning: Performance support disabled, consider sysctl dev.i915.perf_stream_paranoid=0
   boot.kernelParams = [ "dev.i915.perf_stream_paranoid=0" ];
 
-  environment.systemPackages = with pkgs; [
-    gaming.osu-stable
-    piper
-    unstable.lutris
-    unstable.osu-lazer
-    unstable.retroarchFull
-  ];
+  environment = {
+    systemPackages = with pkgs; [
+      gaming.osu-stable
+      import-osu-songs
+      piper
+      unstable.lutris
+      unstable.osu-lazer
+      unstable.retroarchFull
+    ];
 
-  # Use nvidia-offload script in gamemode
-  environment.variables.GAMEMODERUNEXEC = lib.mkIf (nvidia-offload != null)
-    "${nvidia-offload}/bin/nvidia-offload";
+    # Use nvidia-offload script in gamemode
+    variables.GAMEMODERUNEXEC = lib.mkIf (nvidia-offload != null)
+      "${nvidia-offload}/bin/nvidia-offload";
+  };
 
   programs = {
     gamemode = {
