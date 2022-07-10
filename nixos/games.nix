@@ -42,8 +42,16 @@ in
     };
   };
 
-  # Alternative driver for Xbox One/Series S/Series X controllers
-  hardware.xpadneo.enable = true;
+  hardware = {
+    # Enable opentabletdriver (for osu!)
+    opentabletdriver = {
+      enable = true;
+      package = pkgs.unstable.opentabletdriver;
+    };
+
+    # Alternative driver for Xbox One/Series S/Series X controllers
+    xpadneo.enable = true;
+  };
 
   services = {
     # Enable ratbagd (i.e.: piper) for Logitech devices
