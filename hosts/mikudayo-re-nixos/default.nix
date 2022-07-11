@@ -62,19 +62,6 @@ in
   # I think the usage of NVIDIA drivers is making lidSwitchDocked not working correctly
   services.logind.lidSwitchExternalPower = "ignore";
 
-  # Reinit audio after suspend, since sometimes the audio devices "disappears"
-  systemd.services.reinit-audio-after-suspend = rec {
-    description = "Reinit audio after suspend";
-    serviceConfig = {
-      ExecStart = "-${pkgs.alsa-utils}/bin/alsactl init";
-      Type = "simple";
-    };
-    wantedBy = [ "suspend.target" "hibernate.target" "hybrid-sleep.target" "suspend-than-hibernate.target" ];
-    unitConfig = {
-      After = wantedBy;
-    };
-  };
-
   # Use ultrawide wallpaper
   home-manager.users.${config.meta.username}.theme.wallpaper.path = pkgs.wallpapers.hatsune-miku_stylized-ultrawide;
 
