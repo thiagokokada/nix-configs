@@ -113,7 +113,7 @@
     };
   };
 
-  outputs = { self, nixpkgs, ... }@inputs:
+  outputs = { self, nixpkgs, flake-utils, ... }@inputs:
     let
       inherit (import ./lib/flake.nix inputs) buildGHActionsYAML mkNixOSConfig mkDarwinConfig mkHomeConfig;
       inherit (import ./lib/attrsets.nix { inherit (nixpkgs) lib; }) recursiveMergeAttrs;
@@ -150,5 +150,20 @@
       (buildGHActionsYAML "build-and-cache")
       (buildGHActionsYAML "update-flakes")
       (buildGHActionsYAML "update-flakes-darwin")
-    ]); # END recursiveMergeAttrs
+    ])
+    // flake-utils.lib.eachDefaultSystem (system:
+      let
+        pkgs = import nixpkgs { inherit system; };
+      in
+      {
+        devShells.default = pkgs.mkShell {
+          buildInputs = with pkgs; [
+            coreutils
+            findutils
+            gnumake
+            nixpkgs-fmt
+            nixFlakes
+          ];
+        };
+      });
 }
