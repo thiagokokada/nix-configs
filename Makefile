@@ -25,20 +25,10 @@ validate:
 	nix flake check . $(NIX_FLAGS)
 
 format-check:
-	find -name '*.nix' \
-		! -name 'hardware-configuration.nix' \
-		! -name 'cachix.nix' \
-		! -path './modules/home-manager/*' \
-		! -path './modules/nixos/*' \
-		-exec nixpkgs-fmt --check {} \+
+	nix run '.#format-check' $(NIX_FLAGS)
 
 format:
-	find -name '*.nix' \
-		! -name 'hardware-configuration.nix' \
-		! -name 'cachix.nix' \
-		! -path './modules/home-manager/*' \
-		! -path './modules/nixos/*' \
-		-exec nixpkgs-fmt {} \+
+	nix run '.#format' $(NIX_FLAGS)
 
 .github/workflows/%.yml: actions/*.nix
 	nix run '.#githubActions/$*' $(NIX_FLAGS) | tee $@
@@ -57,8 +47,8 @@ build-vm-%:
 build-hm-%:
 	nix build '.#homeConfigurations.$*.activationPackage' $(NIX_FLAGS)
 
-run-vm-%: build-vm-%
-	QEMU_OPTS="-cpu host -smp 2 -m 4096M -machine type=q35,accel=kvm" ./result/bin/run-$*-vm
+run-vm-%:
+	nix run '.#nixosVMs/$*' $(NIX_FLAGS)
 
 # Local Variables:
 # mode: Makefile

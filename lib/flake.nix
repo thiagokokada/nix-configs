@@ -18,8 +18,25 @@ in
       apps."githubActions/${name}" = mkApp {
         drv = self.outputs.githubActions.${system}.${name};
       };
-    }
-  );
+    });
+
+  mkRunCmd =
+    { name
+    , text
+    , deps ? pkgs: with pkgs; [ coreutils findutils nixpkgs-fmt nixFlakes ]
+    }: eachDefaultSystem (system:
+    let
+      pkgs = import nixpkgs { inherit system; };
+    in
+    {
+      apps.${name} = mkApp {
+        drv = pkgs.writeShellApplication {
+          inherit name text;
+          runtimeInputs = (deps pkgs);
+        };
+        exePath = "/bin/${name}";
+      };
+    });
 
   mkNixOSConfig =
     { hostname

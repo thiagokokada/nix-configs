@@ -115,8 +115,9 @@
 
   outputs = { self, nixpkgs, flake-utils, ... }@inputs:
     let
+      inherit (flake-utils.lib) eachDefaultSystem;
       inherit (import ./lib/attrsets.nix { inherit (nixpkgs) lib; }) recursiveMergeAttrs;
-      inherit (import ./lib/flake.nix inputs) buildGHActionsYAML mkNixOSConfig mkDarwinConfig mkHomeConfig;
+      inherit (import ./lib/flake.nix inputs) buildGHActionsYAML mkRunCmd mkNixOSConfig mkDarwinConfig mkHomeConfig;
     in
     (recursiveMergeAttrs [
       {
@@ -147,24 +148,49 @@
         homePath = "/Users";
       })
 
+      # Commands
+      (mkRunCmd {
+        name = "format-check";
+        text = ''
+          find . -name '*.nix' \
+            ! -name 'hardware-configuration.nix' \
+            ! -name 'cachix.nix' \
+            ! -path './modules/home-manager/*' \
+            ! -path './modules/nixos/*' \
+            -exec nixpkgs-fmt --check {} \+
+        '';
+      })
+      (mkRunCmd {
+        name = "format";
+        text = ''
+          find . -name '*.nix' \
+            ! -name 'hardware-configuration.nix' \
+            ! -name 'cachix.nix' \
+            ! -path './modules/home-manager/*' \
+            ! -path './modules/nixos/*' \
+            -exec nixpkgs-fmt {} \+
+        '';
+      })
+
       # GitHub Actions
       (buildGHActionsYAML "build-and-cache")
       (buildGHActionsYAML "update-flakes")
       (buildGHActionsYAML "update-flakes-darwin")
-    ])
-    // flake-utils.lib.eachDefaultSystem (system:
-      let
-        pkgs = import nixpkgs { inherit system; };
-      in
-      {
-        devShells.default = pkgs.mkShell {
-          buildInputs = with pkgs; [
-            coreutils
-            findutils
-            gnumake
-            nixpkgs-fmt
-            nixFlakes
-          ];
-        };
-      });
+
+      (eachDefaultSystem (system:
+        let
+          pkgs = import nixpkgs { inherit system; };
+        in
+        {
+          devShells.default = pkgs.mkShell {
+            buildInputs = with pkgs; [
+              coreutils
+              findutils
+              gnumake
+              nixpkgs-fmt
+              nixFlakes
+            ];
+          };
+        }))
+    ]);
 }
