@@ -315,7 +315,9 @@
         "evil-org-mode": "evil-org-mode",
         "evil-quick-diff": "evil-quick-diff",
         "explain-pause-mode": "explain-pause-mode",
-        "flake-compat": "flake-compat",
+        "flake-compat": [
+          "flake-compat"
+        ],
         "flake-utils": [
           "flake-utils"
         ],
@@ -576,6 +578,7 @@
       "inputs": {
         "doom-emacs": "doom-emacs",
         "emacs": "emacs",
+        "flake-compat": "flake-compat",
         "flake-utils": "flake-utils",
         "hardware": "hardware",
         "home": "home",

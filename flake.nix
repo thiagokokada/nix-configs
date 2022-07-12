@@ -24,6 +24,10 @@
     };
 
     # helpers
+    flake-compat = {
+      url = "github:edolstra/flake-compat";
+      flake = false;
+    };
     flake-utils.url = "github:numtide/flake-utils";
 
     # nix-alien
@@ -49,6 +53,7 @@
       inputs.doom-emacs.follows = "doom-emacs";
       inputs.emacs-overlay.follows = "emacs";
       inputs.flake-utils.follows = "flake-utils";
+      inputs.flake-compat.follows = "flake-compat";
     };
 
     # nnn plugins
