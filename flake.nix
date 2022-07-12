@@ -113,9 +113,9 @@
     };
   };
 
-  outputs = { self, nixpkgs, flake-utils, ... }@inputs:
+  outputs = { self, nixpkgs, ... }@inputs:
     let
-      inherit (import ./lib/flake.nix inputs) buildGHActionsYAMLFor mkNixOSConfig mkDarwinConfig mkHomeConfig;
+      inherit (import ./lib/flake.nix inputs) buildGHActionsYAML mkNixOSConfig mkDarwinConfig mkHomeConfig;
       inherit (import ./lib/attrsets.nix { inherit (nixpkgs) lib; }) recursiveMergeAttrs;
     in
     (recursiveMergeAttrs [
@@ -128,39 +128,27 @@
           };
         };
       }
+      # NixOS configs
       (mkNixOSConfig { hostname = "miku-nixos"; })
       (mkNixOSConfig { hostname = "mikudayo-re-nixos"; })
       (mkNixOSConfig { hostname = "miku-vm"; })
       (mkNixOSConfig { hostname = "mirai-vps"; })
+
+      # nix-darwin configs
       (mkDarwinConfig { hostname = "miku-macos-vm"; })
-      (mkHomeConfig { name = "home-linux"; })
+
+      # Home-Manager configs
+      (mkHomeConfig { hostname = "home-linux"; })
       (mkHomeConfig {
-        name = "home-macos";
+        hostname = "home-macos";
         configuration = ./home-manager/macos.nix;
         system = "x86_64-darwin";
         homePath = "/Users";
       })
-      (flake-utils.lib.eachDefaultSystem (system:
-        let
-          pkgs = import nixpkgs { inherit system; };
-          buildGHActionsYAML = buildGHActionsYAMLFor pkgs;
-        in
-        {
-          githubActions = recursiveMergeAttrs [
-            (buildGHActionsYAML "build-and-cache")
-            (buildGHActionsYAML "update-flakes")
-            (buildGHActionsYAML "update-flakes-darwin")
-          ];
 
-          devShells.default = pkgs.mkShell {
-            buildInputs = with pkgs; [
-              coreutils
-              findutils
-              gnumake
-              nixpkgs-fmt
-              nixFlakes
-            ];
-          };
-        }))
+      # GitHub Actions
+      (buildGHActionsYAML "build-and-cache")
+      (buildGHActionsYAML "update-flakes")
+      (buildGHActionsYAML "update-flakes-darwin")
     ]); # END recursiveMergeAttrs
 }

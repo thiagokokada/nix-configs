@@ -4,7 +4,6 @@
 .PHONY: all gh-actions clean update format format-check install activate run-vm-% build-% build-vm-% build-hm-% run-vm-%
 EXTRA_FLAGS :=
 NIX_FLAGS := --experimental-features 'nix-command flakes' $(EXTRA_FLAGS)
-PLATFORM := $(shell nix-instantiate --eval -E 'builtins.currentSystem' --json | jq -r)
 
 ifeq ($(shell uname),Darwin)
 all: all-macos
@@ -42,7 +41,7 @@ format:
 		-exec nixpkgs-fmt {} \+
 
 .github/workflows/%.yml: actions/*.nix
-	nix run '.#githubActions.$(PLATFORM).$*' $(NIX_FLAGS) | tee $@
+	nix run '.#githubActions/$*' $(NIX_FLAGS) | tee $@
 
 gh-actions: .github/workflows/build-and-cache.yml .github/workflows/update-flakes.yml .github/workflows/update-flakes-darwin.yml
 

@@ -1,16 +1,25 @@
-{ self, nixpkgs, nix-darwin, home, ... }@inputs:
+{ self, nixpkgs, nix-darwin, home, flake-utils, ... }@inputs:
 
+let
+  inherit (flake-utils.lib) eachDefaultSystem mkApp;
+in
 {
-  buildGHActionsYAMLFor = pkgs: name:
+  buildGHActionsYAML = name: eachDefaultSystem (system:
     let
+      pkgs = import nixpkgs { inherit system; };
       file = import (../actions/${name}.nix);
       json = builtins.toJSON file;
     in
     {
-      ${name} = pkgs.writeShellScriptBin name ''
+      githubActions.${name} = pkgs.writeShellScriptBin name ''
         echo ${pkgs.lib.escapeShellArg json} | ${pkgs.yj}/bin/yj -jy;
       '';
-    };
+
+      apps."githubActions/${name}" = mkApp {
+        drv = self.outputs.githubActions.${system}.${name};
+      };
+    }
+  );
 
   mkNixOSConfig =
     { hostname
@@ -25,6 +34,19 @@
         specialArgs = {
           inherit system;
           flake = self;
+        };
+      };
+
+      apps.${system} = {
+        "nixosActivations/${hostname}" = mkApp {
+          drv = self.outputs.nixosConfigurations.${hostname}.config.system.build.toplevel;
+          exePath = "/activate";
+        };
+
+        # QEMU_OPTS="-cpu host -smp 2 -m 4096M -machine type=q35,accel=kvm" nix run .#apps.nixosVMs/<hostname>
+        "nixosVMs/${hostname}" = mkApp {
+          drv = self.outputs.nixosConfigurations.${hostname}.config.system.build.vm;
+          exePath = "/bin/run-${hostname}-vm";
         };
       };
     };
@@ -44,11 +66,16 @@
           flake = self;
         };
       };
+
+      apps.${system}."darwinActivations/${hostname}" = mkApp {
+        drv = self.outputs.darwinConfigurations.${hostname}.system;
+        exePath = "/activate";
+      };
     };
 
   # https://github.com/nix-community/home-manager/issues/1510
   mkHomeConfig =
-    { name
+    { hostname
     , username ? "thiagoko"
     , homePath ? "/home"
     , configPosfix ? "Projects/nix-configs"
@@ -58,7 +85,7 @@
     , homeManagerConfiguration ? home.lib.homeManagerConfiguration
     }:
     {
-      homeConfigurations.${name} = homeManagerConfiguration rec {
+      homeConfigurations.${hostname} = homeManagerConfiguration rec {
         inherit username configuration system;
         homeDirectory = "${homePath}/${username}";
         stateVersion = "22.05";
@@ -79,6 +106,11 @@
             };
           };
         };
+      };
+
+      apps.${system}."homeActivations/${hostname}" = mkApp {
+        drv = self.outputs.homeConfigurations.${hostname}.activationPackage;
+        exePath = "/activate";
       };
     };
 }
