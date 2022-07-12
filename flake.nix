@@ -115,8 +115,8 @@
 
   outputs = { self, nixpkgs, flake-utils, ... }@inputs:
     let
-      inherit (import ./lib/flake.nix inputs) buildGHActionsYAML mkNixOSConfig mkDarwinConfig mkHomeConfig;
       inherit (import ./lib/attrsets.nix { inherit (nixpkgs) lib; }) recursiveMergeAttrs;
+      inherit (import ./lib/flake.nix inputs) buildGHActionsYAML mkNixOSConfig mkDarwinConfig mkHomeConfig;
     in
     (recursiveMergeAttrs [
       {
@@ -128,6 +128,7 @@
           };
         };
       }
+
       # NixOS configs
       (mkNixOSConfig { hostname = "miku-nixos"; })
       (mkNixOSConfig { hostname = "mikudayo-re-nixos"; })

@@ -43,11 +43,14 @@ in
           exePath = "/activate";
         };
 
-        # QEMU_OPTS="-cpu host -smp 2 -m 4096M -machine type=q35,accel=kvm" nix run .#apps.nixosVMs/<hostname>
-        "nixosVMs/${hostname}" = mkApp {
-          drv = self.outputs.nixosConfigurations.${hostname}.config.system.build.vm;
-          exePath = "/bin/run-${hostname}-vm";
-        };
+        "nixosVMs/${hostname}" = let pkgs = import nixpkgs { inherit system; }; in
+          mkApp {
+            drv = pkgs.writeShellScriptBin "run-${hostname}-vm" ''
+              env QEMU_OPTS="''${QEMU_OPTS:--cpu host -smp 4 -m 4096M -machine type=q35}" \
+                ${self.outputs.nixosConfigurations.${hostname}.config.system.build.vm}/bin/run-${hostname}-vm
+            '';
+            exePath = "/bin/run-${hostname}-vm";
+          };
       };
     };
 
