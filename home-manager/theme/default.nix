@@ -75,6 +75,7 @@
       "Net/IconThemeName" = gtk.iconTheme.name;
       "Net/ThemeName" = gtk.theme.name;
       "Gtk/CursorThemeName" = xsession.pointerCursor.name;
+    } // lib.optionalAttrs (super ? fonts.fontconfig) {
       # Applications like Java/Wine doesn't use Fontconfig settings,
       # but uses it from here
       "Xft/Hinting" = super.fonts.fontconfig.hinting.enable;

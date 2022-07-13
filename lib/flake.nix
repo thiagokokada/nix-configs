@@ -126,14 +126,6 @@ in
             device.type = deviceType;
             meta.username = username;
             meta.configPath = "${homeDirectory}/${configPosfix}";
-            fonts.fontconfig = {
-              antialias = true;
-              hinting = {
-                enable = true;
-                style = "hintslight";
-              };
-              subpixel.lcdfilter = "rgb";
-            };
           };
         };
       };
