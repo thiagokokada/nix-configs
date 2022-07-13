@@ -57,7 +57,7 @@ in
     name = "Building nix-darwin configs";
     run =
       let
-        buildNixDarwinConfig = (h: "nix build '#darwinConfigurations.${h}.system'");
+        buildNixDarwinConfig = (h: "nix build '.#darwinConfigurations.${h}.system'");
       in
       builtins.concatStringsSep "\n" (map buildNixDarwinConfig hostnames);
   };
@@ -65,7 +65,7 @@ in
     name = "Building NixOS configs";
     run =
       let
-        buildNixOSConfig = (h: "nix build '#nixosConfigurations.${h}.config.system.build.toplevel'");
+        buildNixOSConfig = (h: "nix build '.#nixosConfigurations.${h}.config.system.build.toplevel'");
       in
       builtins.concatStringsSep "\n" (map buildNixOSConfig hostnames);
   };
@@ -73,7 +73,7 @@ in
     name = "Building Home-Manager configs";
     run =
       let
-        buildHMConfig = (h: "nix build '#homeConfigurations.${h}.activationPackage'");
+        buildHMConfig = (h: "nix build '.#homeConfigurations.${h}.activationPackage'");
       in
       builtins.concatStringsSep "\n" (map buildHMConfig hostnames);
   };
