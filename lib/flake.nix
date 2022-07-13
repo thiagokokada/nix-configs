@@ -4,19 +4,29 @@ let
   inherit (flake-utils.lib) eachDefaultSystem mkApp;
 in
 {
-  buildGHActionsYAML = name: eachDefaultSystem (system:
+  mkGHActionsYAMLs = names: eachDefaultSystem (system:
     let
       pkgs = import nixpkgs { inherit system; };
-      file = import (../actions/${name}.nix);
-      json = builtins.toJSON file;
+      mkGHActionsYAML = name:
+        let
+          file = import (../actions/${name}.nix);
+          json = builtins.toJSON file;
+        in
+        pkgs.runCommand name { } ''
+          mkdir -p $out
+          echo ${pkgs.lib.escapeShellArg json} | ${pkgs.yj}/bin/yj -jy > $out/${name}.yml
+        '';
+      ghActionsYAMLs = (map mkGHActionsYAML names);
     in
     {
-      githubActions.${name} = pkgs.writeShellScriptBin name ''
-        echo ${pkgs.lib.escapeShellArg json} | ${pkgs.yj}/bin/yj -jy;
-      '';
-
-      apps."githubActions/${name}" = mkApp {
-        drv = self.outputs.githubActions.${system}.${name};
+      apps.githubActions = mkApp {
+        drv = pkgs.writeShellScriptBin "generate-gh-actions" ''
+          for dir in ${builtins.toString ghActionsYAMLs}; do
+            cp -f $dir/*.yml .github/workflows/
+          done
+          echo Done!
+        '';
+        exePath = "/bin/generate-gh-actions";
       };
     });
 

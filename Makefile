@@ -30,10 +30,8 @@ format-check:
 format:
 	nix run '.#format' $(NIX_FLAGS)
 
-.github/workflows/%.yml: actions/*.nix
-	nix run '.#githubActions/$*' $(NIX_FLAGS) | tee $@
-
-gh-actions: .github/workflows/build-and-cache.yml .github/workflows/update-flakes.yml .github/workflows/update-flakes-darwin.yml
+gh-actions:
+	nix run '.#githubActions' $(NIX_FLAGS)
 
 build-%:
 	nix build '.#nixosConfigurations.$*.config.system.build.toplevel' $(NIX_FLAGS)

@@ -117,7 +117,7 @@
     let
       inherit (flake-utils.lib) eachDefaultSystem;
       inherit (import ./lib/attrsets.nix { inherit (nixpkgs) lib; }) recursiveMergeAttrs;
-      inherit (import ./lib/flake.nix inputs) buildGHActionsYAML mkRunCmd mkNixOSConfig mkDarwinConfig mkHomeConfig;
+      inherit (import ./lib/flake.nix inputs) mkGHActionsYAMLs mkRunCmd mkNixOSConfig mkDarwinConfig mkHomeConfig;
     in
     (recursiveMergeAttrs [
       {
@@ -173,9 +173,11 @@
       })
 
       # GitHub Actions
-      (buildGHActionsYAML "build-and-cache")
-      (buildGHActionsYAML "update-flakes")
-      (buildGHActionsYAML "update-flakes-darwin")
+      (mkGHActionsYAMLs [
+        "build-and-cache"
+        "update-flakes"
+        "update-flakes-darwin"
+      ])
 
       (eachDefaultSystem (system:
         let
