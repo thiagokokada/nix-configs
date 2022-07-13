@@ -16,7 +16,8 @@ in
         setDefaultGitBranchStep
         checkNixStep
         validateFlakesStep
-        (buildAllForSystemStep "linux")
+        (buildNixOSConfigs { })
+        (buildHomeManagerConfigs { })
       ];
     };
     build-macos = {
@@ -26,7 +27,8 @@ in
         installNixActionStep
         cachixActionStep
         setDefaultGitBranchStep
-        (buildAllForSystemStep "macos")
+        (buildNixDarwinConfigs { })
+        (buildHomeManagerConfigs { inherit (constants.HomeManager.macos) hostnames; })
       ];
     };
   };

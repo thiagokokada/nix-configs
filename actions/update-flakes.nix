@@ -17,7 +17,8 @@ in
         cachixActionStep
         updateFlakeLockStep
         setDefaultGitBranchStep
-        (buildAllForSystemStep "linux")
+        (buildNixOSConfigs { })
+        (buildHomeManagerConfigs { })
         createPullRequestStep
       ];
     };

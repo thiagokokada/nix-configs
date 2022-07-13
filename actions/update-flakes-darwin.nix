@@ -19,7 +19,8 @@ in
         installNixActionStep
         cachixActionStep
         setDefaultGitBranchStep
-        (buildAllForSystemStep "macos")
+        (buildNixDarwinConfigs { })
+        (buildHomeManagerConfigs { inherit (constants.HomeManager.macos) hostnames; })
       ];
     };
   };

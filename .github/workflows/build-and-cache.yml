@@ -23,11 +23,16 @@ jobs:
       - name: Set default git branch (to reduce log spam)
         run: git config --global init.defaultBranch master
       - name: Check if all `.nix` files are formatted correctly
-        run: ./Makefile format-check
+        run: nix run '.#formatCheck'
       - name: Validate Flakes
-        run: ./Makefile validate
-      - name: Build Nix configs
-        run: ./Makefile all-linux
+        run: nix flake check
+      - name: Building NixOS configs
+        run: |-
+          nix build '#nixosConfigurations.miku-nixos.config.system.build.toplevel'
+          nix build '#nixosConfigurations.mikudayo-re-nixos.config.system.build.toplevel'
+          nix build '#nixosConfigurations.mirai-vps.config.system.build.toplevel'
+      - name: Building Home-Manager configs
+        run: nix build '#homeConfigurations.home-linux.activationPackage'
   build-macos:
     runs-on: macos-latest
     steps:
@@ -45,8 +50,10 @@ jobs:
           name: thiagokokada-nix-configs
       - name: Set default git branch (to reduce log spam)
         run: git config --global init.defaultBranch master
-      - name: Build Nix configs
-        run: ./Makefile all-macos
+      - name: Building nix-darwin configs
+        run: nix build '#darwinConfigurations.miku-macos-vm.system'
+      - name: Building Home-Manager configs
+        run: nix build '#homeConfigurations.home-macos.activationPackage'
 name: build-and-cache
 "on":
   - push

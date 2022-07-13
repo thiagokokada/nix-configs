@@ -1,3 +1,6 @@
+let
+  constants = import ./constants.nix;
+in
 {
   maximimizeBuildSpaceStep = {
     uses = "easimon/maximize-build-space@v6";
@@ -36,23 +39,43 @@
   };
   checkNixStep = {
     name = "Check if all `.nix` files are formatted correctly";
-    run = "./Makefile format-check";
+    run = "nix run '.#formatCheck'";
   };
   validateFlakesStep = {
     name = "Validate Flakes";
-    run = "./Makefile validate";
-  };
-  buildAllForSystemStep = system: {
-    name = "Build Nix configs";
-    run = "./Makefile all-${system}";
+    run = "nix flake check";
   };
   updateFlakeLockStep = {
     name = "Update flake.lock";
     run = ''
       git config user.name "''${{ github.actor }}"
       git config user.email "''${{ github.actor }}@users.noreply.github.com"
-      ./Makefile update
+      nix flake update --commit-lock-file
     '';
+  };
+  buildNixDarwinConfigs = { hostnames ? constants.NixDarwin.hostnames }: {
+    name = "Building nix-darwin configs";
+    run =
+      let
+        buildNixDarwinConfig = (h: "nix build '#darwinConfigurations.${h}.system'");
+      in
+      builtins.concatStringsSep "\n" (map buildNixDarwinConfig hostnames);
+  };
+  buildNixOSConfigs = { hostnames ? constants.NixOS.hostnames }: {
+    name = "Building NixOS configs";
+    run =
+      let
+        buildNixOSConfig = (h: "nix build '#nixosConfigurations.${h}.config.system.build.toplevel'");
+      in
+      builtins.concatStringsSep "\n" (map buildNixOSConfig hostnames);
+  };
+  buildHomeManagerConfigs = { hostnames ? constants.HomeManager.linux.hostnames }: {
+    name = "Building Home-Manager configs";
+    run =
+      let
+        buildHMConfig = (h: "nix build '#homeConfigurations.${h}.activationPackage'");
+      in
+      builtins.concatStringsSep "\n" (map buildHMConfig hostnames);
   };
   createPullRequestStep = {
     name = "Create Pull Request";
