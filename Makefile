@@ -1,7 +1,7 @@
 #! /usr/bin/env nix-shell
 #! nix-shell shell.nix -i "make -f"
 
-.PHONY: all gh-actions clean update format format-check install activate run-vm-% build-% build-vm-% build-hm-% run-vm-%
+.PHONY: all gh-actions clean update format format-check run-vm-% build-% build-vm-% build-hm-% run-vm-%
 EXTRA_FLAGS :=
 NIX_FLAGS := --experimental-features 'nix-command flakes' $(EXTRA_FLAGS)
 
