@@ -85,8 +85,10 @@ $ ./result/bin/darwin-installer
 Afterwards run:
 
 ```console
-$ ./Makefile build-darwin-<hostname>
+$ nix build '.#darwinConfigurations.<hostname>.system'
 $ ./result/sw/bin/darwin-rebuild switch --flake .
+# or
+$ nix run '.#darwinActivations/<hostname>'
 ```
 
 ### Home Manager (standalone)
@@ -100,27 +102,22 @@ $ sh <(curl -L https://nixos.org/nix/install) --daemon
 To build the Home Manager standalone and activate its configuration, run:
 
 ```console
-$ ./Makefile build-hm-<config>
-$ ./result/activate
+$ nix run '.#homeActivations/<hostname>'
 ```
 
 ## Testing
 
-You can build a VM to test configurations with safety using the available
-`Makefile`. It should be called as a script since it will automatically download
-its dependencies using `nix-shell`.
-
-For example, to build and run `miku-nixos` configuration inside a VM run:
+You can build a VM to test NixOS configurations with safety running the
+command below:
 
 ```console
-$ ./Makefile run-vm-miku-nixos
+$ nix run '.#nixosVMs/<hostname>'
 ```
 
-## Interesting Tidbits
+## Explore
 
-* Everything builds in Nix, with Flakes (meaning Pure mode).
-* Specially in Home-Manager, configuration between different components are
-shared, so for example changing the color from i3/sway/rofi/dunst/kitty/etc are
-all done changing just one file (see
-[get-base-16-colors.sh](https://github.com/thiagokokada/nix-configs/blob/master/home-manager/scripts/get-base16-colors.sh)
-script for example).
+You can explore all outputs from this configuration by using:
+
+``` console
+$ nix flake show
+```
