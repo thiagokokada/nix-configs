@@ -25,7 +25,7 @@ validate:
 	nix flake check . $(NIX_FLAGS)
 
 format-check:
-	nix run '.#format-check' $(NIX_FLAGS)
+	nix run '.#formatCheck' $(NIX_FLAGS)
 
 format:
 	nix run '.#format' $(NIX_FLAGS)

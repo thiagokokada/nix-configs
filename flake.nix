@@ -120,6 +120,7 @@
       inherit (import ./lib/flake.nix inputs) mkGHActionsYAMLs mkRunCmd mkNixOSConfig mkDarwinConfig mkHomeConfig;
     in
     (recursiveMergeAttrs [
+      # Templates
       {
         templates = {
           default = self.outputs.templates.new-host;
@@ -150,7 +151,7 @@
 
       # Commands
       (mkRunCmd {
-        name = "format-check";
+        name = "formatCheck";
         text = ''
           find . -name '*.nix' \
             ! -name 'hardware-configuration.nix' \
@@ -179,6 +180,7 @@
         "update-flakes-darwin"
       ])
 
+      # shell.nix
       (eachDefaultSystem (system:
         let
           pkgs = import nixpkgs { inherit system; };
@@ -194,5 +196,5 @@
             ];
           };
         }))
-    ]);
+    ]); # END recursiveMergeAttrs
 }
