@@ -79,6 +79,9 @@ in
             exePath = "/bin/run-${hostname}-vm";
           };
       };
+
+      checks.${system}."nixosChecks/${hostname}" =
+        self.outputs.nixosConfigurations.${hostname}.config.system.build.toplevel;
     };
 
   mkDarwinConfig =
@@ -101,6 +104,9 @@ in
         drv = self.outputs.darwinConfigurations.${hostname}.system;
         exePath = "/activate";
       };
+
+      checks.${system}."darwinChecks/${hostname}" =
+        self.outputs.darwinConfigurations.${hostname}.system;
     };
 
   # https://github.com/nix-community/home-manager/issues/1510
@@ -134,5 +140,8 @@ in
         drv = self.outputs.homeConfigurations.${hostname}.activationPackage;
         exePath = "/activate";
       };
+
+      checks.${system}."homeChecks/${hostname}" =
+        self.outputs.homeConfigurations.${hostname}.activationPackage;
     };
 }
