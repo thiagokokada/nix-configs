@@ -171,7 +171,7 @@
                     :server-id 'nix))
   (add-to-list 'lsp-language-id-configuration '(nix-mode . "nix")))
 
-(add-hook! nix-mode #'lsp!)
+;;(add-hook! nix-mode #'lsp!)
 
 ;; sort-words
 (use-package! sort-words
