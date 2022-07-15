@@ -9,29 +9,7 @@
       };
     in
     {
-      mikudayo-re-nixos_internal-only = {
-        inherit fingerprint;
-        config.eDP-1-1 = {
-          enable = true;
-          primary = true;
-          position = "0x0";
-          mode = "1920x1080";
-          rate = "144.15";
-        };
-      };
-      mikudayo-re-nixos_external-only = {
-        inherit fingerprint;
-        config = {
-          HDMI-0 = {
-            enable = true;
-            primary = true;
-            position = "0x0";
-            mode = "3440x1440";
-            rate = "99.98";
-          };
-        };
-      };
-      mikudayo-re-nixos_both = {
+      external-only = {
         inherit fingerprint;
         config = {
           HDMI-0 = {
