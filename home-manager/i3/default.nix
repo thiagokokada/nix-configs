@@ -90,7 +90,7 @@ let
 in
 {
   imports = [
-    ./autorandr.nix
+    ./autorandr
     ./dunst.nix
     ./gammastep.nix
     ./i3status-rust.nix
