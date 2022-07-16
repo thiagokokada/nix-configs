@@ -21,10 +21,10 @@ in
   environment = {
     systemPackages = with pkgs; [
       gaming.osu-stable
+      gaming.osu-lazer-bin
       import-osu-songs
       piper
       unstable.lutris
-      unstable.osu-lazer
       unstable.retroarchFull
     ];
 
