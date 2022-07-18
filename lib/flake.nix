@@ -73,7 +73,7 @@ in
         "nixosVMs/${hostname}" = let pkgs = import nixpkgs { inherit system; }; in
           mkApp {
             drv = pkgs.writeShellScriptBin "run-${hostname}-vm" ''
-              env QEMU_OPTS="''${QEMU_OPTS:--cpu host -smp 4 -m 4096M -machine type=q35}" \
+              env QEMU_OPTS="''${QEMU_OPTS:--cpu max -smp 4 -m 4096M -machine type=q35}" \
                 ${self.outputs.nixosConfigurations.${hostname}.config.system.build.vm}/bin/run-${hostname}-vm
             '';
             exePath = "/bin/run-${hostname}-vm";
