@@ -9,7 +9,6 @@
     audacious
     (calibre.override { unrarSupport = true; })
     desktop-file-utils
-    discord
     gammastep
     gimp
     gnome.evince
@@ -30,6 +29,7 @@
     qalculate-gtk
     shared-mime-info # for pcmanfm recognized file types
     unstable.bitwarden
+    (unstable.discord.override { withOpenASAR = true; nss = nss_latest; })
     (unstable.mcomix.override { unrarSupport = true; })
     vlc
     xclip
