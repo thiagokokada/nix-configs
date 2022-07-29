@@ -43,14 +43,9 @@
       inputs.nixpkgs.follows = "unstable";
       inputs.flake-utils.follows = "flake-utils";
     };
-    doom-emacs = {
-      url = "github:doomemacs/doomemacs";
-      flake = false;
-    };
     nix-doom-emacs = {
       url = "github:nix-community/nix-doom-emacs";
       inputs.nixpkgs.follows = "unstable";
-      inputs.doom-emacs.follows = "doom-emacs";
       inputs.emacs-overlay.follows = "emacs";
       inputs.flake-utils.follows = "flake-utils";
       inputs.flake-compat.follows = "flake-compat";
