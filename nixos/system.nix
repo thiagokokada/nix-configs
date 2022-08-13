@@ -31,7 +31,7 @@ in
     domain = "*";
     type = "-";
     item = "nofile";
-    value = "65536";
+    value = "524288";
   }];
 
   # Enable firmware-linux-nonfree
