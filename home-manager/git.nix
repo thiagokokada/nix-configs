@@ -11,7 +11,7 @@
 
     userName = "Thiago Kenji Okada";
     userEmail = "thiagokokada@gmail.com";
-    package = pkgs.gitFull;
+    package = pkgs.unstable.gitFull;
 
     delta = {
       enable = true;
@@ -74,7 +74,10 @@
         tool = "nvim -d";
       };
       pull = { rebase = true; };
-      push = { default = "simple"; };
+      push = {
+        autoSetupRemote = true;
+        default = "simple";
+      };
       rebase = { autoStash = true; };
     };
   };
