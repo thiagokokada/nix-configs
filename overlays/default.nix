@@ -23,14 +23,13 @@ in
       wallpapers = prev.callPackage ../packages/wallpapers { };
 
       # custom packages
-      arandr = final.unstable.arandr.overrideAttrs (oldAttrs: {
-        patches = (oldAttrs.patches or [ ]) ++ [
-          (prev.fetchpatch {
-            name = "MR4_add_support_for_setting_refresh_rate.patch";
-            url = "https://gitlab.com/arandr/arandr/-/commit/f2e9f064ccbd08dd74820c7c790f022901f2f78f.patch";
-            sha256 = "sha256-dmAM5+I+p+48IKezO/a1Ij57v2HmvPhXbNyanD6Z1FU=";
-          })
-        ];
+      arandr = with final.unstable; arandr.overrideAttrs (oldAttrs: {
+        src = fetchFromGitLab {
+          owner = "thiagokokada";
+          repo = oldAttrs.pname;
+          rev = "5e2eb669ffe76c6894d597acfcd6f1ae964350e1";
+          sha256 = "sha256-sH5D/a92fmPYSyiEYVIipyfFIX0Wgq5MjV1hnG3EHKs=";
+        };
       });
 
       archivers = prev.callPackage ../packages/archivers { };
