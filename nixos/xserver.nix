@@ -24,8 +24,6 @@
 
     xserver = {
       enable = true;
-      # Recommended for modesetting drivers
-      useGlamor = true;
 
       # Enable sx, a lightweight startx alternative
       displayManager.sx.enable = true;
