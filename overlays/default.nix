@@ -23,28 +23,13 @@ in
       wallpapers = prev.callPackage ../packages/wallpapers { };
 
       # custom packages
-      arandr = prev.arandr.overrideAttrs (oldAttrs: {
-        patchPhase = ''
-          runHook prePatch
-
-          # Not sure why `patches` attribute is not working
-          # I am assuming it is because upstream overwrote this phase
-          # https://github.com/NixOS/nixpkgs/blob/e6d5267332e2206d6fb2866d7d9b91bfe41f2748/pkgs/tools/X11/arandr/default.nix#L19-L21
-          for p in $patches; do
-            patch -p1 < $p
-          done
-
-          ${oldAttrs.patchPhase or ""}
-
-          runHook postPatch
-        '';
-        patches = (oldAttrs.patches or [ ]) ++ [
-          (prev.fetchpatch {
-            name = "MR4_add_support_for_setting_refresh_rate.patch";
-            url = "https://gitlab.com/arandr/arandr/-/commit/f2e9f064ccbd08dd74820c7c790f022901f2f78f.patch";
-            sha256 = "sha256-dmAM5+I+p+48IKezO/a1Ij57v2HmvPhXbNyanD6Z1FU=";
-          })
-        ];
+      arandr = with final.unstable; arandr.overrideAttrs (oldAttrs: {
+        src = fetchFromGitLab {
+          owner = "thiagokokada";
+          repo = oldAttrs.pname;
+          rev = "5e2eb669ffe76c6894d597acfcd6f1ae964350e1";
+          sha256 = "sha256-sH5D/a92fmPYSyiEYVIipyfFIX0Wgq5MjV1hnG3EHKs=";
+        };
       });
 
       archivers = prev.callPackage ../packages/archivers { };
@@ -61,12 +46,7 @@ in
         else
           final.unstable.nixpkgs-review;
 
-      run-bg-alias = alias: command: prev.writeShellScriptBin alias ''
-        exec 0>&-
-        exec 1>&-
-        exec 2>&-
-        ${command} $@ &!
-      '';
+      run-bg-alias = name: command: prev.callPackage ../packages/run-bg-alias { inherit name command; };
     })
   ];
 }

@@ -85,6 +85,19 @@ let
     EOF
     }
 
+    check_conflicts() {
+      local -r profile="$1"
+      local -r ip_address="$2"
+
+      local -r ip_all=$(grep -lRF "$ip_address" "${wgClientsPath}")
+      local -r ip_others=$(echo "$ip_all" | grep -Fv "$profile")
+      if [[ -n "$ip_others" ]]; then
+        echoerr "The following clients with '$ip_address' already exists:"
+        echoerr "$ip_others"
+        exit 2
+      fi
+    }
+
     generate_qr_code() {
       local -r profile="$1"
       ${pkgs.qrencode}/bin/qrencode -t ansiutf8 < "$profile.conf"
@@ -122,6 +135,9 @@ let
       local -r client_profile="${wgClientsPath}/$profile"
       local -r ip_address="$2"
       local -r ipv6_address="''${3:-}"
+
+      check_conflicts "$profile" "$ip_address"
+      check_conflicts "$profile" "$ipv6_address"
 
       (
         # Run inside a subshell so umask doesn't propagate to rest of script

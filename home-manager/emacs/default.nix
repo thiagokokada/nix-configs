@@ -12,24 +12,15 @@
       fira-code
       hack-font
       noto-fonts
-
-      # markdown mode
-      pandoc
-
-      # lsp
-      unstable.rnix-lsp
-
-      # shell
-      shellcheck
     ];
   };
 
-  programs.doom-emacs = {
+  programs.doom-emacs = rec {
     enable = true;
     doomPrivateDir = ./doom-emacs;
     emacsPackage = with pkgs;
       if stdenv.isDarwin then
-        emacsNativeComp
+        emacsGitNativeComp
       else emacsPgtkNativeComp;
     extraPackages = with pkgs; [
       fd

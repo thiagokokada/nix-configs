@@ -31,15 +31,10 @@
     flake-utils.url = "github:numtide/flake-utils";
 
     # nix-alien
-    poetry2nix = {
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.flake-utils.follows = "flake-utils";
-    };
     nix-alien = {
       url = "github:thiagokokada/nix-alien";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.flake-utils.follows = "flake-utils";
-      inputs.poetry2nix.follows = "poetry2nix";
     };
 
     # nix-doom-emacs
@@ -53,6 +48,7 @@
       inputs.nixpkgs.follows = "unstable";
       inputs.emacs-overlay.follows = "emacs";
       inputs.flake-utils.follows = "flake-utils";
+      inputs.flake-compat.follows = "flake-compat";
     };
 
     # nnn plugins
@@ -112,145 +108,88 @@
     };
   };
 
-  outputs = { self, nixpkgs, unstable, nix-darwin, home, home-unstable, flake-utils, ... }:
+  outputs = { self, nixpkgs, flake-utils, ... }@inputs:
     let
+      inherit (flake-utils.lib) eachDefaultSystem;
       inherit (import ./lib/attrsets.nix { inherit (nixpkgs) lib; }) recursiveMergeAttrs;
+      inherit (import ./lib/flake.nix inputs) mkGHActionsYAMLs mkRunCmd mkNixOSConfig mkDarwinConfig mkHomeConfig;
     in
-    {
-      templates = rec {
-        default = new-host;
-        new-host = {
-          path = ./templates/new-host;
-          description = "Create a new host";
-        };
-      };
-
-      nixosConfigurations =
-        let
-          mkNixOSConfig =
-            { hostname
-            , system ? "x86_64-linux"
-            , nixosSystem ? nixpkgs.lib.nixosSystem
-            , extraModules ? [ ]
-            }:
-            {
-              ${hostname} = nixosSystem {
-                inherit system;
-                modules = [ ./hosts/${hostname} ] ++ extraModules;
-                specialArgs = {
-                  inherit system;
-                  flake = self;
-                };
-              };
-            };
-        in
-        recursiveMergeAttrs [
-          (mkNixOSConfig { hostname = "miku-nixos"; })
-          (mkNixOSConfig { hostname = "mikudayo-re-nixos"; })
-          (mkNixOSConfig { hostname = "miku-vm"; })
-          (mkNixOSConfig { hostname = "mirai-vps"; })
-        ];
-
-      darwinConfigurations =
-        let
-          mkDarwinConfig =
-            { hostname
-            , system ? "x86_64-darwin"
-            , darwinSystem ? nix-darwin.lib.darwinSystem
-            , extraModules ? [ ]
-            }:
-            {
-              ${hostname} = darwinSystem {
-                inherit system;
-                modules = [ ./hosts/${hostname} ] ++ extraModules;
-                specialArgs = {
-                  inherit system;
-                  flake = self;
-                };
-              };
-            };
-        in
-        recursiveMergeAttrs [
-          (mkDarwinConfig { hostname = "miku-macos-vm"; })
-        ];
-
-      # https://github.com/nix-community/home-manager/issues/1510
-      homeConfigurations =
-        let
-          mkHomeConfig =
-            { name
-            , username ? "thiagoko"
-            , homePath ? "/home"
-            , configPosfix ? "Projects/nix-configs"
-            , configuration ? ./home-manager
-            , deviceType ? "desktop"
-            , system ? "x86_64-linux"
-            , homeManagerConfiguration ? home.lib.homeManagerConfiguration
-            }:
-            {
-              ${name} = homeManagerConfiguration rec {
-                inherit username configuration system;
-                homeDirectory = "${homePath}/${username}";
-                stateVersion = "22.05";
-                extraSpecialArgs = {
-                  inherit system;
-                  flake = self;
-                  super = {
-                    device.type = deviceType;
-                    meta.username = username;
-                    meta.configPath = "${homeDirectory}/${configPosfix}";
-                    fonts.fontconfig = {
-                      antialias = true;
-                      hinting = {
-                        enable = true;
-                        style = "hintslight";
-                      };
-                      subpixel.lcdfilter = "rgb";
-                    };
-                  };
-                };
-              };
-            };
-        in
-        recursiveMergeAttrs [
-          (mkHomeConfig { name = "home-linux"; })
-          (mkHomeConfig {
-            name = "home-macos";
-            configuration = ./home-manager/macos.nix;
-            system = "x86_64-darwin";
-            homePath = "/Users";
-          })
-        ];
-    } // flake-utils.lib.eachDefaultSystem (system:
-      let
-        pkgs = import nixpkgs { inherit system; };
-        buildGHActionsYAML = name:
-          let
-            file = import (./actions/${name}.nix);
-            json = builtins.toJSON file;
-          in
-          {
-            ${name} = pkgs.writeShellScriptBin name ''
-              echo ${pkgs.lib.escapeShellArg json} | ${pkgs.yj}/bin/yj -jy;
-            '';
-          };
-      in
+    (recursiveMergeAttrs [
+      # Templates
       {
-        githubActions = recursiveMergeAttrs [
-          (buildGHActionsYAML "build-and-cache")
-          (buildGHActionsYAML "update-flakes")
-          (buildGHActionsYAML "update-flakes-darwin")
-        ];
-
-        devShells.default = pkgs.mkShell {
-          buildInputs = with pkgs; [
-            coreutils
-            findutils
-            gnumake
-            nixpkgs-fmt
-            nixFlakes
-          ];
+        templates = {
+          default = self.outputs.templates.new-host;
+          new-host = {
+            path = ./templates/new-host;
+            description = "Create a new host";
+          };
         };
       }
-    );
+
+      # NixOS configs
+      (mkNixOSConfig { hostname = "miku-nixos"; })
+      (mkNixOSConfig { hostname = "mikudayo-re-nixos"; })
+      (mkNixOSConfig { hostname = "miku-vm"; })
+      (mkNixOSConfig { hostname = "mirai-vps"; })
+
+      # nix-darwin configs
+      (mkDarwinConfig { hostname = "miku-macos-vm"; })
+
+      # Home-Manager configs
+      (mkHomeConfig { hostname = "home-linux"; })
+      (mkHomeConfig {
+        hostname = "home-macos";
+        configuration = ./home-manager/macos.nix;
+        system = "x86_64-darwin";
+        homePath = "/Users";
+      })
+
+      # Commands
+      (mkRunCmd {
+        name = "formatCheck";
+        text = ''
+          find . -name '*.nix' \
+            ! -name 'hardware-configuration.nix' \
+            ! -name 'cachix.nix' \
+            ! -path './modules/home-manager/*' \
+            ! -path './modules/nixos/*' \
+            -exec nixpkgs-fmt --check {} \+
+        '';
+      })
+      (mkRunCmd {
+        name = "format";
+        text = ''
+          find . -name '*.nix' \
+            ! -name 'hardware-configuration.nix' \
+            ! -name 'cachix.nix' \
+            ! -path './modules/home-manager/*' \
+            ! -path './modules/nixos/*' \
+            -exec nixpkgs-fmt {} \+
+        '';
+      })
+
+      # GitHub Actions
+      (mkGHActionsYAMLs [
+        "build-and-cache"
+        "update-flakes"
+        "update-flakes-darwin"
+      ])
+
+      # shell.nix
+      (eachDefaultSystem (system:
+        let
+          pkgs = import nixpkgs { inherit system; };
+        in
+        {
+          devShells.default = pkgs.mkShell {
+            buildInputs = with pkgs; [
+              coreutils
+              findutils
+              gnumake
+              nixpkgs-fmt
+              nixFlakes
+            ];
+          };
+        }))
+    ]); # END recursiveMergeAttrs
 }

@@ -23,16 +23,8 @@ with config.users.users.${username}; {
     samba
   ];
 
-  hardware = {
-    # Enable opentabletdriver
-    opentabletdriver = {
-      enable = true;
-      package = pkgs.unstable.opentabletdriver;
-    };
-
-    # Enable scanner support
-    sane.enable = true;
-  };
+  # Enable scanner support
+  hardware.sane.enable = true;
 
   users.users.${username} = { extraGroups = [ "sane" "lp" ]; };
 

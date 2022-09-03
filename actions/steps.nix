@@ -1,6 +1,6 @@
 {
   maximimizeBuildSpaceStep = {
-    uses = "easimon/maximize-build-space@v5";
+    uses = "easimon/maximize-build-space@v6";
     "with" = {
       remove-dotnet = true;
       remove-android = true;

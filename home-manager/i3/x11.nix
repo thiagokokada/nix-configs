@@ -100,11 +100,9 @@ in
       + lib.optionalString (super.hardware.nvidia.prime.offload.enable or false) ''
         ${pkgs.xorg.xrandr}/bin/xrandr --setprovideroutputsource NVIDIA-G0 modesetting
       ''
-      # Automatically loads a layout named `auto.sh` from arandr
+      # Automatically loads the best layout from autorandr
       + ''
-        if [ -f "$HOME/.screenlayout/auto.sh" ]; then
-          (PATH="${lib.makeBinPath [ pkgs.xorg.xrandr ]}" . "$HOME/.screenlayout/auto.sh")
-        fi
+        ${pkgs.autorandr}/bin/autorandr --change
       '';
   };
 }

@@ -12,7 +12,7 @@ let
       screenShotName = with config.xdg.userDirs;
         "${pictures}/$(${pkgs.coreutils}/bin/date +%Y-%m-%d_%H-%M-%S)-screenshot.png";
       displayLayoutMode =
-        " : [h]  , [j]  , [k]  , [l]  , [d]uplicate, [m]irror, [s]econd-only, primary-[o]nly";
+        " : [h]  , [j]  , [k]  , [l]  , [a]uto, [d]uplicate, [m]irror, [s]econd-only, primary-[o]nly";
     in
     import ./common.nix rec {
       inherit config lib modifier alt;
@@ -62,6 +62,7 @@ let
           upCmd = runMons "-e top";
           rightCmd = runMons "-e right";
         }) // {
+          a = "mode default, exec ${pkgs.autorandr}/bin/autorandr --change";
           d = runMons "-d";
           m = runMons "-m";
           s = runMons "-s";
@@ -89,6 +90,7 @@ let
 in
 {
   imports = [
+    ./autorandr
     ./dunst.nix
     ./gammastep.nix
     ./i3status-rust.nix

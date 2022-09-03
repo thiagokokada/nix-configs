@@ -92,6 +92,11 @@
          :desc "Replace using regexp"
          "C-R" #'projectile-replace-regexp)))))
 
+;; vertico
+(after! orderless
+  ;; Enable fuzzy (flex)
+  (setq completion-styles '(orderless flex)))
+
 ;;; MAJOR MODES
 
 ;; clojure
@@ -166,7 +171,7 @@
                     :server-id 'nix))
   (add-to-list 'lsp-language-id-configuration '(nix-mode . "nix")))
 
-(add-hook! nix-mode #'lsp!)
+;;(add-hook! nix-mode #'lsp!)
 
 ;; sort-words
 (use-package! sort-words

@@ -7,16 +7,8 @@
     environment.systemPackages = with pkgs; [ smartmontools ];
 
     programs.gnome-disks.enable = true;
-
     services = {
-      smartd = {
-        enable = true;
-        notifications.x11.enable = true;
-      };
-      gnome = {
-        gnome-keyring.enable = true;
-        sushi.enable = true;
-      };
+      gnome.gnome-keyring.enable = true;
     };
 
     xdg = {
