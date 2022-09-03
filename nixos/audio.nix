@@ -21,13 +21,17 @@
       rtkit.enable = true;
     };
 
-    services = with pkgs; {
+    services = {
       pipewire = {
         enable = true;
-        support32Bit = true;
+        audio.enable = true;
+        alsa = {
+          enable = true;
+          support32Bit = true;
+        };
+        pulse.enable = true;
+        wireplumber.enable = true;
       };
-      pulse.enable = true;
-      wireplumber.enable = true;
     };
   };
 }

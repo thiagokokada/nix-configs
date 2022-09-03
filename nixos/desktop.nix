@@ -7,9 +7,7 @@
     environment.systemPackages = with pkgs; [ smartmontools ];
 
     programs.gnome-disks.enable = true;
-    services = {
-      gnome.gnome-keyring.enable = true;
-    };
+    services.gnome.gnome-keyring.enable = true;
 
     xdg = {
       # For sway screensharing
