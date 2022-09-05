@@ -240,7 +240,7 @@ in
       "XF86AudioPrev" = "exec --no-startup-id ${playerctl} previous";
 
       "Print" = "exec --no-startup-id ${fullScreenShot}";
-      "${modifier}+Print" = "exec --no-startup-id ${areaScreenShot}";
+      "Shift+Print" = "exec --no-startup-id ${areaScreenShot}";
     } // (mapDirectionDefault {
       prefixKey = modifier;
       prefixCmd = "focus";
