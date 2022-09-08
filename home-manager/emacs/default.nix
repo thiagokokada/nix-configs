@@ -22,6 +22,14 @@
       if stdenv.isDarwin then
         emacsGitNativeComp
       else emacsPgtkNativeComp;
+    emacsPackagesOverlay = final: prev: {
+      vterm = prev.vterm.overrideAttrs (oldAttrs: {
+        cmakeFlags = [
+          "-DEMACS_SOURCE=${emacsPackage.src}"
+          "-DUSE_SYSTEM_LIBVTERM=ON"
+        ];
+      });
+    };
     extraPackages = with pkgs; [
       fd
       findutils
