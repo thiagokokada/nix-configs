@@ -2,7 +2,7 @@
 
 {
   nixpkgs.overlays = [
-    flake.inputs.nix-alien.overlay
+    flake.inputs.nix-alien.overlays.default
   ];
 
   environment.systemPackages = with pkgs; [
