@@ -20,6 +20,7 @@ in
     each
     file
     findutils
+    gcal
     gnumake
     gnused
     inetutils
@@ -50,6 +51,7 @@ in
 
   programs.zsh.shellAliases = {
     # For muscle memory...
+    cal = "${pkgs.gcal}/bin/gcal";
     ncdu = "${pkgs.dua}/bin/dua interactive";
     sloccount = "${pkgs.tokei}/bin/tokei";
   };
