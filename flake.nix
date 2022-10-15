@@ -138,6 +138,11 @@
       # Home-Manager configs
       (mkHomeConfig { hostname = "home-linux"; })
       (mkHomeConfig {
+        hostname = "steamdeck";
+        username = "deck";
+        configuration = ./home-manager/steamdeck.nix;
+      })
+      (mkHomeConfig {
         hostname = "home-macos";
         configuration = ./home-manager/macos.nix;
         system = "x86_64-darwin";
