@@ -17,8 +17,8 @@
     in
     ''
       # Load nix environment
-      if [ -e ${homeDirectory}/.nix-profile/etc/profile.d/nix.sh ];
-        then . ${homeDirectory}/.nix-profile/etc/profile.d/nix.sh;
+      if [ -e "${homeDirectory}/.nix-profile/etc/profile.d/nix.sh" ]; then
+        . "${homeDirectory}/.nix-profile/etc/profile.d/nix.sh"
       fi
     '';
 }
