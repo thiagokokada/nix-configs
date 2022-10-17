@@ -10,11 +10,9 @@
   };
   checkoutStep = {
     uses = "actions/checkout@v3";
-    # Nix Flakes doesn't work on shallow clones
-    "with".fetch-depth = 0;
   };
   installNixActionStep = {
-    uses = "cachix/install-nix-action@v17";
+    uses = "cachix/install-nix-action@v18";
     "with" = {
       # Need to define a channel, otherwise it wiill use bash from environment
       nix_path = "nixpkgs=channel:nixos-unstable";
@@ -23,7 +21,7 @@
     };
   };
   cachixActionStep = {
-    uses = "cachix/cachix-action@v10";
+    uses = "cachix/cachix-action@v11";
     "with" = {
       name = "thiagokokada-nix-configs";
       extraPullNames = "nix-community";
