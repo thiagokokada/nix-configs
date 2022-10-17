@@ -15,8 +15,10 @@ jobs:
           name: thiagokokada-nix-configs
       - name: Set default git branch (to reduce log spam)
         run: git config --global init.defaultBranch master
-      - name: Build Nix configs
-        run: ./Makefile all-macos
+      - name: Build Home-Manager configs
+        run: nix build '.#homeConfigurations.home-macos.activationPackage'
+      - name: Build NixOS configs
+        run: nix build '.#darwinConfigurations.miku-macos-vm.system'
 name: update-flakes-darwin
 "on":
   workflow_run:

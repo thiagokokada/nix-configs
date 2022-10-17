@@ -2,6 +2,7 @@ let
   steps = import ./steps.nix;
   constants = import ./constants.nix;
 in
+with constants;
 {
   name = "update-flakes";
   on = {
@@ -9,7 +10,7 @@ in
   };
   jobs = {
     update-flakes = {
-      inherit (constants.ubuntu) runs-on;
+      inherit (ubuntu) runs-on;
       steps = with steps; [
         maximimizeBuildSpaceStep
         checkoutStep
@@ -17,7 +18,8 @@ in
         cachixActionStep
         updateFlakeLockStep
         setDefaultGitBranchStep
-        (buildAllForSystemStep "linux")
+        (buildHomeManagerConfigurations home-manager.linux.hostnames)
+        (buildNixOSConfigurations nixos.hostnames)
         createPullRequestStep
       ];
     };

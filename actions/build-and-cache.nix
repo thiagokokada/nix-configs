@@ -2,12 +2,13 @@ let
   steps = import ./steps.nix;
   constants = import ./constants.nix;
 in
+with constants;
 {
   name = "build-and-cache";
   on = [ "push" "workflow_dispatch" ];
   jobs = {
     build-linux = {
-      inherit (constants.ubuntu) runs-on;
+      inherit (ubuntu) runs-on;
       steps = with steps; [
         maximimizeBuildSpaceStep
         checkoutStep
@@ -16,7 +17,8 @@ in
         setDefaultGitBranchStep
         checkNixStep
         validateFlakesStep
-        (buildAllForSystemStep "linux")
+        (buildHomeManagerConfigurations home-manager.linux.hostnames)
+        (buildNixOSConfigurations nixos.hostnames)
       ];
     };
     build-macos = {
@@ -26,7 +28,8 @@ in
         installNixActionStep
         cachixActionStep
         setDefaultGitBranchStep
-        (buildAllForSystemStep "macos")
+        (buildHomeManagerConfigurations home-manager.darwin.hostnames)
+        (buildNixDarwinConfigurations nix-darwin.hostnames)
       ];
     };
   };

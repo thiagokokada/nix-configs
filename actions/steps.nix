@@ -34,15 +34,32 @@
   };
   checkNixStep = {
     name = "Check if all `.nix` files are formatted correctly";
-    run = "./Makefile format-check";
+    run = "nix run '.#formatCheck'";
   };
   validateFlakesStep = {
     name = "Validate Flakes";
-    run = "./Makefile validate";
+    run = "nix flake check";
   };
-  buildAllForSystemStep = system: {
-    name = "Build Nix configs";
-    run = "./Makefile all-${system}";
+  buildHomeManagerConfigurations = hostnames: {
+    name = "Build Home-Manager configs";
+    run = builtins.concatStringsSep "\n"
+      (map
+        (hostname: "nix build '.#homeConfigurations.${hostname}.activationPackage'")
+        hostnames);
+  };
+  buildNixOSConfigurations = hostnames: {
+    name = "Build NixOS configs";
+    run = builtins.concatStringsSep "\n"
+      (map
+        (hostname: "nix build '.#nixosConfigurations.${hostname}.config.system.build.toplevel'")
+        hostnames);
+  };
+  buildNixDarwinConfigurations = hostnames: {
+    name = "Build NixOS configs";
+    run = builtins.concatStringsSep "\n"
+      (map
+        (hostname: "nix build '.#darwinConfigurations.${hostname}.system'")
+        hostnames);
   };
   updateFlakeLockStep = {
     name = "Update flake.lock";
