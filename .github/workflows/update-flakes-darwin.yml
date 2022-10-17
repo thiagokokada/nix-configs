@@ -10,7 +10,7 @@ jobs:
         with:
           extra_nix_config: access-tokens = github.com=${{ secrets.GITHUB_TOKEN }}
           nix_path: nixpkgs=channel:nixos-unstable
-      - uses: cachix/cachix-action@v10
+      - uses: cachix/cachix-action@v11
         with:
           authToken: ${{ secrets.CACHIX_TOKEN }}
           extraPullNames: nix-community
