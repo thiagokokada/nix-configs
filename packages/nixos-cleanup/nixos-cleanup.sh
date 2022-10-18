@@ -47,6 +47,7 @@ cleanup() {
     fi
     nix-collect-garbage -d
     # Clean-up old specializations entries in systemd-boot
+    # TODO: remove this on NixOS 22.11
     if [[ -d "/boot/loader/entries" ]]; then
         rm -f "/boot/loader/entries/nixos-generation-"*"-specialisation-"*".conf"
     fi
