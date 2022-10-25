@@ -18,6 +18,11 @@
   programs.doom-emacs = rec {
     enable = true;
     doomPrivateDir = ./doom-emacs;
+    doomPackageDir = pkgs.linkFarm "doom-packages" [
+      { name = "config.el"; path = pkgs.emptyFile; }
+      { name = "init.el"; path = ./doom-emacs/init.el; }
+      { name = "packages.el"; path = ./doom-emacs/packages.el; }
+    ];
     emacsPackage = with pkgs;
       if stdenv.isDarwin then
         emacsGitNativeComp
