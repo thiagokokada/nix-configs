@@ -19,9 +19,15 @@
               "%b")))
 
 ;; font
-(setq doom-font (font-spec :family "Hack" :size 18)
-      doom-variable-pitch-font (font-spec :family "Fira Code")
-      doom-big-font-increment 2
+;; How to set font fallbacks:
+;; https://github.com/doomemacs/doomemacs/issues/5948#issuecomment-1004253858
+(setq doom-big-font-increment 2
+      doom-font (pcase (system-name)
+                  ;; steamdeck doesn't support fontconfig user directory so we
+                  ;; need to use whatever is included on it
+                  ("steamdeck" (font-spec :family "Source Code Pro" :size 18))
+                  (_ (font-spec :family "Hack" :size 18)))
+      doom-variable-pitch-font (font-spec :family "Noto Sans")
       doom-unicode-font (font-spec :family "Noto Sans Mono"))
 
 ;; enable minibuffer to work correctly in evil mode
