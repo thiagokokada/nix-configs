@@ -66,7 +66,7 @@
     run = ''
       git config user.name "''${{ github.actor }}"
       git config user.email "''${{ github.actor }}@users.noreply.github.com"
-      ./Makefile update
+      nix flake update --commit-lock-file
     '';
   };
   createPullRequestStep = {
