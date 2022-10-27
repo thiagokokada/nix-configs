@@ -21,6 +21,7 @@ jobs:
         run: nix build '.#darwinConfigurations.miku-macos-vm.system'
 name: update-flakes-darwin
 "on":
+  workflow_dispatch: null
   workflow_run:
     types:
       - completed

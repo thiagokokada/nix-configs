@@ -10,6 +10,7 @@ with constants;
       workflows = [ "update-flakes" ];
       types = [ "completed" ];
     };
+    workflow_dispatch = null;
   };
   jobs = {
     update-flakes-macos = {
