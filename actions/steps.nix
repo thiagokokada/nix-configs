@@ -21,7 +21,7 @@
     };
   };
   cachixActionStep = {
-    uses = "cachix/cachix-action@v11";
+    uses = "cachix/cachix-action@v12";
     "with" = {
       name = "thiagokokada-nix-configs";
       extraPullNames = "nix-community";
