@@ -280,7 +280,7 @@
           "flake-utils"
         ],
         "nixpkgs": [
-          "nixpkgs"
+          "unstable"
         ]
       },
       "locked": {

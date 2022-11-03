@@ -1,10 +1,9 @@
 { pkgs, flake, system, ... }:
 
+let
+  inherit (flake.inputs.nix-alien.packages.${system}) nix-alien nix-index-update;
+in
 {
-  nixpkgs.overlays = [
-    flake.inputs.nix-alien.overlays.default
-  ];
-
   environment.systemPackages = with pkgs; [
     nix-alien
     nix-index
