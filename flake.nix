@@ -33,7 +33,8 @@
     # nix-alien
     nix-alien = {
       url = "github:thiagokokada/nix-alien";
-      inputs.nixpkgs.follows = "unstable";
+      # FIXME: https://nixpk.gs/pr-tracker.html?pr=199341
+      # inputs.nixpkgs.follows = "unstable";
       inputs.flake-utils.follows = "flake-utils";
     };
 
