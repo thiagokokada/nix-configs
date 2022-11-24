@@ -7,7 +7,6 @@
     extraLocaleSettings = {
       LC_CTYPE = lib.mkDefault "pt_BR.UTF-8"; # Fix ç in us-intl.
       LC_TIME = lib.mkDefault "pt_BR.UTF-8";
-      LC_COLLATE = lib.mkDefault "C"; # Use C style string sort.
     };
   };
 

@@ -4,11 +4,7 @@ let
   inherit (flake) inputs;
 in
 {
-  # Add wheel to Nix trusted users
-  trustedUsers = [ "root" "@wheel" ];
-
   # Enable Flakes
-  package = pkgs.nixFlakes;
   settings = import ./nix-conf.nix;
 
   # Set the $NIX_PATH entry for nixpkgs. This is necessary in

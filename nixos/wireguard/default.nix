@@ -177,7 +177,8 @@ in
 {
   imports = [
     (import ./${
-    externalUrl} { inherit wgInterface; })
+    externalUrl}
+      { inherit wgInterface; })
     ../../modules/meta.nix
   ];
 

@@ -40,7 +40,6 @@
         dates = "3:15";
         options = "--delete-older-than 7d";
       };
-      autoOptimiseStore = true;
       # Leave nix builds as a background task
       daemonIOSchedClass = "idle";
       daemonCPUSchedPolicy = "idle";

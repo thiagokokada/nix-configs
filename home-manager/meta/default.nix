@@ -25,7 +25,7 @@ in
   # Another option is to add a group by prefixing it by @, e.g.:
   # sudo echo "trusted-users = @wheel" >> /etc/nix/nix.conf
   nix = {
-    package = pkgs.nixFlakes;
+    package = lib.mkDefault pkgs.nix;
     settings = import ../../shared/nix-conf.nix // {
       extra-substituters = [
         "https://nix-community.cachix.org"
@@ -61,7 +61,7 @@ in
   # You can update Home Manager without changing this value. See
   # the Home Manager release notes for a list of state version
   # changes in each release.
-  home.stateVersion = "22.05";
+  home.stateVersion = "22.11";
 
   # Inherit config from NixOS or homeConfigurations
   device = super.device;

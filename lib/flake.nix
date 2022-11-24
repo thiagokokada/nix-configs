@@ -33,7 +33,7 @@ in
   mkRunCmd =
     { name
     , text
-    , deps ? pkgs: with pkgs; [ coreutils findutils nixpkgs-fmt nixFlakes ]
+    , deps ? pkgs: with pkgs; [ coreutils findutils nixpkgs-fmt ]
     }: eachDefaultSystem (system:
     let
       pkgs = import nixpkgs { inherit system; };
@@ -114,11 +114,19 @@ in
     , system ? "x86_64-linux"
     , homeManagerConfiguration ? home.lib.homeManagerConfiguration
     }:
+    let
+      pkgs = import nixpkgs { inherit system; };
+      homeDirectory = "${homePath}/${username}";
+    in
     {
       homeConfigurations.${hostname} = homeManagerConfiguration rec {
-        inherit username configuration system;
-        homeDirectory = "${homePath}/${username}";
-        stateVersion = "22.05";
+        inherit pkgs;
+        modules = [
+          ({ ... }: {
+            home = { inherit username homeDirectory; };
+            imports = [ configuration ];
+          })
+        ];
         extraSpecialArgs = {
           inherit system;
           flake = self;
