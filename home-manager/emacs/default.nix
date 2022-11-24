@@ -23,10 +23,7 @@
       { name = "init.el"; path = ./doom-emacs/init.el; }
       { name = "packages.el"; path = ./doom-emacs/packages.el; }
     ];
-    emacsPackage = with pkgs;
-      if stdenv.isDarwin then
-        emacsGitNativeComp
-      else emacsPgtkNativeComp;
+    emacsPackage = pkgs.emacsNativeComp;
     emacsPackagesOverlay = final: prev: {
       vterm = prev.vterm.overrideAttrs (oldAttrs: {
         cmakeFlags = [
