@@ -180,21 +180,5 @@
         "update-flakes"
         "update-flakes-darwin"
       ])
-
-      # shell.nix
-      (eachDefaultSystem (system:
-        let
-          pkgs = import nixpkgs { inherit system; };
-        in
-        {
-          devShells.default = pkgs.mkShell {
-            buildInputs = with pkgs; [
-              coreutils
-              findutils
-              gnumake
-              nixpkgs-fmt
-            ];
-          };
-        }))
     ]); # END recursiveMergeAttrs
 }
