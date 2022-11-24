@@ -59,9 +59,6 @@
           interval = "weekly";
         };
 
-      # Kill process consuming too much memory before it crawls the machine
-      earlyoom.enable = true;
-
       # Trim SSD weekly
       fstrim = {
         enable = true;
@@ -95,6 +92,14 @@
         # set scheduler for rotating disks
         ACTION=="add|change", KERNEL=="sd[a-z]", ATTR{queue/rotational}=="1", ATTR{queue/scheduler}="bfq"
       '';
+    };
+
+    # systemd's out-of-memory daemon
+    systemd.oomd = {
+      enable = lib.mkDefault true;
+      enableRootSlice = true;
+      enableSystemSlice = true;
+      enableUserServices = true;
     };
 
     # Enable zram to have better memory management
