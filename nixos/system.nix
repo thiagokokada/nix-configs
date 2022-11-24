@@ -5,6 +5,8 @@
 
   config = lib.mkIf config.nixos.system.enable {
     boot = {
+      initrd.systemd.enable = lib.mkDefault true;
+
       # Mount /tmp using tmpfs for performance
       tmpOnTmpfs = lib.mkDefault true;
 
