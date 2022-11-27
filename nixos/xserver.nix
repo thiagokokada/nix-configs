@@ -3,7 +3,7 @@
 {
   # less verbose boot log, otherwise it will write log messages over greetd
   boot.consoleLogLevel = 3;
-  boot.kernelParams = [ "quiet" "udev.log_priority=3" ];
+  boot.kernelParams = [ "console=tty1" "systemd.show_status=auto" ];
 
   # Configure the virtual console keymap from the xserver keyboard settings
   console.useXkbConfig = true;
