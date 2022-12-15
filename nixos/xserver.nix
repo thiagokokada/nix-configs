@@ -1,9 +1,9 @@
 { config, pkgs, lib, ... }:
 
 {
-  # less verbose boot log, otherwise it will write log messages over greetd
   boot.consoleLogLevel = 3;
-  boot.kernelParams = [ "console=tty1" "systemd.show_status=auto" ];
+  # Force kernel log in tty1, otherwise it will override greetd
+  boot.kernelParams = [ "console=tty1" ];
 
   # Configure the virtual console keymap from the xserver keyboard settings
   console.useXkbConfig = true;
