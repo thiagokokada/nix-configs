@@ -242,7 +242,7 @@
       })
       auto-pairs
       gitgutter
-      (nvim-treesitter.withPlugins (plugins: unstable.tree-sitter.allGrammars))
+      (nvim-treesitter.withPlugins (plugins: tree-sitter.allGrammars))
       vim-automkdir
       vim-autoswap
       vim-better-whitespace

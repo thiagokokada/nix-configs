@@ -7,7 +7,7 @@
     gcc
     nim
     pandoc
+    rnix-lsp
     shellcheck
-    unstable.rnix-lsp
   ];
 }

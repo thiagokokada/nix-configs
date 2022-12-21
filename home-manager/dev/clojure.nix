@@ -9,8 +9,8 @@ in
   home.packages = with pkgs; [
     babashka
     clojure
+    clojure-lsp
     leiningen
-    unstable.clojure-lsp
   ];
 
   # https://github.com/babashka/babashka/issues/257

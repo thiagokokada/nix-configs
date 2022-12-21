@@ -1,6 +1,6 @@
 { pkgs, ... }:
 {
   home.packages = with pkgs; [
-    unstable.kotlin-language-server
+    kotlin-language-server
   ];
 }

@@ -60,7 +60,7 @@ in
     # Enable opentabletdriver (for osu!)
     opentabletdriver = {
       enable = true;
-      package = pkgs.unstable.opentabletdriver;
+      package = pkgs.opentabletdriver;
     };
 
     # Alternative driver for Xbox One/Series S/Series X controllers

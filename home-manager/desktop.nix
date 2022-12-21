@@ -7,6 +7,7 @@
     android-file-transfer
     arandr
     audacious
+    bitwarden
     (calibre.override { unrarSupport = true; })
     desktop-file-utils
     gammastep
@@ -21,6 +22,7 @@
     libreoffice-fresh
     lxmenu-data # for pcmanfm installed applications
     open-browser
+    (mcomix.override { unrarSupport = true; })
     pamixer
     pavucontrol
     pcmanfm
@@ -28,9 +30,9 @@
     pinta
     qalculate-gtk
     shared-mime-info # for pcmanfm recognized file types
-    unstable.bitwarden
+    udiskie
     (unstable.discord.override { withOpenASAR = true; nss = nss_latest; })
-    (unstable.mcomix.override { unrarSupport = true; })
+    unstable.zoom-us
     vlc
     xclip
     xdotool
@@ -39,7 +41,6 @@
     xorg.xhost
     xorg.xkill
     xorg.xset
-    zoom-us
   ];
 
   programs.zsh.shellAliases = {
