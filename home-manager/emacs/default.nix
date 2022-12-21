@@ -23,7 +23,7 @@
       { name = "init.el"; path = ./doom-emacs/init.el; }
       { name = "packages.el"; path = ./doom-emacs/packages.el; }
     ];
-    emacsPackage = pkgs.emacsUnstable;
+    emacsPackage = pkgs.emacsGit;
     emacsPackagesOverlay = final: prev: {
       vterm = prev.vterm.overrideAttrs (oldAttrs: {
         cmakeFlags = [
