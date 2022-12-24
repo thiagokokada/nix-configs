@@ -130,10 +130,6 @@ in
           notification = false;
         }
         {
-          command = "${pkgs.mons}/bin/mons -a";
-          notification = false;
-        }
-        {
           command = "${pkgs.dex}/bin/dex --autostart";
           notification = false;
         }

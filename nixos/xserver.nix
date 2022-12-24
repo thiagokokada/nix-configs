@@ -8,6 +8,12 @@
   # Configure the virtual console keymap from the xserver keyboard settings
   console.useXkbConfig = true;
 
+  # Configure special programs (i.e. hardware access)
+  programs = {
+    dconf.enable = true;
+    light.enable = true;
+  };
+
   services = {
     # Configure greetd, a lightweight session manager
     greetd = {
@@ -21,6 +27,18 @@
       };
       vt = 7;
     };
+
+    # Configure monitor hotplug
+    udev.extraRules =
+      let
+        inherit (config.meta) username;
+        inherit (config.users.users.${username}) home;
+        inherit (config.services.greetd) vt;
+      in
+      ''
+        KERNEL=="card[0-9]*", SUBSYSTEM=="drm", ACTION=="change", ENV{DISPLAY}=":${toString vt}", \
+          ENV{XAUTHORITY}="${home}/.local/share/sx/xauthority", RUN+="${pkgs.mons}/bin/mons -o"
+      '';
 
     xserver = {
       enable = true;
@@ -40,11 +58,5 @@
         };
       };
     };
-  };
-
-  # Configure special programs (i.e. hardware access)
-  programs = {
-    dconf.enable = true;
-    light.enable = true;
   };
 }
