@@ -99,9 +99,9 @@
          "C-R" #'projectile-replace-regexp)))))
 
 ;; vertico
-(after! orderless
-  ;; Enable fuzzy (flex)
-  (setq completion-styles '(orderless flex)))
+;; (after! orderless
+;;   ;; Enable fuzzy (flex)
+;;   (setq completion-styles '(orderless flex)))
 
 ;;; MAJOR MODES
 
