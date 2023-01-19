@@ -12,6 +12,7 @@ in
     bars =
       let
         isLaptop = config.device.type == "laptop";
+        isKbddEnabled = config.systemd.user.services ? kbdd;
 
         settings = {
           theme = {
@@ -68,10 +69,7 @@ in
             unit = "GB";
             format = "{icon} ${shortPath m} {available}";
           })
-          # Remove envfs entries
-          (builtins.filter
-            (m: (m != "/bin") && (m != "/usr/bin"))
-            mountPoints);
+          mountPoints;
 
         memoryBlock = {
           block = "memory";
@@ -97,16 +95,14 @@ in
           warning = 80;
         };
 
-        backlightBlock = if isLaptop then { block = "backlight"; } else { };
+        backlightBlock = lib.optionalAttrs isLaptop { block = "backlight"; };
 
-        batteryBlock =
-          if isLaptop then {
-            block = "battery";
-            device = "DisplayDevice";
-            driver = "upower";
-            format = "{percentage} {time}";
-          } else
-            { };
+        batteryBlock = lib.optionalAttrs isLaptop {
+          block = "battery";
+          device = "DisplayDevice";
+          driver = "upower";
+          format = "{percentage} {time}";
+        };
 
         soundBlock = {
           block = "sound";
@@ -114,7 +110,7 @@ in
           max_vol = 150;
         };
 
-        keyboardBlock = {
+        keyboardBlock = lib.optionalAttrs isKbddEnabled {
           block = "keyboard_layout";
           format = " {layout}";
           driver = "kbddbus";
