@@ -38,7 +38,9 @@ in
 
       nix-whereis = prev.callPackage ../packages/nix-whereis { };
 
-      nixos-cleanup = prev.callPackage ../packages/nixos-cleanup { };
+      nix-cleanup = prev.callPackage ../packages/nix-cleanup { };
+
+      nixos-cleanup = prev.callPackage ../packages/nix-cleanup { isNixOS = true; };
 
       nixpkgs-review =
         if (prev.stdenv.isLinux) then

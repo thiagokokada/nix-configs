@@ -14,6 +14,7 @@ in
   # Add some Nix related packages
   home.packages = with pkgs; [
     hydra-check
+    nix-cleanup
     nix-update
     nix-whereis
     nixpkgs-fmt

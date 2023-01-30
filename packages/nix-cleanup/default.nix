@@ -4,27 +4,36 @@
 , gnugrep
 , nix
 , resholve
+, substituteAll
+, isNixOS ? false
 }:
 
-resholve.mkDerivation {
-  pname = "nixos-cleanup";
+resholve.mkDerivation rec {
+  pname =
+    if isNixOS
+    then "nixos-cleanup"
+    else "nix-cleanup";
+
   version = "0.0.1";
 
-  src = ./nixos-cleanup.sh;
+  src = (substituteAll {
+    src = ./nix-cleanup.sh;
+    isNixOS = if isNixOS then "1" else "0";
+  });
 
   dontUnpack = true;
 
   installPhase = ''
     runHook preInstall
 
-    install -Dm755 "$src" "$out/bin/nixos-cleanup"
+    install -Dm755 "$src" "$out/bin/${pname}"
 
     runHook postInstall
   '';
 
   solutions = {
     nix-whereis = {
-      scripts = [ "bin/nixos-cleanup" ];
+      scripts = [ "bin/${pname}" ];
       interpreter = "${bash}/bin/bash";
       inputs = [ coreutils findutils gnugrep nix ];
       fake = {
