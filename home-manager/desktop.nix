@@ -20,17 +20,15 @@
     gthumb
     inkscape
     libreoffice-fresh
-    lxmenu-data # for pcmanfm installed applications
     open-browser
     (mcomix.override { unrarSupport = true; })
     pamixer
     pavucontrol
-    pcmanfm
     peek
     pinta
     qalculate-gtk
-    shared-mime-info # for pcmanfm recognized file types
     udiskie
+    (unstable.cinnamon.nemo-with-extensions.override { extensions = with unstable.cinnamon; [ nemo-fileroller ]; })
     (unstable.discord.override { withOpenASAR = true; nss = nss_latest; })
     unstable.zoom-us
     vlc
@@ -64,7 +62,7 @@
         "image/gif" = "org.gnome.gThumb.desktop";
         "image/jpeg" = "org.gnome.gThumb.desktop";
         "image/png" = "org.gnome.gThumb.desktop";
-        "inode/directory" = "pcmanfm.desktop";
+        "inode/directory" = "nemo.desktop";
         "text/html" = "open-browser.desktop";
         "text/plain" = "emacs.desktop";
         "text/x-makefile" = "emacs.desktop";
