@@ -56,7 +56,7 @@ done
 
 cleanup() {
     find -H /nix/var/nix/gcroots/auto -type l -exec readlink {} \; | \
-        grep "/result[-0-9*]$" | \
+        grep "/result[-0-9]*$" | \
         xargs -L1 rm -rf
     if [[ "$UNSAFE" == 1 ]]; then
         nix-store --ignore-liveness --delete /nix/var/nix/gcroots/booted-system
