@@ -265,7 +265,9 @@
         "flake-utils": [
           "flake-utils"
         ],
-        "nix-index-database": "nix-index-database",
+        "nix-index-database": [
+          "nix-index-database"
+        ],
         "nixpkgs": [
           "unstable"
         ]
@@ -377,8 +379,7 @@
     "nix-index-database": {
       "inputs": {
         "nixpkgs": [
-          "nix-alien",
-          "nixpkgs"
+          "unstable"
         ]
       },
       "locked": {
@@ -584,6 +585,7 @@
         "nix-darwin": "nix-darwin",
         "nix-doom-emacs": "nix-doom-emacs",
         "nix-gaming": "nix-gaming",
+        "nix-index-database": "nix-index-database",
         "nixpkgs": "nixpkgs",
         "nnn-plugins": "nnn-plugins",
         "pure": "pure",
