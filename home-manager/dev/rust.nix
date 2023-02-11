@@ -5,7 +5,7 @@ let
 in
 {
   home = {
-    packages = with pkgs; [ rustup ];
+    # packages = with pkgs; [ rustup ];
     sessionPath = [ "${homeDirectory}/.cargo/bin" ];
   };
 }
