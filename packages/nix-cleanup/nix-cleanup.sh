@@ -61,7 +61,7 @@ cleanup() {
     if [[ "$UNSAFE" == 1 ]]; then
         nix-store --ignore-liveness --delete /nix/var/nix/gcroots/booted-system
     fi
-    nix-store --verify --repair
+    nix-store --verify
     nix-collect-garbage -d
     if [[ "$NIXOS" == 1 ]]; then
         nixos-rebuild boot --fast
