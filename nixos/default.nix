@@ -9,7 +9,6 @@
     ./home.nix
     ./laptop.nix
     ./minimal.nix
-    ./non-nix.nix
     ./wayland.nix
     ./xserver.nix
   ];

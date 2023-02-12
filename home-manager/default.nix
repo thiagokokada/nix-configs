@@ -14,6 +14,7 @@
     ./mpv
     ./neovim.nix
     ./nnn.nix
+    ./non-nix.nix
     ./ssh.nix
     ./sway
     ./theme

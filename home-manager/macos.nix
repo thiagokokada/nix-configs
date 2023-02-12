@@ -6,6 +6,7 @@
     ./minimal.nix
     ./mpv
     ./nnn.nix
+    ./non-nix.nix
   ];
 
   targets.darwin.defaults = {
