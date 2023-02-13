@@ -62,7 +62,7 @@ let
           upCmd = runMons "-e top";
           rightCmd = runMons "-e right";
         }) // {
-          a = "mode default, exec ${pkgs.autorandr}/bin/autorandr --change";
+          a = "mode default, exec ${pkgs.change-res}/bin/change-res";
           d = runMons "-d";
           m = runMons "-m";
           s = runMons "-s";

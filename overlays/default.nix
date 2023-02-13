@@ -34,6 +34,22 @@ in
 
       archivers = prev.callPackage ../packages/archivers { };
 
+      change-res = prev.writeShellApplication {
+        name = "change-res";
+        runtimeInputs = with prev; [ autorandr mons ];
+        text = ''
+          detected="$(autorandr --detected)"
+
+          if [[ -n "$detected" ]]; then
+            autorandr --change || mons -o
+          else
+            mons -o
+          fi
+
+          systemctl --user restart wallpaper.service
+        '';
+      };
+
       open-browser = prev.callPackage ../packages/open-browser { };
 
       nix-whereis = prev.callPackage ../packages/nix-whereis { };

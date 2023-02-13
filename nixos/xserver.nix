@@ -37,7 +37,8 @@
       in
       ''
         KERNEL=="card[0-9]*", SUBSYSTEM=="drm", ACTION=="change", ENV{DISPLAY}=":${toString vt}", \
-          ENV{XAUTHORITY}="${home}/.local/share/sx/xauthority", RUN+="${pkgs.mons}/bin/mons -o"
+          ENV{HOME}="${home}", ENV{XAUTHORITY}="${home}/.local/share/sx/xauthority", \
+          RUN+="${pkgs.change-res}/bin/change-res"
       '';
 
     xserver = {
