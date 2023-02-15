@@ -3,6 +3,7 @@
 set -euo pipefail
 
 readonly NIXOS=@isNixOS@
+AUTO=0
 OPTIMIZE=0
 UNSAFE=0
 
@@ -21,7 +22,8 @@ else
 fi
     echo
     echo "Arguments:"
-    echo "  --optimize  Run 'nix-store --optimize' afterwards"
+    echo "  --auto      Remove auto created gc-roots (e.g.: '/result' symlinks)."
+    echo "  --optimize  Run 'nix-store --optimize' afterwards."
 if [[ "$NIXOS" == 1 ]]; then
     echo "  --unsafe    Delete booted-system's GC root. Possibly unsafe."
     echo "              Only usable after a 'nixos-rebuild switch'"
@@ -33,6 +35,10 @@ while [[ "${#:-0}" -gt 0 ]]; do
     case "$1" in
         -h|--help)
             usage
+            ;;
+        --auto)
+            AUTO=1
+            shift
             ;;
         --optimize)
             OPTIMIZE=1
@@ -55,9 +61,11 @@ fi
 done
 
 cleanup() {
-    find -H /nix/var/nix/gcroots/auto -type l -exec readlink {} \; | \
-        grep "/result[-0-9]*$" | \
-        xargs -L1 rm -rf
+    if [[ "$AUTO" == 1 ]]; then
+        find -H /nix/var/nix/gcroots/auto -type l -exec readlink {} \; | \
+            grep "/result[-0-9]*$" | \
+            xargs -L1 rm -rf
+    fi
     if [[ "$UNSAFE" == 1 ]]; then
         nix-store --ignore-liveness --delete /nix/var/nix/gcroots/booted-system
     fi
