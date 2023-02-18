@@ -1,6 +1,10 @@
+let
+  constants = import ./constants.nix;
+in
+with constants;
 {
   maximimizeBuildSpaceStep = {
-    uses = "easimon/maximize-build-space@v6";
+    uses = actions.maximize-build-space;
     "with" = {
       remove-dotnet = true;
       remove-android = true;
@@ -9,10 +13,10 @@
     };
   };
   checkoutStep = {
-    uses = "actions/checkout@v3";
+    uses = actions.checkout;
   };
   installNixActionStep = {
-    uses = "cachix/install-nix-action@v18";
+    uses = actions.install-nix-action;
     "with" = {
       # Need to define a channel, otherwise it wiill use bash from environment
       nix_path = "nixpkgs=channel:nixos-unstable";
@@ -21,7 +25,7 @@
     };
   };
   cachixActionStep = {
-    uses = "cachix/cachix-action@v12";
+    uses = actions.cachix-action;
     "with" = {
       name = "thiagokokada-nix-configs";
       extraPullNames = "nix-community";
