@@ -170,5 +170,6 @@
       fileWidgetOptions = [ "--preview 'head {}'" ];
       historyWidgetOptions = [ "--sort" ];
     };
+    zoxide.enable = true;
   };
 }
