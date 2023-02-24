@@ -22,8 +22,8 @@ in
 
   environment = {
     systemPackages = with pkgs; [
-      # gaming.osu-stable
-      osu-lazer-bin
+      gaming.osu-stable
+      gaming.osu-lazer-bin
       import-osu-songs
       lutris
       piper
