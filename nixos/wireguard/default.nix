@@ -230,8 +230,8 @@ in
   # enable dnsmasq to serve as a DNS server
   services.dnsmasq = lib.mkIf useHostDNS {
     enable = true;
-    extraConfig = ''
-      interface=${wgInterface}
-    '';
+    settings = {
+      interface = wgInterface;
+    };
   };
 }
