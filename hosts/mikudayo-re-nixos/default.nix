@@ -56,7 +56,7 @@ in
     timeZone = "Europe/Dublin";
   };
 
-  boot.kernelPackages = pkgs.linuxPackages_xanmod;
+  boot.kernelPackages = pkgs.linuxKernel.packages.linux_zen;
   networking.hostName = "mikudayo-re-nixos";
 
   # I think the usage of NVIDIA drivers is making lidSwitchDocked not working correctly
