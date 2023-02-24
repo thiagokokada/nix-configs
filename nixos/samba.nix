@@ -1,7 +1,7 @@
 { config, lib, pkgs, ... }:
 
 let
-  inherit (config.device) archiveDir;
+  inherit (config.device) mediaDir;
   inherit (config.meta) username;
 in
 with config.users.users.${username}; {
@@ -41,7 +41,7 @@ with config.users.users.${username}; {
           "force group" = group;
         };
         archive = {
-          path = archiveDir;
+          path = mediaDir;
           browseable = "yes";
           "read only" = "no";
           "guest ok" = "no";

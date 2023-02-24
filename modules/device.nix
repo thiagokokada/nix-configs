@@ -24,11 +24,11 @@ with lib; {
         else
           [ "/" ];
     };
-    archiveDir = mkOption {
+    mediaDir = mkOption {
       type = types.path;
-      description = "Archive directory";
-      example = "/mnt/archive";
-      default = config.users.users.${config.meta.username}.home + "/Downloads";
+      description = "Shared media directory";
+      example = "/mnt/media";
+      default = "/media";
     };
   };
 }

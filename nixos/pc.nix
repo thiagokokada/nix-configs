@@ -12,7 +12,7 @@ in
     ../modules/device.nix
   ];
 
-  device.archiveDir = "/mnt/archive/${username}";
+  device.mediaDir = "/mnt/archive/${username}";
 
   # Some misc packages
   environment.systemPackages = with pkgs; [
