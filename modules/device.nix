@@ -24,5 +24,11 @@ with lib; {
         else
           [ "/" ];
     };
+    archiveDir = mkOption {
+      type = types.path;
+      description = "Archive directory";
+      example = "/mnt/archive";
+      default = config.users.users.${config.meta.username}.home + "/Downloads";
+    };
   };
 }

@@ -1,8 +1,8 @@
 { config, lib, pkgs, ... }:
 
 let
+  inherit (config.device) archiveDir;
   inherit (config.meta) username;
-  archive = "/mnt/archive/${username}";
 in
 with config.users.users.${username}; {
   environment.systemPackages = with pkgs; [
@@ -41,7 +41,7 @@ with config.users.users.${username}; {
           "force group" = group;
         };
         archive = {
-          path = archive;
+          path = archiveDir;
           browseable = "yes";
           "read only" = "no";
           "guest ok" = "no";

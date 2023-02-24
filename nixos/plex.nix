@@ -2,7 +2,7 @@
 
 let
   inherit (config.meta) username;
-  archive = "/mnt/archive/${username}";
+  inherit (config.device) archiveDir;
 in
 with config.users.users.${username}; {
   # Increase number of directories that Linux can monitor for Plex
@@ -19,9 +19,9 @@ with config.users.users.${username}; {
   };
 
   systemd.tmpfiles.rules = [
-    "d ${archive}/Others 0775 ${username} ${group}"
-    "d ${archive}/Musics 0775 ${username} ${group}"
-    "d ${archive}/Photos 0775 ${username} ${group}"
-    "d ${archive}/Videos 0775 ${username} ${group}"
+    "d ${archiveDir}/Others 0775 ${username} ${group}"
+    "d ${archiveDir}/Musics 0775 ${username} ${group}"
+    "d ${archiveDir}/Photos 0775 ${username} ${group}"
+    "d ${archiveDir}/Videos 0775 ${username} ${group}"
   ];
 }

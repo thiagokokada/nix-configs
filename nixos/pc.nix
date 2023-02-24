@@ -12,6 +12,8 @@ in
     ../modules/device.nix
   ];
 
+  device.archiveDir = "/mnt/archive/${username}";
+
   # Some misc packages
   environment.systemPackages = with pkgs; [
     gnome.simple-scan

@@ -1,8 +1,8 @@
 { config, lib, pkgs, ... }:
 
 let
+  inherit (config.device) archiveDir;
   inherit (config.meta) username;
-  archive = "/mnt/archive/${username}";
 in
 with config.users.users.${username}; {
   environment.systemPackages = with pkgs; [
@@ -11,7 +11,7 @@ with config.users.users.${username}; {
 
   services.rtorrent = {
     enable = true;
-    downloadDir = "${archive}/Downloads";
+    downloadDir = "${archiveDir}/Downloads";
     user = username;
     group = group;
     port = 60001;
@@ -49,6 +49,6 @@ with config.users.users.${username}; {
   };
 
   systemd.tmpfiles.rules = [
-    "d ${archive}/Downloads 0775 ${username} ${group}"
+    "d ${archiveDir}/Downloads 0775 ${username} ${group}"
   ];
 }
