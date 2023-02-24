@@ -30,7 +30,7 @@ in
         "irc/dcc" = {
           dcc_autoget = "yes";
           dcc_autoresume = "yes";
-          dcc_download_path = "${config.device.mediaDir}/Others";
+          dcc_download_path = "${config.device.mediaDir}/Other";
           dcc_file_create_mode = "664";
           dcc_mirc_ctcp = "yes";
           dcc_port = "50000 50010";

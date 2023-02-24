@@ -19,8 +19,8 @@ with config.users.users.${username}; {
   };
 
   systemd.tmpfiles.rules = [
-    "d ${mediaDir}/Others 2775 ${username} ${group}"
-    "d ${mediaDir}/Musics 2775 ${username} ${group}"
+    "d ${mediaDir}/Other 2775 ${username} ${group}"
+    "d ${mediaDir}/Music 2775 ${username} ${group}"
     "d ${mediaDir}/Photos 2775 ${username} ${group}"
     "d ${mediaDir}/Videos 2775 ${username} ${group}"
   ];
