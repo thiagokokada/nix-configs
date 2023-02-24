@@ -5,7 +5,9 @@ in
   # Enable OpenSSH
   services.openssh = {
     enable = true;
-    passwordAuthentication = false;
+    settings = {
+      PasswordAuthentication = false;
+    };
   };
 
   # Enable mosh

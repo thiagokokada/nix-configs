@@ -64,6 +64,9 @@ in
   # Add user to libvirtd group.
   users.users.${username} = { extraGroups = [ "libvirtd" ]; };
 
+  # Enable irqbalance service
+  services.irqbalance.enable = true;
+
   # Reduce latency.
   powerManagement.cpuFreqGovernor = "performance";
 }

@@ -4,7 +4,10 @@
   options.nixos.desktop.enable = pkgs.lib.mkDefaultOption "desktop config";
 
   config = lib.mkIf config.nixos.desktop.enable {
-    environment.systemPackages = with pkgs; [ smartmontools ];
+    environment.systemPackages = with pkgs; [
+      hdparm
+      smartmontools
+    ];
 
     programs.gnome-disks.enable = true;
     services = {
