@@ -12,12 +12,12 @@ in
   # -p pkgs.htop` will keep using an old version of nixpkgs
   nixPath = [
     "nixpkgs=${inputs.nixpkgs}"
-    "nixpkgs-unstable=${inputs.unstable}"
+    "stable=${inputs.stable}"
   ];
   # Same as above, but for `nix shell nixpkgs#htop`
   # FIXME: for non-free packages you need to use `nix shell --impure`
   registry = {
     nixpkgs.flake = inputs.nixpkgs;
-    nixpkgs-unstable.flake = inputs.unstable;
+    stable.flake = inputs.stable;
   };
 }

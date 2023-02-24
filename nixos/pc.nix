@@ -43,7 +43,7 @@ with config.users.users.${username}; {
       enable = true;
       openFirewall = true;
       group = group;
-      package = pkgs.unstable.plex;
+      package = pkgs.plex;
     };
 
     # Enable Samba

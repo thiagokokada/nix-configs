@@ -13,7 +13,7 @@ in
         (import ../lib { inherit (prev) lib; })
       );
 
-      unstable = import inputs.unstable {
+      stable = import inputs.stable {
         inherit system;
         config = prev.config;
       };
@@ -23,14 +23,7 @@ in
       wallpapers = prev.callPackage ../packages/wallpapers { };
 
       # custom packages
-      arandr = with final.unstable; arandr.overrideAttrs (oldAttrs: {
-        src = fetchFromGitLab {
-          owner = "thiagokokada";
-          repo = oldAttrs.pname;
-          rev = "5e2eb669ffe76c6894d597acfcd6f1ae964350e1";
-          sha256 = "sha256-sH5D/a92fmPYSyiEYVIipyfFIX0Wgq5MjV1hnG3EHKs=";
-        };
-      });
+      arandr = prev.arandr.overrideAttrs (_: { src = inputs.arandr; });
 
       archivers = prev.callPackage ../packages/archivers { };
 
@@ -60,9 +53,9 @@ in
 
       nixpkgs-review =
         if (prev.stdenv.isLinux) then
-          final.unstable.nixpkgs-review.override { withSandboxSupport = true; }
+          prev.nixpkgs-review.override { withSandboxSupport = true; }
         else
-          final.unstable.nixpkgs-review;
+          prev.nixpkgs-review;
 
       run-bg-alias = name: command: prev.callPackage ../packages/run-bg-alias { inherit name command; };
     })

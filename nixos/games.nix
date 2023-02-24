@@ -22,12 +22,12 @@ in
 
   environment = {
     systemPackages = with pkgs; [
-      gaming.osu-stable
-      gaming.osu-lazer-bin
+      # gaming.osu-stable
+      osu-lazer-bin
       import-osu-songs
+      lutris
       piper
-      unstable.lutris
-      unstable.retroarchFull
+      retroarchFull
     ];
 
     # Use nvidia-offload script in gamemode

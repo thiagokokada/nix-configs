@@ -3,17 +3,13 @@
 
   inputs = {
     # main
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-22.11";
-    unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    stable.url = "github:NixOS/nixpkgs/nixos-22.11";
     hardware.url = "github:NixOS/nixos-hardware";
     home = {
-      url = "github:nix-community/home-manager/release-22.11";
+      url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.utils.follows = "flake-utils";
-    };
-    home-unstable = {
-      url = "github:nix-community/home-manager";
-      inputs.nixpkgs.follows = "unstable";
     };
     nix-darwin = {
       url = "github:LnL7/nix-darwin";
@@ -21,7 +17,7 @@
     };
     nix-gaming = {
       url = "github:fufexan/nix-gaming";
-      inputs.nixpkgs.follows = "unstable";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     # helpers
@@ -34,11 +30,11 @@
     # nix-alien
     nix-index-database = {
       url = "github:Mic92/nix-index-database";
-      inputs.nixpkgs.follows = "unstable";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
     nix-alien = {
       url = "github:thiagokokada/nix-alien";
-      inputs.nixpkgs.follows = "unstable";
+      inputs.nixpkgs.follows = "nixpkgs";
       inputs.flake-compat.follows = "flake-compat";
       inputs.flake-utils.follows = "flake-utils";
       inputs.nix-index-database.follows = "nix-index-database";
@@ -47,20 +43,26 @@
     # nix-doom-emacs
     emacs = {
       url = "github:nix-community/emacs-overlay";
-      inputs.nixpkgs.follows = "unstable";
+      inputs.nixpkgs.follows = "nixpkgs";
       inputs.flake-utils.follows = "flake-utils";
     };
     nix-doom-emacs = {
       url = "github:nix-community/nix-doom-emacs";
-      inputs.nixpkgs.follows = "unstable";
+      inputs.nixpkgs.follows = "nixpkgs";
       inputs.emacs-overlay.follows = "emacs";
       inputs.flake-utils.follows = "flake-utils";
       inputs.flake-compat.follows = "flake-compat";
     };
 
+    # custom packages
+    arandr = {
+      url = "gitlab:thiagokokada/arandr";
+      flake = false;
+    };
+
     # nnn plugins
     nnn-plugins = {
-      url = "github:jarun/nnn/v4.5";
+      url = "github:jarun/nnn";
       flake = false;
     };
 

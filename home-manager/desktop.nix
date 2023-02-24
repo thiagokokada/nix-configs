@@ -9,7 +9,9 @@
     audacious
     bitwarden
     (calibre.override { unrarSupport = true; })
+    (cinnamon.nemo-with-extensions.override { extensions = with cinnamon; [ nemo-fileroller ]; })
     desktop-file-utils
+    (discord.override { withOpenASAR = true; nss = nss_latest; })
     gammastep
     gimp
     gnome.evince
@@ -28,9 +30,6 @@
     pinta
     qalculate-gtk
     udiskie
-    (unstable.cinnamon.nemo-with-extensions.override { extensions = with unstable.cinnamon; [ nemo-fileroller ]; })
-    (unstable.discord.override { withOpenASAR = true; nss = nss_latest; })
-    unstable.zoom-us
     vlc
     xclip
     xdotool
@@ -39,6 +38,7 @@
     xorg.xhost
     xorg.xkill
     xorg.xset
+    zoom-us
   ];
 
   programs.zsh.shellAliases = {
