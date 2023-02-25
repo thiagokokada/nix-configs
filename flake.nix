@@ -42,7 +42,7 @@
 
     # nix-doom-emacs
     emacs = {
-      url = "github:nix-community/emacs-overlay";
+      url = "github:nix-community/emacs-overlay/5b567bd46294ff2e30cd852e0239caebdf8e1676";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.flake-utils.follows = "flake-utils";
     };
