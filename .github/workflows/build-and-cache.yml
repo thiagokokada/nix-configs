@@ -26,13 +26,13 @@ jobs:
         run: nix flake check
       - name: Build Home-Manager configs
         run: |-
-          nix build '.#homeConfigurations.home-linux.activationPackage'
-          nix build '.#homeConfigurations.steamdeck.activationPackage'
+          nix build --print-build-logs '.#homeConfigurations.home-linux.activationPackage'
+          nix build --print-build-logs '.#homeConfigurations.steamdeck.activationPackage'
       - name: Build NixOS configs
         run: |-
-          nix build '.#nixosConfigurations.miku-nixos.config.system.build.toplevel'
-          nix build '.#nixosConfigurations.mikudayo-re-nixos.config.system.build.toplevel'
-          nix build '.#nixosConfigurations.mirai-vps.config.system.build.toplevel'
+          nix build --print-build-logs '.#nixosConfigurations.miku-nixos.config.system.build.toplevel'
+          nix build --print-build-logs '.#nixosConfigurations.mikudayo-re-nixos.config.system.build.toplevel'
+          nix build --print-build-logs '.#nixosConfigurations.mirai-vps.config.system.build.toplevel'
   build-macos:
     runs-on: macos-latest
     steps:
@@ -49,9 +49,9 @@ jobs:
       - name: Set default git branch (to reduce log spam)
         run: git config --global init.defaultBranch master
       - name: Build Home-Manager configs
-        run: nix build '.#homeConfigurations.home-macos.activationPackage'
+        run: nix build --print-build-logs '.#homeConfigurations.home-macos.activationPackage'
       - name: Build NixOS configs
-        run: nix build '.#darwinConfigurations.miku-macos-vm.system'
+        run: nix build --print-build-logs '.#darwinConfigurations.miku-macos-vm.system'
 name: build-and-cache
 "on":
   - push

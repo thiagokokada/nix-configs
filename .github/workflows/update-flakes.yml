@@ -27,13 +27,13 @@ jobs:
         run: git config --global init.defaultBranch master
       - name: Build Home-Manager configs
         run: |-
-          nix build '.#homeConfigurations.home-linux.activationPackage'
-          nix build '.#homeConfigurations.steamdeck.activationPackage'
+          nix build --print-build-logs '.#homeConfigurations.home-linux.activationPackage'
+          nix build --print-build-logs '.#homeConfigurations.steamdeck.activationPackage'
       - name: Build NixOS configs
         run: |-
-          nix build '.#nixosConfigurations.miku-nixos.config.system.build.toplevel'
-          nix build '.#nixosConfigurations.mikudayo-re-nixos.config.system.build.toplevel'
-          nix build '.#nixosConfigurations.mirai-vps.config.system.build.toplevel'
+          nix build --print-build-logs '.#nixosConfigurations.miku-nixos.config.system.build.toplevel'
+          nix build --print-build-logs '.#nixosConfigurations.mikudayo-re-nixos.config.system.build.toplevel'
+          nix build --print-build-logs '.#nixosConfigurations.mirai-vps.config.system.build.toplevel'
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v4
         with:

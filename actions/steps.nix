@@ -1,5 +1,6 @@
 let
   constants = import ./constants.nix;
+  nixFlags = toString [ "--print-build-logs" ];
 in
 with constants;
 {
@@ -48,21 +49,21 @@ with constants;
     name = "Build Home-Manager configs";
     run = builtins.concatStringsSep "\n"
       (map
-        (hostname: "nix build '.#homeConfigurations.${hostname}.activationPackage'")
+        (hostname: "nix build ${nixFlags} '.#homeConfigurations.${hostname}.activationPackage'")
         hostnames);
   };
   buildNixOSConfigurations = hostnames: {
     name = "Build NixOS configs";
     run = builtins.concatStringsSep "\n"
       (map
-        (hostname: "nix build '.#nixosConfigurations.${hostname}.config.system.build.toplevel'")
+        (hostname: "nix build ${nixFlags} '.#nixosConfigurations.${hostname}.config.system.build.toplevel'")
         hostnames);
   };
   buildNixDarwinConfigurations = hostnames: {
     name = "Build NixOS configs";
     run = builtins.concatStringsSep "\n"
       (map
-        (hostname: "nix build '.#darwinConfigurations.${hostname}.system'")
+        (hostname: "nix build ${nixFlags} '.#darwinConfigurations.${hostname}.system'")
         hostnames);
   };
   updateFlakeLockStep = {
