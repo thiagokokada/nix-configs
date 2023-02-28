@@ -1,8 +1,8 @@
-{ bash
+{ _7zz
+, bash
 , coreutils
 , gnutar
 , gzip
-, p7zip
 , pbzip2
 , pigz
 , rar
@@ -45,10 +45,10 @@ resholve.mkDerivation {
       ];
       interpreter = "${bash}/bin/bash";
       inputs = [
+        _7zz
         coreutils
         gnutar
         gzip
-        p7zip
         pbzip2
         pigz
         rar
@@ -59,8 +59,6 @@ resholve.mkDerivation {
       ];
       execer = [
         "cannot:${gzip}/bin/uncompress"
-        "cannot:${p7zip}/bin/7z"
-        "cannot:${p7zip}/bin/7za"
       ];
     };
   };

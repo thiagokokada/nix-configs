@@ -12,7 +12,7 @@ fi
 
 while [[ "$#" -gt 0 ]]; do
     case "$1" in
-        (*.7z|*.001) 7z x "$1" ;;
+        (*.7z|*.001) 7zz x "$1" ;;
         (*.rar) unrar "$1" ;;
         (*.tar.bz|*.tar.bz2|*.tbz|*.tbz2) tar -xvjf "$1" ;;
         (*.tar.gz|*.tgz) tar -xvzf "$1" ;;

@@ -11,7 +11,7 @@ if [[ "$#" -lt 2 ]]; then
 fi
 
 case "$1" in
-    (*.7z) 7za a "$@" ;;
+    (*.7z) 7zz a "$@" ;;
     (*.rar) rar a "$@" ;;
     (*.tar.bz|*.tar.bz2|*.tbz|*.tbz2) tar -cvjf "$@" ;;
     (*.tar.gz|*.tgz) tar -cvzf "$@" ;;

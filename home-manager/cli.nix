@@ -6,6 +6,7 @@ let
 in
 {
   home.packages = with pkgs; [
+    _7zz
     aria2
     bat
     bc
@@ -33,7 +34,6 @@ in
     netcat-gnu
     openssl
     ouch
-    p7zip
     page
     pipe-rename
     pv
