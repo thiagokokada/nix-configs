@@ -20,6 +20,7 @@ resholve.mkDerivation {
   src = [
     ./archive.sh
     ./unarchive.sh
+    ./lsarchive.sh
   ];
 
   dontUnpack = true;
@@ -42,6 +43,7 @@ resholve.mkDerivation {
       scripts = [
         "bin/archive"
         "bin/unarchive"
+        "bin/lsarchive"
       ];
       interpreter = "${bash}/bin/bash";
       inputs = [

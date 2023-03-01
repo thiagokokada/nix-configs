@@ -19,11 +19,11 @@ case "$1" in
     (*.tar.xz|*.txz) env XZ_OPT=-T0 tar -cvJf "$@" ;;
     (*.tar) tar -cvf "$@" ;;
     (*.zip) zip -r "$@" ;;
-    (*.zst) zstd -c -T0 "${@:2}" -o "$1" ;;
     (*.bz|*.bz2) echoerr "$0: .bzip2 is only useful for single files, and does not capture permissions. Use .tar.bz2" ;;
     (*.gz) echoerr "$0: .gz is only useful for single files, and does not capture permissions. Use .tar.gz" ;;
     (*.lzma) echoerr "$0: .lzma is only useful for single files, and does not capture permissions. Use .tar.lzma" ;;
     (*.xz) echoerr "$0: .xz is only useful for single files, and does not capture permissions. Use .tar.xz" ;;
+    (*.zst) echoerr "$0: .zst is only useful for single files, and does not capture permissions. Use .tar.zst" ;;
     (*.Z) echoerr "$0: .Z is only useful for single files, and does not capture permissions." ;;
     (*) echoerr "$name: unknown archive type: $1" ;;
 esac
