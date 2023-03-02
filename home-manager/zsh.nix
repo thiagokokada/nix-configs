@@ -66,6 +66,9 @@
       }
       get-ip() { ${curl}/bin/curl -Ss "https://ifconfig.me" }
       get-ip!() { ${curl}/bin/curl -Ss "https://ipapi.co/$(get-ip)/yaml" }
+      remove-symlink() {
+        [[ -L "$1" ]] && cp --remove-destination "$(readlink "$1")" "$1"
+      }
 
       # allow using nix-shell with zsh
       ${any-nix-shell}/bin/any-nix-shell zsh --info-right | source /dev/stdin
