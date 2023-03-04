@@ -79,4 +79,8 @@ cleanup() {
     fi
 }
 
-sudo bash -c "$(declare -f cleanup); cleanup"
+if [[ "$NIXOS" == 1 ]]; then
+    sudo bash -c "$(declare -f cleanup); cleanup"
+else
+    cleanup
+fi
