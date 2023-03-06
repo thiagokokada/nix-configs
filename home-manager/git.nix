@@ -3,6 +3,8 @@
 {
   home.packages = with pkgs; [
     (run-bg-alias "gk" "${config.programs.git.package}/bin/gitk")
+    (run-bg-alias "gcd" "${git-cola}/bin/git-cola dag")
+    git-cola
     github-cli
   ];
 
