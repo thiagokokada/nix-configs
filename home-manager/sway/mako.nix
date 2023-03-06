@@ -1,7 +1,7 @@
 { config, lib, pkgs, ... }:
 
 {
-  programs.mako = with config.theme.colors; {
+  services.mako = with config.theme.colors; {
     enable = true;
     font = with config.theme.fonts; "${gui.name} 12";
     backgroundColor = base00;
