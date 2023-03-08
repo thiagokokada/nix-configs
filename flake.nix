@@ -147,6 +147,10 @@
       # Home-Manager configs
       (mkHomeConfig { hostname = "home-linux"; })
       (mkHomeConfig {
+        hostname = "home-linux-minimal";
+        configuration = ./home-manager/minimal.nix;
+      })
+      (mkHomeConfig {
         hostname = "steamdeck";
         username = "deck";
         configuration = ./home-manager/steamdeck.nix;
