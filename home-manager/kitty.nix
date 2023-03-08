@@ -34,10 +34,10 @@
       color5 = base0E;
       color6 = base0C;
       color7 = base05;
-      color8 = base03;
+      color8 = base02;
       color9 = base09;
       color10 = base01;
-      color11 = base02;
+      color11 = base03;
       color12 = base04;
       color13 = base06;
       color14 = base0F;
