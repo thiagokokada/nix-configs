@@ -8,7 +8,6 @@
 
   # Add some Nix related packages
   environment.systemPackages = with pkgs; [
-    cachix
     nixos-cleanup
   ];
 
