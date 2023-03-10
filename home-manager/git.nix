@@ -41,7 +41,12 @@
     };
 
     aliases = {
-      branch-cleanup = ''!git branch --merged | egrep -v "(^\*|master|dev)" | xargs git branch -d #'';
+      branch-default = ''!git symbolic-ref --short refs/remotes/origin/HEAD | sed "s|^origin/||"'';
+      checkout-default = ''!git checkout "$(git branch-default)"'';
+      rebase-default = ''!git rebase "$(git branch-default)"'';
+      merge-default = ''!git merge "$(git branch-default)"'';
+      branch-cleanup = ''!git branch --merged | egrep -v "(^\*|master|main|dev|development)" | xargs git branch -d #'';
+      # Restores the commit message from a failed commit for some reason
       fix-commit = ''!git commit -F "$(git rev-parse --git-dir)/COMMIT_EDITMSG" --edit'';
       pushf = "push --force-with-lease";
       logs = "log --show-signature";
