@@ -11,7 +11,6 @@ in
     package = pkgs.i3status-rust;
     bars =
       let
-        isLaptop = config.device.type == "laptop";
         isKbddEnabled = config.systemd.user.services ? kbdd;
 
         settings = {
@@ -91,9 +90,12 @@ in
           warning = 80;
         };
 
-        backlightBlock = lib.optionalAttrs isLaptop { block = "backlight"; };
+        backlightBlock = {
+          block = "backlight";
+          format = " $icon $brightness |";
+        };
 
-        batteryBlock = lib.optionalAttrs isLaptop {
+        batteryBlock = {
           block = "battery";
           device = "DisplayDevice";
           driver = "upower";
