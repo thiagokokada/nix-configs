@@ -106,8 +106,13 @@ in
 
         soundBlock = {
           block = "sound";
-          # on_click = "pavucontrol";
           max_vol = 150;
+          click = [
+            {
+              button = "left";
+              cmd = "pavucontrol";
+            }
+          ];
         };
 
         keyboardBlock = lib.optionalAttrs isKbddEnabled {
