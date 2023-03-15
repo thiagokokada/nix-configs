@@ -147,7 +147,7 @@ in
 
         timeBlock = {
           block = "time";
-          interval = 1;
+          interval = 5;
         };
 
       in
