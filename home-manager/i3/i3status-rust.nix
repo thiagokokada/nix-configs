@@ -16,7 +16,7 @@ in
 
         settings = {
           theme = {
-            name = "plain";
+            theme = "plain";
             overrides = with config.theme.colors; {
               idle_bg = base00;
               idle_fg = base05;
@@ -33,31 +33,29 @@ in
             };
           };
           icons = {
-            name = "awesome5";
+            icons = "awesome5";
             overrides = {
-              memory_swap = " ";
-              disk_drive = " ";
-              caffeine_on = "  ";
-              caffeine_off = "  ";
-              notification_on = "  ";
-              notification_off = "  ";
+              memory_swap = "";
+              disk_drive = "";
+              caffeine_on = " ";
+              caffeine_off = " ";
+              notification_on = " ";
+              notification_off = " ";
             };
           };
         };
 
         windowBlock = {
           block = "focused_window";
-          max_width = 50;
-          show_marks = "visible";
+          format = " $title.str(max_w:51) |";
         };
 
         netBlocks = with config.device; map
           (d: {
             block = "net";
             device = d;
-            hide_missing = true;
-            hide_inactive = true;
-            format = "{ssid} {speed_up} {speed_down}";
+            format = " $icon {$ssid ($signal_strength) |} ^icon_net_up $speed_up.eng(prefix:K) ^icon_net_down $speed_down.eng(prefix:K) ";
+            missing_format = "";
           })
           netDevices;
 
@@ -66,29 +64,27 @@ in
             block = "disk_space";
             path = m;
             info_type = "available";
-            unit = "GB";
-            format = "{icon} ${shortPath m} {available}";
+            format = " $icon ${shortPath m} $available ";
           })
           mountPoints;
 
         memoryBlock = {
           block = "memory";
-          format_mem = "{mem_avail;G}";
-          format_swap = "{swap_free;G}";
+          format = " $icon $mem_avail ";
+          format_alt = " $icon_swap $swap_free ";
         };
 
         cpuBlock = {
           block = "cpu";
-          format = "{frequency}";
+          format = " $icon $frequency ";
         };
 
         loadBlock = { block = "load"; };
 
         temperatureBlock = {
           block = "temperature";
-          format = "{average}";
-          collapsed = false;
-          chip = "coretemp-*";
+          format = " $icon $average ";
+          chip = "*-acpi-*";
           good = 20;
           idle = 55;
           info = 70;
@@ -101,18 +97,19 @@ in
           block = "battery";
           device = "DisplayDevice";
           driver = "upower";
-          format = "{percentage} {time}";
+          format = " $icon $percentage {$time |}";
+          missing_format = "";
         };
 
         soundBlock = {
           block = "sound";
-          on_click = "pavucontrol";
+          # on_click = "pavucontrol";
           max_vol = 150;
         };
 
         keyboardBlock = lib.optionalAttrs isKbddEnabled {
           block = "keyboard_layout";
-          format = " {layout}";
+          format = " $icon $layout ";
           driver = "kbddbus";
         };
 
@@ -123,6 +120,7 @@ in
           in
           {
             block = "toggle";
+            format = " $icon ";
             command_state = "${dunstctl} is-paused | ${grep} -Fo 'false'";
             command_on = "${dunstctl} set-paused false && ${dunstctl} is-paused";
             command_off = "${dunstctl} set-paused true && ${dunstctl} is-paused";
@@ -136,6 +134,7 @@ in
           in
           {
             block = "toggle";
+            format = " $icon ";
             command_state = "${xset} q | grep -Fo 'DPMS is Enabled'";
             command_on = "${xset} s on +dpms";
             command_off = "${xset} s off -dpms";
@@ -147,7 +146,6 @@ in
         timeBlock = {
           block = "time";
           interval = 1;
-          format = "%a %T";
         };
 
       in
@@ -155,7 +153,7 @@ in
         i3 = {
           inherit settings;
 
-          blocks = lib.lists.flatten [
+          blocks = lib.filter (b: b != { }) (lib.lists.flatten [
             windowBlock
             netBlocks
             disksBlocks
@@ -170,13 +168,13 @@ in
             soundBlock
             keyboardBlock
             timeBlock
-          ];
+          ]);
         };
 
         sway = {
           inherit settings;
 
-          blocks = lib.lists.flatten [
+          blocks = lib.filter (b: b != { }) (lib.lists.flatten [
             windowBlock
             netBlocks
             disksBlocks
@@ -189,7 +187,7 @@ in
             soundBlock
             (keyboardBlock // { driver = "sway"; })
             timeBlock
-          ];
+          ]);
         };
       };
   };

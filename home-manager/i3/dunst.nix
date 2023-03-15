@@ -1,7 +1,10 @@
 { config, lib, pkgs, ... }:
 
 {
-  home.packages = with pkgs; [ dunst ];
+  home.packages = with pkgs; [
+    dbus # for dbus-send, needed for dunstctl
+    dunst
+  ];
 
   services.dunst = {
     enable = true;
