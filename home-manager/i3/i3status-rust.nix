@@ -75,7 +75,8 @@ in
 
         cpuBlock = {
           block = "cpu";
-          format = " $icon $frequency ";
+          format = " $icon {$frequency.eng(prefix:G)|$utilization} ";
+          format_alt = " $icon $barchart.str(max_w:5) $utilization ";
         };
 
         loadBlock = { block = "load"; };
