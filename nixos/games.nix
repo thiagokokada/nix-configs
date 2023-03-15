@@ -22,7 +22,7 @@ in
 
   environment = {
     systemPackages = with pkgs; [
-      gaming.osu-stable
+      # gaming.osu-stable
       gaming.osu-lazer-bin
       import-osu-songs
       lutris
