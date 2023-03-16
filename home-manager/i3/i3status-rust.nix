@@ -40,6 +40,8 @@ in
               caffeine_off = " ";
               notification_on = " ";
               notification_off = " ";
+              cpu_boost_on = "";
+              cpu_boost_off = "";
             };
           };
         };
@@ -75,7 +77,7 @@ in
 
         cpuBlock = {
           block = "cpu";
-          format = " $icon {$frequency.eng(prefix:G)|$utilization} ";
+          format = " $icon {$frequency.eng(prefix:G,w:3)|$max_frequency.eng(prefix:G,w:3)} ";
           format_alt = " $icon $barchart.str(max_w:5) $utilization ";
         };
 
