@@ -27,12 +27,15 @@ in
           let
             lockscreen = with config.theme.fonts;
               pkgs.writeShellScriptBin "lock-screen" ''
-                export XSECURELOCK_FORCE_GRAB=2
+                export XSECURELOCK_FORCE_GRAB=1
                 export XSECURELOCK_BLANK_DPMS_STATE="off"
                 export XSECURELOCK_DATETIME_FORMAT="%H:%M:%S - %a %d/%m"
                 export XSECURELOCK_SHOW_DATETIME=1
                 export XSECURELOCK_SHOW_HOSTNAME=0
                 export XSECURELOCK_SHOW_USERNAME=0
+                # workaround issue with picom
+                export XSECURELOCK_COMPOSITE_OBSCURER=0
+                export XSECURELOCK_DISCARD_FIRST_KEYPRESS=0
                 export XSECURELOCK_FONT="${gui.name}:style=Regular"
 
                 exec ${pkgs.xsecurelock}/bin/xsecurelock $@
