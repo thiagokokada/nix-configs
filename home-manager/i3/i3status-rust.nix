@@ -34,14 +34,14 @@ in
           icons = {
             icons = "awesome5";
             overrides = {
-              memory_swap = "";
+              memory_mem = "";
+              memory_swap = "";
               disk_drive = "";
               caffeine_on = " ";
               caffeine_off = " ";
               notification_on = " ";
               notification_off = " ";
-              cpu_boost_on = "";
-              cpu_boost_off = "";
+              microchip = "";
             };
           };
         };
@@ -78,7 +78,7 @@ in
         cpuBlock = {
           block = "cpu";
           format = " $icon {$frequency.eng(prefix:G,w:3)|$max_frequency.eng(prefix:G,w:3)} ";
-          format_alt = " $icon $barchart.str(max_w:5) $utilization ";
+          format_alt = " ^icon_microchip $barchart.str(max_w:3) $utilization ";
         };
 
         loadBlock = { block = "load"; };
