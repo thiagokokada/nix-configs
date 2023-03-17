@@ -33,7 +33,7 @@ in
             };
           };
           icons = {
-            icons = "awesome5";
+            icons = "awesome6";
             overrides = {
               memory_mem = "";
               memory_swap = "";

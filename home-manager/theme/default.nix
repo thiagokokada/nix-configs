@@ -11,6 +11,13 @@
         package = pkgs.roboto;
         name = "Roboto";
       };
+      icons = {
+        package = pkgs.font-awesome_6;
+        name = [
+          "Font Awesome 6 Brands"
+          "Font Awesome 6 Free Solid"
+        ];
+      };
     };
     colors = with builtins; fromJSON (readFile ./colors.json);
     wallpaper.path = lib.mkDefault pkgs.wallpapers.hatsune-miku_walking-4k;
@@ -22,8 +29,8 @@
   home = {
     packages = with pkgs; [
       config.theme.fonts.gui.package
+      config.theme.fonts.icons.package
       dejavu_fonts
-      font-awesome_5
       gnome.gnome-themes-extra
       hack-font
       hicolor-icon-theme

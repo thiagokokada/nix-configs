@@ -48,10 +48,9 @@
     };
   }]
 , fonts ? with config.theme.fonts; {
-    names = [
+    names = lib.flatten [
       gui.name
-      "Font Awesome 5 Brands"
-      "Font Awesome 5 Free Solid"
+      icons.name
     ];
     style = "Regular";
     size = 8.0;

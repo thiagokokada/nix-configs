@@ -10,7 +10,7 @@ let
       };
 
       name = mkOption {
-        type = types.str;
+        type = with types; either (listOf str) str;
         description = "Theme name";
       };
     };
@@ -22,6 +22,11 @@ in
       gui = mkOption {
         type = types.nullOr themeType;
         description = "GUI main font";
+      };
+
+      icons = mkOption {
+        type = types.nullOr themeType;
+        description = "Icons main font";
       };
 
       dpi = mkOption {
