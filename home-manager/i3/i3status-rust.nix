@@ -11,6 +11,7 @@ in
     package = pkgs.i3status-rust;
     bars =
       let
+        interval = 5;
         isKbddEnabled = config.systemd.user.services ? kbdd;
 
         settings = {
@@ -53,6 +54,7 @@ in
 
         netBlocks = with config.device; map
           (d: {
+            interval = 2;
             block = "net";
             device = d;
             format = " $icon {$ssid ($signal_strength) |} ^icon_net_up $speed_up.eng(prefix:K) ^icon_net_down $speed_down.eng(prefix:K) ";
@@ -62,6 +64,7 @@ in
 
         disksBlocks = with config.device; map
           (m: {
+            inherit interval;
             block = "disk_space";
             path = m;
             info_type = "available";
@@ -70,20 +73,26 @@ in
           mountPoints;
 
         memoryBlock = {
+          inherit interval;
           block = "memory";
           format = " $icon $mem_avail ";
           format_alt = " $icon_swap $swap_free ";
         };
 
         cpuBlock = {
+          inherit interval;
           block = "cpu";
           format = " $icon {$frequency.eng(prefix:G,w:3)|$max_frequency.eng(prefix:G,w:3)} ";
           format_alt = " ^icon_microchip $barchart.str(max_w:3) $utilization ";
         };
 
-        loadBlock = { block = "load"; };
+        loadBlock = {
+          inherit interval;
+          block = "load";
+        };
 
         temperatureBlock = {
+          inherit interval;
           block = "temperature";
           format = " $icon $average ";
           chip = "*-acpi-*";
@@ -96,6 +105,7 @@ in
         backlightBlock = {
           block = "backlight";
           format = " $icon $brightness |";
+          invert_icons = true;
         };
 
         batteryBlock = {
@@ -129,6 +139,7 @@ in
             grep = "${pkgs.gnugrep}/bin/grep";
           in
           {
+            inherit interval;
             block = "toggle";
             format = " $icon ";
             command_state = "${dunstctl} is-paused | ${grep} -Fo 'false'";
@@ -136,13 +147,13 @@ in
             command_off = "${dunstctl} set-paused true && ${dunstctl} is-paused";
             icon_on = "notification_on";
             icon_off = "notification_off";
-            interval = 5;
           };
 
         dpmsBlock =
           let xset = "${pkgs.xorg.xset}/bin/xset";
           in
           {
+            inherit interval;
             block = "toggle";
             format = " $icon ";
             command_state = "${xset} q | grep -Fo 'DPMS is Enabled'";
@@ -150,12 +161,11 @@ in
             command_off = "${xset} s off -dpms";
             icon_on = "caffeine_off";
             icon_off = "caffeine_on";
-            interval = 5;
           };
 
         timeBlock = {
+          inherit interval;
           block = "time";
-          interval = 5;
         };
 
       in
