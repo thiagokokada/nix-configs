@@ -49,7 +49,7 @@ in
 
         windowBlock = {
           block = "focused_window";
-          format = " $title.str(max_w:51) |";
+          format = " $title.str(max_w:26) |";
         };
 
         netBlocks = with config.device; map
