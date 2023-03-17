@@ -12,6 +12,7 @@ in
     bars =
       let
         interval = 5;
+        isLaptop = config.device.type == "laptop";
         isKbddEnabled = config.systemd.user.services ? kbdd;
 
         settings = {
@@ -104,13 +105,13 @@ in
           warning = 80;
         };
 
-        backlightBlock = {
+        backlightBlock = lib.optionalAttrs isLaptop {
           block = "backlight";
           format = " $icon $brightness |";
           invert_icons = true;
         };
 
-        batteryBlock = {
+        batteryBlock = lib.optionalAttrs isLaptop {
           block = "battery";
           device = "DisplayDevice";
           driver = "upower";
