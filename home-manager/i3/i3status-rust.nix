@@ -134,7 +134,7 @@ in
 
         notificationBlock = {
           block = "notify";
-          format = " ^icon_notification {$paused{^icon_toggle_off}|^icon_toggle_on} ";
+          format = " ^icon_notification {$paused{^icon_toggle_off}|^icon_toggle_on}{ ($notification_count.eng(w:1)) |}";
         };
 
         dpmsBlock =
