@@ -36,15 +36,12 @@ in
           icons = {
             icons = "awesome6";
             overrides = {
-              caffeine_off = " ";
-              caffeine_on = " ";
+              caffeine = "";
               disk_drive = "";
               ethernet = "";
               memory_mem = "";
               memory_swap = "";
               microchip = "";
-              notification_off = " ";
-              notification_on = " ";
             };
           };
         };
@@ -136,21 +133,10 @@ in
           driver = "kbddbus";
         };
 
-        notificationBlock =
-          let
-            dunstctl = "${pkgs.dunst}/bin/dunstctl";
-            grep = "${pkgs.gnugrep}/bin/grep";
-          in
-          {
-            inherit interval;
-            block = "toggle";
-            format = " $icon ";
-            command_state = "${dunstctl} is-paused | ${grep} -Fo 'false'";
-            command_on = "${dunstctl} set-paused false && ${dunstctl} is-paused";
-            command_off = "${dunstctl} set-paused true && ${dunstctl} is-paused";
-            icon_on = "notification_on";
-            icon_off = "notification_off";
-          };
+        notificationBlock = {
+          block = "notify";
+          format = " ^icon_notification {$paused{^icon_toggle_off}|^icon_toggle_on} ";
+        };
 
         dpmsBlock =
           let xset = "${pkgs.xorg.xset}/bin/xset";
@@ -158,12 +144,12 @@ in
           {
             inherit interval;
             block = "toggle";
-            format = " $icon ";
+            format = " ^icon_caffeine $icon ";
             command_state = "${xset} q | grep -Fo 'DPMS is Enabled'";
             command_on = "${xset} s on +dpms";
             command_off = "${xset} s off -dpms";
-            icon_on = "caffeine_off";
-            icon_off = "caffeine_on";
+            icon_on = "toggle_off";
+            icon_off = "toggle_on";
           };
 
         timeBlock = {
@@ -205,6 +191,7 @@ in
             cpuBlock
             loadBlock
             temperatureBlock
+            (notificationBlock // { driver = "swaync"; })
             backlightBlock
             batteryBlock
             soundBlock
