@@ -35,14 +35,15 @@ in
           icons = {
             icons = "awesome6";
             overrides = {
+              caffeine_off = " ";
+              caffeine_on = " ";
+              disk_drive = "";
+              ethernet = "";
               memory_mem = "";
               memory_swap = "";
-              disk_drive = "";
-              caffeine_on = " ";
-              caffeine_off = " ";
-              notification_on = " ";
-              notification_off = " ";
               microchip = "";
+              notification_off = " ";
+              notification_on = " ";
             };
           };
         };
@@ -57,7 +58,8 @@ in
             interval = 2;
             block = "net";
             device = d;
-            format = " $icon {$ssid ($signal_strength) |} ^icon_net_up $speed_up.eng(prefix:K) ^icon_net_down $speed_down.eng(prefix:K) ";
+            format = " {$icon $ssid ($signal_strength) |^icon_ethernet } ^icon_net_up $speed_up.eng(prefix:K) ^icon_net_down $speed_down.eng(prefix:K) ";
+            format_alt = " {$icon $ssid ($signal_strength) |^icon_ethernet } ^icon_net_up $graph_up.str(max_w:3) ^icon_net_down$graph_down.str(max_w:3) ";
             missing_format = "";
           })
           netDevices;
