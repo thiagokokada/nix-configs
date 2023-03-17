@@ -37,7 +37,6 @@ in
             icons = "awesome6";
             overrides = {
               caffeine = "";
-              disk_drive = "";
               ethernet = "";
               memory_mem = "";
               memory_swap = "";
