@@ -55,8 +55,12 @@ in
             interval = 2;
             block = "net";
             device = d;
-            format = " {$icon $ssid ($signal_strength) |^icon_ethernet } ^icon_net_up $speed_up.eng(prefix:K) ^icon_net_down $speed_down.eng(prefix:K) ";
-            format_alt = " {$icon $ssid ($signal_strength) |^icon_ethernet } ^icon_net_up $graph_up.str(max_w:3) ^icon_net_down$graph_down.str(max_w:3) ";
+            format = " {$icon $ssid ($signal_strength) |^icon_ethernet } " +
+              "^icon_net_up $speed_up.eng(prefix:K) " +
+              "^icon_net_down $speed_down.eng(prefix:K) ";
+            format_alt = " {$icon $ssid ($signal_strength) |^icon_ethernet } " +
+              "^icon_net_up $graph_up.str(max_w:3) " +
+              "^icon_net_down$graph_down.str(max_w:3) ";
             missing_format = "";
           })
           netDevices;
@@ -81,7 +85,8 @@ in
         cpuBlock = {
           inherit interval;
           block = "cpu";
-          format = " $icon {$frequency.eng(prefix:G,w:3)|$max_frequency.eng(prefix:G,w:3)} ";
+          format = " $icon " +
+            "{$frequency.eng(prefix:G,w:3)|$max_frequency.eng(prefix:G,w:3)} ";
           format_alt = " ^icon_microchip $barchart.str(max_w:3) $utilization ";
         };
 
@@ -134,7 +139,9 @@ in
 
         notificationBlock = {
           block = "notify";
-          format = " ^icon_notification {$paused{^icon_toggle_off}|^icon_toggle_on}{ ($notification_count.eng(w:1)) |}";
+          format = " ^icon_notification " +
+            "{$paused{^icon_toggle_off}|^icon_toggle_on}" +
+            "{ ($notification_count.eng(w:1)) |}";
         };
 
         dpmsBlock =
