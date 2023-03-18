@@ -1,8 +1,4 @@
 { config, lib, pkgs, ... }:
-let
-  shortPath = with lib.strings;
-    (path: concatStringsSep "/" (map (substring 0 1) (splitString "/" path)));
-in
 {
   imports = [ ../../modules/device.nix ];
 
@@ -66,15 +62,20 @@ in
           })
           netDevices;
 
-        disksBlocks = with config.device; map
-          (m: {
-            inherit interval;
-            block = "disk_space";
-            path = m;
-            info_type = "available";
-            format = " $icon ${shortPath m} $available ";
-          })
-          mountPoints;
+        disksBlocks = with config.device;
+          let
+            shortPath = with lib.strings;
+              (path: concatStringsSep "/" (map (substring 0 1) (splitString "/" path)));
+          in
+          map
+            (m: {
+              inherit interval;
+              block = "disk_space";
+              path = m;
+              info_type = "available";
+              format = " $icon ${shortPath m} $available ";
+            })
+            mountPoints;
 
         memoryBlock = {
           inherit interval;
