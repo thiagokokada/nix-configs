@@ -41,6 +41,7 @@ in
               memory_mem = "";
               memory_swap = "";
               microchip = "";
+              monitor = "";
             };
           };
         };
@@ -108,7 +109,7 @@ in
 
         backlightBlock = lib.optionalAttrs isLaptop {
           block = "backlight";
-          format = " $icon $brightness |";
+          format = " ^icon_monitor $brightness |";
           invert_icons = true;
         };
 
@@ -140,8 +141,8 @@ in
         notificationBlock = {
           block = "notify";
           format = " ^icon_notification " +
-            "{$paused{^icon_toggle_off}|^icon_toggle_on}" +
-            "{ ($notification_count.eng(w:1)) |}";
+            "{$paused{^icon_toggle_off}|^icon_toggle_on} " +
+            "{($notification_count.eng(w:1)) |}";
         };
 
         dpmsBlock =
