@@ -32,10 +32,7 @@ in
 
   # Set custom nixpkgs config (e.g.: allowUnfree), both for this
   # config and for ad-hoc nix commands invocation
-  nixpkgs.config = import ./nixpkgs-config.nix // {
-    # FIXME: why is this necessary only for HM standalone?
-    allowUnfreePredicate = _: true;
-  };
+  nixpkgs.config = import ./nixpkgs-config.nix;
   xdg.configFile."nixpkgs/config.nix".source = ./nixpkgs-config.nix;
 
   programs = {
