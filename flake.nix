@@ -168,7 +168,6 @@
         text = ''
           find . -name '*.nix' \
             ! -name 'hardware-configuration.nix' \
-            ! -name 'cachix.nix' \
             ! -path './modules/home-manager/*' \
             ! -path './modules/nixos/*' \
             -exec nixpkgs-fmt --check {} \+
@@ -179,7 +178,6 @@
         text = ''
           find . -name '*.nix' \
             ! -name 'hardware-configuration.nix' \
-            ! -name 'cachix.nix' \
             ! -path './modules/home-manager/*' \
             ! -path './modules/nixos/*' \
             -exec nixpkgs-fmt {} \+
