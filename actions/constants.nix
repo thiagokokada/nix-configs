@@ -1,5 +1,6 @@
 {
   actions = {
+    cache = "actions/cache@v3";
     checkout = "actions/checkout@v3";
     cachix-action = "cachix/cachix-action@v12";
     install-nix-action = "cachix/install-nix-action@v20";
