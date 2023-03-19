@@ -19,7 +19,6 @@ documentation. Some of the repositories that helped me to build this config:
 - https://github.com/bqv/nixrc
 - https://github.com/colemickens/nixcfg
 - https://github.com/hlissner/dotfiles
-- https://github.com/lucasew/nixcfg
 - https://github.com/Mic92/dotfiles
 - https://github.com/nrdxp/nixflk
 
