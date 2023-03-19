@@ -1,6 +1,7 @@
 let
   constants = import ./constants.nix;
   nixFlags = [ "--print-build-logs" ];
+  nixCachePath = "/var/tmp/nix-cache";
 in
 with constants;
 {
@@ -111,7 +112,7 @@ with constants;
     name = "Cache /nix/store";
     uses = actions.cache;
     "with" = {
-      path = "/tmp/nix-cache";
+      path = nixCachePath;
       key = ''''${{ runner.os }}-''${{ runner.arch }}-''${{ hashFiles('flake.*') }}'';
       restore-keys = ''
         ''${{ runner.os }}-''${{ runner.arch }}-''${{ hashFiles('flake.*') }}
@@ -122,16 +123,16 @@ with constants;
   importNixStoreCache = {
     name = "Import /nix/store cache";
     run = ''
-      if [[ -f "/tmp/nix-cache" ]]; then
-        nix-store --import < "/tmp/nix-cache"
+      if [[ -f "${nixCachePath}" ]]; then
+        nix-store --import < "${nixCachePath}"
       fi
     '';
   };
   exportNixStoreCache = {
     name = "Export /nix/store cache";
     run = ''
-      nix-collect-garbage --delete-older-than 7d
-      nix-store --export $(find "/nix/store" -maxdepth 1 -name '*-*') > "/tmp/nix-cache"
+      nix-collect-garbage -d
+      nix-store --export $(find "/nix/store" -maxdepth 1 -name '*-*') > "${nixCachePath}"
     '';
   };
 }
