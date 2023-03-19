@@ -1,6 +1,7 @@
 let
   steps = import ./steps.nix;
   constants = import ./constants.nix;
+  first = list: builtins.elemAt list 0;
 in
 with constants;
 {
@@ -16,12 +17,15 @@ with constants;
         maximimizeBuildSpaceStep
         checkoutStep
         installNixActionStep
-        cachixActionStep
-        updateFlakeLockStep
         setDefaultGitBranchStep
+        cachixActionStep
+        (buildNixOSConfigurationWithOutput (first nixos.hostnames) "/tmp/nixos_old")
+        updateFlakeLockStep
         (buildHomeManagerConfigurations home-manager.linux.hostnames)
         (buildNixOSConfigurations nixos.hostnames)
-        createPullRequestStep
+        (buildNixOSConfigurationWithOutput (first nixos.hostnames) "/tmp/nixos_new")
+        (diffNixOutputs "NixOS" "/tmp/nixos_old" "/tmp/nixos_new")
+        (createPullRequestStep [ "NixOS" ])
       ];
     };
   };

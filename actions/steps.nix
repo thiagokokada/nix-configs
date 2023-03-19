@@ -52,6 +52,12 @@ with constants;
         (hostname: "nix build ${nixFlags} '.#homeConfigurations.${hostname}.activationPackage'")
         hostnames);
   };
+  buildNixOSConfigurationWithOutput = hostname: output: {
+    name = "Build NixOS config for '${hostname}' in '${output}'";
+    run = ''
+      nix build ${nixFlags} -o ${output} '.#nixosConfigurations.${hostname}.config.system.build.toplevel'
+    '';
+  };
   buildNixOSConfigurations = hostnames: {
     name = "Build NixOS configs";
     run = builtins.concatStringsSep "\n"
@@ -74,17 +80,37 @@ with constants;
       nix flake update --commit-lock-file
     '';
   };
-  createPullRequestStep = {
+  diffNixOutputs = id: old: new: {
+    inherit id;
+    name = "Diff Nix outputs: '${old}' vs '${new}'";
+    uses = actions.command-output;
+    "with".run = ''
+      nix run github:NixOS/nixpkgs/nixos-unstable#nvd -- --color never diff '${old}' '${new}'
+    '';
+  };
+  createPullRequestStep = diffIds: {
     name = "Create Pull Request";
-    uses = "peter-evans/create-pull-request@v4";
+    uses = actions.create-pull-request;
     "with" = {
       branch = "flake-updates";
       delete-branch = true;
       title = "Update flake.lock";
       body = ''
         ## Run report
+
         https://github.com/''${{ github.repository }}/actions/runs/''${{ github.run_id }}
-      '';
+      '' +
+      (builtins.concatStringsSep "\n"
+        (map
+          (id: ''
+
+            ## Changes for ${id}
+
+            ```bash
+            ''${{ steps.${id}.outputs.stdout }}
+            ```
+          '')
+          diffIds));
     };
   };
 }

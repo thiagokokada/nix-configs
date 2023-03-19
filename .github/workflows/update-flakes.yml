@@ -13,18 +13,21 @@ jobs:
         with:
           extra_nix_config: access-tokens = github.com=${{ secrets.GITHUB_TOKEN }}
           nix_path: nixpkgs=channel:nixos-unstable
+      - name: Set default git branch (to reduce log spam)
+        run: git config --global init.defaultBranch master
       - uses: cachix/cachix-action@v12
         with:
           authToken: ${{ secrets.CACHIX_TOKEN }}
           extraPullNames: nix-community
           name: thiagokokada-nix-configs
+      - name: Build NixOS config for 'miku-nixos' in '/tmp/nixos_old'
+        run: |
+          nix build --print-build-logs -o /tmp/nixos_old '.#nixosConfigurations.miku-nixos.config.system.build.toplevel'
       - name: Update flake.lock
         run: |
           git config user.name "${{ github.actor }}"
           git config user.email "${{ github.actor }}@users.noreply.github.com"
           nix flake update --commit-lock-file
-      - name: Set default git branch (to reduce log spam)
-        run: git config --global init.defaultBranch master
       - name: Build Home-Manager configs
         run: |-
           nix build --print-build-logs '.#homeConfigurations.home-linux.activationPackage'
@@ -34,12 +37,28 @@ jobs:
           nix build --print-build-logs '.#nixosConfigurations.miku-nixos.config.system.build.toplevel'
           nix build --print-build-logs '.#nixosConfigurations.mikudayo-re-nixos.config.system.build.toplevel'
           nix build --print-build-logs '.#nixosConfigurations.mirai-vps.config.system.build.toplevel'
+      - name: Build NixOS config for 'miku-nixos' in '/tmp/nixos_new'
+        run: |
+          nix build --print-build-logs -o /tmp/nixos_new '.#nixosConfigurations.miku-nixos.config.system.build.toplevel'
+      - id: NixOS
+        name: 'Diff Nix outputs: ''/tmp/nixos_old'' vs ''/tmp/nixos_new'''
+        uses: mathiasvr/command-output@v2.0.0
+        with:
+          run: |
+            nix run github:NixOS/nixpkgs/nixos-unstable#nvd -- --color never diff '/tmp/nixos_old' '/tmp/nixos_new'
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v4
         with:
           body: |
             ## Run report
+
             https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+
+            ## Changes for NixOS
+
+            ```bash
+            ${{ steps.NixOS.outputs.stdout }}
+            ```
           branch: flake-updates
           delete-branch: true
           title: Update flake.lock
