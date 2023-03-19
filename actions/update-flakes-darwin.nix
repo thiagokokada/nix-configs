@@ -21,8 +21,8 @@ with constants;
         installNixActionStep
         cachixActionStep
         setDefaultGitBranchStep
-        (buildHomeManagerConfigurations home-manager.darwin.hostnames)
-        (buildNixDarwinConfigurations nix-darwin.hostnames)
+        (buildHomeManagerConfigurations { hostnames = home-manager.darwin.hostnames; })
+        (buildNixDarwinConfigurations { })
       ];
     };
   };

@@ -17,7 +17,7 @@ jobs:
         run: git config --global init.defaultBranch master
       - name: Build Home-Manager configs
         run: nix build --print-build-logs '.#homeConfigurations.home-macos.activationPackage'
-      - name: Build NixOS configs
+      - name: Build Nix Darwin configs
         run: nix build --print-build-logs '.#darwinConfigurations.miku-macos-vm.system'
 name: update-flakes-darwin
 "on":

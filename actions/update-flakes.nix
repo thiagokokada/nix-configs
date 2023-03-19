@@ -21,13 +21,16 @@ with constants;
         importNixStoreCache
         setDefaultGitBranchStep
         cachixActionStep
-        (buildNixOSConfigurationWithOutput (first nixos.hostnames) "/tmp/nixos_old")
+        (buildNixOSConfigurations { hostnames = [ (first nixos.hostnames) ]; extraNixFlags = [ "-o /tmp/nixos_old" ]; })
+        (buildHomeManagerConfigurations { hostnames = [ (first home-manager.linux.hostnames) ]; extraNixFlags = [ "-o /tmp/hm_old" ]; })
         updateFlakeLockStep
-        (buildHomeManagerConfigurations home-manager.linux.hostnames)
-        (buildNixOSConfigurations nixos.hostnames)
-        (buildNixOSConfigurationWithOutput (first nixos.hostnames) "/tmp/nixos_new")
+        (buildHomeManagerConfigurations { })
+        (buildHomeManagerConfigurations { hostnames = [ (first home-manager.linux.hostnames) ]; extraNixFlags = [ "-o /tmp/hm_new" ]; })
+        (buildNixOSConfigurations { })
+        (buildNixOSConfigurations { hostnames = [ (first nixos.hostnames) ]; extraNixFlags = [ "-o /tmp/nixos_new" ]; })
         (diffNixOutputs "NixOS" "/tmp/nixos_old" "/tmp/nixos_new")
-        (createPullRequestStep [ "NixOS" ])
+        (diffNixOutputs "Home-Manager" "/tmp/hm_old" "/tmp/hm_new")
+        (createPullRequestStep [ "NixOS" "Home-Manager" ])
         exportNixStoreCache
       ];
     };

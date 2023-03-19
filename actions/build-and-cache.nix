@@ -19,8 +19,8 @@ with constants;
         setDefaultGitBranchStep
         checkNixStep
         validateFlakesStep
-        (buildHomeManagerConfigurations home-manager.linux.hostnames)
-        (buildNixOSConfigurations nixos.hostnames)
+        (buildHomeManagerConfigurations { })
+        (buildNixOSConfigurations { })
         exportNixStoreCache
       ];
     };
@@ -33,8 +33,8 @@ with constants;
         importNixStoreCache
         cachixActionStep
         setDefaultGitBranchStep
-        (buildHomeManagerConfigurations home-manager.darwin.hostnames)
-        (buildNixDarwinConfigurations nix-darwin.hostnames)
+        (buildHomeManagerConfigurations { hostnames = home-manager.darwin.hostnames; })
+        (buildNixDarwinConfigurations { })
         exportNixStoreCache
       ];
     };

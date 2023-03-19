@@ -1,6 +1,6 @@
 let
   constants = import ./constants.nix;
-  nixFlags = toString [ "--print-build-logs" ];
+  nixFlags = [ "--print-build-logs" ];
 in
 with constants;
 {
@@ -45,31 +45,25 @@ with constants;
     name = "Validate Flakes";
     run = "nix flake check";
   };
-  buildHomeManagerConfigurations = hostnames: {
+  buildHomeManagerConfigurations = { hostnames ? constants.home-manager.linux.hostnames, extraNixFlags ? [ ] }: {
     name = "Build Home-Manager configs";
     run = builtins.concatStringsSep "\n"
       (map
-        (hostname: "nix build ${nixFlags} '.#homeConfigurations.${hostname}.activationPackage'")
+        (hostname: "nix build ${toString (nixFlags ++ extraNixFlags)} '.#homeConfigurations.${hostname}.activationPackage'")
         hostnames);
   };
-  buildNixOSConfigurationWithOutput = hostname: output: {
-    name = "Build NixOS config for '${hostname}' in '${output}'";
-    run = ''
-      nix build ${nixFlags} -o ${output} '.#nixosConfigurations.${hostname}.config.system.build.toplevel'
-    '';
-  };
-  buildNixOSConfigurations = hostnames: {
+  buildNixOSConfigurations = { hostnames ? constants.nixos.hostnames, extraNixFlags ? [ ] }: {
     name = "Build NixOS configs";
     run = builtins.concatStringsSep "\n"
       (map
-        (hostname: "nix build ${nixFlags} '.#nixosConfigurations.${hostname}.config.system.build.toplevel'")
+        (hostname: "nix build ${toString (nixFlags ++ extraNixFlags)} '.#nixosConfigurations.${hostname}.config.system.build.toplevel'")
         hostnames);
   };
-  buildNixDarwinConfigurations = hostnames: {
-    name = "Build NixOS configs";
+  buildNixDarwinConfigurations = { hostnames ? constants.nix-darwin.hostnames, extraNixFlags ? [ ] }: {
+    name = "Build Nix Darwin configs";
     run = builtins.concatStringsSep "\n"
       (map
-        (hostname: "nix build ${nixFlags} '.#darwinConfigurations.${hostname}.system'")
+        (hostname: "nix build ${toString (nixFlags ++ extraNixFlags)} '.#darwinConfigurations.${hostname}.system'")
         hostnames);
   };
   updateFlakeLockStep = {
@@ -82,7 +76,7 @@ with constants;
   };
   diffNixOutputs = id: old: new: {
     inherit id;
-    name = "Diff Nix outputs: '${old}' vs '${new}'";
+    name = "Diff Nix outputs: ${old} vs ${new}";
     uses = actions.command-output;
     "with".run = ''
       nix run github:NixOS/nixpkgs/nixos-unstable#nvd -- --color never diff '${old}' '${new}'
