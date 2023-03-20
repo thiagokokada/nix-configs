@@ -16,9 +16,7 @@ with constants;
       steps = with steps; [
         maximimizeBuildSpaceStep
         checkoutStep
-        cacheNixStore
         installNixActionStep
-        importNixStoreCache
         setDefaultGitBranchStep
         cachixActionStep
         (buildNixOSConfigurations { hostnames = [ (first nixos.hostnames) ]; extraNixFlags = [ "-o /tmp/nixos_old" ]; })
@@ -31,7 +29,6 @@ with constants;
         (diffNixOutputs "NixOS" "/tmp/nixos_old" "/tmp/nixos_new")
         (diffNixOutputs "Home-Manager" "/tmp/hm_old" "/tmp/hm_new")
         (createPullRequestStep [ "NixOS" "Home-Manager" ])
-        exportNixStoreCache
       ];
     };
   };

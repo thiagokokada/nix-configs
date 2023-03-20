@@ -108,32 +108,4 @@ with constants;
           diffIds));
     };
   };
-  cacheNixStore = {
-    name = "Cache /nix/store";
-    uses = actions.cache;
-    "with" = {
-      path = nixCachePath;
-      key = ''''${{ runner.os }}-''${{ runner.arch }}-''${{ hashFiles('flake.*') }}'';
-      restore-keys = ''
-        ''${{ runner.os }}-''${{ runner.arch }}-''${{ hashFiles('flake.*') }}
-        ''${{ runner.os }}-''${{ runner.arch }}-
-      '';
-    };
-  };
-  importNixStoreCache = {
-    name = "Import /nix/store cache";
-    run = ''
-      if [[ -f "${nixCachePath}" ]]; then
-        nix-store --import < "${nixCachePath}"
-      fi
-    '';
-  };
-  exportNixStoreCache = {
-    name = "Export /nix/store cache";
-    run = ''
-      rm -f "/tmp/"*"-old" "${nixCachePath}"
-      nix-collect-garbage -d
-      nix-store --export $(find "/nix/store" -maxdepth 1 -name '*-*') > "${nixCachePath}"
-    '';
-  };
 }

@@ -9,23 +9,10 @@ jobs:
           remove-dotnet: true
           remove-haskell: true
       - uses: actions/checkout@v3
-      - name: Cache /nix/store
-        uses: actions/cache@v3
-        with:
-          key: ${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('flake.*') }}
-          path: /tmp/nix-cache
-          restore-keys: |
-            ${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('flake.*') }}
-            ${{ runner.os }}-${{ runner.arch }}-
       - uses: cachix/install-nix-action@v20
         with:
           extra_nix_config: access-tokens = github.com=${{ secrets.GITHUB_TOKEN }}
           nix_path: nixpkgs=channel:nixos-unstable
-      - name: Import /nix/store cache
-        run: |
-          if [[ -f "/tmp/nix-cache" ]]; then
-            nix-store --import < "/tmp/nix-cache"
-          fi
       - name: Set default git branch (to reduce log spam)
         run: git config --global init.defaultBranch master
       - uses: cachix/cachix-action@v12
@@ -90,11 +77,6 @@ jobs:
           branch: flake-updates
           delete-branch: true
           title: Update flake.lock
-      - name: Export /nix/store cache
-        run: |
-          rm -f "/tmp/"*"-old" "/tmp/nix-cache"
-          nix-collect-garbage -d
-          nix-store --export $(find "/nix/store" -maxdepth 1 -name '*-*') > "/tmp/nix-cache"
 name: update-flakes
 "on":
   schedule:

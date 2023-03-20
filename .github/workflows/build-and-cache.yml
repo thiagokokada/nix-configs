@@ -9,23 +9,10 @@ jobs:
           remove-dotnet: true
           remove-haskell: true
       - uses: actions/checkout@v3
-      - name: Cache /nix/store
-        uses: actions/cache@v3
-        with:
-          key: ${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('flake.*') }}
-          path: /tmp/nix-cache
-          restore-keys: |
-            ${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('flake.*') }}
-            ${{ runner.os }}-${{ runner.arch }}-
       - uses: cachix/install-nix-action@v20
         with:
           extra_nix_config: access-tokens = github.com=${{ secrets.GITHUB_TOKEN }}
           nix_path: nixpkgs=channel:nixos-unstable
-      - name: Import /nix/store cache
-        run: |
-          if [[ -f "/tmp/nix-cache" ]]; then
-            nix-store --import < "/tmp/nix-cache"
-          fi
       - uses: cachix/cachix-action@v12
         with:
           authToken: ${{ secrets.CACHIX_TOKEN }}
@@ -46,32 +33,14 @@ jobs:
           nix build --print-build-logs '.#nixosConfigurations.miku-nixos.config.system.build.toplevel'
           nix build --print-build-logs '.#nixosConfigurations.mikudayo-re-nixos.config.system.build.toplevel'
           nix build --print-build-logs '.#nixosConfigurations.mirai-vps.config.system.build.toplevel'
-      - name: Export /nix/store cache
-        run: |
-          rm -f "/tmp/"*"-old" "/tmp/nix-cache"
-          nix-collect-garbage -d
-          nix-store --export $(find "/nix/store" -maxdepth 1 -name '*-*') > "/tmp/nix-cache"
   build-macos:
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Cache /nix/store
-        uses: actions/cache@v3
-        with:
-          key: ${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('flake.*') }}
-          path: /tmp/nix-cache
-          restore-keys: |
-            ${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('flake.*') }}
-            ${{ runner.os }}-${{ runner.arch }}-
       - uses: cachix/install-nix-action@v20
         with:
           extra_nix_config: access-tokens = github.com=${{ secrets.GITHUB_TOKEN }}
           nix_path: nixpkgs=channel:nixos-unstable
-      - name: Import /nix/store cache
-        run: |
-          if [[ -f "/tmp/nix-cache" ]]; then
-            nix-store --import < "/tmp/nix-cache"
-          fi
       - uses: cachix/cachix-action@v12
         with:
           authToken: ${{ secrets.CACHIX_TOKEN }}
@@ -83,11 +52,6 @@ jobs:
         run: nix build --print-build-logs '.#homeConfigurations.home-macos.activationPackage'
       - name: Build Nix Darwin configs
         run: nix build --print-build-logs '.#darwinConfigurations.miku-macos-vm.system'
-      - name: Export /nix/store cache
-        run: |
-          rm -f "/tmp/"*"-old" "/tmp/nix-cache"
-          nix-collect-garbage -d
-          nix-store --export $(find "/nix/store" -maxdepth 1 -name '*-*') > "/tmp/nix-cache"
 name: build-and-cache
 "on":
   - push
