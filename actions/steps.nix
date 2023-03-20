@@ -1,7 +1,7 @@
 let
   constants = import ./constants.nix;
   nixFlags = [ "--print-build-logs" ];
-  nixCachePath = "/var/tmp/nix-cache";
+  nixCachePath = "/tmp/nix-cache";
 in
 with constants;
 {
@@ -131,6 +131,7 @@ with constants;
   exportNixStoreCache = {
     name = "Export /nix/store cache";
     run = ''
+      rm -f "/tmp/"*"-old" "${nixCachePath}"
       nix-collect-garbage -d
       nix-store --export $(find "/nix/store" -maxdepth 1 -name '*-*') > "${nixCachePath}"
     '';
