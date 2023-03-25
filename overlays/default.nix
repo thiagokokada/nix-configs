@@ -51,12 +51,6 @@ in
 
       nixos-cleanup = prev.callPackage ../packages/nix-cleanup { isNixOS = true; };
 
-      nixpkgs-review =
-        if (prev.stdenv.isLinux) then
-          prev.nixpkgs-review.override { withSandboxSupport = true; }
-        else
-          prev.nixpkgs-review;
-
       run-bg-alias = name: command: prev.callPackage ../packages/run-bg-alias { inherit name command; };
     })
   ];

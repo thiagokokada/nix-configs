@@ -13,6 +13,7 @@
     ./meta
     ./mpv
     ./neovim.nix
+    ./nixpkgs.nix
     ./nnn.nix
     ./non-nix.nix
     ./ssh.nix

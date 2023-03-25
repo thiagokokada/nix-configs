@@ -18,7 +18,6 @@ in
     nix-update
     nix-whereis
     nixpkgs-fmt
-    nixpkgs-review
   ];
 
   # To make cachix work you need add the current user as a trusted-user on Nix
