@@ -1,7 +1,10 @@
 { super, config, lib, pkgs, ... }:
 
 {
-  imports = [ ./firefox.nix ];
+  imports = [
+    ./chromium.nix
+    ./firefox.nix
+  ];
 
   home.packages = with pkgs; [
     android-file-transfer
@@ -18,7 +21,6 @@
     easyeffects
     gnome.file-roller
     gnome.gnome-disk-utility
-    google-chrome
     gthumb
     inkscape
     libreoffice-fresh
