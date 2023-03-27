@@ -51,6 +51,8 @@ in
 
       nixos-cleanup = prev.callPackage ../packages/nix-cleanup { isNixOS = true; };
 
+      nom-rebuild = prev.callPackage ../packages/nom-rebuild { };
+
       run-bg-alias = name: command: prev.callPackage ../packages/run-bg-alias { inherit name command; };
     })
   ];
