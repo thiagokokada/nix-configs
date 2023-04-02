@@ -6,6 +6,7 @@
     ./desktop.nix
     ./emacs
     ./git.nix
+    ./helix.nix
     ./hexchat.nix
     ./htop.nix
     ./i3
