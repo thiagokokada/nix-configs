@@ -1,4 +1,4 @@
-{ flake, pkgs, lib, config, ... }:
+{ pkgs, lib, config, ... }:
 
 let
   nvidia-offload = lib.findFirst (p: lib.isDerivation p && p.name == "nvidia-offload")
@@ -15,8 +15,6 @@ let
   };
 in
 {
-  imports = [ flake.inputs.nix-gaming.nixosModules.pipewireLowLatency ];
-
   # Fix: MESA-INTEL: warning: Performance support disabled, consider sysctl dev.i915.perf_stream_paranoid=0
   boot.kernelParams = [ "dev.i915.perf_stream_paranoid=0" ];
 
@@ -70,7 +68,5 @@ in
   services = {
     # Enable ratbagd (i.e.: piper) for Logitech devices
     ratbagd.enable = true;
-    # https://github.com/fufexan/nix-gaming/blob/master/modules/pipewireLowLatency.nix
-    pipewire.lowLatency.enable = true;
   };
 }

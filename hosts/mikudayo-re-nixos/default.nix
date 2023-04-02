@@ -61,8 +61,6 @@ in
 
   # I think the usage of NVIDIA drivers is making lidSwitchDocked not working correctly
   services.logind.lidSwitchExternalPower = "ignore";
-  # The audio device from this notebook doesn't seem to like short buffers too much
-  services.pipewire.lowLatency.quantum = 128;
 
   # Use ultrawide wallpaper
   home-manager.users.${config.meta.username}.theme.wallpaper.path = pkgs.wallpapers.hatsune-miku_stylized-ultrawide;
