@@ -11,6 +11,8 @@ with constants;
       remove-dotnet = true;
       remove-android = true;
       remove-haskell = true;
+      remove-codeql = true;
+      remove-docker-images = true;
       overprovision-lvm = true;
     };
   };

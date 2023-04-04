@@ -2,10 +2,12 @@ jobs:
   update-flakes:
     runs-on: ubuntu-latest
     steps:
-      - uses: easimon/maximize-build-space@v6
+      - uses: easimon/maximize-build-space@v7
         with:
           overprovision-lvm: true
           remove-android: true
+          remove-codeql: true
+          remove-docker-images: true
           remove-dotnet: true
           remove-haskell: true
       - uses: actions/checkout@v3
@@ -56,13 +58,6 @@ jobs:
 
             ```bash
             ${{ steps.NixOS.outputs.stdout }}
-            ```
-
-
-            ## Changes for Home-Manager
-
-            ```bash
-            ${{ steps.Home-Manager.outputs.stdout }}
             ```
           branch: flake-updates
           delete-branch: true

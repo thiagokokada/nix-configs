@@ -3,7 +3,7 @@
     checkout = "actions/checkout@v3";
     cachix-action = "cachix/cachix-action@v12";
     install-nix-action = "cachix/install-nix-action@v20";
-    maximize-build-space = "easimon/maximize-build-space@v6";
+    maximize-build-space = "easimon/maximize-build-space@v7";
     create-pull-request = "peter-evans/create-pull-request@v4";
     command-output = "mathiasvr/command-output@v2.0.0";
   };
