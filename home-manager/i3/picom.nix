@@ -1,9 +1,9 @@
-{ config, lib, pkgs, ... }:
+{ super, config, lib, pkgs, ... }:
 
 {
   services.picom = {
     enable = config.device.type != "vm";
-    backend = "glx";
+    backend = if (lib.isNvidia super) then "glx" else "egl";
     fade = true;
     fadeDelta = 2;
     vSync = true;

@@ -131,13 +131,9 @@ in
       gtk = true;
     };
 
-    extraOptions =
-      let
-        videoDrivers = super.services.xserver.videoDrivers or [ ];
-      in
-      lib.optionals (builtins.elem "nvidia" videoDrivers) [
-        "--unsupported-gpu"
-      ];
+    extraOptions = lib.optionals (lib.isNvidia super) [
+      "--unsupported-gpu"
+    ];
   };
 
   home.packages = with pkgs; [
