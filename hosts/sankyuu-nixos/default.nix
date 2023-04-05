@@ -11,6 +11,8 @@ in
   imports = [
     ./hardware-configuration.nix
     ../../nixos
+    ../../nixos/cross-compiling.nix
+    ../../nixos/games.nix
     inputs.hardware.nixosModules.lenovo-thinkpad-t14-amd-gen1
   ];
 
@@ -54,4 +56,9 @@ in
     PLATFORM_PROFILE_ON_AC = "performance";
     PLATFORM_PROFILE_ON_BAT = "balanced";
   };
+
+  # The audio device from this notebook doesn't seem to like short buffers too much
+  services.pipewire.lowLatency.quantum = 128;
+
+  time.timeZone = "Europe/Dublin";
 }
