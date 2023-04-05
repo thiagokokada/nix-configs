@@ -100,8 +100,8 @@
         temperatureBlock = {
           inherit interval;
           block = "temperature";
-          format = " $icon $average ";
-          chip = "*-acpi-*";
+          format = " $icon $max ";
+          chip = "*-isa-*";
           good = 20;
           idle = 55;
           info = 70;
