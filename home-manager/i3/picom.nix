@@ -3,7 +3,7 @@
 {
   services.picom = {
     enable = config.device.type != "vm";
-    backend = if (lib.isNvidia super) then "glx" else "egl";
+    backend = if (pkgs.lib.isNvidia super) then "glx" else "egl";
     fade = true;
     fadeDelta = 2;
     vSync = true;
