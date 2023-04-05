@@ -1,9 +1,16 @@
 { config, pkgs, lib, ... }:
 
 {
-  boot.consoleLogLevel = 3;
-  # Force kernel log in tty1, otherwise it will override greetd
-  boot.kernelParams = [ "console=tty1" ];
+  boot = {
+    consoleLogLevel = 3;
+    kernelParams = [
+      # Force kernel log in tty1, otherwise it will override greetd
+      "console=tty1"
+      # Quiet boot
+      "quiet"
+      "udev.log_level=3"
+    ];
+  };
 
   # Configure the virtual console keymap from the xserver keyboard settings
   console.useXkbConfig = true;

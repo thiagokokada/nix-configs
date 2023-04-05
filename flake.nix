@@ -139,6 +139,7 @@
       (mkNixOSConfig { hostname = "miku-nixos"; })
       (mkNixOSConfig { hostname = "mikudayo-re-nixos"; })
       (mkNixOSConfig { hostname = "mirai-vps"; })
+      (mkNixOSConfig { hostname = "sankyuu-nixos"; })
 
       # nix-darwin configs
       (mkDarwinConfig { hostname = "miku-macos-vm"; })

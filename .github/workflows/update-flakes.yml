@@ -38,6 +38,7 @@ jobs:
           nix build --print-build-logs '.#nixosConfigurations.miku-nixos.config.system.build.toplevel'
           nix build --print-build-logs '.#nixosConfigurations.mikudayo-re-nixos.config.system.build.toplevel'
           nix build --print-build-logs '.#nixosConfigurations.mirai-vps.config.system.build.toplevel'
+          nix build --print-build-logs '.#nixosConfigurations.sankyuu-nixos.config.system.build.toplevel'
       - name: Build NixOS configs
         run: nix build --print-build-logs -o /tmp/nixos_new '.#nixosConfigurations.miku-nixos.config.system.build.toplevel'
       - id: NixOS
