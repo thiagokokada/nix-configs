@@ -39,7 +39,7 @@ in
 
   fileSystems."/".options = [ "compress=zstd" ];
   fileSystems."/home".options = [ "compress=zstd" ];
-  fileSystems."/nix".options = [ "compress=zstd" ];
+  fileSystems."/nix".options = [ "compress=zstd" "noatime" ];
 
   networking.hostName = "sankyuu-nixos";
 
