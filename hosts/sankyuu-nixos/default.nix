@@ -57,6 +57,9 @@ in
     PLATFORM_PROFILE_ON_BAT = "balanced";
   };
 
+  # Used for firmware updates
+  services.fwupd.enable = true;
+
   # The audio device from this notebook doesn't seem to like short buffers too much
   services.pipewire.lowLatency.quantum = 128;
 
