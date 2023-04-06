@@ -22,10 +22,11 @@ in
 
   environment = {
     systemPackages = with pkgs; [
-      gaming.osu-stable
       gaming.osu-lazer-bin
+      gaming.osu-stable
       import-osu-songs
       lutris
+      mangohud
       piper
       retroarchFull
     ];
