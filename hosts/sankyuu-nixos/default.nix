@@ -55,6 +55,9 @@ in
     # Increase performance on AC
     PLATFORM_PROFILE_ON_AC = "performance";
     PLATFORM_PROFILE_ON_BAT = "balanced";
+    # Use schedutil governor
+    CPU_SCALING_GOVERNOR_ON_AC = "schedutil";
+    CPU_SCALING_GOVERNOR_ON_BAT = "schedutil";
   };
 
   # Used for firmware updates
