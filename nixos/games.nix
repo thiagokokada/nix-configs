@@ -24,6 +24,7 @@ in
     systemPackages = with pkgs; [
       gaming.osu-lazer-bin
       gaming.osu-stable
+      gamescope
       import-osu-songs
       lutris
       mangohud
