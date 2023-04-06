@@ -61,26 +61,33 @@ fi
 done
 
 cleanup() {
-    if [[ "$AUTO" == 1 ]]; then
+    local -r auto="$1"
+    local -r unsafe="$1"
+    local -r nixos="$1"
+    local -r optimize="$1"
+
+    if [[ "$auto" == 1 ]]; then
         find -H /nix/var/nix/gcroots/auto -type l -exec readlink {} \; | \
             grep "/result[-0-9]*$" | \
             xargs -L1 rm -rf
     fi
-    if [[ "$UNSAFE" == 1 ]]; then
+    if [[ "$unsafe" == 1 ]]; then
         nix-store --ignore-liveness --delete /nix/var/nix/gcroots/booted-system
     fi
     nix-store --verify
     nix-collect-garbage -d
-    if [[ "$NIXOS" == 1 ]]; then
-        nixos-rebuild boot --fast
+    if [[ "$nixos" == 1 ]]; then
+        nixos-rebuild boot
     fi
-    if [[ "$OPTIMIZE" == 1 ]]; then
+    if [[ "$optimize" == 1 ]]; then
         nix-store --optimize
     fi
 }
 
+declare -ar ARGS=("$AUTO" "$UNSAFE" "$NIXOS" "$OPTIMIZE")
+
 if [[ "$NIXOS" == 1 ]]; then
-    sudo bash -c "$(declare -f cleanup); cleanup"
+    sudo bash -c "$(declare -f cleanup); cleanup ${ARGS[@]}"
 else
-    cleanup
+    cleanup ${ARGS[@]}
 fi
