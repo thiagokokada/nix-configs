@@ -107,6 +107,11 @@
           ENERGY_PERF_POLICY_ON_BAT = "power";
         };
       };
+
+      # Enable wakeup from USB devices
+      udev.extraRules = ''
+        ACTION=="add", SUBSYSTEM=="usb", DRIVERS=="usb", ATTR{power/wakeup}="enabled"
+      '';
     };
   };
 }
