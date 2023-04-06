@@ -63,5 +63,15 @@ in
   # The audio device from this notebook doesn't seem to like short buffers too much
   services.pipewire.lowLatency.quantum = 128;
 
+  # https://gitlab.freedesktop.org/pipewire/pipewire/-/issues/1849
+  systemd.services.fix-mic-light = {
+    description = "Disables mic light (turned on by default)";
+    script = ''
+      echo 0 > /sys/class/leds/platform\:\:micmute/brightness
+    '';
+    serviceConfig.Type = "oneshot";
+    wantedBy = [ "multi-user.target" ]; # starts after login
+  };
+
   time.timeZone = "Europe/Dublin";
 }
