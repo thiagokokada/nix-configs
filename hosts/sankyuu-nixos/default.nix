@@ -66,12 +66,6 @@ in
   # The audio device from this notebook doesn't seem to like short buffers too much
   services.pipewire.lowLatency.quantum = 128;
 
-  # Enable wakeup from USB devices
-  services.udev.extraRules = ''
-    ACTION=="add", SUBSYSTEM=="usb", DRIVERS=="usb", ATTRS{idVendor}=="046d", ATTRS{idProduct}=="c092", ATTR{power/wakeup}="enabled"
-    ACTION=="add", SUBSYSTEM=="usb", DRIVERS=="usb", ATTRS{idVendor}=="258a", ATTRS{idProduct}=="0049", ATTR{power/wakeup}="enabled"
-  '';
-
   # https://gitlab.freedesktop.org/pipewire/pipewire/-/issues/1849
   systemd.services.fix-mic-light = {
     description = "Disables mic light (turned on by default)";
