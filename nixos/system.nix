@@ -1,9 +1,12 @@
 { config, lib, pkgs, ... }:
 
 {
+  imports = [ ./btrfs.nix ];
+
   options.nixos.system.enable = pkgs.lib.mkDefaultOption "system config";
 
   config = lib.mkIf config.nixos.system.enable {
+
     boot = {
       initrd.systemd.enable = lib.mkDefault true;
 
@@ -48,19 +51,6 @@
     };
 
     services = {
-      btrfs.autoScrub =
-        let
-          inherit (config.boot) initrd supportedFilesystems;
-          inherit (lib) any mkIf;
-          btrfsInInitrd = any (fs: fs == "btrfs") initrd.supportedFilesystems;
-          btrfsInSystem = any (fs: fs == "btrfs") supportedFilesystems;
-          enable = btrfsInInitrd || btrfsInSystem;
-        in
-        {
-          inherit enable;
-          interval = "weekly";
-        };
-
       # Trim SSD weekly
       fstrim = {
         enable = true;
