@@ -5,7 +5,6 @@ set -euo pipefail
 readonly NIXOS=@isNixOS@
 AUTO=0
 OPTIMIZE=0
-UNSAFE=0
 
 usage() {
 if [[ "$NIXOS" == 1 ]]; then
@@ -16,18 +15,14 @@ fi
     echo
     echo "Usage:"
 if [[ "$NIXOS" == 1 ]]; then
-    echo "nixos-cleanup [--optimize] [--unsafe]"
+    echo "nixos-cleanup [--auto] [--optimize]"
 else
-    echo "nix-cleanup [--optimize]"
+    echo "nix-cleanup [--auto] [--optimize]"
 fi
     echo
     echo "Arguments:"
     echo "  --auto      Remove auto created gc-roots (e.g.: '/result' symlinks)."
     echo "  --optimize  Run 'nix-store --optimize' afterwards."
-if [[ "$NIXOS" == 1 ]]; then
-    echo "  --unsafe    Delete booted-system's GC root. Possibly unsafe."
-    echo "              Only usable after a 'nixos-rebuild switch'"
-fi
     exit 1
 }
 
@@ -44,15 +39,6 @@ while [[ "${#:-0}" -gt 0 ]]; do
             OPTIMIZE=1
             shift
             ;;
-        --unsafe)
-if [[ "$NIXOS" == 1 ]]; then
-            UNSAFE=1
-            shift
-else
-            echo "'$1' is not a recognized flag!"
-            exit 1;
-fi
-            ;;
         *)
             echo "'$1' is not a recognized flag!"
             exit 1;
@@ -62,32 +48,33 @@ done
 
 cleanup() {
     local -r auto="$1"
-    local -r unsafe="$1"
-    local -r nixos="$1"
-    local -r optimize="$1"
+    local -r nixos="$2"
+    local -r optimize="$3"
 
     if [[ "$auto" == 1 ]]; then
+        echo "[INFO] Removing auto created GC roots..."
         find -H /nix/var/nix/gcroots/auto -type l -exec readlink {} \; | \
             grep "/result[-0-9]*$" | \
             xargs -L1 rm -rf
     fi
-    if [[ "$unsafe" == 1 ]]; then
-        nix-store --ignore-liveness --delete /nix/var/nix/gcroots/booted-system
-    fi
+
+    echo "[INFO] Verifying nix store..."
     nix-store --verify
+
+    echo "[INFO] Running GC..."
     nix-collect-garbage -d
     if [[ "$nixos" == 1 ]]; then
+        echo "[INFO] Rebuilding NixOS to remove old boot entries..."
         nixos-rebuild boot
     fi
     if [[ "$optimize" == 1 ]]; then
+        echo "[INFO] Optimizing nix store..."
         nix-store --optimize
     fi
 }
 
-declare -ar ARGS=("$AUTO" "$UNSAFE" "$NIXOS" "$OPTIMIZE")
-
 if [[ "$NIXOS" == 1 ]]; then
-    sudo bash -c "$(declare -f cleanup); cleanup ${ARGS[@]}"
+    sudo bash -c "$(declare -f cleanup); cleanup $AUTO $NIXOS $OPTIMIZE"
 else
-    cleanup ${ARGS[@]}
+    cleanup "$AUTO" "$NIXOS" "$OPTIMIZE"
 fi
