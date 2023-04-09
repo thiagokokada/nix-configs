@@ -27,7 +27,7 @@
       enable = true;
       settings = rec {
         initial_session = {
-          command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --cmd sx";
+          command = "${pkgs.greetd.tuigreet}/bin/tuigreet --remember --remember-user-session --time --cmd sx";
           user = "greeter";
         };
         default_session = initial_session;
