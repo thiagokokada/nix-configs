@@ -27,14 +27,14 @@ in
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  specialisation = {
-    "HDMI-A-1_1440p_100Hz".configuration = {
-      boot.kernelParams = [
-        "video=HDMI-A-1:3440x1440@99.98"
-        "video=eDP-1:d"
-      ];
-    };
-  };
+  # Default video params to disable internal display and use Dell Ultrawide res
+  boot.kernelParams = lib.mkIf (config.specialisation != { }) [
+    "video=HDMI-A-1:3440x1440@99.98"
+    "video=eDP-1:d"
+  ];
+
+  # A blank specialisation that does not include the parameters above
+  specialisation."detect-displays".configuration = { };
 
   boot.initrd.luks.devices = {
     root = {
