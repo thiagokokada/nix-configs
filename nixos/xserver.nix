@@ -6,10 +6,8 @@
     kernelParams = [
       # Force kernel log in tty1, otherwise it will override greetd
       "console=tty1"
-      # Quiet boot
-      "quiet"
-      "udev.log_level=3"
     ];
+    plymouth.enable = lib.mkDefault true;
   };
 
   # Configure the virtual console keymap from the xserver keyboard settings
