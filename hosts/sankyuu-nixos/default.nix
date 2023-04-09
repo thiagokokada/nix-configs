@@ -27,6 +27,15 @@ in
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
+  specialisation = {
+    "HDMI-A-1_1440p_100Hz".configuration = {
+      boot.kernelParams = [
+        "video=HDMI-A-1:3440x1440@99.98"
+        "video=eDP-1:d"
+      ];
+    };
+  };
+
   boot.initrd.luks.devices = {
     root = {
       device = "/dev/disk/by-uuid/6e4e7379-5faf-494e-9cc4-c1e379741306";
