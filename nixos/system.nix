@@ -95,7 +95,6 @@
       # systemd's out-of-memory daemon
       oomd = {
         enable = lib.mkDefault true;
-        enableRootSlice = true;
         enableSystemSlice = true;
         enableUserServices = true;
       };
