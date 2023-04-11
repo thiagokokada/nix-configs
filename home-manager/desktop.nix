@@ -18,7 +18,6 @@
     gammastep
     gimp
     gnome.evince
-    easyeffects
     gnome.file-roller
     gnome.gnome-disk-utility
     gthumb
@@ -48,9 +47,12 @@
     paste = "${pkgs.xclip}/bin/xclip -selection c -o";
   };
 
-  services.udiskie = {
-    enable = true;
-    tray = "always";
+  services = {
+    easyeffects.enable = true;
+    udiskie = {
+      enable = true;
+      tray = "always";
+    };
   };
 
   xdg = {
