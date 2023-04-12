@@ -32,6 +32,7 @@ in
       device = "/dev/disk/by-uuid/6e4e7379-5faf-494e-9cc4-c1e379741306";
       preLVM = true;
       allowDiscards = true;
+      bypassWorkqueues = true;
     };
   };
 
