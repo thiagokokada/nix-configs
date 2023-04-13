@@ -84,6 +84,7 @@ in
 
       output = {
         "*" = {
+          bg = "${config.theme.wallpaper.path} ${config.theme.wallpaper.scale}";
           # DPI
           scale = (toString (125 / 100.0));
         };
