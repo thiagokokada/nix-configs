@@ -9,7 +9,6 @@
       let
         interval = 5;
         isLaptop = config.device.type == "laptop";
-        isKbddEnabled = config.systemd.user.services ? kbdd;
 
         settings = {
           theme = {
@@ -133,12 +132,6 @@
           ];
         };
 
-        keyboardBlock = lib.optionalAttrs isKbddEnabled {
-          block = "keyboard_layout";
-          format = " $icon $layout ";
-          driver = "kbddbus";
-        };
-
         notificationBlock = {
           block = "notify";
           format = " ^icon_notification " +
@@ -183,7 +176,6 @@
             backlightBlock
             batteryBlock
             soundBlock
-            keyboardBlock
             timeBlock
           ]);
         };
@@ -203,7 +195,6 @@
             backlightBlock
             batteryBlock
             soundBlock
-            (keyboardBlock // { driver = "sway"; })
             timeBlock
           ]);
         };
