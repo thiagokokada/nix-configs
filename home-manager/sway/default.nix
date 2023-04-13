@@ -6,7 +6,7 @@ let
 
   commonOptions =
     let
-      makoctl = "${pkgs.mako}/bin/makoctl";
+      dunstctl = "${pkgs.dunst}/bin/dunstctl";
       screenShotName = with config.xdg.userDirs;
         "${pictures}/$(${pkgs.coreutils}/bin/date +%Y-%m-%d_%H-%M-%S)-screenshot.png";
     in
@@ -34,8 +34,8 @@ let
       '';
 
       extraBindings = {
-        "Ctrl+space" = "exec ${makoctl} dismiss";
-        "Ctrl+Shift+space" = "exec ${makoctl} dismiss -a";
+        "Ctrl+space" = "exec ${dunstctl} close";
+        "Ctrl+Shift+space" = "exec ${dunstctl} close-all";
       };
 
       extraConfig = with config.xsession.pointerCursor; ''
