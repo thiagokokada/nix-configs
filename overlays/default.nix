@@ -29,16 +29,13 @@ in
 
       change-res = prev.writeShellApplication {
         name = "change-res";
-        runtimeInputs = with prev; [ autorandr mons ];
+        runtimeInputs = with prev; [ autorandr ];
         text = ''
-          detected="$(autorandr --detected)"
-
-          if [[ -n "$detected" ]]; then
-            autorandr --change || mons -o
-          else
-            mons -o
+          # Do not run this script in a Sway session
+          if systemctl --quiet --user is-active sway-session.target; then
+            exit 0
           fi
-
+          autorandr --change || autorandr --common
           systemctl --user restart wallpaper.service
         '';
       };
