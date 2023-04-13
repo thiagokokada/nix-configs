@@ -12,4 +12,6 @@
       unredir-if-possible-exclude = [ "name *= 'Firefox'" ];
     };
   };
+  # Avoid restarting picom indefinitely in Wayland
+  systemd.user.services.picom.Service.Restart = lib.mkForce "on-abnormal";
 }
