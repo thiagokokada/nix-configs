@@ -28,7 +28,7 @@
           command = lib.concatStringsSep " " [
             "${pkgs.greetd.tuigreet}/bin/tuigreet"
             "--remember"
-            "--remember-user-session"
+            "--remember-session"
             "--time"
             "--cmd sx"
             "--sessions '${pkgs.sway}/share/wayland-sessions/'"
