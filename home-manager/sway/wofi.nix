@@ -1,6 +1,8 @@
 { config, lib, pkgs, ... }:
 let
   wofiConfig = {
+    allow_images = true;
+    no_actions = true;
     key_left = "Control_L-h";
     key_down = "Control_L-j";
     key_up = "Control_L-k";
