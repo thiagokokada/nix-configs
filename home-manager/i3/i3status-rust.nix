@@ -191,7 +191,7 @@
             cpuBlock
             loadBlock
             temperatureBlock
-            (notificationBlock // { driver = "swaync"; })
+            notificationBlock
             backlightBlock
             batteryBlock
             soundBlock

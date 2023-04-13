@@ -50,7 +50,6 @@ in
   imports = [
     ../i3/gammastep.nix
     ../i3/i3status-rust.nix
-    ./mako.nix
     ./wofi.nix
   ];
 
