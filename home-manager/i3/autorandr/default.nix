@@ -1,7 +1,7 @@
 { super, lib, pkgs, ... }:
 
 let
-  hostName = super.networking.hostName or "no-existing-hostname";
+  hostName = super.networking.hostName or "";
   hostConfigFile = ./${hostName}.nix;
 in
 {
