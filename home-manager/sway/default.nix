@@ -81,7 +81,7 @@ in
 
       input = {
         "type:keyboard" = {
-          xkb_layout = "us(intl),br";
+          xkb_layout = "us(intl)";
           xkb_options = "caps:escape,grp:win_space_toggle";
         };
         "type:pointer" = { accel_profile = "flat"; };
@@ -106,18 +106,13 @@ in
 
     extraSessionCommands = ''
       export XDG_CURRENT_DESKTOP=sway
-      # Breaks Chromium/Electron
-      # export GDK_BACKEND=wayland
       # Firefox
       export MOZ_ENABLE_WAYLAND=1
       # Qt
-      export XDG_SESSION_TYPE=wayland
+      export QT_QPA_PLATFORM=wayland
       export QT_WAYLAND_DISABLE_WINDOWDECORATION="1"
       # SDL
       export SDL_VIDEODRIVER=wayland
-      # Elementary/EFL
-      export ECORE_EVAS_ENGINE=wayland_egl
-      export ELM_ENGINE=wayland_egl
       # Fix for some Java AWT applications (e.g. Android Studio),
       # use this if they aren't displayed properly:
       export _JAVA_AWT_WM_NONREPARENTING=1
