@@ -50,6 +50,7 @@ in
   imports = [
     ../i3/gammastep.nix
     ../i3/i3status-rust.nix
+    ./swayidle.nix
     ./wofi.nix
   ];
 
@@ -61,22 +62,6 @@ in
     config = commonOptions.config // {
       startup = [
         { command = "${pkgs.dex}/bin/dex --autostart"; }
-        {
-          command =
-            let
-              swayidle = "${pkgs.swayidle}/bin/swayidle";
-              swaylock = "${pkgs.swaylock}/bin/swaylock";
-              swaymsg = "${pkgs.sway}/bin/swaymsg";
-            in
-            ''
-              ${swayidle} -w \
-              timeout 600 '${swaylock} -f -c 000000' \
-              timeout 605 '${swaymsg} "output * dpms off"' \
-              resume '${swaymsg} "output * dpms on"' \
-              before-sleep '${swaylock} -f -c 000000' \
-              lock '${swaylock} -f -c 000000'
-            '';
-        }
       ];
 
       input = {
