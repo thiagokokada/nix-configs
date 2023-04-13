@@ -25,7 +25,14 @@
       enable = true;
       settings = rec {
         initial_session = {
-          command = "${pkgs.greetd.tuigreet}/bin/tuigreet --remember --remember-user-session --time --cmd sx";
+          command = lib.concatStringsSep " " [
+            "${pkgs.greetd.tuigreet}/bin/tuigreet"
+            "--remember"
+            "--remember-user-session"
+            "--time"
+            "--cmd sx"
+            "--sessions '${pkgs.sway}/share/wayland-sessions/'"
+          ];
           user = "greeter";
         };
         default_session = initial_session;
@@ -65,4 +72,9 @@
       };
     };
   };
+
+  # https://github.com/apognu/tuigreet/issues/76
+  systemd.tmpfiles.rules = [
+    "d /var/cache/tuigreet 700 ${config.services.greetd.settings.initial_session.user} nobody"
+  ];
 }
