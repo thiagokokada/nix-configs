@@ -28,4 +28,9 @@
 
   # Enable unfree packages
   nixpkgs.config.allowUnfree = true;
+
+  # Change build dir to /var/tmp
+  systemd.services.nix-daemon = {
+    environment.TMPDIR = "/var/tmp";
+  };
 }
