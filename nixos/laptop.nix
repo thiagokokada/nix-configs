@@ -10,6 +10,7 @@
       # Use Network Manager
       networkmanager = {
         enable = true;
+        dns = "dnsmasq";
         wifi.backend = "iwd";
         dispatcherScripts = [{
           source =
