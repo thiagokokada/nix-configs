@@ -14,7 +14,6 @@
         config.eDP-1-1 = {
           enable = true;
           primary = true;
-          position = "760x1440";
           mode = "1920x1080";
           rate = "144.15";
         };

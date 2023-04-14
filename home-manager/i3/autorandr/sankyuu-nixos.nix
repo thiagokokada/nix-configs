@@ -14,6 +14,8 @@
         config.eDP-1 = {
           enable = true;
           primary = true;
+          mode = "1920x1080";
+          rate = "60.2";
         };
       };
       external-only = {
