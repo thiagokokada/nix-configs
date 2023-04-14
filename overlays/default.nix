@@ -27,18 +27,7 @@ in
 
       archivers = prev.callPackage ../packages/archivers { };
 
-      change-res = prev.writeShellApplication {
-        name = "change-res";
-        runtimeInputs = with prev; [ autorandr ];
-        text = ''
-          # Do not run this script in a Sway session
-          if systemctl --quiet --user is-active sway-session.target; then
-            exit 0
-          fi
-          autorandr --change || autorandr --common
-          systemctl --user restart wallpaper.service
-        '';
-      };
+      change-res = prev.callPackage ../packages/change-res { };
 
       open-browser = prev.callPackage ../packages/open-browser { };
 
