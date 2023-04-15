@@ -1,6 +1,7 @@
 { flake, pkgs, lib, config, ... }:
 
 let
+  inherit (config.meta) username;
   nvidia-offload = lib.findFirst (p: lib.isDerivation p && p.name == "nvidia-offload")
     null
     config.environment.systemPackages;
@@ -38,6 +39,7 @@ in
   };
 
   programs = {
+    corectrl.enable = true;
     gamemode = {
       enable = true;
       settings = {
@@ -75,4 +77,7 @@ in
     # https://github.com/fufexan/nix-gaming/blob/master/modules/pipewireLowLatency.nix
     pipewire.lowLatency.enable = true;
   };
+
+  # Added user to groups
+  users.users.${username}.extraGroups = [ "corectrl" ];
 }
