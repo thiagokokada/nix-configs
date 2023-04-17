@@ -10,20 +10,21 @@
     boot = {
       initrd.systemd.enable = lib.mkDefault true;
 
-      # Mount /tmp using tmpfs for performance
-      tmpOnTmpfs = lib.mkDefault true;
-
-      # If not using above, at least clean /tmp on each boot
-      cleanTmpDir = lib.mkDefault true;
-
-      # Enable NTFS support
-      supportedFilesystems = [ "ntfs" ];
-
       kernel.sysctl = {
         # Enable Magic keys
         "kernel.sysrq" = 1;
         # Reduce swap preference
         "vm.swappiness" = 10;
+      };
+
+      # Enable NTFS support
+      supportedFilesystems = [ "ntfs" ];
+
+      tmp = {
+        # Mount /tmp using tmpfs for performance
+        useTmpfs = lib.mkDefault true;
+        # If not using above, at least clean /tmp on each boot
+        cleanOnBoot = lib.mkDefault true;
       };
     };
 
