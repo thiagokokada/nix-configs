@@ -87,9 +87,9 @@ in
       + lib.optionalString (super.hardware.nvidia.prime.offload.enable or false) ''
         ${pkgs.xorg.xrandr}/bin/xrandr --setprovideroutputsource NVIDIA-G0 modesetting
       ''
-      # Automatically loads the best layout from autorandr
+      # Automatically loads the resolution
       + ''
-        ${pkgs.autorandr}/bin/autorandr --change
+        ${pkgs.change-res}/bin/change-res
       '';
   };
 }

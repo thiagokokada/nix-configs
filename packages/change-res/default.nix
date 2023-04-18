@@ -8,7 +8,7 @@ writeShellApplication {
   name = "change-res";
   runtimeInputs = [ autorandr mons systemd ];
   text = ''
-    autorandr --change || mons -o
+    autorandr --change --default horizontal
     systemctl --user restart wallpaper.service
   '';
 }

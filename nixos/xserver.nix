@@ -22,7 +22,7 @@
   services = {
     autorandr = {
       enable = true;
-      defaultTarget = "common";
+      defaultTarget = "horizontal";
     };
     # Configure greetd, a lightweight session manager
     greetd = {
