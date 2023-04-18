@@ -20,6 +20,10 @@
   };
 
   services = {
+    autorandr = {
+      enable = true;
+      defaultTarget = "common";
+    };
     # Configure greetd, a lightweight session manager
     greetd = {
       enable = true;
@@ -39,19 +43,6 @@
       };
       vt = 7;
     };
-
-    # Configure monitor hotplug
-    udev.extraRules =
-      let
-        inherit (config.meta) username;
-        inherit (config.users.users.${username}) home;
-        inherit (config.services.greetd) vt;
-      in
-      ''
-        KERNEL=="card[0-9]*", SUBSYSTEM=="drm", ACTION=="change", ENV{DISPLAY}=":${toString vt}", \
-          ENV{HOME}="${home}", ENV{XAUTHORITY}="${home}/.local/share/sx/xauthority", \
-          RUN+="${pkgs.change-res}/bin/change-res"
-      '';
 
     xserver = {
       enable = true;
