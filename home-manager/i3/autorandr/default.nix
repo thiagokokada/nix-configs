@@ -16,4 +16,17 @@ in
       };
     };
   };
+
+  # Configure autorandr globally
+  xdg.configFile = {
+    # Set default profile as horizontal
+    "autorandr/default" = pkgs.writeTextDir "horizontal" "";
+    # Skip gamma settings since this is controlled by gammastep
+    "autorandr/settings.ini" = {
+      inherit (config.programs.autorandr) enable;
+      text = lib.generators.toINI { } {
+        config.skip-options = "gamma";
+      };
+    };
+  };
 }
