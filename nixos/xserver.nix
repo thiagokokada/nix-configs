@@ -20,10 +20,7 @@
   };
 
   services = {
-    autorandr = {
-      enable = true;
-      defaultTarget = "horizontal";
-    };
+    autorandr.enable = true;
     # Configure greetd, a lightweight session manager
     greetd = {
       enable = true;
