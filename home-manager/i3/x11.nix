@@ -27,8 +27,6 @@ in
               export XSECURELOCK_SHOW_DATETIME=1
               export XSECURELOCK_SHOW_HOSTNAME=0
               export XSECURELOCK_SHOW_USERNAME=0
-              # workaround issue with picom
-              export XSECURELOCK_COMPOSITE_OBSCURER=0
               export XSECURELOCK_DISCARD_FIRST_KEYPRESS=0
               export XSECURELOCK_FONT="${gui.name}:style=Regular"
 

@@ -10,6 +10,8 @@
     settings = {
       unredir-if-possible = true;
       unredir-if-possible-exclude = [ "name *= 'Firefox'" ];
+      # https://github.com/google/xsecurelock/issues/97#issuecomment-1183086902
+      fade-exclude = [ "class_g = 'xsecurelock'" ];
     };
   };
   # Avoid restarting picom indefinitely in Wayland
