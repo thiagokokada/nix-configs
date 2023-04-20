@@ -37,7 +37,7 @@ in
   programs.emacs = with pkgs; let
     emacsPkg =
       if stdenv.isDarwin then
-        emascsUnstable
+        emacsUnstable
       else emacsUnstablePgtk;
     emacs-custom = with pkgs; (pkgs.emacsPackagesFor emacsPkg).emacsWithPackages
       (epkgs: with epkgs; [ vterm ]);
@@ -53,18 +53,20 @@ in
   xdg.configFile.".tree-sitter".source = (pkgs.runCommand "grammars" { } ''
     mkdir -p $out/bin
     ${lib.concatStringsSep "\n"
-      (lib.mapAttrsToList (name: src: "name=${name}; ln -s ${src}/parser $out/bin/\${name#tree-sitter-}.so") pkgs.tree-sitter.builtGrammars)};
+      (lib.mapAttrsToList
+        (name: src: "name=${name}; ln -s ${src}/parser $out/bin/\${name#tree-sitter-}.so")
+        pkgs.tree-sitter.builtGrammars)};
   '');
 
   home.activation = {
     installDoom = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-      readonly emacs_dir="${config.home.homeDirectory}/.config/emacs";
+      readonly emacs_dir="${homeDirectory}/.config/emacs";
       [ ! -d "$emacs_dir" ] && \
         $DRY_RUN_CMD ${pkgs.git}/bin/git clone https://github.com/hlissner/doom-emacs/ "$emacs_dir"
     '';
 
     checkDoomConfigLocation = lib.hm.dag.entryAfter [ "linkGeneration" ] ''
-      if [ ! -e "$HOME/${config.xdg.configFile."doom".target}" ]; then
+      if [ ! -e "${doomConfigPath}" ]; then
         >&2 echo "[ERROR] doom-emacs config is pointing to a non-existing path: ${doomConfigPath}"
         $DRY_RUN_CMD exit 1
       fi

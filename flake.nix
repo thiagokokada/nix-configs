@@ -39,7 +39,7 @@
       inputs.nix-index-database.follows = "nix-index-database";
     };
 
-    # nix-doom-emacs
+    # emacs
     emacs = {
       url = "github:nix-community/emacs-overlay";
       inputs.nixpkgs.follows = "nixpkgs";
