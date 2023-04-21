@@ -1,26 +1,14 @@
-{ flake, config, lib, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 
 let
   inherit (config.home) homeDirectory;
-  emacs' = with pkgs;
-    if stdenv.isDarwin then
-      emacsUnstable
-    else
-      emacsUnstablePgtk.overrideAttrs (old: {
-        patches = (old.patches or [ ]) ++ [ ./disable_pgtk_display_x_warning.patch ];
-      });
-  emacs-custom = with pkgs; (pkgs.emacsPackagesFor emacs').emacsWithPackages
-    (epkgs: with epkgs; [ vterm ]);
+  doomConfigPath = "${config.meta.configPath}/home-manager/emacs/doom-emacs";
 in
 {
   imports = [ ../../modules/meta.nix ];
 
   # Emacs overlay
   home = {
-    activation.runDoomSync = lib.hm.dag.entryAfter [ "linkGeneration" ] ''
-      ${pkgs.systemd}/bin/systemctl start --user doom-sync.service --no-block
-    '';
-
     packages = with pkgs; [
       (run-bg-alias "em" "${config.programs.emacs.package}/bin/emacs")
       (writeShellScriptBin "et" "${config.programs.emacs.package}/bin/emacs -nw $@")
@@ -40,19 +28,30 @@ in
     ];
 
     sessionPath = [ "${homeDirectory}/.config/emacs/bin" ];
-    sessionVariables.EMACSDIR = "${homeDirectory}/.config/emacs";
   };
 
-  programs.emacs = {
+  programs.zsh.shellAliases = {
+    "doom-up!" = "nice doom upgrade";
+  };
+
+  programs.emacs = with pkgs; let
+    emacsPkg =
+      if stdenv.isDarwin then
+        emacsUnstable
+      else
+        emacsUnstablePgtk.overrideAttrs (old: {
+          patches = (old.patches or [ ]) ++ [ ./disable_pgtk_display_x_warning.patch ];
+        });
+    emacs-custom = with pkgs; (pkgs.emacsPackagesFor emacsPkg).emacsWithPackages
+      (epkgs: with epkgs; [ vterm ]);
+  in
+  {
     enable = true;
     package = emacs-custom;
   };
 
-  xdg.configFile."doom".source = ./doom-emacs;
-  xdg.configFile."emacs" = {
-    source = flake.inputs.doomemacs;
-    recursive = true;
-  };
+  xdg.configFile."doom".source =
+    config.lib.file.mkOutOfStoreSymlink doomConfigPath;
 
   xdg.configFile.".tree-sitter".source = (pkgs.runCommand "grammars" { } ''
     mkdir -p $out/bin
@@ -62,22 +61,18 @@ in
         pkgs.tree-sitter.builtGrammars)};
   '');
 
-  systemd.user.services.doom-sync = {
-    Unit = {
-      After = [ "network.target" ];
-      Description = "Sync doomemacs config";
-    };
+  home.activation = {
+    installDoom = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+      readonly emacs_dir="${homeDirectory}/.config/emacs";
+      [ ! -d "$emacs_dir" ] && \
+        $DRY_RUN_CMD ${pkgs.git}/bin/git clone https://github.com/hlissner/doom-emacs/ "$emacs_dir"
+    '';
 
-    Service = with pkgs; {
-      Nice = "15";
-      Environment = [
-        "HOME=${homeDirectory}"
-        "EMACSDIR=${config.home.sessionVariables.EMACSDIR}"
-        "PATH=${lib.makeBinPath [ bash emacs-custom gcc git ]}"
-      ];
-      ExecStart = "${flake.inputs.doomemacs}/bin/doom sync";
-      ExecStartPost = "${libnotify}/bin/notify-send 'Finished sync' 'Doom Emacs is ready!'";
-      Type = "oneshot";
-    };
+    checkDoomConfigLocation = lib.hm.dag.entryAfter [ "linkGeneration" ] ''
+      if [ ! -e "${doomConfigPath}" ]; then
+        >&2 echo "[ERROR] doom-emacs config is pointing to a non-existing path: ${doomConfigPath}"
+        $DRY_RUN_CMD exit 1
+      fi
+    '';
   };
 }
