@@ -85,8 +85,6 @@ let
         for_window [class="^Steam$" title="^Screenshot Uploader$"] floating enable
         for_window [class="^Steam$" title="^Steam Guard - Computer Authorization Required$"] floating enable
         for_window [title="^Steam Keyboard$"] floating enable
-        # kill the annoying PGTK warn from Emacs
-        for_window [class="^Emacs$" title="Warning"] kill
       '';
     };
 in

@@ -38,7 +38,10 @@ in
     emacsPkg =
       if stdenv.isDarwin then
         emacsUnstable
-      else emacsUnstablePgtk;
+      else
+        emacsUnstablePgtk.overrideAttrs (old: {
+          patches = (old.patches or [ ]) ++ [ ./disable_pgtk_display_x_warning.patch ];
+        });
     emacs-custom = with pkgs; (pkgs.emacsPackagesFor emacsPkg).emacsWithPackages
       (epkgs: with epkgs; [ vterm ]);
   in
