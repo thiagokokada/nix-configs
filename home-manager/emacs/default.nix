@@ -58,7 +58,7 @@ in
     '');
   };
 
-  systemd.user.services.doom-sync = {
+  systemd.user.services.doom-sync = lib.mkIf pkgs.stdenv.isLinux {
     Unit = {
       After = [ "network.target" ];
       Description = "Sync doomemacs config";
