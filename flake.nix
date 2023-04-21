@@ -40,6 +40,10 @@
     };
 
     # emacs
+    doomemacs = {
+      url = "github:doomemacs/doomemacs";
+      flake = false;
+    };
     emacs = {
       url = "github:nix-community/emacs-overlay";
       inputs.nixpkgs.follows = "nixpkgs";
