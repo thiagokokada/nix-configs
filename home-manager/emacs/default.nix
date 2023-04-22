@@ -58,7 +58,7 @@ in
     '');
   };
 
-  systemd.user.services.doom-sync = lib.mkIf pkgs.stdenv.isLinux {
+  systemd.user.services.doom-sync = {
     Unit = {
       After = [ "network.target" ];
       Description = "Sync doomemacs config";
@@ -84,8 +84,9 @@ in
       [ ! -d "${EMACSDIR}" ] && \
         $DRY_RUN_CMD ${pkgs.git}/bin/git clone "${doomRepo}" "${EMACSDIR}"
     '';
-    runDoomSync = lib.hm.dag.entryAfter [ "installDoom" ] ''
-      ${pkgs.systemd}/bin/systemctl start --user doom-sync.service --no-block
-    '';
+    runDoomSync = lib.mkIf (pkgs.stdenv.isLinux)
+      (lib.hm.dag.entryAfter [ "installDoom" ] ''
+        ${pkgs.systemd}/bin/systemctl start --user doom-sync.service --no-block
+      '');
   };
 }
