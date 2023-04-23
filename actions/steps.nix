@@ -49,21 +49,21 @@ with constants;
     run = "nix flake check";
   };
   buildHomeManagerConfigurations = { hostnames ? constants.home-manager.linux.hostnames, extraNixFlags ? [ ] }: {
-    name = "Build Home-Manager configs";
+    name = "Build Home-Manager configs for: ${builtins.concatStringsSep ", " hostnames}";
     run = builtins.concatStringsSep "\n"
       (map
         (hostname: "nix build ${toString (nixFlags ++ extraNixFlags)} '.#homeConfigurations.${hostname}.activationPackage'")
         hostnames);
   };
   buildNixOSConfigurations = { hostnames ? constants.nixos.hostnames, extraNixFlags ? [ ] }: {
-    name = "Build NixOS configs";
+    name = "Build NixOS configs for: ${builtins.concatStringsSep ", " hostnames}";
     run = builtins.concatStringsSep "\n"
       (map
         (hostname: "nix build ${toString (nixFlags ++ extraNixFlags)} '.#nixosConfigurations.${hostname}.config.system.build.toplevel'")
         hostnames);
   };
   buildNixDarwinConfigurations = { hostnames ? constants.nix-darwin.hostnames, extraNixFlags ? [ ] }: {
-    name = "Build Nix Darwin configs";
+    name = "Build Nix Darwin configs for: ${builtins.concatStringsSep ", " hostnames}";
     run = builtins.concatStringsSep "\n"
       (map
         (hostname: "nix build ${toString (nixFlags ++ extraNixFlags)} '.#darwinConfigurations.${hostname}.system'")

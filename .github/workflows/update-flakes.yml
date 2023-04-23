@@ -22,24 +22,24 @@ jobs:
           authToken: ${{ secrets.CACHIX_TOKEN }}
           extraPullNames: nix-community
           name: thiagokokada-nix-configs
-      - name: Build NixOS configs
+      - name: 'Build NixOS configs for: miku-nixos'
         run: nix build --print-build-logs -o /tmp/nixos_old '.#nixosConfigurations.miku-nixos.config.system.build.toplevel'
       - name: Update flake.lock
         run: |
           git config user.name "${{ github.actor }}"
           git config user.email "${{ github.actor }}@users.noreply.github.com"
           nix flake update --commit-lock-file
-      - name: Build Home-Manager configs
+      - name: 'Build Home-Manager configs for: home-linux, steamdeck'
         run: |-
           nix build --print-build-logs '.#homeConfigurations.home-linux.activationPackage'
           nix build --print-build-logs '.#homeConfigurations.steamdeck.activationPackage'
-      - name: Build NixOS configs
+      - name: 'Build NixOS configs for: miku-nixos, mikudayo-re-nixos, mirai-vps, sankyuu-nixos'
         run: |-
           nix build --print-build-logs '.#nixosConfigurations.miku-nixos.config.system.build.toplevel'
           nix build --print-build-logs '.#nixosConfigurations.mikudayo-re-nixos.config.system.build.toplevel'
           nix build --print-build-logs '.#nixosConfigurations.mirai-vps.config.system.build.toplevel'
           nix build --print-build-logs '.#nixosConfigurations.sankyuu-nixos.config.system.build.toplevel'
-      - name: Build NixOS configs
+      - name: 'Build NixOS configs for: miku-nixos'
         run: nix build --print-build-logs -o /tmp/nixos_new '.#nixosConfigurations.miku-nixos.config.system.build.toplevel'
       - id: NixOS
         name: 'Diff Nix outputs: /tmp/nixos_old vs /tmp/nixos_new'

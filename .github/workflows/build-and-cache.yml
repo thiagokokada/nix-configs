@@ -26,11 +26,11 @@ jobs:
         run: nix run '.#formatCheck'
       - name: Validate Flakes
         run: nix flake check
-      - name: Build Home-Manager configs
+      - name: 'Build Home-Manager configs for: home-linux, steamdeck'
         run: |-
           nix build --print-build-logs '.#homeConfigurations.home-linux.activationPackage'
           nix build --print-build-logs '.#homeConfigurations.steamdeck.activationPackage'
-      - name: Build NixOS configs
+      - name: 'Build NixOS configs for: miku-nixos, mikudayo-re-nixos, mirai-vps, sankyuu-nixos'
         run: |-
           nix build --print-build-logs '.#nixosConfigurations.miku-nixos.config.system.build.toplevel'
           nix build --print-build-logs '.#nixosConfigurations.mikudayo-re-nixos.config.system.build.toplevel'
@@ -51,9 +51,9 @@ jobs:
           name: thiagokokada-nix-configs
       - name: Set default git branch (to reduce log spam)
         run: git config --global init.defaultBranch master
-      - name: Build Home-Manager configs
+      - name: 'Build Home-Manager configs for: home-macos'
         run: nix build --print-build-logs '.#homeConfigurations.home-macos.activationPackage'
-      - name: Build Nix Darwin configs
+      - name: 'Build Nix Darwin configs for: miku-macos-vm'
         run: nix build --print-build-logs '.#darwinConfigurations.miku-macos-vm.system'
 name: build-and-cache
 "on":
