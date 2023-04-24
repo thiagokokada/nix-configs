@@ -61,34 +61,6 @@ A good start would be to import only `hardware-configuration.nix`,
 After installing it succesfully and rebooting, you can uncomment everything and
 trigger a rebuild.
 
-### nix-darwin
-
-Start by installing Nix:
-
-```console
-$ sh <(curl -L https://nixos.org/nix/install) --daemon
-```
-
-See more details
-[here](https://nixos.org/manual/nix/stable/#sect-multi-user-installation).
-
-You first need to run nix-darwin
-[installer](https://github.com/LnL7/nix-darwin#install):
-
-```console
-$ nix-build https://github.com/LnL7/nix-darwin/archive/master.tar.gz -A installer
-$ ./result/bin/darwin-installer
-```
-
-Afterwards run:
-
-```console
-$ nix build '.#darwinConfigurations.<hostname>.system'
-$ ./result/sw/bin/darwin-rebuild switch --flake .
-# or
-$ nix run '.#darwinActivations/<hostname>'
-```
-
 ### Home Manager (standalone)
 
 Start by installing Nix:

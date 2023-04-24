@@ -1,4 +1,4 @@
-{ self, nixpkgs, nix-darwin, home, flake-utils, ... }@inputs:
+{ self, nixpkgs, home, flake-utils, ... }@inputs:
 
 let
   inherit (flake-utils.lib) eachDefaultSystem mkApp;
@@ -78,28 +78,6 @@ in
             '';
             exePath = "/bin/run-${hostname}-vm";
           };
-      };
-    };
-
-  mkDarwinConfig =
-    { hostname
-    , system ? "x86_64-darwin"
-    , darwinSystem ? nix-darwin.lib.darwinSystem
-    , extraModules ? [ ]
-    }:
-    {
-      darwinConfigurations.${hostname} = darwinSystem {
-        inherit system;
-        modules = [ ../hosts/${hostname} ] ++ extraModules;
-        specialArgs = {
-          inherit system;
-          flake = self;
-        };
-      };
-
-      apps.${system}."darwinActivations/${hostname}" = mkApp {
-        drv = self.outputs.darwinConfigurations.${hostname}.system;
-        exePath = "/activate";
       };
     };
 

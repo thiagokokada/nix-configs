@@ -62,13 +62,6 @@ with constants;
         (hostname: "nix build ${toString (nixFlags ++ extraNixFlags)} '.#nixosConfigurations.${hostname}.config.system.build.toplevel'")
         hostnames);
   };
-  buildNixDarwinConfigurations = { hostnames ? constants.nix-darwin.hostnames, extraNixFlags ? [ ] }: {
-    name = "Build Nix Darwin configs for: ${builtins.concatStringsSep ", " hostnames}";
-    run = builtins.concatStringsSep "\n"
-      (map
-        (hostname: "nix build ${toString (nixFlags ++ extraNixFlags)} '.#darwinConfigurations.${hostname}.system'")
-        hostnames);
-  };
   updateFlakeLockStep = {
     name = "Update flake.lock";
     run = ''

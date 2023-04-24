@@ -53,8 +53,6 @@ jobs:
         run: git config --global init.defaultBranch master
       - name: 'Build Home-Manager configs for: home-macos'
         run: nix build --print-build-logs '.#homeConfigurations.home-macos.activationPackage'
-      - name: 'Build Nix Darwin configs for: miku-macos-vm'
-        run: nix build --print-build-logs '.#darwinConfigurations.miku-macos-vm.system'
 name: build-and-cache
 "on":
   - push

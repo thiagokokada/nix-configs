@@ -24,7 +24,4 @@
     "mirai-vps"
     "sankyuu-nixos"
   ];
-  nix-darwin.hostnames = [
-    "miku-macos-vm"
-  ];
 }

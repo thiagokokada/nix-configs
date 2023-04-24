@@ -9,10 +9,6 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nix-darwin = {
-      url = "github:LnL7/nix-darwin";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     nix-gaming = {
       url = "github:fufexan/nix-gaming";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -112,7 +108,7 @@
     let
       inherit (flake-utils.lib) eachDefaultSystem;
       inherit (import ./lib/attrsets.nix { inherit (nixpkgs) lib; }) recursiveMergeAttrs;
-      inherit (import ./lib/flake.nix inputs) mkGHActionsYAMLs mkRunCmd mkNixOSConfig mkDarwinConfig mkHomeConfig;
+      inherit (import ./lib/flake.nix inputs) mkGHActionsYAMLs mkRunCmd mkNixOSConfig mkHomeConfig;
     in
     (recursiveMergeAttrs [
       # Templates
@@ -131,9 +127,6 @@
       (mkNixOSConfig { hostname = "mikudayo-re-nixos"; })
       (mkNixOSConfig { hostname = "mirai-vps"; })
       (mkNixOSConfig { hostname = "sankyuu-nixos"; })
-
-      # nix-darwin configs
-      (mkDarwinConfig { hostname = "miku-macos-vm"; })
 
       # Home-Manager configs
       (mkHomeConfig { hostname = "home-linux"; })
