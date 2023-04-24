@@ -13,11 +13,6 @@ in
         (import ../lib { inherit (prev) lib; })
       );
 
-      stable = import inputs.stable {
-        inherit system;
-        config = prev.config;
-      };
-
       gaming = flake.inputs.nix-gaming.packages.${system};
 
       wallpapers = prev.callPackage ../packages/wallpapers { };
