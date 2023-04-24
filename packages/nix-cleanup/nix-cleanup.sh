@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-set -euo pipefail
-
 readonly NIXOS=@isNixOS@
 AUTO=0
 OPTIMIZE=0
