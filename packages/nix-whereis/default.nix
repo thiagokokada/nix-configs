@@ -1,30 +1,25 @@
-{ bash
+{ writeShellApplication
 , coreutils
-, resholve
 , which
 }:
 
-resholve.mkDerivation {
-  pname = "nix-whereis";
-  version = "0.0.1";
+writeShellApplication {
+  name = "nix-whereis";
 
-  src = ./nix-whereis.sh;
+  text = ''
+    readonly program_name="''${1:-}"
 
-  dontUnpack = true;
+    if [[ -z "$program_name" ]]; then
+       cat <<EOF
+    usage: $(basename "$0") <name>
 
-  installPhase = ''
-    runHook preInstall
+    Get where in /nix/store a program is located.
+    EOF
+        exit 1
+    fi
 
-    install -Dm755 "$src" "$out/bin/nix-whereis"
-
-    runHook postInstall
+    readlink -f "$(which "$program_name")"
   '';
 
-  solutions = {
-    nix-whereis = {
-      scripts = [ "bin/nix-whereis" ];
-      interpreter = "${bash}/bin/bash";
-      inputs = [ coreutils which ];
-    };
-  };
+  runtimeInputs = [ coreutils which ];
 }
