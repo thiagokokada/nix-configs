@@ -1,8 +1,6 @@
 { config, pkgs, lib, flake, ... }:
 {
-  home.packages = with pkgs; [
-    archivers
-  ] ++ lib.optionals (!stdenv.isDarwin) [
+  home.packages = with pkgs; lib.optionals (!stdenv.isDarwin) [
     (run-bg-alias "open" "${xdg-utils}/bin/xdg-open")
   ];
 

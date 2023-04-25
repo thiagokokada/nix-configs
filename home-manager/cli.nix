@@ -38,12 +38,12 @@ in
     pipe-rename
     pv
     python3
-    rar
     ripgrep
     rlwrap
     tealdeer
     tig
     tokei
+    unar
     unzip
     wget
     zip

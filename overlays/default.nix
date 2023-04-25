@@ -20,8 +20,6 @@ in
       # custom packages
       arandr = prev.arandr.overrideAttrs (_: { src = inputs.arandr; });
 
-      archivers = prev.callPackage ../packages/archivers { };
-
       change-res = prev.callPackage ../packages/change-res { };
 
       open-browser = prev.callPackage ../packages/open-browser { };
