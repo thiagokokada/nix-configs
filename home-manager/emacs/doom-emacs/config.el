@@ -159,6 +159,7 @@
 (use-package! ix
   :defer t)
 
+;; lsp
 (use-package! lsp-mode
   ; https://emacs-lsp.github.io/lsp-mode/tutorials/how-to-turn-off/
   :init (setq lsp-modeline-code-actions-mode t
@@ -170,14 +171,16 @@
               lsp-signature-render-documentation nil
               lsp-file-watch-threshold 10000)
   :config
-  (advice-add #'lsp-rename :after (lambda (&rest _) (projectile-save-project-buffers)))
-  (lsp-register-client
-   (make-lsp-client :new-connection (lsp-stdio-connection '("rnix-lsp"))
-                    :major-modes '(nix-mode)
-                    :server-id 'nix))
-  (add-to-list 'lsp-language-id-configuration '(nix-mode . "nix")))
+  (advice-add #'lsp-rename :after (lambda (&rest _) (projectile-save-project-buffers))))
 
-;;(add-hook! nix-mode #'lsp!)
+(add-hook! nix-mode #'lsp!)
+
+(use-package! lsp-nix
+  :ensure lsp-mode
+  :after (lsp-mode)
+  :demand t
+  :custom
+  (lsp-nix-nil-formatter ["nixpkgs-fmt"]))
 
 ;; sort-words
 (use-package! sort-words

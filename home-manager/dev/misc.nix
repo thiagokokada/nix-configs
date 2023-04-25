@@ -5,9 +5,9 @@
     elixir
     expect
     gcc
+    nil
     nim
     pandoc
-    rnix-lsp
     shellcheck
   ];
 }
