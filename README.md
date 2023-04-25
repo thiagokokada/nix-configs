@@ -49,7 +49,7 @@ system and partition the disk, run the following process to install:
 
 ```console
 $ sudo git clone https://github.com/thiagokokada/nix-configs/ /mnt/etc/nixos
-$ sudo chown -R 1000:1000 /mnt/etc/nixos # optional if you want to edit your config without root
+$ sudo chown -R 1000:100 /mnt/etc/nixos # optional if you want to edit your config without root
 $ nix flake new --template '.#new-host' # if this is a new hardware
 $ sudo nixos-install --flake /mnt/etc/nixos#hostname
 ```
