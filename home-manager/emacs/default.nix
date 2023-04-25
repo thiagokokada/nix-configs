@@ -3,8 +3,6 @@
 let
   inherit (config.home) homeDirectory;
   inherit (config.home.sessionVariables) EMACSDIR;
-  doomRepo = "https://github.com/doomemacs/doomemacs";
-  doomConfigPath = "${config.meta.configPath}/home-manager/emacs/doom-emacs";
   emacs' = with pkgs;
     if stdenv.isDarwin then
       emacsUnstable
@@ -48,7 +46,7 @@ in
   };
 
   xdg.configFile = {
-    "doom".source = config.lib.file.mkOutOfStoreSymlink doomConfigPath;
+    "doom".source = ./doom-emacs;
     ".tree-sitter".source = (pkgs.runCommand "grammars" { } ''
       mkdir -p $out/bin
       ${lib.concatStringsSep "\n"
@@ -65,7 +63,10 @@ in
     };
     Service = with pkgs; {
       Nice = "15";
-      Environment = [ "PATH=${lib.makeBinPath [ bash emacs-custom gcc git ]}" ];
+      Environment = [
+        "PATH=${lib.makeBinPath [ bash emacs-custom gcc git ]}"
+        "EMACSDIR=${EMACSDIR}"
+      ];
       ExecStart = "${EMACSDIR}/bin/doom sync --no-color";
       ExecStartPre = "${libnotify}/bin/notify-send 'Starting sync' 'Doom Emacs config is syncing...'";
       ExecStartPost = "${libnotify}/bin/notify-send 'Finished sync' 'Doom Emacs is ready!'";
@@ -74,15 +75,10 @@ in
   };
 
   home.activation = {
-    checkDoomConfigLocation = lib.hm.dag.entryAfter [ "linkGeneration" ] ''
-      if [ ! -e "${doomConfigPath}" ]; then
-        >&2 echo "[ERROR] doom-emacs config is pointing to a non-existing path: ${doomConfigPath}"
-        $DRY_RUN_CMD exit 1
-      fi
-    '';
-    installDoom = lib.hm.dag.entryAfter [ "checkDoomConfigLocation" ] ''
-      [ ! -d "${EMACSDIR}" ] && \
-        $DRY_RUN_CMD ${pkgs.git}/bin/git clone "${doomRepo}" "${EMACSDIR}"
+    # TODO: check doomemacs commit and only update if it is outdated
+    installDoom = lib.hm.dag.entryAfter [ "linkGeneration" ] ''
+      ${pkgs.coreutils}/bin/mkdir -p ${EMACSDIR}
+      ${pkgs.rsync}/bin/rsync -Er --chmod=u=rwX --delete ${flake.inputs.doomemacs}/* ${EMACSDIR}
     '';
     runDoomSync = lib.mkIf (pkgs.stdenv.isLinux)
       (lib.hm.dag.entryAfter [ "installDoom" ] ''
