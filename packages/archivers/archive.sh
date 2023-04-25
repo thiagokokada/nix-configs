@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Based on https://github.com/zimfw/archive
 
-readonly name="$(basename "$0")"
+name="$(basename "$0")"
 
 echoerr() { echo "$@" 1>&2; }
 

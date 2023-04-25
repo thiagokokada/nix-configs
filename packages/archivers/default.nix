@@ -1,67 +1,51 @@
-{ _7zz
-, bash
+{ lib
+, runCommand
+, writeShellApplication
+, _7zz
 , coreutils
 , gnutar
 , gzip
 , pbzip2
 , pigz
 , rar
-, resholve
 , unzip
 , xz
 , zip
 , zstd
 }:
 
-resholve.mkDerivation {
-  pname = "archivers";
-  version = "0.0.1";
-
-  src = [
-    ./archive.sh
-    ./unarchive.sh
-    ./lsarchive.sh
+let
+  runtimeInputs = [
+    _7zz
+    coreutils
+    gnutar
+    gzip
+    pbzip2
+    pigz
+    rar
+    unzip
+    xz
+    zip
+    zstd
   ];
-
-  dontUnpack = true;
-
-  installPhase = ''
-    runHook preInstall
-
-    for _src in $src; do
-      script_filename="$(stripHash $_src)"
-      # remove .sh extension
-      script_name="''${script_filename%.sh}"
-      install -Dm755 "$_src" "$out/bin/$script_name"
-    done
-
-    runHook postInstall
-  '';
-
-  solutions = {
-    archivers = {
-      scripts = [
-        "bin/archive"
-        "bin/unarchive"
-        "bin/lsarchive"
-      ];
-      interpreter = "${bash}/bin/bash";
-      inputs = [
-        _7zz
-        coreutils
-        gnutar
-        gzip
-        pbzip2
-        pigz
-        rar
-        unzip
-        xz
-        zip
-        zstd
-      ];
-      execer = [
-        "cannot:${gzip}/bin/uncompress"
-      ];
-    };
+  archive = writeShellApplication {
+    name = "archive";
+    text = lib.readFile ./archive.sh;
+    inherit runtimeInputs;
   };
-}
+  unarchive = writeShellApplication {
+    name = "unarchive";
+    text = lib.readFile ./unarchive.sh;
+    inherit runtimeInputs;
+  };
+  lsarchive = writeShellApplication {
+    name = "lsarchive";
+    text = lib.readFile ./lsarchive.sh;
+    inherit runtimeInputs;
+  };
+in
+runCommand "archivers" { } ''
+  install ${archive}/bin/archive -Dt $out/bin
+  install ${unarchive}/bin/unarchive -Dt $out/bin
+  install ${lsarchive}/bin/lsarchive -Dt $out/bin
+''
