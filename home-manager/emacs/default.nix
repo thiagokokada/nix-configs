@@ -18,6 +18,14 @@ in
 
   # Emacs overlay
   home = {
+    file.".tree-sitter".source = (pkgs.runCommand "grammars" { } ''
+      mkdir -p $out/bin
+      ${lib.concatStringsSep "\n"
+        (lib.mapAttrsToList
+          (name: src: "name=${name}; ln -s ${src}/parser $out/bin/\${name#tree-sitter-}.so")
+          pkgs.tree-sitter.builtGrammars)};
+    '');
+
     packages = with pkgs; [
       (run-bg-alias "em" "${config.programs.emacs.package}/bin/emacs")
       (writeShellScriptBin "et" "${config.programs.emacs.package}/bin/emacs -nw $@")
@@ -45,16 +53,7 @@ in
     package = emacs-custom;
   };
 
-  xdg.configFile = {
-    "doom".source = ./doom-emacs;
-    ".tree-sitter".source = (pkgs.runCommand "grammars" { } ''
-      mkdir -p $out/bin
-      ${lib.concatStringsSep "\n"
-        (lib.mapAttrsToList
-          (name: src: "name=${name}; ln -s ${src}/parser $out/bin/\${name#tree-sitter-}.so")
-          pkgs.tree-sitter.builtGrammars)};
-    '');
-  };
+  xdg.configFile."doom".source = ./doom-emacs;
 
   systemd.user.services.doom-sync = {
     Unit = {
