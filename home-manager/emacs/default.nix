@@ -77,8 +77,7 @@ in
   home.activation = {
     # TODO: check doomemacs commit and only update if it is outdated
     installDoom = lib.hm.dag.entryAfter [ "linkGeneration" ] ''
-      ${pkgs.coreutils}/bin/mkdir -p ${EMACSDIR}
-      ${pkgs.rsync}/bin/rsync -Er --chmod=u=rwX --delete ${flake.inputs.doomemacs}/* ${EMACSDIR}
+      ${pkgs.rsync}/bin/rsync -Er --chmod=u=rwX --exclude='.local/' --mkpath --delete ${flake.inputs.doomemacs}/ ${EMACSDIR}/
     '';
     runDoomSync = lib.mkIf (pkgs.stdenv.isLinux)
       (lib.hm.dag.entryAfter [ "installDoom" ] ''
