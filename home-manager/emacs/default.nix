@@ -66,7 +66,7 @@ in
         "PATH=${lib.makeBinPath [ bash emacs-custom gcc git ]}"
         "EMACSDIR=${EMACSDIR}"
       ];
-      ExecStart = "${EMACSDIR}/bin/doom sync --no-color";
+      ExecStart = "${EMACSDIR}/bin/doom sync -u --no-color";
       ExecStartPre = "${libnotify}/bin/notify-send 'Starting sync' 'Doom Emacs config is syncing...'";
       ExecStartPost = "${libnotify}/bin/notify-send 'Finished sync' 'Doom Emacs is ready!'";
       Type = "oneshot";
