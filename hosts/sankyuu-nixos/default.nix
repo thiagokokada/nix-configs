@@ -61,7 +61,7 @@ in
     CPU_SCALING_GOVERNOR_ON_BAT = "schedutil";
   };
 
-  programs.gamescope.args = [
+  programs.steam.gamescopeSession.args = [
     "-w 1600"
     "-h 900"
     "--fsr-sharpness 10"
