@@ -54,7 +54,10 @@ in
       };
     };
 
-    gamescope.capSysNice = true;
+    gamescope = {
+      args = [ "--rt" ];
+      capSysNice = true;
+    };
 
     steam = {
       enable = true;
