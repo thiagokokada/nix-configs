@@ -25,17 +25,27 @@
     greetd = {
       enable = true;
       settings = rec {
-        initial_session = {
-          command = lib.concatStringsSep " " [
-            "${pkgs.greetd.tuigreet}/bin/tuigreet"
-            "--remember"
-            "--remember-session"
-            "--time"
-            "--cmd sx"
-            "--sessions '${pkgs.sway}/share/wayland-sessions/'"
-          ];
-          user = "greeter";
-        };
+        initial_session =
+          let
+            genSessionsFor = path:
+              lib.concatStringsSep ":"
+                (map (s: "${s}/${path}")
+                  config.services.xserver.displayManager.sessionPackages);
+          in
+          {
+            command = lib.concatStringsSep " " [
+              "${pkgs.greetd.tuigreet}/bin/tuigreet"
+              "--remember"
+              "--remember-session"
+              "--time"
+              "--cmd sx"
+              "--sessions"
+              # We can't know if the sessions inside sessionPackages are for
+              # X or Wayland, so add both to path
+              "${genSessionsFor "share/xsessions"}:${genSessionsFor "share/wayland-sessions"}"
+            ];
+            user = "greeter";
+          };
         default_session = initial_session;
       };
       vt = 7;
