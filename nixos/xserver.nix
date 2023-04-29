@@ -61,11 +61,6 @@
     };
   };
 
-  # Add a delay to autorandr so it parses displays correctly
-  systemd.services.autorandr.serviceConfig.ExecStartPre = ''
-    ${pkgs.coreutils}/bin/sleep 2
-  '';
-
   # https://github.com/apognu/tuigreet/issues/76
   systemd.tmpfiles.rules = [
     "d /var/cache/tuigreet 700 ${config.services.greetd.settings.initial_session.user} nobody"
