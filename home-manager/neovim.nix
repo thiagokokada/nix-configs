@@ -81,27 +81,6 @@
       set nofoldenable " disable folding at startup
     '';
 
-    # TODO: configure using scopped plugin config instead?
-    extraLuaConfig = ''
-      require'nvim-treesitter.configs'.setup {
-        highlight = {
-          enable = true,
-        },
-        incremental_selection = {
-          enable = true,
-          keymaps = {
-            init_selection = "gnn", -- set to `false` to disable one of the mappings
-            node_incremental = "grn",
-            scope_incremental = "grc",
-            node_decremental = "grm",
-          },
-        },
-        indent = {
-         enable = true,
-        },
-      }
-    '';
-
     # To install non-packaged plugins, use
     # pkgs.vimUtils.buildVimPluginFrom2Nix { }
     plugins = with pkgs; with vimPlugins; [
@@ -248,6 +227,30 @@
           map T <Plug>Sneak_T
         '';
       }
+      {
+        plugin = nvim-treesitter.withAllGrammars;
+        config = ''
+          lua << EOF
+          require'nvim-treesitter.configs'.setup {
+            highlight = {
+              enable = true,
+            },
+            incremental_selection = {
+              enable = true,
+              keymaps = {
+                init_selection = "gnn", -- set to `false` to disable one of the mappings
+                node_incremental = "grn",
+                scope_incremental = "grc",
+                node_decremental = "grm",
+              },
+            },
+            indent = {
+             enable = true,
+            },
+          }
+          EOF
+        '';
+      }
       (vimUtils.buildVimPlugin {
         name = "AdvancedSorters";
         src = fetchFromGitHub {
@@ -268,7 +271,6 @@
       })
       auto-pairs
       gitgutter
-      nvim-treesitter.withAllGrammars
       vim-automkdir
       vim-autoswap
       vim-better-whitespace
