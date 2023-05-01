@@ -251,6 +251,16 @@
           EOF
         '';
       }
+      {
+        plugin = vim-polyglot;
+        config = ''
+          " use a simpler and faster regex to parse CSV
+          " does not work with CSVs where the delimiter is quoted inside the field
+          " let g:csv_strict_columns = 1
+          " disabled CSV concealing (e.g.: `,` -> `|`), also faster
+          let g:csv_no_conceal = 1
+        '';
+      }
       (vimUtils.buildVimPlugin {
         name = "AdvancedSorters";
         src = fetchFromGitHub {
@@ -277,7 +287,6 @@
       vim-commentary
       vim-fugitive
       vim-lastplace
-      vim-polyglot
       vim-repeat
       vim-sleuth
       vim-surround
