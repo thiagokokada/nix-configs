@@ -45,7 +45,10 @@ in
   networking.hostName = "sankyuu-nixos";
 
   # Use ultrawide wallpaper
-  home-manager.users.${config.meta.username}.theme.wallpaper.path = pkgs.wallpapers.hatsune-miku_stylized-ultrawide;
+  home-manager.users.${config.meta.username} = {
+    theme.wallpaper.path = pkgs.wallpapers.hatsune-miku_stylized-ultrawide;
+    wayland.windowManager.sway.config.output."*".adaptive_sync = "on";
+  };
 
   services.tlp.settings = {
     # Set battery thresholds
@@ -74,6 +77,12 @@ in
 
   # The audio device from this notebook doesn't seem to like short buffers too much
   services.pipewire.lowLatency.quantum = 128;
+
+  # Enable AdaptativeSync
+  services.xserver.deviceSection = ''
+    Option "VariableRefresh" "true"
+    Option "AsyncFlipSecondaries" "true"
+  '';
 
   # https://gitlab.freedesktop.org/pipewire/pipewire/-/issues/1849
   systemd.services.fix-mic-light = {
