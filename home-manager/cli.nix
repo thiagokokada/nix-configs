@@ -8,7 +8,6 @@ in
   home.packages = with pkgs; [
     _7zz
     aria2
-    bat
     bc
     bind
     binutils
@@ -49,10 +48,16 @@ in
     zip
   ];
 
-  programs.zsh.shellAliases = {
-    # For muscle memory...
-    cal = "${pkgs.gcal}/bin/gcal";
-    ncdu = "${pkgs.dua}/bin/dua interactive";
-    sloccount = "${pkgs.tokei}/bin/tokei";
+  programs = {
+    bat = {
+      enable = true;
+      extraPackages = with pkgs.bat-extras; [ batdiff batman batgrep batwatch ];
+    };
+    zsh.shellAliases = {
+      # For muscle memory...
+      cal = "${pkgs.gcal}/bin/gcal";
+      ncdu = "${pkgs.dua}/bin/dua interactive";
+      sloccount = "${pkgs.tokei}/bin/tokei";
+    };
   };
 }
