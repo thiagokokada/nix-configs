@@ -16,16 +16,18 @@
       udisks2.enable = true;
     };
 
-    xdg = {
-      # For sway screensharing
-      # https://nixos.wiki/wiki/Firefox
-      portal = {
-        enable = true;
-        extraPortals = with pkgs; [
-          xdg-desktop-portal-gtk
-          xdg-desktop-portal-wlr
-        ];
-      };
+    # For sway screensharing
+    # https://nixos.wiki/wiki/Firefox
+    xdg.portal = {
+      enable = true;
+      extraPortals = with pkgs; [
+        xdg-desktop-portal-gtk
+        xdg-desktop-portal-wlr
+      ];
+      # Always use portal with xdg-open
+      xdgOpenUsePortal = true;
+      # Allow for screensharing in wlroots-based desktop
+      wlr.enable = true;
     };
   };
 }
