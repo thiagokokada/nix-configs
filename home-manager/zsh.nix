@@ -19,8 +19,8 @@
     };
 
     sessionVariables = {
-      # Less mouse support
-      LESS = "--mouse --wheel-lines=3";
+      # Enable scroll support
+      LESS = "--RAW-CONTROL-CHARS";
       # Reduce time to wait for multi-key sequences
       KEYTIMEOUT = 1;
       # Set right prompt to show time
