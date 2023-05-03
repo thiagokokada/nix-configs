@@ -8,6 +8,6 @@ writeShellApplication {
   name = "change-res";
   runtimeInputs = [ autorandr mons systemd ];
   text = ''
-    autorandr --change --default horizontal
+    autorandr --change --default default
   '';
 }
