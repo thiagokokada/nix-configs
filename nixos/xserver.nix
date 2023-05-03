@@ -83,8 +83,36 @@
     };
   };
 
-  # https://github.com/apognu/tuigreet/issues/76
-  systemd.tmpfiles.rules = [
-    "d /var/cache/tuigreet 700 ${config.services.greetd.settings.initial_session.user} nobody"
-  ];
+  systemd = {
+    services.change-res = {
+      wantedBy = [ "sleep.target" ];
+      description = "Change resolution after sleep hook";
+      after = [ "sleep.target" ];
+
+      startLimitIntervalSec = 5;
+      startLimitBurst = 1;
+      serviceConfig =
+        let
+          inherit (config.meta) username;
+          inherit (config.users.users.${username}) home;
+          inherit (config.services.greetd) vt;
+        in
+        {
+          Environment = [
+            "DISPLAY=:${toString vt}"
+            "HOME=${home}"
+            "XAUTHORITY=${home}/.local/share/sx/xauthority"
+          ];
+          ExecStart = "${pkgs.change-res}/bin/change-res";
+          Type = "oneshot";
+          RemainAfterExit = false;
+          KillMode = "process";
+          User = config.meta.username;
+        };
+    };
+    # https://github.com/apognu/tuigreet/issues/76
+    tmpfiles.rules = [
+      "d /var/cache/tuigreet 700 ${config.services.greetd.settings.initial_session.user} nobody"
+    ];
+  };
 }
