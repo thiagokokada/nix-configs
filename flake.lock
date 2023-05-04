@@ -16,6 +16,23 @@
         "type": "gitlab"
       }
     },
+    "autorandr": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1683233432,
+        "narHash": "sha256-C7RcLO7rt8Y8a2LH+vl9kAbAym/gj0R5WJ4gZJ6MBs8=",
+        "owner": "thiagokokada",
+        "repo": "autorandr",
+        "rev": "b9982bd4c4f18e3e0b879c7549ae5f4761f4b453",
+        "type": "github"
+      },
+      "original": {
+        "owner": "thiagokokada",
+        "ref": "add-wayland-awareness",
+        "repo": "autorandr",
+        "type": "github"
+      }
+    },
     "doomemacs": {
       "flake": false,
       "locked": {
@@ -244,6 +261,7 @@
     "root": {
       "inputs": {
         "arandr": "arandr",
+        "autorandr": "autorandr",
         "doomemacs": "doomemacs",
         "emacs": "emacs",
         "flake-compat": "flake-compat",

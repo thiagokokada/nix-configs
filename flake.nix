@@ -46,6 +46,11 @@
     };
 
     # custom packages
+    autorandr = {
+      url = "github:thiagokokada/autorandr/add-wayland-awareness";
+      flake = false;
+    };
+
     arandr = {
       url = "gitlab:thiagokokada/arandr";
       flake = false;

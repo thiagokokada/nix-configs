@@ -7,31 +7,13 @@ in
 {
   imports = lib.optionals (builtins.pathExists hostConfigFile) [ hostConfigFile ];
 
-  home.activation =
-    let
-      inherit (config.xdg) configHome;
-      blockWaylandScript = pkgs.writeShellScript "block" ''
-        test $WAYLAND_DISPLAY
-      '';
-    in
-    {
-      # Set default profile to the virtual horizontal profile
-      autorandrCreateDefaultProfile = lib.hm.dag.entryAfter [ "linkGeneration" ] ''
-        cd "${configHome}/autorandr"
-        $DRY_RUN_CMD ln -sf $VERBOSE_ARG horizontal default
-      '';
-      # Create block scripts for each profile
-      autorandrCreateBlockScript = lib.hm.dag.entryAfter [ "linkGeneration" ] ''
-        cd "${configHome}/autorandr"
-        for dir in *; do
-          if [[ -d "$dir" ]]; then
-            pushd "$dir"
-            $DRY_RUN_CMD ln -sf $VERBOSE_ARG ${blockWaylandScript} block
-            popd
-          fi
-        done
-      '';
-    };
+  home.activation = let inherit (config.xdg) configHome; in {
+    # Set default profile to the virtual horizontal profile
+    autorandrCreateDefaultProfile = lib.hm.dag.entryAfter [ "linkGeneration" ] ''
+      cd "${configHome}/autorandr"
+      $DRY_RUN_CMD ln -sf $VERBOSE_ARG horizontal default
+    '';
+  };
 
   programs.autorandr = {
     enable = true;
