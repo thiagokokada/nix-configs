@@ -47,7 +47,7 @@
 
     # custom packages
     autorandr = {
-      url = "github:thiagokokada/autorandr/add-wayland-awareness";
+      url = "github:phillipberndt/autorandr";
       flake = false;
     };
 
