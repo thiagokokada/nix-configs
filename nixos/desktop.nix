@@ -24,8 +24,6 @@
         xdg-desktop-portal-gtk
         xdg-desktop-portal-wlr
       ];
-      # Always use portal with xdg-open
-      xdgOpenUsePortal = true;
       # Allow for screensharing in wlroots-based desktop
       wlr.enable = true;
     };
