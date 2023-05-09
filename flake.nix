@@ -23,7 +23,8 @@
 
     # nix-alien
     nix-index-database = {
-      url = "github:Mic92/nix-index-database";
+      # TODO: remove it when upstream fixes comma
+      url = "github:Mic92/nix-index-database/e3e320b19c192f40a5b98e8776e3870df62dee8a";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nix-alien = {
