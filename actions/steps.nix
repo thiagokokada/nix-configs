@@ -1,20 +1,12 @@
 let
   constants = import ./constants.nix;
   nixFlags = [ "--print-build-logs" ];
-  nixCachePath = "/tmp/nix-cache";
 in
 with constants;
 {
   maximimizeBuildSpaceStep = {
-    uses = actions.maximize-build-space;
-    "with" = {
-      remove-dotnet = true;
-      remove-android = true;
-      remove-haskell = true;
-      remove-codeql = true;
-      remove-docker-images = true;
-      overprovision-lvm = true;
-    };
+    name = "Maximize Build Space";
+    run = ".github/free_disk_space.sh";
   };
   checkoutStep = {
     uses = actions.checkout;

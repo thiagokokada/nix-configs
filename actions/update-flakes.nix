@@ -14,8 +14,8 @@ with constants;
     update-flakes = {
       inherit (ubuntu) runs-on;
       steps = with steps; [
-        maximimizeBuildSpaceStep
         checkoutStep
+        maximimizeBuildSpaceStep
         installNixActionStep
         setDefaultGitBranchStep
         cachixActionStep

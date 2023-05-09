@@ -2,15 +2,9 @@ jobs:
   update-flakes:
     runs-on: ubuntu-latest
     steps:
-      - uses: easimon/maximize-build-space@v7
-        with:
-          overprovision-lvm: true
-          remove-android: true
-          remove-codeql: true
-          remove-docker-images: true
-          remove-dotnet: true
-          remove-haskell: true
       - uses: actions/checkout@v3
+      - name: Maximize Build Space
+        run: .github/free_disk_space.sh
       - uses: cachix/install-nix-action@v20
         with:
           extra_nix_config: access-tokens = github.com=${{ secrets.GITHUB_TOKEN }}
