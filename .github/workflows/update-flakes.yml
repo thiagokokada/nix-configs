@@ -10,6 +10,8 @@ jobs:
           remove-docker-images: true
           remove-dotnet: true
           remove-haskell: true
+          root-reserve-mb: 512
+          swap-size-mb: 1024
       - uses: actions/checkout@v3
       - uses: cachix/install-nix-action@v20
         with:

@@ -1,7 +1,6 @@
 let
   constants = import ./constants.nix;
   nixFlags = [ "--print-build-logs" ];
-  nixCachePath = "/tmp/nix-cache";
 in
 with constants;
 {
@@ -14,6 +13,8 @@ with constants;
       remove-codeql = true;
       remove-docker-images = true;
       overprovision-lvm = true;
+      root-reserve-mb = 512;
+      swap-size-mb = 1024;
     };
   };
   checkoutStep = {
