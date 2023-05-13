@@ -117,6 +117,8 @@ in
     ];
   };
 
+  services.xembed-sni-proxy.enable = true;
+
   home.packages = with pkgs; [
     dex
     mako
