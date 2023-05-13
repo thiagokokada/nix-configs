@@ -4,7 +4,7 @@
   services.swayidle = {
     enable = true;
     events = [
-      { event = "after-resume"; command = ''${pkgs.sway}/bin/swaymsg "output * dpms on"''; }
+      { event = "after-resume"; command = ''systemctl restart --user kanshi.service && ${pkgs.sway}/bin/swaymsg "output * dpms on"''; }
       { event = "before-sleep"; command = "${pkgs.swaylock}/bin/swaylock -f"; }
       { event = "lock"; command = "${pkgs.swaylock}/bin/swaylock -f"; }
     ];
