@@ -118,6 +118,7 @@ in
   };
 
   services.xembed-sni-proxy.enable = true;
+  xsession.preferStatusNotifierItems = true;
 
   home.packages = with pkgs; [
     dex
