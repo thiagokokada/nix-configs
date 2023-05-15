@@ -271,7 +271,7 @@ in
           s = "mode default, exec systemctl suspend";
           h = "mode default, exec systemctl hibernate";
           "Shift+r" = "mode default, exec systemctl reboot";
-          "Shift+s" = "mode fault, exec systemctl poweroff";
+          "Shift+s" = "mode default, exec systemctl poweroff";
         } // exitMode;
       } // extraModes;
 
