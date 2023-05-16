@@ -12,7 +12,6 @@ with constants;
       remove-haskell = true;
       remove-codeql = true;
       remove-docker-images = true;
-      remove-large-packages = true;
       overprovision-lvm = true;
       root-reserve-mb = 512;
       swap-size-mb = 1024;

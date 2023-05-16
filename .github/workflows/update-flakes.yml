@@ -2,7 +2,7 @@ jobs:
   update-flakes:
     runs-on: ubuntu-latest
     steps:
-      - uses: thiagokokada/maximize-build-space@remove-large-packages
+      - uses: easimon/maximize-build-space@v7
         with:
           overprovision-lvm: true
           remove-android: true
@@ -10,7 +10,6 @@ jobs:
           remove-docker-images: true
           remove-dotnet: true
           remove-haskell: true
-          remove-large-packages: true
           root-reserve-mb: 512
           swap-size-mb: 1024
       - uses: actions/checkout@v3
