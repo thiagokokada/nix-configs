@@ -24,8 +24,6 @@ jobs:
           authToken: ${{ secrets.CACHIX_TOKEN }}
           extraPullNames: nix-community
           name: thiagokokada-nix-configs
-      - name: 'Build NixOS configs for: miku-nixos'
-        run: nix build --print-build-logs -o /tmp/nixos_old '.#nixosConfigurations.miku-nixos.config.system.build.toplevel'
       - name: Update flake.lock
         run: |
           git config user.name "${{ github.actor }}"
@@ -41,14 +39,6 @@ jobs:
           nix build --print-build-logs '.#nixosConfigurations.mikudayo-re-nixos.config.system.build.toplevel'
           nix build --print-build-logs '.#nixosConfigurations.mirai-vps.config.system.build.toplevel'
           nix build --print-build-logs '.#nixosConfigurations.sankyuu-nixos.config.system.build.toplevel'
-      - name: 'Build NixOS configs for: miku-nixos'
-        run: nix build --print-build-logs -o /tmp/nixos_new '.#nixosConfigurations.miku-nixos.config.system.build.toplevel'
-      - id: NixOS
-        name: 'Diff Nix outputs: /tmp/nixos_old vs /tmp/nixos_new'
-        uses: mathiasvr/command-output@v2.0.0
-        with:
-          run: |
-            nix run github:NixOS/nixpkgs/nixos-unstable#nvd -- --color never diff '/tmp/nixos_old' '/tmp/nixos_new'
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v5
         with:
