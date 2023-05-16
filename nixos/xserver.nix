@@ -21,6 +21,18 @@
 
   services = {
     autorandr.enable = true;
+    keyd = {
+      enable = true;
+      settings = {
+        main = {
+          capslock = "overload(control, esc)";
+        };
+        shift = {
+          leftshift = "capslock";
+          rightshift = "capslock";
+        };
+      };
+    };
     # Configure greetd, a lightweight session manager
     greetd = {
       enable = true;
@@ -70,6 +82,9 @@
       };
     };
   };
+
+  # https://github.com/NixOS/nixpkgs/pull/232029
+  systemd.services.keyd.serviceConfig.DynamicUser = lib.mkForce false;
 
   # https://github.com/apognu/tuigreet/issues/76
   systemd.tmpfiles.rules = [
