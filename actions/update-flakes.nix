@@ -25,7 +25,7 @@ with constants;
         (buildNixOSConfigurations { })
         # (buildNixOSConfigurations { hostnames = [ (first nixos.hostnames) ]; extraNixFlags = [ "-o /tmp/nixos_new" ]; })
         # (diffNixOutputs "NixOS" "/tmp/nixos_old" "/tmp/nixos_new")
-        (createPullRequestStep [ "NixOS" ])
+        (createPullRequestStep [ ])
       ];
     };
   };

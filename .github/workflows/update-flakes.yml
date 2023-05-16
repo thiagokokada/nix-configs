@@ -46,12 +46,6 @@ jobs:
             ## Run report
 
             https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
-
-            ## Changes for NixOS
-
-            ```bash
-            ${{ steps.NixOS.outputs.stdout }}
-            ```
           branch: flake-updates
           delete-branch: true
           title: Update flake.lock
