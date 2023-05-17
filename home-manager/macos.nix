@@ -3,6 +3,7 @@
 {
   imports = [
     ./emacs
+    ./helix.nix
     ./minimal.nix
     ./mpv
     ./nnn.nix
