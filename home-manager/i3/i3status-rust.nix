@@ -153,6 +153,17 @@
             icon_off = "toggle_on";
           };
 
+        dpmsBlockSway = {
+          inherit interval;
+          block = "toggle";
+          format = " ^icon_caffeine $icon ";
+          command_state = "systemctl is-active --user swayidle.service --quiet && echo on";
+          command_on = "systemctl start --user swayidle.service";
+          command_off = "systemctl stop --user swayidle.service";
+          icon_on = "toggle_off";
+          icon_off = "toggle_on";
+        };
+
         timeBlock = {
           inherit interval;
           block = "time";
@@ -192,6 +203,7 @@
             loadBlock
             temperatureBlock
             notificationBlock
+            dpmsBlockSway
             backlightBlock
             batteryBlock
             soundBlock
