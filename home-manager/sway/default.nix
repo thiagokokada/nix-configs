@@ -36,6 +36,7 @@ let
       extraBindings = {
         "Ctrl+space" = "exec ${dunstctl} close";
         "Ctrl+Shift+space" = "exec ${dunstctl} close-all";
+        "${modifier}+p" = "exec systemctl restart --user kanshi.service";
       };
 
       extraConfig = with config.xsession.pointerCursor; ''
