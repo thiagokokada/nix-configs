@@ -193,6 +193,9 @@ in
        #battery.critical {
          color: ${base08};
        }
+      #custom-separator {
+        color: ${base02};
+      }
     '';
   };
 
