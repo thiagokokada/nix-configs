@@ -105,8 +105,8 @@ in
       };
       backlight = {
         format = " {percent}%";
-        on-scroll-up = "light -A 5%";
-        on-scroll-down = "light -U 5%";
+        on-scroll-up = "${pkgs.light}/bin/light -A 5%";
+        on-scroll-down = "${pkgs.light}/bin/light -U 5%";
       };
       battery = {
         inherit interval;
