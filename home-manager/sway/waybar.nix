@@ -35,6 +35,7 @@ in
           ]));
       "sway/mode".tooltip = false;
       "sway/window".max-length = 50;
+      "sway/workspaces".disable-scroll-wraparound = true;
       idle_inhibitor = {
         format = " {icon}";
         format-icons = {
