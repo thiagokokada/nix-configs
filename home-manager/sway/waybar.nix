@@ -29,6 +29,8 @@ in
         "clock"
         "tray"
       ];
+      "sway/mode".tooltip = false;
+      "sway/window". max-length = 50;
       idle_inhibitor = {
         format = " {icon}";
         format-icons = {
@@ -151,6 +153,7 @@ in
        #mode {
          background: ${base0A};
          color: ${base00};
+         padding: 0 7px;
        }
        #workspaces button {
          padding: 0 7px;
