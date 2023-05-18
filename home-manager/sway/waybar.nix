@@ -20,6 +20,7 @@ in
         "memory"
         "cpu"
         "temperature"
+        "custom/dunst"
         "idle_inhibitor"
         (lib.optionalString isLaptop "backlight")
         (lib.optionalString isLaptop "battery")
@@ -64,6 +65,31 @@ in
         format-icons = [ "" "" "" "" "" ];
         critical-threshold = 80;
       };
+      "custom/dunst" = {
+        exec = (pkgs.writeShellApplication {
+          name = "dunst-status";
+          runtimeInputs = with pkgs; [ dbus dunst gnugrep ];
+          text = ''
+            COUNT="$(dunstctl count waiting)"
+            ENABLED=" ";
+            DISABLED=" ";
+            if [ "$COUNT" != 0 ]; then
+              DISABLED="  ($COUNT)"
+            fi
+            if dunstctl is-paused | grep -q "false" ; then
+              echo "$ENABLED"
+            else
+              echo "$DISABLED"
+            fi
+          '';
+        }) + "/bin/dunst-status";
+        on-click = (pkgs.writeShellApplication {
+          name = "dunst-toggle";
+          runtimeInputs = with pkgs; [ dbus dunst ];
+          text = "dunstctl set-paused toggle";
+        }) + "/bin/dunst-toggle";
+        restart-interval = interval;
+      };
       pulseaudio = {
         format = "{icon} {volume}%";
         format-muted = "";
@@ -93,7 +119,7 @@ in
       };
       clock = {
         inherit interval;
-        format = " {:%R}";
+        format = " {:%H:%M, %a %d}";
         tooltip-format = "<tt><small>{calendar}</small></tt>";
         calendar = {
           "mode" = "year";
