@@ -3,6 +3,7 @@
 {
   services.kanshi.profiles = {
     undocked = {
+      exec = [ "systemctl restart --user waybar.service" ];
       outputs = [
         {
           criteria = "eDP-1";
@@ -11,6 +12,7 @@
       ];
     };
     docked = {
+      exec = [ "systemctl restart --user waybar.service" ];
       outputs = [
         {
           criteria = "Dell Inc. DELL S3423DWC 10CWNH3";
