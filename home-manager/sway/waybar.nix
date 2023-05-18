@@ -12,6 +12,7 @@ in
       layer = "top";
       position = "top";
       height = 24;
+      spacing = 5;
       modules-left = [ "sway/workspaces" "sway/mode" ];
       modules-center = [ "sway/window" ];
       modules-right = lib.filter (m: m != "") [
@@ -139,7 +140,6 @@ in
     }];
     style = with config.theme.colors; ''
       * {
-         padding: 0 3px;
          border: none;
          border-radius: 0;
          font-family: Roboto, "Font Awesome 6 Free Solid";
@@ -153,7 +153,7 @@ in
          color: ${base00};
        }
        #workspaces button {
-         padding: 0 5px;
+         padding: 0 7px;
        }
        #workspaces button.focused {
          background: ${base0D};
@@ -164,19 +164,19 @@ in
          color: ${base00};
        }
        #temperature.critical {
-         background: ${base08};
+         color: ${base08};
        }
        #pulseaudio.muted {
-         background: ${base08};
+         color: ${base08};
        }
        #tray > .needs-attention {
-         background: ${base08};
+         color: ${base08};
        }
        #battery.warning {
-         background: ${base0A};
+         color: ${base0A};
        }
        #battery.critical {
-         background: ${base08};
+         color: ${base08};
        }
     '';
   };
