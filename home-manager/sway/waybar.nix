@@ -148,6 +148,10 @@ in
          background: ${base00};
          color: ${base05};
        }
+       #mode {
+         background: ${base0A};
+         color: ${base00};
+       }
        #workspaces button {
          padding: 0 5px;
        }
@@ -169,11 +173,15 @@ in
          background: ${base08};
        }
        #battery.warning {
-         background: ${base08};
-       }
-       #battery.critical {
          background: ${base0A};
        }
+       #battery.critical {
+         background: ${base08};
+       }
     '';
+  };
+
+  systemd.user.services.waybar = {
+    Service.RestartSec = 2;
   };
 }
