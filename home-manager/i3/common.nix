@@ -9,7 +9,7 @@
 , areaScreenShot
 , browser
 , fileManager
-, statusCommand
+, statusCommand ? null
 , alt ? "Mod1"
 , modifier ? "Mod4"
 , bars ? with config.theme.colors; [{

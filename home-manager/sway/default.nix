@@ -13,9 +13,8 @@ let
     import ../i3/common.nix rec {
       inherit config lib modifier alt;
       browser = "firefox";
+      bars = [ ];
       fileManager = "${terminal} ${config.programs.nnn.finalPackage}/bin/nnn -a -P p";
-      statusCommand = with config;
-        "${programs.i3status-rust.package}/bin/i3status-rs ${xdg.configHome}/i3status-rust/config-sway.toml";
       menu =
         "${pkgs.j4-dmenu-desktop}/bin/j4-dmenu-desktop --dmenu='${pkgs.wofi}/bin/wofi --show drun'";
       # light needs to be installed in system, so not defining a path here
@@ -50,9 +49,9 @@ in
 {
   imports = [
     ../i3/gammastep.nix
-    ../i3/i3status-rust.nix
     ./kanshi
     ./swayidle.nix
+    ./waybar.nix
     ./wofi.nix
   ];
 
