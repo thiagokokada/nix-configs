@@ -12,23 +12,27 @@ in
       layer = "top";
       position = "top";
       height = 24;
-      spacing = 5;
+      spacing = 3;
       modules-left = [ "sway/workspaces" "sway/mode" ];
       modules-center = [ "sway/window" ];
-      modules-right = lib.filter (m: m != "") [
-        "network"
-        "disk"
-        "memory"
-        "cpu"
-        "temperature"
-        "custom/dunst"
-        "idle_inhibitor"
-        (lib.optionalString isLaptop "backlight")
-        (lib.optionalString isLaptop "battery")
-        "pulseaudio" # wireplumber is causing segfault
-        "clock"
-        "tray"
-      ];
+      modules-right =
+        # Add a separator between each module, except the last one
+        lib.init (builtins.concatMap (m: [ m "custom/separator" ])
+          # Filter optional modules
+          (lib.filter (m: m != "") [
+            "network"
+            "disk"
+            "memory"
+            "cpu"
+            "temperature"
+            "custom/dunst"
+            "idle_inhibitor"
+            (lib.optionalString isLaptop "backlight")
+            (lib.optionalString isLaptop "battery")
+            "pulseaudio" # wireplumber is causing segfault
+            "clock"
+            "tray"
+          ]));
       "sway/mode".tooltip = false;
       "sway/window".max-length = 50;
       idle_inhibitor = {
@@ -92,6 +96,11 @@ in
           text = "dunstctl set-paused toggle";
         }) + "/bin/dunst-toggle";
         restart-interval = interval;
+      };
+      "custom/separator" = {
+        format = "|";
+        interval = "once";
+        tooltip = false;
       };
       pulseaudio = {
         format = "{icon} {volume}%";
