@@ -43,7 +43,7 @@
     pointerCursor = {
       package = pkgs.gnome.adwaita-icon-theme;
       name = "Adwaita";
-      size = 32;
+      size = 24;
       x11.enable = true;
       gtk.enable = true;
     };

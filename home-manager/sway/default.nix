@@ -42,7 +42,7 @@ let
         hide_edge_borders --i3 smart
 
         # XCURSOR_SIZE
-        seat seat0 xcursor_theme ${name} 24
+        seat * xcursor_theme ${name} ${toString size}
       '';
     };
 in
