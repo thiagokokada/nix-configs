@@ -9,6 +9,7 @@ let
       dunstctl = "${pkgs.dunst}/bin/dunstctl";
       screenShotName = with config.xdg.userDirs;
         "${pictures}/$(${pkgs.coreutils}/bin/date +%Y-%m-%d_%H-%M-%S)-screenshot.png";
+      displayLayoutMode = " : [a]uto, [g]ui";
     in
     import ../i3/common.nix rec {
       inherit config lib modifier alt;
@@ -35,7 +36,16 @@ let
       extraBindings = {
         "Ctrl+space" = "exec ${dunstctl} close";
         "Ctrl+Shift+space" = "exec ${dunstctl} close-all";
-        "${modifier}+p" = "exec systemctl restart --user kanshi.service";
+        "${modifier}+p" = ''mode "${displayLayoutMode}"'';
+      };
+
+      extraModes = {
+        ${displayLayoutMode} = {
+          a = "mode default, exec systemctl restart --user kanshi.service";
+          g = "mode default, exec ${pkgs.wdisplays}/bin/wdisplays";
+          "Escape" = "mode default";
+          "Return" = "mode default";
+        };
       };
 
       extraConfig = with config.xsession.pointerCursor; ''
