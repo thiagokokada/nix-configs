@@ -85,10 +85,11 @@
     } // lib.optionalAttrs (super ? fonts.fontconfig) {
       # Applications like Java/Wine doesn't use Fontconfig settings,
       # but uses it from here
+      "Xft/Antialias" = super.fonts.fontconfig.antialias;
       "Xft/Hinting" = super.fonts.fontconfig.hinting.enable;
       "Xft/HintStyle" = super.fonts.fontconfig.hinting.style;
-      "Xft/Antialias" = super.fonts.fontconfig.antialias;
-      "Xft/RGBA" = super.fonts.fontconfig.subpixel.lcdfilter;
+      "Xft/RGBA" = super.fonts.fontconfig.subpixel.rgba;
+      "Xft/lcdfilter" = super.fonts.fontconfig.subpixel.lcdfilter;
     };
   };
 }

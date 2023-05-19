@@ -97,6 +97,8 @@ in
           bg = "${config.theme.wallpaper.path} ${config.theme.wallpaper.scale}";
           # DPI
           scale = (toString (125 / 100.0));
+        } // lib.optionalAttrs (super ? fonts.fontconfig) {
+          subpixel = super.fonts.fontconfig.subpixel.rgba;
         };
       };
     };
