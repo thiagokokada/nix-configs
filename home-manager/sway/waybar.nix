@@ -23,7 +23,8 @@ in
               "network"
               "disk"
               "memory"
-              "cpu"
+              "cpu#usage"
+              "cpu#load"
               "temperature"
               "custom/dunst"
               "idle_inhibitor"
@@ -42,6 +43,7 @@ in
             activated = "";
             deactivated = "";
           };
+          tooltip = false;
         };
         network =
           let
@@ -64,9 +66,13 @@ in
           format = " {avail:0.0f}G";
           format-alt = " {swapAvail:0.0f}G";
         };
-        cpu = {
+        "cpu#usage" = {
           inherit interval;
-          format = " {usage}%  {load:0.1f}";
+          format = " {usage}%";
+        };
+        "cpu#load" = {
+          inherit interval;
+          format = " {load:0.1f}";
         };
         temperature = {
           format = "{icon} {temperatureC}°C";
@@ -97,6 +103,7 @@ in
             text = "dunstctl set-paused toggle";
           }) + "/bin/dunst-toggle";
           restart-interval = interval;
+          tooltip = false;
         };
         "custom/separator" = {
           format = "|";
