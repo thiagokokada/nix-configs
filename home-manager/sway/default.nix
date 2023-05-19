@@ -13,7 +13,7 @@ let
     import ../i3/common.nix rec {
       inherit config lib modifier alt;
       browser = "firefox";
-      bars = [ ];
+      bars = [{ command = "${config.programs.waybar.package}/bin/waybar"; }];
       fileManager = "${terminal} ${config.programs.nnn.finalPackage}/bin/nnn -a -P p";
       menu =
         "${pkgs.j4-dmenu-desktop}/bin/j4-dmenu-desktop --dmenu='${pkgs.wofi}/bin/wofi --show drun'";

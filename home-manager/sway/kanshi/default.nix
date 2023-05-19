@@ -1,4 +1,4 @@
-{ super, lib, pkgs, ... }:
+{ super, lib, ... }:
 
 let
   hostName = super.networking.hostName or "";

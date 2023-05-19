@@ -7,7 +7,6 @@ in
 {
   programs.waybar = {
     enable = true;
-    systemd.enable = true;
     settings = {
       mainBar = {
         layer = "top";
@@ -200,9 +199,5 @@ in
         color: ${base02};
       }
     '';
-  };
-
-  systemd.user.services.waybar = {
-    Service.RestartSec = 2;
   };
 }
