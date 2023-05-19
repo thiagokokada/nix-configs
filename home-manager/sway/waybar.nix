@@ -13,7 +13,7 @@ in
         position = "top";
         height = 24;
         spacing = 3;
-        modules-left = [ "sway/workspaces" "sway/mode" ];
+        modules-left = [ "sway/workspaces" "sway/mode" "wlr/taskbar" ];
         modules-center = [ "sway/window" ];
         modules-right =
           # Add a separator between each module, except the last one
@@ -37,6 +37,11 @@ in
         "sway/mode".tooltip = false;
         "sway/window".max-length = 50;
         "sway/workspaces".disable-scroll-wraparound = true;
+        "wlr/taskbar" = {
+          format = "{icon}";
+          on-click = "activate";
+          on-click-middle = "close";
+        };
         idle_inhibitor = {
           format = " {icon}";
           format-icons = {
