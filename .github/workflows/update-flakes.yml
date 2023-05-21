@@ -33,10 +33,9 @@ jobs:
         run: |-
           nix build --print-build-logs '.#homeConfigurations.home-linux.activationPackage'
           nix build --print-build-logs '.#homeConfigurations.steamdeck.activationPackage'
-      - name: 'Build NixOS configs for: miku-nixos, mikudayo-re-nixos, mirai-vps, sankyuu-nixos'
+      - name: 'Build NixOS configs for: miku-nixos, mirai-vps, sankyuu-nixos'
         run: |-
           nix build --print-build-logs '.#nixosConfigurations.miku-nixos.config.system.build.toplevel'
-          nix build --print-build-logs '.#nixosConfigurations.mikudayo-re-nixos.config.system.build.toplevel'
           nix build --print-build-logs '.#nixosConfigurations.mirai-vps.config.system.build.toplevel'
           nix build --print-build-logs '.#nixosConfigurations.sankyuu-nixos.config.system.build.toplevel'
       - name: Create Pull Request
