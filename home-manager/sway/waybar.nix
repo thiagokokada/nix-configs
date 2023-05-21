@@ -65,15 +65,27 @@ in
           inherit interval;
           format = " {free}";
           path = "/";
+          states = {
+            warning = 75;
+            critical = 95;
+          };
         };
         memory = {
           inherit interval;
           format = " {avail:0.0f}G";
           format-alt = " {swapAvail:0.0f}G";
+          states = {
+            warning = 75;
+            critical = 95;
+          };
         };
         "cpu#usage" = {
           inherit interval;
           format = " {usage}%";
+          states = {
+            warning = 75;
+            critical = 95;
+          };
         };
         "cpu#load" = {
           inherit interval;
@@ -124,6 +136,9 @@ in
           scroll-step = 5;
           max-volume = 150;
           ignored-sinks = [ "Easy Effects Sink" ];
+          states = {
+            critical = 101;
+          };
         };
         backlight = {
           format = " {percent}%";
@@ -139,7 +154,7 @@ in
           };
           states = {
             warning = 20;
-            critical = 5;
+            critical = 10;
           };
         };
         clock = {
@@ -205,6 +220,21 @@ in
          color: ${base0A};
        }
        #battery.critical {
+         color: ${base08};
+       }
+       #cpu.warning {
+         color: ${base0A};
+       }
+       #cpu.critical {
+         color: ${base08};
+       }
+       #disk.warning {
+         color: ${base0A};
+       }
+       #disk.critical {
+         color: ${base08};
+       }
+       #pulseaudio.critical {
          color: ${base08};
        }
       #custom-separator {
