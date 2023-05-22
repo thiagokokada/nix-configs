@@ -58,10 +58,7 @@ in
       nixosConfigurations.${hostname} = nixosSystem {
         inherit system;
         modules = [ ../hosts/${hostname} ] ++ extraModules;
-        specialArgs = {
-          inherit system;
-          flake = self;
-        };
+        specialArgs = { flake = self; };
       };
 
       apps.${system} = {
@@ -97,7 +94,7 @@ in
       homeDirectory = "${homePath}/${username}";
     in
     {
-      homeConfigurations.${hostname} = homeManagerConfiguration rec {
+      homeConfigurations.${hostname} = homeManagerConfiguration {
         inherit pkgs;
         modules = [
           ({ ... }: {
@@ -106,7 +103,6 @@ in
           })
         ];
         extraSpecialArgs = {
-          inherit system;
           flake = self;
           super = {
             device.type = deviceType;

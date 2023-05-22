@@ -1,4 +1,4 @@
-{ pkgs, lib, flake, system, ... }:
+{ pkgs, flake, ... }:
 
 let
   inherit (flake) inputs;
@@ -13,7 +13,7 @@ in
         (import ../lib { inherit (prev) lib; })
       );
 
-      gaming = flake.inputs.nix-gaming.packages.${system};
+      gaming = flake.inputs.nix-gaming.packages.${pkgs.system};
 
       wallpapers = prev.callPackage ../packages/wallpapers { };
 

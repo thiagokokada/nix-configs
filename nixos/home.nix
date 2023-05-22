@@ -1,4 +1,4 @@
-{ config, lib, pkgs, flake, system, ... }:
+{ config, lib, pkgs, flake, ... }:
 
 {
   imports = [
@@ -20,7 +20,7 @@
       useUserPackages = true;
       users.${config.nixos.home.username} = ../home-manager/nixos.nix;
       extraSpecialArgs = {
-        inherit flake system;
+        inherit flake;
         super = config;
       };
     };
