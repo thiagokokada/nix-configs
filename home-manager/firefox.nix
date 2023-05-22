@@ -23,6 +23,9 @@ in
         "app.shield.optoutstudies.enabled" = false;
         "app.normandy.enabled" = false;
         "browser.tabs.crashReporting.sendReport" = false;
+        # https://pandasauce.org/get-fonts-done/
+        "gfx.text.subpixel-position.force-enabled" = true;
+        "gfx.webrender.quality.force-subpixel-aa-where-possible" = true;
       };
     };
   };
