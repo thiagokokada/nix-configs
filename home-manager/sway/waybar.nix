@@ -108,9 +108,9 @@ in
                 DISABLED="  ($COUNT)"
               fi
               if dunstctl is-paused | grep -q "false" ; then
-                echo "$ENABLED"
+                printf '{"text": "%s", "class": "%s"}' "$ENABLED" enabled
               else
-                echo "$DISABLED"
+                printf '{"text": "%s", "class": "%s"}' "$DISABLED" disabled
               fi
             '';
           }) + "/bin/dunst-status";
@@ -120,6 +120,7 @@ in
             text = "dunstctl set-paused toggle";
           }) + "/bin/dunst-toggle";
           restart-interval = interval;
+          return-type = "json";
           tooltip = false;
         };
         "custom/separator" = {
@@ -180,63 +181,69 @@ in
     };
     style = with config.theme.colors; ''
       * {
-         border: none;
-         border-radius: 0;
-         font-family: Roboto, "Font Awesome 6 Free Solid";
-       }
-       window#waybar {
-         background: ${base00};
-         color: ${base05};
-       }
-       #mode {
-         background: ${base0A};
-         color: ${base00};
-         padding: 0 7px;
-       }
-       #window {
-         padding: 0 3px;
-       }
-       #workspaces button {
-         padding: 0 7px;
-       }
-       #workspaces button.focused {
-         background: ${base0D};
-         color: ${base00};
-       }
-       #workspaces button.urgent {
-         background: ${base08};
-         color: ${base00};
-       }
-       #temperature.critical {
-         color: ${base08};
-       }
-       #pulseaudio.muted {
-         color: ${base08};
-       }
-       #tray > .needs-attention {
-         color: ${base08};
-       }
-       #battery.warning {
-         color: ${base0A};
-       }
-       #battery.critical {
-         color: ${base08};
-       }
-       #cpu.warning {
-         color: ${base0A};
-       }
-       #cpu.critical {
-         color: ${base08};
-       }
-       #disk.warning {
-         color: ${base0A};
-       }
-       #disk.critical {
-         color: ${base08};
-       }
-       #pulseaudio.critical {
-         color: ${base08};
-       }
+        border: none;
+        border-radius: 0;
+        font-family: Roboto, "Font Awesome 6 Free Solid";
+      }
+      window#waybar {
+        background: ${base00};
+        color: ${base05};
+      }
+      #mode {
+        background: ${base0A};
+        color: ${base00};
+        padding: 0 7px;
+      }
+      #window {
+        padding: 0 3px;
+      }
+      #workspaces button {
+        padding: 0 7px;
+      }
+      #workspaces button.focused {
+        background: ${base0D};
+        color: ${base00};
+      }
+      #workspaces button.urgent {
+        background: ${base08};
+        color: ${base00};
+      }
+      #temperature.critical {
+        color: ${base08};
+      }
+      #pulseaudio.muted {
+        color: ${base08};
+      }
+      #tray > .needs-attention {
+        color: ${base08};
+      }
+      #battery.warning {
+        color: ${base0A};
+      }
+      #battery.critical {
+        color: ${base08};
+      }
+      #cpu.warning {
+        color: ${base0A};
+      }
+      #cpu.critical {
+        color: ${base08};
+      }
+      #disk.warning {
+        color: ${base0A};
+      }
+      #disk.critical {
+        color: ${base08};
+      }
+      #pulseaudio.critical {
+        color: ${base08};
+      }
+      #idle_inhibitor.activated {
+        color: ${base08};
+      }
+      #custom-dunst.disabled {
+        color: ${base08};
+      }
       #custom-separator {
         color: ${base02};
       }
