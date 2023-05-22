@@ -74,6 +74,16 @@
     style.name = "gtk2";
   };
 
+  dconf.settings = {
+    # https://github.com/GNOME/gsettings-desktop-schemas/blob/8527b47348ce0573694e0e254785e7c0f2150e16/schemas/org.gnome.desktop.interface.gschema.xml.in#L276-L296
+    "org/gnome/desktop/interface" = {
+      "font-aliasing" = "rgba";
+    } // lib.optionalAttrs (super ? fonts.fontconfig) {
+      "font-hinting" = builtins.replaceStrings [ "hint" ] [ "" ] super.fonts.fontconfig.hinting.style;
+      "font-rgba-order" = super.fonts.fontconfig.subpixel.rgba;
+    };
+  };
+
   services.xsettingsd = {
     enable = true;
     settings = with config; {
