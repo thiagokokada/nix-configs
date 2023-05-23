@@ -13,7 +13,11 @@
 
     userName = "Thiago Kenji Okada";
     userEmail = "thiagokokada@gmail.com";
-    package = pkgs.gitFull;
+    package = pkgs.gitFull.override {
+      # Use SSH from macOS instead with support for Keyring
+      # https://github.com/NixOS/nixpkgs/issues/62353
+      withSsh = !pkgs.stdenv.isDarwin;
+    };
 
     delta = {
       enable = true;
