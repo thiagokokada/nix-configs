@@ -1,7 +1,10 @@
 { config, pkgs, flake, ... }:
 
 {
-  imports = [ ../overlays ];
+  imports = [
+    ../cachix.nix
+    ../overlays
+  ];
 
   # Add some Nix related packages
   environment.systemPackages = with pkgs; [
