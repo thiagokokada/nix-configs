@@ -99,26 +99,23 @@ in
         "custom/dunst" = {
           exec = (pkgs.writeShellApplication {
             name = "dunst-status";
-            runtimeInputs = with pkgs; [ dbus dunst gnugrep ];
+            runtimeInputs = with pkgs; [ dunst ];
             text = ''
               COUNT="$(dunstctl count waiting)"
+              PAUSED="$(dunstctl is-paused)"
               ENABLED=" ";
               DISABLED=" ";
               if [ "$COUNT" != 0 ]; then
-                DISABLED="  ($COUNT)"
+                DISABLED="$DISABLED ($COUNT)"
               fi
-              if dunstctl is-paused | grep -q "false" ; then
+              if [ "$PAUSED" == false ] ; then
                 printf '{"text": "%s", "class": "%s"}' "$ENABLED" enabled
               else
                 printf '{"text": "%s", "class": "%s"}' "$DISABLED" disabled
               fi
             '';
           }) + "/bin/dunst-status";
-          on-click = (pkgs.writeShellApplication {
-            name = "dunst-toggle";
-            runtimeInputs = with pkgs; [ dbus dunst ];
-            text = "dunstctl set-paused toggle";
-          }) + "/bin/dunst-toggle";
+          on-click = "${pkgs.dunst}/bin/dunstctl set-paused toggle";
           restart-interval = interval;
           return-type = "json";
           tooltip = false;
