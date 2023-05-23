@@ -1,4 +1,4 @@
-{ config, lib, pkgs, flake, ... }:
+{ pkgs, ... }:
 
 {
   fonts = {
@@ -6,7 +6,6 @@
     fontDir.enable = true;
 
     fonts = with pkgs; [
-      corefonts
       noto-fonts
       noto-fonts-cjk
       noto-fonts-emoji
