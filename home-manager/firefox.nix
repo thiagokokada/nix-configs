@@ -1,6 +1,9 @@
-{ config, lib, pkgs, flake, ... }:
+{ super, config, lib, pkgs, flake, ... }:
 
-let inherit (config.home) username;
+let
+  inherit (config.home) username;
+  subpixelRender = (super.fonts.fontconfig.antialias or false) &&
+    (super.fonts.fontconfig.subpixel.rgba != "none");
 in
 {
   programs.firefox = {
@@ -23,6 +26,7 @@ in
         "app.shield.optoutstudies.enabled" = false;
         "app.normandy.enabled" = false;
         "browser.tabs.crashReporting.sendReport" = false;
+      } // lib.optionalAttrs subpixelRender {
         # https://pandasauce.org/get-fonts-done/
         "gfx.text.subpixel-position.force-enabled" = true;
         "gfx.webrender.quality.force-subpixel-aa-where-possible" = true;
