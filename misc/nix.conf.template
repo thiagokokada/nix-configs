@@ -1,0 +1,4 @@
+# In cases where we can't configure Nix in a declarative way, you can just copy/paste those configs to make cachix work
+trusted-users = @wheel # or @admin in macOS
+extra-substituters = https://nix-community.cachix.org https://thiagokokada-nix-configs.cachix.org
+extra-trusted-public-keys = nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs= thiagokokada-nix-configs.cachix.org-1:MwFfYIvEHsVOvUPSEpvJ3mA69z/NnY6LQqIQJFvNwOc=
