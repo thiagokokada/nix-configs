@@ -13,6 +13,7 @@
     extraConfig = ''
       AddKeysToAgent yes
     '' + lib.optionalString pkgs.stdenv.isDarwin ''
+      IgnoreUnknown UseKeychain
       UseKeychain yes
     '';
     matchBlocks = {
