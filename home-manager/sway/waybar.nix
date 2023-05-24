@@ -99,10 +99,11 @@ in
         "custom/dunst" = {
           exec = (pkgs.writeShellApplication {
             name = "dunst-status";
-            runtimeInputs = with pkgs; [ dunst ];
+            runtimeInputs = with pkgs; [ dbus dunst ];
             text = ''
               readonly ENABLED=' '
               readonly DISABLED=' '
+              # --profile outputs a single line per message
               dbus-monitor path='/org/freedesktop/Notifications',interface='org.freedesktop.DBus.Properties',member='PropertiesChanged' --profile |
                 while read -r _; do
                   PAUSED="$(dunstctl is-paused)"
