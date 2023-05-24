@@ -57,6 +57,7 @@
             format_alt = " {$icon $ssid ($signal_strength) |^icon_ethernet } " +
               "^icon_net_up $graph_up.str(max_w:3) " +
               "^icon_net_down$graph_down.str(max_w:3) ";
+            inactive_format = "";
             missing_format = "";
           })
           netDevices;
