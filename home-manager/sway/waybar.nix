@@ -101,22 +101,28 @@ in
             name = "dunst-status";
             runtimeInputs = with pkgs; [ dunst ];
             text = ''
-              COUNT="$(dunstctl count waiting)"
-              PAUSED="$(dunstctl is-paused)"
-              ENABLED=" ";
-              DISABLED=" ";
-              if [ "$COUNT" != 0 ]; then
-                DISABLED="$DISABLED ($COUNT)"
-              fi
-              if [ "$PAUSED" == false ] ; then
-                printf '{"text": "%s", "class": "%s"}' "$ENABLED" enabled
-              else
-                printf '{"text": "%s", "class": "%s"}' "$DISABLED" disabled
-              fi
+              readonly ENABLED=' '
+              readonly DISABLED=' '
+              dbus-monitor path='/org/freedesktop/Notifications',interface='org.freedesktop.DBus.Properties',member='PropertiesChanged' --profile |
+                while read -r _; do
+                  PAUSED="$(dunstctl is-paused)"
+                  if [ "$PAUSED" == 'false' ]; then
+                    CLASS="enabled"
+                    TEXT="$ENABLED"
+                  else
+                    CLASS="disabled"
+                    TEXT="$DISABLED"
+                    COUNT="$(dunstctl count waiting)"
+                    if [ "$COUNT" != '0' ]; then
+                      TEXT="$DISABLED ($COUNT)"
+                    fi
+                  fi
+                  printf '{"text": "%s", "class": "%s"}\n' "$TEXT" "$CLASS"
+                done
             '';
           }) + "/bin/dunst-status";
           on-click = "${pkgs.dunst}/bin/dunstctl set-paused toggle";
-          restart-interval = interval;
+          restart-interval = 1;
           return-type = "json";
           tooltip = false;
         };
