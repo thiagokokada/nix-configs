@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, pkgs, ... }:
 
 {
   services.swayidle = {
@@ -10,11 +10,11 @@
       }
       {
         event = "before-sleep";
-        command = "${pkgs.swaylock}/bin/swaylock -f";
+        command = "${config.programs.swaylock.package}/bin/swaylock -f";
       }
       {
         event = "lock";
-        command = "${pkgs.swaylock}/bin/swaylock -f";
+        command = "${config.programs.swaylock.package}/bin/swaylock -f";
       }
     ];
     timeouts = [

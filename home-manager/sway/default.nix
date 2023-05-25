@@ -59,8 +59,10 @@ in
 {
   imports = [
     ../i3/gammastep.nix
+    ../i3/dunst.nix
     ./kanshi
     ./swayidle.nix
+    ./swaylock.nix
     ./waybar.nix
     ./wofi.nix
   ];
