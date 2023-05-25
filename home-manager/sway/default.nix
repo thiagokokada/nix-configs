@@ -132,11 +132,7 @@ in
   xsession.preferStatusNotifierItems = true;
 
   home.packages = with pkgs; [
-    dex
-    mako
-    swayidle
-    swaylock
-    wl-clipboard
     wdisplays
+    wl-clipboard
   ];
 }
