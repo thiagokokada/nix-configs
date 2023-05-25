@@ -99,26 +99,52 @@ in
         "custom/dunst" = {
           exec = (pkgs.writeShellApplication {
             name = "dunst-status";
-            runtimeInputs = with pkgs; [ dbus dunst ];
+            runtimeInputs = with pkgs; [ dunst jq ];
             text = ''
               readonly ENABLED=' '
               readonly DISABLED=' '
-              # --profile outputs a single line per message
-              dbus-monitor path='/org/freedesktop/Notifications',interface='org.freedesktop.DBus.Properties',member='PropertiesChanged' --profile |
-                while read -r _; do
-                  PAUSED="$(dunstctl is-paused)"
-                  if [ "$PAUSED" == 'false' ]; then
-                    CLASS="enabled"
-                    TEXT="$ENABLED"
-                  else
-                    CLASS="disabled"
-                    TEXT="$DISABLED"
-                    COUNT="$(dunstctl count waiting)"
-                    if [ "$COUNT" != '0' ]; then
-                      TEXT="$DISABLED ($COUNT)"
-                    fi
+
+              format() {
+                local -r paused="$1"
+                local -r count="$2"
+                local class text
+
+                case "$paused-$count" in
+                  true-0)
+                    class="disabled"
+                    text="$DISABLED"
+                    ;;
+                  true-*)
+                    class="disabled"
+                    text="$DISABLED ($COUNT)"
+                    ;;
+                  *)
+                    class="enabled"
+                    text="$ENABLED"
+                    ;;
+                esac
+
+                printf '{"text": "%s", "class": "%s"}\n' "$text" "$class"
+              }
+
+              PAUSED="$(dunstctl is-paused)"
+              COUNT="$(dunstctl count waiting)"
+
+              format "$PAUSED" "$COUNT"
+
+              busctl monitor \
+                --user \
+                --json=short \
+                --match 'path=/org/freedesktop/Notifications,interface=org.freedesktop.DBus.Properties,member=PropertiesChanged' \
+                2>/dev/null |
+                while read -r line; do
+                  if PARSE_PAUSED="$(jq .payload.data[1].paused.data <<< "$line")" && [[ "$PARSE_PAUSED" != null ]]; then
+                    PAUSED="$PARSE_PAUSED"
                   fi
-                  printf '{"text": "%s", "class": "%s"}\n' "$TEXT" "$CLASS"
+                  if PARSE_COUNT="$(jq .payload.data[1].waitingLength.data <<< "$line")" && [[ "$PARSE_COUNT" != null ]]; then
+                    COUNT="$PARSE_COUNT"
+                  fi
+                  format "$PAUSED" "$COUNT"
                 done
             '';
           }) + "/bin/dunst-status";
