@@ -43,10 +43,10 @@ in
           on-click-middle = "close";
         };
         idle_inhibitor = {
-          format = " {icon}";
+          format = "{icon}";
           format-icons = {
-            activated = "";
-            deactivated = "";
+            deactivated = "";
+            activated = "";
           };
           tooltip = false;
         };
@@ -101,8 +101,8 @@ in
             name = "dunst-status";
             runtimeInputs = with pkgs; [ dbus dunst ];
             text = ''
-              readonly ENABLED=' '
-              readonly DISABLED=' '
+              readonly ENABLED=''
+              readonly DISABLED=''
               # --profile outputs a single line per message
               dbus-monitor path='/org/freedesktop/Notifications',interface='org.freedesktop.DBus.Properties',member='PropertiesChanged' --profile |
                 while read -r _; do
