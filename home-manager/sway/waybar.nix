@@ -52,7 +52,7 @@ in
         };
         network =
           let
-            bandwidthFormat = " {bandwidthUpBytes}  {bandwidthDownBytes}";
+            bandwidthFormat = " {bandwidthUpBytes}  {bandwidthDownBytes}";
           in
           {
             inherit interval;
