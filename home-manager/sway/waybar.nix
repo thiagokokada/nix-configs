@@ -56,9 +56,10 @@ in
           in
           {
             inherit interval;
+            format = "";
             format-wifi = " {essid} ({signalStrength}%) ${bandwidthFormat}";
             format-ethernet = " ${bandwidthFormat}";
-            format-disconnected = " Disconnected";
+            format-disconnected = ""; # empty format will hide the module
           };
         # TODO: support multiple disks
         disk = {
