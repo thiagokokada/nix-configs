@@ -3,6 +3,10 @@
 let
   interval = 5;
   isLaptop = config.device.type == "laptop";
+  shortPath' = with lib.strings;
+    (sep: path: concatStringsSep sep (map (substring 0 1) (splitString "/" path)));
+  shortPath = shortPath' "/";
+  shortPathName = path: "disk#${shortPath' "_" path}";
 in
 {
   programs.waybar = {
@@ -19,21 +23,23 @@ in
           # Add a separator between each module, except the last one
           lib.init (builtins.concatMap (m: [ m "custom/separator" ])
             # Filter optional modules
-            (lib.filter (m: m != "") [
-              "network"
-              "disk"
-              "memory"
-              "cpu#usage"
-              "cpu#load"
-              "temperature"
-              "custom/dunst"
-              "idle_inhibitor"
-              (lib.optionalString isLaptop "backlight")
-              (lib.optionalString isLaptop "battery")
-              "pulseaudio" # wireplumber is causing segfault
-              "clock"
-              "tray"
-            ]));
+            (lib.filter (m: m != "")
+              # Flatten maps
+              (lib.flatten [
+                "network"
+                (map (m: shortPathName m) config.device.mountPoints)
+                "memory"
+                "cpu#usage"
+                "cpu#load"
+                "temperature"
+                "custom/dunst"
+                "idle_inhibitor"
+                (lib.optionalString isLaptop "backlight")
+                (lib.optionalString isLaptop "battery")
+                "pulseaudio" # wireplumber is causing segfault
+                "clock"
+                "tray"
+              ])));
         "sway/mode".tooltip = false;
         "sway/window".max-length = 50;
         "sway/workspaces".disable-scroll-wraparound = true;
@@ -61,16 +67,22 @@ in
             format-ethernet = " ${bandwidthFormat}";
             format-disconnected = ""; # empty format will hide the module
           };
-        # TODO: support multiple disks
-        disk = {
-          inherit interval;
-          format = " {free}";
-          path = "/";
-          states = {
-            warning = 75;
-            critical = 95;
-          };
-        };
+      } //
+      (pkgs.lib.recursiveMergeAttrs
+        (map
+          (m: {
+            "${shortPathName m}" = {
+              inherit interval;
+              format = " ${shortPath m}: {free}";
+              path = m;
+              states = {
+                warning = 75;
+                critical = 95;
+              };
+            };
+          })
+          config.device.mountPoints))
+      // {
         memory = {
           inherit interval;
           format = " {avail:0.0f}G";
