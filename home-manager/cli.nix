@@ -1,16 +1,11 @@
-{ config, lib, pkgs, ... }:
+{ pkgs, ... }:
 
-let
-  # fix conflict with gcc in darwin
-  binutils = (lib.hiPrio pkgs.binutils);
-in
 {
   home.packages = with pkgs; [
     _7zz
     aria2
     bc
     bind
-    binutils
     coreutils
     curl
     daemonize
@@ -18,31 +13,25 @@ in
     dos2unix
     dua
     each
+    ffmpeg
     file
     findutils
     gcal
     gnumake
     gnused
-    inetutils
     ix
-    jo
     jq
     lsof
     mediainfo
-    moreutils
     netcat-gnu
-    openssl
     ouch
-    page
-    pipe-rename
+    pamixer
     pv
-    python3
     ripgrep
     rlwrap
     tealdeer
     tig
     tokei
-    unar
     unzip
     wget
     zip
@@ -55,6 +44,9 @@ in
     };
     zsh.shellAliases = {
       # For muscle memory...
+      archive = "${pkgs.ouch}/bin/ouch compress";
+      unarchive = "${pkgs.ouch}/bin/ouch decompress";
+      lsarchive = "${pkgs.ouch}/bin/ouch list";
       cal = "${pkgs.gcal}/bin/gcal";
       ncdu = "${pkgs.dua}/bin/dua interactive";
       sloccount = "${pkgs.tokei}/bin/tokei";

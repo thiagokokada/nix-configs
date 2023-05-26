@@ -5,11 +5,10 @@ let
 in
 {
   home = {
-    packages = with pkgs;
-      [
-        nodejs
-        (yarn.override { inherit nodejs; })
-      ];
+    packages = with pkgs; [
+      nodejs
+      yarn
+    ];
     sessionPath = [ "${homeDirectory}/.npm-packages/bin" ];
     sessionVariables = rec {
       NPM_PACKAGES = "${homeDirectory}/.npm-packages";

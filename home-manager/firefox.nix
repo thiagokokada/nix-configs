@@ -1,4 +1,4 @@
-{ super, config, lib, pkgs, flake, ... }:
+{ super, config, lib, ... }:
 
 let
   inherit (config.home) username;

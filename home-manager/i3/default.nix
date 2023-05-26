@@ -104,11 +104,9 @@ in
     keyboard = null;
 
     packages = with pkgs; [
+      arandr
       dex
       feh
-      ffmpegthumbnailer
-      kbdd
-      libnotify
       maim
       mons
       playerctl

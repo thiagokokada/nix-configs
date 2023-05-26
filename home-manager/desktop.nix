@@ -1,4 +1,4 @@
-{ super, config, lib, pkgs, ... }:
+{ pkgs, ... }:
 
 {
   imports = [
@@ -8,7 +8,6 @@
 
   home.packages = with pkgs; [
     android-file-transfer
-    arandr
     audacious
     (calibre.override { unrarSupport = true; })
     (cinnamon.nemo-with-extensions.override { extensions = with cinnamon; [ nemo-fileroller ]; })
@@ -24,12 +23,10 @@
     libreoffice-fresh
     open-browser
     (mcomix.override { unrarSupport = true; })
-    pamixer
     pavucontrol
     peek
     pinta
     qalculate-gtk
-    udiskie
     vlc
     xclip
     xdotool
