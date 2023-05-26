@@ -22,6 +22,8 @@ in
 
       arandr = prev.arandr.overrideAttrs (_: { src = inputs.arandr; });
 
+      anime4k = prev.callPackage ../packages/anime4k { };
+
       change-res = prev.callPackage ../packages/change-res { };
 
       open-browser = prev.callPackage ../packages/open-browser { };
