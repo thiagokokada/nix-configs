@@ -96,16 +96,6 @@
         '';
       }
       {
-        # TODO: add support for trailing whitespace
-        plugin = lualine-nvim;
-        config = ''
-          lua << EOF
-          require('lualine').setup()
-          EOF
-        '';
-      }
-      {
-        # TODO: migrate to https://github.com/arsham/fzfmania.nvim
         plugin = fzf-vim;
         config = ''
           let g:fzf_layout = { 'down': '40%' }
@@ -167,6 +157,35 @@
             set termguicolors
           endif
           colorscheme onedark
+        '';
+      }
+      {
+        plugin = lightline-vim;
+        config = ''
+          let g:lightline = {
+              \ 'colorscheme': 'onedark',
+              \ 'active': {
+              \   'left': [ [ 'mode', 'paste' ],
+              \             [ 'filename', 'readonly', 'modified' ],
+              \           ],
+              \   'right': [
+              \             [ 'trailing' ],
+              \             [ 'percent' ],
+              \             [ 'lineinfo' ],
+              \             [ 'fileformat', 'fileencoding' ],
+              \            ],
+              \ },
+              \ 'component_expand': {
+              \   'trailing': 'lightline#trailing_whitespace#component',
+              \ },
+              \ 'component_function': {
+              \   'gitbranch': 'fugitive#head',
+              \   'trailing': 'lightline#trailing_whitespace#component'
+              \ },
+              \ 'component_type': {
+              \   'trailing': 'error'
+              \ },
+              \ }
         '';
       }
       {
@@ -252,11 +271,19 @@
           sha256 = "sha256-dpVfd0xaf9SAXxy0h6C8q4e7s7WTY8zz+JVDr4zVsQE=";
         };
       })
+      (vimUtils.buildVimPlugin rec {
+        name = "lightline-trailing-whitespace";
+        src = fetchFromGitHub {
+          owner = "maximbaz";
+          repo = name;
+          rev = "869ba29edae15b44061cb4e8d964d66bcb2421ff";
+          sha256 = "sha256-g6Rmb9LTBw6hIEWBvcM6KYAv3ChEzC7gcy0OH95aTXM=";
+        };
+      })
       gitgutter
       nvim-treesitter-endwise
       nvim-ts-autotag
       nvim-ts-context-commentstring
-      nvim-web-devicons
       vim-automkdir
       vim-autoswap
       vim-better-whitespace
