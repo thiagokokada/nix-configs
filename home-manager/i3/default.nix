@@ -109,6 +109,7 @@ in
       feh
       maim
       mons
+      pamixer
       playerctl
       wmctrl
       xsecurelock

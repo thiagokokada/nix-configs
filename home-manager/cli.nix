@@ -25,7 +25,6 @@
     mediainfo
     netcat-gnu
     ouch
-    pamixer
     pv
     ripgrep
     rlwrap
