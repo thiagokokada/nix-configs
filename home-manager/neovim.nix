@@ -96,6 +96,7 @@
         '';
       }
       {
+        # TODO: add support for trailing whitespace
         plugin = lualine-nvim;
         config = ''
           lua << EOF
@@ -104,6 +105,7 @@
         '';
       }
       {
+        # TODO: migrate to https://github.com/arsham/fzfmania.nvim
         plugin = fzf-vim;
         config = ''
           let g:fzf_layout = { 'down': '40%' }
