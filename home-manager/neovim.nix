@@ -173,7 +173,6 @@
               \             [ 'percent' ],
               \             [ 'lineinfo' ],
               \             [ 'fileformat', 'fileencoding' ],
-              \             [ 'gutentags'],
               \            ],
               \ },
               \ 'component_expand': {
@@ -181,7 +180,6 @@
               \ },
               \ 'component_function': {
               \   'gitbranch': 'fugitive#head',
-              \   'gutentags': 'gutentags#statusline',
               \   'trailing': 'lightline#trailing_whitespace#component'
               \ },
               \ 'component_type': {
@@ -201,24 +199,6 @@
           set undofile
           set undodir=~/.config/nvim/undotree
           let undotree_WindowLayout = 3
-        '';
-      }
-      {
-        plugin = vim-gutentags;
-        config = ''
-          let g:gutentags_cache_dir="~/.cache/nvim/gutentags"
-          let g:gutentags_file_list_command = {
-              \ 'markers': {
-              \   '.git': 'git ls-files',
-              \   '.hg': 'hg files',
-              \ },
-              \ }
-
-          augroup UpdateLightlineForGutentags
-              autocmd!
-              autocmd User GutentagsUpdating call lightline#update()
-              autocmd User GutentagsUpdated call lightline#update()
-          augroup END
         '';
       }
       {
