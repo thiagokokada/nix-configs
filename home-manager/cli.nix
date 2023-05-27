@@ -26,6 +26,7 @@
     netcat-gnu
     ouch
     pv
+    python3
     ripgrep
     rlwrap
     tealdeer
