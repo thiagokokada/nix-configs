@@ -133,6 +133,16 @@
         '';
       }
       {
+        plugin = nvim-lastplace;
+        config = ''
+          lua << EOF
+          require'nvim-lastplace'.setup {
+            lastplace_ignore_buftype = {"quickfix", "nofile", "help"},
+          }
+          EOF
+        '';
+      }
+      {
         plugin = onedark-vim;
         config = ''
           if (has("termguicolors"))
@@ -286,7 +296,6 @@
       vim-better-whitespace
       vim-commentary
       vim-fugitive
-      vim-lastplace
       vim-repeat
       vim-sleuth
       vim-surround
