@@ -268,9 +268,6 @@
             endwise = {
               enable = true,
             },
-            rainbow = {
-              enable = true,
-            },
           }
           EOF
         '';
@@ -307,7 +304,6 @@
       nvim-treesitter-endwise
       nvim-ts-autotag
       nvim-ts-context-commentstring
-      nvim-ts-rainbow2
       vim-automkdir
       vim-autoswap
       vim-better-whitespace
