@@ -133,6 +133,14 @@
         '';
       }
       {
+        plugin = nvim-autopairs;
+        config = ''
+          lua << EOF
+          require("nvim-autopairs").setup {}
+          EOF
+        '';
+      }
+      {
         plugin = nvim-lastplace;
         config = ''
           lua << EOF
@@ -289,7 +297,6 @@
           sha256 = "sha256-g6Rmb9LTBw6hIEWBvcM6KYAv3ChEzC7gcy0OH95aTXM=";
         };
       })
-      auto-pairs
       gitgutter
       vim-automkdir
       vim-autoswap
