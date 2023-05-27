@@ -191,12 +191,6 @@
         '';
       }
       {
-        plugin = rainbow;
-        config = ''
-          let g:rainbow_active = 1
-        '';
-      }
-      {
         plugin = undotree;
         config = ''
           if !isdirectory($HOME . "/.config/nvim/undotree")
@@ -262,8 +256,20 @@
                 node_decremental = "grm",
               },
             },
+            autotag = {
+              enable = true,
+            },
+            context_commentstring = {
+              enable = true,
+            },
             indent = {
-             enable = true,
+              enable = true,
+            },
+            endwise = {
+              enable = true,
+            },
+            rainbow = {
+              enable = true,
             },
           }
           EOF
@@ -298,6 +304,10 @@
         };
       })
       gitgutter
+      nvim-treesitter-endwise
+      nvim-ts-autotag
+      nvim-ts-context-commentstring
+      nvim-ts-rainbow2
       vim-automkdir
       vim-autoswap
       vim-better-whitespace
