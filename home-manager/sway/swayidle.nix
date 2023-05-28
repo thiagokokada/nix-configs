@@ -1,37 +1,37 @@
 { config, pkgs, ... }:
 
+let
+  swaylock = "${config.programs.swaylock.package}/bin/swaylock -f";
+  dpmsOn = ''${pkgs.sway}/bin/swaymsg "output * dpms on"'';
+  dpmsOff = ''${pkgs.sway}/bin/swaymsg "output * dpms off"'';
+in
 {
   services.swayidle = {
     enable = true;
     events = [
       {
         event = "after-resume";
-        command = ''systemctl restart --user kanshi.service && ${pkgs.sway}/bin/swaymsg "output * dpms on"'';
+        command = "systemctl restart --user kanshi.service && ${dpmsOn}";
       }
       {
         event = "before-sleep";
-        command = "${config.programs.swaylock.package}/bin/swaylock -f";
+        command = swaylock;
       }
       {
         event = "lock";
-        command = "${config.programs.swaylock.package}/bin/swaylock -f";
+        command = swaylock;
       }
     ];
     timeouts = [
       {
         timeout = 600;
-        command = "${pkgs.swaylock}/bin/swaylock -f";
+        command = swaylock;
       }
       {
         timeout = 605;
-        command = ''${pkgs.sway}/bin/swaymsg "output * dpms off"'';
-        resumeCommand = ''${pkgs.sway}/bin/swaymsg "output * dpms on"'';
+        command = dpmsOff;
+        resumeCommand = dpmsOn;
       }
     ];
-  };
-
-  programs.swaylock.settings = {
-    color = "000000";
-    keyboard-layout = false;
   };
 }
