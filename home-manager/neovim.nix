@@ -235,7 +235,6 @@
                 i = {
                   ["<C-j>"] = actions.move_selection_next,
                   ["<C-k>"] = actions.move_selection_previous,
-                  ["<C-g>"] = actions.close,
                 },
               },
               -- ivy-like theme
@@ -263,6 +262,53 @@
           EOF
         '';
       }
+      {
+        plugin = lir-nvim;
+        config = ''
+          lua << EOF
+          local actions = require('lir.actions')
+          local mark_actions = require('lir.mark.actions')
+          local clipboard_actions = require('lir.clipboard.actions')
+
+          require('lir').setup {
+            show_hidden_files = false,
+            ignore = {},
+            devicons = {
+              enable = true,
+              highlight_dirname = false
+            },
+            mappings = {
+              ['<Enter>'] = actions.edit,
+              ['<C-s>']   = actions.split,
+              ['<C-v>']   = actions.vsplit,
+              ['<C-t>']   = actions.tabedit,
+
+              ['-']       = actions.up,
+              ['q']       = actions.quit,
+
+              ['K']       = actions.mkdir,
+              ['N']       = actions.newfile,
+              ['R']       = actions.rename,
+              ['@']       = actions.cd,
+              ['Y']       = actions.yank_path,
+              ['.']       = actions.toggle_show_hidden,
+              ['D']       = actions.delete,
+
+              ['J'] = function()
+                mark_actions.toggle_mark()
+                vim.cmd('normal! j')
+              end,
+              ['C'] = clipboard_actions.copy,
+              ['X'] = clipboard_actions.cut,
+              ['P'] = clipboard_actions.paste,
+            },
+          }
+
+          -- vinegar
+          vim.api.nvim_set_keymap('n', '-', [[<Cmd>execute 'e ' .. expand('%:p:h')<CR>]], { noremap = true })
+          EOF
+        '';
+      }
       (vimUtils.buildVimPlugin {
         name = "AdvancedSorters";
         src = fetchFromGitHub {
@@ -285,6 +331,7 @@
       nvim-treesitter-endwise
       nvim-ts-autotag
       nvim-ts-context-commentstring
+      nvim-web-devicons
       telescope-fzf-native-nvim
       vim-automkdir
       vim-autoswap
@@ -294,7 +341,6 @@
       vim-repeat
       vim-sleuth
       vim-surround
-      vim-vinegar
     ];
   };
 
