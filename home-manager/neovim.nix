@@ -97,17 +97,6 @@
         '';
       }
       {
-        plugin = nvim-lastplace;
-        config = ''
-          lua << EOF
-          require('nvim-lastplace').setup {
-            lastplace_ignore_buftype = {"quickfix", "nofile", "help"},
-            lastplace_ignore_filetype = {"gitcommit", "gitrebase", "svn", "hgcommit"},
-          }
-          EOF
-        '';
-      }
-      {
         plugin = onedark-vim;
         config = ''
           if (has("termguicolors"))
@@ -336,6 +325,7 @@
       telescope-fzf-native-nvim
       vim-commentary
       vim-fugitive
+      vim-lastplace
       vim-repeat
       vim-sleuth
       vim-surround
