@@ -371,7 +371,6 @@
       nvim-ts-context-commentstring
       nvim-web-devicons
       telescope-fzf-native-nvim
-      vim-autoswap
       vim-commentary
       vim-fugitive
       vim-repeat
