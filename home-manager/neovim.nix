@@ -37,10 +37,6 @@
       " turn on omnicomplete
       set omnifunc=syntaxcomplete#Complete
 
-      " changes the cwd to the directory of the current
-      " buffer whenever you switch buffers
-      set autochdir
-
       " unsets the 'last search pattern'
       nnoremap <C-g> :noh<CR><CR>
 
@@ -96,43 +92,6 @@
         '';
       }
       {
-        plugin = fzf-vim;
-        config = ''
-          let g:fzf_layout = { 'down': '40%' }
-          let $FZF_DEFAULT_COMMAND = 'rg --files --hidden --glob="!.git/"'
-
-          function! RipgrepFzf(query, fullscreen)
-            let command_fmt = 'rg --column --line-number --no-heading --color=always --smart-case -- %s || true'
-            let initial_command = printf(command_fmt, shellescape(a:query))
-            let reload_command = printf(command_fmt, '{q}')
-            let spec = {'options': ['--phony', '--query', a:query, '--bind', 'change:reload:'.reload_command]}
-            call fzf#vim#grep(initial_command, 1, fzf#vim#with_preview(spec), a:fullscreen)
-          endfunction
-
-          command! -bang -nargs=? -complete=dir Files
-                \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
-          command! -nargs=* -bang RG call RipgrepFzf(<q-args>, <bang>0)
-          command! F execute len(FugitiveHead()) ? 'GFiles' : 'Files'
-
-          nnoremap <Leader><Leader> :F<CR>
-          nnoremap <Leader>b :Buffers<CR>
-          nnoremap <Leader>/ :RG<space>
-          nnoremap <silent> <Leader>* :Rg <C-R><C-W><CR>
-          vnoremap <silent> <Leader>* y:Rg <C-R>"<CR>
-          " undo terminal mappings just for fzf window
-          au FileType fzf,Rg tnoremap <buffer> <C-h> <Left>
-          au FileType fzf,Rg tnoremap <buffer> <C-j> <Down>
-          au FileType fzf,Rg tnoremap <buffer> <C-k> <Up>
-          au FileType fzf,Rg tnoremap <buffer> <C-l> <Right>
-          au FileType fzf,Rg tnoremap <buffer> <Esc> <C-g>
-
-          " selecting mappings
-          nmap <Leader><Tab> <Plug>(fzf-maps-n)
-          xmap <Leader><Tab> <Plug>(fzf-maps-x)
-          omap <Leader><Tab> <Plug>(fzf-maps-o)
-        '';
-      }
-      {
         plugin = nvim-autopairs;
         config = ''
           lua << EOF
@@ -144,7 +103,7 @@
         plugin = nvim-lastplace;
         config = ''
           lua << EOF
-          require'nvim-lastplace'.setup {
+          require('nvim-lastplace').setup {
             lastplace_ignore_buftype = {"quickfix", "nofile", "help"},
           }
           EOF
@@ -223,7 +182,7 @@
         plugin = nvim-treesitter.withAllGrammars;
         config = ''
           lua << EOF
-          require'nvim-treesitter.configs'.setup {
+          require('nvim-treesitter.configs').setup {
             highlight = {
               enable = true,
             },
@@ -262,6 +221,47 @@
           let g:csv_no_conceal = 1
         '';
       }
+      {
+        plugin = telescope-nvim;
+        config = ''
+          lua << EOF
+          local actions = require('telescope.actions')
+          require('telescope').setup {
+            defaults = {
+              -- Default configuration for telescope goes here:
+              -- config_key = value,
+              mappings = {
+                i = {
+                  ["<C-j>"] = actions.move_selection_next,
+                  ["<C-k>"] = actions.move_selection_previous,
+                  ["<C-g>"] = actions.close,
+                },
+              },
+              -- ivy-like theme
+              layout_strategy = 'bottom_pane',
+              layout_config = {
+                height = 0.4,
+              },
+              border = true,
+              sorting_strategy = "ascending",
+            },
+            extensions = {
+              fzf = {
+                fuzzy = true,                    -- false will only do exact matching
+                override_generic_sorter = true,  -- override the generic sorter
+                override_file_sorter = true,     -- override the file sorter
+                case_mode = "smart_case",        -- or "ignore_case" or "respect_case"
+              },
+            },
+          }
+          local builtin = require('telescope.builtin')
+          vim.keymap.set('n', '<leader><leader>', builtin.find_files, { noremap = true })
+          vim.keymap.set('n', '<leader>/', builtin.live_grep, { noremap = true })
+          vim.keymap.set('n', '<leader>*', builtin.grep_string, { noremap = true })
+          vim.keymap.set('v', '<leader>*', builtin.grep_string, { noremap = true })
+          EOF
+        '';
+      }
       (vimUtils.buildVimPlugin {
         name = "AdvancedSorters";
         src = fetchFromGitHub {
@@ -284,6 +284,7 @@
       nvim-treesitter-endwise
       nvim-ts-autotag
       nvim-ts-context-commentstring
+      telescope-fzf-native-nvim
       vim-automkdir
       vim-autoswap
       vim-better-whitespace
