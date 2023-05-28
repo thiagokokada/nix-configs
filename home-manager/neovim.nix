@@ -287,15 +287,7 @@
         '';
       }
       {
-        plugin = (vimUtils.buildVimPlugin rec {
-          name = "whitespace-nvim";
-          src = fetchFromGitHub {
-            owner = "johnfrankmorgan";
-            repo = "whitespace.nvim";
-            rev = "0.2.0";
-            hash = "sha256-OpoMm06L+JDUNStLFGVOHdAwHrytKE22VwNujbAKaag=";
-          };
-        });
+        plugin = whitespace-nvim;
         config = ''
           lua << EOF
           require('whitespace-nvim').setup({
