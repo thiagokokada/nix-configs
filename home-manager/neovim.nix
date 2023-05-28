@@ -117,32 +117,12 @@
         '';
       }
       {
-        plugin = lightline-vim;
+        plugin = lualine-nvim;
+        # TODO: add support for trailing whitespace
         config = ''
-          let g:lightline = {
-              \ 'colorscheme': 'onedark',
-              \ 'active': {
-              \   'left': [ [ 'mode', 'paste' ],
-              \             [ 'filename', 'readonly', 'modified' ],
-              \           ],
-              \   'right': [
-              \             [ 'trailing' ],
-              \             [ 'percent' ],
-              \             [ 'lineinfo' ],
-              \             [ 'fileformat', 'fileencoding' ],
-              \            ],
-              \ },
-              \ 'component_expand': {
-              \   'trailing': 'lightline#trailing_whitespace#component',
-              \ },
-              \ 'component_function': {
-              \   'gitbranch': 'fugitive#head',
-              \   'trailing': 'lightline#trailing_whitespace#component'
-              \ },
-              \ 'component_type': {
-              \   'trailing': 'error'
-              \ },
-              \ }
+          lua << EOF
+          require('lualine').setup {}
+          EOF
         '';
       }
       {
@@ -354,15 +334,6 @@
           repo = "mkdir.nvim";
           rev = "c55d1dee4f099528a1853b28bb28caa802eba217";
           hash = "sha256-Q+zlQVR8wVB1BqVTd0lkjZaFu/snt/hcb9jxw9fc/n4=";
-        };
-      })
-      (vimUtils.buildVimPlugin rec {
-        name = "lightline-trailing-whitespace";
-        src = fetchFromGitHub {
-          owner = "maximbaz";
-          repo = name;
-          rev = "869ba29edae15b44061cb4e8d964d66bcb2421ff";
-          hash = "sha256-g6Rmb9LTBw6hIEWBvcM6KYAv3ChEzC7gcy0OH95aTXM=";
         };
       })
       gitgutter
