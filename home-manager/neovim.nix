@@ -40,9 +40,6 @@
       " unsets the 'last search pattern'
       nnoremap <C-g> :noh<CR><CR>
 
-      " removes trailing spaces
-      nnoremap <Leader>w :StripWhitespace<CR>
-
       " make Esc enter Normal mode in term
       tnoremap <Esc> <C-\><C-n>
       tnoremap <M-[> <Esc>
@@ -309,13 +306,54 @@
           EOF
         '';
       }
+      {
+        plugin = (vimUtils.buildVimPlugin rec {
+          name = "whitespace-nvim";
+          src = fetchFromGitHub {
+            owner = "johnfrankmorgan";
+            repo = "whitespace.nvim";
+            rev = "0.2.0";
+            hash = "sha256-OpoMm06L+JDUNStLFGVOHdAwHrytKE22VwNujbAKaag=";
+          };
+        });
+        config = ''
+          lua << EOF
+          require('whitespace-nvim').setup({
+            -- configuration options and their defaults
+
+            -- `highlight` configures which highlight is used to display
+            -- trailing whitespace
+            highlight = 'DiffDelete',
+
+            -- `ignored_filetypes` configures which filetypes to ignore when
+            -- displaying trailing whitespace
+            ignored_filetypes = { 'TelescopePrompt', 'Trouble', 'help' },
+
+            -- `ignore_terminal` configures whether to ignore terminal buffers
+            ignore_terminal = true,
+          })
+
+          -- remove trailing whitespace with a keybinding
+          vim.keymap.set('n', '<Leader>w', require('whitespace-nvim').trim)
+          EOF
+        '';
+      }
       (vimUtils.buildVimPlugin {
         name = "AdvancedSorters";
         src = fetchFromGitHub {
           owner = "inkarkat";
           repo = "vim-AdvancedSorters";
           rev = "1.30";
-          sha256 = "sha256-dpVfd0xaf9SAXxy0h6C8q4e7s7WTY8zz+JVDr4zVsQE=";
+          hash = "sha256-dpVfd0xaf9SAXxy0h6C8q4e7s7WTY8zz+JVDr4zVsQE=";
+        };
+      })
+      (vimUtils.buildVimPlugin rec {
+        name = "mkdir-neovim";
+        src = fetchFromGitHub {
+          owner = "jghauser";
+          repo = "mkdir.nvim";
+          rev = "c55d1dee4f099528a1853b28bb28caa802eba217";
+          hash = "sha256-Q+zlQVR8wVB1BqVTd0lkjZaFu/snt/hcb9jxw9fc/n4=";
         };
       })
       (vimUtils.buildVimPlugin rec {
@@ -324,7 +362,7 @@
           owner = "maximbaz";
           repo = name;
           rev = "869ba29edae15b44061cb4e8d964d66bcb2421ff";
-          sha256 = "sha256-g6Rmb9LTBw6hIEWBvcM6KYAv3ChEzC7gcy0OH95aTXM=";
+          hash = "sha256-g6Rmb9LTBw6hIEWBvcM6KYAv3ChEzC7gcy0OH95aTXM=";
         };
       })
       gitgutter
@@ -333,9 +371,7 @@
       nvim-ts-context-commentstring
       nvim-web-devicons
       telescope-fzf-native-nvim
-      vim-automkdir
       vim-autoswap
-      vim-better-whitespace
       vim-commentary
       vim-fugitive
       vim-repeat
