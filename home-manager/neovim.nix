@@ -31,9 +31,6 @@
       " show vertical column
       set colorcolumn=81,121
 
-      " managed by lightline
-      set noshowmode
-
       " turn on omnicomplete
       set omnifunc=syntaxcomplete#Complete
 
@@ -62,11 +59,6 @@
       nnoremap <C-j> <c-w>j
       nnoremap <C-k> <c-w>k
       nnoremap <C-l> <c-w>l
-
-      " completion
-      noremap! <expr> <C-Space> "<C-x><C-o>"
-      noremap! <expr> <C-j> pumvisible() ? "\<C-n>" : "\<C-j>"
-      noremap! <expr> <C-k> pumvisible() ? "\<C-p>" : "\<C-k>"
 
       " folding
       set foldmethod=expr
@@ -128,24 +120,6 @@
         '';
       }
       {
-        plugin = vim-endwise;
-        config = ''
-          let g:endwise_no_mappings = v:true
-          imap <expr> <CR> pumvisible() ? "\<C-y>" : "\<CR><Plug>DiscretionaryEnd"
-          imap <script> <C-X><CR> <CR><SID>AlwaysEnd
-        '';
-      }
-      {
-        plugin = vim-sneak;
-        config = ''
-          let g:sneak#label = 1
-          map f <Plug>Sneak_f
-          map F <Plug>Sneak_F
-          map t <Plug>Sneak_t
-          map T <Plug>Sneak_T
-        '';
-      }
-      {
         plugin = nvim-treesitter.withAllGrammars;
         config = ''
           lua << EOF
@@ -171,7 +145,7 @@
             indent = {
               enable = true,
             },
-            endwise = {
+            rainbow = {
               enable = true,
             },
           }
@@ -186,6 +160,16 @@
           " let g:csv_strict_columns = 1
           " disabled CSV concealing (e.g.: `,` -> `|`), also faster
           let g:csv_no_conceal = 1
+        '';
+      }
+      {
+        plugin = vim-sneak;
+        config = ''
+          let g:sneak#label = 1
+          map f <Plug>Sneak_f
+          map F <Plug>Sneak_F
+          map t <Plug>Sneak_t
+          map T <Plug>Sneak_T
         '';
       }
       {
@@ -308,7 +292,7 @@
           hash = "sha256-dpVfd0xaf9SAXxy0h6C8q4e7s7WTY8zz+JVDr4zVsQE=";
         };
       })
-      (vimUtils.buildVimPlugin rec {
+      (vimUtils.buildVimPlugin {
         name = "mkdir-neovim";
         src = fetchFromGitHub {
           owner = "jghauser";
@@ -318,12 +302,13 @@
         };
       })
       gitgutter
-      nvim-treesitter-endwise
       nvim-ts-autotag
       nvim-ts-context-commentstring
+      nvim-ts-rainbow2
       nvim-web-devicons
       telescope-fzf-native-nvim
       vim-commentary
+      vim-endwise
       vim-fugitive
       vim-lastplace
       vim-repeat
