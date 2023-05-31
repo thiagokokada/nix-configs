@@ -107,7 +107,7 @@ in
         temperature = {
           format = "{icon} {temperatureC}°C";
           format-icons = [ "" "" "" "" "" ];
-          critical-threshold = 80;
+          critical-threshold = 75;
         };
         "custom/dunst" = {
           exec = (pkgs.writeShellApplication {
