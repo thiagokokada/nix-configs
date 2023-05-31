@@ -288,20 +288,20 @@
             },
             mappings = {
               ['<Enter>'] = actions.edit,
-              ['<C-s>']   = actions.split,
-              ['<C-v>']   = actions.vsplit,
-              ['<C-t>']   = actions.tabedit,
+              ['<C-s>'] = actions.split,
+              ['<C-v>'] = actions.vsplit,
+              ['<C-t>'] = actions.tabedit,
 
-              ['-']       = actions.up,
-              ['q']       = actions.quit,
+              ['-'] = actions.up,
+              ['q'] = actions.quit,
 
-              ['K']       = actions.mkdir,
-              ['N']       = actions.newfile,
-              ['R']       = actions.rename,
-              ['@']       = actions.cd,
-              ['Y']       = actions.yank_path,
-              ['.']       = actions.toggle_show_hidden,
-              ['D']       = actions.delete,
+              ['K'] = actions.mkdir,
+              ['N'] = actions.newfile,
+              ['R'] = actions.rename,
+              ['@'] = actions.cd,
+              ['Y'] = actions.yank_path,
+              ['.'] = actions.toggle_show_hidden,
+              ['D'] = actions.delete,
 
               ['J'] = function()
                 mark_actions.toggle_mark()
@@ -322,7 +322,7 @@
         plugin = whitespace-nvim;
         config = ''
           lua << EOF
-          require('whitespace-nvim').setup({
+          require('whitespace-nvim').setup {
             -- configuration options and their defaults
 
             -- `highlight` configures which highlight is used to display
@@ -335,7 +335,7 @@
 
             -- `ignore_terminal` configures whether to ignore terminal buffers
             ignore_terminal = true,
-          })
+          }
 
           -- remove trailing whitespace with a keybinding
           vim.keymap.set('n', '<Leader>w', require('whitespace-nvim').trim)
