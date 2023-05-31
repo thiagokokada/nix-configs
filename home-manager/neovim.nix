@@ -238,7 +238,8 @@
         config = ''
           lua << EOF
           local actions = require('telescope.actions')
-          require('telescope').setup {
+          local telescope = require('telescope')
+          telescope.setup {
             defaults = {
               -- Default configuration for telescope goes here:
               -- config_key = value,
@@ -265,6 +266,7 @@
               },
             },
           }
+          telescope.load_extension('fzf')
           local builtin = require('telescope.builtin')
           vim.keymap.set('n', '<Leader><Leader>', builtin.find_files, { noremap = true })
           vim.keymap.set('n', '<Leader>/', builtin.live_grep, { noremap = true })
