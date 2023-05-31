@@ -64,6 +64,12 @@
       set foldmethod=expr
       set foldexpr=nvim_treesitter#foldexpr()
       set nofoldenable " disable folding at startup
+
+      " completion
+      set completeopt=menu
+      inoremap <expr> <C-j> pumvisible() ? "\<C-n>" : "\<C-j>"
+      inoremap <expr> <C-k> pumvisible() ? "\<C-p>" : "\<C-k>"
+      inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<CR>"
     '';
 
     # To install non-packaged plugins, use
@@ -139,13 +145,6 @@
             },
           }
 
-          -- Global mappings.
-          -- See `:help vim.diagnostic.*` for documentation on any of the below functions
-          vim.keymap.set('n', '<space>e', vim.diagnostic.open_float)
-          vim.keymap.set('n', '[d', vim.diagnostic.goto_prev)
-          vim.keymap.set('n', ']d', vim.diagnostic.goto_next)
-          vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist)
-
           local builtin = require('telescope.builtin')
           -- Use LspAttach autocommand to only map the following keys
           -- after the language server attaches to the current buffer
@@ -174,7 +173,7 @@
               vim.keymap.set('n', '<space>f', function()
                 vim.lsp.buf.format { async = true }
               end, opts)
-              vim.keymap.set('n', '<Leader>ld', builtin.diagnostics, opts)
+              vim.keymap.set('n', '<Leader>e', builtin.diagnostics, opts)
             end,
           })
           EOF
