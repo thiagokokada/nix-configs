@@ -7,7 +7,6 @@
     ./emacs
     ./git.nix
     ./helix.nix
-    ./hexchat.nix
     ./htop.nix
     ./i3
     ./kitty.nix
