@@ -351,16 +351,8 @@
           hash = "sha256-dpVfd0xaf9SAXxy0h6C8q4e7s7WTY8zz+JVDr4zVsQE=";
         };
       })
-      (vimUtils.buildVimPlugin {
-        name = "mkdir-neovim";
-        src = fetchFromGitHub {
-          owner = "jghauser";
-          repo = "mkdir.nvim";
-          rev = "c55d1dee4f099528a1853b28bb28caa802eba217";
-          hash = "sha256-Q+zlQVR8wVB1BqVTd0lkjZaFu/snt/hcb9jxw9fc/n4=";
-        };
-      })
       gitgutter
+      mkdir-nvim
       nvim-ts-autotag
       nvim-ts-context-commentstring
       nvim-ts-rainbow2
