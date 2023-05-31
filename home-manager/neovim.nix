@@ -126,6 +126,7 @@
           -- Setup language servers.
           -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
           local lspconfig = require('lspconfig')
+          lspconfig.bashls.setup {}
           lspconfig.clojure_lsp.setup {}
           lspconfig.pyright.setup {}
           lspconfig.nil_ls.setup {
@@ -173,6 +174,7 @@
               vim.keymap.set('n', '<space>f', function()
                 vim.lsp.buf.format { async = true }
               end, opts)
+              vim.keymap.set('n', '<Leader>ld', builtin.diagnostics, opts)
             end,
           })
           EOF

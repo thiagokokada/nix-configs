@@ -5,6 +5,7 @@
     expect
     gcc
     nil
+    nodePackages.bash-language-server
     shellcheck
   ];
 }
