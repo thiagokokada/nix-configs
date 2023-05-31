@@ -264,10 +264,9 @@
             },
           }
           local builtin = require('telescope.builtin')
-          vim.keymap.set('n', '<leader><leader>', builtin.find_files, { noremap = true })
-          vim.keymap.set('n', '<leader>/', builtin.live_grep, { noremap = true })
-          vim.keymap.set('n', '<leader>*', builtin.grep_string, { noremap = true })
-          vim.keymap.set('v', '<leader>*', builtin.grep_string, { noremap = true })
+          vim.keymap.set('n', '<Leader><Leader>', builtin.find_files, { noremap = true })
+          vim.keymap.set('n', '<Leader>/', builtin.live_grep, { noremap = true })
+          vim.keymap.set({'n', 'v'}, '<Leader>*', builtin.grep_string, { noremap = true })
           EOF
         '';
       }
