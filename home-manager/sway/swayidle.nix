@@ -11,7 +11,7 @@ in
     events = [
       {
         event = "after-resume";
-        command = "systemctl restart --user kanshi.service && ${dpmsOn}";
+        command = dpmsOn;
       }
       {
         event = "before-sleep";

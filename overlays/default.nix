@@ -26,6 +26,16 @@ in
 
       change-res = prev.callPackage ../packages/change-res { };
 
+      # https://lists.sr.ht/~emersion/public-inbox/patches/40604
+      kanshi = prev.kanshi.overrideAttrs (oldAttrs: {
+        patches = (oldAttrs.patches or [ ]) ++ [
+          (prev.fetchpatch {
+            url = "https://lists.sr.ht/~emersion/public-inbox/patches/40604/mbox";
+            hash = "sha256-n1ZlOEWne0ALvspbwI4xUCe5MfYtyidSqYkuFmLbOCU=";
+          })
+        ];
+      });
+
       open-browser = prev.callPackage ../packages/open-browser { };
 
       nix-whereis = prev.callPackage ../packages/nix-whereis { };
