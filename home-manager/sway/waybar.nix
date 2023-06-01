@@ -9,6 +9,11 @@ let
   shortPathName = path: "disk#${shortPath' "_" path}";
 in
 {
+  home.packages = with pkgs; [
+    font-awesome_6
+    (nerdfonts.override { fonts = [ "NerdFontsSymbolsOnly" ]; })
+  ];
+
   programs.waybar = {
     enable = true;
     settings = {
@@ -62,10 +67,11 @@ in
           in
           {
             inherit interval;
-            format = "";
-            format-wifi = " {essid} ({signalStrength}%) ${bandwidthFormat}";
-            format-ethernet = " ${bandwidthFormat}";
-            format-disconnected = ""; # empty format will hide the module
+            format = "󰈀";
+            format-wifi = "{icon} {essid} ${bandwidthFormat}";
+            format-ethernet = "󰈀 ${bandwidthFormat}";
+            format-disconnected = "󰤮";
+            format-icons = [ "󰤯" "󰤟" "󰤢" "󰤥" "󰤨" ];
           };
       } //
       (pkgs.lib.recursiveMergeAttrs
@@ -200,7 +206,7 @@ in
       * {
         border: none;
         border-radius: 0;
-        font-family: Roboto, "Font Awesome 6 Free Solid";
+        font-family: Roboto, "Font Awesome 6 Free Solid", "Symbols Nerd Font";
       }
       window#waybar {
         background: ${base00};
