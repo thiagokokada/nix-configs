@@ -1,11 +1,11 @@
-{ config, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 
 {
   programs.rofi = {
     enable = true;
     terminal = "${pkgs.kitty}/bin/kitty";
-    package = with pkgs; rofi-wayland.override { plugins = [ rofi-calc rofi-emoji ]; };
-    font = with config.theme.fonts; "${gui.package} 12";
+    package = with pkgs; rofi.override { plugins = [ rofi-calc rofi-emoji ]; };
+    font = with config.theme.fonts; "${gui.package} 14";
     theme =
       let l = config.lib.formats.rasi.mkLiteral;
       in
