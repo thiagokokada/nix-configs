@@ -100,7 +100,8 @@ in
         };
         "cpu#usage" = {
           inherit interval;
-          format = " {usage}%";
+          format = "{icon} {avg_frequency}GHz";
+          format-icons = [ "󰡳" "󰡵" "󰊚" "󰡴" ];
           states = {
             warning = 75;
             critical = 95;
@@ -109,6 +110,7 @@ in
         "cpu#load" = {
           inherit interval;
           format = " {load:0.1f}";
+          tooltip = false;
         };
         temperature = {
           format = "{icon} {temperatureC}°C";
