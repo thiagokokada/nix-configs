@@ -1,7 +1,7 @@
 jobs:
   update-flakes-macos:
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
-    runs-on: macos-latest
+    runs-on: macos-13
     steps:
       - uses: actions/checkout@v3
       - uses: cachix/install-nix-action@v20

@@ -38,7 +38,7 @@ jobs:
           nix build --print-build-logs '.#nixosConfigurations.mirai-vps.config.system.build.toplevel'
           nix build --print-build-logs '.#nixosConfigurations.sankyuu-nixos.config.system.build.toplevel'
   build-macos:
-    runs-on: macos-latest
+    runs-on: macos-13
     steps:
       - uses: actions/checkout@v3
       - uses: cachix/install-nix-action@v20

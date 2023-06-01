@@ -8,7 +8,7 @@
     command-output = "mathiasvr/command-output@v2.0.0";
   };
   ubuntu.runs-on = "ubuntu-latest";
-  macos.runs-on = "macos-latest";
+  macos.runs-on = "macos-13";
   home-manager = {
     linux.hostnames = [
       "home-linux"
