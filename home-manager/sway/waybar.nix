@@ -35,8 +35,8 @@ in
                 (map (m: shortPathName m) config.device.mountPoints)
                 "memory"
                 "cpu#usage"
-                "cpu#load"
                 "temperature"
+                "cpu#load"
                 "custom/dunst"
                 "idle_inhibitor"
                 (lib.optionalString isLaptop "backlight")
