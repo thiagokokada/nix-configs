@@ -5,10 +5,10 @@
     _7zz
     aria2
     bc
-    bind
+    bind.dnsutils
     coreutils
     curl
-    daemonize
+    curlie
     diffutils
     dos2unix
     dua
@@ -33,9 +33,7 @@
     tealdeer
     tig
     tokei
-    unzip
     wget
-    zip
   ];
 
   programs = {
@@ -49,6 +47,7 @@
       unarchive = "${pkgs.ouch}/bin/ouch decompress";
       lsarchive = "${pkgs.ouch}/bin/ouch list";
       cal = "${pkgs.gcal}/bin/gcal";
+      http = "${pkgs.curlie}/bin/curlie";
       ncdu = "${pkgs.dua}/bin/dua interactive";
       sloccount = "${pkgs.tokei}/bin/tokei";
     };
