@@ -5,9 +5,9 @@ let
   inherit (config.home.sessionVariables) EMACSDIR;
   emacs' = with pkgs;
     if stdenv.isDarwin then
-      emacsUnstable
+      emacs-unstable
     else
-      emacsUnstablePgtk.overrideAttrs (old: {
+      emacs-unstable-pgtk.overrideAttrs (old: {
         patches = (old.patches or [ ]) ++ [ ./disable_pgtk_display_x_warning.patch ];
       });
   emacs-custom = with pkgs; (pkgs.emacsPackagesFor emacs').emacsWithPackages
