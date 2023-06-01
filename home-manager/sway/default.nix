@@ -7,6 +7,7 @@ let
   commonOptions =
     let
       dunstctl = "${pkgs.dunst}/bin/dunstctl";
+      rofi = "${config.programs.rofi.package}/bin/rofi";
       screenShotName = with config.xdg.userDirs;
         "${pictures}/$(${pkgs.coreutils}/bin/date +%Y-%m-%d_%H-%M-%S)-screenshot.png";
       displayLayoutMode = " : [a]uto, [g]ui";
@@ -16,8 +17,7 @@ let
       browser = "firefox";
       bars = [{ command = "${config.programs.waybar.package}/bin/waybar"; }];
       fileManager = "${terminal} ${config.programs.nnn.finalPackage}/bin/nnn -a -P p";
-      menu =
-        "${pkgs.j4-dmenu-desktop}/bin/j4-dmenu-desktop --dmenu='${pkgs.wofi}/bin/wofi --show drun'";
+      menu = "${rofi} -show drun";
       # light needs to be installed in system, so not defining a path here
       light = "light";
       pamixer = "${pkgs.pamixer}/bin/pamixer";
@@ -34,9 +34,11 @@ let
       '';
 
       extraBindings = {
+        "${modifier}+p" = ''mode "${displayLayoutMode}"'';
+        "${modifier}+c" =
+          "exec ${rofi} -show calc -modi calc -no-show-match -no-sort";
         "Ctrl+space" = "exec ${dunstctl} close";
         "Ctrl+Shift+space" = "exec ${dunstctl} close-all";
-        "${modifier}+p" = ''mode "${displayLayoutMode}"'';
       };
 
       extraModes = {
@@ -58,13 +60,13 @@ let
 in
 {
   imports = [
-    ../i3/gammastep.nix
     ../i3/dunst.nix
+    ../i3/gammastep.nix
+    ../i3/rofi.nix
     ./kanshi
     ./swayidle.nix
     ./swaylock.nix
     ./waybar.nix
-    ./wofi.nix
   ];
 
   wayland.windowManager.sway = with commonOptions; {
