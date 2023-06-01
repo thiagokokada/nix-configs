@@ -21,7 +21,7 @@ let
       light = "light";
       pamixer = "${pkgs.pamixer}/bin/pamixer";
       playerctl = "${pkgs.playerctl}/bin/playerctl";
-      terminal = "${pkgs.kitty}/bin/kitty";
+      terminal = "${config.programs.kitty.package}/bin/kitty";
 
       fullScreenShot = ''
         ${pkgs.grim}/bin/grim "${screenShotName}" && \

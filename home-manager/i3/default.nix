@@ -28,7 +28,7 @@ let
       playerctl = "${pkgs.playerctl}/bin/playerctl";
       terminal =
         if config.programs.kitty.enable then
-          "${pkgs.kitty}/bin/kitty"
+          "${config.programs.kitty.package}/bin/kitty"
         else
           "${pkgs.xterm}/bin/xterm";
 

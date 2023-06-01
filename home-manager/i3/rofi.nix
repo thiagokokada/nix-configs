@@ -3,7 +3,7 @@
 {
   programs.rofi = {
     enable = true;
-    terminal = "${pkgs.kitty}/bin/kitty";
+    terminal = "${config.programs.kitty.package}/bin/kitty";
     package = with pkgs; rofi.override { plugins = [ rofi-calc rofi-emoji ]; };
     font = with config.theme.fonts; "${gui.package} 14";
     theme =

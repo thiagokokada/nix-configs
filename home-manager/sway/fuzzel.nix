@@ -1,11 +1,11 @@
-{ config, pkgs, lib, ... }:
+{ config, lib, ... }:
 {
   programs.fuzzel = {
     enable = true;
     settings = with config.theme.fonts; {
       main = {
         font = "${gui.name}:style=regular:size=14";
-        terminal = "${pkgs.kitty}/bin/kitty";
+        terminal = "${config.programs.kitty.package}/bin/kitty";
         icon-theme = config.gtk.iconTheme.name;
         lines = 15;
         horizontal-pad = 10;
