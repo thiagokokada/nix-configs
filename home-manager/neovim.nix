@@ -348,21 +348,13 @@
           EOF
         '';
       }
-      (vimUtils.buildVimPlugin {
-        name = "AdvancedSorters";
-        src = fetchFromGitHub {
-          owner = "inkarkat";
-          repo = "vim-AdvancedSorters";
-          rev = "1.30";
-          hash = "sha256-dpVfd0xaf9SAXxy0h6C8q4e7s7WTY8zz+JVDr4zVsQE=";
-        };
-      })
       gitgutter
       mkdir-nvim
       nvim-ts-autotag
       nvim-ts-context-commentstring
       nvim-ts-rainbow2
       telescope-fzf-native-nvim
+      vim-advanced-sorters
       vim-commentary
       vim-endwise
       vim-fugitive
