@@ -25,7 +25,7 @@ in
     timeouts = [
       {
         timeout = 600;
-        command = swaylock;
+        command = "${swaylock} --grace 5 --fade-in 5";
       }
       {
         timeout = 605;
