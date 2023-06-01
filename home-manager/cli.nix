@@ -25,6 +25,7 @@
     mediainfo
     netcat-gnu
     ouch
+    page
     pv
     python3
     ripgrep
