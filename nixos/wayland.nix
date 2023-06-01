@@ -6,5 +6,6 @@
     enable = true;
     # Remove unnecessary packages from system-wide install (e.g.: foot)
     package = null;
+    extraPackages = [ ];
   };
 }
