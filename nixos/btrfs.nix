@@ -2,7 +2,7 @@
 
 let
   inherit (config.boot) initrd supportedFilesystems;
-  inherit (lib) any mkIf;
+  inherit (lib) any;
   btrfsInInitrd = any (fs: fs == "btrfs") initrd.supportedFilesystems;
   btrfsInSystem = any (fs: fs == "btrfs") supportedFilesystems;
   enable = btrfsInInitrd || btrfsInSystem;
