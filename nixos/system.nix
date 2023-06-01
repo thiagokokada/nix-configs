@@ -15,6 +15,9 @@
         "kernel.sysrq" = 1;
         # Reduce swap preference
         "vm.swappiness" = 10;
+        # https://fedoraproject.org/wiki/Changes/IncreaseVmMaxMapCount
+        # https://pagure.io/fesco/issue/2993#comment-859763
+        "vm.max_map_count" = 1048576;
       };
 
       # Enable NTFS support
