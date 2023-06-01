@@ -16,8 +16,7 @@ let
       browser = "firefox";
       bars = [{ command = "${config.programs.waybar.package}/bin/waybar"; }];
       fileManager = "${terminal} ${config.programs.nnn.finalPackage}/bin/nnn -a -P p";
-      menu =
-        "${pkgs.j4-dmenu-desktop}/bin/j4-dmenu-desktop --dmenu='${pkgs.wofi}/bin/wofi --show drun'";
+      menu = "${config.programs.fuzzel.package}/bin/fuzzel";
       # light needs to be installed in system, so not defining a path here
       light = "light";
       pamixer = "${pkgs.pamixer}/bin/pamixer";
@@ -61,10 +60,10 @@ in
     ../i3/gammastep.nix
     ../i3/dunst.nix
     ./kanshi
+    ./fuzzel.nix
     ./swayidle.nix
     ./swaylock.nix
     ./waybar.nix
-    ./wofi.nix
   ];
 
   wayland.windowManager.sway = with commonOptions; {
