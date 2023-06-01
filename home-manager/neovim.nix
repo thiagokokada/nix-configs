@@ -285,7 +285,7 @@
             show_hidden_files = false,
             ignore = {},
             devicons = {
-              enable = true,
+              enable = ${if stdenv.isLinux then "true" else "false"},
               highlight_dirname = false
             },
             mappings = {
@@ -358,7 +358,6 @@
       nvim-ts-autotag
       nvim-ts-context-commentstring
       nvim-ts-rainbow2
-      nvim-web-devicons
       telescope-fzf-native-nvim
       vim-commentary
       vim-endwise
@@ -367,6 +366,10 @@
       vim-repeat
       vim-sleuth
       vim-surround
+    ] ++
+    lib.optionals pkgs.stdenv.isLinux [
+      # give [?] icons in macOS
+      nvim-web-devicons
     ];
   };
 
