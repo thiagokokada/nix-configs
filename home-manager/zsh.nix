@@ -131,8 +131,6 @@
         (zshPlugin "zsh-autopair")
         (zshPlugin "zsh-completions")
         (zshPlugin "zsh-syntax-highlighting")
-        # Will fail without access if pbcopy/xclip/xsel/wl-clipboard/etc is unavailable
-        (lib.optional (config.device.type != "server") (zshPlugin "zsh-system-clipboard"))
         # Should be the last one
         (zshPlugin "zsh-history-substring-search")
       ];
