@@ -100,7 +100,7 @@ in
         };
         "cpu#usage" = {
           inherit interval;
-          format = "{icon} {avg_frequency}GHz";
+          format = "{icon} {max_frequency}GHz";
           format-icons = [ "󰡳" "󰡵" "󰊚" "󰡴" ];
           states = {
             warning = 75;
