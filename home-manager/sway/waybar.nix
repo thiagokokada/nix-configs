@@ -118,11 +118,31 @@ in
           critical-threshold = 75;
         };
         "custom/dunst" = {
-          exec = lib.concatStringsSep " " [
-            "journalctl --user-unit=dunst-status.service --quiet --boot --follow --no-pager --output=cat"
-            "|"
-            "${pkgs.jq}/bin/jq -R 'fromjson?' --unbuffered --compact-output"
-          ];
+          exec = (pkgs.writeShellApplication {
+            name = "dunst-status";
+            runtimeInputs = with pkgs; [ dbus dunst ];
+            text = ''
+              readonly ENABLED=''
+              readonly DISABLED=''
+              # --profile outputs a single line per message
+              dbus-monitor path='/org/freedesktop/Notifications',interface='org.freedesktop.DBus.Properties',member='PropertiesChanged' --profile |
+                while read -r _; do
+                  PAUSED="$(dunstctl is-paused)"
+                  if [ "$PAUSED" == 'false' ]; then
+                    CLASS="enabled"
+                    TEXT="$ENABLED"
+                  else
+                    CLASS="disabled"
+                    TEXT="$DISABLED"
+                    COUNT="$(dunstctl count waiting)"
+                    if [ "$COUNT" != '0' ]; then
+                      TEXT="$DISABLED ($COUNT)"
+                    fi
+                  fi
+                  printf '{"text": "%s", "class": "%s"}\n' "$TEXT" "$CLASS"
+                done
+            '';
+          }) + "/bin/dunst-status";
           on-click = "${pkgs.dunst}/bin/dunstctl set-paused toggle";
           restart-interval = 1;
           return-type = "json";
@@ -253,46 +273,5 @@ in
         color: ${base02};
       }
     '';
-  };
-
-  # Workaround for:
-  # https://github.com/Alexays/Waybar/issues/121
-  # https://github.com/Alexays/Waybar/issues/1203
-  # https://github.com/Alexays/Waybar/issues/1713
-  systemd.user.services.dunst-status = {
-    Unit = {
-      PartOf = [ "sway-session.target" ];
-      After = [ "sway-session.target" "dunst.service" ];
-      Description = "Current Dunst status as JSON";
-    };
-    Service = with pkgs; {
-      ExecStart = (pkgs.writeShellApplication {
-        name = "dunst-status";
-        runtimeInputs = with pkgs; [ dbus dunst ];
-        text = ''
-          readonly ENABLED=''
-          readonly DISABLED=''
-          # --profile outputs a single line per message
-          dbus-monitor path='/org/freedesktop/Notifications',interface='org.freedesktop.DBus.Properties',member='PropertiesChanged' --profile |
-            while read -r _; do
-              PAUSED="$(dunstctl is-paused)"
-              if [ "$PAUSED" == 'false' ]; then
-                CLASS="enabled"
-                TEXT="$ENABLED"
-              else
-                CLASS="disabled"
-                TEXT="$DISABLED"
-                COUNT="$(dunstctl count waiting)"
-                if [ "$COUNT" != '0' ]; then
-                  TEXT="$DISABLED ($COUNT)"
-                fi
-              fi
-              printf '{"text": "%s", "class": "%s"}\n' "$TEXT" "$CLASS"
-            done
-        '';
-      }) + "/bin/dunst-status";
-      Restart = "on-failure";
-      Type = "simple";
-    };
   };
 }
