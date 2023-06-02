@@ -88,7 +88,7 @@
           inherit interval;
           block = "cpu";
           format = " $icon " +
-            "{$frequency.eng(prefix:G,w:3)|$max_frequency.eng(prefix:G,w:3)} ";
+            "{$max_frequency.eng(prefix:G,w:3)} ";
           format_alt = " ^icon_microchip $barchart.str(max_w:3) $utilization ";
         };
 
@@ -154,17 +154,6 @@
             icon_off = "toggle_on";
           };
 
-        dpmsBlockSway = {
-          inherit interval;
-          block = "toggle";
-          format = " ^icon_caffeine $icon ";
-          command_state = "systemctl is-active --user swayidle.service --quiet && echo on";
-          command_on = "systemctl start --user swayidle.service";
-          command_off = "systemctl stop --user swayidle.service";
-          icon_on = "toggle_off";
-          icon_off = "toggle_on";
-        };
-
         timeBlock = {
           inherit interval;
           block = "time";
@@ -181,30 +170,10 @@
             disksBlocks
             memoryBlock
             cpuBlock
-            loadBlock
             temperatureBlock
+            loadBlock
             notificationBlock
             dpmsBlock
-            backlightBlock
-            batteryBlock
-            soundBlock
-            timeBlock
-          ]);
-        };
-
-        sway = {
-          inherit settings;
-
-          blocks = lib.filter (b: b != { }) (lib.lists.flatten [
-            windowBlock
-            netBlocks
-            disksBlocks
-            memoryBlock
-            cpuBlock
-            loadBlock
-            temperatureBlock
-            notificationBlock
-            dpmsBlockSway
             backlightBlock
             batteryBlock
             soundBlock
