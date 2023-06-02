@@ -289,7 +289,7 @@
             show_hidden_files = false,
             ignore = {},
             devicons = {
-              enable = ${if stdenv.isLinux then "true" else "false"},
+              enable = ${if stdenv.isDarwin then "false" else "true"},
               highlight_dirname = false
             },
             mappings = {
@@ -363,7 +363,7 @@
       vim-sleuth
       vim-surround
     ] ++
-    lib.optionals pkgs.stdenv.isLinux [
+    lib.optionals (!pkgs.stdenv.isDarwin) [
       # give [?] icons in macOS
       nvim-web-devicons
     ];
