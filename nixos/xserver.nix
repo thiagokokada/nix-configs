@@ -83,9 +83,6 @@
     };
   };
 
-  # https://github.com/NixOS/nixpkgs/pull/232029
-  systemd.services.keyd.serviceConfig.DynamicUser = lib.mkForce false;
-
   # https://github.com/apognu/tuigreet/issues/76
   systemd.tmpfiles.rules = [
     "d /var/cache/tuigreet 700 ${config.services.greetd.settings.initial_session.user} nobody"
