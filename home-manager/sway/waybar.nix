@@ -163,7 +163,8 @@ in
           max-volume = 150;
           ignored-sinks = [ "Easy Effects Sink" ];
           states = {
-            critical = 101;
+            normal = 100;
+            high = 150;
           };
         };
         backlight = {
@@ -236,9 +237,6 @@ in
       #temperature.critical {
         color: ${base08};
       }
-      #pulseaudio.muted {
-        color: ${base08};
-      }
       #tray > .needs-attention {
         color: ${base08};
       }
@@ -260,7 +258,10 @@ in
       #disk.critical {
         color: ${base08};
       }
-      #pulseaudio.critical {
+      #pulseaudio.high {
+        color: ${base0A};
+      }
+      #pulseaudio.muted {
         color: ${base08};
       }
       #idle_inhibitor.activated {
