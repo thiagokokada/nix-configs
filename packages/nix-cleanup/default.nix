@@ -1,7 +1,7 @@
 { writeShellApplication
 , lib
 , coreutils
-, findutils
+, gawk
 , gnugrep
 , nix
 , substituteAll
@@ -19,5 +19,5 @@ writeShellApplication {
     isNixOS = if isNixOS then "1" else "0";
   });
 
-  runtimeInputs = [ coreutils findutils gnugrep nix ];
+  runtimeInputs = [ coreutils gawk gnugrep nix ];
 }

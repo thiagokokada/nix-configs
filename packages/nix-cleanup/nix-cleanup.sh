@@ -51,8 +51,9 @@ cleanup() {
 
     if [[ "$auto" == 1 ]]; then
         echo "[INFO] Removing auto created GC roots..."
-        find -H /nix/var/nix/gcroots/auto -type l -exec readlink {} \; | \
-            grep "/result[-0-9]*$" | \
+        nix-store --gc --print-roots | \
+            awk '{ print $1 }' | \
+            grep '/result.*$' | \
             xargs -L1 rm -rf
     fi
 
