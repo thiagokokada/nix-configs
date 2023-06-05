@@ -16,13 +16,14 @@
     ffmpeg
     file
     findutils
-    gcal
     gawk
+    gcal
     gnugrep
     gnumake
     gnused
     ix
     jq
+    less
     lsof
     mediainfo
     netcat-gnu
