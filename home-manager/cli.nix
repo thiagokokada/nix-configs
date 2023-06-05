@@ -17,6 +17,8 @@
     file
     findutils
     gcal
+    gawk
+    gnugrep
     gnumake
     gnused
     ix
