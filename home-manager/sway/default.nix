@@ -74,6 +74,7 @@ in
     config = commonOptions.config // {
       startup = [
         { command = "${pkgs.dex}/bin/dex --autostart"; }
+        { command = "systemctl restart --user kanshi.service"; always = true; }
       ];
 
       input = {
