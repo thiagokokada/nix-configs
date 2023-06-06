@@ -120,7 +120,7 @@ in
         "custom/dunst" = {
           exec = (pkgs.writeShellApplication {
             name = "dunst-status";
-            runtimeInputs = with pkgs; [ dbus dunst ];
+            runtimeInputs = with pkgs; [ coreutils dbus dunst procps ];
             text = ''
               readonly ENABLED=''
               readonly DISABLED=''
@@ -128,6 +128,11 @@ in
               dbus-monitor path='/org/freedesktop/Notifications',interface='org.freedesktop.DBus.Properties',member='PropertiesChanged' --profile |
                 while read -r _; do
                   PAUSED="$(dunstctl is-paused)"
+                  # exit if parent process exit
+                  if ! ps -p "$PPID" >/dev/null; then
+                    # sending SIGKILL here since HUP/TERM are not killing dbus-monitor for some reason
+                    kill -9 0
+                  fi
                   if [ "$PAUSED" == 'false' ]; then
                     CLASS="enabled"
                     TEXT="$ENABLED"
