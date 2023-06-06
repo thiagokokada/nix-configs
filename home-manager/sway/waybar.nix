@@ -122,6 +122,11 @@ in
             name = "dunst-status";
             runtimeInputs = with pkgs; [ coreutils dbus dunst procps ];
             text = ''
+              # sending SIGKILL here since HUP/TERM are not killing dbus-monitor for some reason
+              cleanup() { kill -SIGKILL 0; }
+
+              trap "cleanup" EXIT
+
               readonly ENABLED=''
               readonly DISABLED=''
               # --profile outputs a single line per message
@@ -130,8 +135,7 @@ in
                   PAUSED="$(dunstctl is-paused)"
                   # exit if parent process exit
                   if ! ps -p "$PPID" >/dev/null; then
-                    # sending SIGKILL here since HUP/TERM are not killing dbus-monitor for some reason
-                    kill -9 0
+                    cleanup
                   fi
                   if [ "$PAUSED" == 'false' ]; then
                     CLASS="enabled"
