@@ -1,4 +1,4 @@
-{ ... }:
+{ pkgs, ... }:
 
 {
   programs.sway = {
@@ -7,5 +7,16 @@
     # Remove unnecessary packages from system-wide install (e.g.: foot)
     package = null;
     extraPackages = [ ];
+  };
+
+  # For sway screensharing
+  # https://nixos.wiki/wiki/Firefox
+  xdg.portal = {
+    enable = true;
+    extraPortals = with pkgs; [
+      xdg-desktop-portal-gtk
+    ];
+    # Allow for screensharing in wlroots-based desktop
+    wlr.enable = true;
   };
 }

@@ -15,17 +15,5 @@
       gnome.gnome-keyring.enable = true;
       udisks2.enable = true;
     };
-
-    # For sway screensharing
-    # https://nixos.wiki/wiki/Firefox
-    xdg.portal = {
-      enable = true;
-      extraPortals = with pkgs; [
-        xdg-desktop-portal-gtk
-        xdg-desktop-portal-wlr
-      ];
-      # Allow for screensharing in wlroots-based desktop
-      wlr.enable = true;
-    };
   };
 }
