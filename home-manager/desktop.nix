@@ -24,7 +24,6 @@
     open-browser
     (mcomix.override { unrarSupport = true; })
     pavucontrol
-    peek
     pinta
     qalculate-gtk
     vlc
