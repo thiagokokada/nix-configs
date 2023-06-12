@@ -65,6 +65,9 @@
       set foldexpr=nvim_treesitter#foldexpr()
       set nofoldenable " disable folding at startup
 
+      " threat words with dash as a word
+      set iskeyword+=-
+
       " completion
       set completeopt=menu
       inoremap <expr> <C-j> pumvisible() ? "\<C-n>" : "\<C-j>"
