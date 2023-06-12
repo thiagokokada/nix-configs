@@ -38,6 +38,10 @@
       noto-fonts
       noto-fonts-cjk
       noto-fonts-emoji
+
+      # needed for QT_QPA_PLATFORMTHEME=kde
+      libsForQt5.plasma-integration
+      libsForQt5.systemsettings
     ];
 
     pointerCursor = {
@@ -47,6 +51,8 @@
       x11.enable = true;
       gtk.enable = true;
     };
+
+    sessionVariables.QT_QPA_PLATFORMTHEME = "kde";
   };
 
   gtk = {
@@ -65,10 +71,32 @@
     };
   };
 
-  qt = {
-    enable = true;
-    platformTheme = "gtk";
-    style.name = "gtk2";
+  xdg = {
+    configFile.kdeglobals.text = lib.generators.toINI { } {
+      General = {
+        ColorScheme = "nordicbluish";
+        Name = "nordic-bluish";
+        shadeSortColumn = true;
+      };
+      Icons = {
+        Theme = config.gtk.iconTheme.name;
+      };
+      KDE = {
+        LookAndFeelPackage = "Nordic-bluish";
+        contrast = 4;
+      };
+    };
+
+    dataFile = {
+      color-schemes = {
+        source = "${pkgs.nordic}/share/color-schemes";
+        recursive = true;
+      };
+      plasma = {
+        source = "${pkgs.nordic}/share/plasma";
+        recursive = true;
+      };
+    };
   };
 
   # https://github.com/GNOME/gsettings-desktop-schemas/blob/8527b47348ce0573694e0e254785e7c0f2150e16/schemas/org.gnome.desktop.interface.gschema.xml.in#L276-L296

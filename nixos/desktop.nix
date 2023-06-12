@@ -10,6 +10,7 @@
     ];
 
     programs.gnome-disks.enable = true;
+
     services = {
       dbus.implementation = "broker";
       gnome.gnome-keyring.enable = true;
