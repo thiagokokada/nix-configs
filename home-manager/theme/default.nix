@@ -41,16 +41,12 @@
     ];
 
     pointerCursor = {
-      package = pkgs.gnome.adwaita-icon-theme;
-      name = "Adwaita";
+      package = pkgs.nordzy-cursor-theme;
+      name = "Nordzy-cursors";
       size = 24;
       x11.enable = true;
       gtk.enable = true;
     };
-
-    # Application using libadwaita are **not** respecting config files *sigh*
-    # https://www.reddit.com/r/swaywm/comments/qodk20/gtk4_theming_not_working_how_do_i_configure_it/hzrv6gr/?context=3
-    sessionVariables.GTK_THEME = config.gtk.theme.name;
   };
 
   gtk = {
@@ -60,12 +56,12 @@
       name = "Noto Sans";
     };
     iconTheme = {
-      package = pkgs.arc-icon-theme;
-      name = "Arc";
+      package = pkgs.nordzy-icon-theme;
+      name = "Nordzy-dark";
     };
     theme = {
-      name = "Arc-Dark";
-      package = pkgs.arc-theme;
+      name = "Nordic-bluish-accent";
+      package = pkgs.nordic;
     };
   };
 
