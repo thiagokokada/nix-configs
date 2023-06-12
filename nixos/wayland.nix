@@ -15,6 +15,7 @@
     enable = true;
     extraPortals = with pkgs; [
       xdg-desktop-portal-gtk
+      xdg-desktop-portal-kde
     ];
     # Allow for screensharing in wlroots-based desktop
     wlr.enable = true;
