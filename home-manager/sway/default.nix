@@ -73,7 +73,6 @@ in
 
     config = commonOptions.config // {
       startup = [
-        { command = "${pkgs.dex}/bin/dex --autostart"; }
         { command = "systemctl restart --user kanshi.service"; always = true; }
       ];
 
@@ -118,7 +117,10 @@ in
       export _JAVA_AWT_WM_NONREPARENTING=1
     '';
 
-    systemdIntegration = true;
+    systemd = {
+      enable = true;
+      xdgAutostart = true;
+    };
 
     wrapperFeatures = {
       base = true;
