@@ -104,6 +104,7 @@
     # hide ibus systray icon, kinda buggy in waybar
     "desktop/ibus/panel".show-icon-on-systray = false;
     "org/gnome/desktop/interface" = with super.fonts.fontconfig; {
+      "color-scheme" = "prefer-dark";
       "font-antialiasing" =
         if antialias then
           if (subpixel.rgba == "none")
@@ -130,7 +131,6 @@
       "Xft/Hinting" = super.fonts.fontconfig.hinting.enable;
       "Xft/HintStyle" = super.fonts.fontconfig.hinting.style;
       "Xft/RGBA" = super.fonts.fontconfig.subpixel.rgba;
-      "Xft/lcdfilter" = super.fonts.fontconfig.subpixel.lcdfilter;
     };
   };
 }
