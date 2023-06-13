@@ -172,7 +172,7 @@
               vim.keymap.set('n', 'gd', builtin.lsp_definitions, opts)
               vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
               vim.keymap.set('n', 'gi', builtin.lsp_implementations, opts)
-              vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, opts)
+              vim.keymap.set('n', '<Leader>s', vim.lsp.buf.signature_help, opts)
               vim.keymap.set('n', '<Leader>wa', vim.lsp.buf.add_workspace_folder, opts)
               vim.keymap.set('n', '<Leader>wr', vim.lsp.buf.remove_workspace_folder, opts)
               vim.keymap.set('n', '<Leader>wl', function()
