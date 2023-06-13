@@ -77,6 +77,10 @@
       " disable "How to disable mouse" menu
       aunmenu PopUp.How-to\ disable\ mouse
       aunmenu PopUp.-1-
+
+      " disable netrw
+      let g:loaded_netrw       = 1
+      let g:loaded_netrwPlugin = 1
     '';
 
     # To install non-packaged plugins, use
