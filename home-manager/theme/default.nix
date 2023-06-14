@@ -38,10 +38,6 @@
       noto-fonts
       noto-fonts-cjk
       noto-fonts-emoji
-
-      # needed for QT_QPA_PLATFORMTHEME=kde
-      libsForQt5.plasma-integration
-      libsForQt5.systemsettings
     ];
 
     pointerCursor = {
@@ -51,8 +47,6 @@
       x11.enable = true;
       gtk.enable = true;
     };
-
-    sessionVariables.QT_QPA_PLATFORMTHEME = "kde";
   };
 
   gtk = {
@@ -69,6 +63,11 @@
       name = "Nordic-bluish-accent";
       package = pkgs.nordic;
     };
+  };
+
+  qt = {
+    enable = true;
+    platformTheme = "kde";
   };
 
   xdg = {
