@@ -20,6 +20,7 @@
       # inspired by https://github.com/LGUG2Z/helix-vim/
       keys = {
         normal = {
+          space.space = "file_picker";
           C-h = "select_prev_sibling";
           C-j = "shrink_selection";
           C-k = "expand_selection";
