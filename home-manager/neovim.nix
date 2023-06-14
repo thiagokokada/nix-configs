@@ -60,11 +60,6 @@
       nnoremap <C-k> <c-w>k
       nnoremap <C-l> <c-w>l
 
-      " folding
-      set foldmethod=expr
-      set foldexpr=nvim_treesitter#foldexpr()
-      set nofoldenable " disable folding at startup
-
       " threat words with dash as a word
       set iskeyword+=-
 
@@ -139,6 +134,11 @@
       {
         plugin = nvim-lspconfig;
         config = ''
+          " folding
+          set foldmethod=expr
+          set foldexpr=nvim_treesitter#foldexpr()
+          set nofoldenable " disable folding at startup
+
           lua << EOF
           -- Setup language servers.
           -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
