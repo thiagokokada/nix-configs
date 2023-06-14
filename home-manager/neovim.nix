@@ -266,6 +266,10 @@
               },
               border = true,
               sorting_strategy = "ascending",
+              preview = {
+                -- set timeout low enough that it never feels too slow
+                timeout = 50,
+              },
             },
             extensions = {
               fzf = {
