@@ -134,11 +134,6 @@
       {
         plugin = nvim-lspconfig;
         config = ''
-          " folding
-          set foldmethod=expr
-          set foldexpr=nvim_treesitter#foldexpr()
-          set nofoldenable " disable folding at startup
-
           lua << EOF
           -- Setup language servers.
           -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
@@ -193,6 +188,11 @@
       {
         plugin = nvim-treesitter.withAllGrammars;
         config = ''
+          " folding
+          " disabled for now since this is slowing down neovim considerably
+          " set foldmethod=expr
+          " set foldexpr=nvim_treesitter#foldexpr()
+          " set nofoldenable " disable folding at startup
           lua << EOF
           require('nvim-treesitter.configs').setup {
             highlight = {
@@ -207,16 +207,7 @@
                 node_decremental = "grm",
               },
             },
-            autotag = {
-              enable = true,
-            },
-            context_commentstring = {
-              enable = true,
-            },
             indent = {
-              enable = true,
-            },
-            rainbow = {
               enable = true,
             },
           }
@@ -361,9 +352,6 @@
       }
       gitgutter
       mkdir-nvim
-      nvim-ts-autotag
-      nvim-ts-context-commentstring
-      nvim-ts-rainbow2
       telescope-fzf-native-nvim
       vim-advanced-sorters
       vim-commentary
