@@ -72,8 +72,12 @@
   };
 
   xdg.configFile = {
-    "Kvantum/kvantum.config".text = lib.generators.toINI { } {
-      General.theme = "Nordic-bluish";
+    "Kvantum/kvantum.kvconfig".text = lib.generators.toINI { } {
+      General.theme = "Nordic-bluish-solid";
+    };
+    "Kvantum" = {
+      source = "${pkgs.nordic}/share/Kvantum";
+      recursive = true;
     };
     "qt5ct/qt5ct.conf".text = lib.generators.toINI { } {
       Appearance = {
