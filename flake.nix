@@ -6,7 +6,7 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     hardware.url = "github:NixOS/nixos-hardware";
     home = {
-      url = "github:nix-community/home-manager";
+      url = "github:thiagokokada/home-manager/fix-kvantum";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nix-gaming = {

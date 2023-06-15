@@ -67,27 +67,25 @@
 
   qt = {
     enable = true;
-    platformTheme = "kde";
+    platformTheme = "qtct";
+    style.name = "kvantum";
   };
 
-  xdg.configFile.kdeglobals.text =
-    lib.readFile "${pkgs.nordic}/share/color-schemes/nordicbluish.colors" +
-    (lib.generators.toINI { } {
-      Icons = {
-        Theme = config.gtk.iconTheme.name;
+  xdg.configFile = {
+    "Kvantum/kvantum.config".text = lib.generators.toINI { } {
+      General.theme = "Nordic-bluish";
+    };
+    "qt5ct/qt5ct.conf".text = lib.generators.toINI { } {
+      Appearance = {
+        style = "kvantum-dark";
+        icon_theme = config.gtk.iconTheme.name;
       };
-      # https://community.kde.org/Windows/Fine-tuning
-      General = {
-        font = config.gtk.font.name;
-        menuFont = config.gtk.font.name;
+      Interface = {
+        activate_item_on_single_click = 0;
       };
-      KDE = {
-        SingleClick = false;
-      };
-      "KFileDialog Settings" = {
-        Native = true;
-      };
-    });
+    };
+    "qt6ct/qt6ct.conf".text = config.xdg.configFile."qt5ct/qt5ct.conf".text;
+  };
 
   # https://github.com/GNOME/gsettings-desktop-schemas/blob/8527b47348ce0573694e0e254785e7c0f2150e16/schemas/org.gnome.desktop.interface.gschema.xml.in#L276-L296
   dconf.settings = lib.optionalAttrs (super ? fonts.fontconfig) {
