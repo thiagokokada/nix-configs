@@ -26,6 +26,8 @@ in
 
       change-res = prev.callPackage ../packages/change-res { };
 
+      home-manager = flake.inputs.home.packages.${pkgs.system}.home-manager;
+
       # https://lists.sr.ht/~emersion/public-inbox/patches/40604
       kanshi = prev.kanshi.overrideAttrs (oldAttrs: {
         patches = (oldAttrs.patches or [ ]) ++ [

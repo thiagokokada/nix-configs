@@ -1,8 +1,5 @@
-{ lib, pkgs, flake, super, ... }:
+{ lib, pkgs, super, ... }:
 
-let
-  inherit (flake) inputs;
-in
 {
   # Import overlays
   imports = [
@@ -13,6 +10,7 @@ in
 
   # Add some Nix related packages
   home.packages = with pkgs; [
+    home-manager
     hydra-check
     nix-cleanup
     nix-update
