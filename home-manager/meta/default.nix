@@ -58,6 +58,8 @@
   # changes in each release.
   home.stateVersion = "22.11";
 
+  manual.html.enable = true;
+
   # Inherit config from NixOS or homeConfigurations
   device = super.device;
   meta = super.meta;
