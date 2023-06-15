@@ -8,5 +8,9 @@
       # Needed for Wayland
       commandLineArgs = "--ozone-platform-hint=auto";
     };
+    extensions = [
+      { id = "cjpalhdlnbpafiamejdnhcphjbkeiagm"; } # ublock origin
+      { id = "hfjbmagddngcpeloejdejnfgbamkjaeg"; } # vimium-c
+    ];
   };
 }
