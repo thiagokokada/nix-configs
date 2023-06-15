@@ -3,6 +3,7 @@
 , coreutils
 , gawk
 , gnugrep
+, home-manager
 , nix
 , substituteAll
 , isNixOS ? false
@@ -19,5 +20,11 @@ writeShellApplication {
     isNixOS = if isNixOS then "1" else "0";
   });
 
-  runtimeInputs = [ coreutils gawk gnugrep nix ];
+  runtimeInputs = [
+    coreutils
+    gawk
+    gnugrep
+    home-manager
+    nix
+  ];
 }
