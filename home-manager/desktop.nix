@@ -12,7 +12,6 @@
     (calibre.override { unrarSupport = true; })
     (cinnamon.nemo-with-extensions.override { extensions = with cinnamon; [ nemo-fileroller ]; })
     desktop-file-utils
-    (discord.override { withOpenASAR = true; nss = nss_latest; })
     gammastep
     gimp
     gnome.evince
