@@ -76,6 +76,17 @@
       Icons = {
         Theme = config.gtk.iconTheme.name;
       };
+      # https://community.kde.org/Windows/Fine-tuning
+      General = {
+        font = config.gtk.font.name;
+        menuFont = config.gtk.font.name;
+      };
+      KDE = {
+        SingleClick = false;
+      };
+      "KFileDialog Settings" = {
+        Native = true;
+      };
     });
 
   # https://github.com/GNOME/gsettings-desktop-schemas/blob/8527b47348ce0573694e0e254785e7c0f2150e16/schemas/org.gnome.desktop.interface.gschema.xml.in#L276-L296
