@@ -70,33 +70,13 @@
     platformTheme = "kde";
   };
 
-  xdg = {
-    configFile.kdeglobals.text = lib.generators.toINI { } {
-      General = {
-        ColorScheme = "nordicbluish";
-        Name = "nordic-bluish";
-        shadeSortColumn = true;
-      };
+  xdg.configFile.kdeglobals.text =
+    lib.readFile "${pkgs.nordic}/share/color-schemes/nordicbluish.colors" +
+    (lib.generators.toINI { } {
       Icons = {
         Theme = config.gtk.iconTheme.name;
       };
-      KDE = {
-        LookAndFeelPackage = "Nordic-bluish";
-        contrast = 4;
-      };
-    };
-
-    dataFile = {
-      color-schemes = {
-        source = "${pkgs.nordic}/share/color-schemes";
-        recursive = true;
-      };
-      plasma = {
-        source = "${pkgs.nordic}/share/plasma";
-        recursive = true;
-      };
-    };
-  };
+    });
 
   # https://github.com/GNOME/gsettings-desktop-schemas/blob/8527b47348ce0573694e0e254785e7c0f2150e16/schemas/org.gnome.desktop.interface.gschema.xml.in#L276-L296
   dconf.settings = lib.optionalAttrs (super ? fonts.fontconfig) {
