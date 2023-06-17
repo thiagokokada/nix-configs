@@ -85,7 +85,7 @@
         # FIXME: dummy plugin since there is no way currently to set a config
         # before the plugins are initialized
         # See: https://github.com/nix-community/home-manager/pull/2391
-        plugin = (pkgs.writeText "init-pre" "");
+        plugin = (pkgs.writeText "00-init-pre" "");
         config = ''
           " remap leader
           let g:mapleader = "\<Space>"
@@ -106,10 +106,58 @@
         '';
       }
       {
-        plugin = nvim-autopairs;
+        plugin = lir-nvim;
         config = ''
           lua << EOF
-          require("nvim-autopairs").setup {}
+          local actions = require('lir.actions')
+          local mark_actions = require('lir.mark.actions')
+          local clipboard_actions = require('lir.clipboard.actions')
+
+          require('lir').setup {
+            show_hidden_files = false,
+            ignore = {},
+            devicons = {
+              enable = ${if stdenv.isDarwin then "false" else "true"},
+              highlight_dirname = false
+            },
+            mappings = {
+              ['<Enter>'] = actions.edit,
+              ['<C-s>'] = actions.split,
+              ['<C-v>'] = actions.vsplit,
+              ['<C-t>'] = actions.tabedit,
+
+              ['-'] = actions.up,
+              ['q'] = actions.quit,
+
+              ['K'] = actions.mkdir,
+              ['N'] = actions.newfile,
+              ['R'] = actions.rename,
+              ['@'] = actions.cd,
+              ['Y'] = actions.yank_path,
+              ['.'] = actions.toggle_show_hidden,
+              ['D'] = actions.delete,
+
+              ['J'] = function()
+                mark_actions.toggle_mark()
+                vim.cmd('normal! j')
+              end,
+              ['C'] = clipboard_actions.copy,
+              ['X'] = clipboard_actions.cut,
+              ['P'] = clipboard_actions.paste,
+            },
+          }
+
+          -- vinegar
+          vim.api.nvim_set_keymap('n', '-', [[<Cmd>execute 'e ' .. expand('%:p:h')<CR>]], { noremap = true })
+          EOF
+        '';
+      }
+      {
+        plugin = lualine-nvim;
+        # TODO: add support for trailing whitespace
+        config = ''
+          lua << EOF
+          require('lualine').setup {}
           EOF
         '';
       }
@@ -123,28 +171,6 @@
         '';
       }
       {
-        plugin = lualine-nvim;
-        # TODO: add support for trailing whitespace
-        config = ''
-          lua << EOF
-          require('lualine').setup {}
-          EOF
-        '';
-      }
-      {
-        plugin = undotree;
-        config = ''
-          if !isdirectory($HOME . "/.config/nvim/undotree")
-              call mkdir($HOME . "/.config/nvim/undotree", "p", 0755)
-          endif
-
-          nnoremap <Leader>u :UndotreeToggle<CR>
-          set undofile
-          set undodir=~/.config/nvim/undotree
-          let undotree_WindowLayout = 3
-        '';
-      }
-      {
         plugin = project-nvim;
         config = ''
           lua << EOF
@@ -155,6 +181,14 @@
             ":Telescope projects<CR>",
             { noremap = true }
           )
+          EOF
+        '';
+      }
+      {
+        plugin = nvim-autopairs;
+        config = ''
+          lua << EOF
+          require("nvim-autopairs").setup {}
           EOF
         '';
       }
@@ -245,6 +279,19 @@
         '';
       }
       {
+        plugin = undotree;
+        config = ''
+          if !isdirectory($HOME . "/.config/nvim/undotree")
+              call mkdir($HOME . "/.config/nvim/undotree", "p", 0755)
+          endif
+
+          nnoremap <Leader>u :UndotreeToggle<CR>
+          set undofile
+          set undodir=~/.config/nvim/undotree
+          let undotree_WindowLayout = 3
+        '';
+      }
+      {
         plugin = vim-polyglot;
         config = ''
           " use a simpler and faster regex to parse CSV
@@ -307,53 +354,6 @@
           vim.keymap.set('n', '<Leader><Leader>', builtin.find_files, { noremap = true })
           vim.keymap.set('n', '<Leader>/', builtin.live_grep, { noremap = true })
           vim.keymap.set({'n', 'v'}, '<Leader>*', builtin.grep_string, { noremap = true })
-          EOF
-        '';
-      }
-      {
-        plugin = lir-nvim;
-        config = ''
-          lua << EOF
-          local actions = require('lir.actions')
-          local mark_actions = require('lir.mark.actions')
-          local clipboard_actions = require('lir.clipboard.actions')
-
-          require('lir').setup {
-            show_hidden_files = false,
-            ignore = {},
-            devicons = {
-              enable = ${if stdenv.isDarwin then "false" else "true"},
-              highlight_dirname = false
-            },
-            mappings = {
-              ['<Enter>'] = actions.edit,
-              ['<C-s>'] = actions.split,
-              ['<C-v>'] = actions.vsplit,
-              ['<C-t>'] = actions.tabedit,
-
-              ['-'] = actions.up,
-              ['q'] = actions.quit,
-
-              ['K'] = actions.mkdir,
-              ['N'] = actions.newfile,
-              ['R'] = actions.rename,
-              ['@'] = actions.cd,
-              ['Y'] = actions.yank_path,
-              ['.'] = actions.toggle_show_hidden,
-              ['D'] = actions.delete,
-
-              ['J'] = function()
-                mark_actions.toggle_mark()
-                vim.cmd('normal! j')
-              end,
-              ['C'] = clipboard_actions.copy,
-              ['X'] = clipboard_actions.cut,
-              ['P'] = clipboard_actions.paste,
-            },
-          }
-
-          -- vinegar
-          vim.api.nvim_set_keymap('n', '-', [[<Cmd>execute 'e ' .. expand('%:p:h')<CR>]], { noremap = true })
           EOF
         '';
       }
