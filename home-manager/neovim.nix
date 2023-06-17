@@ -145,6 +145,20 @@
         '';
       }
       {
+        plugin = project-nvim;
+        config = ''
+          lua << EOF
+          require("project_nvim").setup {}
+          vim.api.nvim_set_keymap(
+            'n',
+            '<Leader>p',
+            ":Telescope projects<CR>",
+            { noremap = true }
+          )
+          EOF
+        '';
+      }
+      {
         plugin = nvim-lspconfig;
         config = ''
           lua << EOF
@@ -288,6 +302,7 @@
             },
           }
           telescope.load_extension('fzf')
+          telescope.load_extension('projects')
           local builtin = require('telescope.builtin')
           vim.keymap.set('n', '<Leader><Leader>', builtin.find_files, { noremap = true })
           vim.keymap.set('n', '<Leader>/', builtin.live_grep, { noremap = true })
