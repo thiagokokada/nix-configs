@@ -76,6 +76,9 @@
       " disable netrw
       let g:loaded_netrw       = 1
       let g:loaded_netrwPlugin = 1
+
+      " syntax highlight flake.lock files as json
+      autocmd BufNewFile,BufRead flake.lock set filetype=json
     '';
 
     # To install non-packaged plugins, use
