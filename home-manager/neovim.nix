@@ -98,6 +98,14 @@
         '';
       }
       {
+        plugin = comment-nvim;
+        config = ''
+          lua << EOF
+          require('Comment').setup {}
+          EOF
+        '';
+      }
+      {
         plugin = nvim-autopairs;
         config = ''
           lua << EOF
@@ -363,7 +371,6 @@
       nvim-ts-autotag
       telescope-fzf-native-nvim
       vim-advanced-sorters
-      vim-commentary
       vim-endwise
       vim-fugitive
       vim-lastplace
