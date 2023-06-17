@@ -90,6 +90,11 @@
           " remap leader
           let g:mapleader = "\<Space>"
           let g:maplocalleader = ','
+
+          lua << EOF
+          -- bytecompile lua modules
+          vim.loader.enable()
+          EOF
         '';
       }
       {
