@@ -106,6 +106,14 @@
         '';
       }
       {
+        plugin = gitsigns-nvim;
+        config = ''
+          lua << EOF
+          require('gitsigns').setup {}
+          EOF
+        '';
+      }
+      {
         plugin = lir-nvim;
         config = ''
           lua << EOF
@@ -381,7 +389,6 @@
           EOF
         '';
       }
-      gitgutter
       mkdir-nvim
       nvim-ts-autotag
       telescope-fzf-native-nvim
