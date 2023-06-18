@@ -392,6 +392,17 @@
           EOF
         '';
       }
+      {
+        plugin = vim-test;
+        config = ''
+          let test#strategy = "neovim"
+          nnoremap <silent> <leader>tt :TestNearest<CR>
+          nnoremap <silent> <leader>tT :TestFile<CR>
+          nnoremap <silent> <leader>ta :TestSuite<CR>
+          nnoremap <silent> <leader>tl :TestLast<CR>
+          nnoremap <silent> <leader>tg :TestVisit<CR>
+        '';
+      }
       mkdir-nvim
       nvim-ts-autotag
       telescope-fzf-native-nvim
