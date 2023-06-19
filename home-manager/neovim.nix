@@ -287,13 +287,10 @@
         '';
       }
       {
-        plugin = onedark-nvim;
+        plugin = onedarkpro-nvim;
         config = ''
           lua << EOF
-          require('onedark').setup {
-            style = 'deep'
-          }
-          require('onedark').load()
+          vim.cmd("colorscheme onedark")
           EOF
         '';
       }
