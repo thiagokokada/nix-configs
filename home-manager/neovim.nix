@@ -283,19 +283,21 @@
         '';
       }
       {
-        plugin = onedark-vim;
+        plugin = onedark-nvim;
         config = ''
-          if (has("termguicolors"))
-            set termguicolors
-          endif
-          colorscheme onedark
+          lua << EOF
+          require('onedark').setup {
+            style = 'deep'
+          }
+          require('onedark').load()
+          EOF
         '';
       }
       {
         plugin = project-nvim;
         config = ''
           lua << EOF
-          require("project_nvim").setup {}
+          require('project_nvim').setup {}
           vim.api.nvim_set_keymap(
             'n',
             '<Leader>p',
