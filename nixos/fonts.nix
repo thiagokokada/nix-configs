@@ -1,4 +1,4 @@
-{ pkgs, lib, ... }:
+{ pkgs, ... }:
 
 {
   fonts = {
@@ -12,7 +12,6 @@
     ];
 
     fontconfig = {
-      hinting.style = lib.mkDefault "hintfull";
       defaultFonts = {
         monospace = [ "Noto Sans Mono" ];
         serif = [ "Noto Serif" ];
