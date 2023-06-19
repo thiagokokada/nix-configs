@@ -422,9 +422,9 @@
           lua << EOF
           vim.keymap.set('n', '<Leader>tt', ':TestNearest<CR>', { noremap = true, desc = "Test nearest" })
           vim.keymap.set('n', '<Leader>tT', ':TestFile<CR>', { noremap = true, desc = "Test file" })
-          vim.keymap.set('n', '<Leader>ta', ':TestSuite<CR>', { noremap = true, desc = "Test suite" })
+          vim.keymap.set('n', '<Leader>ts', ':TestSuite<CR>', { noremap = true, desc = "Test suite" })
           vim.keymap.set('n', '<Leader>tl', ':TestLast<CR>', { noremap = true, desc = "Test last" })
-          vim.keymap.set('n', '<Leader>tg', ':TestVisit<CR>', { noremap = true, desc = "Test visit" })
+          vim.keymap.set('n', '<Leader>tv', ':TestVisit<CR>', { noremap = true, desc = "Test visit" })
           EOF
         '';
       }
