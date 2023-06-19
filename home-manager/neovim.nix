@@ -224,6 +224,11 @@
           }
 
           local builtin = require('telescope.builtin')
+
+          -- Global mappings.
+          -- See `:help vim.diagnostic.*` for documentation on any of the below functions
+          vim.keymap.set('n', '<space>ld', builtin.diagnostics, { desc = "LSP diagnostics" })
+
           -- Use LspAttach autocommand to only map the following keys
           -- after the language server attaches to the current buffer
           vim.api.nvim_create_autocmd('LspAttach', {
@@ -234,24 +239,22 @@
 
               -- Buffer local mappings.
               -- See `:help vim.lsp.*` for documentation on any of the below functions
-              local opts = { buffer = ev.buf }
-              vim.keymap.set('n', 'gD', builtin.lsp_references, opts)
-              vim.keymap.set('n', 'gd', builtin.lsp_definitions, opts)
-              vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
-              vim.keymap.set('n', 'gi', builtin.lsp_implementations, opts)
-              vim.keymap.set('n', '<Leader>s', vim.lsp.buf.signature_help, opts)
-              vim.keymap.set('n', '<Leader>wa', vim.lsp.buf.add_workspace_folder, opts)
-              vim.keymap.set('n', '<Leader>wr', vim.lsp.buf.remove_workspace_folder, opts)
-              vim.keymap.set('n', '<Leader>wl', function()
+              vim.keymap.set('n', 'gD', builtin.lsp_references, { buffer = ev.buf, desc = "LSP references" })
+              vim.keymap.set('n', 'gd', builtin.lsp_definitions, { buffer = ev.buf, desc = "LSP definitions" })
+              vim.keymap.set('n', 'K', vim.lsp.buf.hover, { buffer = ev.buf, desc = "LSP symbol under" })
+              vim.keymap.set('n', 'gi', builtin.lsp_implementations, { buffer = ev.buf, desc = "LSP implementations" })
+              vim.keymap.set('n', '<Leader>ls', vim.lsp.buf.signature_help, { buffer = ev.buf, desc = "LSP signature help" })
+              vim.keymap.set('n', '<Leader>lwa', vim.lsp.buf.add_workspace_folder, { buffer = ev.buf, desc = "LSP add workspace" })
+              vim.keymap.set('n', '<Leader>lwr', vim.lsp.buf.remove_workspace_folder, { buffer = ev.buf, desc = "LSP remove workspace" })
+              vim.keymap.set('n', '<Leader>lwl', function()
                 print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-              end, opts)
-              vim.keymap.set('n', '<Leader>D', builtin.lsp_type_definitions, opts)
-              vim.keymap.set('n', '<Leader>rn', vim.lsp.buf.rename, opts)
-              vim.keymap.set({ 'n', 'v' }, '<Leader>ca', vim.lsp.buf.code_action, opts)
+              end, { buffer = ev.buf, desc = "LSP list workspaces" })
+              vim.keymap.set('n', '<Leader>lt', builtin.lsp_type_definitions, { buffer = ev.buf, desc = "LSP type definitions" })
+              vim.keymap.set('n', '<Leader>lr', vim.lsp.buf.rename, { buffer = ev.buf, desc = "LSP rename" })
+              vim.keymap.set({ 'n', 'v' }, '<Leader>la', vim.lsp.buf.code_action, { buffer = ev.buf, desc = "LSP code action" })
               vim.keymap.set('n', '<Leader>f', function()
                 vim.lsp.buf.format { async = true }
-              end, opts)
-              vim.keymap.set('n', '<Leader>e', builtin.diagnostics, opts)
+              end, { buffer = ev.buf, desc = "LSP format" })
             end,
           })
           EOF
@@ -296,10 +299,12 @@
               call mkdir($HOME . "/.config/nvim/undotree", "p", 0755)
           endif
 
-          nnoremap <Leader>u :UndotreeToggle<CR>
           set undofile
           set undodir=~/.config/nvim/undotree
           let undotree_WindowLayout = 3
+          lua << EOF
+          vim.keymap.set('n', '<Leader>u', ':UndotreeToggle<CR>', { noremap = true, desc = "Undotree toggle" })
+          EOF
         '';
       }
       {
@@ -362,9 +367,19 @@
           telescope.load_extension('fzf')
           telescope.load_extension('projects')
           local builtin = require('telescope.builtin')
-          vim.keymap.set('n', '<Leader><Leader>', builtin.find_files, { noremap = true })
-          vim.keymap.set('n', '<Leader>/', builtin.live_grep, { noremap = true })
-          vim.keymap.set({'n', 'v'}, '<Leader>*', builtin.grep_string, { noremap = true })
+          vim.keymap.set('n', '<Leader><Leader>', builtin.find_files, { noremap = true, desc = "Find files" })
+          vim.keymap.set('n', '<Leader>/', builtin.live_grep, { noremap = true, desc = "Live grep" })
+          vim.keymap.set({'n', 'v'}, '<Leader>*', builtin.grep_string, { noremap = true, desc = "Grep string" })
+          EOF
+        '';
+      }
+      {
+        plugin = which-key-nvim;
+        config = ''
+          lua << EOF
+          vim.o.timeout = true
+          vim.o.timeoutlen = 300
+          require("which-key").setup {}
           EOF
         '';
       }
@@ -388,7 +403,7 @@
           }
 
           -- remove trailing whitespace with a keybinding
-          vim.keymap.set('n', '<Leader>w', require('whitespace-nvim').trim)
+          vim.keymap.set('n', '<Leader>w', require('whitespace-nvim').trim, { noremap = true, desc = "Trim whitespace" })
           EOF
         '';
       }
@@ -396,11 +411,13 @@
         plugin = vim-test;
         config = ''
           let test#strategy = "neovim"
-          nnoremap <silent> <leader>tt :TestNearest<CR>
-          nnoremap <silent> <leader>tT :TestFile<CR>
-          nnoremap <silent> <leader>ta :TestSuite<CR>
-          nnoremap <silent> <leader>tl :TestLast<CR>
-          nnoremap <silent> <leader>tg :TestVisit<CR>
+          lua << EOF
+          vim.keymap.set('n', '<Leader>tt', ':TestNearest<CR>', { noremap = true, desc = "Test nearest" })
+          vim.keymap.set('n', '<Leader>tT', ':TestFile<CR>', { noremap = true, desc = "Test file" })
+          vim.keymap.set('n', '<Leader>ta', ':TestSuite<CR>', { noremap = true, desc = "Test suite" })
+          vim.keymap.set('n', '<Leader>tl', ':TestLast<CR>', { noremap = true, desc = "Test last" })
+          vim.keymap.set('n', '<Leader>tg', ':TestVisit<CR>', { noremap = true, desc = "Test visit" })
+          EOF
         '';
       }
       mkdir-nvim
