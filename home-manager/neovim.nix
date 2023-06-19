@@ -306,6 +306,19 @@
         '';
       }
       {
+        plugin = pkgs.fetchFromGitHub {
+          owner = "vladdoster";
+          repo = "remember.nvim";
+          rev = "v1.4.1";
+          hash = "sha256-XNPPq8KnTcicQ683p1nSyMhRMvka+zyK9bPHts4Occ4=";
+        };
+        config = ''
+          lua << EOF
+          require('remember').setup {}
+          EOF
+        '';
+      }
+      {
         plugin = undotree;
         config = ''
           if !isdirectory($HOME . "/.config/nvim/undotree")
@@ -434,7 +447,6 @@
       vim-advanced-sorters
       vim-endwise
       vim-fugitive
-      vim-lastplace
       vim-repeat
       vim-sleuth
       vim-surround
