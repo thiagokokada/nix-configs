@@ -68,6 +68,10 @@
       inoremap <expr> <C-j> pumvisible() ? "\<C-n>" : "\<C-j>"
       inoremap <expr> <C-k> pumvisible() ? "\<C-p>" : "\<C-k>"
       inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<CR>"
+      " commandline
+      cnoremap <expr> <C-j> pumvisible() ? "\<C-n>" : "\<C-j>"
+      cnoremap <expr> <C-k> pumvisible() ? "\<C-p>" : "\<C-k>"
+      cnoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<CR>"
 
       " disable "How to disable mouse" menu
       aunmenu PopUp.How-to\ disable\ mouse
