@@ -443,6 +443,8 @@
       }
       mkdir-nvim
       nvim-ts-autotag
+      open-browser-github-vim
+      open-browser-vim
       telescope-fzf-native-nvim
       vim-advanced-sorters
       vim-endwise
