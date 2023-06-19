@@ -186,29 +186,6 @@
         '';
       }
       {
-        plugin = onedark-vim;
-        config = ''
-          if (has("termguicolors"))
-            set termguicolors
-          endif
-          colorscheme onedark
-        '';
-      }
-      {
-        plugin = project-nvim;
-        config = ''
-          lua << EOF
-          require("project_nvim").setup {}
-          vim.api.nvim_set_keymap(
-            'n',
-            '<Leader>p',
-            ":Telescope projects<CR>",
-            { noremap = true, desc = "Projects" }
-          )
-          EOF
-        '';
-      }
-      {
         plugin = nvim-autopairs;
         config = ''
           lua << EOF
@@ -302,6 +279,29 @@
               enable = true,
             },
           }
+          EOF
+        '';
+      }
+      {
+        plugin = onedark-vim;
+        config = ''
+          if (has("termguicolors"))
+            set termguicolors
+          endif
+          colorscheme onedark
+        '';
+      }
+      {
+        plugin = project-nvim;
+        config = ''
+          lua << EOF
+          require("project_nvim").setup {}
+          vim.api.nvim_set_keymap(
+            'n',
+            '<Leader>p',
+            ":Telescope projects<CR>",
+            { noremap = true, desc = "Projects" }
+          )
           EOF
         '';
       }
