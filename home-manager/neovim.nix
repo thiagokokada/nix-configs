@@ -73,10 +73,6 @@
       aunmenu PopUp.How-to\ disable\ mouse
       aunmenu PopUp.-1-
 
-      " disable netrw
-      let g:loaded_netrw       = 1
-      let g:loaded_netrwPlugin = 1
-
       " syntax highlight flake.lock files as json
       autocmd BufNewFile,BufRead flake.lock set filetype=json
     '';
@@ -127,6 +123,10 @@
       {
         plugin = lir-nvim;
         config = ''
+          " disable netrw
+          let g:loaded_netrw       = 1
+          let g:loaded_netrwPlugin = 1
+
           lua << EOF
           local actions = require('lir.actions')
           local mark_actions = require('lir.mark.actions')
@@ -167,7 +167,12 @@
           }
 
           -- vinegar
-          vim.api.nvim_set_keymap('n', '-', [[<Cmd>execute 'e ' .. expand('%:p:h')<CR>]], { noremap = true })
+          vim.api.nvim_set_keymap(
+            'n',
+            '-',
+            [[<Cmd>execute 'e ' .. expand('%:p:h')<CR>]],
+            { noremap = true, desc = "Files" }
+          )
           EOF
         '';
       }
@@ -198,7 +203,7 @@
             'n',
             '<Leader>p',
             ":Telescope projects<CR>",
-            { noremap = true }
+            { noremap = true, desc = "Projects" }
           )
           EOF
         '';
@@ -401,7 +406,12 @@
           }
 
           -- remove trailing whitespace with a keybinding
-          vim.keymap.set('n', '<Leader>w', require('whitespace-nvim').trim, { noremap = true, desc = "Trim whitespace" })
+          vim.keymap.set(
+            'n',
+            '<Leader>w',
+            require('whitespace-nvim').trim,
+            { noremap = true, desc = "Trim whitespace" }
+          )
           EOF
         '';
       }
