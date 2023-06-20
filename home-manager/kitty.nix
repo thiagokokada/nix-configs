@@ -52,9 +52,6 @@
       repaint_delay = 10;
       input_delay = 0;
 
-      # Open URLs on click without modifier
-      mouse_map = "left click ungrabbed mouse_click_url_or_select";
-
       # Bell
       visual_bell_duration = "0.0";
       enable_audio_bell = false;
