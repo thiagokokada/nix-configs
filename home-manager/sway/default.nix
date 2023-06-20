@@ -33,8 +33,8 @@ let
       '';
 
       extraBindings = {
-        "Ctrl+space" = "exec ${dunstctl} close";
-        "Ctrl+Shift+space" = "exec ${dunstctl} close-all";
+        "Ctrl+escape" = "exec ${dunstctl} close";
+        "Ctrl+Shift+escape" = "exec ${dunstctl} close-all";
         "${modifier}+p" = ''mode "${displayLayoutMode}"'';
       };
 

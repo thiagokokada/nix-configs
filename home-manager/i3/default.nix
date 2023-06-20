@@ -47,8 +47,8 @@ let
         "${modifier}+c" =
           "exec ${rofi} -show calc -modi calc -no-show-match -no-sort";
         "${modifier}+Tab" = "exec ${rofi} -show window -modi window";
-        "Ctrl+space" = "exec ${dunstctl} close";
-        "Ctrl+Shift+space" = "exec ${dunstctl} close-all";
+        "Ctrl+Esc" = "exec ${dunstctl} close";
+        "Ctrl+Shift+Esc" = "exec ${dunstctl} close-all";
       };
 
       extraModes = with commonOptions.helpers; let
