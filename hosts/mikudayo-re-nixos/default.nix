@@ -23,6 +23,7 @@ in
   };
 
   hardware.nvidia = {
+    open = true;
     modesetting.enable = true;
     # Enable experimental NVIDIA power management via systemd
     powerManagement.enable = true;
