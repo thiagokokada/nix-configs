@@ -12,7 +12,7 @@ let
       displayLayoutMode = " : [a]uto, [g]ui";
     in
     import ../i3/common.nix rec {
-      inherit config lib modifier alt;
+      inherit config lib modifier alt dunstctl;
       browser = "firefox";
       bars = [{ command = "${config.programs.waybar.package}/bin/waybar"; }];
       fileManager = "${terminal} ${config.programs.nnn.finalPackage}/bin/nnn -a -P p";
@@ -33,8 +33,6 @@ let
       '';
 
       extraBindings = {
-        "Ctrl+escape" = "exec ${dunstctl} close";
-        "Ctrl+Shift+escape" = "exec ${dunstctl} close-all";
         "${modifier}+p" = ''mode "${displayLayoutMode}"'';
       };
 

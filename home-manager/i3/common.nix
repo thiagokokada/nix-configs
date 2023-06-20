@@ -1,14 +1,15 @@
 { config
 , lib
-, terminal
-, menu
-, pamixer
-, light
-, playerctl
-, fullScreenShot
 , areaScreenShot
 , browser
+, dunstctl
 , fileManager
+, fullScreenShot
+, light
+, menu
+, pamixer
+, playerctl
+, terminal
 , statusCommand ? null
 , alt ? "Mod1"
 , modifier ? "Mod4"
@@ -240,6 +241,9 @@ in
 
       "Print" = "exec --no-startup-id ${fullScreenShot}";
       "Shift+Print" = "exec --no-startup-id ${areaScreenShot}";
+
+      "Ctrl+escape" = "exec ${dunstctl} close";
+      "Ctrl+Shift+escape" = "exec ${dunstctl} close-all";
     } // (mapDirectionDefault {
       prefixKey = modifier;
       prefixCmd = "focus";

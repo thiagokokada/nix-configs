@@ -15,7 +15,7 @@ let
         " : [h]  , [j]  , [k]  , [l]  , [a]uto, [d]uplicate, [m]irror, [s]econd-only, primary-[o]nly";
     in
     import ./common.nix rec {
-      inherit config lib modifier alt;
+      inherit config lib modifier alt dunstctl;
 
       browser = "firefox";
       fileManager = "${terminal} ${config.programs.nnn.finalPackage}/bin/nnn -a -P p";
@@ -47,8 +47,6 @@ let
         "${modifier}+c" =
           "exec ${rofi} -show calc -modi calc -no-show-match -no-sort";
         "${modifier}+Tab" = "exec ${rofi} -show window -modi window";
-        "Ctrl+Esc" = "exec ${dunstctl} close";
-        "Ctrl+Shift+Esc" = "exec ${dunstctl} close-all";
       };
 
       extraModes = with commonOptions.helpers; let
