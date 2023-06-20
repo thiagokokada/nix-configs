@@ -1,7 +1,7 @@
 { pkgs, ... }:
 
 {
-  home.packages = with pkgs; [ universal-ctags ripgrep ];
+  home.packages = with pkgs; [ ripgrep ];
 
   programs.neovim = {
     enable = true;
