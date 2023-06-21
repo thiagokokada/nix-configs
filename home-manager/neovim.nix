@@ -126,62 +126,6 @@
         '';
       }
       {
-        plugin = lir-nvim;
-        config = ''
-          " disable netrw
-          let g:loaded_netrw       = 1
-          let g:loaded_netrwPlugin = 1
-
-          lua << EOF
-          local actions = require('lir.actions')
-          local mark_actions = require('lir.mark.actions')
-          local clipboard_actions = require('lir.clipboard.actions')
-
-          require('lir').setup {
-            show_hidden_files = false,
-            ignore = {},
-            devicons = {
-              enable = ${if stdenv.isDarwin then "false" else "true"},
-              highlight_dirname = false
-            },
-            mappings = {
-              ['<Enter>'] = actions.edit,
-              ['<C-s>'] = actions.split,
-              ['<C-v>'] = actions.vsplit,
-              ['<C-t>'] = actions.tabedit,
-
-              ['-'] = actions.up,
-              ['q'] = actions.quit,
-
-              ['K'] = actions.mkdir,
-              ['N'] = actions.newfile,
-              ['R'] = actions.rename,
-              ['@'] = actions.cd,
-              ['Y'] = actions.yank_path,
-              ['.'] = actions.toggle_show_hidden,
-              ['D'] = actions.delete,
-
-              ['J'] = function()
-                mark_actions.toggle_mark()
-                vim.cmd('normal! j')
-              end,
-              ['C'] = clipboard_actions.copy,
-              ['X'] = clipboard_actions.cut,
-              ['P'] = clipboard_actions.paste,
-            },
-          }
-
-          -- vinegar
-          vim.api.nvim_set_keymap(
-            'n',
-            '-',
-            [[<Cmd>execute 'e ' .. expand('%:p:h')<CR>]],
-            { noremap = true, desc = "Files" }
-          )
-          EOF
-        '';
-      }
-      {
         plugin = lualine-nvim;
         # TODO: add support for trailing whitespace
         config = ''
@@ -292,6 +236,18 @@
               enable = true,
             },
           }
+          EOF
+        '';
+      }
+      {
+        plugin = oil-nvim;
+        config = ''
+          lua << EOF
+          require("oil").setup {
+            default_file_explorer = true,
+            skip_confirm_for_simple_edits = false,
+          }
+          vim.keymap.set("n", "-", require("oil").open, { desc = "Open parent directory" })
           EOF
         '';
       }
@@ -455,8 +411,6 @@
       }
       mkdir-nvim
       nvim-ts-autotag
-      open-browser-github-vim
-      open-browser-vim
       telescope-fzf-native-nvim
       vim-advanced-sorters
       vim-endwise
