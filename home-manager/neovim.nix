@@ -287,6 +287,30 @@
         '';
       }
       {
+        plugin = other-nvim;
+        config = ''
+          lua << EOF
+          require("other-nvim").setup {
+            mappings = {
+              "livewire",
+              "angular",
+              "laravel",
+              "rails",
+              "golang",
+            },
+          }
+
+          vim.api.nvim_set_keymap("n", "<leader>aa", "<cmd>:Other<CR>", { noremap = true, silent = true, desc = "Other" })
+          vim.api.nvim_set_keymap("n", "<leader>as", "<cmd>:OtherSplit<CR>", { noremap = true, silent = true, desc = "Other h-split" })
+          vim.api.nvim_set_keymap("n", "<leader>av", "<cmd>:OtherVSplit<CR>", { noremap = true, silent = true, desc = "Other v-split" })
+          vim.api.nvim_set_keymap("n", "<leader>ac", "<cmd>:OtherClear<CR>", { noremap = true, silent = true, desc = "Other clear" })
+
+          -- Context specific bindings
+          vim.api.nvim_set_keymap("n", "<leader>at", "<cmd>:Other test<CR>", { noremap = true, silent = true, desc = "Other test" })
+          EOF
+        '';
+      }
+      {
         plugin = project-nvim;
         config = ''
           lua << EOF
