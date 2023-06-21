@@ -5,6 +5,7 @@
 
   programs.neovim = {
     enable = true;
+    defaultEditor = true;
 
     withRuby = false;
     withNodeJs = false;
@@ -450,9 +451,5 @@
       # give [?] icons in macOS
       nvim-web-devicons
     ];
-  };
-
-  programs.zsh.sessionVariables = {
-    EDITOR = "nvim";
   };
 }
