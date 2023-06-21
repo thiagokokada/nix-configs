@@ -68,7 +68,7 @@ cleanup() {
         nix-store --gc --print-roots | \
             awk '{ print $1 }' | \
             grep '/result.*$' | \
-            xargs -L1 rm -rf
+            xargs -L1 rm -rf || true
     fi
 
     echo "[INFO] Verifying nix store..."
