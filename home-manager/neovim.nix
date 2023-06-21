@@ -99,6 +99,9 @@
           lua << EOF
           -- bytecompile lua modules
           vim.loader.enable()
+
+          -- load .exrc, .nvimrc and .nvim.lua local files
+          vim.o.exrc = true
           EOF
         '';
       }
