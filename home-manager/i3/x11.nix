@@ -44,6 +44,7 @@ in
             "--"
             "${lockscreen}/bin/lock-screen"
           ];
+          Restart = "on-failure";
         };
     };
 
