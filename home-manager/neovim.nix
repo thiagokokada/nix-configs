@@ -264,16 +264,7 @@
         '';
       }
       {
-        plugin = pkgs.vimUtils.buildVimPluginFrom2Nix rec {
-          pname = "openingh.nvim";
-          version = "2023-06-19";
-          src = pkgs.fetchFromGitHub {
-            owner = "Almo7aya";
-            repo = pname;
-            rev = "2719e5759ecf4b9a2d492fbf52d03d2e6fc6126a";
-            hash = "sha256-qlcps5nuc5i5J3BxpsEAgG7hDi74m+RrbtmDT2Llhhg";
-          };
-        };
+        plugin = openingh-nvim;
         config = ''
           lua << EOF
           -- for repository page
@@ -325,16 +316,7 @@
         '';
       }
       {
-        plugin = pkgs.vimUtils.buildVimPluginFrom2Nix rec {
-          pname = "remember.nvim";
-          version = "1.4.1";
-          src = pkgs.fetchFromGitHub {
-            owner = "vladdoster";
-            repo = pname;
-            rev = "v${version}";
-            hash = "sha256-XNPPq8KnTcicQ683p1nSyMhRMvka+zyK9bPHts4Occ4=";
-          };
-        };
+        plugin = remember-nvim;
         config = ''
           lua << EOF
           require('remember').setup {}
