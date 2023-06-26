@@ -268,12 +268,11 @@
         config = ''
           lua << EOF
           -- for repository page
-          vim.api.nvim_set_keymap('n', '<Leader>gr', ":OpenInGHRepo <CR>", { silent = true, noremap = true, desc = "Open in GitHub repo" })
-          vim.api.nvim_set_keymap('v', '<Leader>gr', ":OpenInGHRepo <CR>", { silent = true, noremap = true, desc = "Open in GitHub repo" })
+          vim.keymap.set({'n', 'v'}, '<Leader>gr', ":OpenInGHRepo <CR>", { silent = true, noremap = true, desc = "Open in GitHub repo" })
 
           -- for current file page
-          vim.api.nvim_set_keymap('n', '<Leader>gf', ":OpenInGHFile <CR>", { silent = true, noremap = true, desc = "Open in GitHub file" })
-          vim.api.nvim_set_keymap('v', '<Leader>gf', ":OpenInGHFileLines <CR>", { silent = true, noremap = true, desc = "Open in GitHub lines" })
+          vim.keymap.set('n', '<Leader>gf', ":OpenInGHFile <CR>", { silent = true, noremap = true, desc = "Open in GitHub file" })
+          vim.keymap.set('v', '<Leader>gf', ":OpenInGHFileLines <CR>", { silent = true, noremap = true, desc = "Open in GitHub lines" })
           EOF
         '';
       }
@@ -291,13 +290,13 @@
             },
           }
 
-          vim.api.nvim_set_keymap("n", "<leader>aa", "<cmd>:Other<CR>", { noremap = true, silent = true, desc = "Other" })
-          vim.api.nvim_set_keymap("n", "<leader>as", "<cmd>:OtherSplit<CR>", { noremap = true, silent = true, desc = "Other h-split" })
-          vim.api.nvim_set_keymap("n", "<leader>av", "<cmd>:OtherVSplit<CR>", { noremap = true, silent = true, desc = "Other v-split" })
-          vim.api.nvim_set_keymap("n", "<leader>ac", "<cmd>:OtherClear<CR>", { noremap = true, silent = true, desc = "Other clear" })
+          vim.keymap.set("n", "<leader>aa", "<cmd>:Other<CR>", { noremap = true, silent = true, desc = "Other" })
+          vim.keymap.set("n", "<leader>as", "<cmd>:OtherSplit<CR>", { noremap = true, silent = true, desc = "Other h-split" })
+          vim.keymap.set("n", "<leader>av", "<cmd>:OtherVSplit<CR>", { noremap = true, silent = true, desc = "Other v-split" })
+          vim.keymap.set("n", "<leader>ac", "<cmd>:OtherClear<CR>", { noremap = true, silent = true, desc = "Other clear" })
 
           -- Context specific bindings
-          vim.api.nvim_set_keymap("n", "<leader>at", "<cmd>:Other test<CR>", { noremap = true, silent = true, desc = "Other test" })
+          vim.keymap.set("n", "<leader>at", "<cmd>:Other test<CR>", { noremap = true, silent = true, desc = "Other test" })
           EOF
         '';
       }
@@ -306,7 +305,7 @@
         config = ''
           lua << EOF
           require('project_nvim').setup {}
-          vim.api.nvim_set_keymap(
+          vim.keymap.set(
             'n',
             '<Leader>p',
             ":Telescope projects<CR>",
