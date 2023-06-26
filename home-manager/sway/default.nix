@@ -108,6 +108,8 @@ in
     };
 
     extraSessionCommands = ''
+      # Source home-manager session vars
+      . "${config.home.profileDirectory}/etc/profile.d/hm-session-vars.sh"
       # Firefox
       export MOZ_ENABLE_WAYLAND=1
       # Qt
