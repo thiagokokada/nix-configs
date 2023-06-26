@@ -83,9 +83,13 @@
       Appearance = {
         style = "kvantum-dark";
         icon_theme = config.gtk.iconTheme.name;
+        standard_dialogs = "gtk3";
       };
       Interface = {
         activate_item_on_single_click = 0;
+        double_click_interval = 400;
+        dialog_buttons_have_icons = 1;
+        wheel_scroll_lines = 3;
       };
       Fonts = {
         # Noto Sans Mono 10
