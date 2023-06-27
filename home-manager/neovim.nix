@@ -122,14 +122,6 @@
         '';
       }
       {
-        plugin = leap-nvim;
-        config = ''
-          lua << EOF
-          require('leap').add_default_mappings()
-          EOF
-        '';
-      }
-      {
         plugin = lualine-nvim;
         # TODO: add support for trailing whitespace
         config = ''
@@ -345,6 +337,16 @@
           " let g:csv_strict_columns = 1
           " disabled CSV concealing (e.g.: `,` -> `|`), also faster
           let g:csv_no_conceal = 1
+        '';
+      }
+      {
+        plugin = vim-sneak;
+        config = ''
+          let g:sneak#label = 1
+          map f <Plug>Sneak_f
+          map F <Plug>Sneak_F
+          map t <Plug>Sneak_t
+          map T <Plug>Sneak_T
         '';
       }
       {
