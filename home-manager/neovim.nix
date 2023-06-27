@@ -436,6 +436,7 @@
         plugin = vim-test;
         config = ''
           let test#strategy = "neovim"
+          let test#neovim#term_position = "vert botright"
           lua << EOF
           vim.keymap.set('n', '<Leader>tt', ':TestNearest<CR>', { noremap = true, desc = "Test nearest" })
           vim.keymap.set('n', '<Leader>tT', ':TestFile<CR>', { noremap = true, desc = "Test file" })
