@@ -21,6 +21,7 @@
     gnugrep
     gnumake
     gnused
+    inetutils
     ix
     jq
     less
