@@ -14,7 +14,7 @@
   console.useXkbConfig = true;
 
   # For gtkgreet
-  environment.systemPackages = with pkgs; [ arc-theme ];
+  environment.systemPackages = with pkgs; [ nordic ];
 
   # Configure special programs (i.e. hardware access)
   programs = {
@@ -43,9 +43,9 @@
         initial_session = {
           command = "${pkgs.sway}/bin/sway --config ${pkgs.writeText "sway-config" ''
             # `-l` activates layer-shell mode. Notice that `swaymsg exit` will run after gtkgreet.
-            exec "GTK_THEME=Arc-Dark ${pkgs.greetd.gtkgreet}/bin/gtkgreet -l; swaymsg exit"
+            exec "GTK_THEME=Nordic-bluish-accent ${pkgs.greetd.gtkgreet}/bin/gtkgreet -l; swaymsg exit"
 
-            bindsym Mod4+shift+e exec swaynag \
+            bindsym Mod4+Escape exec ${pkgs.sway}/bin/swaynag \
               -t warning \
               -m 'What do you want to do?' \
               -b 'Poweroff' 'systemctl poweroff' \
