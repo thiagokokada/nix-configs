@@ -13,9 +13,6 @@
   # Configure the virtual console keymap from the xserver keyboard settings
   console.useXkbConfig = true;
 
-  # For gtkgreet
-  environment.systemPackages = with pkgs; [ nordic ];
-
   # Configure special programs (i.e. hardware access)
   programs = {
     dconf.enable = true;
@@ -28,21 +25,27 @@
     greetd = {
       enable = true;
       settings = rec {
-        initial_session = {
-          command = "${pkgs.sway}/bin/sway --config ${pkgs.writeText "sway-config" ''
-            # `-l` activates layer-shell mode. Notice that `swaymsg exit` will run after gtkgreet.
-            exec "GTK_THEME=Nordic-bluish-accent ${pkgs.greetd.gtkgreet}/bin/gtkgreet -l; swaymsg exit"
-
-            bindsym Mod4+Escape exec ${pkgs.sway}/bin/swaynag \
-              -t warning \
-              -m 'What do you want to do?' \
-              -b 'Poweroff' 'systemctl poweroff' \
-              -b 'Reboot' 'systemctl reboot'
-
-            include /etc/sway/config.d/*
-          ''}";
-          user = "greeter";
-        };
+        initial_session =
+          let
+            genSessionsFor = path:
+              lib.concatStringsSep ":"
+                (map (s: "${s}/${path}")
+                  config.services.xserver.displayManager.sessionPackages);
+          in
+          {
+            command = lib.concatStringsSep " " [
+              "${pkgs.greetd.tuigreet}/bin/tuigreet"
+              "--remember"
+              "--remember-session"
+              "--time"
+              "--cmd sx"
+              "--sessions"
+              # We can't know if the sessions inside sessionPackages are for
+              # X or Wayland, so add both to path
+              "${genSessionsFor "share/xsessions"}:${genSessionsFor "share/wayland-sessions"}"
+            ];
+            user = "greeter";
+          };
         default_session = initial_session;
       };
       vt = 7;
@@ -67,12 +70,6 @@
       };
     };
   };
-
-  environment.etc."greetd/environments".text = ''
-    sway
-    sx
-  '' +
-  lib.optionalString (config.programs.steam.gamescopeSession.enable) "steam-gamescope";
 
   # https://github.com/apognu/tuigreet/issues/76
   systemd.tmpfiles.rules = [
