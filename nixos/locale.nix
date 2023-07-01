@@ -14,7 +14,8 @@
   services.xserver = {
     layout = lib.mkDefault "us";
     xkbVariant = lib.mkDefault "intl";
-    xkbOptions = lib.mkDefault "grp:win_space_toggle";
+    # Remap Caps Lock to Esc, and use Super+Space to change layouts
+    xkbOptions = lib.mkDefault "caps:escape,grp:win_space_toggle";
   };
 
   # Set your time zone.

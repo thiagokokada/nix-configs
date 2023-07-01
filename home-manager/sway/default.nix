@@ -82,7 +82,7 @@ in
       input = {
         "type:keyboard" = {
           xkb_layout = "us(intl)";
-          xkb_options = "grp:win_space_toggle";
+          xkb_options = "caps:escape,grp:win_space_toggle";
         };
         "type:pointer" = { accel_profile = "flat"; };
         "type:touchpad" = {
