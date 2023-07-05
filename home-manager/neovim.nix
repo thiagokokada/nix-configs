@@ -452,6 +452,7 @@
       nvim-ts-autotag
       telescope-fzf-native-nvim
       vim-advanced-sorters
+      vim-easy-align
       vim-endwise
       vim-fugitive
       vim-repeat
