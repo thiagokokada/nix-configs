@@ -36,11 +36,6 @@
     zoom-us
   ];
 
-  programs.zsh.shellAliases = {
-    copy = "${pkgs.xclip}/bin/xclip -selection c";
-    paste = "${pkgs.xclip}/bin/xclip -selection c -o";
-  };
-
   services = {
     easyeffects.enable = true;
     udiskie = {
