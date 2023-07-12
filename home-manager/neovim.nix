@@ -17,9 +17,6 @@
 
     extraConfig = ''
       "" General config
-      " enable/disable paste mode
-      set pastetoggle=<F4>
-
       " show line number
       set number
 
