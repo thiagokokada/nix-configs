@@ -81,6 +81,9 @@
 
       " syntax highlight flake.lock files as json
       autocmd BufNewFile,BufRead flake.lock set filetype=json
+
+      " keep comment leader when 'o' or 'O' is used in Normal mode
+      autocmd FileType * set formatoptions+=o
     '';
 
     # To install non-packaged plugins, use
