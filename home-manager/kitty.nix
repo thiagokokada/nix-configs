@@ -82,11 +82,11 @@
     # Do not enable those alias in non-kitty terminal
     if [[ "$TERM" == "xterm-kitty" ]]; then
       alias copy="kitty +kitten clipboard"
-      alias diffk="kitty +kitten diff"
+      alias d="kitty +kitten diff"
       alias icat="kitty +kitten icat"
       alias paste="kitty +kitten clipboard --get-clipboard"
-      alias sshk="kitty +kitten ssh $@"
-      alias ssh="TERM=xterm-256color ssh"
+      alias ssh="kitty +kitten ssh $@"
+      alias ssh-compat="TERM=xterm-256color ssh"
     fi
   '';
 }
