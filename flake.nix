@@ -46,11 +46,6 @@
     };
 
     # custom packages
-    autorandr = {
-      url = "github:phillipberndt/autorandr";
-      flake = false;
-    };
-
     arandr = {
       url = "gitlab:thiagokokada/arandr";
       flake = false;

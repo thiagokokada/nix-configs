@@ -18,8 +18,6 @@ in
       wallpapers = prev.callPackage ../packages/wallpapers { };
 
       # custom packages
-      autorandr = prev.autorandr.overrideAttrs (_: { src = inputs.autorandr; });
-
       arandr = prev.arandr.overrideAttrs (_: { src = inputs.arandr; });
 
       anime4k = prev.callPackage ../packages/anime4k { };

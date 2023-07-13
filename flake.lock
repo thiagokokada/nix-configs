@@ -16,22 +16,6 @@
         "type": "gitlab"
       }
     },
-    "autorandr": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1688650746,
-        "narHash": "sha256-WwX8aifefyV48KpWW5OErgg48Si7Z93ggC5P2hr87dQ=",
-        "owner": "phillipberndt",
-        "repo": "autorandr",
-        "rev": "8d28d3c0713c658357e052bb3f03f731d8feb080",
-        "type": "github"
-      },
-      "original": {
-        "owner": "phillipberndt",
-        "repo": "autorandr",
-        "type": "github"
-      }
-    },
     "doomemacs": {
       "flake": false,
       "locked": {
@@ -314,7 +298,6 @@
     "root": {
       "inputs": {
         "arandr": "arandr",
-        "autorandr": "autorandr",
         "doomemacs": "doomemacs",
         "emacs": "emacs",
         "flake-compat": "flake-compat",
