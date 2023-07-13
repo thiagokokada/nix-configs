@@ -3,11 +3,8 @@
 {
   home.packages = with pkgs; [
     babashka
+    clojure
     clojure-lsp
+    (leiningen.override { inherit (clojure) jdk; })
   ];
-
-  # https://github.com/babashka/babashka/issues/257
-  programs.zsh.shellAliases = {
-    bb = "${pkgs.rlwrap}/bin/rlwrap ${pkgs.babashka}/bin/bb";
-  };
 }
