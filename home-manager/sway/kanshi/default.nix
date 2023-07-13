@@ -1,7 +1,7 @@
-{ super, lib, ... }:
+{ lib, osConfig, ... }:
 
 let
-  hostName = super.networking.hostName or "";
+  hostName = osConfig.networking.hostName or "generic";
   hostConfigFile = ./${hostName}.nix;
 in
 {

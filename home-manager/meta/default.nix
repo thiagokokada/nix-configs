@@ -1,4 +1,4 @@
-{ lib, pkgs, super, ... }:
+{ lib, pkgs, osConfig, ... }:
 
 {
   # Import overlays
@@ -7,6 +7,9 @@
     ../../modules/device.nix
     ../../modules/meta.nix
   ];
+
+  # Inherit config from NixOS or homeConfigurations
+  inherit (osConfig) device meta;
 
   # Add some Nix related packages
   home.packages = with pkgs; [
@@ -56,11 +59,7 @@
   # You can update Home Manager without changing this value. See
   # the Home Manager release notes for a list of state version
   # changes in each release.
-  home.stateVersion = (super.system.stateVersion or "23.11");
+  home.stateVersion = (osConfig.system.stateVersion or "23.11");
 
   manual.html.enable = true;
-
-  # Inherit config from NixOS or homeConfigurations
-  device = super.device;
-  meta = super.meta;
 }

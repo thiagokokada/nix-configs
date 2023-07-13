@@ -1,4 +1,4 @@
-{ config, lib, pkgs, super, ... }:
+{ config, lib, pkgs, osConfig, ... }:
 let
   # Aliases
   alt = "Mod1";
@@ -101,8 +101,8 @@ in
           bg = "${config.theme.wallpaper.path} ${config.theme.wallpaper.scale}";
           # DPI
           scale = (toString (125 / 100.0));
-        } // lib.optionalAttrs (super ? fonts.fontconfig) {
-          subpixel = super.fonts.fontconfig.subpixel.rgba;
+        } // lib.optionalAttrs (osConfig ? fonts.fontconfig) {
+          subpixel = osConfig.fonts.fontconfig.subpixel.rgba;
         };
       };
     };
@@ -132,7 +132,7 @@ in
       gtk = true;
     };
 
-    extraOptions = lib.optionals (pkgs.lib.isNvidia super) [
+    extraOptions = lib.optionals (pkgs.lib.isNvidia osConfig) [
       "--unsupported-gpu"
     ];
   };

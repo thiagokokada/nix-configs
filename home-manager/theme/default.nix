@@ -1,4 +1,4 @@
-{ super, config, pkgs, lib, ... }:
+{ config, pkgs, lib, osConfig, ... }:
 
 {
   imports = [
@@ -102,8 +102,8 @@
   };
 
   # https://github.com/GNOME/gsettings-desktop-schemas/blob/8527b47348ce0573694e0e254785e7c0f2150e16/schemas/org.gnome.desktop.interface.gschema.xml.in#L276-L296
-  dconf.settings = lib.optionalAttrs (super ? fonts.fontconfig) {
-    "org/gnome/desktop/interface" = with super.fonts.fontconfig; {
+  dconf.settings = lib.optionalAttrs (osConfig ? fonts.fontconfig) {
+    "org/gnome/desktop/interface" = with osConfig.fonts.fontconfig; {
       "color-scheme" = "prefer-dark";
       "font-antialiasing" =
         if antialias then
@@ -124,13 +124,13 @@
       "Net/IconThemeName" = gtk.iconTheme.name;
       "Net/ThemeName" = gtk.theme.name;
       "Gtk/CursorThemeName" = xsession.pointerCursor.name;
-    } // lib.optionalAttrs (super ? fonts.fontconfig) {
+    } // lib.optionalAttrs (osConfig ? fonts.fontconfig) {
       # Applications like Java/Wine doesn't use Fontconfig settings,
       # but uses it from here
-      "Xft/Antialias" = super.fonts.fontconfig.antialias;
-      "Xft/Hinting" = super.fonts.fontconfig.hinting.enable;
-      "Xft/HintStyle" = super.fonts.fontconfig.hinting.style;
-      "Xft/RGBA" = super.fonts.fontconfig.subpixel.rgba;
+      "Xft/Antialias" = osConfig.fonts.fontconfig.antialias;
+      "Xft/Hinting" = osConfig.fonts.fontconfig.hinting.enable;
+      "Xft/HintStyle" = osConfig.fonts.fontconfig.hinting.style;
+      "Xft/RGBA" = osConfig.fonts.fontconfig.subpixel.rgba;
     };
   };
 }

@@ -104,7 +104,7 @@ in
         ];
         extraSpecialArgs = {
           flake = self;
-          super = {
+          osConfig = {
             device.type = deviceType;
             meta.username = username;
             meta.configPath = "${homeDirectory}/${configPosfix}";

@@ -1,4 +1,4 @@
-{ super, config, lib, pkgs, ... }:
+{ config, lib, pkgs, osConfig, ... }:
 let
   xsession = "${config.home.homeDirectory}/.xsession";
 in
@@ -77,12 +77,12 @@ in
     enable = true;
     initExtra =
       # NVIDIA sync
-      lib.optionalString (super.hardware.nvidia.prime.sync.enable or false) ''
+      lib.optionalString (osConfig.hardware.nvidia.prime.sync.enable or false) ''
         ${pkgs.xorg.xrandr}/bin/xrandr --setprovideroutputsource modesetting NVIDIA-0
         ${pkgs.xorg.xrandr}/bin/xrandr --auto
       ''
       # Reverse PRIME
-      + lib.optionalString (super.hardware.nvidia.prime.offload.enable or false) ''
+      + lib.optionalString (osConfig.hardware.nvidia.prime.offload.enable or false) ''
         ${pkgs.xorg.xrandr}/bin/xrandr --setprovideroutputsource NVIDIA-G0 modesetting
       ''
       # Automatically loads the resolution

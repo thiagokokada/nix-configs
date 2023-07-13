@@ -27,10 +27,7 @@ in
         ../../home-manager/minimal.nix
       ];
     };
-    extraSpecialArgs = {
-      inherit flake;
-      super = config;
-    };
+    extraSpecialArgs = { inherit flake; };
   };
 
   device.type = "server";

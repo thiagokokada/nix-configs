@@ -1,9 +1,9 @@
-{ super, config, lib, ... }:
+{ config, lib, osConfig, ... }:
 
 let
   inherit (config.home) username;
-  subpixelRender = (super.fonts.fontconfig.antialias or false) &&
-    (super.fonts.fontconfig.subpixel.rgba != "none");
+  subpixelRender = (osConfig.fonts.fontconfig.antialias or false) &&
+    (osConfig.fonts.fontconfig.subpixel.rgba != "none");
 in
 {
   programs.firefox = {

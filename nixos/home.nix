@@ -19,10 +19,7 @@
     home-manager = {
       useUserPackages = true;
       users.${config.nixos.home.username} = ../home-manager/nixos.nix;
-      extraSpecialArgs = {
-        inherit flake;
-        super = config;
-      };
+      extraSpecialArgs = { inherit flake; };
     };
   };
 }
