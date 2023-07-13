@@ -47,6 +47,24 @@ in
   # Use ultrawide wallpaper
   home-manager.users.${config.meta.username}.theme.wallpaper.path = pkgs.wallpapers.hatsune-miku_stylized-ultrawide;
 
+  nixos.audio = {
+    lowLatency = {
+      enable = true;
+      # The audio device from this notebook doesn't seem to like short buffers too much
+      quantum = 128;
+    };
+  };
+
+  programs.steam.gamescopeSession.args = [
+    "-w 1600"
+    "-h 900"
+    "--fsr-sharpness 10"
+    "-U"
+    "--adaptive-sync"
+  ];
+
+  # Used for firmware updates
+  services.fwupd.enable = true;
   services.tlp.settings = {
     # Set battery thresholds
     START_CHARGE_THRESH_BAT0 = 75;
@@ -61,19 +79,6 @@ in
     CPU_SCALING_GOVERNOR_ON_BAT = "schedutil";
   };
 
-  programs.steam.gamescopeSession.args = [
-    "-w 1600"
-    "-h 900"
-    "--fsr-sharpness 10"
-    "-U"
-    "--adaptive-sync"
-  ];
-
-  # Used for firmware updates
-  services.fwupd.enable = true;
-
-  # The audio device from this notebook doesn't seem to like short buffers too much
-  services.pipewire.lowLatency.quantum = 128;
 
   # https://gitlab.freedesktop.org/pipewire/pipewire/-/issues/1849
   systemd.services.fix-mic-light = {

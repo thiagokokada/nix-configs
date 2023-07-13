@@ -1,7 +1,26 @@
-{ config, lib, pkgs, ... }:
+{ flake, config, lib, pkgs, ... }:
 
 {
-  options.nixos.audio.enable = pkgs.lib.mkDefaultOption "audio config";
+  imports = [ flake.inputs.nix-gaming.nixosModules.pipewireLowLatency ];
+
+  options.nixos.audio = {
+    enable = pkgs.lib.mkDefaultOption "audio config";
+    lowLatency = {
+      enable = lib.mkEnableOption "low latency config";
+      quantum = lib.mkOption {
+        description = "Minimum quantum to set";
+        type = lib.types.int;
+        default = 64;
+        example = 32;
+      };
+      rate = lib.mkOption {
+        description = "Rate to set";
+        type = lib.types.int;
+        default = 48000;
+        example = 96000;
+      };
+    };
+  };
 
   config = lib.mkIf config.nixos.audio.enable {
     # Wireplumber config
@@ -31,6 +50,9 @@
         };
         pulse.enable = true;
         wireplumber.enable = true;
+        lowLatency = {
+          inherit (config.nixos.audio.lowLatency) enable quantum rate;
+        };
       };
     };
   };
