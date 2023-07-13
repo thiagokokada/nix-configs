@@ -2,16 +2,14 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, flake, ... }:
+{ flake, ... }:
 
-let
-  inherit (config.meta) username;
-in
 {
   imports =
     [
       # Include the results of the hardware scan.
       ./hardware-configuration.nix
+      ../../nixos/home.nix
       ../../nixos/minimal.nix
       ../../nixos/security.nix
       ../../nixos/ssh.nix
@@ -19,16 +17,10 @@ in
       flake.inputs.home.nixosModules.home-manager
     ];
 
-  home-manager = {
-    useUserPackages = true;
-    users.${username} = {
-      imports = [
-        ../../home-manager/irssi.nix
-        ../../home-manager/minimal.nix
-      ];
-    };
-    extraSpecialArgs = { inherit flake; };
-  };
+  nixos.home.imports = [
+    ../../home-manager/irssi.nix
+    ../../home-manager/minimal.nix
+  ];
 
   device.type = "server";
 
