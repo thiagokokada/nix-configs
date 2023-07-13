@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ config, pkgs, ... }:
 
 {
   # CLI packages.
@@ -6,14 +6,16 @@
     # To get zsh completion for system packages
     pathsToLink = [ "/share/zsh" ];
 
-    systemPackages = with pkgs; [
+    systemPackages = with pkgs; with config.boot.kernelPackages; [
+      cpupower
       glxinfo
-      linuxPackages.cpupower
       lm_sensors
       lshw
       pciutils
       powertop
       psmisc
+      ryzenadj
+      turbostat
       usbutils
     ];
   };
