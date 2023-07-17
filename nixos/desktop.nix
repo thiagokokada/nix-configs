@@ -1,7 +1,7 @@
 { config, lib, pkgs, ... }:
 
 {
-  options.nixos.desktop.enable = pkgs.lib.mkDefaultOption "desktop config";
+  options.nixos.desktop.enable = lib.mkDefaultOption "desktop config";
 
   config = lib.mkIf config.nixos.desktop.enable {
     environment.systemPackages = with pkgs; [

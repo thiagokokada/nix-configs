@@ -1,4 +1,4 @@
-{ config, lib, pkgs, flake, ... }:
+{ config, lib, flake, ... }:
 
 {
   imports = [
@@ -7,7 +7,7 @@
   ];
 
   options.nixos.home = {
-    enable = pkgs.lib.mkDefaultOption "home config";
+    enable = lib.mkDefaultOption "home config";
     username = lib.mkOption {
       description = "Main username";
       type = lib.types.str;

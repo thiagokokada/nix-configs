@@ -74,7 +74,7 @@ in
             format-icons = [ "󰤯" "󰤟" "󰤢" "󰤥" "󰤨" ];
           };
       } //
-      (pkgs.lib.recursiveMergeAttrs
+      (lib.recursiveMergeAttrs
         (map
           (m: {
             "${shortPathName m}" = {

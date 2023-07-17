@@ -10,7 +10,7 @@ in
     (final: prev: {
       # namespaces
       lib = prev.lib.extend (finalLib: prevLib:
-        (import ../lib { inherit (prev) lib; })
+        (import ../lib { lib = finalLib; })
       );
 
       gaming = flake.inputs.nix-gaming.packages.${pkgs.system};

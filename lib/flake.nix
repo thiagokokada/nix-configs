@@ -58,6 +58,9 @@ in
       nixosConfigurations.${hostname} = nixosSystem {
         inherit system;
         modules = [ ../hosts/${hostname} ] ++ extraModules;
+        lib = nixpkgs.lib.extend (final: prev:
+          (import ../lib { lib = final; })
+        );
         specialArgs = { flake = self; };
       };
 
@@ -102,6 +105,9 @@ in
             imports = [ configuration ];
           })
         ];
+        lib = nixpkgs.lib.extend (final: prev:
+          (import ../lib { lib = final; })
+        );
         extraSpecialArgs = {
           flake = self;
           osConfig = {

@@ -1,9 +1,9 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, ... }:
 
 {
   imports = [ ./btrfs.nix ];
 
-  options.nixos.system.enable = pkgs.lib.mkDefaultOption "system config";
+  options.nixos.system.enable = lib.mkDefaultOption "system config";
 
   config = lib.mkIf config.nixos.system.enable {
 

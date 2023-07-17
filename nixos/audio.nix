@@ -1,10 +1,10 @@
-{ flake, config, lib, pkgs, ... }:
+{ flake, config, lib, ... }:
 
 {
   imports = [ flake.inputs.nix-gaming.nixosModules.pipewireLowLatency ];
 
   options.nixos.audio = {
-    enable = pkgs.lib.mkDefaultOption "audio config";
+    enable = lib.mkDefaultOption "audio config";
     lowLatency = {
       enable = lib.mkEnableOption "low latency config";
       quantum = lib.mkOption {
