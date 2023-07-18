@@ -1,15 +1,13 @@
-{ config, lib, pkgs, flake, ... }:
+{ ... }:
 
 {
   imports = [
     ./audio.nix
-    ./desktop.nix
+    ./desktop
     ./dev.nix
     ./fonts.nix
     ./home.nix
     ./laptop.nix
     ./minimal.nix
-    ./wayland.nix
-    ./xserver.nix
   ];
 }

@@ -1,4 +1,4 @@
-{ config, lib, ... }:
+{ config, lib, pkgs, ... }:
 
 {
   imports = [ ./btrfs.nix ];
@@ -6,6 +6,10 @@
   options.nixos.system.enable = lib.mkDefaultOption "system config";
 
   config = lib.mkIf config.nixos.system.enable {
+    environment.systemPackages = with pkgs; [
+      hdparm
+      smartmontools
+    ];
 
     boot = {
       initrd.systemd.enable = lib.mkDefault true;

@@ -1,14 +1,16 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, ... }:
 
 {
+  imports = [
+    ./greetd.nix
+    ./plymouth.nix
+    ./wayland.nix
+    ./xserver.nix
+  ];
+
   options.nixos.desktop.enable = lib.mkDefaultOption "desktop config";
 
   config = lib.mkIf config.nixos.desktop.enable {
-    environment.systemPackages = with pkgs; [
-      hdparm
-      smartmontools
-    ];
-
     programs.gnome-disks.enable = true;
 
     services = {
