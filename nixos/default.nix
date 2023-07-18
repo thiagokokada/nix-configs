@@ -4,7 +4,7 @@
   imports = [
     ./audio.nix
     ./desktop
-    ./dev.nix
+    ./dev
     ./fonts.nix
     ./home.nix
     ./laptop.nix
