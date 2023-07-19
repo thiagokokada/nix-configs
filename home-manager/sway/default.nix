@@ -112,6 +112,8 @@ in
       . "${config.home.profileDirectory}/etc/profile.d/hm-session-vars.sh"
       # Firefox
       export MOZ_ENABLE_WAYLAND=1
+      # Chrome/Chromium/Electron
+      export NIXOS_OZONE_WL=1
       # Qt
       export QT_QPA_PLATFORM=wayland
       export QT_WAYLAND_DISABLE_WINDOWDECORATION="1"
