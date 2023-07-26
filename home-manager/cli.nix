@@ -30,6 +30,7 @@
     netcat-gnu
     ouch
     page
+    procps
     pv
     python3
     ripgrep
