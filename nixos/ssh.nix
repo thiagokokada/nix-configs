@@ -1,12 +1,15 @@
-{ config, lib, pkgs, ... }:
+{ config, ... }:
 let inherit (config.meta) username;
 in
 {
   # Enable OpenSSH
-  services.openssh = {
-    enable = true;
-    settings = {
-      PasswordAuthentication = false;
+  services = {
+    fail2ban.enable = true;
+    openssh = {
+      enable = true;
+      settings = {
+        PasswordAuthentication = false;
+      };
     };
   };
 

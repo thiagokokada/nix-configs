@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ ... }:
 {
   imports = [
     (import ./wireguard {
@@ -15,9 +15,5 @@
     enable = true;
     allowReboot = true;
     flake = "github:thiagokokada/nix-configs";
-  };
-
-  services = {
-    fail2ban.enable = true;
   };
 }
