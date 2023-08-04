@@ -1,4 +1,4 @@
-{ ... }:
+{ pkgs, ... }:
 {
   imports = [
     (import ./wireguard {
@@ -9,6 +9,10 @@
   ];
 
   device.mediaDir = "/media";
+
+  environment.systemPackages = with pkgs; [ tailscale ];
+
+  services.tailscale.enable = true;
 
   # Enable NixOS auto-upgrade
   system.autoUpgrade = {
