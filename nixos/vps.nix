@@ -6,6 +6,7 @@
       externalUrl = "mirai-vps.duckdns.org";
     })
     ./plex.nix
+    ./tailscale.nix
   ];
 
   device.mediaDir = "/media";
