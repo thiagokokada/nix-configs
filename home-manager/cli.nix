@@ -9,6 +9,7 @@
     coreutils
     curl
     curlie
+    dialog
     diffutils
     dos2unix
     dua
