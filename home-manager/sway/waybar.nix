@@ -259,6 +259,12 @@ in
       #cpu.critical {
         color: ${base08};
       }
+      #memory.warning {
+        color: ${base0A};
+      }
+      #memory.critical {
+        color: ${base08};
+      }
       #disk.warning {
         color: ${base0A};
       }
