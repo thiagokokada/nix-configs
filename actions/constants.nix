@@ -19,6 +19,7 @@
     ];
   };
   nixos.hostnames = [
+    "hachune-nixos"
     "miku-nixos"
     "mirai-vps"
     "sankyuu-nixos"
