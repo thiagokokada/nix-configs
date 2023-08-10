@@ -37,6 +37,15 @@ in
     };
   };
 
+  # Reduce power consumption
+  services.tlp = {
+    enable = true;
+    settings = {
+      CPU_SCALING_GOVERNOR_ON_AC = "schedutil";
+      CPU_SCALING_GOVERNOR_ON_BAT = "schedutil";
+    };
+  };
+
   # Used for firmware updates
   services.fwupd.enable = true;
 
