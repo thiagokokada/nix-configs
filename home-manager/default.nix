@@ -20,7 +20,6 @@
     ./sway
     ./theme
     ./tmux.nix
-    ./vscode
     ./xterm.nix
     ./zsh.nix
   ];
