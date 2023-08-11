@@ -20,6 +20,11 @@ in
     netDevices = [ "enp2s0f1" ];
   };
 
+  nixos.server = {
+    tailscale.enable = true;
+    ssh.enable = true;
+  };
+
   # Use the systemd-boot EFI boot loader
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -28,14 +33,6 @@ in
 
   # Use ultrawide wallpaper
   home-manager.users.${config.meta.username}.theme.wallpaper.path = pkgs.wallpapers.hatsune-miku_stylized-ultrawide;
-
-  nixos.audio = {
-    lowLatency = {
-      enable = true;
-      # The audio device from this notebook doesn't seem to like short buffers too much
-      quantum = 128;
-    };
-  };
 
   # Reduce power consumption
   services.tlp = {
