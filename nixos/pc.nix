@@ -6,13 +6,8 @@ in
 {
   imports = [
     ./libvirt
-    ./rtorrent.nix
-    ./plex.nix
-    ./samba.nix
     ../modules/device.nix
   ];
-
-  device.mediaDir = "/mnt/archive/${username}";
 
   # Some misc packages
   environment.systemPackages = with pkgs; [

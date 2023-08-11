@@ -15,13 +15,20 @@ in
     ../../nixos/games.nix
     ../../nixos/pc.nix
     ../../nixos/security.nix
-    ../../nixos/ssh.nix
     inputs.hardware.nixosModules.common-cpu-intel
   ];
+
+  nixos.server = {
+    plex.enable = true;
+    rtorrent.enable = true;
+    samba.enable = true;
+    ssh.enable = true;
+  };
 
   device = {
     type = "desktop";
     netDevices = [ "eno1" ];
+    mediaDir = "/mnt/archive/${config.meta.username}";
   };
 
   # Fix quirk in Renesas USB hub

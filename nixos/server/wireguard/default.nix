@@ -1,17 +1,8 @@
-{ externalInterface
-, externalUrl
-, wgPath ? "/etc/wireguard"
-, wgInterface ? "wg0"
-, wgPort ? 51820
-, wgHostIp ? "10.100.0.1"
-, wgNetmask ? "24"
-, wgHostIp6 ? "fdc9:281f:04d7:9ee9::1"
-, wgNetmask6 ? "64"
-, wgDnsServers ? "${wgHostIp}, ${wgHostIp6}"
-, useHostDNS ? (wgDnsServers == "${wgHostIp}, ${wgHostIp6}")
-}:
 { config, lib, pkgs, ... }:
 let
+  inherit (config.nixos.server.wireguard)
+    externalInterface externalUrl wgPath wgInterface wgPort wgHostIp
+    wgNetmask wgHostIp6 wgNetmask6 wgDnsServers useHostDNS;
   inherit (config.meta) configPath;
   privateKeyFile = "${wgPath}/wg-priv";
   publicKeyFile = "${wgPath}/wg-pub";
@@ -175,63 +166,109 @@ let
   '';
 in
 {
-  imports = [
-    (import ./${
-    externalUrl}
-      { inherit wgInterface; })
-    ../../modules/meta.nix
-  ];
-
-  environment.systemPackages = with pkgs; [
-    qrencode
-    wgGenerateConfig
-    wireguard-tools
-  ];
-
-  boot.kernel.sysctl = {
-    "net.ipv4.ip_forward" = 1;
-    "net.ipv6.conf.all.forwarding" = 1;
+  options.nixos.server.wireguard = {
+    enable = lib.mkEnableOption "Wireguard config";
+    externalInterface = lib.mkOption {
+      type = lib.types.str;
+    };
+    externalUrl = lib.mkOption {
+      type = lib.types.str;
+    };
+    wgPath = lib.mkOption {
+      type = lib.types.str;
+      default = "/etc/wireguard";
+    };
+    wgInterface = lib.mkOption {
+      type = lib.types.str;
+      default = "wg0";
+    };
+    wgPort = lib.mkOption {
+      type = lib.types.int;
+      default = 51820;
+    };
+    wgHostIp = lib.mkOption {
+      type = lib.types.str;
+      default = "10.100.0.1";
+    };
+    wgNetmask = lib.mkOption {
+      type = lib.types.str;
+      default = "24";
+    };
+    wgHostIp6 = lib.mkOption {
+      type = lib.types.str;
+      default = "fdc9:281f:04d7:9ee9::1";
+    };
+    wgNetmask6 = lib.mkOption {
+      type = lib.types.str;
+      default = "64";
+    };
+    wgDnsServers = lib.mkOption {
+      type = lib.types.str;
+      default = "${wgHostIp}, ${wgHostIp6}";
+    };
+    useHostDNS = lib.mkOption {
+      type = lib.types.bool;
+      default = wgDnsServers == "${wgHostIp}, ${wgHostIp6}";
+    };
   };
 
-  networking = {
-    nat = {
-      enable = true;
-      inherit externalInterface;
-      internalInterfaces = [ wgInterface ];
-    };
-    firewall = {
-      # Port 53 is for DNS
-      allowedTCPPorts = lib.optional useHostDNS 53;
-      allowedUDPPorts = [ wgPort 53 ] ++ lib.optional useHostDNS 53;
-    };
-    wireguard.interfaces = {
-      ${wgInterface} = {
-        inherit privateKeyFile;
-        ips = [ "${wgHostIp}/${wgNetmask}" "${wgHostIp6}/${wgNetmask6}" ];
-        listenPort = wgPort;
+  imports = [
+    ./mirai-vps.duckdns.org
+    ../../../modules/meta.nix
+  ];
 
-        # This allows the wireguard server to route your traffic to the internet and hence be like a VPN
-        # For this to work you have to set the dnsserver IP of your router (or dnsserver of choice) in your clients
-        postSetup = ''
-          ${pkgs.iptables}/bin/iptables -t nat -A POSTROUTING -s '${wgHostIp}/${wgNetmask}' -o ${externalInterface} -j MASQUERADE
-          ${pkgs.iptables}/bin/ip6tables -t nat -A POSTROUTING -s '${wgHostIp6}/${wgNetmask6}' -o ${externalInterface} -j MASQUERADE
-        '';
+  config = lib.mkIf config.nixos.server.wireguard.enable {
+    environment.systemPackages = with pkgs; [
+      qrencode
+      wgGenerateConfig
+      wireguard-tools
+    ];
 
-        # This undoes the above command
-        postShutdown = ''
-          ${pkgs.iptables}/bin/iptables -t nat -D POSTROUTING -s '${wgHostIp}/${wgNetmask}' -o ${externalInterface} -j MASQUERADE
-          ${pkgs.iptables}/bin/ip6tables -t nat -D POSTROUTING -s '${wgHostIp6}/${wgNetmask6}' -o ${externalInterface} -j MASQUERADE
-        '';
+    boot.kernel.sysctl = {
+      "net.ipv4.ip_forward" = 1;
+      "net.ipv6.conf.all.forwarding" = 1;
+    };
+
+    networking = {
+      nat = {
+        enable = true;
+        inherit externalInterface;
+        internalInterfaces = [ wgInterface ];
+      };
+      firewall = {
+        # Port 53 is for DNS
+        allowedTCPPorts = lib.optional useHostDNS 53;
+        allowedUDPPorts = [ wgPort 53 ] ++ lib.optional useHostDNS 53;
+      };
+      wireguard.interfaces = {
+        ${wgInterface} = {
+          inherit privateKeyFile;
+          ips = [ "${wgHostIp}/${wgNetmask}" "${wgHostIp6}/${wgNetmask6}" ];
+          listenPort = wgPort;
+
+          # This allows the wireguard server to route your traffic to the internet and hence be like a VPN
+          # For this to work you have to set the dnsserver IP of your router (or dnsserver of choice) in your clients
+          postSetup = ''
+            ${pkgs.iptables}/bin/iptables -t nat -A POSTROUTING -s '${wgHostIp}/${wgNetmask}' -o ${externalInterface} -j MASQUERADE
+            ${pkgs.iptables}/bin/ip6tables -t nat -A POSTROUTING -s '${wgHostIp6}/${wgNetmask6}' -o ${externalInterface} -j MASQUERADE
+          '';
+
+          # This undoes the above command
+          postShutdown = ''
+            ${pkgs.iptables}/bin/iptables -t nat -D POSTROUTING -s '${wgHostIp}/${wgNetmask}' -o ${externalInterface} -j MASQUERADE
+            ${pkgs.iptables}/bin/ip6tables -t nat -D POSTROUTING -s '${wgHostIp6}/${wgNetmask6}' -o ${externalInterface} -j MASQUERADE
+          '';
+        };
       };
     };
-  };
 
-  # If you want to use the host for DNS resolution (more secure), we need to
-  # enable dnsmasq to serve as a DNS server
-  services.dnsmasq = lib.mkIf useHostDNS {
-    enable = true;
-    settings = {
-      interface = wgInterface;
+    # If you want to use the host for DNS resolution (more secure), we need to
+    # enable dnsmasq to serve as a DNS server
+    services.dnsmasq = lib.mkIf useHostDNS {
+      enable = true;
+      settings = {
+        interface = wgInterface;
+      };
     };
   };
 }

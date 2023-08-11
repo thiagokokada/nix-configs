@@ -12,8 +12,7 @@
       ../../nixos/home.nix
       ../../nixos/minimal.nix
       ../../nixos/security.nix
-      ../../nixos/ssh.nix
-      ../../nixos/vps.nix
+      ../../nixos/server
       flake.inputs.home.nixosModules.home-manager
     ];
 
@@ -23,6 +22,18 @@
   ];
 
   device.type = "server";
+
+  nixos.server = {
+    enable = true;
+    plex.enable = true;
+    ssh.enable = true;
+    tailscale.enable = true;
+    wireguard = {
+      enable = true;
+      externalInterface = "ens3";
+      externalUrl = "mirai-vps.duckdns.org";
+    };
+  };
 
   # Use the GRUB 2 boot loader.
   boot.loader.grub.enable = true;

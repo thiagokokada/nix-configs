@@ -9,5 +9,6 @@
     ./home.nix
     ./laptop.nix
     ./minimal.nix
+    ./server
   ];
 }
