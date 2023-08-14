@@ -6,22 +6,14 @@ let
 
   commonOptions =
     let
-      dunstctl = "${pkgs.dunst}/bin/dunstctl";
       screenShotName = with config.xdg.userDirs;
         "${pictures}/$(${pkgs.coreutils}/bin/date +%Y-%m-%d_%H-%M-%S)-screenshot.png";
       displayLayoutMode = " : [a]uto, [g]ui";
     in
     import ../i3/common.nix rec {
-      inherit config lib modifier alt dunstctl;
-      browser = "firefox";
+      inherit config lib pkgs modifier alt;
       bars = [{ command = "${config.programs.waybar.package}/bin/waybar"; }];
-      fileManager = "${terminal} ${config.programs.nnn.finalPackage}/bin/nnn -a -P p";
       menu = "${config.programs.fuzzel.package}/bin/fuzzel";
-      # light needs to be installed in system, so not defining a path here
-      light = "light";
-      pamixer = "${pkgs.pamixer}/bin/pamixer";
-      playerctl = "${pkgs.playerctl}/bin/playerctl";
-      terminal = "${config.programs.kitty.package}/bin/kitty";
 
       fullScreenShot = ''
         ${pkgs.grim}/bin/grim "${screenShotName}" && \

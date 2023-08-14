@@ -1,15 +1,16 @@
 { config
 , lib
+, pkgs
 , areaScreenShot
-, browser
-, dunstctl
-, fileManager
 , fullScreenShot
-, light
 , menu
-, pamixer
-, playerctl
-, terminal
+, browser ? "${lib.getExe config.programs.firefox.package}"
+, dunstctl ? "${pkgs.dunst}/bin/dunstctl"
+, fileManager ? "${terminal} ${lib.getExe config.programs.nnn.finalPackage} -a -P p"
+, light ? "light" # needs to be installed system-wide
+, pamixer ? "${lib.getExe pkgs.pamixer}"
+, playerctl ? "${lib.getExe pkgs.pamixer}"
+, terminal ? "${config.programs.kitty.package}/bin/kitty"
 , statusCommand ? null
 , alt ? "Mod1"
 , modifier ? "Mod4"
