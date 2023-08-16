@@ -56,11 +56,6 @@ in
     ./waybar.nix
   ];
 
-  home.packages = with pkgs; [
-    wdisplays
-    wl-clipboard
-  ];
-
   wayland.windowManager.sway = with commonOptions; {
     enable = true;
 
@@ -133,17 +128,8 @@ in
 
   xsession.preferStatusNotifierItems = true;
 
-  systemd.user.services.wl-clip-persist = {
-    Unit = {
-      Description = "Keep Wayland clipboard even after programs close";
-      PartOf = [ "graphical-session.target" ];
-    };
-
-    Install = { WantedBy = [ "sway-session.target" ]; };
-
-    Service = {
-      ExecStart = "${pkgs.wl-clip-persist}/bin/wl-clip-persist --clipboard both";
-      Restart = "on-failure";
-    };
-  };
+  home.packages = with pkgs; [
+    wdisplays
+    wl-clipboard
+  ];
 }
