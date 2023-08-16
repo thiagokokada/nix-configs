@@ -86,6 +86,8 @@
 
   # https://github.com/GNOME/gsettings-desktop-schemas/blob/8527b47348ce0573694e0e254785e7c0f2150e16/schemas/org.gnome.desktop.interface.gschema.xml.in#L276-L296
   dconf.settings = lib.optionalAttrs (osConfig ? fonts.fontconfig) {
+    # hide ibus systray icon, kinda buggy in waybar
+    "desktop/ibus/panel".show-icon-on-systray = false;
     "org/gnome/desktop/interface" = with osConfig.fonts.fontconfig; {
       "color-scheme" = "prefer-dark";
       "font-antialiasing" =
