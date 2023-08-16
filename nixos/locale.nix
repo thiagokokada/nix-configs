@@ -3,7 +3,7 @@
 {
   # Select internationalisation properties.
   i18n = {
-    inputMethod.enabled = "ibus";
+    inputMethod.enabled = "fcitx5";
     defaultLocale = lib.mkDefault "en_IE.UTF-8";
     extraLocaleSettings = {
       LC_CTYPE = lib.mkDefault "pt_BR.UTF-8"; # Fix ç in us-intl.
