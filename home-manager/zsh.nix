@@ -40,6 +40,9 @@
           if [ -e '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh' ]; then
             source '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh'
           fi
+          # Set the soft ulimit to something sensible
+          # https://developer.apple.com/forums/thread/735798
+          ulimit -Sn 524288
         '';
       in
       ''
