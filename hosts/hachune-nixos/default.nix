@@ -18,11 +18,15 @@ in
   device = {
     type = "desktop";
     netDevices = [ "enp2s0f1" ];
+    mediaDir = "/mnt/media/${config.meta.username}";
   };
 
   nixos.server = {
-    tailscale.enable = true;
+    enable = true;
+    plex.enable = true;
+    rtorrent.enable = true;
     ssh.enable = true;
+    tailscale.enable = true;
   };
 
   # Use the systemd-boot EFI boot loader
@@ -46,5 +50,5 @@ in
   # Used for firmware updates
   services.fwupd.enable = true;
 
-  time.timeZone = "Europe/Dublin";
+  time.timeZone = "America/Sao_Paulo";
 }
