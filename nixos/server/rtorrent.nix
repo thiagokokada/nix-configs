@@ -46,6 +46,12 @@ in
           # Watch directory
           schedule2 = watch_directory,5,5,load.start="${mediaDir}/Torrents/*.torrent"
           schedule2 = untied_directory,5,5,stop_untied=
+
+          # Disable when diskspace is low
+          schedule2 = monitor_diskspace, 15, 60, ((close_low_diskspace, 1000M))
+
+          # Set umask for download files
+          system.umask.set = 0002
         '';
       };
 
