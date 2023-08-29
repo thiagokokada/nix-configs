@@ -28,7 +28,7 @@ in
           ratio.upload.set=500M
 
           # Watch directory
-          schedule2 = watch_directory,5,5,load.start="${home}/Torrents/*.torrent"
+          schedule2 = watch_directory,5,5,load.start="${mediaDir}/Torrents/*.torrent"
           schedule2 = untied_directory,5,5,stop_untied=
         '';
       };
@@ -50,7 +50,8 @@ in
       };
 
       systemd.tmpfiles.rules = [
-        "d ${mediaDir}/Downloads 0775 ${username} ${group}"
+        "d ${mediaDir}/Downloads 2775 ${username} ${group}"
+        "d ${mediaDir}/Torrents 2775 ${username} ${group}"
       ];
     };
 }
