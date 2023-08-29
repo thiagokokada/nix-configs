@@ -3,12 +3,28 @@
 let
   inherit (config.device) mediaDir;
   inherit (config.meta) username;
+  cfg = config.nixos.server.rtorrent;
 in
 {
-  options.nixos.server.rtorrent.enable = lib.mkEnableOption "rTorrent config";
+  options.nixos.server.rtorrent = {
+    enable = lib.mkEnableOption "rTorrent config";
+    flood = {
+      enable = lib.mkDefaultOption "Flood UI";
+      port = lib.mkOption {
+        type = lib.types.int;
+        description = "Port to bind webserver";
+        default = 3000;
+      };
+      host = lib.mkOption {
+        type = lib.types.str;
+        description = "Host to bind webserver";
+        default = "0.0.0.0";
+      };
+    };
+  };
 
   config = with config.users.users.${username};
-    lib.mkIf config.nixos.server.rtorrent.enable {
+    lib.mkIf cfg.enable {
       environment.systemPackages = with pkgs; [ rtorrent ];
 
       services.rtorrent = {
@@ -35,7 +51,7 @@ in
 
       systemd.services = {
         rtorrent.serviceConfig.Restart = lib.mkForce "always";
-        flood = {
+        flood = lib.mkIf cfg.flood.enable {
           description = "A web UI for rTorrent with a Node.js backend and React frontend.";
           after = [ "rtorrent.service" ];
           wantedBy = [ "multi-user.target" ];
@@ -44,10 +60,14 @@ in
             Group = group;
             Type = "simple";
             Restart = "always";
-            ExecStart = "${pkgs.nodePackages.flood}/bin/flood";
+            ExecStart = "${pkgs.nodePackages.flood}/bin/flood --host ${cfg.flood.host} --port ${toString cfg.flood.port}";
           };
         };
       };
+
+      networking.firewall.allowedTCPPorts = lib.mkIf cfg.flood.enable [
+        cfg.flood.port
+      ];
 
       systemd.tmpfiles.rules = [
         "d ${mediaDir}/Downloads 2775 ${username} ${group}"
