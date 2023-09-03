@@ -27,6 +27,10 @@ in
     rtorrent.enable = true;
     ssh.enable = true;
     tailscale.enable = true;
+    duckdns-updater = {
+      enable = true;
+      domain = "hachune-nixos";
+    };
   };
 
   # Use the systemd-boot EFI boot loader

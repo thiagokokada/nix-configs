@@ -28,6 +28,11 @@
     plex.enable = true;
     ssh.enable = true;
     tailscale.enable = true;
+    duckdns-updater = {
+      enable = true;
+      domain = "mirai-vps";
+      onCalendar = "daily"; # fixed IP, mostly for health checking
+    };
     wireguard = {
       enable = true;
       externalInterface = "ens3";

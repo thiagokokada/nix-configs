@@ -3,6 +3,7 @@
   options.nixos.server.enable = lib.mkEnableOption "server config";
 
   imports = [
+    ./duckdns-updater.nix
     ./plex.nix
     ./rtorrent.nix
     ./samba.nix
