@@ -39,9 +39,10 @@ in
       path = with pkgs; [ curl ];
       script = ''
         readonly curl_out="$(echo \
-        url="https://www.duckdns.org/update?domains=${cfg.domain}&token=$DUCKDNS_TOKEN&ip=" \
+        url="https://www.duckdns.org/update?domains=${cfg.domain}&token=$DUCKDNS_TOKEN&ip=&ipv6" \
         | curl --silent --config -)"
 
+        echo "DuckDNS response: $curl_out"
         if [ "$curl_out" == "OK" ]; then
           >&2 echo "Domain updated successfully: ${cfg.domain}"
         else
