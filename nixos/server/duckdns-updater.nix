@@ -53,21 +53,21 @@ in
 
       serviceConfig = {
         DynamicUser = true;
+        CapabilityBoundingSet = "";
         EnvironmentFile = cfg.environmentFile;
         LockPersonality = true;
         MemoryDenyWriteExecute = true;
-        NoNewPrivileges = true;
-        PrivateDevices = true;
-        PrivateTmp = true;
         ProtectControlGroups = true;
-        ProtectHome = "read-only";
-        ProtectKernelModules = true;
-        ProtectKernelTunables = true;
-        ProtectSystem = "full";
+        ProtectClock = true;
+        PrivateDevices = true;
+        ProtectHome = true;
         RestrictAddressFamilies = "AF_UNIX AF_INET AF_INET6 AF_NETLINK";
         RestrictNamespaces = true;
         RestrictRealtime = true;
-        RestrictSUIDSGID = true;
+        ProtectKernelModules = true;
+        ProtectKernelTunables = true;
+        ProtectSystem = "strict";
+        SystemCallFilter = "@system-service";
         Type = "oneshot";
       };
     };
