@@ -48,6 +48,7 @@ in
     settings = {
       CPU_SCALING_GOVERNOR_ON_AC = "schedutil";
       CPU_SCALING_GOVERNOR_ON_BAT = "schedutil";
+      RUNTIME_PM_ON_AC = "auto";
     };
   };
 
