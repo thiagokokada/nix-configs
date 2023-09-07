@@ -35,7 +35,7 @@ in
     systemd.services.duckdns-updater = {
       description = "DuckDNS updater";
       wantedBy = [ "multi-user.target" ];
-      after = [ "networking.target" ];
+      after = [ "network-online.target" ];
       path = with pkgs; [ curl ];
       script = ''
         readonly curl_out="$(echo \
