@@ -10,8 +10,10 @@ in
       fail2ban.enable = true;
       openssh = {
         enable = true;
+        ports = [ 22 2222 ];
         settings = {
           PasswordAuthentication = false;
+          KbdInteractiveAuthentication = false;
         };
       };
     };
