@@ -10,6 +10,7 @@ in
   };
 
   config = lib.mkIf cfg.enable {
+    services.resolved.enable = true;
     networking.useNetworkd = true;
   };
 }
