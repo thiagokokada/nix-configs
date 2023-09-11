@@ -47,8 +47,9 @@ in
   # Use ultrawide wallpaper
   home-manager.users.${config.meta.username}.theme.wallpaper.path = pkgs.wallpapers.hatsune-miku_stylized-ultrawide;
 
-  nixos.audio = {
-    lowLatency = {
+  nixos = {
+    desktop.tailscale.enable = true;
+    audio.lowLatency = {
       enable = true;
       # The audio device from this notebook doesn't seem to like short buffers too much
       quantum = 128;

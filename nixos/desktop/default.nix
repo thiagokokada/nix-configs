@@ -4,6 +4,7 @@
   imports = [
     ./greetd.nix
     ./plymouth.nix
+    ./tailscale.nix
     ./wayland.nix
     ./xserver.nix
   ];

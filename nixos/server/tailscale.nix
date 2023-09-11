@@ -4,7 +4,7 @@ let
   inherit (config.meta) username;
 in
 {
-  options.nixos.server.tailscale.enable = lib.mkEnableOption "Tailscale config";
+  options.nixos.server.tailscale.enable = lib.mkEnableOption "Tailscale config (server side)";
 
   config = lib.mkIf config.nixos.server.tailscale.enable {
     environment.systemPackages = with pkgs; [ tailscale ];
@@ -12,7 +12,10 @@ in
     services.tailscale = {
       enable = true;
       permitCertUid = toString config.users.users.${username}.uid;
-      useRoutingFeatures = "server";
+      useRoutingFeatures =
+        if (config.nixos.desktop.tailscale.enable)
+        then "both"
+        else "server";
       extraUpFlags = [
         "--advertise-exit-node"
         "--ssh"
