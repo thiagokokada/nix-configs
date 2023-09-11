@@ -12,10 +12,7 @@ in
     services.tailscale = {
       enable = true;
       permitCertUid = toString config.users.users.${username}.uid;
-      useRoutingFeatures =
-        if (config.nixos.desktop.tailscale.enable)
-        then "both"
-        else "server";
+      useRoutingFeatures = lib.mkDefault "server";
       extraUpFlags = [
         "--advertise-exit-node"
         "--ssh"
