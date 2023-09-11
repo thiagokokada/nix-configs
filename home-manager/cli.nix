@@ -14,6 +14,7 @@
     dos2unix
     dua
     each
+    eza
     ffmpeg
     file
     findutils
