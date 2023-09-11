@@ -19,7 +19,7 @@ in
     };
     extraPackages = with pkgs; [
       bat
-      exa
+      eza
       fzf
       mediainfo
     ] ++ lib.optionals (!stdenv.isDarwin) [
