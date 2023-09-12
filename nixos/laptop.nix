@@ -10,7 +10,6 @@
       # Use Network Manager
       networkmanager = {
         enable = true;
-        dns = "dnsmasq";
         wifi.backend = "iwd";
         dispatcherScripts = [{
           source =
@@ -75,16 +74,23 @@
     # Enable laptop specific services
     services = {
       # Enable Blueman to manage Bluetooth
-      blueman = { enable = true; };
+      blueman.enable = true;
 
       # For battery status reporting
-      upower = { enable = true; };
+      upower.enable = true;
 
       # Only suspend on lid closed when laptop is disconnected
       logind = {
         lidSwitch = "suspend-then-hibernate";
         lidSwitchDocked = lib.mkDefault "ignore";
         lidSwitchExternalPower = lib.mkDefault "lock";
+      };
+
+      # Use systemd-resolved for DNS
+      resolved = {
+        enable = true;
+        # Can make DNS lookups really slow
+        dnssec = "false";
       };
 
       # Reduce power consumption
