@@ -36,6 +36,7 @@ in
       description = "DuckDNS updater";
       wantedBy = [ "multi-user.target" ];
       after = [ "network-online.target" ];
+      wants = [ "network-online.target" ];
       path = with pkgs; [ curl ];
       script = ''
         readonly curl_out="$(echo \
