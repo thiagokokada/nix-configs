@@ -49,6 +49,8 @@
     nix = {
       gc = {
         automatic = true;
+        persistent = true;
+        randomizedDelaySec = "15m";
         dates = "3:15";
         options = "--delete-older-than 7d";
       };
