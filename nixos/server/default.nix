@@ -16,7 +16,7 @@
   config = lib.mkIf config.nixos.server.enable {
     # Enable watchdog
     systemd.watchdog = {
-      runtimeTime = "30s";
+      runtimeTime = "1m";
       rebootTime = "10m";
     };
     # Enable NixOS auto-upgrade
