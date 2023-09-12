@@ -11,5 +11,9 @@
         then "both"
         else "client";
     };
+
+    # Disable wait online as it's causing trouble at rebuild
+    # See: https://github.com/NixOS/nixpkgs/issues/180175
+    systemd.services.NetworkManager-wait-online.enable = false;
   };
 }
