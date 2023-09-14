@@ -1,10 +1,12 @@
 { config, lib, pkgs, ... }:
 let
+  inherit (config.meta) username;
   cfg = config.nixos.server.duckdns-updater;
 in
 {
   options.nixos.server.duckdns-updater = {
     enable = lib.mkEnableOption "DuckDNS config";
+    enableCerts = lib.mkEnableOption "generate HTTPS cert via ACME/Let's Encrypt";
     domain = lib.mkOption {
       # TODO: accept a list of strings
       type = lib.types.str;
@@ -77,6 +79,16 @@ in
       timerConfig = {
         OnCalendar = cfg.onCalendar;
         Persistent = true;
+      };
+    };
+
+    security.acme = lib.mkIf cfg.enableCerts {
+      acceptTerms = true;
+      certs."${cfg.domain}.duckdns.org" = {
+        email = "thiagokokada@gmail.com";
+        group = config.users.users.${username}.group;
+        dnsProvider = "duckdns";
+        credentialsFile = cfg.environmentFile;
       };
     };
   };
