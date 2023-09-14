@@ -15,6 +15,8 @@ with config.users.users.${username}; {
       group = group;
     };
 
+    security.acme.defaults.reloadServices = [ "jellyfin.service" ];
+
     systemd.tmpfiles.rules = [
       "d ${mediaDir}/Other 2775 ${username} ${group}"
       "d ${mediaDir}/Music 2775 ${username} ${group}"
