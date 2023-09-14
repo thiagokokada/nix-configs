@@ -1,7 +1,9 @@
 { config, lib, pkgs, ... }:
 let
   inherit (config.meta) username;
+  group = config.users.users.${username}.group;
   cfg = config.nixos.server.duckdns-updater;
+  fullDomain = "${cfg.domain}.duckdns.org";
 in
 {
   options.nixos.server.duckdns-updater = {
@@ -64,7 +66,7 @@ in
         ProtectClock = true;
         PrivateDevices = true;
         ProtectHome = true;
-        RestrictAddressFamilies = "AF_UNIX AF_INET AF_INET6 AF_NETLINK";
+        RestrictAddressFamilies = [ "AF_UNIX" "AF_INET" "AF_INET6" ];
         RestrictNamespaces = true;
         RestrictRealtime = true;
         ProtectKernelModules = true;
@@ -84,11 +86,54 @@ in
 
     security.acme = lib.mkIf cfg.enableCerts {
       acceptTerms = true;
-      certs."${cfg.domain}.duckdns.org" = {
+      certs.${fullDomain} = {
+        inherit group;
         email = "thiagokokada@gmail.com";
-        group = config.users.users.${username}.group;
         dnsProvider = "duckdns";
         credentialsFile = cfg.environmentFile;
+      };
+    };
+
+    systemd.services."acme-${fullDomain}-generate-pfx" = lib.mkIf cfg.enableCerts {
+      description = "ACME generate PFX files";
+      after = [ "acme-${fullDomain}.service" ];
+      wants = [ "acme-${fullDomain}.service" ];
+      wantedBy = [ "multi-user.target" ];
+      path = with pkgs; [
+        coreutils
+        (lib.getBin openssl)
+      ];
+      script = ''
+        readonly filename='bundle.pfx'
+        cd /var/lib/acme/${lib.escapeShellArg fullDomain}
+        openssl pkcs12 -export -out "$filename" -inkey key.pem -in cert.pem -passout pass:
+        chmod 640 "$filename"
+      '';
+      serviceConfig = {
+        User = "acme";
+        Group = group;
+        UMask = "0022";
+        StateDirectoryMode = "750";
+        ProtectSystem = "strict";
+        PrivateTmp = true;
+        LockPersonality = true;
+        MemoryDenyWriteExecute = true;
+        NoNewPrivileges = true;
+        PrivateDevices = true;
+        ProtectClock = true;
+        ProtectHome = true;
+        ProtectHostname = true;
+        ProtectControlGroups = true;
+        ProtectKernelLogs = true;
+        ProtectKernelModules = true;
+        ProtectKernelTunables = true;
+        RestrictAddressFamilies = [ ];
+        ReadWritePaths = [ "/var/lib/acme" ];
+        RestrictNamespaces = true;
+        RestrictRealtime = true;
+        RestrictSUIDSGID = true;
+        SystemCallArchitectures = "native";
+        SystemCallFilter = [ "@system-service" ];
       };
     };
   };
