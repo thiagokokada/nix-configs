@@ -5,16 +5,11 @@ let
   inherit (config.device) mediaDir;
 in
 with config.users.users.${username}; {
-  options.nixos.server.plex.enable = lib.mkEnableOption "Plex config";
+  options.nixos.server.jellyfin.enable = lib.mkEnableOption "Jellyfin config";
 
-  config = lib.mkIf config.nixos.server.plex.enable {
-    # Increase number of directories that Linux can monitor for Plex
-    boot.kernel.sysctl = {
-      "fs.inotify.max_user_watches" = 524288;
-    };
-
-    # Enable Plex Media Server
-    services.plex = {
+  config = lib.mkIf config.nixos.server.jellyfin.enable {
+    # Enable Jellyfin
+    services.jellyfin = {
       enable = true;
       openFirewall = true;
       group = group;

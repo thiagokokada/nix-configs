@@ -23,6 +23,7 @@ in
 
   nixos.server = {
     enable = true;
+    jellyfin.enable = true;
     networkd.enable = true;
     plex.enable = true;
     rtorrent.enable = true;

@@ -4,6 +4,7 @@
 
   imports = [
     ./duckdns-updater.nix
+    ./jellyfin.nix
     ./networkd.nix
     ./plex.nix
     ./rtorrent.nix
