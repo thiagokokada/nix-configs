@@ -32,7 +32,7 @@ in
     duckdns-updater = {
       enable = true;
       enableCerts = true;
-      domain = "hachune-nixos";
+      domain = "hachune-nixos.duckdns.org";
     };
   };
 

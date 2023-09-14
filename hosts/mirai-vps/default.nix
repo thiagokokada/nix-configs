@@ -30,7 +30,7 @@
     tailscale.enable = true;
     duckdns-updater = {
       enable = true;
-      domain = "mirai-vps";
+      domain = "mirai-vps.duckdns.org";
       onCalendar = "daily"; # fixed IP, mostly for health checking
     };
     wireguard = {
