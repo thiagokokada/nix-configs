@@ -14,7 +14,6 @@
     dos2unix
     dua
     each
-    eza
     ffmpeg
     file
     findutils
@@ -47,6 +46,12 @@
     bat = {
       enable = true;
       extraPackages = with pkgs.bat-extras; [ batdiff batman batgrep batwatch ];
+    };
+    eza = {
+      enable = true;
+      enableAliases = true;
+      git = true;
+      icons = true;
     };
     zsh.shellAliases = {
       # For muscle memory...
