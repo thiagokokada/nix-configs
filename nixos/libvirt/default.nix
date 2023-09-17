@@ -1,4 +1,4 @@
-{ flake, config, pkgs, ... }:
+{ config, pkgs, ... }:
 let
   inherit (config.meta) username;
 
@@ -20,7 +20,7 @@ in
     kernelParams = [ "intel_iommu=on" ];
   };
 
-  environment.systemPackages = with pkgs; [ virtmanager ];
+  environment.systemPackages = with pkgs; [ virt-manager ];
 
   networking = {
     # Needs to disable global DHCP to use bridge interfaces
