@@ -1,5 +1,8 @@
-{ config, lib, flake, ... }:
+{ config, lib, flake, pkgs, ... }:
 
+let
+  cfg = config.nixos.home;
+in
 {
   imports = [
     flake.inputs.home.nixosModules.home-manager
@@ -20,13 +23,22 @@
     };
   };
 
-  config = lib.mkIf config.nixos.home.enable {
+  config = lib.mkIf cfg.enable {
     home-manager = {
       useUserPackages = true;
-      users.${config.nixos.home.username} = {
+      users.${cfg.username} = {
         inherit (config.nixos.home) imports;
       };
       extraSpecialArgs = { inherit flake; };
+    };
+
+    # Define a user account. Don't forget to set a password with ‘passwd’.
+    users.users.${cfg.username} = {
+      isNormalUser = true;
+      uid = 1000;
+      extraGroups = [ "wheel" "networkmanager" "video" ];
+      shell = pkgs.zsh;
+      password = "changeme";
     };
   };
 }

@@ -6,7 +6,6 @@
     ./locale.nix
     ./meta.nix
     ./system
-    ./user.nix
     ../modules
   ];
 }
