@@ -1,16 +1,14 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, ... }:
 
 {
-  imports = [ ./btrfs.nix ];
+  imports = [
+    ./btrfs.nix
+    ./smart.nix
+  ];
 
   options.nixos.system.enable = lib.mkDefaultOption "system config";
 
   config = lib.mkIf config.nixos.system.enable {
-    environment.systemPackages = with pkgs; [
-      hdparm
-      smartmontools
-    ];
-
     boot = {
       initrd.systemd.enable = lib.mkDefault true;
 
@@ -76,9 +74,6 @@
       logind.extraConfig = ''
         HandlePowerKey=suspend-then-hibernate
       '';
-
-      # Enable smartd for SMART reporting
-      smartd.enable = true;
     };
 
     systemd = {

@@ -22,21 +22,24 @@
 
   device.type = "server";
 
-  nixos.server = {
-    enable = true;
-    plex.enable = true;
-    ssh.enable = true;
-    tailscale.enable = true;
-    duckdns-updater = {
+  nixos = {
+    server = {
       enable = true;
-      domain = "mirai-vps.duckdns.org";
-      onCalendar = "daily"; # fixed IP, mostly for health checking
+      plex.enable = true;
+      ssh.enable = true;
+      tailscale.enable = true;
+      duckdns-updater = {
+        enable = true;
+        domain = "mirai-vps.duckdns.org";
+        onCalendar = "daily"; # fixed IP, mostly for health checking
+      };
+      wireguard = {
+        enable = true;
+        externalInterface = "ens3";
+        externalUrl = "mirai-vps.duckdns.org";
+      };
     };
-    wireguard = {
-      enable = true;
-      externalInterface = "ens3";
-      externalUrl = "mirai-vps.duckdns.org";
-    };
+    system.smart.enable = false;
   };
 
   # Use the GRUB 2 boot loader.
