@@ -13,7 +13,6 @@ in
     ../../nixos
     ../../nixos/cross-compiling.nix
     ../../nixos/games.nix
-    ../../nixos/security.nix
     inputs.hardware.nixosModules.common-cpu-intel
   ];
 

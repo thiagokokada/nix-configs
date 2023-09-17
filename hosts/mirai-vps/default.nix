@@ -11,7 +11,6 @@
       ./hardware-configuration.nix
       ../../nixos/home.nix
       ../../nixos/minimal.nix
-      ../../nixos/security.nix
       ../../nixos/server
       flake.inputs.home.nixosModules.home-manager
     ];
