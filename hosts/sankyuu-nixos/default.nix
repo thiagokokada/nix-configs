@@ -48,6 +48,7 @@ in
   home-manager.users.${config.meta.username}.theme.wallpaper.path = pkgs.wallpapers.hatsune-miku_stylized-ultrawide;
 
   nixos = {
+    dev.enable = true;
     desktop.tailscale.enable = true;
     audio.lowLatency = {
       enable = true;

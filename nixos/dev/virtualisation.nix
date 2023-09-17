@@ -3,7 +3,9 @@ let
   inherit (config.meta) username;
 in
 {
-  options.nixos.dev.virtualisation.enable = lib.mkDefaultOption "virtualisation config";
+  options.nixos.dev.virtualisation.enable = lib.mkEnableOption "virtualisation config" // {
+    inherit (config.nixos.dev) enable;
+  };
 
   config = lib.mkIf config.nixos.dev.virtualisation.enable {
     environment.systemPackages = with pkgs; [

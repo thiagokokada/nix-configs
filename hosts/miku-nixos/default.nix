@@ -16,11 +16,15 @@ in
     inputs.hardware.nixosModules.common-cpu-intel
   ];
 
-  nixos.server = {
-    plex.enable = true;
-    rtorrent.enable = true;
-    samba.enable = true;
-    ssh.enable = true;
+  nixos = {
+    audio.lowLatency.enable = true;
+    dev.enable = true;
+    server = {
+      plex.enable = true;
+      rtorrent.enable = true;
+      samba.enable = true;
+      ssh.enable = true;
+    };
   };
 
   device = {
