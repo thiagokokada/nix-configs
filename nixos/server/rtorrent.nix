@@ -56,7 +56,27 @@ in
       };
 
       systemd.services = {
-        rtorrent.serviceConfig.Restart = lib.mkForce "always";
+        rtorrent.serviceConfig = {
+          CapabilityBoundingSet = "";
+          LockPersonality = true;
+          NoNewPrivileges = true;
+          PrivateDevices = true;
+          PrivateTmp = true;
+          ProtectClock = true;
+          ProtectControlGroups = true;
+          ProtectHostname = true;
+          ProtectKernelLogs = true;
+          ProtectKernelModules = true;
+          ProtectKernelTunables = true;
+          ProtectProc = "invisible";
+          ProtectSystem = "full";
+          RestrictAddressFamilies = [ "AF_UNIX" "AF_INET" "AF_INET6" ];
+          RestrictNamespaces = true;
+          RestrictRealtime = true;
+          RestrictSUIDSGID = true;
+          SystemCallArchitectures = "native";
+          SystemCallFilter = [ "@system-service" "~@privileged" ];
+        };
         flood = lib.mkIf cfg.flood.enable {
           description = "A web UI for rTorrent with a Node.js backend and React frontend.";
           after = [ "rtorrent.service" ];
@@ -67,6 +87,26 @@ in
             Type = "simple";
             Restart = "always";
             ExecStart = "${pkgs.nodePackages.flood}/bin/flood --host ${cfg.flood.host} --port ${toString cfg.flood.port}";
+
+            CapabilityBoundingSet = "";
+            LockPersonality = true;
+            NoNewPrivileges = true;
+            PrivateDevices = true;
+            PrivateTmp = true;
+            ProtectClock = true;
+            ProtectControlGroups = true;
+            ProtectHostname = true;
+            ProtectKernelLogs = true;
+            ProtectKernelModules = true;
+            ProtectKernelTunables = true;
+            ProtectProc = "invisible";
+            ProtectSystem = "strict";
+            RestrictAddressFamilies = [ "AF_UNIX" "AF_INET" "AF_INET6" ];
+            RestrictNamespaces = true;
+            RestrictRealtime = true;
+            RestrictSUIDSGID = true;
+            SystemCallArchitectures = "native";
+            SystemCallFilter = [ "~@privileged" ];
           };
         };
       };
