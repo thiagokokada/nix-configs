@@ -3,12 +3,15 @@ let
   inherit (config.meta) username;
   group = config.users.users.${username}.group;
   cfg = config.nixos.server.duckdns-updater;
+  httpPort = 80;
 in
 {
   options.nixos.server.duckdns-updater = {
     enable = lib.mkEnableOption "DuckDNS config";
-    enableCerts = lib.mkEnableOption "generate HTTPS cert via ACME/Let's Encrypt";
-    useHttpServer = lib.mkEnableOption "use Lego's built-in HTTP server instead a request to DuckDNS";
+    certs = {
+      enable = lib.mkEnableOption "generate HTTPS cert via ACME/Let's Encrypt";
+      useHttpServer = lib.mkEnableOption "use Lego's built-in HTTP server instead a request to DuckDNS";
+    };
     domain = lib.mkOption {
       # TODO: accept a list of strings
       type = lib.types.str;
@@ -90,14 +93,14 @@ in
       };
     };
 
-    security.acme = lib.mkIf cfg.enableCerts {
+    security.acme = lib.mkIf cfg.certs.enable {
       acceptTerms = true;
       certs.${cfg.domain} = {
         inherit group;
         email = "thiagokokada@gmail.com";
-        dnsProvider = lib.mkIf (!cfg.useHttpServer) "duckdns";
-        credentialsFile = lib.mkIf (!cfg.useHttpServer) cfg.environmentFile;
-        listenHTTP = lib.mkIf cfg.useHttpServer ":80"; # any other port needs to be proxied
+        dnsProvider = lib.mkIf (!cfg.certs.useHttpServer) "duckdns";
+        credentialsFile = lib.mkIf (!cfg.certs.useHttpServer) cfg.environmentFile;
+        listenHTTP = lib.mkIf cfg.certs.useHttpServer ":${toString httpPort}"; # any other port needs to be proxied
         postRun = ''
           ${lib.getBin pkgs.openssl}/bin/openssl pkcs12 -export -out bundle.pfx -inkey key.pem -in cert.pem -passout pass:
           chown 'acme:${group}' bundle.pfx
@@ -107,9 +110,10 @@ in
     };
 
     systemd.services."acme-${cfg.domain}" = {
-      after = lib.mkIf cfg.useHttpServer [ "duckdns-updater.service" ];
+      after = lib.mkIf (cfg.certs.enable && cfg.certs.useHttpServer) [ "duckdns-updater.service" ];
     };
 
-    networking.firewall.allowedTCPPorts = lib.mkIf cfg.useHttpServer [ 80 ];
+    networking.firewall.allowedTCPPorts =
+      lib.mkIf (cfg.certs.enable && cfg.certs.useHttpServer) [ httpPort ];
   };
 }

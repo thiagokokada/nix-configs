@@ -31,10 +31,12 @@
       tailscale.enable = true;
       duckdns-updater = {
         enable = true;
-        enableCerts = true;
-        useHttpServer = true;
         domain = "mirai-vps.duckdns.org";
         onCalendar = "daily"; # fixed IP, mostly for health checking
+        certs = {
+          enable = true;
+          useHttpServer = true;
+        };
       };
     };
     system.smart.enable = false;

@@ -31,7 +31,7 @@ in
     tailscale.enable = true;
     duckdns-updater = {
       enable = true;
-      enableCerts = true;
+      certs.enable = true;
       domain = "hachune-nixos.duckdns.org";
     };
   };
