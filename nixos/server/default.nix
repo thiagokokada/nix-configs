@@ -11,7 +11,6 @@
     ./samba.nix
     ./ssh.nix
     ./tailscale.nix
-    ./wireguard
   ];
 
   config = lib.mkIf config.nixos.server.enable {

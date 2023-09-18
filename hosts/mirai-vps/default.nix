@@ -33,11 +33,6 @@
         domain = "mirai-vps.duckdns.org";
         onCalendar = "daily"; # fixed IP, mostly for health checking
       };
-      wireguard = {
-        enable = true;
-        externalInterface = "ens3";
-        externalUrl = "mirai-vps.duckdns.org";
-      };
     };
     system.smart.enable = false;
   };
