@@ -106,6 +106,10 @@ in
       };
     };
 
+    systemd.services."acme-${cfg.domain}" = {
+      after = lib.mkIf cfg.useHttpServer [ "duckdns-updater.service" ];
+    };
+
     networking.firewall.allowedTCPPorts = lib.mkIf cfg.useHttpServer [ 80 ];
   };
 }
