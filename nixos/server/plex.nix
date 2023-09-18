@@ -23,7 +23,8 @@ with config.users.users.${username}; {
     systemd.services.plex.serviceConfig = {
       LockPersonality = true;
       NoNewPrivileges = true;
-      PrivateDevices = true;
+      PrivateDevices = false; # hardware acceleration
+      PrivateUsers = true;
       PrivateTmp = true;
       ProtectClock = true;
       ProtectControlGroups = true;
