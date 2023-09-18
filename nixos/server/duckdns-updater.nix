@@ -8,6 +8,7 @@ in
   options.nixos.server.duckdns-updater = {
     enable = lib.mkEnableOption "DuckDNS config";
     enableCerts = lib.mkEnableOption "generate HTTPS cert via ACME/Let's Encrypt";
+    useHttpServer = lib.mkEnableOption "use Lego's built-in HTTP server instead a request to DuckDNS";
     domain = lib.mkOption {
       # TODO: accept a list of strings
       type = lib.types.str;
@@ -94,8 +95,9 @@ in
       certs.${cfg.domain} = {
         inherit group;
         email = "thiagokokada@gmail.com";
-        dnsProvider = "duckdns";
-        credentialsFile = cfg.environmentFile;
+        dnsProvider = lib.mkIf (!cfg.useHttpServer) "duckdns";
+        credentialsFile = lib.mkIf (!cfg.useHttpServer) cfg.environmentFile;
+        listenHTTP = lib.mkIf cfg.useHttpServer ":80"; # any other port needs to be proxied
         postRun = ''
           ${lib.getBin pkgs.openssl}/bin/openssl pkcs12 -export -out bundle.pfx -inkey key.pem -in cert.pem -passout pass:
           chown 'acme:${group}' bundle.pfx
@@ -103,5 +105,7 @@ in
         '';
       };
     };
+
+    networking.firewall.allowedTCPPorts = lib.mkIf cfg.useHttpServer [ 80 ];
   };
 }

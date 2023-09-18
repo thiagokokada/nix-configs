@@ -25,11 +25,14 @@
   nixos = {
     server = {
       enable = true;
+      jellyfin.enable = true;
       plex.enable = true;
       ssh.enable = true;
       tailscale.enable = true;
       duckdns-updater = {
         enable = true;
+        enableCerts = true;
+        useHttpServer = true;
         domain = "mirai-vps.duckdns.org";
         onCalendar = "daily"; # fixed IP, mostly for health checking
       };

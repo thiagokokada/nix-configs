@@ -4,7 +4,7 @@ let
 in
 {
   options.nixos.dev.virtualisation.enable = lib.mkEnableOption "virtualisation config" // {
-    default =  config.nixos.dev.enable;
+    default = config.nixos.dev.enable;
   };
 
   config = lib.mkIf config.nixos.dev.virtualisation.enable {
