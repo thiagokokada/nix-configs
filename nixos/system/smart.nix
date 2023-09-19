@@ -25,7 +25,6 @@
       ProtectKernelTunables = true;
       ProtectProc = "invisible";
       ProtectSystem = "strict";
-      PrivateNetwork = true;
       RestrictNamespaces = true;
       RestrictRealtime = true;
       RestrictSUIDSGID = true;
