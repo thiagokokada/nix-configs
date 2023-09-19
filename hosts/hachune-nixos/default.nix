@@ -55,8 +55,5 @@ in
     };
   };
 
-  # Used for firmware updates
-  services.fwupd.enable = true;
-
   time.timeZone = "America/Sao_Paulo";
 }
