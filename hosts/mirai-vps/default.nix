@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ flake, ... }:
+{ ... }:
 
 {
   imports =
@@ -12,7 +12,6 @@
       ../../nixos/home.nix
       ../../nixos/minimal.nix
       ../../nixos/server
-      flake.inputs.home.nixosModules.home-manager
     ];
 
   nixos.home.imports = [
