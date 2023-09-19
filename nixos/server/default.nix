@@ -24,7 +24,6 @@
     system.autoUpgrade = {
       enable = true;
       allowReboot = true;
-      operation = "boot";
       flake = "github:thiagokokada/nix-configs";
     };
   };
