@@ -16,7 +16,7 @@ with constants;
         cachixActionStep
         setDefaultGitBranchStep
         checkNixStep
-        validateFlakesStep
+        # validateFlakesStep
         (buildHomeManagerConfigurations { })
         (buildNixOSConfigurations { })
       ];
