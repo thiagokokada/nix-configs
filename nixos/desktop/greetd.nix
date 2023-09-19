@@ -1,7 +1,9 @@
 { config, lib, pkgs, ... }:
 
 {
-  options.nixos.desktop.greetd.enable = lib.mkDefaultOption "greetd config";
+  options.nixos.desktop.greetd.enable = lib.mkEnableOption "greetd config" // {
+    default = config.nixos.desktop.enable;
+  };
 
   config = lib.mkIf config.nixos.desktop.greetd.enable {
     boot = {

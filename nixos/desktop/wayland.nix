@@ -1,7 +1,9 @@
 { config, lib, pkgs, ... }:
 
 {
-  options.nixos.desktop.wayland.enable = lib.mkDefaultOption "wayland config";
+  options.nixos.desktop.wayland.enable = lib.mkEnableOption "wayland config" // {
+    default = config.nixos.desktop.enable;
+  };
 
   config = lib.mkIf config.nixos.desktop.wayland.enable {
     programs.sway = {

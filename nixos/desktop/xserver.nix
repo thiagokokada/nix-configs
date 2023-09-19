@@ -1,7 +1,9 @@
 { config, lib, ... }:
 
 {
-  options.nixos.desktop.xserver.enable = lib.mkDefaultOption "xserver config";
+  options.nixos.desktop.xserver.enable = lib.mkEnableOption "xserver config" // {
+    default = config.nixos.desktop.enable;
+  };
 
   config = lib.mkIf config.nixos.desktop.xserver.enable {
     # Configure the virtual console keymap from the xserver keyboard settings
