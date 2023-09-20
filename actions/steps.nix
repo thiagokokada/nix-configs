@@ -28,6 +28,9 @@ with constants;
       # Should avoid GitHub API rate limit
       extra_nix_config = builtins.concatStringsSep "\n" [
         "access-tokens = github.com=\${{ secrets.GITHUB_TOKEN }}"
+        # Add remote builder for aarch64-linux
+        "builders = ssh-ng://zatsune-nixos-uk aarch64-linux"
+        "builders-use-substitutes = true"
         extraNixConfig
       ];
     };
@@ -107,14 +110,6 @@ with constants;
           diffIds));
     };
   };
-  setupAarch64 = {
-    name = "Setup aarch64-linux";
-    run = ''
-      DEBIAN_FRONTEND=noninteractive
-      sudo apt-get update -q -y
-      sudo apt-get install -q -y qemu-system-aarch64 qemu-efi binfmt-support qemu-user-static
-    '';
-  };
   setupSshForRemoteBuilder = {
     name = "Setup SSH for Nix's remote builders";
     run = ''
@@ -123,7 +118,7 @@ with constants;
     '';
   };
   setupTailscale = {
-    name = "Tailscale";
+    name = "Setup Tailscale";
     uses = actions.tailscale;
     "with" = {
       oauth-client-id = "\${{ secrets.TS_OAUTH_CLIENT_ID }}";

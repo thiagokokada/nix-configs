@@ -24,5 +24,6 @@
     "miku-nixos"
     "mirai-vps"
     "sankyuu-nixos"
+    "zatsune-nixos"
   ];
 }
