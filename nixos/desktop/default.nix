@@ -3,6 +3,7 @@
 {
   imports = [
     ./greetd.nix
+    ./locale.nix
     ./plymouth.nix
     ./tailscale.nix
     ./wayland.nix
