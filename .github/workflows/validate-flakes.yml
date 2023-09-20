@@ -3,17 +3,23 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Setup Tailscale
+        uses: tailscale/github-action@v2
+        with:
+          oauth-client-id: ${{ secrets.TS_OAUTH_CLIENT_ID }}
+          oauth-secret: ${{ secrets.TS_OAUTH_SECRET }}
+          tags: tag:ci
+      - name: Setup SSH for Nix's remote builders
+        run: |
+          sudo mkdir -p /root/.ssh
+          printf 'Host *\n\tStrictHostKeyChecking accept-new' | sudo tee /root/.ssh/config
       - uses: cachix/install-nix-action@v22
         with:
           extra_nix_config: |
             access-tokens = github.com=${{ secrets.GITHUB_TOKEN }}
-            extra-platforms = aarch64-linux
+            builders = ssh-ng://zatsune-nixos-uk aarch64-linux
+            builders-use-substitutes = true
           nix_path: nixpkgs=channel:nixos-unstable
-      - name: Setup aarch64-linux
-        run: |
-          DEBIAN_FRONTEND=noninteractive
-          sudo apt-get update -q -y
-          sudo apt-get install -q -y qemu-system-aarch64 qemu-efi binfmt-support qemu-user-static
       - uses: cachix/cachix-action@v12
         with:
           authToken: ${{ secrets.CACHIX_TOKEN }}

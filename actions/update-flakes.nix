@@ -15,6 +15,8 @@ with constants;
       steps = with steps; [
         maximimizeBuildSpaceStep
         checkoutStep
+        setupTailscale
+        setupSshForRemoteBuilder
         (installNixActionStep { })
         setDefaultGitBranchStep
         cachixActionStep
