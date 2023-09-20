@@ -11,36 +11,6 @@
       networkmanager = {
         enable = true;
         wifi.backend = "iwd";
-        dispatcherScripts = [{
-          source =
-            let
-              nmcli = "${pkgs.networkmanager}/bin/nmcli";
-              logger = "${pkgs.inetutils}/bin/logger";
-            in
-            pkgs.writeText "wifi-wired-exclusive" ''
-              IFACE="$1"
-              ACTION="$2"
-
-              log() { ${logger} -i -t "wifi-wired-exclusive" "$*"; }
-
-              log "NetworkManager event: ''${IFACE:-NetworkManager} is $ACTION"
-              case "$IFACE" in
-                eth*|usb*|en*)
-                  case "$ACTION" in
-                    up)
-                      log "Disabling wifi radio"
-                      ${nmcli} radio wifi off
-                      ;;
-                    down)
-                      log "Enabling wifi radio"
-                      ${nmcli} radio wifi on
-                      ;;
-                  esac
-                  ;;
-              esac
-            '';
-          type = "basic";
-        }];
       };
     };
 
