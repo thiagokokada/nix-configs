@@ -11,9 +11,12 @@ with constants;
       inherit (ubuntu) runs-on;
       steps = with steps; [
         checkoutStep
-        setupTailscale
-        setupSshForRemoteBuilder
-        (installNixActionStep { })
+        (installNixActionStep {
+          extraNixConfig = ''
+            extra-platforms = aarch64-linux
+          '';
+        })
+        setupAarch64
         cachixActionStep
         setDefaultGitBranchStep
         checkNixStep

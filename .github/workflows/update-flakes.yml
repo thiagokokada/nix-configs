@@ -13,22 +13,10 @@ jobs:
           root-reserve-mb: 512
           swap-size-mb: 1024
       - uses: actions/checkout@v4
-      - name: Setup Tailscale
-        uses: tailscale/github-action@v2
-        with:
-          oauth-client-id: ${{ secrets.TS_OAUTH_CLIENT_ID }}
-          oauth-secret: ${{ secrets.TS_OAUTH_SECRET }}
-          tags: tag:ci
-      - name: Setup SSH for Nix's remote builders
-        run: |
-          sudo mkdir -p /root/.ssh
-          printf 'Host *\n\tStrictHostKeyChecking accept-new' | sudo tee /root/.ssh/config
       - uses: cachix/install-nix-action@v22
         with:
           extra_nix_config: |
             access-tokens = github.com=${{ secrets.GITHUB_TOKEN }}
-            builders = ssh-ng://zatsune-nixos-uk aarch64-linux
-            builders-use-substitutes = true
           nix_path: nixpkgs=channel:nixos-unstable
       - name: Set default git branch (to reduce log spam)
         run: git config --global init.defaultBranch master
@@ -46,13 +34,12 @@ jobs:
         run: |-
           nix build --print-build-logs '.#homeConfigurations.home-linux.activationPackage'
           nix build --print-build-logs '.#homeConfigurations.steamdeck.activationPackage'
-      - name: 'Build NixOS configs for: hachune-nixos, miku-nixos, mirai-vps, sankyuu-nixos, zatsune-nixos'
+      - name: 'Build NixOS configs for: hachune-nixos, miku-nixos, mirai-vps, sankyuu-nixos'
         run: |-
           nix build --print-build-logs '.#nixosConfigurations.hachune-nixos.config.system.build.toplevel'
           nix build --print-build-logs '.#nixosConfigurations.miku-nixos.config.system.build.toplevel'
           nix build --print-build-logs '.#nixosConfigurations.mirai-vps.config.system.build.toplevel'
           nix build --print-build-logs '.#nixosConfigurations.sankyuu-nixos.config.system.build.toplevel'
-          nix build --print-build-logs '.#nixosConfigurations.zatsune-nixos.config.system.build.toplevel'
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v5
         with:

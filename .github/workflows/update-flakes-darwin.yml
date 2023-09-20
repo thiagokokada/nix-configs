@@ -8,8 +8,6 @@ jobs:
         with:
           extra_nix_config: |
             access-tokens = github.com=${{ secrets.GITHUB_TOKEN }}
-            builders = ssh-ng://zatsune-nixos-uk aarch64-linux
-            builders-use-substitutes = true
           nix_path: nixpkgs=channel:nixos-unstable
       - uses: cachix/cachix-action@v12
         with:

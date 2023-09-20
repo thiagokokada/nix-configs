@@ -13,7 +13,7 @@ jobs:
           root-reserve-mb: 512
           swap-size-mb: 1024
       - uses: actions/checkout@v4
-      - name: Setup Tailscale
+      - name: Tailscale
         uses: tailscale/github-action@v2
         with:
           oauth-client-id: ${{ secrets.TS_OAUTH_CLIENT_ID }}
@@ -27,8 +27,7 @@ jobs:
         with:
           extra_nix_config: |
             access-tokens = github.com=${{ secrets.GITHUB_TOKEN }}
-            builders = ssh-ng://zatsune-nixos-uk aarch64-linux
-            builders-use-substitutes = true
+            builders = ssh://zatsune-nixos-uk aarch64-linux
           nix_path: nixpkgs=channel:nixos-unstable
       - uses: cachix/cachix-action@v12
         with:
@@ -41,13 +40,14 @@ jobs:
         run: |-
           nix build --print-build-logs '.#homeConfigurations.home-linux.activationPackage'
           nix build --print-build-logs '.#homeConfigurations.steamdeck.activationPackage'
-      - name: 'Build NixOS configs for: hachune-nixos, miku-nixos, mirai-vps, sankyuu-nixos, zatsune-nixos'
+      - name: 'Build NixOS configs for: hachune-nixos, miku-nixos, mirai-vps, sankyuu-nixos'
         run: |-
           nix build --print-build-logs '.#nixosConfigurations.hachune-nixos.config.system.build.toplevel'
           nix build --print-build-logs '.#nixosConfigurations.miku-nixos.config.system.build.toplevel'
           nix build --print-build-logs '.#nixosConfigurations.mirai-vps.config.system.build.toplevel'
           nix build --print-build-logs '.#nixosConfigurations.sankyuu-nixos.config.system.build.toplevel'
-          nix build --print-build-logs '.#nixosConfigurations.zatsune-nixos.config.system.build.toplevel'
+      - name: 'Build NixOS configs for: zatsune-nixos'
+        run: nix build --print-build-logs '.#nixosConfigurations.zatsune-nixos.config.system.build.toplevel'
   build-macos:
     runs-on: macos-13
     steps:
@@ -56,8 +56,6 @@ jobs:
         with:
           extra_nix_config: |
             access-tokens = github.com=${{ secrets.GITHUB_TOKEN }}
-            builders = ssh-ng://zatsune-nixos-uk aarch64-linux
-            builders-use-substitutes = true
           nix_path: nixpkgs=channel:nixos-unstable
       - uses: cachix/cachix-action@v12
         with:
