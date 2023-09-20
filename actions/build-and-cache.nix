@@ -15,8 +15,6 @@ with constants;
         installNixActionStep
         cachixActionStep
         setDefaultGitBranchStep
-        checkNixStep
-        # validateFlakesStep
         (buildHomeManagerConfigurations { })
         (buildNixOSConfigurations { })
       ];

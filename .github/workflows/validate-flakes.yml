@@ -1,0 +1,31 @@
+jobs:
+  build-linux:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: cachix/install-nix-action@v22
+        with:
+          extra_nix_config: access-tokens = github.com=${{ secrets.GITHUB_TOKEN }}
+          nix_path: nixpkgs=channel:nixos-unstable
+      - name: Setup aarch64-linux
+        with:
+          run: |
+            DEBIAN_FRONTEND=noninteractive
+            sudo apt-get update -q -y
+            sudo apt-get install -q -y qemu-system-aarch64 qemu-efi binfmt-support qemu-user-static
+            sudo sh -c "echo 'system-features = aarch64-linux' >> /etc/nix/nix.conf"
+      - uses: cachix/cachix-action@v12
+        with:
+          authToken: ${{ secrets.CACHIX_TOKEN }}
+          extraPullNames: nix-community
+          name: thiagokokada-nix-configs
+      - name: Set default git branch (to reduce log spam)
+        run: git config --global init.defaultBranch master
+      - name: Check if all `.nix` files are formatted correctly
+        run: nix run '.#formatCheck'
+      - name: Validate Flakes
+        run: nix flake check
+name: validate-flakes
+"on":
+  - push
+  - workflow_dispatch

@@ -104,4 +104,13 @@ with constants;
           diffIds));
     };
   };
+  setupAarch64 = {
+    name = "Setup aarch64-linux";
+    "with".run = ''
+       DEBIAN_FRONTEND=noninteractive
+       sudo apt-get update -q -y
+       sudo apt-get install -q -y qemu-system-aarch64 qemu-efi binfmt-support qemu-user-static
+       sudo sh -c "echo 'system-features = aarch64-linux' >> /etc/nix/nix.conf"
+    '';
+  };
 }
