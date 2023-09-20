@@ -18,6 +18,7 @@ in
 
   nixos = {
     audio.lowLatency.enable = true;
+    cross-compiling.enable = true;
     dev.enable = true;
     server = {
       plex.enable = true;

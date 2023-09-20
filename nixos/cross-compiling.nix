@@ -2,7 +2,7 @@
 
 {
   options.nixos.cross-compiling = {
-    enable = lib.mkDefaultOption "cross-compiling config for nixpkgs";
+    enable = lib.mkEnableOption "cross-compiling config for nixpkgs";
     emulatedSystems = lib.mkOption {
       description = "List of systems to emulate";
       type = lib.types.listOf lib.types.str;
