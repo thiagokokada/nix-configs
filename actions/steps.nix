@@ -115,4 +115,20 @@ with constants;
       sudo apt-get install -q -y qemu-system-aarch64 qemu-efi binfmt-support qemu-user-static
     '';
   };
+  setupSshForRemoteBuilder = {
+    name = "Setup SSH for Nix's remote builders";
+    run = ''
+      sudo mkdir -p /root/.ssh
+      printf 'Host *\n\tStrictHostKeyChecking accept-new' | sudo tee /root/.ssh/config
+    '';
+  };
+  setupTailscale = {
+    name = "Tailscale";
+    uses = actions.tailscale;
+    "with" = {
+      oauth-client-id = "\${{ secrets.TS_OAUTH_CLIENT_ID }}";
+      oauth-secret = "\${{ secrets.TS_OAUTH_SECRET }}";
+      tags = "tag:ci";
+    };
+  };
 }
