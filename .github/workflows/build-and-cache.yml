@@ -26,8 +26,6 @@ jobs:
         run: git config --global init.defaultBranch master
       - name: Check if all `.nix` files are formatted correctly
         run: nix run '.#formatCheck'
-      - name: Validate Flakes
-        run: nix flake check --no-build
       - name: 'Build Home-Manager configs for: home-linux, steamdeck'
         run: |-
           nix build --print-build-logs '.#homeConfigurations.home-linux.activationPackage'
