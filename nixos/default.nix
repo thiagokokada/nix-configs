@@ -7,6 +7,7 @@
     ./desktop
     ./dev
     ./fonts.nix
+    ./games
     ./home.nix
     ./laptop
     ./minimal.nix

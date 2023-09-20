@@ -11,7 +11,6 @@ in
   imports = [
     ./hardware-configuration.nix
     ../../nixos
-    ../../nixos/games.nix
     inputs.hardware.nixosModules.common-cpu-intel
   ];
 
@@ -19,6 +18,7 @@ in
     audio.lowLatency.enable = true;
     cross-compiling.enable = true;
     dev.enable = true;
+    games.enable = true;
     server = {
       plex.enable = true;
       rtorrent.enable = true;

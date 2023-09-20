@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, flake, lib, ... }:
+{ config, pkgs, flake, ... }:
 
 let
   inherit (flake) inputs;
@@ -11,7 +11,6 @@ in
   imports = [
     ./hardware-configuration.nix
     ../../nixos
-    ../../nixos/games.nix
     inputs.hardware.nixosModules.lenovo-thinkpad-t14-amd-gen1
   ];
 
@@ -55,6 +54,10 @@ in
       # The audio device from this notebook doesn't seem to like short buffers too much
       quantum = 128;
     };
+    games = {
+      enable = true;
+      gpu = "amd";
+    };
     laptop.tlp = {
       cpuFreqGovernor = "schedutil";
       batteryThreshold = {
@@ -67,9 +70,6 @@ in
   programs.steam.gamescopeSession.args = [
     "-w 1600"
     "-h 900"
-    "--fsr-sharpness 10"
-    "-U"
-    "--adaptive-sync"
   ];
 
   # Used for firmware updates
