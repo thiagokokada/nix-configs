@@ -13,21 +13,10 @@ jobs:
           root-reserve-mb: 512
           swap-size-mb: 1024
       - uses: actions/checkout@v4
-      - name: Tailscale
-        uses: tailscale/github-action@v2
-        with:
-          oauth-client-id: ${{ secrets.TS_OAUTH_CLIENT_ID }}
-          oauth-secret: ${{ secrets.TS_OAUTH_SECRET }}
-          tags: tag:ci
-      - name: Setup SSH for Nix's remote builders
-        run: |
-          sudo mkdir -p /root/.ssh
-          printf 'Host *\n\tStrictHostKeyChecking accept-new' | sudo tee /root/.ssh/config
       - uses: cachix/install-nix-action@v22
         with:
           extra_nix_config: |
             access-tokens = github.com=${{ secrets.GITHUB_TOKEN }}
-            builders = ssh://zatsune-nixos-uk aarch64-linux
           nix_path: nixpkgs=channel:nixos-unstable
       - uses: cachix/cachix-action@v12
         with:
@@ -46,8 +35,6 @@ jobs:
           nix build --print-build-logs '.#nixosConfigurations.miku-nixos.config.system.build.toplevel'
           nix build --print-build-logs '.#nixosConfigurations.mirai-vps.config.system.build.toplevel'
           nix build --print-build-logs '.#nixosConfigurations.sankyuu-nixos.config.system.build.toplevel'
-      - name: 'Build NixOS configs for: zatsune-nixos'
-        run: nix build --print-build-logs '.#nixosConfigurations.zatsune-nixos.config.system.build.toplevel'
   build-macos:
     runs-on: macos-13
     steps:
