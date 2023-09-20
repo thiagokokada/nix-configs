@@ -3,6 +3,7 @@
 {
   imports = [
     ./audio.nix
+    ./cross-compiling.nix
     ./desktop
     ./dev
     ./fonts.nix

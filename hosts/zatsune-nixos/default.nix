@@ -9,9 +9,7 @@
     [
       # Include the results of the hardware scan.
       ./hardware-configuration.nix
-      ../../nixos/home.nix
-      ../../nixos/minimal.nix
-      ../../nixos/server
+      ../../nixos
     ];
 
   nixos.home.imports = [

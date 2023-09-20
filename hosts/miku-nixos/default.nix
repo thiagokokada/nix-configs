@@ -11,7 +11,6 @@ in
   imports = [
     ./hardware-configuration.nix
     ../../nixos
-    ../../nixos/cross-compiling.nix
     ../../nixos/games.nix
     inputs.hardware.nixosModules.common-cpu-intel
   ];

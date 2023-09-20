@@ -11,7 +11,6 @@ in
   imports = [
     ./hardware-configuration.nix
     ../../nixos
-    ../../nixos/cross-compiling.nix
     ../../nixos/games.nix
     inputs.hardware.nixosModules.lenovo-thinkpad-t14-amd-gen1
   ];
