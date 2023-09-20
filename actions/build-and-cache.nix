@@ -12,11 +12,18 @@ with constants;
       steps = with steps; [
         maximimizeBuildSpaceStep
         checkoutStep
-        (installNixActionStep { })
+        setupTailscale
+        setupSshForRemoteBuilder
+        (installNixActionStep {
+          extraNixConfig = ''
+            builders = ssh://zatsune-nixos-uk aarch64-linux
+          '';
+        })
         cachixActionStep
         setDefaultGitBranchStep
         (buildHomeManagerConfigurations { })
         (buildNixOSConfigurations { })
+        (buildNixOSConfigurations { hostnames = [ "zatsune-nixos" ]; })
       ];
     };
     build-macos = {
