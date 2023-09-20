@@ -1,45 +1,19 @@
 { config, pkgs, lib, ... }:
 
 {
+  imports = [
+    ./wireless.nix
+    ./tlp.nix
+  ];
+
   options.nixos.laptop.enable = lib.mkEnableOption "laptop config" // {
     default = (config.device.type == "laptop");
   };
 
   config = lib.mkIf config.nixos.laptop.enable {
-    networking = {
-      # Use Network Manager
-      networkmanager = {
-        enable = true;
-        wifi.backend = "iwd";
-      };
-    };
-
     # Configure hibernation
     boot.resumeDevice = lib.mkIf (config.swapDevices != [ ])
       (lib.mkDefault (builtins.head config.swapDevices).device);
-
-    # Install laptop related packages
-    environment.systemPackages = with pkgs; [ iw ];
-
-    # Configure special hardware in laptops
-    hardware = {
-      # Enable bluetooth
-      bluetooth = { enable = true; };
-    };
-
-    # Enable programs that need special configuration
-    programs = {
-      # Enable NetworkManager applet
-      nm-applet = { enable = true; };
-    };
-
-    # Make nm-applet restart in case of failure
-    systemd.user.services.nm-applet = {
-      serviceConfig = {
-        RestartSec = 3;
-        Restart = "on-failure";
-      };
-    };
 
     # Enable laptop specific services
     services = {
@@ -54,13 +28,6 @@
         lidSwitch = "suspend-then-hibernate";
         lidSwitchDocked = lib.mkDefault "ignore";
         lidSwitchExternalPower = lib.mkDefault "lock";
-      };
-
-      # Use systemd-resolved for DNS
-      resolved = {
-        enable = true;
-        # Can make DNS lookups really slow
-        dnssec = "false";
       };
 
       # Reduce power consumption

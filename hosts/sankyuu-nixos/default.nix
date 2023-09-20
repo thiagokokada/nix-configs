@@ -55,6 +55,13 @@ in
       # The audio device from this notebook doesn't seem to like short buffers too much
       quantum = 128;
     };
+    laptop.tlp = {
+      cpuFreqGovernor = "schedutil";
+      batteryThreshold = {
+        start = 75;
+        stop = 80;
+      };
+    };
   };
 
   programs.steam.gamescopeSession.args = [
@@ -67,20 +74,6 @@ in
 
   # Used for firmware updates
   services.fwupd.enable = true;
-  services.tlp.settings = {
-    # Set battery thresholds
-    START_CHARGE_THRESH_BAT0 = 75;
-    STOP_CHARGE_THRESH_BAT0 = 80;
-    # Use `tlp setcharge` to restore the charging thresholds
-    RESTORE_THRESHOLDS_ON_BAT = 1;
-    # Increase performance on AC
-    PLATFORM_PROFILE_ON_AC = "performance";
-    PLATFORM_PROFILE_ON_BAT = "balanced";
-    # Use schedutil governor
-    CPU_SCALING_GOVERNOR_ON_AC = "schedutil";
-    CPU_SCALING_GOVERNOR_ON_BAT = "schedutil";
-  };
-
 
   # https://gitlab.freedesktop.org/pipewire/pipewire/-/issues/1849
   systemd.services.fix-mic-light = {

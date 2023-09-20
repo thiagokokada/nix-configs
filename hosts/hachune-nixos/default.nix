@@ -21,19 +21,25 @@ in
     mediaDir = "/mnt/media/${config.meta.username}";
   };
 
-  nixos.server = {
-    enable = true;
-    iperf3.enable = true;
-    jellyfin.enable = true;
-    networkd.enable = true;
-    plex.enable = true;
-    rtorrent.enable = true;
-    ssh.enable = true;
-    tailscale.enable = true;
-    duckdns-updater = {
+  nixos = {
+    laptop.tlp = {
       enable = true;
-      certs.enable = true;
-      domain = "hachune-nixos.duckdns.org";
+      cpuFreqGovernor = "schedutil";
+    };
+    server = {
+      enable = true;
+      iperf3.enable = true;
+      jellyfin.enable = true;
+      networkd.enable = true;
+      plex.enable = true;
+      rtorrent.enable = true;
+      ssh.enable = true;
+      tailscale.enable = true;
+      duckdns-updater = {
+        enable = true;
+        certs.enable = true;
+        domain = "hachune-nixos.duckdns.org";
+      };
     };
   };
 
@@ -47,14 +53,5 @@ in
   home-manager.users.${config.meta.username}.theme.wallpaper.path = pkgs.wallpapers.hatsune-miku_stylized-ultrawide;
 
   # Reduce power consumption
-  services.tlp = {
-    enable = true;
-    settings = {
-      CPU_SCALING_GOVERNOR_ON_AC = "schedutil";
-      CPU_SCALING_GOVERNOR_ON_BAT = "schedutil";
-      RUNTIME_PM_ON_AC = "auto";
-    };
-  };
-
   time.timeZone = "America/Sao_Paulo";
 }

@@ -7,7 +7,7 @@
     ./dev
     ./fonts.nix
     ./home.nix
-    ./laptop.nix
+    ./laptop
     ./minimal.nix
     ./server
   ];
