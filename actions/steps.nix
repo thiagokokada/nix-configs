@@ -20,13 +20,16 @@ with constants;
   checkoutStep = {
     uses = actions.checkout;
   };
-  installNixActionStep = {
+  installNixActionStep = { extraNixConfig ? "" }: {
     uses = actions.install-nix-action;
     "with" = {
-      # Need to define a channel, otherwise it wiill use bash from environment
+      # Need to define a channel, otherwise it will use bash from environment
       nix_path = "nixpkgs=channel:nixos-unstable";
       # Should avoid GitHub API rate limit
-      extra_nix_config = "access-tokens = github.com=\${{ secrets.GITHUB_TOKEN }}";
+      extra_nix_config = builtins.concatStringsSep "\n" [
+        "access-tokens = github.com=\${{ secrets.GITHUB_TOKEN }}"
+        extraNixConfig
+      ];
     };
   };
   cachixActionStep = {
@@ -103,5 +106,13 @@ with constants;
           '')
           diffIds));
     };
+  };
+  setupAarch64 = {
+    name = "Setup aarch64-linux";
+    run = ''
+      DEBIAN_FRONTEND=noninteractive
+      sudo apt-get update -q -y
+      sudo apt-get install -q -y qemu-system-aarch64 qemu-efi binfmt-support qemu-user-static
+    '';
   };
 }

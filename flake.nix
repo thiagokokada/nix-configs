@@ -179,6 +179,7 @@
         "build-and-cache"
         "update-flakes"
         "update-flakes-darwin"
+        "validate-flakes"
       ])
     ]); # END recursiveMergeAttrs
 }

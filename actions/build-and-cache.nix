@@ -12,11 +12,9 @@ with constants;
       steps = with steps; [
         maximimizeBuildSpaceStep
         checkoutStep
-        installNixActionStep
+        (installNixActionStep { })
         cachixActionStep
         setDefaultGitBranchStep
-        checkNixStep
-        # validateFlakesStep
         (buildHomeManagerConfigurations { })
         (buildNixOSConfigurations { })
       ];
@@ -25,7 +23,7 @@ with constants;
       inherit (constants.macos) runs-on;
       steps = with steps; [
         checkoutStep
-        installNixActionStep
+        (installNixActionStep { })
         cachixActionStep
         setDefaultGitBranchStep
         (buildHomeManagerConfigurations { hostnames = home-manager.darwin.hostnames; })

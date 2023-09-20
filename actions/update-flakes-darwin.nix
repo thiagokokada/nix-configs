@@ -18,7 +18,7 @@ with constants;
       "if" = "\${{ github.event.workflow_run.conclusion == 'success' }}";
       steps = with steps; [
         checkoutStep
-        installNixActionStep
+        (installNixActionStep { })
         cachixActionStep
         setDefaultGitBranchStep
         (buildHomeManagerConfigurations { hostnames = home-manager.darwin.hostnames; })

@@ -16,7 +16,7 @@ with constants;
       steps = with steps; [
         maximimizeBuildSpaceStep
         checkoutStep
-        installNixActionStep
+        (installNixActionStep { })
         setDefaultGitBranchStep
         cachixActionStep
         # (buildNixOSConfigurations { hostnames = [ (first nixos.hostnames) ]; extraNixFlags = [ "-o /tmp/nixos_old" ]; })
