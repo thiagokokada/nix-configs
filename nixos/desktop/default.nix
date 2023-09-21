@@ -2,6 +2,7 @@
 
 {
   imports = [
+    ./fonts.nix
     ./greetd.nix
     ./locale.nix
     ./plymouth.nix
@@ -10,7 +11,7 @@
     ./xserver.nix
   ];
 
-  options.nixos.desktop.enable = lib.mkDefaultOption "desktop config";
+  options.nixos.desktop.enable = lib.mkEnableOption "desktop config";
 
   config = lib.mkIf config.nixos.desktop.enable {
     programs.gnome-disks.enable = true;

@@ -48,7 +48,7 @@ in
   nixos = {
     cross-compiling.enable = true;
     dev.enable = true;
-    desktop.tailscale.enable = true;
+    desktop.enable = true;
     audio.lowLatency = {
       enable = true;
       # The audio device from this notebook doesn't seem to like short buffers too much

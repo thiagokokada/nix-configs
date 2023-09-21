@@ -1,9 +1,11 @@
 { config, pkgs, lib, ... }:
 
 {
-  options.nixos.fonts.enable = lib.mkDefaultOption "fonts config";
+  options.nixos.desktop.fonts.enable = lib.mkEnableOption "fonts config" // {
+    default = config.nixos.desktop.enable;
+  };
 
-  config = lib.mkIf config.nixos.fonts.enable {
+  config = lib.mkIf config.nixos.desktop.fonts.enable {
     fonts = {
       enableDefaultPackages = true;
       fontDir.enable = true;

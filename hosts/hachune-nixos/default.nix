@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, flake, lib, ... }:
+{ config, pkgs, flake, ... }:
 
 let
   inherit (flake) inputs;
@@ -22,6 +22,7 @@ in
   };
 
   nixos = {
+    desktop.enable = true;
     laptop.tlp = {
       enable = true;
       cpuFreqGovernor = "schedutil";
