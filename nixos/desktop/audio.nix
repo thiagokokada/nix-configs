@@ -1,10 +1,15 @@
 { flake, config, lib, ... }:
 
+let
+  cfg = config.nixos.desktop.audio;
+in
 {
   imports = [ flake.inputs.nix-gaming.nixosModules.pipewireLowLatency ];
 
-  options.nixos.audio = {
-    enable = lib.mkDefaultOption "audio config";
+  options.nixos.desktop.audio = {
+    enable = lib.mkEnableOption "audio config" // {
+      default = config.nixos.desktop.enable;
+    };
     lowLatency = {
       enable = lib.mkEnableOption "low latency config";
       quantum = lib.mkOption {
@@ -22,7 +27,7 @@
     };
   };
 
-  config = lib.mkIf config.nixos.audio.enable {
+  config = lib.mkIf cfg.enable {
     # Wireplumber config
     environment.etc = {
       "wireplumber/bluetooth.lua.d/51-bluez-config.lua".text = ''
@@ -35,10 +40,8 @@
       '';
     };
 
-    security = {
-      # This allows PipeWire to run with realtime privileges (i.e: less cracks)
-      rtkit.enable = true;
-    };
+    # This allows PipeWire to run with realtime privileges (i.e: less cracks)
+    security.rtkit.enable = true;
 
     services = {
       pipewire = {
@@ -51,7 +54,7 @@
         pulse.enable = true;
         wireplumber.enable = true;
         lowLatency = {
-          inherit (config.nixos.audio.lowLatency) enable quantum rate;
+          inherit (cfg.lowLatency) enable quantum rate;
         };
       };
     };
