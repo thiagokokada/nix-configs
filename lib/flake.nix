@@ -50,7 +50,7 @@ in
 
   mkNixOSConfig =
     { hostname
-    , system ? "x86_64-linux"
+    , system ? null # get from hardware-configuration.nix by default
     , nixosSystem ? nixpkgs.lib.nixosSystem
     , extraModules ? [ ]
     }:
@@ -61,7 +61,7 @@ in
         lib = nixpkgs.lib.extend (final: prev:
           (import ../lib { lib = final; })
         );
-        specialArgs = { flake = self; };
+        specialArgs.flake = self;
       };
 
       apps.${system} = {
