@@ -14,7 +14,7 @@ in
         in
         pkgs.runCommand name { } ''
           mkdir -p $out
-          echo ${pkgs.lib.escapeShellArg json} | ${pkgs.yj}/bin/yj -jy > $out/${name}.yml
+          echo ${nixpkgs.lib.escapeShellArg json} | ${pkgs.yj}/bin/yj -jy > $out/${name}.yml
         '';
       ghActionsYAMLs = (map mkGHActionsYAML names);
     in
