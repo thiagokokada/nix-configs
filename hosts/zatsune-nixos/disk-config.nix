@@ -18,7 +18,7 @@
           };
           root = {
             name = "root";
-            end = "-1G";
+            end = "-12G";
             content = {
               type = "filesystem";
               format = "xfs";
