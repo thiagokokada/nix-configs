@@ -2,19 +2,21 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ ... }:
+{ flake, ... }:
 
 {
-  imports =
-    [
-      # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-      ../../nixos
-    ];
+  imports = [
+    # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+    ../../nixos
+    flake.inputs.disko.nixosModules.disko
+  ];
 
   nixos.home.imports = [
     ../../home-manager/minimal.nix
   ];
+
+  disko.devices = import ./disk-config.nix;
 
   device.type = "server";
 
