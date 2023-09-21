@@ -86,7 +86,7 @@
       alias icat="kitty +kitten icat"
       alias paste="kitty +kitten clipboard --get-clipboard"
       alias ssh="kitty +kitten ssh $@"
-      alias ssh-compat="TERM=xterm-256color ssh"
+      alias ssh-compat="TERM=xterm-256color \ssh"
     fi
   '';
 }
