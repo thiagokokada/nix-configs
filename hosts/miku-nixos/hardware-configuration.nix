@@ -47,5 +47,6 @@
     [ { device = "/dev/disk/by-uuid/b14d5664-18e4-429a-a8ef-a98c61275347"; }
     ];
 
+  nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
 }
