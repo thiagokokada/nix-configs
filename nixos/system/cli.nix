@@ -1,9 +1,11 @@
 { config, pkgs, lib, ... }:
 
 {
-  options.nixos.cli.enable = lib.mkDefaultOption "CLI config";
+  options.nixos.system.cli.enable = lib.mkEnableOption "CLI config" // {
+    default = config.nixos.system.enable;
+  };
 
-  config = lib.mkIf config.nixos.cli.enable {
+  config = lib.mkIf config.nixos.system.cli.enable {
     # CLI packages.
     environment = {
       # To get zsh completion for system packages

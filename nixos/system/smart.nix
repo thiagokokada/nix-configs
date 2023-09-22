@@ -2,7 +2,9 @@
 
 {
   options.nixos.system.smart = {
-    enable = lib.mkDefaultOption "SMART config";
+    enable = lib.mkEnableOption "SMART config" // {
+      default = config.nixos.system.enable;
+    };
   };
 
   config = lib.mkIf config.nixos.system.smart.enable {

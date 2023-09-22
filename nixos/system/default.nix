@@ -2,6 +2,7 @@
 
 {
   imports = [
+    ./cli.nix
     ./btrfs.nix
     ./smart.nix
   ];
