@@ -12,7 +12,7 @@
     enable = true;
 
     userName = "Thiago Kenji Okada";
-    userEmail = "thiagokokada@gmail.com";
+    userEmail = config.meta.email;
     package = pkgs.gitFull.override {
       # Use SSH from macOS instead with support for Keyring
       # https://github.com/NixOS/nixpkgs/issues/62353
