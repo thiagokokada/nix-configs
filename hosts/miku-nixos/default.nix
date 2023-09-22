@@ -15,7 +15,6 @@ in
   ];
 
   nixos = {
-    cross-compiling.enable = true;
     desktop = {
       enable = true;
       audio.lowLatency.enable = true;

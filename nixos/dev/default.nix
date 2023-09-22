@@ -3,7 +3,10 @@ let
   inherit (config.meta) username;
 in
 {
-  imports = [ ./virtualisation.nix ];
+  imports = [
+    ./cross-compiling.nix
+    ./virtualisation.nix
+  ];
 
   options.nixos.dev.enable = lib.mkEnableOption "dev config";
 

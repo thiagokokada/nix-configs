@@ -46,7 +46,6 @@ in
   home-manager.users.${config.meta.username}.theme.wallpaper.path = pkgs.wallpapers.hatsune-miku_stylized-ultrawide;
 
   nixos = {
-    cross-compiling.enable = true;
     dev.enable = true;
     desktop = {
       enable = true;

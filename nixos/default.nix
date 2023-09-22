@@ -2,7 +2,6 @@
 
 {
   imports = [
-    ./cross-compiling.nix
     ./desktop
     ./dev
     ./games
