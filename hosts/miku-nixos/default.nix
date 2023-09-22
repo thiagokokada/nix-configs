@@ -15,10 +15,7 @@ in
   ];
 
   nixos = {
-    desktop = {
-      enable = true;
-      audio.lowLatency.enable = true;
-    };
+    desktop.audio.lowLatency.enable = true;
     dev.enable = true;
     games.enable = true;
     server = {

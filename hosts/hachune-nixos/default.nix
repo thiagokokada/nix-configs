@@ -22,7 +22,6 @@ in
   };
 
   nixos = {
-    desktop.enable = true;
     laptop.tlp = {
       enable = true;
       cpuFreqGovernor = "schedutil";
