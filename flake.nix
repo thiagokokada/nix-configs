@@ -135,7 +135,6 @@
       (mkNixOSConfig { hostname = "mirai-vps"; })
       (mkNixOSConfig { hostname = "sankyuu-nixos"; })
       (mkNixOSConfig { hostname = "zatsune-nixos"; })
-      (mkNixOSConfig { hostname = "zachune-nixos"; })
 
       # Home-Manager configs
       (mkHomeConfig { hostname = "home-linux"; })
