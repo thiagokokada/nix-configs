@@ -22,7 +22,6 @@
 
   nixos = {
     server = {
-      enable = true;
       iperf3.enable = true;
       ssh.enable = true;
       tailscale.enable = true;

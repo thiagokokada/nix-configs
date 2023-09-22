@@ -1,6 +1,8 @@
 { lib, config, ... }:
 {
-  options.nixos.server.enable = lib.mkEnableOption "server config";
+  options.nixos.server.enable = lib.mkEnableOption "server config" // {
+    default = (config.device.type == "server");
+  };
 
   imports = [
     ./duckdns-updater.nix

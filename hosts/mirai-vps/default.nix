@@ -21,7 +21,6 @@
 
   nixos = {
     server = {
-      enable = true;
       iperf3.enable = true;
       jellyfin.enable = true;
       plex.enable = true;
