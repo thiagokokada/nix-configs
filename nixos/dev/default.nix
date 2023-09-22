@@ -4,7 +4,6 @@ let
 in
 {
   imports = [
-    ./cross-compiling.nix
     ./virtualisation.nix
   ];
 

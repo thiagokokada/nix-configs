@@ -47,6 +47,7 @@ in
 
   nixos = {
     dev.enable = true;
+    nix.cross-compiling.enable = true;
     desktop = {
       audio.lowLatency = {
         enable = true;

@@ -2,8 +2,8 @@
 
 {
   imports = [
-    ./meta.nix
-    ./system
     ../modules
+    ./nix
+    ./system
   ];
 }

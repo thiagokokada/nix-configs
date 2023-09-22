@@ -1,19 +1,18 @@
 { config, lib, ... }:
 
 let
-  cfg = config.nixos.dev.cross-compiling;
+  cfg = config.nixos.nix.cross-compiling;
 in
 {
-  options.nixos.dev.cross-compiling = {
-    enable = lib.mkEnableOption "cross-compiling config for nixpkgs" // {
-      default = config.nixos.dev.enable;
-    };
+  options.nixos.nix.cross-compiling = {
+    enable = lib.mkEnableOption "cross-compiling config for nixpkgs";
     emulatedSystems = lib.mkOption {
       description = "List of systems to emulate via QEMU";
       type = lib.types.listOf lib.types.str;
       default = [ "aarch64-linux" ];
     };
   };
+
   config = lib.mkIf cfg.enable {
     # Allow compilation of packages ARM/ARM64 architectures via QEMU
     # e.g. nix-build -A <pkg> --argstr system aarch64-linux
