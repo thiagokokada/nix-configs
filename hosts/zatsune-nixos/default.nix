@@ -16,6 +16,22 @@
     ../../home-manager/minimal.nix
   ];
 
+  boot.kernelParams = [
+    "nvme.shutdown_timeout=10"
+    "nvme_core.shutdown_timeout=10"
+    "libiscsi.debug_libiscsi_eh=1"
+    "crash_kexec_post_notifiers"
+
+    # VNC console
+    "console=tty1"
+
+    # x86_64-linux
+    "console=ttyS0"
+
+    # aarch64-linux
+    "console=ttyAMA0,115200"
+  ];
+
   disko.devices = import ./disk-config.nix;
 
   device.type = "server";
