@@ -2,25 +2,63 @@
 
 let
   cfg = config.nixos.games.retroarch;
+  finalPkg =
+    if (cfg.cores == "all") then
+      pkgs.retroarchFull
+    else
+      pkgs.retroarch.override {
+        cores = lib.pipe pkgs.libretro [
+          (lib.getAttrs cfg.cores)
+          lib.attrValues
+        ];
+      };
 in
 {
   options.nixos.games.retroarch = {
     enable = lib.mkEnableOption "RetroArch config" // {
       default = config.nixos.games.enable;
     };
-    package = lib.mkPackageOption pkgs "retroarch" {
-      default = "retroarchFull";
+    cores = lib.mkOption {
+      type = with lib.types; either (enum [ "all" ]) (listOf str);
+      default = [
+        "beetle-pcfx"
+        "blastem"
+        "bsnes-hd"
+        "desmume"
+        "fbneo"
+        "flycast"
+        "gambatte"
+        "genesis-plus-gx"
+        "melonds"
+        "mgba"
+        "mupen64plus"
+        "neocd"
+        "nestopia"
+        "parallel-n64"
+        "pcsx2"
+        "ppsspp"
+        "snes9x"
+        "stella"
+        "swanstation"
+        "yabause"
+      ];
+      description = "List of cores to include. Pass `all` to use `retroarchFull` instead";
+    };
+    package = lib.mkOption {
+      type = lib.types.package;
+      description = "Final package";
+      internal = true;
     };
   };
 
   config = lib.mkIf cfg.enable {
-    environment.systemPackages = [
-      cfg.package
-    ];
+    nixos.games.retroarch.package = finalPkg;
+
+    environment.systemPackages = [ finalPkg ];
 
     services.xserver.desktopManager.retroarch = {
       enable = true;
-      package = cfg.package;
+      package = finalPkg;
     };
   };
 }
