@@ -37,6 +37,8 @@
   device.type = "server";
 
   nixos = {
+    # Has tons of memory and slow disk
+    nix.tmpOnDisk = false;
     server = {
       iperf3.enable = true;
       ssh.enable = true;

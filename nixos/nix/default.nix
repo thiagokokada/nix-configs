@@ -1,5 +1,8 @@
 { config, lib, pkgs, flake, ... }:
 
+let
+  cfg = config.nixos.nix;
+in
 {
   imports = [
     ../../cachix.nix
@@ -7,9 +10,14 @@
     ./cross-compiling.nix
   ];
 
-  options.nixos.nix.enable = lib.mkDefaultOption "nix/nixpkgs config";
+  options.nixos.nix = {
+    enable = lib.mkDefaultOption "nix/nixpkgs config";
+    tmpOnDisk = lib.mkDefaultOption "set nix's TMPDIR to /var/tmp (disk instead tmpfs)" // {
+      enable = config.boot.tmp.useTmpfs;
+    };
+  };
 
-  config = lib.mkIf config.nixos.nix.enable {
+  config = lib.mkIf cfg.enable {
     # Add some Nix related packages
     environment.systemPackages = with pkgs; [
       nixos-cleanup
@@ -38,7 +46,7 @@
 
     # Change build dir to /var/tmp
     systemd.services.nix-daemon = {
-      environment.TMPDIR = lib.mkDefault "/var/tmp";
+      environment.TMPDIR = lib.mkIf (cfg.tmpOnDisk) "/var/tmp";
     };
 
     # This value determines the NixOS release with which your system is to be
