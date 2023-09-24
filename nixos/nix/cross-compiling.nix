@@ -27,7 +27,7 @@ in
         hostName = "zatsune-nixos-uk";
         system = "aarch64-linux";
         protocol = "ssh-ng";
-        speedFactor = 4;
+        maxJobs = 4;
         publicHostKey = "c3NoLWVkMjU1MTkgQUFBQUMzTnphQzFsWkRJMU5URTVBQUFBSUY5a3NRZkFGWTRSbVRmdUEzTDdTQ1Z0YlpsZ2hodVBWSDAxWTRDbytvOHIgcm9vdEB6YXRzdW5lLW5peG9zCg==";
       }];
 
