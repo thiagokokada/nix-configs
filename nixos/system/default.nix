@@ -45,20 +45,6 @@
     # Enable firmware-linux-nonfree
     hardware.enableRedistributableFirmware = true;
 
-    nix = {
-      gc = {
-        automatic = true;
-        persistent = true;
-        randomizedDelaySec = "15m";
-        dates = "3:15";
-        options = "--delete-older-than 7d";
-      };
-      # Reduce disk usage
-      daemonIOSchedClass = "idle";
-      # Leave nix builds as a background task
-      daemonCPUSchedPolicy = "idle";
-    };
-
     services = {
       # Trim SSD weekly
       fstrim = {

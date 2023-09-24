@@ -16,7 +16,22 @@
       nom-rebuild
     ];
 
-    nix = import ../../shared/nix.nix { inherit pkgs flake; };
+    nix = lib.mkMerge [
+      (import ../../shared/nix.nix { inherit pkgs flake; })
+      {
+        gc = {
+          automatic = true;
+          persistent = true;
+          randomizedDelaySec = "15m";
+          dates = "3:15";
+          options = "--delete-older-than 7d";
+        };
+        # Reduce disk usage
+        daemonIOSchedClass = "idle";
+        # Leave nix builds as a background task
+        daemonCPUSchedPolicy = "idle";
+      }
+    ];
 
     # Enable unfree packages
     nixpkgs.config.allowUnfree = true;
