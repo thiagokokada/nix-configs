@@ -21,7 +21,13 @@ in
     cores = lib.mkOption {
       type = with lib.types; either (enum [ "all" ]) (listOf str);
       default = [
+        "atari800"
+        "beetle-lynx"
+        "beetle-ngp"
+        "beetle-pce-fast"
         "beetle-pcfx"
+        "beetle-supergrafx"
+        "beetle-wswan"
         "blastem"
         "bsnes-hd"
         "desmume"
@@ -34,9 +40,9 @@ in
         "mupen64plus"
         "neocd"
         "nestopia"
-        "parallel-n64"
         "pcsx2"
         "ppsspp"
+        "prosystem"
         "snes9x"
         "stella"
         "swanstation"
