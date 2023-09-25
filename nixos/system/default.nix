@@ -1,5 +1,8 @@
 { config, lib, ... }:
 
+let
+  cfg = config.nixos.system;
+in
 {
   imports = [
     ./cli.nix
@@ -7,9 +10,12 @@
     ./smart.nix
   ];
 
-  options.nixos.system.enable = lib.mkDefaultOption "system config";
+  options.nixos.system = {
+    enable = lib.mkDefaultOption "system config";
+    showMotd = lib.mkDefaultOption "show message of the day";
+  };
 
-  config = lib.mkIf config.nixos.system.enable {
+  config = lib.mkIf cfg.enable {
     boot = {
       initrd.systemd.enable = lib.mkDefault true;
 
@@ -34,6 +40,9 @@
       };
     };
 
+    # Enable firmware-linux-nonfree
+    hardware.enableRedistributableFirmware = true;
+
     # Increase file handler limit
     security.pam.loginLimits = [{
       domain = "*";
@@ -41,9 +50,6 @@
       item = "nofile";
       value = "524288";
     }];
-
-    # Enable firmware-linux-nonfree
-    hardware.enableRedistributableFirmware = true;
 
     services = {
       # Trim SSD weekly
@@ -76,6 +82,11 @@
         enableUserServices = true;
       };
     };
+
+    # nixos/modules/misc/version.nix
+    users.motd = lib.mkIf (cfg.showMotd) ''
+      Welcome to '${config.networking.hostName}' running NixOS ${config.system.nixos.version}!
+    '';
 
     # Enable zram to have better memory management
     zramSwap = {
