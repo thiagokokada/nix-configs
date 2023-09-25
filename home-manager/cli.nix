@@ -51,7 +51,6 @@
       enable = true;
       enableAliases = true;
       git = true;
-      icons = true;
     };
     zsh.shellAliases = {
       # For muscle memory...
