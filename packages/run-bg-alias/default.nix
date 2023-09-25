@@ -12,7 +12,7 @@ writeShellApplication {
     # macOS seems to lose the current PWD for some reason if you
     # close stdin, but without closing stdin you can't have a proper
     # background application.
-    # This function should make it wirj by expanding the paths, but it
+    # This function should make it by expanding the paths, but it
     # is using a heuristic so it may be buggy.
     if stdenv.isDarwin then ''
       declare -a parsed_args
