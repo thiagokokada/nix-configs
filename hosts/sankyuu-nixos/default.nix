@@ -66,6 +66,7 @@ in
         stop = 80;
       };
     };
+    server.tailscale.enable = true;
   };
 
   programs.steam.gamescopeSession.args = [
