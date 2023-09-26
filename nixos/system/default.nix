@@ -41,7 +41,10 @@ in
     };
 
     # Enable firmware-linux-nonfree
-    hardware.enableRedistributableFirmware = true;
+    hardware.enableRedistributableFirmware = lib.mkDefault true;
+
+    # Enable nftables-based firewall
+    networking.nftables.enable = lib.mkDefault true;
 
     # Increase file handler limit
     security.pam.loginLimits = [{
