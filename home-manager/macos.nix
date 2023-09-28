@@ -4,7 +4,6 @@
   imports = [
     ./emacs
     ./minimal.nix
-    ./mpv
     ./non-nix.nix
   ];
 

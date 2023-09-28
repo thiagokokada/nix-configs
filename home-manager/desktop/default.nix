@@ -5,6 +5,7 @@
     ./chromium.nix
     ./firefox.nix
     ./kitty.nix
+    ./mpv
     ./xterm.nix
   ];
 
