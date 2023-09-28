@@ -1,14 +1,25 @@
 { config, pkgs, lib, ... }:
 
+let
+  cfg = config.home-manager.cli.git;
+in
 {
-  options.home-manager.cli.git.enable = lib.mkDefaultOption "Git config" // {
-    default = config.home-manager.cli.enable;
+  options.home-manager.cli.git = {
+    enable = lib.mkEnableOption "Git config" // {
+      default = config.home-manager.cli.enable;
+    };
+    enableGui = lib.mkEnableOption "enable Git GUI" // {
+      default = config.home-manager.desktop.enable or false;
+    };
   };
 
-  config = lib.mkIf config.home-manager.cli.git.enable {
+  config = lib.mkIf cfg.enable {
     home.packages = with pkgs; [
       (run-bg-alias "gk" "${config.programs.git.package}/bin/gitk")
       github-cli
+    ] ++ lib.optionals cfg.enableGui [
+      (run-bg-alias "gcd" "${git-cola}/bin/git-cola dag")
+      git-cola
     ];
 
     programs.git = {
