@@ -14,7 +14,6 @@
     dos2unix
     dua
     each
-    ffmpeg
     file
     findutils
     gawk
