@@ -37,8 +37,5 @@
   # Does not support boot.growPartition yet
   boot.initrd.systemd.enable = false;
 
-  # Probably too low memory for it to work well
-  systemd.oomd.enable = false;
-
   nixpkgs.hostPlatform = "x86_64-linux";
 }

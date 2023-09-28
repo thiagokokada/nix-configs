@@ -80,8 +80,7 @@ in
       '';
       # systemd's out-of-memory daemon
       oomd = {
-        enable = lib.mkDefault true;
-        enableSystemSlice = true;
+        enableRootSlice = true;
         enableUserServices = true;
       };
     };
