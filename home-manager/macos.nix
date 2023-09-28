@@ -2,10 +2,10 @@
 
 {
   imports = [
-    ./emacs
     ./minimal.nix
-    ./non-nix.nix
   ];
+
+  home-manager.editor.emacs.enable = true;
 
   targets.darwin.defaults = {
     # Disable all automatic substitution
