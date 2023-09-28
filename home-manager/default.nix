@@ -3,7 +3,7 @@
 {
   imports = [
     ./cli
-    ./desktop.nix
+    ./desktop
     ./emacs
     ./i3
     ./kitty.nix
