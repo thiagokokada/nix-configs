@@ -5,6 +5,7 @@
     ./git.nix
     ./htop.nix
     ./irssi.nix
+    ./nixpkgs.nix
     ./nnn.nix
     ./ssh.nix
     ./tmux.nix
