@@ -5,6 +5,7 @@
   # Good starting point to start porting HM for new systems
   imports = [
     ./cli
+    ./editor
     ./meta
   ];
 }

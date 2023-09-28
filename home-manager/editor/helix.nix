@@ -1,11 +1,11 @@
 { config, lib, ... }:
 
 {
-  options.home-manager.cli.helix.enable = lib.mkDefaultOption "Helix editor config" // {
-    default = config.home-manager.cli.enable;
+  options.home-manager.editor.helix.enable = lib.mkDefaultOption "Helix editor config" // {
+    default = config.home-manager.editor.enable;
   };
 
-  config = lib.mkIf config.home-manager.cli.helix.enable {
+  config = lib.mkIf config.home-manager.editor.helix.enable {
     programs.helix = {
       enable = true;
 

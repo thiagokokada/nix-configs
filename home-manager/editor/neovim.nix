@@ -1,11 +1,11 @@
 { config, pkgs, lib, ... }:
 
 {
-  options.home-manager.cli.neovim.enable = lib.mkDefaultOption "Neovim config" // {
-    default = config.home-manager.cli.enable;
+  options.home-manager.editor.neovim.enable = lib.mkDefaultOption "Neovim config" // {
+    default = config.home-manager.editor.enable;
   };
 
-  config = lib.mkIf config.home-manager.cli.neovim.enable {
+  config = lib.mkIf config.home-manager.editor.neovim.enable {
     home.packages = with pkgs; [ ripgrep ];
 
     programs.neovim = {

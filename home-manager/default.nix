@@ -2,11 +2,9 @@
 
 {
   imports = [
-    ./cli
     ./desktop
-    ./emacs
     ./i3
-    ./meta
+    ./minimal.nix
     ./mpv
     ./nixpkgs.nix
     ./non-nix.nix
