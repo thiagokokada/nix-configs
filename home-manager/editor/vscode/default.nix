@@ -2,7 +2,7 @@
 
 {
   options.home-manager.editor.vscode.enable = lib.mkEnableOption "VScode config" // {
-    default = (config.home-manager.editor.enable && config.home-manager.desktop.enable);
+    default = (config.home-manager.editor.enable && (config.home-manager.desktop.enable or false));
   };
 
   config = lib.mkIf config.home-manager.editor.vscode.enable {
