@@ -1,8 +1,10 @@
 { config, pkgs, lib, flake, ... }:
 {
-  options.home-manager.zsh.enable = lib.mkDefaultOption "zsh config";
+  options.home-manager.cli.zsh.enable = lib.mkDefaultOption "ZSH config" // {
+    default = config.home-manager.cli.enable;
+  };
 
-  config = lib.mkIf config.home-manager.zsh.enable {
+  config = lib.mkIf config.home-manager.cli.zsh.enable {
     home.packages = with pkgs; [
       (writeShellScriptBin "nix-hash-fetchurl" ''
         nix-build -E "with import <nixpkgs> {}; fetchurl {url = \"$1\"; sha256 = lib.fakeSha256; }"
