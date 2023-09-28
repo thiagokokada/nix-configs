@@ -13,7 +13,6 @@
     ];
 
   nixos.home.imports = [
-    ../../home-manager/irssi.nix
     ../../home-manager/minimal.nix
   ];
 
