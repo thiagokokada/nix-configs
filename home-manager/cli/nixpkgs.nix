@@ -6,7 +6,7 @@ let
     if (pkgs.stdenv.isLinux) then
       pkgs.nixpkgs-review.override { withSandboxSupport = true; withNom = true; }
     else
-      pkgs.nixpkgs-review.override { withNon = true; };
+      pkgs.nixpkgs-review.override { withNom = true; };
 in
 {
   imports = [ flake.inputs.nix-index-database.hmModules.nix-index ];
