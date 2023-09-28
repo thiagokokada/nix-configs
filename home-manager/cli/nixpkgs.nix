@@ -11,7 +11,7 @@ in
 {
   imports = [ flake.inputs.nix-index-database.hmModules.nix-index ];
 
-  options.home-manager.cli.nixpkgs.enable = lib.mkDefaultOption "nixpkgs tools config" // {
+  options.home-manager.cli.nixpkgs.enable = lib.mkEnableOption "nixpkgs tools config" // {
     default = config.home-manager.cli.enable;
   };
 

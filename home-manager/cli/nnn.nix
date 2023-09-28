@@ -4,7 +4,7 @@ let
   inherit (flake) inputs;
 in
 {
-  options.home-manager.cli.nnn.enable = lib.mkDefaultOption "nnn config" // {
+  options.home-manager.cli.nnn.enable = lib.mkEnableOption "nnn config" // {
     default = config.home-manager.cli.enable;
   };
 

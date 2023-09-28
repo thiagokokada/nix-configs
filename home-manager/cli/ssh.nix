@@ -1,7 +1,7 @@
 { config, lib, pkgs, ... }:
 
 {
-  options.home-manager.cli.ssh.enable = lib.mkDefaultOption "SSH config" // {
+  options.home-manager.cli.ssh.enable = lib.mkEnableOption "SSH config" // {
     default = config.home-manager.cli.enable;
   };
 

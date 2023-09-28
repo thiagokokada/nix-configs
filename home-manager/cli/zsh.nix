@@ -1,6 +1,6 @@
 { config, pkgs, lib, flake, ... }:
 {
-  options.home-manager.cli.zsh.enable = lib.mkDefaultOption "ZSH config" // {
+  options.home-manager.cli.zsh.enable = lib.mkEnableOption "ZSH config" // {
     default = config.home-manager.cli.enable;
   };
 

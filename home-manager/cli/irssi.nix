@@ -5,7 +5,7 @@ let
 in
 {
   options.home-manager.cli.irssi = {
-    enable = lib.mkDefaultOption "irssi config" // {
+    enable = lib.mkEnableOption "irssi config" // {
       default = config.home-manager.cli.enable;
     };
     dcc = {
