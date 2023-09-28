@@ -4,6 +4,8 @@
   imports = [
     ./chromium.nix
     ./firefox.nix
+    ./kitty.nix
+    ./xterm.nix
   ];
 
   options.home-manager.desktop.enable = lib.mkDefaultOption "desktop config";
