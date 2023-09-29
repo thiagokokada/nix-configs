@@ -432,6 +432,8 @@ in
         vim-endwise
         vim-fugitive
         vim-repeat
+        vim-sexp
+        vim-sexp-mappings-for-regular-people
         vim-sleuth
         vim-surround
       ]
