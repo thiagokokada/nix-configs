@@ -1,5 +1,8 @@
 { config, pkgs, lib, ... }:
 
+let
+  devCfg = config.home-manager.dev;
+in
 {
   options.home-manager.editor.neovim.enable = lib.mkDefaultOption "Neovim config" // {
     default = config.home-manager.editor.enable;
@@ -196,103 +199,6 @@
           config = ''
             lua << EOF
             require("nvim-autopairs").setup {}
-            EOF
-          '';
-        }
-        {
-          plugin = nvim-lspconfig;
-          config = ''
-            lua << EOF
-            -- Setup language servers.
-            -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
-            local lspconfig = require('lspconfig')
-            lspconfig.bashls.setup {}
-            lspconfig.clojure_lsp.setup {}
-            lspconfig.pyright.setup {}
-            lspconfig.nil_ls.setup {
-              settings = {
-                ['nil'] = {
-                  formatting = {
-                    command = { "nixpkgs-fmt" },
-                  },
-                },
-              },
-            }
-
-            local builtin = require('telescope.builtin')
-
-            -- Global mappings.
-            -- See `:help vim.diagnostic.*` for documentation on any of the below functions
-            vim.keymap.set('n', '<space>ld', builtin.diagnostics, { desc = "LSP diagnostics" })
-
-            -- Use LspAttach autocommand to only map the following keys
-            -- after the language server attaches to the current buffer
-            vim.api.nvim_create_autocmd('LspAttach', {
-              group = vim.api.nvim_create_augroup('UserLspConfig', {}),
-              callback = function(ev)
-                -- Enable completion triggered by <c-x><c-o>
-                vim.bo[ev.buf].omnifunc = 'v:lua.vim.lsp.omnifunc'
-
-                -- Buffer local mappings.
-                -- See `:help vim.lsp.*` for documentation on any of the below functions
-                vim.keymap.set('n', 'gD', builtin.lsp_references, { buffer = ev.buf, desc = "LSP references" })
-                vim.keymap.set('n', 'gd', builtin.lsp_definitions, { buffer = ev.buf, desc = "LSP definitions" })
-                vim.keymap.set('n', 'K', vim.lsp.buf.hover, { buffer = ev.buf, desc = "LSP symbol under" })
-                vim.keymap.set('n', 'gi', builtin.lsp_implementations, { buffer = ev.buf, desc = "LSP implementations" })
-                vim.keymap.set('n', '<Leader>ls', vim.lsp.buf.signature_help, { buffer = ev.buf, desc = "LSP signature help" })
-                vim.keymap.set('n', '<Leader>lwa', vim.lsp.buf.add_workspace_folder, { buffer = ev.buf, desc = "LSP add workspace" })
-                vim.keymap.set('n', '<Leader>lwr', vim.lsp.buf.remove_workspace_folder, { buffer = ev.buf, desc = "LSP remove workspace" })
-                vim.keymap.set('n', '<Leader>lwl', function()
-                  print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-                end, { buffer = ev.buf, desc = "LSP list workspaces" })
-                vim.keymap.set('n', '<Leader>lt', builtin.lsp_type_definitions, { buffer = ev.buf, desc = "LSP type definitions" })
-                vim.keymap.set('n', '<Leader>lr', vim.lsp.buf.rename, { buffer = ev.buf, desc = "LSP rename" })
-                vim.keymap.set({ 'n', 'v' }, '<Leader>la', vim.lsp.buf.code_action, { buffer = ev.buf, desc = "LSP code action" })
-                vim.keymap.set('n', '<Leader>f', function()
-                  vim.lsp.buf.format { async = true }
-                end, { buffer = ev.buf, desc = "LSP format" })
-              end,
-            })
-            EOF
-          '';
-        }
-        {
-          plugin = nvim-treesitter.withAllGrammars;
-          config = ''
-            " folding
-            " disabled for now since this is slowing down neovim considerably
-            " set foldmethod=expr
-            " set foldexpr=nvim_treesitter#foldexpr()
-            " set nofoldenable " disable folding at startup
-            lua << EOF
-            require('nvim-treesitter.configs').setup {
-              highlight = {
-                enable = true,
-                -- disable slow treesitter highlight for large files
-                disable = function(lang, buf)
-                    local max_filesize = 100 * 1024 -- 100 KB
-                    local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
-                    if ok and stats and stats.size > max_filesize then
-                        return true
-                    end
-                end,
-              },
-              incremental_selection = {
-                enable = true,
-                keymaps = {
-                  init_selection = "gnn", -- set to `false` to disable one of the mappings
-                  node_incremental = "grn",
-                  scope_incremental = "grc",
-                  node_decremental = "grm",
-                },
-              },
-              indent = {
-                enable = true,
-              },
-              autotag = {
-                enable = true,
-              },
-            }
             EOF
           '';
         }
@@ -507,8 +413,112 @@
         vim-repeat
         vim-sleuth
         vim-surround
-      ] ++
-      lib.optionals (!pkgs.stdenv.isDarwin) [
+      ]
+      ++ lib.optionals (devCfg.enable) [
+        {
+          plugin = nvim-lspconfig;
+          config =
+            ''
+              lua << EOF
+              -- Setup language servers.
+              -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
+              local lspconfig = require('lspconfig')
+              lspconfig.bashls.setup {}
+              lspconfig.nil_ls.setup {
+                settings = {
+                  ['nil'] = {
+                    formatting = {
+                      command = { "nixpkgs-fmt" },
+                    },
+                  },
+                },
+              }
+              ${lib.optionalString devCfg.clojure.enable ''
+                lspconfig.clojure_lsp.setup {}
+              ''}
+              ${lib.optionalString devCfg.python.enable ''
+                lspconfig.pyright.setup {}
+              ''}
+
+              local builtin = require('telescope.builtin')
+
+              -- Global mappings.
+              -- See `:help vim.diagnostic.*` for documentation on any of the below functions
+              vim.keymap.set('n', '<space>ld', builtin.diagnostics, { desc = "LSP diagnostics" })
+
+              -- Use LspAttach autocommand to only map the following keys
+              -- after the language server attaches to the current buffer
+              vim.api.nvim_create_autocmd('LspAttach', {
+                group = vim.api.nvim_create_augroup('UserLspConfig', {}),
+                callback = function(ev)
+                  -- Enable completion triggered by <c-x><c-o>
+                  vim.bo[ev.buf].omnifunc = 'v:lua.vim.lsp.omnifunc'
+
+                  -- Buffer local mappings.
+                  -- See `:help vim.lsp.*` for documentation on any of the below functions
+                  vim.keymap.set('n', 'gD', builtin.lsp_references, { buffer = ev.buf, desc = "LSP references" })
+                  vim.keymap.set('n', 'gd', builtin.lsp_definitions, { buffer = ev.buf, desc = "LSP definitions" })
+                  vim.keymap.set('n', 'K', vim.lsp.buf.hover, { buffer = ev.buf, desc = "LSP symbol under" })
+                  vim.keymap.set('n', 'gi', builtin.lsp_implementations, { buffer = ev.buf, desc = "LSP implementations" })
+                  vim.keymap.set('n', '<Leader>ls', vim.lsp.buf.signature_help, { buffer = ev.buf, desc = "LSP signature help" })
+                  vim.keymap.set('n', '<Leader>lwa', vim.lsp.buf.add_workspace_folder, { buffer = ev.buf, desc = "LSP add workspace" })
+                  vim.keymap.set('n', '<Leader>lwr', vim.lsp.buf.remove_workspace_folder, { buffer = ev.buf, desc = "LSP remove workspace" })
+                  vim.keymap.set('n', '<Leader>lwl', function()
+                    print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+                  end, { buffer = ev.buf, desc = "LSP list workspaces" })
+                  vim.keymap.set('n', '<Leader>lt', builtin.lsp_type_definitions, { buffer = ev.buf, desc = "LSP type definitions" })
+                  vim.keymap.set('n', '<Leader>lr', vim.lsp.buf.rename, { buffer = ev.buf, desc = "LSP rename" })
+                  vim.keymap.set({ 'n', 'v' }, '<Leader>la', vim.lsp.buf.code_action, { buffer = ev.buf, desc = "LSP code action" })
+                  vim.keymap.set('n', '<Leader>f', function()
+                    vim.lsp.buf.format { async = true }
+                  end, { buffer = ev.buf, desc = "LSP format" })
+                end,
+              })
+              EOF
+            '';
+        }
+        {
+          plugin = nvim-treesitter.withAllGrammars;
+          config = ''
+            " folding
+            " disabled for now since this is slowing down neovim considerably
+            " set foldmethod=expr
+            " set foldexpr=nvim_treesitter#foldexpr()
+            " set nofoldenable " disable folding at startup
+            lua << EOF
+            require('nvim-treesitter.configs').setup {
+              highlight = {
+                enable = true,
+                -- disable slow treesitter highlight for large files
+                disable = function(lang, buf)
+                    local max_filesize = 100 * 1024 -- 100 KB
+                    local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
+                    if ok and stats and stats.size > max_filesize then
+                        return true
+                    end
+                end,
+              },
+              incremental_selection = {
+                enable = true,
+                keymaps = {
+                  init_selection = "gnn", -- set to `false` to disable one of the mappings
+                  node_incremental = "grn",
+                  scope_incremental = "grc",
+                  node_decremental = "grm",
+                },
+              },
+              indent = {
+                enable = true,
+              },
+              autotag = {
+                enable = true,
+              },
+            }
+            EOF
+          '';
+        }
+      ]
+      ++ lib.optionals (!pkgs.stdenv.isDarwin) [
         # give [?] icons in macOS
         nvim-web-devicons
       ];
