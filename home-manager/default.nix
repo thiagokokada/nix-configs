@@ -2,12 +2,11 @@
 
 {
   imports = [
+    ./cli
     ./desktop
     ./dev
-    ./minimal.nix
+    ./editor
+    ./meta
     ./theme
   ];
-
-  # More reliable user service restart
-  systemd.user.startServices = "sd-switch";
 }

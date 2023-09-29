@@ -10,10 +10,6 @@
     "${modulesPath}/virtualisation/oci-common.nix"
   ];
 
-  nixos.home.imports = [
-    ../../home-manager/minimal.nix
-  ];
-
   device.type = "server";
 
   nixos = {

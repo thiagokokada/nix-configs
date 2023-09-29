@@ -138,11 +138,21 @@
       (mkNixOSConfig { hostname = "zachune-nixos"; })
 
       # Home-Manager configs
-      (mkHomeConfig { hostname = "home-linux"; })
       (mkHomeConfig {
-        hostname = "home-linux-minimal";
-        configuration = ./home-manager/minimal.nix;
+        hostname = "home-linux";
+        extraModules = [{
+          home-manager = {
+            desktop.enable = true;
+            dev = {
+              clojure.enable = true;
+              go.enable = true;
+              node.enable = true;
+              python.enable = true;
+            };
+          };
+        }];
       })
+      (mkHomeConfig { hostname = "home-linux-minimal"; })
       (mkHomeConfig {
         hostname = "steamdeck";
         username = "deck";

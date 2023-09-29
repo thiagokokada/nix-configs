@@ -12,10 +12,6 @@
     flake.inputs.disko.nixosModules.disko
   ];
 
-  nixos.home.imports = [
-    ../../home-manager/minimal.nix
-  ];
-
   boot.kernelParams = [
     "nvme.shutdown_timeout=10"
     "nvme_core.shutdown_timeout=10"

@@ -2,12 +2,14 @@
 
 {
   imports = [
+    ../modules
     ./desktop
     ./dev
     ./games
     ./home.nix
     ./laptop
-    ./minimal.nix
+    ./nix
     ./server
+    ./system
   ];
 }

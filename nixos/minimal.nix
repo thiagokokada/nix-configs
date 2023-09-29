@@ -1,9 +1,0 @@
-{ ... }:
-
-{
-  imports = [
-    ../modules
-    ./nix
-    ./system
-  ];
-}

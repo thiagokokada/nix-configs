@@ -61,5 +61,8 @@
   # changes in each release.
   home.stateVersion = (osConfig.system.stateVersion or "23.11");
 
+  # More reliable user service restart
+  systemd.user.startServices = lib.mkIf pkgs.stdenv.isLinux "sd-switch";
+
   manual.html.enable = true;
 }

@@ -11,7 +11,7 @@
     ./xterm.nix
   ];
 
-  options.home-manager.desktop.enable = lib.mkDefaultOption "desktop config";
+  options.home-manager.desktop.enable = lib.mkEnableOption "desktop config";
 
   config = lib.mkIf config.home-manager.desktop.enable {
     home.packages = with pkgs; [

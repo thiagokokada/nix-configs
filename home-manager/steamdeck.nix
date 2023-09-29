@@ -2,7 +2,7 @@
 
 {
   imports = [
-    ./minimal.nix
+    ./default.nix
   ];
 
   home-manager.editor.emacs.enable = true;

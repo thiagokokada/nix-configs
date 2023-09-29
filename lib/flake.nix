@@ -89,6 +89,7 @@ in
     , configPosfix ? "Projects/nix-configs"
     , configuration ? ../home-manager
     , deviceType ? "desktop"
+    , extraModules ? [ ]
     , system ? "x86_64-linux"
     , homeManagerConfiguration ? home.lib.homeManagerConfiguration
     }:
@@ -104,7 +105,7 @@ in
             home = { inherit username homeDirectory; };
             imports = [ configuration ];
           })
-        ];
+        ] ++ extraModules;
         lib = nixpkgs.lib.extend (final: prev:
           (import ../lib { lib = final; })
         );
