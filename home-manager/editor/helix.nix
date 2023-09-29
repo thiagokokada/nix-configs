@@ -1,7 +1,7 @@
 { config, lib, ... }:
 
 {
-  options.home-manager.editor.helix.enable = lib.mkDefaultOption "Helix editor config" // {
+  options.home-manager.editor.helix.enable = lib.mkEnableOption "Helix editor config" // {
     default = config.home-manager.editor.enable;
   };
 

@@ -1,15 +1,27 @@
 { config, pkgs, lib, ... }:
 
 let
+  cfg = config.home-manager.editor.neovim;
   devCfg = config.home-manager.dev;
 in
 {
-  options.home-manager.editor.neovim.enable = lib.mkDefaultOption "Neovim config" // {
-    default = config.home-manager.editor.enable;
+  options.home-manager.editor.neovim = {
+    enable = lib.mkEnableOption "Neovim config" // {
+      default = config.home-manager.editor.enable;
+    };
+    # Do not forget to set 'Hack Nerd Mono Font' as the terminal font
+    enableIcons = lib.mkEnableOption "icons" // {
+      default = config.home-manager.desktop.enable || config.home-manager.darwin.enable;
+    };
   };
 
-  config = lib.mkIf config.home-manager.editor.neovim.enable {
-    home.packages = with pkgs; [ ripgrep ];
+  config = lib.mkIf cfg.enable {
+    home.packages = with pkgs; [
+      ripgrep
+    ]
+    ++ lib.optionals (cfg.enableIcons) [
+      (nerdfonts.override { fonts = [ "Hack" ]; })
+    ];
 
     programs.neovim = {
       enable = true;
@@ -145,7 +157,7 @@ in
               show_hidden_files = false,
               ignore = {},
               devicons = {
-                enable = ${if stdenv.isDarwin then "false" else "true"},
+                enable = ${if cfg.enableIcons then "true" else "false"},
                 highlight_dirname = false
               },
               mappings = {
@@ -190,7 +202,11 @@ in
           # TODO: add support for trailing whitespace
           config = ''
             lua << EOF
-            require('lualine').setup {}
+            require('lualine').setup {
+              options = {
+                icons_enabled = ${if cfg.enableIcons then "true" else "false"},
+              },
+            }
             EOF
           '';
         }
@@ -528,8 +544,7 @@ in
         }
         nvim-ts-autotag
       ]
-      ++ lib.optionals (!pkgs.stdenv.isDarwin) [
-        # give [?] icons in macOS
+      ++ lib.optionals (cfg.enableIcons) [
         nvim-web-devicons
       ];
     };
