@@ -13,6 +13,12 @@ in
     enableIcons = lib.mkEnableOption "icons" // {
       default = config.home-manager.desktop.enable || config.home-manager.darwin.enable;
     };
+    enableLsp = lib.mkEnableOption "LSP" // {
+      default = config.home-manager.dev.enable;
+    };
+    enableTreeSitter = lib.mkEnableOption "TreeSitter" // {
+      default = config.home-manager.dev.enable;
+    };
   };
 
   config = lib.mkIf cfg.enable {
@@ -429,7 +435,7 @@ in
         vim-sleuth
         vim-surround
       ]
-      ++ lib.optionals (devCfg.enable) [
+      ++ lib.optionals cfg.enableLsp [
         {
           plugin = nvim-lspconfig;
           config =
@@ -502,6 +508,8 @@ in
               EOF
             '';
         }
+      ]
+      ++ lib.optionals cfg.enableTreeSitter [
         {
           plugin = nvim-treesitter.withAllGrammars;
           config = ''
@@ -544,7 +552,7 @@ in
         }
         nvim-ts-autotag
       ]
-      ++ lib.optionals (cfg.enableIcons) [
+      ++ lib.optionals cfg.enableIcons [
         nvim-web-devicons
       ];
     };
