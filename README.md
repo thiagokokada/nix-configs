@@ -54,12 +54,33 @@ $ nix flake new --template '.#new-host' # if this is a new hardware
 $ sudo nixos-install --flake /mnt/etc/nixos#hostname
 ```
 
-To speed-up the initial setup, you can comment parts of the configuration.
-A good start would be to import only `hardware-configuration.nix`,
-`nixos/minimal.nix` and `home-manager/minimal.nix`.
-
 After installing it succesfully and rebooting, you can uncomment everything and
 trigger a rebuild.
+
+#### Remote installations
+
+You can also do remote installations by using `--target-host` flag in
+`nixos-rebuild` (from any machine that already has NixOS installed):
+
+```console
+$ nixos-rebuild switch --flake '.#hostname' --target-host root@hostname --use-substitutes
+```
+
+Or if you don't have `root` access via SSH (keep in kind that the user needs to
+have `sudo` permissions instead):
+
+```console
+$ nixos-rebuild switch --flake '.#hostname' --target-host user@hostname --use-substitutes --use-remote-sudo
+```
+
+Another option for a few hosts is to use
+[nixos-anywhere](https://github.com/nix-community/nixos-anywhere). This need to
+be a host with [disko](https://github.com/nix-community/disko/) configured. In
+this case, you can just run:
+
+```
+$ nix run github:numtide/nixos-anywhere -- --flake '.#hostname' root@hostname
+```
 
 ### Home Manager (standalone)
 
