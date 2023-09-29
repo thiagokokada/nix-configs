@@ -155,7 +155,6 @@
       })
       (mkHomeConfig {
         hostname = "home-macos";
-        configuration = ./home-manager/macos.nix;
         system = "x86_64-darwin";
         homePath = "/Users";
       })
