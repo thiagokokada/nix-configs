@@ -9,6 +9,7 @@
     ./mpv
     ./sway
     ./xterm.nix
+    ./theme
   ];
 
   options.home-manager.desktop.enable = lib.mkEnableOption "desktop config";
