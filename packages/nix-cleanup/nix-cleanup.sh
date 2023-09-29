@@ -78,7 +78,11 @@ cleanup() {
     nix-collect-garbage -d
     if [[ "$nixos" == 1 ]]; then
         echo "[INFO] Rebuilding NixOS to remove old boot entries..."
-        nixos-rebuild boot
+        if [[ -f /etc/nixos/flake.nix ]]; then
+            nixos-rebuild boot
+        else
+            nixos-rebuild boot --flake github:thiagokokada/nix-configs
+        fi
     fi
     if [[ "$optimize" == 1 ]]; then
         echo "[INFO] Optimizing nix store..."
