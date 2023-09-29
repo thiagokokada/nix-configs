@@ -404,7 +404,6 @@ in
           '';
         }
         mkdir-nvim
-        nvim-ts-autotag
         telescope-fzf-native-nvim
         vim-advanced-sorters
         vim-easy-align
@@ -527,6 +526,7 @@ in
             EOF
           '';
         }
+        nvim-ts-autotag
       ]
       ++ lib.optionals (!pkgs.stdenv.isDarwin) [
         # give [?] icons in macOS
