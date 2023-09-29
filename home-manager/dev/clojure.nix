@@ -1,10 +1,19 @@
-{ pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 {
-  home.packages = with pkgs; [
-    (babashka.override { withRlwrap = true; })
-    clojure
-    clojure-lsp
-    (leiningen.override { inherit (clojure) jdk; })
-  ];
+  options.home-manager.dev.clojure.enable = lib.mkEnableOption "Clojure config";
+
+  config = lib.mkIf config.home-manager.dev.clojure.enable {
+    home.packages = with pkgs; [
+      (babashka.override { withRlwrap = true; })
+      clojure
+      clojure-lsp
+      (leiningen.override { inherit (clojure) jdk; })
+    ];
+
+    programs.java = {
+      enable = true;
+      package = pkgs.clojure.jdk;
+    };
+  };
 }

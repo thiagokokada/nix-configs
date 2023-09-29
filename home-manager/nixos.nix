@@ -3,6 +3,12 @@
 {
   imports = [
     ./default.nix
-    ./dev
   ];
+
+  home-manager.dev = {
+    clojure.enable = true;
+    go.enable = true;
+    node.enable = true;
+    python.enable = true;
+  };
 }
