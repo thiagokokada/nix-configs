@@ -4,7 +4,9 @@ let
   inherit (config.home) homeDirectory;
 in
 {
-  options.home-manager.dev.node.enable = lib.mkEnableOption "NodeJS config";
+  options.home-manager.dev.node.enable = lib.mkEnableOption "NodeJS config" // {
+    default = config.home-manager.dev.enable;
+  };
 
   config = lib.mkIf config.home-manager.dev.node.enable {
     home = {

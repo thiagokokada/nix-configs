@@ -1,7 +1,9 @@
 { config, lib, ... }:
 
 {
-  options.home-manager.dev.go.enable = lib.mkEnableOption "Go config";
+  options.home-manager.dev.go.enable = lib.mkEnableOption "Go config" // {
+    default = config.home-manager.dev.enable;
+  };
 
   config = lib.mkIf config.home-manager.dev.go.enable {
     programs.go = {

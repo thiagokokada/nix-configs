@@ -143,12 +143,7 @@
         extraModules = [{
           home-manager = {
             desktop.enable = true;
-            dev = {
-              clojure.enable = true;
-              go.enable = true;
-              node.enable = true;
-              python.enable = true;
-            };
+            dev.enable = true;
           };
         }];
       })
