@@ -12,8 +12,10 @@ in
     home = {
       packages = with pkgs; [
         nodejs
+        vscode-langservers-extracted
         yarn
       ];
+
       sessionPath = [ "${homeDirectory}/.npm-packages/bin" ];
       sessionVariables = rec {
         NPM_PACKAGES = "${homeDirectory}/.npm-packages";

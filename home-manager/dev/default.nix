@@ -14,6 +14,7 @@
     home.packages = with pkgs; [
       expect
       gcc
+      marksman
       nil
       nodePackages.bash-language-server
       shellcheck

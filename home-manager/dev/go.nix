@@ -1,4 +1,4 @@
-{ config, lib, ... }:
+{ config, lib, pkgs, ... }:
 
 {
   options.home-manager.dev.go.enable = lib.mkEnableOption "Go config" // {
@@ -11,6 +11,10 @@
       goBin = ".go/bin";
       goPath = ".go";
     };
-    home.sessionPath = [ config.home.sessionVariables.GOBIN ];
+
+    home = {
+      packages = with pkgs; [ gopls ];
+      sessionPath = [ config.home.sessionVariables.GOBIN ];
+    };
   };
 }
