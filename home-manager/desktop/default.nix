@@ -4,8 +4,10 @@
   imports = [
     ./chromium.nix
     ./firefox.nix
+    ./i3
     ./kitty.nix
     ./mpv
+    ./sway
     ./xterm.nix
   ];
 

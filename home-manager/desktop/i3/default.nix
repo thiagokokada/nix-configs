@@ -85,42 +85,47 @@ in
     ./x11.nix
   ];
 
-  home = {
-    # Disable keyboard management via HM
-    keyboard = null;
-
-    packages = with pkgs; [
-      arandr
-      dex
-      feh
-      maim
-      mons
-      pamixer
-      playerctl
-      wmctrl
-      xsecurelock
-      xss-lock
-    ];
+  options.home-manager.desktop.i3.enable = lib.mkEnableOption "i3 config" // {
+    default = config.home-manager.desktop.enable;
   };
 
-  xsession.windowManager.i3 = with commonOptions; {
-    enable = true;
+  config = lib.mkIf config.home-manager.desktop.i3.enable {
+    home = {
+      # Disable keyboard management via HM
+      keyboard = null;
 
-    inherit extraConfig;
-
-    config = commonOptions.config // {
-      startup = [
-        {
-          command = "${pkgs.xorg.xset}/bin/xset s 600 30";
-          notification = false;
-        }
-        {
-          command = "${pkgs.dex}/bin/dex --autostart";
-          notification = false;
-        }
+      packages = with pkgs; [
+        arandr
+        dex
+        feh
+        maim
+        mons
+        pamixer
+        playerctl
+        wmctrl
+        xsecurelock
+        xss-lock
       ];
+    };
 
+    xsession.windowManager.i3 = with commonOptions; {
+      enable = true;
+
+      inherit extraConfig;
+
+      config = commonOptions.config // {
+        startup = [
+          {
+            command = "${pkgs.xorg.xset}/bin/xset s 600 30";
+            notification = false;
+          }
+          {
+            command = "${pkgs.dex}/bin/dex --autostart";
+            notification = false;
+          }
+        ];
+
+      };
     };
   };
-
 }
