@@ -24,6 +24,10 @@ in
   };
 
   config = lib.mkIf cfg.enable {
+    # Home-Manager standalone already adds home-manager to PATH, so we
+    # are adding here only for NixOS
+    environment.systemPackages = with pkgs; [ home-manager ];
+
     home-manager = {
       useUserPackages = true;
       users.${cfg.username} = {
