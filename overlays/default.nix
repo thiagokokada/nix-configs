@@ -34,6 +34,23 @@ in
 
       nixos-cleanup = prev.callPackage ../packages/nix-cleanup { isNixOS = true; };
 
+      # https://github.com/NixOS/nixpkgs/issues/97855#issuecomment-1075818028
+      nixos-option =
+        let
+          prefix = ''
+            (import ${flake.inputs.flake-compat} {
+              src = ${flake};
+            }).defaultNix.nixosConfigurations.\$(hostname)
+          '';
+        in
+        prev.runCommandNoCC "nixos-option" { buildInputs = [ prev.makeWrapper ]; } ''
+          makeWrapper ${prev.nixos-option}/bin/nixos-option $out/bin/nixos-option \
+            --add-flags --config_expr \
+            --add-flags "\"${prefix}.config\"" \
+            --add-flags --options_expr \
+            --add-flags "\"${prefix}.options\""
+        '';
+
       nom-rebuild = prev.callPackage ../packages/nom-rebuild { };
 
       run-bg-alias = name: command: prev.callPackage ../packages/run-bg-alias { inherit name command; };
