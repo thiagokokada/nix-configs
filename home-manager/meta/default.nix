@@ -13,7 +13,8 @@
 
   # Add some Nix related packages
   home.packages = with pkgs; [
-    home-manager
+    # Necessary for NixOS, but causes conflicts in Home-Manager standalone
+    (lib.lowPrio home-manager)
     hydra-check
     nix-cleanup
     nix-update
