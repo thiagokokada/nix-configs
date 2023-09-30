@@ -6,6 +6,7 @@
     ../../overlays
     ../../modules/device.nix
     ../../modules/meta.nix
+    ./home-manager-auto-expire.nix
   ];
 
   # Inherit config from NixOS or homeConfigurations
@@ -46,6 +47,13 @@
     home-manager.enable = true;
     # Without git we may be unable to build this config
     git.enable = true;
+  };
+
+  services.home-manager.autoExpire = lib.mkIf pkgs.stdenv.isLinux {
+    enable = true;
+    timestamp = "-7 days";
+    frequency = "3:05";
+    store.cleanup = true;
   };
 
   # This value determines the Home Manager release that your
