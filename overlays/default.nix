@@ -43,12 +43,14 @@ in
             }).defaultNix.nixosConfigurations.\$(hostname)
           '';
         in
-        prev.runCommand "nixos-option" { buildInputs = [ prev.makeWrapper ]; } ''
+        prev.runCommand "nixos-option" { buildInputs = with prev; [ makeWrapper installShellFiles ]; } ''
           makeWrapper ${prev.nixos-option}/bin/nixos-option $out/bin/nixos-option \
             --add-flags --config_expr \
             --add-flags "\"${prefix}.config\"" \
             --add-flags --options_expr \
             --add-flags "\"${prefix}.options\""
+
+          installManPage ${prev.nixos-option}/share/man/**/*
         '';
 
       nom-rebuild = prev.callPackage ../packages/nom-rebuild { };
