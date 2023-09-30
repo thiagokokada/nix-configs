@@ -43,7 +43,7 @@ in
             }).defaultNix.nixosConfigurations.\$(hostname)
           '';
         in
-        prev.runCommandNoCC "nixos-option" { buildInputs = [ prev.makeWrapper ]; } ''
+        prev.runCommand "nixos-option" { buildInputs = [ prev.makeWrapper ]; } ''
           makeWrapper ${prev.nixos-option}/bin/nixos-option $out/bin/nixos-option \
             --add-flags --config_expr \
             --add-flags "\"${prefix}.config\"" \
