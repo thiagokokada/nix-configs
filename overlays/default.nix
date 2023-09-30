@@ -55,19 +55,7 @@ in
 
       run-bg-alias = name: command: prev.callPackage ../packages/run-bg-alias { inherit name command; };
 
-      swaylock-effects = prev.swaylock-effects.overrideAttrs (oldAttrs: {
-        # https://github.com/jirutka/swaylock-effects/pull/38
-        patches = (oldAttrs.patches or [ ]) ++ [
-          (prev.fetchpatch {
-            url = "https://github.com/jirutka/swaylock-effects/commit/18573cb795592b4ab82f7693c151923d9e08cbb5.patch";
-            hash = "sha256-ogFhSsONuCToLFIStUaA+GTm8qBKJrg7s6VMDBvF1Bc=";
-          })
-          (prev.fetchpatch {
-            url = "https://github.com/jirutka/swaylock-effects/commit/071bfa4f584593de4dd91f052419767bc30d0b4b.patch";
-            hash = "sha256-Tk8AXtt7eszuHe918YUNAgSGqc73mTYpZ14R6wB33Sw=";
-          })
-        ];
-      });
+      swaylock-effects = prev.swaylock-effects.overrideAttrs (_: { src = inputs.swaylock-effects; });
     })
   ];
 }

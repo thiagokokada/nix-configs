@@ -61,6 +61,12 @@
       flake = false;
     };
 
+    # swaylock-effects
+    swaylock-effects = {
+      url = "github:jirutka/swaylock-effects";
+      flake = false;
+    };
+
     # ZSH plugins
     zim-completion = {
       url = "github:zimfw/completion";

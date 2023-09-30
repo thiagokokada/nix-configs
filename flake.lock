@@ -331,6 +331,7 @@
         "nixpkgs": "nixpkgs",
         "nnn-plugins": "nnn-plugins",
         "pure": "pure",
+        "swaylock-effects": "swaylock-effects",
         "zim-completion": "zim-completion",
         "zim-environment": "zim-environment",
         "zim-git": "zim-git",
@@ -342,6 +343,22 @@
         "zsh-history-substring-search": "zsh-history-substring-search",
         "zsh-syntax-highlighting": "zsh-syntax-highlighting",
         "zsh-system-clipboard": "zsh-system-clipboard"
+      }
+    },
+    "swaylock-effects": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1691849340,
+        "narHash": "sha256-09Kq90wIIF9lPjiY2anf9MSgi/EqeXKXW1mFmhxA/aM=",
+        "owner": "jirutka",
+        "repo": "swaylock-effects",
+        "rev": "7c5681ce96587ce3090c6698501faeccdfdc157d",
+        "type": "github"
+      },
+      "original": {
+        "owner": "jirutka",
+        "repo": "swaylock-effects",
+        "type": "github"
       }
     },
     "systems": {
