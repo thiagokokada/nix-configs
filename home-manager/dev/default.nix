@@ -16,6 +16,7 @@
       gcc
       marksman
       nil
+      nixpkgs-fmt
       nodePackages.bash-language-server
       shellcheck
     ];

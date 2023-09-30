@@ -15,11 +15,9 @@
   home.packages = with pkgs; [
     # Necessary for NixOS, but causes conflicts in Home-Manager standalone
     (lib.lowPrio home-manager)
-    hydra-check
     nix-cleanup
     nix-update
     nix-whereis
-    nixpkgs-fmt
   ];
 
   # To make cachix work you need add the current user as a trusted-user on Nix
