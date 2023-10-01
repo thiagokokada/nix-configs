@@ -37,7 +37,8 @@
                 -E NIX_PATH \
                 -E LOCALE_ARCHIVE \
                 -E PATH \
-                -t --wait "${nixos-rebuild}/bin/nixos-rebuild" "$@"
+                --unit=nixos-rebuild --pty --wait --collect --same-dir --service-type=exec \
+                "${nixos-rebuild}/bin/nixos-rebuild" "$@"
         else
           "${nixos-rebuild}/bin/nixos-rebuild" "$@"
         fi
