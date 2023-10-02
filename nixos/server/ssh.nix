@@ -6,7 +6,7 @@ let
 in
 {
   options.nixos.server.ssh = {
-    enable = lib.mkEnableOption "SSH config";
+    enable = lib.mkEnableOption "SSH config (server side)";
     enableRootLogin = lib.mkEnableOption "Root login via SSH";
     authorizedKeys = lib.mkOption {
       description = "List of authorized keys.";
