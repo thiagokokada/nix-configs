@@ -1,11 +1,8 @@
 { pkgs, flake, ... }:
 
-let
-  inherit (flake) inputs;
-in
 {
   nixpkgs.overlays = [
-    inputs.emacs.overlay
+    flake.inputs.emacs.overlay
 
     (final: prev: {
       # namespaces
@@ -18,7 +15,7 @@ in
       wallpapers = prev.callPackage ../packages/wallpapers { };
 
       # custom packages
-      arandr = prev.arandr.overrideAttrs (_: { src = inputs.arandr; });
+      arandr = prev.arandr.overrideAttrs (_: { src = flake.inputs.arandr; });
 
       anime4k = prev.callPackage ../packages/anime4k { };
 
@@ -57,7 +54,7 @@ in
 
       run-bg-alias = name: command: prev.callPackage ../packages/run-bg-alias { inherit name command; };
 
-      swaylock-effects = prev.swaylock-effects.overrideAttrs (_: { src = inputs.swaylock-effects; });
+      swaylock-effects = prev.swaylock-effects.overrideAttrs (_: { src = flake.inputs.swaylock-effects; });
     })
   ];
 }
