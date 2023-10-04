@@ -15,6 +15,8 @@
   # Add some Nix related packages
   home.packages = with pkgs; [
     nix-cleanup
+    nix-hash-fetchurl
+    nix-hash-fetchzip
     nix-update
     nix-whereis
   ];

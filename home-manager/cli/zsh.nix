@@ -5,15 +5,7 @@
   };
 
   config = lib.mkIf config.home-manager.cli.zsh.enable {
-    home.packages = with pkgs; [
-      (writeShellScriptBin "nix-hash-fetchurl" ''
-        nix-build -E "with import <nixpkgs> {}; fetchurl {url = \"$1\"; sha256 = lib.fakeSha256; }"
-      '')
-      (writeShellScriptBin "nix-hash-fetchzip" ''
-        nix-build -E "with import <nixpkgs> {}; fetchzip {url = \"$1\"; sha256 = lib.fakeSha256; }"
-      '')
-    ]
-    ++ lib.optionals (!stdenv.isDarwin) [
+    home.packages = with pkgs; lib.optionals (!stdenv.isDarwin) [
       (run-bg-alias "open" "${xdg-utils}/bin/xdg-open")
     ];
 
