@@ -7,10 +7,22 @@
 
   config = lib.mkIf config.nixos.desktop.wayland.enable {
     programs.sway = {
-      # Make Sway available for display managers
+      # Make Sway available for display managers and make things like swaylock work
       enable = true;
+      wrapperFeatures = {
+        base = true;
+        gtk = true;
+      };
       # Remove unnecessary packages from system-wide install (e.g.: foot)
       extraPackages = [ ];
+    };
+
+    # https://github.com/swaywm/sway/pull/6994
+    security.wrappers.sway = {
+      owner = "root";
+      group = "root";
+      source = "${config.programs.sway.package}/bin/sway";
+      capabilities = "cap_sys_nice+ep";
     };
 
     # For sway screensharing
