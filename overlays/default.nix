@@ -63,8 +63,6 @@
       nom-rebuild = prev.callPackage ../packages/nom-rebuild { };
 
       run-bg-alias = name: command: prev.callPackage ../packages/run-bg-alias { inherit name command; };
-
-      swaylock-effects = prev.swaylock-effects.overrideAttrs (_: { src = flake.inputs.swaylock-effects; });
     })
   ];
 }

@@ -8,13 +8,13 @@
   config = lib.mkIf config.home-manager.desktop.sway.swaylock.enable {
     programs.swaylock = {
       enable = true;
-      package = pkgs.swaylock-effects;
+      package = pkgs.swaylock;
       settings = with config.theme.colors; {
-        effect-pixelate = 120;
         font = config.theme.fonts.gui.name;
         indicator-caps-lock = true;
-        screenshots = true;
         show-keyboard-layout = true;
+        image = toString config.theme.wallpaper.path;
+        scaling = config.theme.wallpaper.scale;
 
         inside-color = base01;
         line-color = base01;
