@@ -1,11 +1,11 @@
 { config, lib, pkgs, ... }:
 
 {
-  options.home-manager.desktop.i3.dunst.enable = lib.mkEnableOption "dunst config" // {
-    default = config.home-manager.desktop.i3.enable;
+  options.home-manager.desktop.dunst.enable = lib.mkEnableOption "dunst config" // {
+    default = config.home-manager.desktop.i3.enable || config.home-manager.desktop.sway.enable;
   };
 
-  config = lib.mkIf config.home-manager.desktop.i3.dunst.enable {
+  config = lib.mkIf config.home-manager.desktop.dunst.enable {
     home.packages = with pkgs; [
       dbus # for dbus-send, needed for dunstctl
       dunst

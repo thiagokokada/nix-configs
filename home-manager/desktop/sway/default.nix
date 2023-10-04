@@ -47,8 +47,6 @@ let
 in
 {
   imports = [
-    ../i3/gammastep.nix
-    ../i3/dunst.nix
     ./kanshi
     ./fuzzel.nix
     ./swayidle.nix

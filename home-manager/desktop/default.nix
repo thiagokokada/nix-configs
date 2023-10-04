@@ -3,13 +3,15 @@
 {
   imports = [
     ./chromium.nix
+    ./dunst.nix
     ./firefox.nix
+    ./gammastep.nix
     ./i3
     ./kitty.nix
     ./mpv
     ./sway
-    ./xterm.nix
     ./theme
+    ./xterm.nix
   ];
 
   options.home-manager.desktop.enable = lib.mkEnableOption "desktop config";

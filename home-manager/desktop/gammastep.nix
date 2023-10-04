@@ -1,11 +1,11 @@
 { config, lib, pkgs, ... }:
 
 {
-  options.home-manager.desktop.i3.gammastep.enable = lib.mkEnableOption "gammastep config" // {
-    default = config.home-manager.desktop.i3.enable;
+  options.home-manager.desktop.gammastep.enable = lib.mkEnableOption "gammastep config" // {
+    default = config.home-manager.desktop.i3.enable || config.home-manager.desktop.sway.enable;
   };
 
-  config = lib.mkIf config.home-manager.desktop.i3.gammastep.enable {
+  config = lib.mkIf config.home-manager.desktop.gammastep.enable {
     services.gammastep = {
       enable = config.device.type != "vm";
       tray = true;
