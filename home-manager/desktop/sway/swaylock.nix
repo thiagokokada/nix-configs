@@ -13,7 +13,11 @@
         font = config.theme.fonts.gui.name;
         indicator-caps-lock = true;
         show-keyboard-layout = true;
-        image = toString config.theme.wallpaper.path;
+        # https://stackoverflow.com/a/506662
+        image = with pkgs; toString
+          (runCommand "wallpaper-pixelated" { buildInputs = [ imagemagick ]; } ''
+            convert -scale 1% -scale 10000% ${config.theme.wallpaper.path} $out
+          '');
         scaling = config.theme.wallpaper.scale;
 
         inside-color = base01;
