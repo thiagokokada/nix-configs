@@ -5,8 +5,8 @@ let
   notify = pkgs.writeShellScript "notify" ''
     ${pkgs.dunst}/bin/dunstify -t 30000 "30 seconds to lock"
   '';
-  dpmsOn = ''${pkgs.sway}/bin/swaymsg "output * dpms on"'';
-  dpmsOff = ''${pkgs.sway}/bin/swaymsg "output * dpms off"'';
+  displayOn = ''${pkgs.sway}/bin/swaymsg "output * power on"'';
+  displayOff = ''${pkgs.sway}/bin/swaymsg "output * power off"'';
 in
 {
 
@@ -20,7 +20,7 @@ in
       events = [
         {
           event = "after-resume";
-          command = dpmsOn;
+          command = displayOn;
         }
         {
           event = "before-sleep";
@@ -42,8 +42,8 @@ in
         }
         {
           timeout = 605;
-          command = dpmsOff;
-          resumeCommand = dpmsOn;
+          command = displayOff;
+          resumeCommand = displayOn;
         }
       ];
     };
