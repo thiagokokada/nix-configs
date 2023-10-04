@@ -7,7 +7,6 @@
     ./greetd.nix
     ./locale.nix
     ./plymouth.nix
-    ./ssh.nix
     ./tailscale.nix
     ./wayland.nix
     ./xserver.nix
