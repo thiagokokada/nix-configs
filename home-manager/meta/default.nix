@@ -1,4 +1,4 @@
-{ config, lib, pkgs, osConfig, ... }:
+{ config, lib, pkgs, osConfig, flake, ... }:
 
 {
   imports = [
@@ -24,16 +24,7 @@
     # sudo echo "trusted-users = @wheel" >> /etc/nix/nix.conf
     nix = {
       package = lib.mkDefault pkgs.nix;
-      settings = import ../../shared/nix-conf.nix // {
-        extra-substituters = [
-          "https://nix-community.cachix.org"
-          "https://thiagokokada-nix-configs.cachix.org"
-        ];
-        extra-trusted-public-keys = [
-          "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
-          "thiagokokada-nix-configs.cachix.org-1:MwFfYIvEHsVOvUPSEpvJ3mA69z/NnY6LQqIQJFvNwOc="
-        ];
-      };
+      settings = import ../../shared/nix-conf.nix // flake.outputs.nixConfig;
     };
 
     # Set custom nixpkgs config (e.g.: allowUnfree), both for this
