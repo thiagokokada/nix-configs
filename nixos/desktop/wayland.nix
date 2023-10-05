@@ -17,13 +17,10 @@
       extraPackages = [ ];
     };
 
-    # https://github.com/swaywm/sway/pull/6994
-    security.wrappers.sway = {
-      owner = "root";
-      group = "root";
-      source = "${config.programs.sway.package}/bin/sway";
-      capabilities = "cap_sys_nice+ep";
-    };
+    # https://github.com/NixOS/nixpkgs/pull/207842#issuecomment-1374906499
+    security.pam.loginLimits = [
+      { domain = "@users"; item = "rtprio"; type = "-"; value = 1; }
+    ];
 
     # For sway screensharing
     # https://nixos.wiki/wiki/Firefox
