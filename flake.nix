@@ -200,6 +200,20 @@
             homePath = "/tmp";
             username = "home";
             extraModules = [{
+              home.stateVersion = "23.11";
+              # Disable some modules
+              home-manager = {
+                darwin.enable = false;
+                cli = {
+                  enable = false;
+                  git.enable = true;
+                  htop.enable = true;
+                  tmux.enable = true;
+                  zsh.enable = true;
+                };
+                editor.helix.enable = false;
+                meta.enable = false;
+              };
               # Disable systemd services/sockets/timers/etc.
               systemd.user = {
                 automounts = pkgs.lib.mkForce { };
