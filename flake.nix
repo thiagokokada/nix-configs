@@ -194,14 +194,18 @@
       (flake-utils.lib.eachDefaultSystem (system:
         let
           pkgs = nixpkgs.legacyPackages.${system};
-          homeManager = (mkHomeConfig {
+          homeManager = (mkHomeConfig rec {
             inherit system;
             hostname = "devShell";
             homeDirectory = "/tmp/home";
             # Needs to run with `--impure` flag
             username = builtins.getEnv "USER";
             extraModules = [{
-              home.stateVersion = "23.11";
+              home = {
+                # Not sure why this variable is not filling up automatically
+                sessionPath = [ "${homeDirectory}/.nix-profile/bin" ];
+                stateVersion = "23.11";
+              };
               # Disable some modules
               home-manager = {
                 darwin.enable = false;
@@ -239,24 +243,25 @@
               trap "rm -rf $HOME" EXIT
 
               ${homeManager.activationPackage}/activate
+              . "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"
 
               zsh -l && exit 0
             '';
           };
         }))
 
-        {
-          # Allows the user to use our cache when using `nix run <thisFlake>`.
-          nixConfig = {
-            extra-substituters = [
-              "https://nix-community.cachix.org"
-              "https://thiagokokada-nix-configs.cachix.org"
-            ];
-            extra-trusted-public-keys = [
-              "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
-              "thiagokokada-nix-configs.cachix.org-1:MwFfYIvEHsVOvUPSEpvJ3mA69z/NnY6LQqIQJFvNwOc="
-            ];
-          };
-        }
+      {
+        # Allows the user to use our cache when using `nix run <thisFlake>`.
+        nixConfig = {
+          extra-substituters = [
+            "https://nix-community.cachix.org"
+            "https://thiagokokada-nix-configs.cachix.org"
+          ];
+          extra-trusted-public-keys = [
+            "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+            "thiagokokada-nix-configs.cachix.org-1:MwFfYIvEHsVOvUPSEpvJ3mA69z/NnY6LQqIQJFvNwOc="
+          ];
+        };
+      }
     ]); # END recursiveMergeAttrs
 }
