@@ -194,11 +194,12 @@
       (flake-utils.lib.eachDefaultSystem (system:
         let
           pkgs = nixpkgs.legacyPackages.${system};
+          tmpdir = builtins.getEnv "TMPDIR";
+          homePath = (if tmpdir != "" then tmpdir else "/tmp") + "/home";
           homeManager = (mkHomeConfig {
-            inherit system;
+            inherit homePath system;
             configuration = ./home-manager/minimal.nix;
             hostname = "devShell";
-            homeDirectory = "/tmp/home";
             # Needs to run with `--impure` flag
             username = builtins.getEnv "USER";
           }).homeConfigurations.devShell;
@@ -209,7 +210,7 @@
               export HOME=${homeManager.config.home.homeDirectory}
               mkdir -p "$HOME"
 
-              trap "rm -rf $HOME" EXIT
+              trap "rm -rf ${homePath}" EXIT
 
               ${homeManager.activationPackage}/activate
               . "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"
