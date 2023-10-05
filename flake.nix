@@ -112,7 +112,7 @@
     };
   };
 
-  outputs = { self, nixpkgs, ... }@inputs:
+  outputs = { self, nixpkgs, flake-utils, ... }@inputs:
     let
       inherit (import ./lib/attrsets.nix { inherit (nixpkgs) lib; }) recursiveMergeAttrs;
       inherit (import ./lib/flake.nix inputs) mkGHActionsYAMLs mkRunCmd mkNixOSConfig mkHomeConfig;
@@ -190,5 +190,51 @@
         "update-flakes-darwin"
         "validate-flakes"
       ])
+
+      (flake-utils.lib.eachDefaultSystem (system:
+        let
+          pkgs = nixpkgs.legacyPackages.${system};
+          homeManager = (mkHomeConfig {
+            inherit system;
+            hostname = "devShell";
+            homePath = "/tmp";
+            username = "home";
+            extraModules = [{
+              # Disable systemd services/sockets/timers/etc.
+              systemd.user = {
+                automounts = pkgs.lib.mkForce { };
+                mounts = pkgs.lib.mkForce { };
+                paths = pkgs.lib.mkForce { };
+                services = pkgs.lib.mkForce { };
+                sessionVariables = pkgs.lib.mkForce { };
+                slices = pkgs.lib.mkForce { };
+                sockets = pkgs.lib.mkForce { };
+                targets = pkgs.lib.mkForce { };
+                timers = pkgs.lib.mkForce { };
+              };
+            }];
+          }).homeConfigurations.devShell;
+        in
+        {
+          devShells.default = pkgs.mkShell {
+            shellHook = ''
+              # Home Manager checks if the USER environment variable matches
+              # username
+              OLD_USER="$USER"
+              export USER=${homeManager.config.home.username}
+              export HOME=${homeManager.config.home.homeDirectory}
+              mkdir -p "$HOME"
+
+              trap "rm -rf $HOME" EXIT
+
+              ${homeManager.activationPackage}/activate
+
+              export USER="$OLD_USER"
+              unset OLD_USER
+
+              zsh -l && exit 0
+            '';
+          };
+        }))
     ]); # END recursiveMergeAttrs
 }
