@@ -1,4 +1,4 @@
-{ self, nixpkgs, home, flake-utils, ... }@inputs:
+{ self, nixpkgs, home, flake-utils, ... }:
 
 let
   inherit (flake-utils.lib) eachDefaultSystem mkApp;
@@ -6,7 +6,7 @@ in
 {
   mkGHActionsYAMLs = names: eachDefaultSystem (system:
     let
-      pkgs = import nixpkgs { inherit system; };
+      pkgs = nixpkgs.legacyPackages.${system};
       mkGHActionsYAML = name:
         let
           file = import (../actions/${name}.nix);
@@ -36,7 +36,7 @@ in
     , deps ? pkgs: with pkgs; [ coreutils findutils nixpkgs-fmt ]
     }: eachDefaultSystem (system:
     let
-      pkgs = import nixpkgs { inherit system; };
+      pkgs = nixpkgs.legacyPackages.${system};
     in
     {
       apps.${name} = mkApp {
@@ -70,7 +70,7 @@ in
           exePath = "/activate";
         };
 
-        "nixosVMs/${hostname}" = let pkgs = import nixpkgs { inherit system; }; in
+        "nixosVMs/${hostname}" = let pkgs = nixpkgs.legacyPackages.${system}; in
           mkApp {
             drv = pkgs.writeShellScriptBin "run-${hostname}-vm" ''
               env QEMU_OPTS="''${QEMU_OPTS:--cpu max -smp 4 -m 4096M -machine type=q35}" \
@@ -94,7 +94,7 @@ in
     , homeManagerConfiguration ? home.lib.homeManagerConfiguration
     }:
     let
-      pkgs = import nixpkgs { inherit system; };
+      pkgs = nixpkgs.legacyPackages.${system};
       homeDirectory = "${homePath}/${username}";
     in
     {
