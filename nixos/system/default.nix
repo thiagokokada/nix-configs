@@ -87,8 +87,7 @@ in
 
     # nixos/modules/misc/version.nix
     users.motd = lib.mkIf (cfg.showMotd) ''
-      Welcome to '${config.networking.hostName}' running NixOS ${config.system.nixos.version}!
-    '';
+      Welcome to '${config.networking.hostName}' running NixOS ${config.system.nixos.version}!'';
 
     # Enable zram to have better memory management
     zramSwap = {
