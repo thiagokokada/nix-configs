@@ -8,7 +8,6 @@
   options.home-manager.meta.enable = lib.mkDefaultOption "Home-Manager config";
 
   config = lib.mkIf config.home-manager.meta.enable {
-
     # Add some Nix related packages
     home.packages = with pkgs; [
       nix-cleanup

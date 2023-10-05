@@ -194,44 +194,13 @@
       (flake-utils.lib.eachDefaultSystem (system:
         let
           pkgs = nixpkgs.legacyPackages.${system};
-          homeManager = (mkHomeConfig rec {
+          homeManager = (mkHomeConfig {
             inherit system;
+            configuration = ./home-manager/minimal.nix;
             hostname = "devShell";
             homeDirectory = "/tmp/home";
             # Needs to run with `--impure` flag
             username = builtins.getEnv "USER";
-            extraModules = [{
-              home = {
-                # Not sure why this variable is not filling up automatically
-                sessionPath = [ "${homeDirectory}/.nix-profile/bin" ];
-                stateVersion = "23.11";
-              };
-              # Disable some modules
-              home-manager = {
-                darwin.enable = false;
-                cli = {
-                  enable = false;
-                  git.enable = true;
-                  htop.enable = true;
-                  tmux.enable = true;
-                  zsh.enable = true;
-                };
-                editor.helix.enable = false;
-                meta.enable = false;
-              };
-              # Disable systemd services/sockets/timers/etc.
-              systemd.user = {
-                automounts = pkgs.lib.mkForce { };
-                mounts = pkgs.lib.mkForce { };
-                paths = pkgs.lib.mkForce { };
-                services = pkgs.lib.mkForce { };
-                sessionVariables = pkgs.lib.mkForce { };
-                slices = pkgs.lib.mkForce { };
-                sockets = pkgs.lib.mkForce { };
-                targets = pkgs.lib.mkForce { };
-                timers = pkgs.lib.mkForce { };
-              };
-            }];
           }).homeConfigurations.devShell;
         in
         {
