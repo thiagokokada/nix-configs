@@ -164,7 +164,7 @@ in
               ignore = {},
               devicons = {
                 enable = ${if cfg.enableIcons then "true" else "false"},
-                highlight_dirname = false
+                highlight_dirname = false,
               },
               mappings = {
                 ['<Enter>'] = actions.edit,
