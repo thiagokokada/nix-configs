@@ -50,6 +50,9 @@
         bs-hl-color = base08;
         key-hl-color = base0C;
         separator-color = "#00000000"; # transparent
+
+        indicator-radius = 80;
+        indicator-thickness = 10;
       };
     };
   };
