@@ -197,8 +197,9 @@
           homeManager = (mkHomeConfig {
             inherit system;
             hostname = "devShell";
-            homePath = "/tmp";
-            username = "home";
+            homeDirectory = "/tmp/home";
+            # Needs to run with `--impure` flag
+            username = builtins.getEnv "USER";
             extraModules = [{
               home.stateVersion = "23.11";
               # Disable some modules
@@ -232,19 +233,12 @@
         {
           devShells.default = pkgs.mkShell {
             shellHook = ''
-              # Home Manager checks if the USER environment variable matches
-              # username
-              OLD_USER="$USER"
-              export USER=${homeManager.config.home.username}
               export HOME=${homeManager.config.home.homeDirectory}
               mkdir -p "$HOME"
 
               trap "rm -rf $HOME" EXIT
 
               ${homeManager.activationPackage}/activate
-
-              export USER="$OLD_USER"
-              unset OLD_USER
 
               zsh -l && exit 0
             '';

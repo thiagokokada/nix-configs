@@ -86,6 +86,7 @@ in
     { hostname
     , username ? "thiagoko"
     , homePath ? "/home"
+    , homeDirectory ? "${homePath}/${username}"
     , configPosfix ? "Projects/nix-configs"
     , configuration ? ../home-manager
     , deviceType ? "desktop"
@@ -95,7 +96,6 @@ in
     }:
     let
       pkgs = nixpkgs.legacyPackages.${system};
-      homeDirectory = "${homePath}/${username}";
     in
     {
       homeConfigurations.${hostname} = homeManagerConfiguration {
