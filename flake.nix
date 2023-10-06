@@ -139,7 +139,7 @@
 
       # Home-Manager configs
       (mkHomeConfig {
-        hostname = "home-linux";
+        hostname = "home-linux-desktop";
         extraModules = [{
           home-manager = {
             desktop.enable = true;
@@ -147,7 +147,10 @@
           };
         }];
       })
-      (mkHomeConfig { hostname = "home-linux-minimal"; })
+      (mkHomeConfig {
+        hostname = "home-linux";
+        extraModules = [{ home-manager.dev.enable = true; }];
+      })
       (mkHomeConfig {
         hostname = "steamdeck";
         username = "deck";
