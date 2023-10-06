@@ -201,17 +201,12 @@
             inherit homePath username system;
             configuration = ./home-manager/minimal.nix;
             hostname = "devShell";
-            extraModules = [
-              ({ config, ... }: {
-                # Not sure why this variable is not filling up automatically
-                home.sessionPath = [ "${config.home.homeDirectory}/.nix-profile/bin" ];
-              })
-            ];
           }).homeConfigurations.devShell;
-          inherit (homeManager.config.home) homeDirectory profileDirectory;
+          inherit (homeManager.config.home) homeDirectory packages profileDirectory;
         in
         {
           devShells.default = homeManager.pkgs.mkShell {
+            inherit packages;
             shellHook = ''
               export HOME=${homeDirectory}
               mkdir -p "$HOME"
