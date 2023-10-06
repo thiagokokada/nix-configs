@@ -5,7 +5,6 @@ let
 in
 {
   imports = [
-    ../../cachix.nix
     ../../overlays
     ./cross-compiling.nix
   ];
@@ -38,6 +37,14 @@ in
         daemonIOSchedClass = "idle";
         # Leave nix builds as a background task
         daemonCPUSchedPolicy = "idle";
+      }
+      {
+        settings = {
+          # For some reason when nix is running as daemon,
+          # extra-{substituters,trusted-public-keys} doesn't work
+          substituters = [ "https://cache.nixos.org/" ] ++ flake.outputs.nixConfig.extra-substituters;
+          trusted-public-keys = flake.outputs.nixConfig.extra-trusted-public-keys;
+        };
       }
     ];
 
