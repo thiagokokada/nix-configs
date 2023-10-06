@@ -1,4 +1,4 @@
-{ lib, ... }:
+{ pkgs, lib, ... }:
 
 {
   imports = [ ./default.nix ];
@@ -25,6 +25,12 @@
   };
 
   # Disable systemd services/sockets/timers/etc.
+  home.activation = {
+    reloadSystemd = lib.mkIf pkgs.stdenv.isLinux
+      (lib.mkForce (lib.hm.dag.entryAfter [ "linkGeneration" ] ""));
+    setupLaunchAgents = lib.mkIf pkgs.stdenv.isDarwin
+      (lib.mkForce (lib.hm.dag.entryAfter [ "writeBoundary" ] ""));
+  };
   systemd.user = {
     automounts = lib.mkForce { };
     mounts = lib.mkForce { };
