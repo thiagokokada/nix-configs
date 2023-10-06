@@ -88,6 +88,9 @@
         # disable "no matches found" check
         unsetopt nomatch
 
+        # edit the current command line in $EDITOR
+        bindkey -M vicmd v edit-command-line
+
         # zsh-history-substring-search
         bindkey "$terminfo[kcuu1]" history-substring-search-up
         bindkey "$terminfo[kcud1]" history-substring-search-down
