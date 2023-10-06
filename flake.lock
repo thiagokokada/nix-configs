@@ -340,8 +340,7 @@
         "zsh-autopair": "zsh-autopair",
         "zsh-completions": "zsh-completions",
         "zsh-history-substring-search": "zsh-history-substring-search",
-        "zsh-syntax-highlighting": "zsh-syntax-highlighting",
-        "zsh-system-clipboard": "zsh-system-clipboard"
+        "zsh-syntax-highlighting": "zsh-syntax-highlighting"
       }
     },
     "systems": {
@@ -516,22 +515,6 @@
       "original": {
         "owner": "zsh-users",
         "repo": "zsh-syntax-highlighting",
-        "type": "github"
-      }
-    },
-    "zsh-system-clipboard": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1696107891,
-        "narHash": "sha256-t4xPKd9BvrH4cyq8rN/IVGcm13OJNutdZ4e+FdGbPIo=",
-        "owner": "kutsan",
-        "repo": "zsh-system-clipboard",
-        "rev": "5f66befd96529b28767fe8a239e9c6de6d57cdc4",
-        "type": "github"
-      },
-      "original": {
-        "owner": "kutsan",
-        "repo": "zsh-system-clipboard",
         "type": "github"
       }
     }

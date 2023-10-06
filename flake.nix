@@ -106,10 +106,6 @@
       url = "github:zsh-users/zsh-syntax-highlighting";
       flake = false;
     };
-    zsh-system-clipboard = {
-      url = "github:kutsan/zsh-system-clipboard";
-      flake = false;
-    };
   };
 
   outputs = { self, nixpkgs, flake-utils, ... }@inputs:
