@@ -195,19 +195,12 @@
             let envValue = builtins.getEnv env; in
             if envValue != "" then envValue else default;
           tmpdir = getEnvOrDefault "TMPDIR" "/tmp";
+          username = getEnvOrDefault "USER" "nobody";
           homePath = "${tmpdir}/home";
-          user = getEnvOrDefault "USER" "nobody";
           homeManager = (mkHomeConfig {
-            inherit homePath system;
+            inherit homePath username system;
             configuration = ./home-manager/minimal.nix;
             hostname = "devShell";
-            username =
-              if user == "nobody"
-              then
-                (nixpkgs.lib.warn
-                  "username is set to 'nobody', you may have forgot `--impure` flag!"
-                  user)
-              else user;
             extraModules = [
               ({ config, ... }: {
                 # Not sure why this variable is not filling up automatically
@@ -215,19 +208,25 @@
               })
             ];
           }).homeConfigurations.devShell;
+          inherit (homeManager.config.home) homeDirectory profileDirectory;
         in
         {
           devShells.default = homeManager.pkgs.mkShell {
             shellHook = ''
-              export HOME=${homeManager.config.home.homeDirectory}
+              export HOME=${homeDirectory}
               mkdir -p "$HOME"
 
               trap "rm -rf ${homePath}" EXIT
 
               ${homeManager.activationPackage}/activate
-              . "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"
 
-              zsh -l && exit 0
+              if [[ -L ${profileDirectory}/etc/profile.d/hm-session-vars.sh ]]; then
+                . ${profileDirectory}/etc/profile.d/hm-session-vars.sh
+                zsh -l && exit 0
+              else
+                >&2 echo "[ERROR] Could not source Home Manager!"
+                >&2 echo "[ERROR] Did you pass '--impure' flag to 'nix develop'?"
+              fi
             '';
           };
         }))
