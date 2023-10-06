@@ -9,16 +9,16 @@ in
       default = config.home-manager.cli.enable;
     };
     enableGui = lib.mkEnableOption "enable Git GUI" // {
-      default = config.home-manager.desktop.enable or false;
+      default = config.home-manager.desktop.enable;
     };
   };
 
   config = lib.mkIf cfg.enable {
     home.packages = with pkgs; [
-      (run-bg-alias "gk" "${config.programs.git.package}/bin/gitk")
       github-cli
     ] ++ lib.optionals cfg.enableGui [
       (run-bg-alias "gcd" "${git-cola}/bin/git-cola dag")
+      (run-bg-alias "gk" "${gitFull}/bin/gitk")
       git-cola
     ];
 
@@ -27,11 +27,15 @@ in
 
       userName = "Thiago Kenji Okada";
       userEmail = config.meta.email;
-      package = pkgs.gitFull.override {
-        # Use SSH from macOS instead with support for Keyring
-        # https://github.com/NixOS/nixpkgs/issues/62353
-        withSsh = !pkgs.stdenv.isDarwin;
-      };
+      package = with pkgs;
+        if (cfg.enableGui) then
+          gitFull.override
+            {
+              # Use SSH from macOS instead with support for Keyring
+              # https://github.com/NixOS/nixpkgs/issues/62353
+              withSsh = !stdenv.isDarwin;
+            }
+        else git;
 
       delta = {
         enable = true;
