@@ -4,6 +4,7 @@
   imports = [
     ./clojure.nix
     ./go.nix
+    ./nix.nix
     ./node.nix
     ./python.nix
   ];
@@ -15,8 +16,6 @@
       expect
       gcc
       marksman
-      nil
-      nixpkgs-fmt
       nodePackages.bash-language-server
       shellcheck
     ];

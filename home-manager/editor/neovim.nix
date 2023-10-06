@@ -446,17 +446,21 @@ in
               -- Setup language servers.
               -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
               local lspconfig = require('lspconfig')
-              lspconfig.bashls.setup {}
-              lspconfig.marksman.setup {}
-              lspconfig.nil_ls.setup {
-                settings = {
-                  ['nil'] = {
-                    formatting = {
-                      command = { "nixpkgs-fmt" },
+              ${lib.optionalString devCfg.enable ''
+                lspconfig.bashls.setup {}
+                lspconfig.marksman.setup {}
+              ''}
+              ${lib.optionalString devCfg.nix.enable ''
+                lspconfig.nil_ls.setup {
+                  settings = {
+                    ['nil'] = {
+                      formatting = {
+                        command = { "nixpkgs-fmt" },
+                      },
                     },
                   },
-                },
-              }
+                }
+              ''}
               ${lib.optionalString devCfg.clojure.enable ''
                 lspconfig.clojure_lsp.setup {}
               ''}
