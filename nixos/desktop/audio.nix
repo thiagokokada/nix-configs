@@ -11,7 +11,9 @@ in
       default = config.nixos.desktop.enable;
     };
     lowLatency = {
-      enable = lib.mkEnableOption "low latency config";
+      enable = lib.mkEnableOption "low latency config" // {
+        default = config.nixos.games.enable;
+      };
       quantum = lib.mkOption {
         description = "Minimum quantum to set";
         type = lib.types.int;

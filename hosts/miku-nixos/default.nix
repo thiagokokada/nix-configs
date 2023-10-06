@@ -15,7 +15,6 @@ in
   ];
 
   nixos = {
-    desktop.audio.lowLatency.enable = true;
     dev.enable = true;
     games.enable = true;
     nix.cross-compiling.enable = true;

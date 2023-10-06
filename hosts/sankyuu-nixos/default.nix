@@ -48,13 +48,6 @@ in
   nixos = {
     dev.enable = true;
     nix.cross-compiling.enable = true;
-    desktop = {
-      audio.lowLatency = {
-        enable = true;
-        # The audio device from this notebook doesn't seem to like short buffers too much
-        quantum = 128;
-      };
-    };
     games = {
       enable = true;
       gpu = "amd";
