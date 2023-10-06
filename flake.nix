@@ -86,10 +86,6 @@
       url = "github:zimfw/utility";
       flake = false;
     };
-    fast-syntax-highlighting = {
-      url = "github:zdharma-continuum/fast-syntax-highlighting";
-      flake = false;
-    };
     pure = {
       url = "github:sindresorhus/pure";
       flake = false;
@@ -104,6 +100,14 @@
     };
     zsh-history-substring-search = {
       url = "github:zsh-users/zsh-history-substring-search";
+      flake = false;
+    };
+    zsh-syntax-highlighting = {
+      url = "github:zsh-users/zsh-syntax-highlighting";
+      flake = false;
+    };
+    zsh-system-clipboard = {
+      url = "github:kutsan/zsh-system-clipboard";
       flake = false;
     };
   };

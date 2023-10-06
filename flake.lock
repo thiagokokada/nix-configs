@@ -76,22 +76,6 @@
         "type": "github"
       }
     },
-    "fast-syntax-highlighting": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1688591419,
-        "narHash": "sha256-RVX9ZSzjBW3LpFs2W86lKI6vtcvDWP6EPxzeTcRZua4=",
-        "owner": "zdharma-continuum",
-        "repo": "fast-syntax-highlighting",
-        "rev": "cf318e06a9b7c9f2219d78f41b46fa6e06011fd9",
-        "type": "github"
-      },
-      "original": {
-        "owner": "zdharma-continuum",
-        "repo": "fast-syntax-highlighting",
-        "type": "github"
-      }
-    },
     "flake-compat": {
       "flake": false,
       "locked": {
@@ -337,7 +321,6 @@
         "disko": "disko",
         "doomemacs": "doomemacs",
         "emacs": "emacs",
-        "fast-syntax-highlighting": "fast-syntax-highlighting",
         "flake-compat": "flake-compat",
         "flake-utils": "flake-utils",
         "hardware": "hardware",
@@ -356,7 +339,9 @@
         "zim-utility": "zim-utility",
         "zsh-autopair": "zsh-autopair",
         "zsh-completions": "zsh-completions",
-        "zsh-history-substring-search": "zsh-history-substring-search"
+        "zsh-history-substring-search": "zsh-history-substring-search",
+        "zsh-syntax-highlighting": "zsh-syntax-highlighting",
+        "zsh-system-clipboard": "zsh-system-clipboard"
       }
     },
     "systems": {
@@ -515,6 +500,38 @@
       "original": {
         "owner": "zsh-users",
         "repo": "zsh-history-substring-search",
+        "type": "github"
+      }
+    },
+    "zsh-syntax-highlighting": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1693974187,
+        "narHash": "sha256-TKGCck51qQ50dQGntKaeSk8waK3BlwUjueg4MImTH8k=",
+        "owner": "zsh-users",
+        "repo": "zsh-syntax-highlighting",
+        "rev": "143b25eb98aa3227af63bd7f04413e1b3e7888ec",
+        "type": "github"
+      },
+      "original": {
+        "owner": "zsh-users",
+        "repo": "zsh-syntax-highlighting",
+        "type": "github"
+      }
+    },
+    "zsh-system-clipboard": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1696107891,
+        "narHash": "sha256-t4xPKd9BvrH4cyq8rN/IVGcm13OJNutdZ4e+FdGbPIo=",
+        "owner": "kutsan",
+        "repo": "zsh-system-clipboard",
+        "rev": "5f66befd96529b28767fe8a239e9c6de6d57cdc4",
+        "type": "github"
+      },
+      "original": {
+        "owner": "kutsan",
+        "repo": "zsh-system-clipboard",
         "type": "github"
       }
     }
