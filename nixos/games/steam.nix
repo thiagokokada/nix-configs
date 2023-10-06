@@ -1,9 +1,11 @@
-{ pkgs, lib, config, ... }:
+{ flake, pkgs, lib, config, ... }:
 
 let
   cfg = config.nixos.games.steam;
 in
 {
+  imports = [ flake.inputs.nix-gaming.nixosModules.steamCompat ];
+
   options.nixos.games.steam = {
     enable = lib.mkEnableOption "Steam config" // {
       default = config.nixos.games.enable;
