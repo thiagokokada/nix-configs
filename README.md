@@ -27,7 +27,7 @@ Also, some extra resources and documentation about Flakes:
 - [Flakes in NixOS Wiki](https://nixos.wiki/wiki/Flakes)
 - [Nix Flakes blog posts from
   @eldostra](https://www.tweag.io/blog/2020-05-25-flakes/)
-- [Nix 2.4/3.0 documentation](https://nixos.org/manual/nix/unstable/)
+- [Nix documentation](https://nixos.org/manual/nix/unstable/)
 
 **Remember**: Flakes is *experimental*, so you shouldn't try this approach
 until you have some experience in Nix.
@@ -95,6 +95,19 @@ To build the Home Manager standalone and activate its configuration, run:
 ```console
 $ nix run '.#homeActivations/<hostname>'
 ```
+
+#### devShell
+
+You can also start a minimal configuration based on my Home-Manager setup by
+running `nix develop --impure`. A quick way to have a working shell in any
+Nix-enabled system is to run:
+
+```console
+$ nix --experimental-features 'nix-command flakes' develop github:thiagokokada/nix-configs --impure
+```
+
+This will bring a `zsh` setup with some other tooling (like `neovim`) all self
+contained inside your shell (once it is closed, everything is gone!).
 
 ## Testing
 
