@@ -1,19 +1,36 @@
 { pkgs, lib, config, ... }:
 
 let
-  interval = 5;
-  isLaptop = config.device.type == "laptop";
+  cfg = config.home-manager.desktop.sway.waybar;
   shortPath' = with lib.strings;
     (sep: path: concatStringsSep sep (map (substring 0 1) (splitString "/" path)));
   shortPath = shortPath' "/";
   shortPathName = path: "disk#${shortPath' "_" path}";
 in
 {
-  options.home-manager.desktop.sway.waybar.enable = lib.mkEnableOption "Waybar config" // {
-    default = config.home-manager.desktop.sway.enable;
+  options.home-manager.desktop.sway.waybar = {
+    enable = lib.mkEnableOption "Waybar config" // {
+      default = config.home-manager.desktop.sway.enable;
+    };
+    enableBacklight = lib.mkEnableOption "backlight block" // {
+      default = config.device.type == "laptop";
+    };
+    enableBattery = lib.mkEnableOption "battery block" // {
+      default = config.device.type == "laptop";
+    };
+    mountPoints = lib.mkOption {
+      type = with lib.types; listOf path;
+      description = "Disks to show in disk block";
+      default = config.device.mountPoints;
+    };
+    interval = lib.mkOption {
+      type = lib.types.int;
+      default = 5;
+      description = "Block update interval";
+    };
   };
 
-  config = lib.mkIf config.home-manager.desktop.sway.waybar.enable {
+  config = lib.mkIf cfg.enable {
     home.packages = with pkgs; [
       font-awesome_6
       (nerdfonts.override { fonts = [ "NerdFontsSymbolsOnly" ]; })
@@ -30,26 +47,29 @@ in
           modules-left = [ "sway/workspaces" "sway/mode" "wlr/taskbar" ];
           modules-center = [ "sway/window" ];
           modules-right =
-            # Add a separator between each module, except the last one
-            lib.init (builtins.concatMap (m: [ m "custom/separator" ])
+            lib.pipe [
+              "network"
+              (map (m: shortPathName m) cfg.mountPoints)
+              "memory"
+              "cpu#usage"
+              "temperature"
+              "cpu#load"
+              "custom/dunst"
+              "idle_inhibitor"
+              (lib.optionalString cfg.enableBacklight "backlight")
+              (lib.optionalString cfg.enableBattery "battery")
+              "pulseaudio" # wireplumber is causing segfault
+              "clock"
+              "tray"
+            ] [
+              # Flatten lists
+              lib.flatten
               # Filter optional modules
-              (lib.filter (m: m != "")
-                # Flatten maps
-                (lib.flatten [
-                  "network"
-                  (map (m: shortPathName m) config.device.mountPoints)
-                  "memory"
-                  "cpu#usage"
-                  "temperature"
-                  "cpu#load"
-                  "custom/dunst"
-                  "idle_inhibitor"
-                  (lib.optionalString isLaptop "backlight")
-                  (lib.optionalString isLaptop "battery")
-                  "pulseaudio" # wireplumber is causing segfault
-                  "clock"
-                  "tray"
-                ])));
+              (lib.filter (m: m != ""))
+              # Add a separator between each module, except the last one
+              (builtins.concatMap (m: [ m "custom/separator" ]))
+              lib.init
+            ];
           "sway/mode".tooltip = false;
           "sway/window".max-length = 50;
           "sway/workspaces".disable-scroll-wraparound = true;
@@ -71,7 +91,7 @@ in
               bandwidthFormat = " {bandwidthUpBytes}  {bandwidthDownBytes}";
             in
             {
-              inherit interval;
+              interval = cfg.interval;
               format = "󰈀";
               format-wifi = "{icon} {essid} ${bandwidthFormat}";
               format-ethernet = "󰈀 ${bandwidthFormat}";
@@ -83,7 +103,7 @@ in
           (map
             (m: {
               "${shortPathName m}" = {
-                inherit interval;
+                interval = cfg.interval;
                 format = " ${shortPath m}: {free}";
                 path = m;
                 states = {
@@ -95,7 +115,7 @@ in
             config.device.mountPoints))
         // {
           memory = {
-            inherit interval;
+            interval = cfg.interval;
             format = " {avail:0.0f}G";
             format-alt = " {swapAvail:0.0f}G";
             states = {
@@ -104,7 +124,7 @@ in
             };
           };
           "cpu#usage" = {
-            inherit interval;
+            interval = cfg.interval;
             format = "{icon} {max_frequency}GHz";
             format-icons = [ "󰡳" "󰡵" "󰊚" "󰡴" ];
             states = {
@@ -113,7 +133,7 @@ in
             };
           };
           "cpu#load" = {
-            inherit interval;
+            interval = cfg.interval;
             format = " {load:0.1f}";
             tooltip = false;
           };
@@ -187,7 +207,7 @@ in
             on-scroll-down = "${pkgs.light}/bin/light -U 5%";
           };
           battery = {
-            inherit interval;
+            interval = cfg.interval;
             format = "{icon} {capacity}%";
             format-icons = {
               default = [ "" "" "" "" "" ];
@@ -199,7 +219,7 @@ in
             };
           };
           clock = {
-            inherit interval;
+            interval = cfg.interval;
             format = " {:%H:%M, %a %d}";
             tooltip-format = "<tt><small>{calendar}</small></tt>";
             calendar = {

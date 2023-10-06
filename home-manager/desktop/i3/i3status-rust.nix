@@ -14,9 +14,9 @@ in
     enableBattery = lib.mkEnableOption "battery block" // {
       default = config.device.type == "laptop";
     };
-    disksPaths = lib.mkOption {
+    mountPoints = lib.mkOption {
       type = with lib.types; listOf path;
-      description = "Disks to show in disk block";
+      description = "Mount points to show in disk block";
       default = config.device.mountPoints;
     };
     netDevices = lib.mkOption {
@@ -102,7 +102,7 @@ in
                 info_type = "available";
                 format = " $icon ${shortPath m} $available ";
               })
-              cfg.disksPaths;
+              cfg.mountPoints;
 
           memoryBlock = {
             interval = cfg.interval;
