@@ -194,7 +194,6 @@
 
       (flake-utils.lib.eachDefaultSystem (system:
         let
-          pkgs = nixpkgs.legacyPackages.${system};
           # Needs to run with `--impure` flag because `builtins.getEnv`
           getEnvOrDefault = env: default:
             let envValue = builtins.getEnv env; in
@@ -222,7 +221,7 @@
           }).homeConfigurations.devShell;
         in
         {
-          devShells.default = pkgs.mkShell {
+          devShells.default = homeManager.pkgs.mkShell {
             shellHook = ''
               export HOME=${homeManager.config.home.homeDirectory}
               mkdir -p "$HOME"
