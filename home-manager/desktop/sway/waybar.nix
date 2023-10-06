@@ -2,10 +2,7 @@
 
 let
   cfg = config.home-manager.desktop.sway.waybar;
-  shortPath' = with lib.strings;
-    (sep: path: concatStringsSep sep (map (substring 0 1) (splitString "/" path)));
-  shortPath = shortPath' "/";
-  shortPathName = path: "disk#${shortPath' "_" path}";
+  shortPathName = path: "disk#${lib.shortPathWithSep "_" path}";
 in
 {
   options.home-manager.desktop.sway.waybar = {
@@ -104,7 +101,7 @@ in
             (m: {
               "${shortPathName m}" = {
                 interval = cfg.interval;
-                format = " ${shortPath m}: {free}";
+                format = " ${lib.shortPath m}: {free}";
                 path = m;
                 states = {
                   warning = 75;

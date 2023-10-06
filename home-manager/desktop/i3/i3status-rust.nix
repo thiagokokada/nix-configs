@@ -89,20 +89,15 @@ in
             })
             cfg.netDevices;
 
-          disksBlocks =
-            let
-              shortPath = with lib.strings;
-                (path: concatStringsSep "/" (map (substring 0 1) (splitString "/" path)));
-            in
-            map
-              (m: {
-                interval = cfg.interval;
-                block = "disk_space";
-                path = m;
-                info_type = "available";
-                format = " $icon ${shortPath m} $available ";
-              })
-              cfg.mountPoints;
+          disksBlocks = map
+            (m: {
+              interval = cfg.interval;
+              block = "disk_space";
+              path = m;
+              info_type = "available";
+              format = " $icon ${lib.shortPath m} $available ";
+            })
+            cfg.mountPoints;
 
           memoryBlock = {
             interval = cfg.interval;
