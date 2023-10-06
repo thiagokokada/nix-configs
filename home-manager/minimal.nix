@@ -36,6 +36,9 @@
     targets = lib.mkForce { };
     timers = lib.mkForce { };
   };
+  # Disable macOS's launchd services
+  launchd.enable = false;
 
+  # Disable manpages to reduce closure size
   manual.manpages.enable = false;
 }
