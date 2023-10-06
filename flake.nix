@@ -194,14 +194,24 @@
       (flake-utils.lib.eachDefaultSystem (system:
         let
           pkgs = nixpkgs.legacyPackages.${system};
-          tmpdir = builtins.getEnv "TMPDIR";
-          homePath = (if tmpdir != "" then tmpdir else "/tmp") + "/home";
+          # Needs to run with `--impure` flag because `builtins.getEnv`
+          getEnvOrDefault = env: default:
+            let envValue = builtins.getEnv env; in
+            if envValue != "" then envValue else default;
+          tmpdir = getEnvOrDefault "TMPDIR" "/tmp";
+          homePath = "${tmpdir}/home";
+          user = getEnvOrDefault "USER" "nobody";
           homeManager = (mkHomeConfig {
             inherit homePath system;
             configuration = ./home-manager/minimal.nix;
             hostname = "devShell";
-            # Needs to run with `--impure` flag
-            username = builtins.getEnv "USER";
+            username =
+              if user == "nobody"
+              then
+                (nixpkgs.lib.warn
+                  "username is set to 'nobody', you may have forgot `--impure` flag!"
+                  user)
+              else user;
           }).homeConfigurations.devShell;
         in
         {
