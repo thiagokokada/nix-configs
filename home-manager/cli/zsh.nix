@@ -138,7 +138,7 @@
           (zshPlugin "pure")
           (zshPlugin "zsh-autopair")
           (zshPlugin "zsh-completions")
-          (zshPlugin "zsh-syntax-highlighting")
+          (zshPlugin "fast-syntax-highlighting")
           # Should be the last one
           (zshPlugin "zsh-history-substring-search")
         ];
