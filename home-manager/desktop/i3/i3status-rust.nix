@@ -1,18 +1,42 @@
 { config, lib, pkgs, ... }:
+
+let
+  cfg = config.home-manager.desktop.i3.i3status-rust;
+in
 {
-  options.home-manager.desktop.i3.i3status-rust.enable = lib.mkEnableOption "i3status-rust config" // {
-    default = config.home-manager.desktop.i3.enable;
+  options.home-manager.desktop.i3.i3status-rust = {
+    enable = lib.mkEnableOption "i3status-rust config" // {
+      default = config.home-manager.desktop.i3.enable;
+    };
+    enableBacklight = lib.mkEnableOption "backlight block" // {
+      default = config.device.type == "laptop";
+    };
+    enableBattery = lib.mkEnableOption "battery block" // {
+      default = config.device.type == "laptop";
+    };
+    disksPaths = lib.mkOption {
+      type = with lib.types; listOf path;
+      description = "Disks to show in disk block";
+      default = config.device.mountPoints;
+    };
+    netDevices = lib.mkOption {
+      type = with lib.types; listOf str;
+      description = "Net devices to show in net block";
+      default = config.device.netDevices;
+    };
+    interval = lib.mkOption {
+      type = lib.types.int;
+      default = 5;
+      description = "Block update interval";
+    };
   };
 
-  config = lib.mkIf config.home-manager.desktop.i3.i3status-rust.enable {
+  config = lib.mkIf cfg.enable {
     programs.i3status-rust = {
       enable = true;
       package = pkgs.i3status-rust;
       bars =
         let
-          interval = 5;
-          isLaptop = config.device.type == "laptop";
-
           settings = {
             theme = {
               theme = "plain";
@@ -49,9 +73,9 @@
             format = " $title.str(max_w:26) |";
           };
 
-          netBlocks = with config.device; map
+          netBlocks = map
             (d: {
-              interval = 2;
+              interval = cfg.interval;
               block = "net";
               device = d;
               format = " {$icon $ssid ($signal_strength) |^icon_ethernet } " +
@@ -63,32 +87,32 @@
               inactive_format = "";
               missing_format = "";
             })
-            netDevices;
+            cfg.netDevices;
 
-          disksBlocks = with config.device;
+          disksBlocks =
             let
               shortPath = with lib.strings;
                 (path: concatStringsSep "/" (map (substring 0 1) (splitString "/" path)));
             in
             map
               (m: {
-                inherit interval;
+                interval = cfg.interval;
                 block = "disk_space";
                 path = m;
                 info_type = "available";
                 format = " $icon ${shortPath m} $available ";
               })
-              mountPoints;
+              cfg.disksPaths;
 
           memoryBlock = {
-            inherit interval;
+            interval = cfg.interval;
             block = "memory";
             format = " $icon $mem_avail ";
             format_alt = " $icon_swap $swap_free ";
           };
 
           cpuBlock = {
-            inherit interval;
+            interval = cfg.interval;
             block = "cpu";
             format = " $icon " +
               "{$max_frequency.eng(prefix:G,w:3)} ";
@@ -96,12 +120,12 @@
           };
 
           loadBlock = {
-            inherit interval;
+            interval = cfg.interval;
             block = "load";
           };
 
           temperatureBlock = {
-            inherit interval;
+            interval = cfg.interval;
             block = "temperature";
             format = " $icon $max ";
             chip = "*-isa-*";
@@ -111,13 +135,13 @@
             warning = 80;
           };
 
-          backlightBlock = lib.optionalAttrs isLaptop {
+          backlightBlock = lib.optionalAttrs cfg.enableBacklight {
             block = "backlight";
             format = " ^icon_monitor $brightness |";
             invert_icons = true;
           };
 
-          batteryBlock = lib.optionalAttrs isLaptop {
+          batteryBlock = lib.optionalAttrs cfg.enableBattery {
             block = "battery";
             device = "DisplayDevice";
             driver = "upower";
@@ -147,7 +171,7 @@
             let xset = "${pkgs.xorg.xset}/bin/xset";
             in
             {
-              inherit interval;
+              interval = cfg.interval;
               block = "toggle";
               format = " ^icon_caffeine $icon ";
               command_state = "${xset} q | grep -Fo 'DPMS is Enabled'";
@@ -158,7 +182,7 @@
             };
 
           timeBlock = {
-            inherit interval;
+            interval = cfg.interval;
             block = "time";
           };
 
@@ -167,7 +191,7 @@
           i3 = {
             inherit settings;
 
-            blocks = lib.filter (b: b != { }) (lib.lists.flatten [
+            blocks = lib.pipe [
               windowBlock
               netBlocks
               disksBlocks
@@ -181,7 +205,10 @@
               batteryBlock
               soundBlock
               timeBlock
-            ]);
+            ] [
+              lib.lists.flatten
+              (lib.filter (b: b != { }))
+            ];
           };
         };
     };

@@ -8,13 +8,13 @@ with lib; {
       default = "desktop";
     };
     netDevices = mkOption {
-      type = with types; (listOf str);
+      type = with types; listOf str;
       description = "Available net devices";
       example = [ "eno1" "wlp2s0" ];
       default = [ "eth0" ];
     };
     mountPoints = mkOption {
-      type = with types; (listOf str);
+      type = with types; listOf path;
       description = "Available mount points";
       example = [ "/" "/mnt/backup" ];
       default =
