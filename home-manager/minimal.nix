@@ -1,13 +1,10 @@
-{ config, lib, ... }:
+{ lib, ... }:
 
 {
   imports = [ ./default.nix ];
 
-  home = {
-    # Not sure why this variable is not filling up automatically
-    sessionPath = [ "${config.home.homeDirectory}/.nix-profile/bin" ];
-    stateVersion = "23.11";
-  };
+  # Need to be set since meta module is disabled in this config
+  home.stateVersion = "23.11";
 
   # Disable some modules
   home-manager = {

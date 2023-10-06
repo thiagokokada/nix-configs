@@ -213,6 +213,12 @@
                   "username is set to 'nobody', you may have forgot `--impure` flag!"
                   user)
               else user;
+            extraModules = [
+              ({ config, ... }: {
+                # Not sure why this variable is not filling up automatically
+                home.sessionPath = [ "${config.home.homeDirectory}/.nix-profile/bin" ];
+              })
+            ];
           }).homeConfigurations.devShell;
         in
         {
