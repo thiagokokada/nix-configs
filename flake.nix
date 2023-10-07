@@ -166,6 +166,7 @@
       })
       (mkRunCmd {
         name = "format";
+        deps = pkgs: with pkgs; [ nixpkgs-fmt ];
         text = "nixpkgs-fmt .";
       })
       (mkRunCmd {
