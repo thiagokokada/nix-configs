@@ -45,8 +45,11 @@ with constants;
     run = "git config --global init.defaultBranch master";
   };
   checkNixStep = {
-    name = "Check if all `.nix` files are formatted correctly";
-    run = "nix run '.#formatCheck'";
+    name = "Check format and lint '.nix' files";
+    run = ''
+      nix run '.#formatCheck'
+      nix run '.#linterCheck'
+    '';
   };
   validateFlakesStep = {
     name = "Validate Flakes";

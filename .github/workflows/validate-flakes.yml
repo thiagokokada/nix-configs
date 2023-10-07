@@ -21,8 +21,10 @@ jobs:
           name: thiagokokada-nix-configs
       - name: Set default git branch (to reduce log spam)
         run: git config --global init.defaultBranch master
-      - name: Check if all `.nix` files are formatted correctly
-        run: nix run '.#formatCheck'
+      - name: Check format and lint '.nix' files
+        run: |
+          nix run '.#formatCheck'
+          nix run '.#linterCheck'
       - name: Validate Flakes
         run: nix flake check
 name: validate-flakes

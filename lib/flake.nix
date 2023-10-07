@@ -33,7 +33,7 @@ in
   mkRunCmd =
     { name
     , text
-    , deps ? pkgs: with pkgs; [ coreutils findutils nixpkgs-fmt ]
+    , deps ? pkgs: [ ]
     }: eachDefaultSystem (system:
     let
       pkgs = nixpkgs.legacyPackages.${system};

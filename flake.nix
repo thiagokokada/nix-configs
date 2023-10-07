@@ -161,22 +161,34 @@
       # Commands
       (mkRunCmd {
         name = "formatCheck";
+        deps = pkgs: with pkgs; [ coreutils findutils nixpkgs-fmt ];
         text = ''
           find . -name '*.nix' \
             ! -name 'hardware-configuration.nix' \
-            ! -path './modules/home-manager/*' \
-            ! -path './modules/nixos/*' \
             -exec nixpkgs-fmt --check {} \+
         '';
       })
       (mkRunCmd {
         name = "format";
+        deps = pkgs: with pkgs; [ coreutils findutils nixpkgs-fmt ];
         text = ''
           find . -name '*.nix' \
             ! -name 'hardware-configuration.nix' \
-            ! -path './modules/home-manager/*' \
-            ! -path './modules/nixos/*' \
             -exec nixpkgs-fmt {} \+
+        '';
+      })
+      (mkRunCmd {
+        name = "linterCheck";
+        deps = pkgs: with pkgs; [ statix ];
+        text = ''
+          statix check -i hardware-configuration.nix
+        '';
+      })
+      (mkRunCmd {
+        name = "linter";
+        deps = pkgs: with pkgs; [ coreutils findutils nixpkgs-fmt ];
+        text = ''
+          statix fix -i hardware-configuration.nix
         '';
       })
 
