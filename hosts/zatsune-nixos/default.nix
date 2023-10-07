@@ -36,6 +36,7 @@
     # Has tons of memory and slow disk
     nix.tmpOnDisk = false;
     server = {
+      github-runner.enable = true;
       iperf3.enable = true;
       ssh.enable = true;
       tailscale.enable = true;

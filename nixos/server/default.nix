@@ -6,6 +6,7 @@
 
   imports = [
     ./duckdns-updater.nix
+    ./github-runner.nix
     ./iperf3.nix
     ./jellyfin.nix
     ./networkd.nix
