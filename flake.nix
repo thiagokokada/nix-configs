@@ -190,41 +190,44 @@
       (flake-utils.lib.eachDefaultSystem (system:
         let
           pkgs = nixpkgs.legacyPackages.${system};
-          # Needs to run with `--impure` flag because `builtins.getEnv`
-          getEnvOrDefault = env: default:
-            let envValue = builtins.getEnv env; in
-            if envValue != "" then envValue else default;
-          tmpdir = getEnvOrDefault "TMPDIR" "/tmp";
-          username = getEnvOrDefault "USER" "nobody";
-          homePath = "${tmpdir}/home";
-          homeManager = (mkHomeConfig {
-            inherit homePath username system;
-            configuration = ./home-manager/minimal.nix;
-            hostname = "devShell";
-          }).homeConfigurations.devShell;
-          inherit (homeManager.config.home) homeDirectory packages profileDirectory;
         in
         {
           formatter = pkgs.nixpkgs-fmt;
-          devShells.default = homeManager.pkgs.mkShell {
-            inherit packages;
-            shellHook = ''
-              export HOME=${homeDirectory}
-              mkdir -p "$HOME"
+          devShells.default =
+            let
+              # Needs to run with `--impure` flag because `builtins.getEnv`
+              getEnvOrDefault = env: default:
+                let envValue = builtins.getEnv env; in
+                if envValue != "" then envValue else default;
+              tmpdir = getEnvOrDefault "TMPDIR" "/tmp";
+              username = getEnvOrDefault "USER" "nobody";
+              homePath = "${tmpdir}/home";
+              homeManager = (mkHomeConfig {
+                inherit homePath username system;
+                configuration = ./home-manager/minimal.nix;
+                hostname = "devShell";
+              }).homeConfigurations.devShell;
+              inherit (homeManager.config.home) homeDirectory packages profileDirectory;
+            in
+            homeManager.pkgs.mkShell {
+              inherit packages;
+              shellHook = ''
+                export HOME=${homeDirectory}
+                mkdir -p "$HOME"
 
-              trap "rm -rf ${homePath}" EXIT
+                trap "rm -rf ${homePath}" EXIT
 
-              ${homeManager.activationPackage}/activate
+                ${homeManager.activationPackage}/activate
 
-              if [[ -L ${profileDirectory}/etc/profile.d/hm-session-vars.sh ]]; then
-                . ${profileDirectory}/etc/profile.d/hm-session-vars.sh
-                zsh -l && exit 0
-              else
-                >&2 echo "[ERROR] Could not source Home Manager!"
-                >&2 echo "[ERROR] Did you pass '--impure' flag to 'nix develop'?"
-              fi
-            '';
-          };
+                if [[ -L ${profileDirectory}/etc/profile.d/hm-session-vars.sh ]]; then
+                  . ${profileDirectory}/etc/profile.d/hm-session-vars.sh
+                  zsh -l && exit 0
+                else
+                  >&2 echo "[ERROR] Could not source Home Manager!"
+                  >&2 echo "[ERROR] Did you pass '--impure' flag to 'nix develop'?"
+                fi
+              '';
+            };
         }))
 
       {
