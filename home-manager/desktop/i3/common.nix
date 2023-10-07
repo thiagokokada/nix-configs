@@ -191,7 +191,7 @@ in
       };
     };
 
-    keybindings = ({
+    keybindings = {
       "${modifier}+Return" = "exec ${terminal}";
       "${modifier}+Shift+q" = "kill";
       "${alt}+F4" = "kill";
@@ -254,7 +254,7 @@ in
     }) // (mapDirectionDefault {
       prefixKey = "Ctrl+${alt}";
       prefixCmd = "move workspace to output";
-    }) // extraBindings);
+    }) // extraBindings;
 
     modes =
       let
@@ -296,7 +296,7 @@ in
   # https://github.com/nix-community/home-manager/issues/695
   extraConfig =
     let
-      workspaceStr = (builtins.concatStringsSep "\n" [
+      workspaceStr = builtins.concatStringsSep "\n" [
         (mapWorkspacesStr {
           inherit workspaces;
           prefixKey = modifier;
@@ -307,7 +307,7 @@ in
           prefixKey = "${modifier}+Shift";
           prefixCmd = "move container to workspace number";
         })
-      ]);
+      ];
     in
     ''
       ${workspaceStr}

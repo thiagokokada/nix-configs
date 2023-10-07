@@ -21,13 +21,13 @@ in
   config = lib.mkIf config.home-manager.editor.emacs.enable {
     # Emacs overlay
     home = {
-      file.".tree-sitter".source = (pkgs.runCommand "grammars" { } ''
+      file.".tree-sitter".source = pkgs.runCommand "grammars" { } ''
         mkdir -p $out/bin
         ${lib.concatStringsSep "\n"
           (lib.mapAttrsToList
             (name: src: "name=${name}; ln -s ${src}/parser $out/bin/\${name#tree-sitter-}.so")
             pkgs.tree-sitter.builtGrammars)};
-      '');
+      '';
 
       packages = with pkgs; [
         (run-bg-alias "em" "${config.programs.emacs.package}/bin/emacs")
@@ -81,7 +81,7 @@ in
       installDoom = lib.hm.dag.entryAfter [ "linkGeneration" ] ''
         ${pkgs.rsync}/bin/rsync -Er --chmod=u=rwX --exclude='.local/' --mkpath --delete ${flake.inputs.doomemacs}/ ${EMACSDIR}/
       '';
-      runDoomSync = lib.mkIf (pkgs.stdenv.isLinux)
+      runDoomSync = lib.mkIf pkgs.stdenv.isLinux
         (lib.hm.dag.entryAfter [ "installDoom" ] ''
           ${pkgs.systemd}/bin/systemctl start --user doom-sync.service --no-block
         '');

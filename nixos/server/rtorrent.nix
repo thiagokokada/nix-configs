@@ -31,7 +31,7 @@ in
         enable = true;
         downloadDir = "${mediaDir}/Downloads";
         user = username;
-        group = group;
+        inherit group;
         port = 60001;
         openFirewall = true;
         configText = ''

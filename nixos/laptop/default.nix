@@ -7,7 +7,7 @@
   ];
 
   options.nixos.laptop.enable = lib.mkEnableOption "laptop config" // {
-    default = (config.device.type == "laptop");
+    default = config.device.type == "laptop";
   };
 
   config = lib.mkIf config.nixos.laptop.enable {

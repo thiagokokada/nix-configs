@@ -20,7 +20,7 @@
         powertop
         psmisc
         usbutils
-      ] ++ lib.optionals (stdenv.isx86_64) [
+      ] ++ lib.optionals stdenv.isx86_64 [
         ryzenadj
         turbostat
       ];

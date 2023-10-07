@@ -1,7 +1,7 @@
 { config, lib, pkgs, ... }:
 let
   inherit (config.meta) username;
-  group = config.users.users.${username}.group;
+  inherit (config.users.users.${username}) group;
   cfg = config.nixos.server.duckdns-updater;
   httpPort = 80;
 in
@@ -94,7 +94,7 @@ in
         ProtectProc = "invisible";
         ProtectSystem = "strict";
         RestrictAddressFamilies = [ "AF_UNIX" "AF_INET" "AF_INET6" ]
-          ++ lib.optionals (cfg.ipv6.enable) [ "AF_NETLINK" ];
+          ++ lib.optionals cfg.ipv6.enable [ "AF_NETLINK" ];
         RestrictNamespaces = true;
         RestrictRealtime = true;
         SystemCallArchitectures = "native";

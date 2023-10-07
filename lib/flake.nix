@@ -16,7 +16,7 @@ in
           mkdir -p $out
           echo ${nixpkgs.lib.escapeShellArg json} | ${pkgs.yj}/bin/yj -jy > $out/${name}.yml
         '';
-      ghActionsYAMLs = (map mkGHActionsYAML names);
+      ghActionsYAMLs = map mkGHActionsYAML names;
     in
     {
       apps.githubActions = mkApp {
@@ -42,7 +42,7 @@ in
       apps.${name} = mkApp {
         drv = pkgs.writeShellApplication {
           inherit name text;
-          runtimeInputs = (deps pkgs);
+          runtimeInputs = deps pkgs;
         };
         exePath = "/bin/${name}";
       };

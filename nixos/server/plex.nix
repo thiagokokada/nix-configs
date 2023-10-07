@@ -17,7 +17,7 @@ with config.users.users.${username}; {
     services.plex = {
       enable = true;
       openFirewall = true;
-      group = group;
+      inherit group;
     };
 
     systemd.services.plex.serviceConfig = {

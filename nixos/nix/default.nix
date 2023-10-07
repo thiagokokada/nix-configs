@@ -53,7 +53,7 @@ in
 
     # Change build dir to /var/tmp
     systemd.services.nix-daemon = {
-      environment.TMPDIR = lib.mkIf (cfg.tmpOnDisk) "/var/tmp";
+      environment.TMPDIR = lib.mkIf cfg.tmpOnDisk "/var/tmp";
     };
 
     # This value determines the NixOS release with which your system is to be

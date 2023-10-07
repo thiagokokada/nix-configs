@@ -53,7 +53,7 @@
     # You can update Home Manager without changing this value. See
     # the Home Manager release notes for a list of state version
     # changes in each release.
-    home.stateVersion = (osConfig.system.stateVersion or "23.11");
+    home.stateVersion = osConfig.system.stateVersion or "23.11";
 
     # More reliable user service restart
     systemd.user.startServices = lib.mkIf pkgs.stdenv.isLinux "sd-switch";

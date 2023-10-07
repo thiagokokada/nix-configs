@@ -10,7 +10,7 @@
       enable = true;
       keybindings = { "ctrl+shift+0" = "change_font_size all 0"; };
       font = {
-        package = (pkgs.nerdfonts.override { fonts = [ "Hack" ]; });
+        package = pkgs.nerdfonts.override { fonts = [ "Hack" ]; };
         name = "Hack Nerd Font";
       };
       settings = with config.theme.colors; {

@@ -12,7 +12,7 @@ with config.users.users.${username}; {
     services.jellyfin = {
       enable = true;
       openFirewall = true;
-      group = group;
+      inherit group;
     };
 
     security.acme.defaults.reloadServices = [ "jellyfin.service" ];

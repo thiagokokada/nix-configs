@@ -1,7 +1,7 @@
 { lib, config, pkgs, ... }:
 {
   options.nixos.server.enable = lib.mkEnableOption "server config" // {
-    default = (config.device.type == "server");
+    default = config.device.type == "server";
   };
 
   imports = [

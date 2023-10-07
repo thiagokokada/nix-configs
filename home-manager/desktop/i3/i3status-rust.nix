@@ -75,7 +75,7 @@ in
 
           netBlocks = map
             (d: {
-              interval = cfg.interval;
+              inherit (cfg) interval;
               block = "net";
               device = d;
               format = " {$icon $ssid ($signal_strength) |^icon_ethernet } " +
@@ -91,7 +91,7 @@ in
 
           disksBlocks = map
             (m: {
-              interval = cfg.interval;
+              inherit (cfg) interval;
               block = "disk_space";
               path = m;
               info_type = "available";
@@ -100,14 +100,14 @@ in
             cfg.mountPoints;
 
           memoryBlock = {
-            interval = cfg.interval;
+            inherit (cfg) interval;
             block = "memory";
             format = " $icon $mem_avail ";
             format_alt = " $icon_swap $swap_free ";
           };
 
           cpuBlock = {
-            interval = cfg.interval;
+            inherit (cfg) interval;
             block = "cpu";
             format = " $icon " +
               "{$max_frequency.eng(prefix:G,w:3)} ";
@@ -115,12 +115,12 @@ in
           };
 
           loadBlock = {
-            interval = cfg.interval;
+            inherit (cfg) interval;
             block = "load";
           };
 
           temperatureBlock = {
-            interval = cfg.interval;
+            inherit (cfg) interval;
             block = "temperature";
             format = " $icon $max ";
             chip = "*-isa-*";
@@ -166,7 +166,7 @@ in
             let xset = "${pkgs.xorg.xset}/bin/xset";
             in
             {
-              interval = cfg.interval;
+              inherit (cfg) interval;
               block = "toggle";
               format = " ^icon_caffeine $icon ";
               command_state = "${xset} q | grep -Fo 'DPMS is Enabled'";
@@ -177,7 +177,7 @@ in
             };
 
           timeBlock = {
-            interval = cfg.interval;
+            inherit (cfg) interval;
             block = "time";
           };
 

@@ -75,7 +75,7 @@ in
     };
 
     xresources.properties = with config.theme.fonts; {
-      "Xft.dpi" = (toString dpi);
+      "Xft.dpi" = toString dpi;
     };
 
     xsession = {

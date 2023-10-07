@@ -113,7 +113,7 @@
       inherit (import ./lib/attrsets.nix { inherit (nixpkgs) lib; }) recursiveMergeAttrs;
       inherit (import ./lib/flake.nix inputs) mkGHActionsYAMLs mkRunCmd mkNixOSConfig mkHomeConfig;
     in
-    (recursiveMergeAttrs [
+    recursiveMergeAttrs [
       # Templates
       {
         templates = {
@@ -239,5 +239,5 @@
           ];
         };
       }
-    ]); # END recursiveMergeAttrs
+    ]; # END recursiveMergeAttrs
 }

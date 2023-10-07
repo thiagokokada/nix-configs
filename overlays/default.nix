@@ -21,7 +21,7 @@
 
       change-res = prev.callPackage ../packages/change-res { };
 
-      home-manager = flake.inputs.home.packages.${pkgs.system}.home-manager;
+      inherit (flake.inputs.home.packages.${pkgs.system}) home-manager;
 
       open-browser = prev.callPackage ../packages/open-browser { };
 
@@ -33,13 +33,13 @@
         isNixOS = true;
       };
 
-      nix-hash-fetchurl = (prev.writeShellScriptBin "nix-hash-fetchurl" ''
+      nix-hash-fetchurl = prev.writeShellScriptBin "nix-hash-fetchurl" ''
         nix-build -E "with import <nixpkgs> {}; fetchurl {url = \"$1\"; sha256 = lib.fakeSha256; }"
-      '');
+      '';
 
-      nix-hash-fetchzip = (prev.writeShellScriptBin "nix-hash-fetchzip" ''
+      nix-hash-fetchzip = prev.writeShellScriptBin "nix-hash-fetchzip" ''
         nix-build -E "with import <nixpkgs> {}; fetchzip {url = \"$1\"; sha256 = lib.fakeSha256; }"
-      '');
+      '';
 
       # https://github.com/NixOS/nixpkgs/issues/97855#issuecomment-1075818028
       nixos-option =

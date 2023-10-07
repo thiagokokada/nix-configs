@@ -1,0 +1,4 @@
+disabled = [
+	"empty_pattern",
+	"repeated_keys",
+]

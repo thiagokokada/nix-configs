@@ -28,7 +28,7 @@ in
       userName = "Thiago Kenji Okada";
       userEmail = config.meta.email;
       package = with pkgs;
-        if (cfg.enableGui) then
+        if cfg.enableGui then
           gitFull.override
             {
               # Use SSH from macOS instead with support for Keyring

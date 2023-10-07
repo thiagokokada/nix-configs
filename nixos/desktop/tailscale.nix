@@ -9,7 +9,7 @@
     services.tailscale = {
       enable = true;
       useRoutingFeatures =
-        if (config.nixos.server.tailscale.enable)
+        if config.nixos.server.tailscale.enable
         then "both"
         else "client";
     };

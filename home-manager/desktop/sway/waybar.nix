@@ -46,7 +46,7 @@ in
           modules-right =
             lib.pipe [
               "network"
-              (map (m: shortPathName m) cfg.mountPoints)
+              (map shortPathName cfg.mountPoints)
               "memory"
               "cpu#usage"
               "temperature"
@@ -88,7 +88,7 @@ in
               bandwidthFormat = " {bandwidthUpBytes}  {bandwidthDownBytes}";
             in
             {
-              interval = cfg.interval;
+              inherit (cfg) interval;
               format = "󰈀";
               format-wifi = "{icon} {essid} ${bandwidthFormat}";
               format-ethernet = "󰈀 ${bandwidthFormat}";
@@ -100,7 +100,7 @@ in
           (map
             (m: {
               "${shortPathName m}" = {
-                interval = cfg.interval;
+                inherit (cfg) interval;
                 format = " ${lib.shortPath m}: {free}";
                 path = m;
                 states = {
@@ -112,7 +112,7 @@ in
             config.device.mountPoints))
         // {
           memory = {
-            interval = cfg.interval;
+            inherit (cfg) interval;
             format = " {avail:0.0f}G";
             format-alt = " {swapAvail:0.0f}G";
             states = {
@@ -121,7 +121,7 @@ in
             };
           };
           "cpu#usage" = {
-            interval = cfg.interval;
+            inherit (cfg) interval;
             format = "{icon} {max_frequency}GHz";
             format-icons = [ "󰡳" "󰡵" "󰊚" "󰡴" ];
             states = {
@@ -130,7 +130,7 @@ in
             };
           };
           "cpu#load" = {
-            interval = cfg.interval;
+            inherit (cfg) interval;
             format = " {load:0.1f}";
             tooltip = false;
           };
@@ -204,7 +204,7 @@ in
             on-scroll-down = "${pkgs.light}/bin/light -U 5%";
           };
           battery = {
-            interval = cfg.interval;
+            inherit (cfg) interval;
             format = "{icon} {capacity}%";
             format-icons = {
               default = [ "" "" "" "" "" ];
@@ -216,7 +216,7 @@ in
             };
           };
           clock = {
-            interval = cfg.interval;
+            inherit (cfg) interval;
             format = " {:%H:%M, %a %d}";
             tooltip-format = "<tt><small>{calendar}</small></tt>";
             calendar = {
