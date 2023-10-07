@@ -32,12 +32,12 @@
       # Run nixos-rebuild inside a systemd-run to avoid TTY closing issues
       # https://github.com/NixOS/nixpkgs/issues/39118
       (writeShellScriptBin "nixos-rebuild" ''
-        if [[ -z "$NIXOS_REBUILD_FALLBACK" ]] && [[ -z "$SSH_CLIENT" ]] && [[ "$#" -ne 0 ]]; then
+        if [[ -z "$NIXOS_REBUILD_DIRTY_ENV" ]] && [[ -z "$SSH_CLIENT" ]] && [[ "$#" -ne 0 ]]; then
           systemd-run \
                 -E NIX_PATH \
                 -E LOCALE_ARCHIVE \
                 -E PATH \
-                --unit=nixos-rebuild --pty --wait --collect --same-dir --service-type=exec \
+                --unit=nixos-rebuild --pty --wait --collect --same-dir --service-type=exec --quiet \
                 "${nixos-rebuild}/bin/nixos-rebuild" "$@"
         else
           "${nixos-rebuild}/bin/nixos-rebuild" "$@"
