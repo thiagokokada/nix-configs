@@ -9,6 +9,7 @@
   };
   ubuntu.runs-on = "ubuntu-latest";
   macos.runs-on = "macos-13";
+  nixos.runs-on = "nix-configs";
   home-manager = {
     linux.hostnames = [
       "home-linux"
@@ -23,5 +24,8 @@
     "miku-nixos"
     "mirai-vps"
     "sankyuu-nixos"
+  ];
+  nixos-aarch64.hostnames = [
+    "zatsune-nixos"
   ];
 }

@@ -19,6 +19,16 @@ with constants;
         (buildNixOSConfigurations { })
       ];
     };
+    build-linux-aarch64 = {
+      inherit (nixos) runs-on;
+      steps = with steps; [
+        checkoutStep
+        (installNixActionStep { })
+        cachixActionStep
+        setDefaultGitBranchStep
+        (buildNixOSConfigurations { hostnames = nixos-aarch64.hostnames; })
+      ];
+    };
     build-macos = {
       inherit (constants.macos) runs-on;
       steps = with steps; [
