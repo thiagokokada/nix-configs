@@ -458,6 +458,7 @@ in
                         command = { "nixpkgs-fmt" },
                       },
                       nix = {
+                        maxMemoryMB = 8192,
                         flake = {
                           autoArchive = true,
                           autoEvalInputs = true,
