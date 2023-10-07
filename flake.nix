@@ -161,35 +161,22 @@
       # Commands
       (mkRunCmd {
         name = "formatCheck";
-        deps = pkgs: with pkgs; [ coreutils findutils nixpkgs-fmt ];
-        text = ''
-          find . -name '*.nix' \
-            ! -name 'hardware-configuration.nix' \
-            -exec nixpkgs-fmt --check {} \+
-        '';
+        deps = pkgs: with pkgs; [ nixpkgs-fmt ];
+        text = "nixpkgs-fmt . --check";
       })
       (mkRunCmd {
         name = "format";
-        deps = pkgs: with pkgs; [ coreutils findutils nixpkgs-fmt ];
-        text = ''
-          find . -name '*.nix' \
-            ! -name 'hardware-configuration.nix' \
-            -exec nixpkgs-fmt {} \+
-        '';
+        text = "nixpkgs-fmt .";
       })
       (mkRunCmd {
         name = "linterCheck";
         deps = pkgs: with pkgs; [ statix ];
-        text = ''
-          statix check -i hardware-configuration.nix
-        '';
+        text = "statix check -i hardware-configuration.nix";
       })
       (mkRunCmd {
         name = "linter";
-        deps = pkgs: with pkgs; [ coreutils findutils nixpkgs-fmt ];
-        text = ''
-          statix fix -i hardware-configuration.nix
-        '';
+        deps = pkgs: with pkgs; [ statix ];
+        text = "statix fix -i hardware-configuration.nix";
       })
 
       # GitHub Actions
@@ -202,6 +189,7 @@
 
       (flake-utils.lib.eachDefaultSystem (system:
         let
+          pkgs = nixpkgs.legacyPackages.${system};
           # Needs to run with `--impure` flag because `builtins.getEnv`
           getEnvOrDefault = env: default:
             let envValue = builtins.getEnv env; in
@@ -217,6 +205,7 @@
           inherit (homeManager.config.home) homeDirectory packages profileDirectory;
         in
         {
+          formatter = pkgs.nixpkgs-fmt;
           devShells.default = homeManager.pkgs.mkShell {
             inherit packages;
             shellHook = ''
