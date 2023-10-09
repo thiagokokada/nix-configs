@@ -9,7 +9,7 @@ in
       default = config.home-manager.cli.enable;
     };
     enableGui = lib.mkEnableOption "enable Git GUI" // {
-      default = config.home-manager.desktop.enable;
+      default = config.home-manager.desktop.enable || config.home-manager.darwin.enable;
     };
   };
 
