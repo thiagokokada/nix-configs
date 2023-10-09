@@ -73,9 +73,6 @@
           [[ -L "$1" ]] && cp --remove-destination "$(readlink "$1")" "$1"
         }
 
-        # allow using nix-shell with zsh
-        ${any-nix-shell}/bin/any-nix-shell zsh --info-right | source /dev/stdin
-
         # try to correct the spelling of commands
         setopt correct
         # disable C-S/C-Q
