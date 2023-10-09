@@ -37,24 +37,19 @@
 
       shellAliases = { "reload!" = "source $HOME/.zshrc"; };
 
-      profileExtra =
-        let
-          darwinFixes = lib.optionalString pkgs.stdenv.isDarwin ''
-            # Source nix-daemon profile since macOS updates can remove it from /etc/zshrc
-            # https://github.com/NixOS/nix/issues/3616
-            if [ -e '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh' ]; then
-              source '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh'
-            fi
-            # Set the soft ulimit to something sensible
-            # https://developer.apple.com/forums/thread/735798
-            ulimit -Sn 524288
-          '';
-        in
-        ''
-          # Source .profile
-          [[ -e ~/.profile ]] && emulate sh -c '. ~/.profile'
-          ${darwinFixes}
-        '';
+      profileExtra = ''
+        # Source .profile
+        [[ -e ~/.profile ]] && emulate sh -c '. ~/.profile'
+      '' + lib.optionalString pkgs.stdenv.isDarwin ''
+        # Source nix-daemon profile since macOS updates can remove it from /etc/zshrc
+        # https://github.com/NixOS/nix/issues/3616
+        if [ -e '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh' ]; then
+          source '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh'
+        fi
+        # Set the soft ulimit to something sensible
+        # https://developer.apple.com/forums/thread/735798
+        ulimit -Sn 524288
+      '';
 
       initExtraBeforeCompInit = ''
         # zimfw config
@@ -94,6 +89,8 @@
         # zsh-history-substring-search
         bindkey "$terminfo[kcuu1]" history-substring-search-up
         bindkey "$terminfo[kcud1]" history-substring-search-down
+        bindkey -M vicmd 'k' history-substring-search-up
+        bindkey -M vicmd 'j' history-substring-search-down
 
         # allow ad-hoc scripts to be add to PATH locally
         export PATH="$HOME/.local/bin:$PATH"
@@ -105,10 +102,6 @@
 
         # avoid duplicated entries in PATH
         typeset -U PATH
-
-        # ensure that MANPATH includes a :
-        # https://askubuntu.com/a/693612
-        export MANPATH=":$MANPATH"
       '';
 
       plugins =
