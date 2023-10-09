@@ -59,6 +59,14 @@
 
       initExtra = with pkgs; ''
         # helpers
+        run-bg() {
+          (
+            exec 0>&-
+            exec 1>&-
+            exec 2>&-
+            "$@"
+          ) &!
+        }
         get-ip() { ${curl}/bin/curl -Ss "https://ifconfig.me" }
         get-ip!() { ${curl}/bin/curl -Ss "https://ipapi.co/$(get-ip)/yaml" }
         remove-symlink() {

@@ -23,7 +23,6 @@
       coreutils
       curl
       curlie
-      daemonize
       dialog
       diffutils
       dos2unix
