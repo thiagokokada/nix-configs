@@ -44,13 +44,6 @@ with constants;
     name = "Set default git branch (to reduce log spam)";
     run = "git config --global init.defaultBranch master";
   };
-  checkNixStep = {
-    name = "Check format and lint '.nix' files";
-    run = ''
-      nix run '.#formatCheck'
-      nix run '.#linterCheck'
-    '';
-  };
   validateFlakesStep = {
     name = "Validate Flakes";
     run = "nix flake check";

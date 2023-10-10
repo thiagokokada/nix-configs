@@ -161,21 +161,6 @@
 
       # Commands
       (mkRunCmd {
-        name = "formatCheck";
-        deps = pkgs: with pkgs; [ nixpkgs-fmt ];
-        text = "nixpkgs-fmt . --check";
-      })
-      (mkRunCmd {
-        name = "format";
-        deps = pkgs: with pkgs; [ nixpkgs-fmt ];
-        text = "nixpkgs-fmt .";
-      })
-      (mkRunCmd {
-        name = "linterCheck";
-        deps = pkgs: with pkgs; [ statix ];
-        text = "statix check -i hardware-configuration.nix";
-      })
-      (mkRunCmd {
         name = "linter";
         deps = pkgs: with pkgs; [ statix ];
         text = "statix fix -i hardware-configuration.nix";
@@ -233,6 +218,7 @@
                 fi
               '';
             };
+          checks = import ./checks.nix { inherit pkgs; };
           formatter = pkgs.nixpkgs-fmt;
           legacyPackages = pkgs;
         }))

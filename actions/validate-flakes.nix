@@ -19,7 +19,6 @@ with constants;
         setupAarch64
         cachixActionStep
         setDefaultGitBranchStep
-        checkNixStep
         validateFlakesStep
       ];
     };

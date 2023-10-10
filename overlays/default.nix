@@ -24,8 +24,6 @@ flake.inputs.emacs.overlay final prev // {
 
   nix-cleanup = prev.callPackage ../packages/nix-cleanup { };
 
-  nix-whereis = prev.callPackage ../packages/nix-whereis { };
-
   nixos-cleanup = prev.callPackage ../packages/nix-cleanup {
     isNixOS = true;
   };
@@ -37,6 +35,8 @@ flake.inputs.emacs.overlay final prev // {
   nix-hash-fetchzip = prev.writeShellScriptBin "nix-hash-fetchzip" ''
     nix-build -E "with import <nixpkgs> {}; fetchzip {url = \"$1\"; sha256 = lib.fakeSha256; }"
   '';
+
+  nix-whereis = prev.callPackage ../packages/nix-whereis { };
 
   # https://github.com/NixOS/nixpkgs/issues/97855#issuecomment-1075818028
   nixos-option =
