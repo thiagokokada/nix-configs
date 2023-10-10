@@ -5,7 +5,6 @@ let
 in
 {
   imports = [
-    ../../overlays
     ./cross-compiling.nix
   ];
 
@@ -48,8 +47,14 @@ in
       }
     ];
 
-    # Enable unfree packages
-    nixpkgs.config.allowUnfree = true;
+    nixpkgs = {
+      overlays = [
+        (import ../../overlays { inherit flake; })
+      ];
+
+      # Enable unfree packages
+      config.allowUnfree = true;
+    };
 
     # Change build dir to /var/tmp
     systemd.services.nix-daemon = {

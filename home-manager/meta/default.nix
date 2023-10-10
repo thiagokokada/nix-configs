@@ -28,8 +28,13 @@
 
     # Set custom nixpkgs config (e.g.: allowUnfree), both for this
     # config and for ad-hoc nix commands invocation
-    nixpkgs.config = import ./nixpkgs-config.nix;
     xdg.configFile."nixpkgs/config.nix".source = ./nixpkgs-config.nix;
+    nixpkgs = {
+      overlays = [
+        (import ../../overlays { inherit flake; })
+      ];
+      config = import ./nixpkgs-config.nix;
+    };
 
     programs = {
       # Let Home Manager install and manage itself.

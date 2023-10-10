@@ -123,6 +123,7 @@
             description = "Create a new host";
           };
         };
+        overlays.default = (import ./overlays { flake = self; });
       }
 
       # NixOS configs

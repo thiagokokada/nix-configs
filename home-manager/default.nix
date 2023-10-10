@@ -3,7 +3,6 @@
 {
   imports = [
     ../modules
-    ../overlays
     ./cli
     ./darwin.nix
     ./desktop
