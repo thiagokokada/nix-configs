@@ -46,7 +46,7 @@ with constants;
   };
   validateFlakesStep = {
     name = "Validate Flakes";
-    run = "nix flake check";
+    run = "nix flake check ${toString nixFlags}";
   };
   buildHomeManagerConfigurations = { hostnames ? constants.home-manager.linux.hostnames, extraNixFlags ? [ ] }: {
     name = "Build Home-Manager configs for: ${builtins.concatStringsSep ", " hostnames}";
