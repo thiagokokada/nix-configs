@@ -123,7 +123,7 @@
             description = "Create a new host";
           };
         };
-        overlays.default = (import ./overlays { flake = self; });
+        overlays.default = import ./overlays { flake = self; };
       }
 
       # NixOS configs
@@ -191,10 +191,13 @@
 
       (flake-utils.lib.eachDefaultSystem (system:
         let
-          pkgs = nixpkgs.legacyPackages.${system};
+          pkgs = import nixpkgs {
+            inherit system;
+            config.allowUnfree = true;
+            overlays = [ self.overlays.default ];
+          };
         in
         {
-          formatter = pkgs.nixpkgs-fmt;
           devShells.default =
             let
               # Needs to run with `--impure` flag because `builtins.getEnv`
@@ -230,6 +233,8 @@
                 fi
               '';
             };
+          formatter = pkgs.nixpkgs-fmt;
+          legacyPackages = pkgs;
         }))
 
       {
