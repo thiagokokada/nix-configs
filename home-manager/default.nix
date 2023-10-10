@@ -1,4 +1,4 @@
-{ osConfig, ... }:
+{ flake, osConfig, ... }:
 
 {
   imports = [
@@ -10,6 +10,8 @@
     ./editor
     ./meta
   ];
+
+  nixpkgs.overlays = [ (import ../overlays { inherit flake; }) ];
 
   # Inherit config from NixOS or homeConfigurations
   inherit (osConfig) device meta;
