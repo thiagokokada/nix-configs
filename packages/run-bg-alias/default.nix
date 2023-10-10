@@ -19,32 +19,12 @@ writeShellApplication {
 
       while [[ "$#" -gt 0 ]]; do
         arg="$1"
-        case "$arg" in
-          # Either a hidden file or a relative path
-          .?*)
-            parsed_args+=("$(realpath "$arg")")
-            shift
-            ;;
-          # a/file
-          *?/?*)
-            parsed_args+=("$(realpath "$arg")")
-            shift
-            ;;
-          # Probably an option
-          -?*)
-            parsed_args+=("$arg")
-            shift
-            ;;
-          # Something else, check if it is a file or not
-          *)
-            if [[ -d "$arg" ]] || [[ -f "$arg" ]]; then
-              parsed_args+=("$(realpath "$arg")")
-            else
-              parsed_args+=("$arg")
-            fi
-            shift
-            ;;
-        esac
+        if [[ -d "$arg" ]] || [[ -f "$arg" ]]; then
+          parsed_args+=("$(realpath "$arg")")
+        else
+          parsed_args+=("$arg")
+        fi
+        shift
       done
 
       exec 0>&-
