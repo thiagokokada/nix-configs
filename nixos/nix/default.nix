@@ -22,34 +22,42 @@ in
       nom-rebuild
     ];
 
-    nix = lib.mkMerge [
-      (import ../../shared/nix.nix { inherit pkgs flake; })
-      {
-        gc = {
-          automatic = true;
-          persistent = true;
-          randomizedDelaySec = "15m";
-          dates = "3:15";
-          options = "--delete-older-than 7d";
-        };
-        # Reduce disk usage
-        daemonIOSchedClass = "idle";
-        # Leave nix builds as a background task
-        daemonCPUSchedPolicy = "idle";
-      }
-      {
-        settings =
-          let
-            cachix = import ../../shared/cachix.nix;
-          in
+    nix = {
+      gc = {
+        automatic = true;
+        persistent = true;
+        randomizedDelaySec = "15m";
+        dates = "3:15";
+        options = "--delete-older-than 7d";
+      };
+      # Reduce disk usage
+      daemonIOSchedClass = "idle";
+      # Leave nix builds as a background task
+      daemonCPUSchedPolicy = "idle";
+
+      # Set the $NIX_PATH entry for nixpkgs. This is necessary in
+      # this setup with flakes, otherwise commands like `nix-shell
+      # -p pkgs.htop` will keep using an old version of nixpkgs
+      nixPath = [
+        "nixpkgs=${flake}"
+      ];
+      # Same as above, but for `nix shell nixpkgs#htop`
+      registry.nixpkgs.flake = flake;
+
+      settings =
+        let
+          substituters = import ../../shared/substituters.nix;
+        in
+        lib.mkMerge [
+          (import ../../shared/nix-conf.nix)
           {
             # For some reason when nix is running as daemon,
             # extra-{substituters,trusted-public-keys} doesn't work
-            substituters = [ "https://cache.nixos.org/" ] ++ cachix.extra-substituters;
-            trusted-public-keys = cachix.extra-trusted-public-keys;
-          };
-      }
-    ];
+            substituters = substituters.extra-substituters;
+            trusted-public-keys = substituters.extra-trusted-public-keys;
+          }
+        ];
+    };
 
     # Enable unfree packages
     nixpkgs.config.allowUnfree = true;
