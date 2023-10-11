@@ -52,13 +52,7 @@ in
       enable = true;
       gpu = "amd";
     };
-    laptop.tlp = {
-      cpuFreqGovernor = "schedutil";
-      batteryThreshold = {
-        start = 75;
-        stop = 80;
-      };
-    };
+    laptop.tlp.enable = false;
     server.tailscale.enable = true;
   };
 

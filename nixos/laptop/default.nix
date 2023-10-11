@@ -20,6 +20,10 @@
       # Enable Blueman to manage Bluetooth
       blueman.enable = true;
 
+      # Reduces power consumption on demand
+      # TODO: use it by default?
+      power-profiles-daemon.enable = !config.nixos.laptop.tlp.enable;
+
       # For battery status reporting
       upower.enable = true;
 
