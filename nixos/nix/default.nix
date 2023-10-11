@@ -31,9 +31,10 @@ in
         options = "--delete-older-than 7d";
       };
       # Reduce disk usage
-      daemonIOSchedClass = "idle";
+      daemonIOSchedClass = "best-effort";
+      daemonIOSchedPriority = 7;
       # Leave nix builds as a background task
-      daemonCPUSchedPolicy = "idle";
+      daemonCPUSchedPolicy = "batch";
 
       # Set the $NIX_PATH entry for nixpkgs. This is necessary in
       # this setup with flakes, otherwise commands like `nix-shell
