@@ -61,6 +61,10 @@ in
         interval = "weekly";
       };
 
+      # Reduces power consumption on demand
+      # TODO: use it in place of TLP?
+      power-profiles-daemon.enable = !config.nixos.laptop.tlp.enable;
+
       # Decrease journal size
       journald.extraConfig = ''
         SystemMaxUse=500M
