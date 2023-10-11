@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 
+set -euo pipefail
+
 readonly NIXOS=@isNixOS@
+PATH=@path@
 AUTO=0
 OPTIMIZE=0
 HM_PROFILE=0
