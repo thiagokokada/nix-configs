@@ -197,10 +197,12 @@
                 configuration = ./home-manager/minimal.nix;
                 hostname = "devShell";
               }).homeConfigurations.devShell;
+              inherit (homeManager) pkgs;
               inherit (homeManager.config.home) homeDirectory packages profileDirectory;
             in
-            homeManager.pkgs.mkShell {
-              inherit packages;
+            pkgs.mkShell {
+              # Ensure that nix/nix-build is in PATH
+              packages = [ pkgs.nix ] ++ packages;
               shellHook = ''
                 export HOME=${homeDirectory}
                 mkdir -p "$HOME"
