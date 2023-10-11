@@ -14,16 +14,20 @@ in
       example = "schedutil";
       description = "CPU frequency governor to be set via TLP.";
     };
+    # Use `tlp fullcharge` while connect though AC to charge it to 100% when
+    # this option is set.
     batteryThreshold = {
       start = lib.mkOption {
-        default = 0;
-        type = lib.types.int;
-        description = "Start of battery charging threshold";
+        default = null;
+        example = 75;
+        type = with lib.types; nullOr int;
+        description = "Start of battery charging threshold.";
       };
       stop = lib.mkOption {
-        default = 0;
-        type = lib.types.int;
-        description = "Stop of battery charging threshold";
+        default = null;
+        example = 80;
+        type = with lib.types; nullOr int;
+        description = "Stop of battery charging threshold.";
       };
     };
   };
@@ -44,10 +48,8 @@ in
         CPU_SCALING_GOVERNOR_ON_AC = lib.mkIf (cfg.cpuFreqGovernor != null) cfg.cpuFreqGovernor;
         CPU_SCALING_GOVERNOR_ON_BAT = lib.mkIf (cfg.cpuFreqGovernor != null) cfg.cpuFreqGovernor;
         # Set battery thresholds
-        START_CHARGE_THRESH_BAT0 = cfg.batteryThreshold.start;
-        STOP_CHARGE_THRESH_BAT0 = cfg.batteryThreshold.stop;
-        # Use `tlp setcharge` to restore the charging thresholds
-        RESTORE_THRESHOLDS_ON_BAT = lib.mkDefault 1;
+        START_CHARGE_THRESH_BAT0 = lib.mkIf (cfg.batteryThreshold.start != null) cfg.batteryThreshold.start;
+        STOP_CHARGE_THRESH_BAT0 = lib.mkIf (cfg.batteryThreshold.stop != null) cfg.batteryThreshold.stop;
       };
     };
   };

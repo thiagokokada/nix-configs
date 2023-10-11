@@ -52,6 +52,10 @@ in
       enable = true;
       gpu = "amd";
     };
+    laptop.tlp.batteryThreshold = {
+      start = 75;
+      stop = 80;
+    };
     server.tailscale.enable = true;
   };
 
