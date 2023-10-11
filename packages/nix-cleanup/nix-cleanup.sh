@@ -3,7 +3,7 @@
 set -euo pipefail
 
 readonly NIXOS=@is_nixos@
-PATH=@path@
+PATH="@path@:$PATH"
 AUTO=0
 OPTIMIZE=0
 HM_PROFILE=0
