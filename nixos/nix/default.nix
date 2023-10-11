@@ -52,6 +52,7 @@ in
         lib.mkMerge [
           (import ../../shared/nix-conf.nix)
           {
+            trusted-users = [ "root" "@wheel" ];
             # For some reason when nix is running as daemon,
             # extra-{substituters,trusted-public-keys} doesn't work
             substituters = substituters.extra-substituters;
