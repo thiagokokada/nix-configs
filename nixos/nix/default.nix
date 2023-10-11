@@ -40,7 +40,7 @@ in
       # this setup with flakes, otherwise commands like `nix-shell
       # -p pkgs.htop` will keep using an old version of nixpkgs
       nixPath = [
-        "nixpkgs=${flake}"
+        "nixpkgs=${flake.inputs.nixpkgs}"
       ];
       # Same as above, but for `nix shell nixpkgs#htop`
       registry.nixpkgs.flake = flake;
