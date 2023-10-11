@@ -23,7 +23,7 @@
     # sudo echo "trusted-users = @wheel" >> /etc/nix/nix.conf
     nix = {
       package = lib.mkDefault pkgs.nix;
-      settings = import ../../shared/nix-conf.nix // flake.outputs.nixConfig;
+      settings = import ../../shared/nix-conf.nix // (import ../../shared/cachix.nix);
     };
 
     # Set custom nixpkgs config (e.g.: allowUnfree), both for this
