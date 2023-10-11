@@ -52,7 +52,6 @@ in
       enable = true;
       gpu = "amd";
     };
-    laptop.tlp.enable = false;
     server.tailscale.enable = true;
   };
 
