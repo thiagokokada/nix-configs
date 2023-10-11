@@ -11,7 +11,7 @@
 , isNixOS ? false
 }:
 
-stdenvNoCC.mkDerivation {
+stdenvNoCC.mkDerivation (finalAttrs: {
   name =
     if isNixOS
     then "nixos-cleanup"
@@ -19,7 +19,7 @@ stdenvNoCC.mkDerivation {
 
   src = substituteAll {
     src = ./nix-cleanup.sh;
-    isNixOS = if isNixOS then "1" else "0";
+    is_nixos = if isNixOS then "1" else "0";
     path = lib.makeBinPath [
       coreutils
       findutils
@@ -35,7 +35,7 @@ stdenvNoCC.mkDerivation {
   installPhase = ''
     runHook preInstall
 
-    install -Dm0755 $src $out/bin/nix-cleanup
+    install -Dm0755 $src $out/bin/${finalAttrs.name}
 
     runHook postInstall
   '';
@@ -49,4 +49,4 @@ stdenvNoCC.mkDerivation {
 
     runHook postCheck
   '';
-}
+})

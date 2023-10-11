@@ -2,7 +2,7 @@
 
 set -euo pipefail
 
-readonly NIXOS=@isNixOS@
+readonly NIXOS=@is_nixos@
 PATH=@path@
 AUTO=0
 OPTIMIZE=0
