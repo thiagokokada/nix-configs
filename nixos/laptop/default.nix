@@ -29,9 +29,6 @@
         lidSwitchDocked = lib.mkDefault "ignore";
         lidSwitchExternalPower = lib.mkDefault "lock";
       };
-
-      # Reduce power consumption
-      tlp.enable = true;
     };
   };
 }
