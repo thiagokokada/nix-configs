@@ -6,6 +6,7 @@ in
 {
   mkGHActionsYAMLs = names: eachDefaultSystem (system:
     let
+      inherit (nixpkgs) lib;
       pkgs = nixpkgs.legacyPackages.${system};
       mkGHActionsYAML = name:
         let
@@ -14,7 +15,8 @@ in
         in
         pkgs.runCommand name { } ''
           mkdir -p $out
-          echo ${nixpkgs.lib.escapeShellArg json} | ${pkgs.yj}/bin/yj -jy > $out/${name}.yml
+          echo ${lib.escapeShellArg json} | ${lib.getExe' pkgs.yj "yj"} -jy > $out/${name}.yml
+          ${lib.getExe pkgs.action-validator} -v $out/${name}.yml
         '';
       ghActionsYAMLs = map mkGHActionsYAML names;
     in
