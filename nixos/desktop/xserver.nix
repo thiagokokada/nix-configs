@@ -16,6 +16,7 @@
     };
 
     services = {
+      # Enable autorandr service, i.e.: sleep.target
       autorandr.enable = true;
 
       xserver = {
@@ -37,5 +38,9 @@
         };
       };
     };
+
+    # Try at least 3 times before considering the service failed
+    # Default is 1
+    systemd.services.autorandr.startLimitBurst = lib.mkForce 3;
   };
 }
