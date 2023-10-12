@@ -157,10 +157,14 @@
       };
 
     programs = {
-      dircolors.enable = true;
       direnv = {
         enable = true;
         nix-direnv.enable = true;
+      };
+      eza = {
+        enable = true;
+        enableAliases = true;
+        git = true;
       };
       fzf = {
         enable = true;

@@ -60,11 +60,6 @@
         enable = true;
         extraPackages = with pkgs.bat-extras; [ batdiff batman batgrep batwatch ];
       };
-      eza = {
-        enable = true;
-        enableAliases = true;
-        git = true;
-      };
       zsh.shellAliases = {
         # For muscle memory...
         archive = "${pkgs.ouch}/bin/ouch compress";
