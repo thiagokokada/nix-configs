@@ -215,14 +215,14 @@
                 export HOME=${homeDirectory}
                 mkdir -p "$HOME"
 
-                ${homeManager.activationPackage}/activate
-
-                if [[ -L ${profileDirectory}/etc/profile.d/hm-session-vars.sh ]]; then
+                if ${homeManager.activationPackage}/activate; then
                   . ${profileDirectory}/etc/profile.d/hm-session-vars.sh
                   zsh -l && exit 0
                 else
-                  >&2 echo "[ERROR] Could not source Home Manager!"
+                  >&2 echo "[ERROR] Could not activate Home Manager!"
                   >&2 echo "[ERROR] Did you pass '--impure' flag to 'nix develop'?"
+                  >&2 echo "[INFO] You can run the following command manually to debug the issue:"
+                  >&2 echo "[INFO] $ ${homeManager.activationPackage}/activate"
                 fi
               '';
             };
