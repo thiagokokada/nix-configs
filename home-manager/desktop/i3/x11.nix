@@ -1,4 +1,5 @@
 { config, lib, pkgs, osConfig, ... }:
+
 let
   xsession = "${config.home.homeDirectory}/.xsession";
 in
@@ -8,51 +9,14 @@ in
   };
 
   config = lib.mkIf config.home-manager.desktop.i3.x11.enable {
+    # Disable keyboard management via HM
+    home.keyboard = null;
+
     # Compatibility with xinit/sx
     home.file.".xinitrc".source = config.lib.file.mkOutOfStoreSymlink xsession;
     xdg.configFile."sx/sxrc".source = config.lib.file.mkOutOfStoreSymlink xsession;
 
     systemd.user.services = {
-      xss-lock = {
-        Unit = {
-          Description = "Use external locker as X screen saver";
-          After = [ "graphical-session-pre.target" ];
-          PartOf = [ "graphical-session.target" ];
-        };
-
-        Install = { WantedBy = [ "graphical-session.target" ]; };
-
-        Service =
-          let
-            lockscreen = with config.theme.fonts;
-              pkgs.writeShellScriptBin "lock-screen" ''
-                export XSECURELOCK_FORCE_GRAB=1
-                export XSECURELOCK_BLANK_DPMS_STATE="off"
-                export XSECURELOCK_DATETIME_FORMAT="%H:%M:%S - %a %d/%m"
-                export XSECURELOCK_SHOW_DATETIME=1
-                export XSECURELOCK_SHOW_HOSTNAME=0
-                export XSECURELOCK_SHOW_USERNAME=0
-                export XSECURELOCK_FONT="${gui.name}:style=Regular"
-
-                exec ${pkgs.xsecurelock}/bin/xsecurelock $@
-              '';
-            notify = pkgs.writeShellScript "notify" ''
-              ${pkgs.dunst}/bin/dunstify -t 30000 "30 seconds to lock"
-            '';
-          in
-          {
-            ExecStart = lib.concatStringsSep " " [
-              "${pkgs.xss-lock}/bin/xss-lock"
-              "--notifier ${notify}"
-              "--transfer-sleep-lock"
-              "--session $XDG_SESSION_ID"
-              "--"
-              "${lockscreen}/bin/lock-screen"
-            ];
-            Restart = "on-failure";
-          };
-      };
-
       wallpaper = {
         Unit = {
           Description = "Set wallpaper";

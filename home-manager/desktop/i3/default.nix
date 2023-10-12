@@ -80,6 +80,7 @@ in
     ./i3status-rust.nix
     ./picom.nix
     ./rofi.nix
+    ./screen-locker.nix
     ./x11.nix
   ];
 
@@ -89,9 +90,6 @@ in
 
   config = lib.mkIf config.home-manager.desktop.i3.enable {
     home = {
-      # Disable keyboard management via HM
-      keyboard = null;
-
       packages = with pkgs; [
         arandr
         dex
@@ -113,10 +111,6 @@ in
 
       config = commonOptions.config // {
         startup = [
-          {
-            command = "${pkgs.xorg.xset}/bin/xset s 600 30";
-            notification = false;
-          }
           {
             command = "${pkgs.dex}/bin/dex --autostart";
             notification = false;
