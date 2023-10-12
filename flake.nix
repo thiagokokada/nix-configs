@@ -204,10 +204,16 @@
               # Ensure that nix/nix-build is in PATH
               packages = [ pkgs.nix ] ++ packages;
               shellHook = ''
+                cleanup() {
+                  chmod +w -R ${homeDirectory}
+                  rm -rf ${homeDirectory}
+                  rmdir --ignore-fail-on-non-empty ${homePath}
+                }
+
+                trap "cleanup" EXIT
+
                 export HOME=${homeDirectory}
                 mkdir -p "$HOME"
-
-                trap "rm -rf ${homePath}" EXIT
 
                 ${homeManager.activationPackage}/activate
 
