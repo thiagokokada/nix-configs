@@ -16,28 +16,6 @@ in
     home.file.".xinitrc".source = config.lib.file.mkOutOfStoreSymlink xsession;
     xdg.configFile."sx/sxrc".source = config.lib.file.mkOutOfStoreSymlink xsession;
 
-    systemd.user.services = {
-      wallpaper = {
-        Unit = {
-          Description = "Set wallpaper";
-          After = [ "graphical-session-pre.target" ];
-          PartOf = [ "graphical-session.target" ];
-        };
-
-        Install = { WantedBy = [ "graphical-session.target" ]; };
-
-        Service = {
-          ExecStart = lib.concatStringsSep " " [
-            "${pkgs.feh}/bin/feh"
-            "--no-fehbg"
-            "--bg-${config.theme.wallpaper.scale}"
-            "${config.theme.wallpaper.path}"
-          ];
-          Type = "oneshot";
-        };
-      };
-    };
-
     xresources.properties = with config.theme.fonts; {
       "Xft.dpi" = toString dpi;
     };

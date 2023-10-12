@@ -47,7 +47,7 @@ in
         description = "Wallpaper path";
       };
       scale = mkOption {
-        type = types.enum [ "tile" "fit" "center" "fill" "scale" ];
+        type = types.enum [ "tile" "center" "fill" "scale" ];
         default = "fill";
         description = "Wallpaper scaling";
       };
