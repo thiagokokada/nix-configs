@@ -157,10 +157,6 @@
       };
 
     programs = {
-      direnv = {
-        enable = true;
-        nix-direnv.enable = true;
-      };
       eza = {
         enable = true;
         enableAliases = true;

@@ -19,5 +19,13 @@
       nodePackages.bash-language-server
       shellcheck
     ];
+
+    programs.direnv = {
+      enable = true;
+      nix-direnv.enable = true;
+    };
+
+    # lorri is a faster direnv implementation
+    services.lorri.enable = lib.mkIf pkgs.stdenv.isLinux true;
   };
 }
