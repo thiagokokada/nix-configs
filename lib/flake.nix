@@ -56,6 +56,9 @@ in
     , nixosSystem ? nixpkgs.lib.nixosSystem
     , extraModules ? [ ]
     }:
+    let
+      inherit (self.outputs.nixosConfigurations.${hostname}) config pkgs;
+    in
     {
       nixosConfigurations.${hostname} = nixosSystem {
         inherit system;
@@ -66,20 +69,19 @@ in
         specialArgs.flake = self;
       };
 
-      apps.${system} = {
+      apps.${pkgs.system} = {
         "nixosActivations/${hostname}" = mkApp {
-          drv = self.outputs.nixosConfigurations.${hostname}.config.system.build.toplevel;
+          drv = config.system.build.toplevel;
           exePath = "/activate";
         };
 
-        "nixosVMs/${hostname}" = let pkgs = nixpkgs.legacyPackages.${system}; in
-          mkApp {
-            drv = pkgs.writeShellScriptBin "run-${hostname}-vm" ''
-              env QEMU_OPTS="''${QEMU_OPTS:--cpu max -smp 4 -m 4096M -machine type=q35}" \
-                ${self.outputs.nixosConfigurations.${hostname}.config.system.build.vm}/bin/run-${hostname}-vm
-            '';
-            exePath = "/bin/run-${hostname}-vm";
-          };
+        "nixosVMs/${hostname}" = mkApp {
+          drv = pkgs.writeShellScriptBin "run-${hostname}-vm" ''
+            env QEMU_OPTS="''${QEMU_OPTS:--cpu max -smp 4 -m 4096M -machine type=q35}" \
+              ${config.system.build.vm}/bin/run-${hostname}-vm
+          '';
+          exePath = "/bin/run-${hostname}-vm";
+        };
       };
     };
 
