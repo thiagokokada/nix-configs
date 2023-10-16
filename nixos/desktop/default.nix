@@ -22,6 +22,9 @@
     services = {
       dbus.implementation = "broker";
       gnome.gnome-keyring.enable = true;
+      # Reduces power consumption on demand
+      # TODO: use it in place of TLP?
+      power-profiles-daemon.enable = !config.nixos.laptop.tlp.enable;
       udisks2.enable = true;
     };
   };
