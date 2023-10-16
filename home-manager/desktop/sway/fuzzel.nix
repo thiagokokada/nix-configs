@@ -7,7 +7,7 @@
   config = lib.mkIf config.home-manager.desktop.sway.fuzzel.enable {
     programs.fuzzel = {
       enable = true;
-      settings = with config.theme.fonts; {
+      settings = with config.home-manager.desktop.theme.fonts; {
         main = {
           font = "${gui.name}:style=regular:size=14";
           terminal = "${config.programs.kitty.package}/bin/kitty";
@@ -17,7 +17,7 @@
           vertical-pad = 10;
           line-height = 28;
         };
-        colors = with config.theme.colors; let
+        colors = with config.home-manager.desktop.theme.colors; let
           fixColor = color: "${lib.removePrefix "#" color}ff";
         in
         {

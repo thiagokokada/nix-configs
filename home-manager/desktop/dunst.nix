@@ -14,7 +14,7 @@
     services.dunst = {
       enable = true;
       iconTheme = with config.gtk.iconTheme; { inherit name package; };
-      settings = with config.theme.colors;
+      settings = with config.home-manager.desktop.theme.colors;
         let
           theme = {
             background = base00;
@@ -22,7 +22,7 @@
           };
         in
         {
-          global = with config.theme.fonts; {
+          global = with config.home-manager.desktop.theme.fonts; {
             font = "${gui.name} 8";
             markup = true;
             format = "<b>%s</b>\\n%b";

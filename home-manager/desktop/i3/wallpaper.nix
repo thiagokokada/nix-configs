@@ -16,12 +16,12 @@
 
         Install.WantedBy = [ "graphical-session.target" ];
 
-        Service = {
+        Service = with config.home-manager.desktop.theme.wallpaper; {
           ExecStart = lib.concatStringsSep " " [
             "${lib.getExe pkgs.feh}"
             "--no-fehbg"
-            "--bg-${config.theme.wallpaper.scale}"
-            "${config.theme.wallpaper.path}"
+            "--bg-${scale}"
+            "${path}"
           ];
           Type = "oneshot";
         };

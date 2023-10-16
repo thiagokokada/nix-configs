@@ -43,7 +43,8 @@ in
   networking.hostName = "sankyuu-nixos";
 
   # Use ultrawide wallpaper
-  home-manager.users.${config.mainUser.username}.theme.wallpaper.path = pkgs.wallpapers.hatsune-miku_stylized-ultrawide;
+  home-manager.users.${config.mainUser.username}.home-manager.desktop.theme.wallpaper.path =
+    pkgs.wallpapers.hatsune-miku_stylized-ultrawide;
 
   nixos = {
     dev.enable = true;

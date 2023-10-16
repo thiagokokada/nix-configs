@@ -16,7 +16,7 @@ in
     home.file.".xinitrc".source = config.lib.file.mkOutOfStoreSymlink xsession;
     xdg.configFile."sx/sxrc".source = config.lib.file.mkOutOfStoreSymlink xsession;
 
-    xresources.properties = with config.theme.fonts; {
+    xresources.properties = with config.home-manager.desktop.theme.fonts; {
       "Xft.dpi" = toString dpi;
     };
 

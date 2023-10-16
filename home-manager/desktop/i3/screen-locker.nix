@@ -9,7 +9,7 @@
     services.screen-locker = {
       enable = true;
       inactiveInterval = 10;
-      lockCmd = with config.theme.fonts; toString
+      lockCmd = with config.home-manager.desktop.theme.fonts; toString
         (pkgs.writeShellScript "lock-screen" ''
           export XSECURELOCK_FORCE_GRAB=1
           export XSECURELOCK_BLANK_DPMS_STATE="off"

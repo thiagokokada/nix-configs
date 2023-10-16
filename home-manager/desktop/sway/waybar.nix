@@ -234,7 +234,8 @@ in
           };
         };
       };
-      style = with config.theme.colors; ''
+      # TODO: get fonts from config.home-manager.desktop.theme.fonts
+      style = with config.home-manager.desktop.theme.colors; ''
         * {
           border: none;
           border-radius: 0;

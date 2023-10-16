@@ -87,8 +87,8 @@ in
         };
 
         output = {
-          "*" = {
-            bg = "${config.theme.wallpaper.path} ${config.theme.wallpaper.scale}";
+          "*" = with config.home-manager.desktop.theme.wallpaper; {
+            bg = "${path} ${scale}";
             # DPI
             scale = toString (125 / 100.0);
           } // lib.optionalAttrs (osConfig ? fonts.fontconfig) {

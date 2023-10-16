@@ -40,7 +40,7 @@ in
           settings = {
             theme = {
               theme = "plain";
-              overrides = with config.theme.colors; {
+              overrides = with config.home-manager.desktop.theme.colors; {
                 idle_bg = base00;
                 idle_fg = base05;
                 info_bg = base0D;

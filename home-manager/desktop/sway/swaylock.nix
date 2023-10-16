@@ -9,16 +9,16 @@
     programs.swaylock = {
       enable = true;
       package = pkgs.swaylock;
-      settings = with config.theme.colors; {
-        font = config.theme.fonts.gui.name;
+      settings = with config.home-manager.desktop.theme.colors; {
+        font = config.home-manager.desktop.theme.fonts.gui.name;
         indicator-caps-lock = true;
         show-keyboard-layout = true;
         # https://stackoverflow.com/a/506662
         image = with pkgs; toString
           (runCommand "wallpaper-pixelated" { buildInputs = [ imagemagick ]; } ''
-            convert -scale 1% -scale 10000% ${config.theme.wallpaper.path} $out
+            convert -scale 1% -scale 10000% ${config.home-manager.desktop.theme.wallpaper.path} $out
           '');
-        scaling = config.theme.wallpaper.scale;
+        scaling = config.home-manager.desktop.theme.wallpaper.scale;
 
         inside-color = base01;
         line-color = base01;

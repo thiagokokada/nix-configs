@@ -10,11 +10,11 @@
       enable = true;
       terminal = "${config.programs.kitty.package}/bin/kitty";
       package = with pkgs; rofi.override { plugins = [ rofi-calc rofi-emoji ]; };
-      font = with config.theme.fonts; "${gui.package} 14";
+      font = with config.home-manager.desktop.theme.fonts; "${gui.package} 14";
       theme =
         let l = config.lib.formats.rasi.mkLiteral;
         in
-        with config.theme.colors; {
+        with config.home-manager.desktop.theme.colors; {
           "*" = {
             background-color = l base00;
             border-color = l base01;

@@ -8,7 +8,7 @@
   config = lib.mkIf config.home-manager.desktop.xterm.enable {
     home.packages = with pkgs; [ hack-font xterm ];
 
-    xresources.extraConfig = with config.theme.colors; ''
+    xresources.extraConfig = with config.home-manager.desktop.theme.colors; ''
       #define base00 ${base00}
       #define base01 ${base01}
       #define base02 ${base02}

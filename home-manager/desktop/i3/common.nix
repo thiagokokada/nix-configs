@@ -14,7 +14,7 @@
 , statusCommand ? null
 , alt ? "Mod1"
 , modifier ? "Mod4"
-, bars ? with config.theme.colors; [{
+, bars ? with config.home-manager.desktop.theme.colors; [{
     inherit fonts statusCommand;
 
     position = "top";
@@ -49,7 +49,7 @@
       };
     };
   }]
-, fonts ? with config.theme.fonts; {
+, fonts ? with config.home-manager.desktop.theme.fonts; {
     names = lib.flatten [
       gui.name
       icons.name
@@ -152,7 +152,7 @@ in
   config = {
     inherit bars fonts modifier menu terminal;
 
-    colors = with config.theme.colors; {
+    colors = with config.home-manager.desktop.theme.colors; {
       background = base07;
       focused = {
         background = base0D;

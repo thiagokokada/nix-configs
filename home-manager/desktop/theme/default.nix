@@ -1,18 +1,39 @@
 { config, pkgs, lib, osConfig, ... }:
 
-{
-  options.home-manager.desktop.theme.enable = lib.mkEnableOption "Chromium config" // {
-    default = config.home-manager.desktop.enable;
-  };
+let
+  themeType = lib.types.submodule {
+    options = {
+      package = lib.mkOption {
+        type = with lib.types; nullOr package;
+        description = "Theme package";
+      };
 
-  config = lib.mkIf config.home-manager.desktop.theme.enable {
-    theme = {
-      fonts = {
-        gui = {
+      name = lib.mkOption {
+        type = with lib.types; either (listOf str) str;
+        description = "Theme name";
+      };
+    };
+  };
+in
+{
+  options.home-manager.desktop.theme = {
+    enable = lib.mkEnableOption "theme config" // {
+      default = config.home-manager.desktop.enable;
+    };
+    fonts = {
+      gui = lib.mkOption {
+        type = lib.types.nullOr themeType;
+        description = "GUI main font";
+        default = {
           package = pkgs.roboto;
           name = "Roboto";
         };
-        icons = {
+      };
+
+      icons = lib.mkOption {
+        type = lib.types.nullOr themeType;
+        description = "Icons main font";
+        default = {
           package = pkgs.font-awesome_6;
           name = [
             "Font Awesome 6 Brands"
@@ -20,18 +41,43 @@
           ];
         };
       };
-      colors = with builtins; fromJSON (readFile ./colors.json);
-      wallpaper.path = lib.mkDefault pkgs.wallpapers.hatsune-miku_walking-4k;
+
+      dpi = lib.mkOption {
+        type = lib.types.int;
+        description = "Font dpi";
+        default = 135;
+      };
     };
 
+    colors = lib.mkOption {
+      type = with lib.types; attrsOf str;
+      description = "Base16 colors";
+      default = lib.importJSON ./colors.json;
+    };
+
+    wallpaper = {
+      path = lib.mkOption {
+        type = lib.types.path;
+        description = "Wallpaper path";
+        default = pkgs.wallpapers.hatsune-miku_walking-4k;
+      };
+      scale = lib.mkOption {
+        type = lib.types.enum [ "tile" "center" "fill" "scale" ];
+        default = "fill";
+        description = "Wallpaper scaling";
+      };
+    };
+  };
+
+  config = lib.mkIf config.home-manager.desktop.theme.enable {
     # Enable fonts in home.packages to be available to applications
     fonts.fontconfig.enable = true;
 
     home = {
-      packages = with pkgs; [
-        config.theme.fonts.gui.package
-        config.theme.fonts.icons.package
+      packages = with pkgs; with config.home-manager.desktop.theme; [
         dejavu_fonts
+        fonts.gui.package
+        fonts.icons.package
         gnome.gnome-themes-extra
         hack-font
         hicolor-icon-theme

@@ -13,7 +13,7 @@
         package = pkgs.nerdfonts.override { fonts = [ "Hack" ]; };
         name = "Hack Nerd Font";
       };
-      settings = with config.theme.colors; {
+      settings = with config.home-manager.desktop.theme.colors; {
         # Font
         font_size = "12.0";
 
