@@ -5,8 +5,11 @@
 python3.pkgs.buildPythonApplication rec {
   pname = "open-browser";
   version = "0.1";
+  format = "pyproject";
 
   src = ./.;
+
+  propagatedBuildInputs = with python3.pkgs; [ setuptools ];
 
   desktopItem = makeDesktopItem {
     categories = [
