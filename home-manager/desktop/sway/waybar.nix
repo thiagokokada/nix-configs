@@ -234,12 +234,18 @@ in
           };
         };
       };
-      # TODO: get fonts from config.home-manager.desktop.theme.fonts
-      style = with config.home-manager.desktop.theme.colors; ''
+      style = with config.home-manager.desktop.theme.colors; with config.home-manager.desktop.theme.fonts; let
+        concatFonts = fonts: lib.pipe fonts [
+          lib.flatten
+          (map (s: ''"${s}"''))
+          (lib.concatStringsSep ", ")
+        ];
+      in
+      ''
         * {
           border: none;
           border-radius: 0;
-          font-family: Roboto, "Font Awesome 6 Free Solid", "Symbols Nerd Font";
+          font-family: ${concatFonts [ gui.name icons.name "Symbols Nerd Font" ]};
         }
         window#waybar {
           background: ${base00};

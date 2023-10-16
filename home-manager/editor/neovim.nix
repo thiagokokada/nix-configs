@@ -26,7 +26,7 @@ in
       ripgrep
     ]
     ++ lib.optionals cfg.enableIcons [
-      (nerdfonts.override { fonts = [ "Hack" ]; })
+      config.home-manager.desktop.theme.fonts.symbols.package
     ];
 
     programs.neovim = {

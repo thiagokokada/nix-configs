@@ -10,8 +10,7 @@
       enable = true;
       keybindings = { "ctrl+shift+0" = "change_font_size all 0"; };
       font = {
-        package = pkgs.nerdfonts.override { fonts = [ "Hack" ]; };
-        name = "Hack Nerd Font";
+        inherit (config.home-manager.desktop.theme.fonts.symbols) package name;
       };
       settings = with config.home-manager.desktop.theme.colors; {
         # Font

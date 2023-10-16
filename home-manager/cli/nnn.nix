@@ -2,18 +2,27 @@
 
 let
   inherit (flake) inputs;
+  cfg = config.home-manager.cli.nnn;
 in
 {
-  options.home-manager.cli.nnn.enable = lib.mkEnableOption "nnn config" // {
-    default = config.home-manager.cli.enable;
+  options.home-manager.cli.nnn = {
+    enable = lib.mkEnableOption "nnn config" // {
+      default = config.home-manager.cli.enable;
+    };
+    # Do not forget to set 'Hack Nerd Mono Font' as the terminal font
+    enableIcons = lib.mkEnableOption "icons" // {
+      default = config.home-manager.desktop.enable || config.home-manager.darwin.enable;
+    };
   };
 
-  config = lib.mkIf config.home-manager.cli.nnn.enable {
-    home.packages = [ (pkgs.nerdfonts.override { fonts = [ "Hack" ]; }) ];
+  config = lib.mkIf cfg.enable {
+    home.packages = lib.optionals cfg.enableIcons [
+      config.home-manager.desktop.theme.fonts.symbols.package
+    ];
 
     programs.nnn = {
       enable = true;
-      package = pkgs.nnn.override { withNerdIcons = true; };
+      package = pkgs.nnn.override { withNerdIcons = cfg.enableIcons; };
       bookmarks = {
         d = "~/Documents";
         D = "~/Downloads";

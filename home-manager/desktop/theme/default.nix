@@ -23,7 +23,7 @@ in
     fonts = {
       gui = lib.mkOption {
         type = lib.types.nullOr themeType;
-        description = "GUI main font";
+        description = "GUI font";
         default = {
           package = pkgs.roboto;
           name = "Roboto";
@@ -32,13 +32,22 @@ in
 
       icons = lib.mkOption {
         type = lib.types.nullOr themeType;
-        description = "Icons main font";
+        description = "Icons font";
         default = {
           package = pkgs.font-awesome_6;
           name = [
             "Font Awesome 6 Brands"
             "Font Awesome 6 Free Solid"
           ];
+        };
+      };
+
+      symbols = lib.mkOption {
+        type = lib.types.nullOr themeType;
+        description = "Symbols font";
+        default = {
+          package = pkgs.nerdfonts.override { fonts = [ "Hack" ]; };
+          name = "Hack Nerd Font";
         };
       };
 
@@ -78,6 +87,7 @@ in
         dejavu_fonts
         fonts.gui.package
         fonts.icons.package
+        fonts.symbols.package
         gnome.gnome-themes-extra
         hack-font
         hicolor-icon-theme
