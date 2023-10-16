@@ -28,14 +28,6 @@ flake.inputs.emacs.overlay final prev // {
     isNixOS = true;
   };
 
-  nix-hash-fetchurl = prev.writeShellScriptBin "nix-hash-fetchurl" ''
-    nix-build -E "with import <nixpkgs> {}; fetchurl {url = \"$1\"; sha256 = lib.fakeSha256; }"
-  '';
-
-  nix-hash-fetchzip = prev.writeShellScriptBin "nix-hash-fetchzip" ''
-    nix-build -E "with import <nixpkgs> {}; fetchzip {url = \"$1\"; sha256 = lib.fakeSha256; }"
-  '';
-
   nix-whereis = prev.callPackage ../packages/nix-whereis { };
 
   # https://github.com/NixOS/nixpkgs/issues/97855#issuecomment-1075818028
