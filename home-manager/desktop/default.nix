@@ -69,8 +69,8 @@
           "image/png" = "org.gnome.gThumb.desktop";
           "inode/directory" = "nemo.desktop";
           "text/html" = "open-browser.desktop";
-          "text/plain" = "emacs.desktop";
-          "text/x-makefile" = "emacs.desktop";
+          "text/plain" = "nvim.desktop";
+          "text/x-makefile" = "nvim.desktop";
           "x-scheme-handler/about" = "open-browser.desktop";
           "x-scheme-handler/http" = "open-browser.desktop";
           "x-scheme-handler/https" = "open-browser.desktop";
