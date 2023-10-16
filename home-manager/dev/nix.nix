@@ -8,6 +8,9 @@
   config = lib.mkIf config.home-manager.dev.nix.enable {
     home.packages = with pkgs; [
       nil
+      nix-hash-fetchurl
+      nix-hash-fetchzip
+      nix-update
       nixpkgs-fmt
       statix
     ];
