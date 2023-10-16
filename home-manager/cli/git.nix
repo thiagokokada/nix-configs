@@ -18,7 +18,7 @@ in
       github-cli
     ] ++ lib.optionals cfg.enableGui [
       (run-bg-alias "gcd" "${git-cola}/bin/git-cola dag")
-      (run-bg-alias "gk" "${gitFull}/bin/gitk")
+      (run-bg-alias "gk" "${config.programs.git.package}/bin/gitk")
       git-cola
     ];
 
