@@ -29,7 +29,7 @@ in
   device = {
     type = "desktop";
     netDevices = [ "eno1" ];
-    mediaDir = "/mnt/archive/${config.meta.username}";
+    mediaDir = "/mnt/archive/${config.mainUser.username}";
   };
 
   # Fix quirk in Renesas USB hub

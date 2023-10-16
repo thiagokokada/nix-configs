@@ -1,9 +1,9 @@
-{ config, lib, pkgs, ... }:
+{ ... }:
 
 {
   imports = [
     ./device.nix
-    ./meta.nix
+    ./mainUser.nix
     ./theme.nix
   ];
 }

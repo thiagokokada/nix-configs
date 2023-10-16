@@ -2,7 +2,7 @@
 
 let
   inherit (config.device) mediaDir;
-  inherit (config.meta) username;
+  inherit (config.mainUser) username;
   cfg = config.nixos.server.rtorrent;
 in
 {

@@ -8,11 +8,6 @@ in
 
   options.nixos.home = {
     enable = lib.mkDefaultOption "home config";
-    username = lib.mkOption {
-      description = "Main username";
-      type = lib.types.str;
-      default = config.meta.username;
-    };
     imports = lib.mkOption {
       description = "Modules to import";
       type = lib.types.listOf lib.types.path;
@@ -27,14 +22,14 @@ in
 
     home-manager = {
       useUserPackages = true;
-      users.${cfg.username} = {
+      users.${config.mainUser.username} = {
         inherit (config.nixos.home) imports;
       };
       extraSpecialArgs = { inherit flake; };
     };
 
     # Define a user account. Don't forget to set a password with ‘passwd’.
-    users.users.${cfg.username} = {
+    users.users.${config.mainUser.username} = {
       isNormalUser = true;
       uid = 1000;
       extraGroups = [ "wheel" "networkmanager" "video" ];

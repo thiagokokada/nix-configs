@@ -1,6 +1,6 @@
 { lib, config, ... }:
 let
-  inherit (config.meta) username;
+  inherit (config.mainUser) username;
 in
 {
   imports = [

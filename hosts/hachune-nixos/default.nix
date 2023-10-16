@@ -18,7 +18,7 @@ in
   device = {
     type = "desktop";
     netDevices = [ "enp2s0f1" ];
-    mediaDir = "/mnt/media/${config.meta.username}";
+    mediaDir = "/mnt/media/${config.mainUser.username}";
   };
 
   nixos = {
@@ -50,8 +50,7 @@ in
   networking.hostName = "hachune-nixos";
 
   # Use ultrawide wallpaper
-  home-manager.users.${config.meta.username}.theme.wallpaper.path = pkgs.wallpapers.hatsune-miku_stylized-ultrawide;
+  home-manager.users.${config.mainUser.username}.theme.wallpaper.path = pkgs.wallpapers.hatsune-miku_stylized-ultrawide;
 
-  # Reduce power consumption
   time.timeZone = "America/Sao_Paulo";
 }

@@ -25,8 +25,8 @@ in
     programs.git = {
       enable = true;
 
-      userName = "Thiago Kenji Okada";
-      userEmail = config.meta.email;
+      userName = config.mainUser.fullname;
+      userEmail = config.mainUser.email;
       package = with pkgs;
         if cfg.enableGui then
           gitFull.override

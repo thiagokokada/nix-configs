@@ -1,7 +1,7 @@
 { lib, config, pkgs, ... }:
 
 let
-  inherit (config.meta) username;
+  inherit (config.mainUser) username;
   inherit (config.services.tailscale) interfaceName port;
 in
 {

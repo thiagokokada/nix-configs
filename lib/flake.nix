@@ -117,8 +117,7 @@ in
           flake = self;
           osConfig = {
             device.type = deviceType;
-            meta.username = username;
-            meta.configPath = "${homeDirectory}/${configPosfix}";
+            mainUser.username = username;
           };
         };
       };

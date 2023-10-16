@@ -1,7 +1,7 @@
 { config, lib, ... }:
 
 let
-  inherit (config.meta) username;
+  inherit (config.mainUser) username;
   inherit (config.device) mediaDir;
 in
 with config.users.users.${username}; {

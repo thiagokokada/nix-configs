@@ -14,5 +14,5 @@
   nixpkgs.overlays = [ (import ../overlays { inherit flake; }) ];
 
   # Inherit config from NixOS or homeConfigurations
-  inherit (osConfig) device meta;
+  inherit (osConfig) device mainUser;
 }

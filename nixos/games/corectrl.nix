@@ -1,7 +1,7 @@
 { lib, config, ... }:
 
 let
-  inherit (config.meta) username;
+  inherit (config.mainUser) username;
   cfg = config.nixos.games.corectrl;
 in
 {

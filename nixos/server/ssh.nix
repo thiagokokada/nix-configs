@@ -1,7 +1,7 @@
 { config, lib, ... }:
 
 let
-  inherit (config.meta) username;
+  inherit (config.mainUser) username;
   cfg = config.nixos.server.ssh;
 in
 {
