@@ -4,10 +4,7 @@ let
   cfg = config.nixos.home;
 in
 {
-  imports = [
-    flake.inputs.home.nixosModules.home-manager
-    ../modules/meta.nix
-  ];
+  imports = [ flake.inputs.home.nixosModules.home-manager ];
 
   options.nixos.home = {
     enable = lib.mkDefaultOption "home config";
