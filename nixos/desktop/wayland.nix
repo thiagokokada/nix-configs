@@ -9,14 +9,16 @@
     programs.sway = {
       # Make Sway available for display managers and make things like swaylock work
       enable = true;
-      enableRealtime = true;
-      wrapperFeatures = {
-        base = true;
-        gtk = true;
-      };
+      # Disable Sway package (will use HM one instead)
+      package = null;
       # Remove unnecessary packages from system-wide install (e.g.: foot)
       extraPackages = [ ];
     };
+
+    # https://github.com/NixOS/nixpkgs/pull/207842#issuecomment-1374906499
+    security.pam.loginLimits = [
+      { domain = "@users"; item = "rtprio"; type = "-"; value = 1; }
+    ];
 
     # For sway screensharing
     # https://nixos.wiki/wiki/Firefox

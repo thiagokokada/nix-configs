@@ -106,7 +106,7 @@ in
         export NIXOS_OZONE_WL=1
         # Qt
         export QT_QPA_PLATFORM=wayland
-        export QT_WAYLAND_DISABLE_WINDOWDECORATION="1"
+        export QT_WAYLAND_DISABLE_WINDOWDECORATION=1
         # SDL
         export SDL_VIDEODRIVER=wayland
         # Fix for some Java AWT applications (e.g. Android Studio),

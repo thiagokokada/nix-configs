@@ -19,6 +19,12 @@
   config = lib.mkIf config.nixos.desktop.enable {
     programs.gnome-disks.enable = true;
 
+    # FIXME: why adding this only to Home Manager isn't sufficient for Qt6?
+    qt = {
+      enable = true;
+      platformTheme = "qt5ct";
+    };
+
     services = {
       dbus.implementation = "broker";
       gnome.gnome-keyring.enable = true;
