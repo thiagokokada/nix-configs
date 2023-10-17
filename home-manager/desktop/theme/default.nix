@@ -125,22 +125,39 @@ in
 
     qt = {
       enable = true;
-      platformTheme = "kde";
+      platformTheme = "qtct";
+      style.name = "kvantum";
     };
 
-    xdg.configFile.kdeglobals.text =
-      lib.readFile "${pkgs.nordic}/share/color-schemes/nordicbluish.colors" +
-      (lib.generators.toINI { } {
-        Icons = {
-          Theme = config.gtk.iconTheme.name;
+    xdg.configFile = {
+      "Kvantum/kvantum.kvconfig".text = lib.generators.toINI { } {
+        General.theme = "Nordic-bluish-solid";
+      };
+      "Kvantum" = {
+        source = "${pkgs.nordic}/share/Kvantum";
+        recursive = true;
+      };
+      "qt5ct/qt5ct.conf".text = lib.generators.toINI { } {
+        Appearance = {
+          style = "kvantum-dark";
+          icon_theme = config.gtk.iconTheme.name;
+          standard_dialogs = "gtk3";
         };
-        KDE = {
-          SingleClick = false;
+        Interface = {
+          activate_item_on_single_click = 0;
+          double_click_interval = 400;
+          dialog_buttons_have_icons = 1;
+          wheel_scroll_lines = 3;
         };
-        "KFileDialog Settings" = {
-          Native = true;
+        Fonts = {
+          # Noto Sans Mono 10
+          fixed = ''@Variant(\0\0\0@\0\0\0\x1c\0N\0o\0t\0o\0 \0S\0\x61\0n\0s\0 \0M\0o\0n\0o@$\0\0\0\0\0\0\xff\xff\xff\xff\x5\x1\0\x32\x10)'';
+          # Noto Sans 10
+          general = ''@Variant(\0\0\0@\0\0\0\x12\0N\0o\0t\0o\0 \0S\0\x61\0n\0s@$\0\0\0\0\0\0\xff\xff\xff\xff\x5\x1\0\x32\x10)'';
         };
-      });
+      };
+      "qt6ct/qt6ct.conf".text = config.xdg.configFile."qt5ct/qt5ct.conf".text;
+    };
 
     # https://github.com/GNOME/gsettings-desktop-schemas/blob/8527b47348ce0573694e0e254785e7c0f2150e16/schemas/org.gnome.desktop.interface.gschema.xml.in#L276-L296
     dconf.settings = lib.optionalAttrs (osConfig ? fonts.fontconfig) {
