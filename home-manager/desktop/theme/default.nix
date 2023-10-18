@@ -1,6 +1,7 @@
 { config, pkgs, lib, osConfig, ... }:
 
 let
+  cfg = config.home-manager.desktop.theme;
   themeType = lib.types.submodule {
     options = {
       package = lib.mkOption {
@@ -16,6 +17,11 @@ let
   };
 in
 {
+  imports = [
+    ./gtk.nix
+    ./qt.nix
+  ];
+
   options.home-manager.desktop.theme = {
     enable = lib.mkEnableOption "theme config" // {
       default = config.home-manager.desktop.enable;
@@ -78,12 +84,12 @@ in
     };
   };
 
-  config = lib.mkIf config.home-manager.desktop.theme.enable {
+  config = lib.mkIf cfg.enable {
     # Enable fonts in home.packages to be available to applications
     fonts.fontconfig.enable = true;
 
     home = {
-      packages = with pkgs; with config.home-manager.desktop.theme; [
+      packages = with pkgs; with cfg; [
         dejavu_fonts
         fonts.gui.package
         fonts.icons.package
@@ -107,74 +113,8 @@ in
       };
     };
 
-    gtk = {
-      enable = true;
-      font = {
-        package = pkgs.noto-fonts;
-        name = "Noto Sans";
-      };
-      iconTheme = {
-        package = pkgs.nordzy-icon-theme;
-        name = "Nordzy-dark";
-      };
-      theme = {
-        name = "Nordic-bluish-accent";
-        package = pkgs.nordic;
-      };
-    };
-
-    qt = {
-      enable = true;
-      platformTheme = "qtct";
-      style.name = "kvantum";
-    };
-
-    # TODO: remove after this PR is merged
-    # https://github.com/nix-community/home-manager/pull/4579
-    home.sessionVariables =
-      let
-        inherit (config.home) profileDirectory;
-        qtVersions = with pkgs; [ qt5 qt6 ];
-        makeQtPath = prefix: lib.concatStringsSep ":"
-          (map (qt: "${profileDirectory}/${qt.qtbase.${prefix}}") qtVersions);
-      in
-      {
-        QT_PLUGIN_PATH = "$QT_PLUGIN_PATH\${QT_PLUGIN_PATH:+:}${makeQtPath "qtPluginPrefix"}";
-        QML2_IMPORT_PATH = "$QML2_IMPORT_PATH\${QML2_IMPORT_PATH:+:}${makeQtPath "qtQmlPrefix"}";
-      };
-
-    xdg.configFile = {
-      "Kvantum/kvantum.kvconfig".text = lib.generators.toINI { } {
-        General.theme = "Nordic-bluish-solid";
-      };
-      "Kvantum" = {
-        source = "${pkgs.nordic}/share/Kvantum";
-        recursive = true;
-      };
-      "qt5ct/qt5ct.conf".text = lib.generators.toINI { } {
-        Appearance = {
-          style = "kvantum-dark";
-          icon_theme = config.gtk.iconTheme.name;
-          standard_dialogs = "gtk3";
-        };
-        Interface = {
-          activate_item_on_single_click = 0;
-          double_click_interval = 400;
-          dialog_buttons_have_icons = 1;
-          wheel_scroll_lines = 3;
-        };
-        Fonts = {
-          # Noto Sans Mono 10
-          fixed = ''@Variant(\0\0\0@\0\0\0\x1c\0N\0o\0t\0o\0 \0S\0\x61\0n\0s\0 \0M\0o\0n\0o@$\0\0\0\0\0\0\xff\xff\xff\xff\x5\x1\0\x32\x10)'';
-          # Noto Sans 10
-          general = ''@Variant(\0\0\0@\0\0\0\x12\0N\0o\0t\0o\0 \0S\0\x61\0n\0s@$\0\0\0\0\0\0\xff\xff\xff\xff\x5\x1\0\x32\x10)'';
-        };
-      };
-      "qt6ct/qt6ct.conf".text = config.xdg.configFile."qt5ct/qt5ct.conf".text;
-    };
-
     # https://github.com/GNOME/gsettings-desktop-schemas/blob/8527b47348ce0573694e0e254785e7c0f2150e16/schemas/org.gnome.desktop.interface.gschema.xml.in#L276-L296
-    dconf.settings = lib.optionalAttrs (osConfig ? fonts.fontconfig) {
+    dconf.settings = lib.mkIf (osConfig ? fonts.fontconfig) {
       "org/gnome/desktop/interface" = with osConfig.fonts.fontconfig; {
         "color-scheme" = "prefer-dark";
         "font-antialiasing" =
@@ -188,15 +128,9 @@ in
       };
     };
 
-    services.xsettingsd = {
+    services.xsettingsd = lib.mkIf (osConfig ? fonts.fontconfig) {
       enable = true;
-      settings = with config; {
-        # When running, most GNOME/GTK+ applications prefer those settings
-        # instead of *.ini files
-        "Net/IconThemeName" = gtk.iconTheme.name;
-        "Net/ThemeName" = gtk.theme.name;
-        "Gtk/CursorThemeName" = xsession.pointerCursor.name;
-      } // lib.optionalAttrs (osConfig ? fonts.fontconfig) {
+      settings = {
         # Applications like Java/Wine doesn't use Fontconfig settings,
         # but uses it from here
         "Xft/Antialias" = osConfig.fonts.fontconfig.antialias;
