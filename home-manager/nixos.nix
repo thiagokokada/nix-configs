@@ -9,4 +9,6 @@
     desktop.enable = osConfig.nixos.desktop.enable;
     dev.enable = osConfig.nixos.dev.enable;
   };
+
+  targets.genericLinux.enable = false;
 }
