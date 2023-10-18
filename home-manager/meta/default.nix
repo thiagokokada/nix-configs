@@ -3,6 +3,7 @@
 {
   imports = [
     ./home-manager-auto-expire.nix
+    ./diff.nix
   ];
 
   options.home-manager.meta.enable = lib.mkDefaultOption "Home-Manager config";

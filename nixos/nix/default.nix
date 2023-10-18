@@ -6,7 +6,7 @@ in
 {
   imports = [
     ./cross-compiling.nix
-    ./nix-diff.nix
+    ./diff.nix
   ];
 
   options.nixos.nix = {

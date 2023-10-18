@@ -12,7 +12,7 @@ in
     system.activationScripts.diff = ''
       if [[ -e /run/current-system ]]; then
         echo "showing changes compared to /run/current-system..."
-        ${lib.getExe' config.nix.package "nix"} \
+        ${lib.getExe config.nix.package} \
           --extra-experimental-features 'nix-command' \
           store diff-closures /run/current-system "$systemConfig" || true
       fi
