@@ -27,21 +27,11 @@
   # Disable systemd services/sockets/timers/etc.
   home.activation = {
     reloadSystemd = lib.mkIf pkgs.stdenv.isLinux
-      (lib.mkForce (lib.hm.dag.entryAfter [ "linkGeneration" ] ""));
+      (lib.mkForce (lib.hm.dag.entryAnywhere ""));
     setupLaunchAgents = lib.mkIf pkgs.stdenv.isDarwin
-      (lib.mkForce (lib.hm.dag.entryAfter [ "writeBoundary" ] ""));
+      (lib.mkForce (lib.hm.dag.entryAnywhere ""));
   };
-  systemd.user = {
-    automounts = lib.mkForce { };
-    mounts = lib.mkForce { };
-    paths = lib.mkForce { };
-    services = lib.mkForce { };
-    sessionVariables = lib.mkForce { };
-    slices = lib.mkForce { };
-    sockets = lib.mkForce { };
-    targets = lib.mkForce { };
-    timers = lib.mkForce { };
-  };
+  systemd.user = lib.mkForce { };
   # Disable macOS's launchd services
   launchd.enable = false;
 
