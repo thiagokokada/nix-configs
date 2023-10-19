@@ -1,4 +1,4 @@
-{ lib, flake, osConfig, ... }:
+{ pkgs, lib, flake, osConfig, ... }:
 
 {
   imports = [
@@ -17,5 +17,5 @@
   nixpkgs.overlays = [ (import ../overlays { inherit flake; }) ];
 
   # Assume that this is a non-NixOS system
-  targets.genericLinux.enable = lib.mkDefault true;
+  targets.genericLinux.enable = lib.mkIf pkgs.stdenv.isLinux (lib.mkDefault true);
 }
