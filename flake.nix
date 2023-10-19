@@ -151,7 +151,7 @@
       (mkHomeConfig {
         hostname = "steamdeck";
         username = "deck";
-        configuration = ./home-manager/steamdeck.nix;
+        extraModules = [{ home-manager.editor.emacs.enable = true; }];
       })
       (mkHomeConfig {
         hostname = "home-macos";

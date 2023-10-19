@@ -24,6 +24,11 @@ in
     home.packages = with pkgs; [
       ripgrep
     ]
+    # For clipboard=unnamedplus
+    ++ lib.optionals stdenv.isLinux [
+      wl-clipboard
+      xclip
+    ]
     ++ lib.optionals cfg.enableIcons [
       config.home-manager.desktop.theme.fonts.symbols.package
     ];
