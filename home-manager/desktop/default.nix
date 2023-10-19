@@ -17,6 +17,8 @@
   options.home-manager.desktop.enable = lib.mkEnableOption "desktop config";
 
   config = lib.mkIf config.home-manager.desktop.enable {
+    i18n.inputMethod.enabled = "fcitx5";
+
     home.packages = with pkgs; [
       android-file-transfer
       audacious

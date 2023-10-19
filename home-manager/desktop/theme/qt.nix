@@ -8,17 +8,17 @@
   config = lib.mkIf config.home-manager.desktop.theme.qt.enable {
     # TODO: remove after this PR is merged
     # https://github.com/nix-community/home-manager/pull/4579
-    home.sessionVariables =
+    home.sessionVariablesExtra =
       let
         inherit (config.home) profileDirectory;
         qtVersions = with pkgs; [ qt5 qt6 ];
         makeQtPath = prefix: lib.concatStringsSep ":"
           (map (qt: "${profileDirectory}/${qt.qtbase.${prefix}}") qtVersions);
       in
-      {
-        QT_PLUGIN_PATH = "$QT_PLUGIN_PATH\${QT_PLUGIN_PATH:+:}${makeQtPath "qtPluginPrefix"}";
-        QML2_IMPORT_PATH = "$QML2_IMPORT_PATH\${QML2_IMPORT_PATH:+:}${makeQtPath "qtQmlPrefix"}";
-      };
+      ''
+        export QT_PLUGIN_PATH="$QT_PLUGIN_PATH''${QT_PLUGIN_PATH:+:}${makeQtPath "qtPluginPrefix"}"
+        export QML2_IMPORT_PATH="$QML2_IMPORT_PATH''${QML2_IMPORT_PATH:+:}${makeQtPath "qtQmlPrefix"}"
+      '';
 
     qt = {
       enable = true;
