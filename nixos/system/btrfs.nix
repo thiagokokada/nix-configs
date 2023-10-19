@@ -5,9 +5,8 @@
     enable =
       let
         inherit (config.boot) initrd supportedFilesystems;
-        inherit (lib) any;
-        btrfsInInitrd = any (fs: fs == "btrfs") initrd.supportedFilesystems;
-        btrfsInSystem = any (fs: fs == "btrfs") supportedFilesystems;
+        btrfsInInitrd = builtins.elem "btrfs" initrd.supportedFilesystems;
+        btrfsInSystem = builtins.elem "brtfs" supportedFilesystems;
         default = btrfsInInitrd || btrfsInSystem;
       in
       lib.mkEnableOption "btrfs config" // { inherit default; };
