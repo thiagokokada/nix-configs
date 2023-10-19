@@ -9,8 +9,15 @@ in
   };
 
   config = lib.mkIf config.home-manager.desktop.i3.x11.enable {
-    # Disable keyboard management via HM
-    home.keyboard = null;
+    home.packages = with pkgs; [
+      xclip
+      xdotool
+      xdragon
+      xorg.xdpyinfo
+      xorg.xhost
+      xorg.xkill
+      xorg.xset
+    ];
 
     # Compatibility with xinit/sx
     home.file.".xinitrc".source = config.lib.file.mkOutOfStoreSymlink xsession;

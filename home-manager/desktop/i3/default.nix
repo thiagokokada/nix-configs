@@ -97,8 +97,6 @@ in
         feh
         maim
         mons
-        pamixer
-        playerctl
         wmctrl
         xsecurelock
         xss-lock

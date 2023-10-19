@@ -19,36 +19,36 @@
   config = lib.mkIf config.home-manager.desktop.enable {
     i18n.inputMethod.enabled = "fcitx5";
 
-    home.packages = with pkgs; [
-      android-file-transfer
-      audacious
-      (calibre.override { unrarSupport = true; })
-      (cinnamon.nemo-with-extensions.override { extensions = with cinnamon; [ nemo-fileroller ]; })
-      desktop-file-utils
-      ffmpeg
-      gammastep
-      gimp
-      gnome.evince
-      gnome.file-roller
-      gnome.gnome-disk-utility
-      gthumb
-      inkscape
-      libreoffice-fresh
-      open-browser
-      (mcomix.override { unrarSupport = true; })
-      pavucontrol
-      pinta
-      qalculate-gtk
-      vlc
-      xclip
-      xdotool
-      xdragon
-      xorg.xdpyinfo
-      xorg.xhost
-      xorg.xkill
-      xorg.xset
-      zoom-us
-    ];
+    home = {
+      # Disable keyboard management via HM
+      keyboard = null;
+
+      packages = with pkgs; [
+        android-file-transfer
+        audacious
+        (calibre.override { unrarSupport = true; })
+        (cinnamon.nemo-with-extensions.override { extensions = with cinnamon; [ nemo-fileroller ]; })
+        desktop-file-utils
+        ffmpeg
+        gammastep
+        gimp
+        gnome.evince
+        gnome.file-roller
+        gnome.gnome-disk-utility
+        gthumb
+        inkscape
+        libreoffice-fresh
+        open-browser
+        (mcomix.override { unrarSupport = true; })
+        pamixer
+        pavucontrol
+        playerctl
+        pinta
+        qalculate-gtk
+        vlc
+        zoom-us
+      ];
+    };
 
     services = {
       easyeffects.enable = true;
