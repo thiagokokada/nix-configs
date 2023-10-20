@@ -112,6 +112,7 @@
     let
       inherit (import ./lib/attrsets.nix { inherit (nixpkgs) lib; }) recursiveMergeAttrs;
       inherit (import ./lib/flake.nix inputs) mkGHActionsYAMLs mkRunCmd mkNixOSConfig mkHomeConfig;
+      inherit (import ./lib/impure.nix { }) getEnvOrDefault;
     in
     recursiveMergeAttrs [
       # Templates
@@ -147,6 +148,12 @@
       (mkHomeConfig {
         hostname = "home-linux";
         extraModules = [{ home-manager.dev.enable = true; }];
+      })
+      (mkHomeConfig {
+        hostname = "home-linux-minimal";
+        username = getEnvOrDefault "USER" "thiagoko";
+        homePath = (getEnvOrDefault "TMPDIR" "/tmp") + "/home";
+        configuration = ./home-manager/minimal.nix;
       })
       (mkHomeConfig {
         hostname = "steamdeck";
@@ -185,18 +192,7 @@
         {
           devShells.default =
             let
-              # Needs to run with `--impure` flag because `builtins.getEnv`
-              getEnvOrDefault = env: default:
-                let envValue = builtins.getEnv env; in
-                if envValue != "" then envValue else default;
-              tmpdir = getEnvOrDefault "TMPDIR" "/tmp";
-              username = getEnvOrDefault "USER" "nobody";
-              homePath = "${tmpdir}/home";
-              homeManager = (mkHomeConfig {
-                inherit homePath username system;
-                configuration = ./home-manager/minimal.nix;
-                hostname = "devShell";
-              }).homeConfigurations.devShell;
+              homeManager = self.outputs.homeConfigurations.home-linux-minimal;
               inherit (homeManager) pkgs;
               inherit (homeManager.config.home) homeDirectory packages profileDirectory;
             in
@@ -204,14 +200,6 @@
               # Ensure that nix/nix-build is in PATH
               packages = [ pkgs.nix ] ++ packages;
               shellHook = ''
-                cleanup() {
-                  chmod +w -R ${homeDirectory}
-                  rm -rf ${homeDirectory}
-                  rmdir --ignore-fail-on-non-empty ${homePath}
-                }
-
-                trap "cleanup" EXIT
-
                 export HOME=${homeDirectory}
                 mkdir -p "$HOME"
 
