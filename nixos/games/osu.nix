@@ -27,7 +27,6 @@ in
     in
     [
       gaming.osu-lazer-bin
-      gaming.osu-mime
       gaming.osu-stable
       import-osu-songs
     ];
