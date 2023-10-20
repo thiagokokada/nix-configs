@@ -1,4 +1,4 @@
-{ self, nixpkgs, home, flake-utils, ... }:
+{ self, nixpkgs, flake-utils, ... }@inputs:
 
 let
   inherit (flake-utils.lib) eachDefaultSystem mkApp;
@@ -53,14 +53,14 @@ in
   mkNixOSConfig =
     { hostname
     , system ? null # get from hardware-configuration.nix by default
-    , nixosSystem ? nixpkgs.lib.nixosSystem
+    , nixpkgs ? inputs.nixpkgs
     , extraModules ? [ ]
     }:
     let
       inherit (self.outputs.nixosConfigurations.${hostname}) config pkgs;
     in
     {
-      nixosConfigurations.${hostname} = nixosSystem {
+      nixosConfigurations.${hostname} = nixpkgs.lib.nixosSystem {
         inherit system;
         modules = [ ../hosts/${hostname} ] ++ extraModules;
         lib = nixpkgs.lib.extend (final: prev:
@@ -96,14 +96,12 @@ in
     , deviceType ? "desktop"
     , extraModules ? [ ]
     , system ? "x86_64-linux"
-    , homeManagerConfiguration ? home.lib.homeManagerConfiguration
+    , nixpkgs ? inputs.nixpkgs
+    , home ? inputs.home
     }:
-    let
-      pkgs = nixpkgs.legacyPackages.${system};
-    in
     {
-      homeConfigurations.${hostname} = homeManagerConfiguration {
-        inherit pkgs;
+      homeConfigurations.${hostname} = home.lib.homeManagerConfiguration {
+        pkgs = nixpkgs.legacyPackages.${system};
         modules = [
           ({ ... }: {
             home = { inherit username homeDirectory; };
