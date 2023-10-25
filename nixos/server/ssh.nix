@@ -17,15 +17,12 @@ in
 
   config = lib.mkIf cfg.enable {
     # Enable OpenSSH
-    services = {
-      fail2ban.enable = true;
-      openssh = {
-        enable = true;
-        ports = [ 22 2222 ];
-        settings = {
-          PasswordAuthentication = false;
-          KbdInteractiveAuthentication = false;
-        };
+    services.openssh = {
+      enable = true;
+      ports = [ 22 2222 ];
+      settings = {
+        PasswordAuthentication = false;
+        KbdInteractiveAuthentication = false;
       };
     };
 
