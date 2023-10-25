@@ -449,7 +449,9 @@ in
             add_lsp("clojure-lsp", lspconfig.clojure_lsp, {})
             add_lsp("gopls", lspconfig.gopls, {})
             add_lsp("marksman", lspconfig.marksman, {})
-            add_lsp("pyright", lspconfig.pyright, {})
+            add_lsp("ruff-lsp", lspconfig.ruff_lsp, {})
+            add_lsp("jedi-language-server", lspconfig.jedi_language_server, {})
+            -- add_lsp("pyright-langserver", lspconfig.pyright, {})
             add_lsp("nil", lspconfig.nil_ls, {
               settings = {
                 ['nil'] = {
