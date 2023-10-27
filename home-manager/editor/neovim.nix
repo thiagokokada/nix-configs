@@ -1,6 +1,7 @@
 { config, pkgs, lib, ... }:
 
 let
+  devCfg = config.home-manager.dev;
   cfg = config.home-manager.editor.neovim;
 in
 {
@@ -440,38 +441,45 @@ in
             -- Setup language servers.
             -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
             local lspconfig = require('lspconfig')
-            local function add_lsp(binary, server, options)
-              if not options["cmd"] then options["cmd"] = { binary, unpack(options["cmd_args"] or {}) } end
-              if vim.fn.executable(binary) == 1 then server.setup(options) end
-            end
 
-            add_lsp("bash-language-server", lspconfig.bashls, {})
-            add_lsp("clojure-lsp", lspconfig.clojure_lsp, {})
-            add_lsp("gopls", lspconfig.gopls, {})
-            add_lsp("marksman", lspconfig.marksman, {})
-            add_lsp("ruff-lsp", lspconfig.ruff_lsp, {})
-            add_lsp("jedi-language-server", lspconfig.jedi_language_server, {})
-            -- add_lsp("pyright-langserver", lspconfig.pyright, {})
-            add_lsp("nil", lspconfig.nil_ls, {
-              settings = {
-                ['nil'] = {
-                  formatting = {
-                    command = { "nixpkgs-fmt" },
-                  },
-                  nix = {
-                    maxMemoryMB = 8192,
-                    flake = {
-                      autoArchive = true,
-                      autoEvalInputs = true,
+            ${lib.optionalString devCfg.enable ''
+              lspconfig.bashls.setup {}
+              lspconfig.marksman.setup {}
+            ''}
+            ${lib.optionalString devCfg.nix.enable ''
+              lspconfig.nil_ls.setup {
+                settings = {
+                  ['nil'] = {
+                    formatting = {
+                      command = { "nixpkgs-fmt" },
                     },
-                  };
+                    nix = {
+                      maxMemoryMB = 8192,
+                      flake = {
+                        autoArchive = true,
+                        autoEvalInputs = true,
+                      },
+                    };
+                  },
                 },
-              },
-            })
-            add_lsp("vscode-css-language-server", lspconfig.cssls, {})
-            add_lsp("vscode-eslint-language-server", lspconfig.eslint, {})
-            add_lsp("vscode-html-language-server", lspconfig.html, {})
-            add_lsp("vscode-json-language-server", lspconfig.jsonls, {})
+              }
+            ''}
+            ${lib.optionalString devCfg.clojure.enable ''
+              lspconfig.clojure_lsp.setup {}
+            ''}
+            ${lib.optionalString devCfg.go.enable ''
+              lspconfig.gopls.setup {}
+            ''}
+            ${lib.optionalString devCfg.python.enable ''
+              lspconfig.pyright.setup {}
+              lspconfig.ruff_lsp.setup {}
+            ''}
+            ${lib.optionalString devCfg.node.enable ''
+              lspconfig.cssls.setup {}
+              lspconfig.eslint.setup {}
+              lspconfig.html.setup {}
+              lspconfig.jsonls.setup {}
+            ''}
 
             local builtin = require('telescope.builtin')
 

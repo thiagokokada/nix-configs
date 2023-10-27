@@ -8,9 +8,8 @@
   config = lib.mkIf config.home-manager.dev.python.enable {
     home.packages = with pkgs; [
       black
-      # pyright
+      pyright
       python3
-      python3Packages.jedi-language-server
       ruff
       ruff-lsp
     ];
