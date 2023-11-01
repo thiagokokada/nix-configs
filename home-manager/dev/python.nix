@@ -7,7 +7,6 @@
 
   config = lib.mkIf config.home-manager.dev.python.enable {
     home.packages = with pkgs; [
-      black
       pyright
       python3
       ruff
