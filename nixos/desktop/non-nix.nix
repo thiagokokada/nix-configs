@@ -57,5 +57,6 @@
         zlib
       ];
     };
+    services.envfs.enable = true;
   };
 }
