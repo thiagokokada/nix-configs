@@ -171,24 +171,40 @@
         "flake-utils": [
           "flake-utils"
         ],
-        "nix-index-database": [
-          "nix-index-database"
-        ],
+        "nix-filter": "nix-filter",
+        "nix-index-database": "nix-index-database",
         "nixpkgs": [
+          "nix-alien",
+          "nix-index-database",
           "nixpkgs"
         ]
       },
       "locked": {
-        "lastModified": 1698260846,
-        "narHash": "sha256-B9nOgHRJktyfNpvJoB71Tt8zpnsvWzvGqg/DyWoqpPk=",
+        "lastModified": 1698833037,
+        "narHash": "sha256-dlkcjWU/bbwL47s9Ylxtfhm4LvTapISH/UnbPE2fnS4=",
         "owner": "thiagokokada",
         "repo": "nix-alien",
-        "rev": "2d9bb1ed46eea734313fa8bfdb92de0bf342fe45",
+        "rev": "110660c2d3e3995ed78b9f8ee37e6c09fa4243ea",
         "type": "github"
       },
       "original": {
         "owner": "thiagokokada",
         "repo": "nix-alien",
+        "type": "github"
+      }
+    },
+    "nix-filter": {
+      "locked": {
+        "lastModified": 1694857738,
+        "narHash": "sha256-bxxNyLHjhu0N8T3REINXQ2ZkJco0ABFPn6PIe2QUfqo=",
+        "owner": "numtide",
+        "repo": "nix-filter",
+        "rev": "41fd48e00c22b4ced525af521ead8792402de0ea",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "nix-filter",
         "type": "github"
       }
     },
@@ -215,16 +231,14 @@
     },
     "nix-index-database": {
       "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ]
+        "nixpkgs": "nixpkgs"
       },
       "locked": {
-        "lastModified": 1697946153,
-        "narHash": "sha256-7k7qIwWLaYPgQ4fxmEdew3yCffhK6rM4I4Jo3X/79DA=",
+        "lastModified": 1697340827,
+        "narHash": "sha256-XlrR68N7jyaZ0bs8TPrhqcWG0IPG3pbjrKzJMpYOsos=",
         "owner": "Mic92",
         "repo": "nix-index-database",
-        "rev": "5a2006282caaf32663cdcd582c5b18809c7d7d8d",
+        "rev": "29977d0796c058bbcfb2df5b18eb5badf1711007",
         "type": "github"
       },
       "original": {
@@ -237,13 +251,13 @@
       "locked": {
         "lastModified": 1697723726,
         "narHash": "sha256-SaTWPkI8a5xSHX/rrKzUe+/uVNy6zCGMXgoeMb7T9rg=",
-        "owner": "NixOS",
+        "owner": "nixos",
         "repo": "nixpkgs",
         "rev": "7c9cc5a6e5d38010801741ac830a3f8fd667a7a0",
         "type": "github"
       },
       "original": {
-        "owner": "NixOS",
+        "owner": "nixos",
         "ref": "nixos-unstable",
         "repo": "nixpkgs",
         "type": "github"
@@ -279,6 +293,22 @@
       "original": {
         "owner": "NixOS",
         "ref": "nixos-23.05",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs_2": {
+      "locked": {
+        "lastModified": 1697723726,
+        "narHash": "sha256-SaTWPkI8a5xSHX/rrKzUe+/uVNy6zCGMXgoeMb7T9rg=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "7c9cc5a6e5d38010801741ac830a3f8fd667a7a0",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixos-unstable",
         "repo": "nixpkgs",
         "type": "github"
       }
@@ -327,8 +357,11 @@
         "home": "home",
         "nix-alien": "nix-alien",
         "nix-gaming": "nix-gaming",
-        "nix-index-database": "nix-index-database",
-        "nixpkgs": "nixpkgs",
+        "nix-index-database": [
+          "nix-alien",
+          "nix-index-database"
+        ],
+        "nixpkgs": "nixpkgs_2",
         "nnn-plugins": "nnn-plugins",
         "pure": "pure",
         "zim-completion": "zim-completion",

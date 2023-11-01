@@ -26,16 +26,11 @@
     flake-utils.url = "github:numtide/flake-utils";
 
     # nix-alien
-    nix-index-database = {
-      url = "github:Mic92/nix-index-database";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    nix-index-database.follows = "nix-alien/nix-index-database";
     nix-alien = {
       url = "github:thiagokokada/nix-alien";
-      inputs.nixpkgs.follows = "nixpkgs";
       inputs.flake-compat.follows = "flake-compat";
       inputs.flake-utils.follows = "flake-utils";
-      inputs.nix-index-database.follows = "nix-index-database";
     };
 
     # emacs
