@@ -19,7 +19,7 @@ with lib; {
       example = [ "/" "/mnt/backup" ];
       default =
         if (config ? fileSystems) then
-          (lists.subtractLists [ "/boot" "/tmp" "/nix" ]
+          (lists.subtractLists [ "/boot" "/tmp" "/nix" "/bin" "/usr/bin" ]
             (mapAttrsToList (n: _: n) config.fileSystems))
         else
           [ "/" ];
