@@ -91,7 +91,6 @@ in
     , username ? "thiagoko"
     , homePath ? "/home"
     , homeDirectory ? "${homePath}/${username}"
-    , configPosfix ? "Projects/nix-configs"
     , configuration ? ../home-manager
     , deviceType ? "desktop"
     , extraModules ? [ ]

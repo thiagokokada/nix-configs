@@ -103,7 +103,7 @@
   outputs = { self, nixpkgs, flake-utils, ... }@inputs:
     let
       inherit (import ./lib/attrsets.nix { inherit (nixpkgs) lib; }) recursiveMergeAttrs;
-      inherit (import ./lib/flake.nix inputs) mkGHActionsYAMLs mkRunCmd mkNixOSConfig mkHomeConfig;
+      inherit (import ./lib/flake-helpers.nix inputs) mkGHActionsYAMLs mkRunCmd mkNixOSConfig mkHomeConfig;
       inherit (import ./lib/impure.nix { }) getEnvOrDefault;
     in
     recursiveMergeAttrs [
