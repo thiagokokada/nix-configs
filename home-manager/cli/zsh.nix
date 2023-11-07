@@ -57,14 +57,7 @@
         zstyle ':zim:ssh' ids /dev/null
       '';
 
-      initExtra = with pkgs; /* bash */ ''
-        # powerlevel10k instant prompt
-        # initialization code that may require console input (password prompts, [y/n]
-        # confirmations, etc.) must go above this block; everything else may go below.
-        if [[ -r "''${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-''${(%):-%n}.zsh" ]]; then
-          source "''${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-''${(%):-%n}.zsh"
-        fi
-
+      initExtra = with pkgs; ''
         # helpers
         run-bg() {
           (
@@ -106,9 +99,6 @@
 
         # avoid duplicated entries in PATH
         typeset -U PATH
-
-        # source powerlevel10k config
-        [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
       '';
 
       plugins =
@@ -131,16 +121,14 @@
             };
           zimPlugin = name:
             zshPlugin name // { file = "init.zsh"; };
-          zshTheme = name:
-            zshPlugin name // { file = "${name}.zsh-theme"; };
         in
         lib.flatten [
-          (zshTheme "powerlevel10k")
           (zimPlugin "zim-completion")
           (zimPlugin "zim-input")
           (zimPlugin "zim-git")
           (zimPlugin "zim-ssh")
           (zimPlugin "zim-utility")
+          (zshPlugin "pure")
           (zshPlugin "zsh-autopair")
           (zshPlugin "zsh-completions")
           (zshPlugin "zsh-syntax-highlighting")
@@ -166,7 +154,6 @@
         ".zprofile.zwc".source = compileZshConfig ".zprofile";
         ".zshenv.zwc".source = compileZshConfig ".zshenv";
         ".zshrc.zwc".source = compileZshConfig ".zshrc";
-        ".p10k.zsh".source = ./p10k.zsh;
       };
 
     programs = {
