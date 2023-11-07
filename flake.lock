@@ -328,19 +328,19 @@
         "type": "github"
       }
     },
-    "pure": {
+    "powerlevel10k": {
       "flake": false,
       "locked": {
-        "lastModified": 1687718525,
-        "narHash": "sha256-TR4CyBZ+KoZRs9XDmWE5lJuUXXU1J8E2Z63nt+FS+5w=",
-        "owner": "sindresorhus",
-        "repo": "pure",
-        "rev": "87e6f5dd4c793f6d980532205aaefe196780606f",
+        "lastModified": 1698831883,
+        "narHash": "sha256-3fvqWS/Zm3GLFqo36s5tPBfVX3SOpUyxjHDatMhD/u0=",
+        "owner": "romkatv",
+        "repo": "powerlevel10k",
+        "rev": "174ce9bf0166c657404a21f4dc9608da935f7325",
         "type": "github"
       },
       "original": {
-        "owner": "sindresorhus",
-        "repo": "pure",
+        "owner": "romkatv",
+        "repo": "powerlevel10k",
         "type": "github"
       }
     },
@@ -362,7 +362,7 @@
         ],
         "nixpkgs": "nixpkgs_2",
         "nnn-plugins": "nnn-plugins",
-        "pure": "pure",
+        "powerlevel10k": "powerlevel10k",
         "zim-completion": "zim-completion",
         "zim-environment": "zim-environment",
         "zim-git": "zim-git",

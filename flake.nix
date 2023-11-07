@@ -78,8 +78,8 @@
       url = "github:zimfw/utility";
       flake = false;
     };
-    pure = {
-      url = "github:sindresorhus/pure";
+    powerlevel10k = {
+      url = "github:romkatv/powerlevel10k";
       flake = false;
     };
     zsh-autopair = {

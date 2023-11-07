@@ -9,7 +9,7 @@
     ./nnn.nix
     ./ssh.nix
     ./tmux.nix
-    ./zsh.nix
+    ./zsh
   ];
 
   options.home-manager.cli.enable = lib.mkDefaultOption "CLI config";
