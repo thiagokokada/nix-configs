@@ -3,15 +3,12 @@
 let
   inherit (config.home) homeDirectory;
   inherit (config.home.sessionVariables) EMACSDIR;
-  emacs' = with pkgs;
-    if stdenv.isDarwin then
-      emacs29-macport
-    else
-      emacs29-pgtk.overrideAttrs (old: {
-        patches = (old.patches or [ ]) ++ [ ./disable_pgtk_display_x_warning.patch ];
-      });
-  emacs-custom = with pkgs; (pkgs.emacsPackagesFor emacs').emacsWithPackages
-    (epkgs: with epkgs; [ vterm ]);
+  emacs' = with pkgs; if stdenv.isDarwin then
+    emacs29
+  else
+    emacs29-pgtk.overrideAttrs (old: {
+      patches = (old.patches or [ ]) ++ [ ./disable_pgtk_display_x_warning.patch ];
+    });
 in
 {
   options.home-manager.editor.emacs.enable = lib.mkEnableOption "Emacs config" // {
@@ -52,7 +49,7 @@ in
 
     programs.emacs = {
       enable = true;
-      package = emacs-custom;
+      package = emacs';
     };
 
     xdg.configFile."doom".source = ./doom-emacs;
@@ -65,7 +62,7 @@ in
       Service = with pkgs; {
         Nice = "15";
         Environment = [
-          "PATH=${lib.makeBinPath [ bash emacs-custom gcc git ]}"
+          "PATH=${lib.makeBinPath [ bash emacs' gcc git ]}"
           "EMACSDIR=${EMACSDIR}"
         ];
         ExecStart = "${EMACSDIR}/bin/doom sync -u --no-color";
