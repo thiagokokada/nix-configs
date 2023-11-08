@@ -1,7 +1,7 @@
 { flake }:
 final: prev:
 
-flake.inputs.emacs.overlay final prev // {
+{
   # namespaces
   lib = prev.lib.extend (finalLib: prevLib:
     (import ../lib { lib = finalLib; })

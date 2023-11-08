@@ -5,9 +5,9 @@ let
   inherit (config.home.sessionVariables) EMACSDIR;
   emacs' = with pkgs;
     if stdenv.isDarwin then
-      emacs-unstable
+      emacs29-macport
     else
-      emacs-unstable-pgtk.overrideAttrs (old: {
+      emacs29-pgtk.overrideAttrs (old: {
         patches = (old.patches or [ ]) ++ [ ./disable_pgtk_display_x_warning.patch ];
       });
   emacs-custom = with pkgs; (pkgs.emacsPackagesFor emacs').emacsWithPackages
@@ -19,7 +19,6 @@ in
   };
 
   config = lib.mkIf config.home-manager.editor.emacs.enable {
-    # Emacs overlay
     home = {
       file.".tree-sitter".source = pkgs.runCommand "grammars" { } ''
         mkdir -p $out/bin
