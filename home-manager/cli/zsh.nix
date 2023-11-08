@@ -1,11 +1,29 @@
 { config, pkgs, lib, flake, ... }:
+
+let
+  get-ip = pkgs.writeShellScriptBin "get-ip" ''
+    ${lib.getExe pkgs.curl} -Ss "https://ifconfig.me"
+  '';
+  get-ip' = pkgs.writeShellScriptBin "get-ip!" ''
+    ${lib.getExe pkgs.curl} -Ss "https://ipapi.co/$(${lib.getExe get-ip})/yaml"
+  '';
+  remove-symlink = pkgs.writeShellScriptBin "remove-symlink" ''
+    [[ -L "$1" ]] && \
+      ${lib.getExe' pkgs.coreutils "cp"} --remove-destination \
+      "$(${lib.getExe' pkgs.coreutils "readlink"} "$1")" "$1"
+  '';
+in
 {
   options.home-manager.cli.zsh.enable = lib.mkEnableOption "ZSH config" // {
     default = config.home-manager.cli.enable;
   };
 
   config = lib.mkIf config.home-manager.cli.zsh.enable {
-    home.packages = with pkgs; lib.optionals (!stdenv.isDarwin) [
+    home.packages = with pkgs; [
+      get-ip
+      get-ip'
+      remove-symlink
+    ] ++ lib.optionals (!stdenv.isDarwin) [
       (run-bg-alias "open" "${xdg-utils}/bin/xdg-open")
     ];
 
@@ -21,6 +39,12 @@
         ignoreSpace = true;
         expireDuplicatesFirst = true;
         share = true;
+      };
+
+      historySubstringSearch = {
+        enable = true;
+        searchUpKey = [ "$terminfo[kcuu1]" ];
+        searchDownKey = [ "$terminfo[kcud1]" ];
       };
 
       sessionVariables = {
@@ -57,21 +81,9 @@
         zstyle ':zim:ssh' ids /dev/null
       '';
 
-      initExtra = with pkgs; ''
-        # helpers
-        run-bg() {
-          (
-            exec 0>&-
-            exec 1>&-
-            exec 2>&-
-            "$@"
-          ) &!
-        }
-        get-ip() { ${curl}/bin/curl -Ss "https://ifconfig.me" }
-        get-ip!() { ${curl}/bin/curl -Ss "https://ipapi.co/$(get-ip)/yaml" }
-        remove-symlink() {
-          [[ -L "$1" ]] && cp --remove-destination "$(readlink "$1")" "$1"
-        }
+      initExtra = /* bash */ ''
+        # avoid duplicated entries in PATH
+        typeset -U PATH
 
         # try to correct the spelling of commands
         setopt correct
@@ -84,8 +96,8 @@
         bindkey -M vicmd v edit-command-line
 
         # zsh-history-substring-search
-        bindkey "$terminfo[kcuu1]" history-substring-search-up
-        bindkey "$terminfo[kcud1]" history-substring-search-down
+        # historySubstringSearch.{searchUpKey,searchDownKey} does not work with
+        # vicmd, this is why we have this here
         bindkey -M vicmd 'k' history-substring-search-up
         bindkey -M vicmd 'j' history-substring-search-down
 
@@ -96,9 +108,6 @@
         for file in "$HOME/.zshrc.d/"*.zsh; do
           [[ -f "$file" ]] && source "$file"
         done
-
-        # avoid duplicated entries in PATH
-        typeset -U PATH
       '';
 
       plugins =
@@ -132,8 +141,6 @@
           (zshPlugin "zsh-autopair")
           (zshPlugin "zsh-completions")
           (zshPlugin "zsh-syntax-highlighting")
-          # Should be the last one
-          (zshPlugin "zsh-history-substring-search")
         ];
     };
 

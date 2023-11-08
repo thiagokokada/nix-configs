@@ -330,7 +330,6 @@
         "zim-utility": "zim-utility",
         "zsh-autopair": "zsh-autopair",
         "zsh-completions": "zsh-completions",
-        "zsh-history-substring-search": "zsh-history-substring-search",
         "zsh-syntax-highlighting": "zsh-syntax-highlighting"
       }
     },
@@ -474,22 +473,6 @@
       "original": {
         "owner": "zsh-users",
         "repo": "zsh-completions",
-        "type": "github"
-      }
-    },
-    "zsh-history-substring-search": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1672773944,
-        "narHash": "sha256-GSEvgvgWi1rrsgikTzDXokHTROoyPRlU0FVpAoEmXG4=",
-        "owner": "zsh-users",
-        "repo": "zsh-history-substring-search",
-        "rev": "400e58a87f72ecec14f783fbd29bc6be4ff1641c",
-        "type": "github"
-      },
-      "original": {
-        "owner": "zsh-users",
-        "repo": "zsh-history-substring-search",
         "type": "github"
       }
     },
