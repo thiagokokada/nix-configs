@@ -82,9 +82,9 @@
       };
     };
 
-    programs.zsh.initExtra = lib.mkIf config.programs.zsh.enable ''
+    programs.zsh.initExtra = lib.mkIf config.programs.zsh.enable /* bash */ ''
       # Do not enable those alias in non-kitty terminal
-      if [[ "$TERM" == "xterm-kitty" ]]; then
+      if [[ -n "$KITTY_INSTALLATION_DIR" ]]; then
         alias copy="kitty +kitten clipboard"
         alias d="kitty +kitten diff"
         alias icat="kitty +kitten icat"
