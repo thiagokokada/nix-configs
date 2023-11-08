@@ -59,8 +59,6 @@ in
         ZSH_HIGHLIGHT_HIGHLIGHTERS = [ "main" "brackets" "cursor" ];
       };
 
-      shellAliases = { "reload!" = "source $HOME/.zshrc"; };
-
       profileExtra = ''
         # Source .profile
         [[ -e ~/.profile ]] && emulate sh -c '. ~/.profile'
