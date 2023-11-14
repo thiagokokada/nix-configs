@@ -51,39 +51,13 @@ in
         " turn on omnicomplete
         set omnifunc=syntaxcomplete#Complete
 
-        " unsets the 'last search pattern'
-        nnoremap <C-g> :noh<CR><CR>
-
-        " make Esc enter Normal mode in term
-        tnoremap <Esc> <C-\><C-n>
-        tnoremap <M-[> <Esc>
-        tnoremap <C-v><Esc> <Esc>
-
-        " window movement mappings
-        tnoremap <C-h> <c-\><c-n><c-w>h
-        tnoremap <C-j> <c-\><c-n><c-w>j
-        tnoremap <C-k> <c-\><c-n><c-w>k
-        tnoremap <C-l> <c-\><c-n><c-w>l
-        inoremap <C-h> <Esc><c-w>h
-        inoremap <C-j> <Esc><c-w>j
-        inoremap <C-k> <Esc><c-w>k
-        inoremap <C-l> <Esc><c-w>l
-        vnoremap <C-h> <Esc><c-w>h
-        vnoremap <C-j> <Esc><c-w>j
-        vnoremap <C-k> <Esc><c-w>k
-        vnoremap <C-l> <Esc><c-w>l
-        nnoremap <C-h> <c-w>h
-        nnoremap <C-j> <c-w>j
-        nnoremap <C-k> <c-w>k
-        nnoremap <C-l> <c-w>l
-
         " disable "How to disable mouse" menu
         aunmenu PopUp.How-to\ disable\ mouse
         aunmenu PopUp.-1-
       '';
 
       extraLuaConfig = /* lua */ ''
-
+        -- general config
         -- show line numbers
         vim.opt.number = true
 
@@ -99,6 +73,28 @@ in
         -- threat words-with-dash as a word
         vim.opt.iskeyword:append { '-' }
 
+        -- window movement mappings
+        vim.keymap.set('t', '<C-h>', [[<C-\><C-n><C-w>h]])
+        vim.keymap.set('t', '<C-j>', [[<C-\><C-n><C-w>j]])
+        vim.keymap.set('t', '<C-k>', [[<C-\><C-n><C-w>k]])
+        vim.keymap.set('t', '<C-l>', [[<C-\><C-n><C-w>l]])
+        vim.keymap.set('n', '<C-h>', '<C-w>h')
+        vim.keymap.set('n', '<C-j>', '<C-w>j')
+        vim.keymap.set('n', '<C-k>', '<C-w>k')
+        vim.keymap.set('n', '<C-l>', '<C-w>l')
+        vim.keymap.set({'i', 'v'}, '<C-h>', '<Esc><C-w>h')
+        vim.keymap.set({'i', 'v'}, '<C-j>', '<Esc><C-w>j')
+        vim.keymap.set({'i', 'v'}, '<C-k>', '<Esc><C-w>k')
+        vim.keymap.set({'i', 'v'}, '<C-l>', '<Esc><C-w>l')
+
+        -- make Esc enter Normal mode in Term
+        vim.keymap.set('t', '<Esc>', [[<C-\><C-n>]])
+        vim.keymap.set('t', '<M-[>', [[<C-\><C-n>]])
+        vim.keymap.set('t', '<C-v><Esc>', [[<C-\><C-n>]])
+
+        -- unsets the 'last search pattern'
+        vim.keymap.set('n', '<C-g>', '<cmd>:noh<CR><CR>')
+
         -- completion
         vim.opt.completeopt = 'menu'
         vim.keymap.set('i', '<C-Space>', '<C-x><C-o>')
@@ -110,6 +106,7 @@ in
           if vim.fn.pumvisible() ~= 0 then return '<C-p>' end
           return '<C-k>'
         end, { expr = true })
+        -- FIXME: currently broken
         vim.keymap.set({'i', 'c'}, '<CR>', function()
           if vim.fn.pumvisible() ~= 0 then return '<C-y>' end
           return '<CR>'
