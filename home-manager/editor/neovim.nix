@@ -212,7 +212,7 @@ in
               'n',
               '-',
               [[<Cmd>execute 'e ' .. expand('%:p:h')<CR>]],
-              { noremap = true, desc = "Files" }
+              { desc = "Files" }
             )
           '';
         }
@@ -247,11 +247,11 @@ in
           type = "lua";
           config = /* lua */ ''
             -- for repository page
-            vim.keymap.set({'n', 'v'}, '<Leader>gr', ":OpenInGHRepo <CR>", { silent = true, noremap = true, desc = "Open in GitHub repo" })
+            vim.keymap.set({'n', 'v'}, '<Leader>gr', ":OpenInGHRepo <CR>", { silent = true, desc = "Open in GitHub repo" })
 
             -- for current file page
-            vim.keymap.set('n', '<Leader>gf', ":OpenInGHFile <CR>", { silent = true, noremap = true, desc = "Open in GitHub file" })
-            vim.keymap.set('v', '<Leader>gf', ":OpenInGHFileLines <CR>", { silent = true, noremap = true, desc = "Open in GitHub lines" })
+            vim.keymap.set('n', '<Leader>gf', ":OpenInGHFile <CR>", { silent = true, desc = "Open in GitHub file" })
+            vim.keymap.set('v', '<Leader>gf', ":OpenInGHFileLines <CR>", { silent = true, desc = "Open in GitHub lines" })
           '';
         }
         {
@@ -268,13 +268,13 @@ in
               },
             }
 
-            vim.keymap.set("n", "<leader>aa", "<cmd>:Other<CR>", { noremap = true, silent = true, desc = "Other" })
-            vim.keymap.set("n", "<leader>as", "<cmd>:OtherSplit<CR>", { noremap = true, silent = true, desc = "Other h-split" })
-            vim.keymap.set("n", "<leader>av", "<cmd>:OtherVSplit<CR>", { noremap = true, silent = true, desc = "Other v-split" })
-            vim.keymap.set("n", "<leader>ac", "<cmd>:OtherClear<CR>", { noremap = true, silent = true, desc = "Other clear" })
+            vim.keymap.set("n", "<leader>aa", "<cmd>:Other<CR>", { silent = true, desc = "Other" })
+            vim.keymap.set("n", "<leader>as", "<cmd>:OtherSplit<CR>", { silent = true, desc = "Other h-split" })
+            vim.keymap.set("n", "<leader>av", "<cmd>:OtherVSplit<CR>", { silent = true, desc = "Other v-split" })
+            vim.keymap.set("n", "<leader>ac", "<cmd>:OtherClear<CR>", { silent = true, desc = "Other clear" })
 
             -- Context specific bindings
-            vim.keymap.set("n", "<leader>at", "<cmd>:Other test<CR>", { noremap = true, silent = true, desc = "Other test" })
+            vim.keymap.set("n", "<leader>at", "<cmd>:Other test<CR>", { silent = true, desc = "Other test" })
           '';
         }
         {
@@ -286,7 +286,7 @@ in
               'n',
               '<Leader>p',
               ":Telescope projects<CR>",
-              { noremap = true, desc = "Projects" }
+              { desc = "Projects" }
             )
           '';
         }
@@ -308,7 +308,7 @@ in
             set undodir=~/.config/nvim/undotree
             let undotree_WindowLayout = 3
             lua << EOF
-            vim.keymap.set('n', '<Leader>u', ':UndotreeToggle<CR>', { noremap = true, desc = "Undotree toggle" })
+            vim.keymap.set('n', '<Leader>u', ':UndotreeToggle<CR>', { desc = "Undotree toggle" })
             EOF
           '';
         }
@@ -372,9 +372,9 @@ in
             telescope.load_extension('fzf')
             telescope.load_extension('projects')
             local builtin = require('telescope.builtin')
-            vim.keymap.set('n', '<Leader><Leader>', builtin.find_files, { noremap = true, desc = "Find files" })
-            vim.keymap.set('n', '<Leader>/', builtin.live_grep, { noremap = true, desc = "Live grep" })
-            vim.keymap.set({'n', 'v'}, '<Leader>*', builtin.grep_string, { noremap = true, desc = "Grep string" })
+            vim.keymap.set('n', '<Leader><Leader>', builtin.find_files, { desc = "Find files" })
+            vim.keymap.set('n', '<Leader>/', builtin.live_grep, { desc = "Live grep" })
+            vim.keymap.set({'n', 'v'}, '<Leader>*', builtin.grep_string, { desc = "Grep string" })
           '';
         }
         {
@@ -410,7 +410,7 @@ in
               'n',
               '<Leader>w',
               require('whitespace-nvim').trim,
-              { noremap = true, desc = "Trim whitespace" }
+              { desc = "Trim whitespace" }
             )
           '';
         }
@@ -421,11 +421,11 @@ in
             let g:test#neovim#start_normal = 1
             let g:test#neovim#term_position = "vert botright"
             lua << EOF
-            vim.keymap.set('n', '<Leader>tt', ':TestNearest<CR>', { noremap = true, desc = "Test nearest" })
-            vim.keymap.set('n', '<Leader>tT', ':TestFile<CR>', { noremap = true, desc = "Test file" })
-            vim.keymap.set('n', '<Leader>ts', ':TestSuite<CR>', { noremap = true, desc = "Test suite" })
-            vim.keymap.set('n', '<Leader>tl', ':TestLast<CR>', { noremap = true, desc = "Test last" })
-            vim.keymap.set('n', '<Leader>tv', ':TestVisit<CR>', { noremap = true, desc = "Test visit" })
+            vim.keymap.set('n', '<Leader>tt', ':TestNearest<CR>', { desc = "Test nearest" })
+            vim.keymap.set('n', '<Leader>tT', ':TestFile<CR>', { desc = "Test file" })
+            vim.keymap.set('n', '<Leader>ts', ':TestSuite<CR>', { desc = "Test suite" })
+            vim.keymap.set('n', '<Leader>tl', ':TestLast<CR>', { desc = "Test last" })
+            vim.keymap.set('n', '<Leader>tv', ':TestVisit<CR>', { desc = "Test visit" })
             EOF
           '';
         }
