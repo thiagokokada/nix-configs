@@ -46,20 +46,13 @@ in
       vimAlias = true;
       vimdiffAlias = true;
 
-      extraConfig = /* vimscript */ ''
-        "" General config
-        " turn on omnicomplete
-        set omnifunc=syntaxcomplete#Complete
-
-        " disable "How to disable mouse" menu
-        aunmenu PopUp.How-to\ disable\ mouse
-        aunmenu PopUp.-1-
-      '';
-
       extraLuaConfig = /* lua */ ''
         -- general config
         -- show line numbers
         vim.opt.number = true
+
+        -- turn on omnicomplete
+        vim.opt.omnifunc = "syntaxcomplete#Complete"
 
         -- live substitutions as you type
         vim.opt.inccommand = 'nosplit'
@@ -72,6 +65,10 @@ in
 
         -- threat words-with-dash as a word
         vim.opt.iskeyword:append { '-' }
+
+        -- disable "How to disable mouse" menu
+        vim.cmd.aunmenu { [[PopUp.How-to\ disable\ mouse]] }
+        vim.cmd.aunmenu { [[PopUp.-1-]] }
 
         -- window movement mappings
         vim.keymap.set('t', '<C-h>', [[<C-\><C-n><C-w>h]])
