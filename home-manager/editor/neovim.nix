@@ -48,18 +48,6 @@ in
 
       extraConfig = /* vimscript */ ''
         "" General config
-        " show line number
-        set number
-
-        " live substitutions as you type
-        set inccommand=nosplit
-
-        " copy and paste
-        set clipboard+=unnamedplus
-
-        " show vertical column
-        set colorcolumn=81,121
-
         " turn on omnicomplete
         set omnifunc=syntaxcomplete#Complete
 
@@ -89,33 +77,55 @@ in
         nnoremap <C-k> <c-w>k
         nnoremap <C-l> <c-w>l
 
-        " threat words with dash as a word
-        set iskeyword+=-
-
-        " completion
-        set completeopt=menu
-        inoremap <expr> <C-j> pumvisible() ? "\<C-n>" : "\<C-j>"
-        inoremap <expr> <C-k> pumvisible() ? "\<C-p>" : "\<C-k>"
-        inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<CR>"
-        inoremap <C-Space> <C-x><C-o>
-        " commandline
-        cnoremap <expr> <C-j> pumvisible() ? "\<C-n>" : "\<C-j>"
-        cnoremap <expr> <C-k> pumvisible() ? "\<C-p>" : "\<C-k>"
-        cnoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<CR>"
-
         " disable "How to disable mouse" menu
         aunmenu PopUp.How-to\ disable\ mouse
         aunmenu PopUp.-1-
+      '';
 
-        " syntax highlight flake.lock files as json
-        autocmd BufNewFile,BufRead flake.lock set filetype=json
+      extraLuaConfig = /* lua */ ''
 
-        " keep comment leader when 'o' or 'O' is used in Normal mode
-        autocmd FileType * set formatoptions+=o
+        -- show line numbers
+        vim.opt.number = true
 
-        " disable netrw (we wil use lir-nvim instead)
-        let g:loaded_netrw       = 1
-        let g:loaded_netrwPlugin = 1
+        -- live substitutions as you type
+        vim.opt.inccommand = 'nosplit'
+
+        -- copy and paste use the system clipboard
+        vim.opt.clipboard:append { 'unnamedplus' }
+
+        -- show vertical colum
+        vim.opt.colorcolumn:append { 81, 121 }
+
+        -- threat words-with-dash as a word
+        vim.opt.iskeyword:append { '-' }
+
+        -- completion
+        vim.opt.completeopt = 'menu'
+        vim.keymap.set('i', '<C-Space>', '<C-x><C-o>')
+        vim.keymap.set({'i', 'c'}, '<C-j>', function()
+          if vim.fn.pumvisible() ~= 0 then return '<C-n>' end
+          return '<C-j>'
+        end, { expr = true })
+        vim.keymap.set({'i', 'c'}, '<C-k>', function()
+          if vim.fn.pumvisible() ~= 0 then return '<C-p>' end
+          return '<C-k>'
+        end, { expr = true })
+        vim.keymap.set({'i', 'c'}, '<CR>', function()
+          if vim.fn.pumvisible() ~= 0 then return '<C-y>' end
+          return '<CR>'
+        end, { expr = true })
+
+        -- syntax highlight flake.lock files as json
+        vim.api.nvim_create_autocmd({ 'BufNewFile', 'BufRead' }, {
+          pattern = 'flake.lock',
+          command = 'set filetype=json',
+        })
+
+        -- keep comment leader when 'o' or 'O' is used in Normal mode
+        vim.api.nvim_create_autocmd({ 'FileType' }, {
+          pattern = '*',
+          command = 'set formatoptions+=o',
+        })
       '';
 
       # To install non-packaged plugins, use
@@ -161,6 +171,10 @@ in
           plugin = lir-nvim;
           type = "lua";
           config = /* lua */ ''
+            -- disable netrw
+            vim.g.loaded_netrw = 1
+            vim.g.loaded_netrwPlugin = 1
+
             local actions = require('lir.actions')
             local mark_actions = require('lir.mark.actions')
             local clipboard_actions = require('lir.clipboard.actions')
