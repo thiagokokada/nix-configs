@@ -137,6 +137,56 @@ in
           '';
         }
         {
+          plugin = undotree;
+          config = /* vimscript */ ''
+            if !isdirectory($HOME . "/.config/nvim/undotree")
+                call mkdir($HOME . "/.config/nvim/undotree", "p", 0755)
+            endif
+
+            set undofile
+            set undodir=~/.config/nvim/undotree
+            let undotree_WindowLayout = 3
+            lua << EOF
+            vim.keymap.set('n', '<Leader>u', ':UndotreeToggle<CR>', { desc = "Undotree toggle" })
+            EOF
+          '';
+        }
+        {
+          plugin = vim-polyglot;
+          config = /* vimscript */ ''
+            " use a simpler and faster regex to parse CSV
+            " does not work with CSVs where the delimiter is quoted inside the field
+            " let g:csv_strict_columns = 1
+            " disabled CSV concealing (e.g.: `,` -> `|`), also faster
+            let g:csv_no_conceal = 1
+          '';
+        }
+        {
+          plugin = vim-sneak;
+          config = /* vimscript */ ''
+            let g:sneak#label = 1
+            map f <Plug>Sneak_f
+            map F <Plug>Sneak_F
+            map t <Plug>Sneak_t
+            map T <Plug>Sneak_T
+          '';
+        }
+        {
+          plugin = vim-test;
+          config = /* vimscript */ ''
+            let g:test#strategy = "neovim"
+            let g:test#neovim#start_normal = 1
+            let g:test#neovim#term_position = "vert botright"
+            lua << EOF
+            vim.keymap.set('n', '<Leader>tt', ':TestNearest<CR>', { desc = "Test nearest" })
+            vim.keymap.set('n', '<Leader>tT', ':TestFile<CR>', { desc = "Test file" })
+            vim.keymap.set('n', '<Leader>ts', ':TestSuite<CR>', { desc = "Test suite" })
+            vim.keymap.set('n', '<Leader>tl', ':TestLast<CR>', { desc = "Test last" })
+            vim.keymap.set('n', '<Leader>tv', ':TestVisit<CR>', { desc = "Test visit" })
+            EOF
+          '';
+        }
+        {
           plugin = pkgs.writeText "01-init-pre-lua" "";
           type = "lua";
           config = /* lua */ ''
@@ -298,41 +348,6 @@ in
           '';
         }
         {
-          plugin = undotree;
-          config = /* vimscript */ ''
-            if !isdirectory($HOME . "/.config/nvim/undotree")
-                call mkdir($HOME . "/.config/nvim/undotree", "p", 0755)
-            endif
-
-            set undofile
-            set undodir=~/.config/nvim/undotree
-            let undotree_WindowLayout = 3
-            lua << EOF
-            vim.keymap.set('n', '<Leader>u', ':UndotreeToggle<CR>', { desc = "Undotree toggle" })
-            EOF
-          '';
-        }
-        {
-          plugin = vim-polyglot;
-          config = /* vimscript */ ''
-            " use a simpler and faster regex to parse CSV
-            " does not work with CSVs where the delimiter is quoted inside the field
-            " let g:csv_strict_columns = 1
-            " disabled CSV concealing (e.g.: `,` -> `|`), also faster
-            let g:csv_no_conceal = 1
-          '';
-        }
-        {
-          plugin = vim-sneak;
-          config = /* vimscript */ ''
-            let g:sneak#label = 1
-            map f <Plug>Sneak_f
-            map F <Plug>Sneak_F
-            map t <Plug>Sneak_t
-            map T <Plug>Sneak_T
-          '';
-        }
-        {
           plugin = telescope-nvim;
           type = "lua";
           config = /* lua */ ''
@@ -412,21 +427,6 @@ in
               require('whitespace-nvim').trim,
               { desc = "Trim whitespace" }
             )
-          '';
-        }
-        {
-          plugin = vim-test;
-          config = /* vimscript */ ''
-            let g:test#strategy = "neovim"
-            let g:test#neovim#start_normal = 1
-            let g:test#neovim#term_position = "vert botright"
-            lua << EOF
-            vim.keymap.set('n', '<Leader>tt', ':TestNearest<CR>', { desc = "Test nearest" })
-            vim.keymap.set('n', '<Leader>tT', ':TestFile<CR>', { desc = "Test file" })
-            vim.keymap.set('n', '<Leader>ts', ':TestSuite<CR>', { desc = "Test suite" })
-            vim.keymap.set('n', '<Leader>tl', ':TestLast<CR>', { desc = "Test last" })
-            vim.keymap.set('n', '<Leader>tv', ':TestVisit<CR>', { desc = "Test visit" })
-            EOF
           '';
         }
         mkdir-nvim
