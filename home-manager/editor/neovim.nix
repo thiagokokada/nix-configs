@@ -95,19 +95,6 @@ in
         -- completion
         vim.opt.completeopt = 'menu'
         vim.keymap.set('i', '<C-Space>', '<C-x><C-o>')
-        vim.keymap.set({'i', 'c'}, '<C-j>', function()
-          if vim.fn.pumvisible() ~= 0 then return '<C-n>' end
-          return '<C-j>'
-        end, { expr = true })
-        vim.keymap.set({'i', 'c'}, '<C-k>', function()
-          if vim.fn.pumvisible() ~= 0 then return '<C-p>' end
-          return '<C-k>'
-        end, { expr = true })
-        -- FIXME: currently broken
-        vim.keymap.set({'i', 'c'}, '<CR>', function()
-          if vim.fn.pumvisible() ~= 0 then return '<C-y>' end
-          return '<CR>'
-        end, { expr = true })
 
         -- syntax highlight flake.lock files as json
         vim.api.nvim_create_autocmd({ 'BufNewFile', 'BufRead' }, {
@@ -440,6 +427,26 @@ in
         vim-sexp-mappings-for-regular-people
         vim-sleuth
         vim-surround
+        {
+          # Workaround issue with those mappings being overwritten by some
+          # plugins, needs to be Lua since it needs to load later than
+          # vimscript, however for some reason vim.keymap.set is giving errors
+          # here
+          plugin = pkgs.writeText "50-completion-maps" "";
+          type = "lua";
+          config = /* lua */ ''
+            vim.cmd [[
+              " insert mode
+              inoremap <expr> <C-j> pumvisible() ? "<C-n>" : "<C-j>"
+              inoremap <expr> <C-k> pumvisible() ? "<C-p>" : "<C-k>"
+              inoremap <expr> <CR> pumvisible() ? "<C-y>" : "<CR>"
+              " command line
+              cnoremap <expr> <C-j> pumvisible() ? "<C-n>" : "<C-j>"
+              cnoremap <expr> <C-k> pumvisible() ? "<C-p>" : "<C-k>"
+              cnoremap <expr> <CR> pumvisible() ? "<C-y>" : "<CR>"
+            ]]
+          '';
+        }
       ]
       ++ lib.optionals cfg.enableLsp [
         {
