@@ -18,7 +18,7 @@ final: prev:
 
   change-res = prev.callPackage ../packages/change-res { };
 
-  inherit (flake.inputs.home.packages.${prev.system}) home-manager;
+  inherit (flake.inputs.home-manager.packages.${prev.system}) home-manager;
 
   open-browser = prev.callPackage ../packages/open-browser { };
 

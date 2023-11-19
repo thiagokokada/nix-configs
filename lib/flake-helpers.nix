@@ -96,10 +96,10 @@ in
     , extraModules ? [ ]
     , system ? "x86_64-linux"
     , nixpkgs ? inputs.nixpkgs
-    , home ? inputs.home
+    , home-manager ? inputs.home-manager
     }:
     {
-      homeConfigurations.${hostname} = home.lib.homeManagerConfiguration {
+      homeConfigurations.${hostname} = home-manager.lib.homeManagerConfiguration {
         pkgs = nixpkgs.legacyPackages.${system};
         modules = [
           ({ ... }: {
