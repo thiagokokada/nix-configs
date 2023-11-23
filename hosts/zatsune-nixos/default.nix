@@ -33,6 +33,7 @@
   device.type = "server";
 
   nixos = {
+    dev.enable = true;
     # Has tons of memory and slow disk
     nix.tmpOnDisk = false;
     server = {
