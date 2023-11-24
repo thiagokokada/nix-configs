@@ -18,6 +18,7 @@
     server = {
       iperf3.enable = true;
       jellyfin.enable = true;
+      networkd.enable = false;
       plex.enable = true;
       ssh.enable = true;
       tailscale.enable = true;
