@@ -2,31 +2,20 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ flake, ... }:
+{ modulesPath, flake, config, lib, pkgs, ... }:
 
+let
+  oci-common = import "${modulesPath}/virtualisation/oci-common.nix" { inherit config lib pkgs; };
+in
 {
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
     ../../nixos
     flake.inputs.disko.nixosModules.disko
-  ];
+  ] ++ oci-common.imports;
 
-  boot.kernelParams = [
-    "nvme.shutdown_timeout=10"
-    "nvme_core.shutdown_timeout=10"
-    "libiscsi.debug_libiscsi_eh=1"
-    "crash_kexec_post_notifiers"
-
-    # VNC console
-    "console=tty1"
-
-    # x86_64-linux
-    "console=ttyS0"
-
-    # aarch64-linux
-    "console=ttyAMA0,115200"
-  ];
+  boot = { inherit (oci-common.boot) kernelParams; };
 
   disko.devices = import ./disk-config.nix;
 
@@ -58,5 +47,8 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  networking.hostName = "zatsune-nixos";
+  networking = {
+    inherit (oci-common.networking) timeServers;
+    hostName = "zatsune-nixos";
+  };
 }
