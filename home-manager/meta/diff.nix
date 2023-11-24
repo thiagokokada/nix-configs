@@ -10,9 +10,11 @@ in
 
   config = lib.mkIf cfg.enable {
     home.activation.diff = lib.hm.dag.entryAnywhere ''
-      ${lib.getExe config.nix.package} \
-        --extra-experimental-features 'nix-command' \
-        store diff-closures $oldGenPath $newGenPath
+      if [[ -n $oldGenPath ]] && [[ -n $newGenPath ]]; then
+        ${lib.getExe config.nix.package} \
+          --extra-experimental-features 'nix-command' \
+          store diff-closures $oldGenPath $newGenPath
+      fi
     '';
   };
 }
