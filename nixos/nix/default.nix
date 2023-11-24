@@ -17,11 +17,16 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    # Add some Nix related packages
-    environment.systemPackages = with pkgs; [
-      nixos-cleanup
-      nom-rebuild
-    ];
+    environment = {
+      # Add some Nix related packages
+      systemPackages = with pkgs; [
+        nixos-cleanup
+        nom-rebuild
+      ];
+      # Ask for sudo password if needed when running `--use-remote-sudo` flag
+      # in nixos-rebuild
+      sessionVariables.NIX_SSHOPTS = "-o RequestTTY=force";
+    };
 
     nix = {
       gc = {
