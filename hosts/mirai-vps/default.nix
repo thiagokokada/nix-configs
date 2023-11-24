@@ -36,6 +36,20 @@
     system.smart.enable = false;
   };
 
+  systemd.network.networks."10-wan" = {
+    matchConfig.Name = "ens3";
+    address = [
+      "148.135.35.70/26"
+      "148.135.35.71/26"
+      "2607:f130:0:f3:ff:ff:d581:184c/64"
+    ];
+    routes = [
+      { routeConfig.Gateway = "148.135.35.65"; }
+      { routeConfig.Gateway = "2607:f130:0:f3:0:0:0:1"; }
+    ];
+    linkConfig.RequiredForOnline = "routable";
+  };
+
   # Use the GRUB 2 boot loader.
   boot.loader.grub.enable = true;
   boot.loader.grub.device = "/dev/vda";
