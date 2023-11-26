@@ -113,7 +113,7 @@
       # NixOS configs
       (mkNixOSConfig { hostname = "hachune-nixos"; })
       (mkNixOSConfig { hostname = "miku-nixos"; })
-      (mkNixOSConfig { hostname = "mirai-vps"; })
+      (mkNixOSConfig { hostname = "mirai-nixos"; })
       (mkNixOSConfig { hostname = "sankyuu-nixos"; })
       (mkNixOSConfig { hostname = "zatsune-nixos"; })
       (mkNixOSConfig { hostname = "zachune-nixos"; })

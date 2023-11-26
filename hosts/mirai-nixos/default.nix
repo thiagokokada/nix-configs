@@ -25,7 +25,7 @@
       tailscale.enable = true;
       duckdns-updater = {
         enable = true;
-        domain = "mirai-vps.duckdns.org";
+        domain = "mirai-nixos.duckdns.org";
         onCalendar = "daily"; # fixed IP, mostly for health checking
         certs = {
           enable = true;
@@ -58,5 +58,5 @@
   boot.loader.grub.enable = true;
   boot.loader.grub.device = "/dev/vda";
 
-  networking.hostName = "mirai-vps";
+  networking.hostName = "mirai-nixos";
 }
