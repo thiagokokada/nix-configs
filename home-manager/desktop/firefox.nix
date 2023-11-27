@@ -17,6 +17,8 @@ in
         settings = {
           # disable annoyinh Ctrl+Q shortcut
           "browser.quitShortcut.disabled" = true;
+          # don't mess up with paste
+          "dom.event.clipboardevents.enabled" = false;
           # enable hw video acceleration, if supported
           "media.ffmpeg.vaapi.enabled" = true;
           # handpicked settings from: https://github.com/arkenfox/user.js/blob/master/user.js
