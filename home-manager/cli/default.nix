@@ -1,5 +1,8 @@
 { config, pkgs, lib, ... }:
 
+let
+  cfg = config.home-manager.cli;
+in
 {
   imports = [
     ./git.nix
@@ -12,35 +15,31 @@
     ./zsh.nix
   ];
 
-  options.home-manager.cli.enable = lib.mkDefaultOption "CLI config";
+  options.home-manager.cli = {
+    enable = lib.mkDefaultOption "CLI config";
+    enableGnu = lib.mkEnableOption "GNU utils config" // {
+      default = !pkgs.stdenv.isDarwin;
+    };
+  };
 
-  config = lib.mkIf config.home-manager.cli.enable {
+  config = lib.mkIf cfg.enable {
     home.packages = with pkgs; [
       _7zz
       aria2
       bc
       bind.dnsutils
-      coreutils
       curl
       curlie
       dialog
-      diffutils
       dos2unix
       dua
       each
       file
-      findutils
-      gawk
-      gnugrep
-      gnumake
-      gnused
-      inetutils
       ix
       jq
       less
       lsof
       mediainfo
-      netcat-gnu
       ouch
       page
       procps
@@ -52,8 +51,17 @@
       tig
       tokei
       wget
-    ] ++ lib.optionals (!pkgs.stdenv.isDarwin) [
+    ] ++ lib.optionals cfg.enableGnu [
+      coreutils
+      diffutils
+      findutils
+      gawk
       gcal
+      gnugrep
+      gnumake
+      gnused
+      inetutils
+      netcat-gnu
     ];
 
     programs = {
@@ -66,7 +74,7 @@
         archive = "${pkgs.ouch}/bin/ouch compress";
         unarchive = "${pkgs.ouch}/bin/ouch decompress";
         lsarchive = "${pkgs.ouch}/bin/ouch list";
-        cal = lib.mkIf (!pkgs.stdenv.isDarwin) "${pkgs.gcal}/bin/gcal";
+        cal = lib.mkIf cfg.enableGnu "${pkgs.gcal}/bin/gcal";
         http = "${pkgs.curlie}/bin/curlie";
         ncdu = "${pkgs.dua}/bin/dua interactive";
         sloccount = "${pkgs.tokei}/bin/tokei";
