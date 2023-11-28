@@ -57,6 +57,7 @@ cleanup_hm() {
     local -r hm_profile="$1"
 
     if [[ "$hm_profile" == 1 ]]; then
+        echo "[INFO] Clean-up old home-manager generations..."
         home-manager expire-generations '0 days'
     fi
 }
