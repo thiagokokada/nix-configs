@@ -29,11 +29,11 @@ jobs:
         run: |-
           nix build --print-build-logs '.#homeConfigurations.home-linux.activationPackage'
           nix build --print-build-logs '.#homeConfigurations.steamdeck.activationPackage'
-      - name: 'Build NixOS configs for: hachune-nixos, miku-nixos, mirai-vps, sankyuu-nixos'
+      - name: 'Build NixOS configs for: hachune-nixos, miku-nixos, mirai-nixos, sankyuu-nixos'
         run: |-
           nix build --print-build-logs '.#nixosConfigurations.hachune-nixos.config.system.build.toplevel'
           nix build --print-build-logs '.#nixosConfigurations.miku-nixos.config.system.build.toplevel'
-          nix build --print-build-logs '.#nixosConfigurations.mirai-vps.config.system.build.toplevel'
+          nix build --print-build-logs '.#nixosConfigurations.mirai-nixos.config.system.build.toplevel'
           nix build --print-build-logs '.#nixosConfigurations.sankyuu-nixos.config.system.build.toplevel'
   build-macos:
     runs-on: macos-13
