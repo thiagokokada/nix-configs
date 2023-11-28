@@ -22,7 +22,7 @@
     nix = {
       package = lib.mkDefault pkgs.nix;
       settings = lib.mkMerge [
-        (import ../../shared/nix-conf.nix)
+        (import ../../shared/nix-conf.nix { inherit lib pkgs; })
         (import ../../shared/substituters.nix)
       ];
     };

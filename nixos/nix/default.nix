@@ -56,7 +56,7 @@ in
           substituters = import ../../shared/substituters.nix;
         in
         lib.mkMerge [
-          (import ../../shared/nix-conf.nix)
+          (import ../../shared/nix-conf.nix { inherit lib pkgs; })
           {
             trusted-users = [ "root" "@wheel" ];
             # For some reason when nix is running as daemon,
