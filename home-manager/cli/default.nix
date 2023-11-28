@@ -31,7 +31,6 @@
       file
       findutils
       gawk
-      gcal
       gnugrep
       gnumake
       gnused
@@ -53,6 +52,8 @@
       tig
       tokei
       wget
+    ] ++ lib.optionals (!pkgs.stdenv.isDarwin) [
+      gcal
     ];
 
     programs = {
@@ -65,7 +66,7 @@
         archive = "${pkgs.ouch}/bin/ouch compress";
         unarchive = "${pkgs.ouch}/bin/ouch decompress";
         lsarchive = "${pkgs.ouch}/bin/ouch list";
-        cal = "${pkgs.gcal}/bin/gcal";
+        cal = lib.mkIf (!pkgs.stdenv.isDarwin) "${pkgs.gcal}/bin/gcal";
         http = "${pkgs.curlie}/bin/curlie";
         ncdu = "${pkgs.dua}/bin/dua interactive";
         sloccount = "${pkgs.tokei}/bin/tokei";
