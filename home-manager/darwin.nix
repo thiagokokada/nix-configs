@@ -7,8 +7,11 @@
 
   config = lib.mkIf config.home-manager.darwin.enable {
     home-manager = {
-      dev.enable = lib.mkDefault true;
-      editor.emacs.enable = lib.mkDefault true;
+      dev = {
+        enable = true;
+        clojure.enable = false;
+      };
+      editor.emacs.enable = true;
     };
 
     targets.darwin.defaults = {
