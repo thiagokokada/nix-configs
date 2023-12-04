@@ -90,7 +90,7 @@ in
           "*" = with config.home-manager.desktop.theme.wallpaper; {
             bg = "${path} ${scale}";
             # DPI
-            scale = toString (125 / 100.0);
+            scale = toString (config.home-manager.desktop.theme.fonts.dpi / 100.0);
           } // lib.optionalAttrs (osConfig ? fonts.fontconfig) {
             subpixel = osConfig.fonts.fontconfig.subpixel.rgba;
           };
