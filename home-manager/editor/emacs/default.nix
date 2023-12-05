@@ -12,7 +12,8 @@ let
 in
 {
   options.home-manager.editor.emacs.enable = lib.mkEnableOption "Emacs config" // {
-    default = config.home-manager.editor.enable && config.home-manager.desktop.enable;
+    default = config.home-manager.editor.enable &&
+      (config.home-manager.desktop.enable || config.home-manager.darwin.enable);
   };
 
   config = lib.mkIf config.home-manager.editor.emacs.enable {

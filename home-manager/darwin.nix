@@ -8,7 +8,6 @@
   config = lib.mkIf config.home-manager.darwin.enable {
     home-manager = {
       dev.enable = lib.mkDefault true;
-      editor.emacs.enable = lib.mkDefault true;
     };
 
     targets.darwin.defaults = {
