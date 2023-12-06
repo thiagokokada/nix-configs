@@ -148,6 +148,12 @@
         system = "x86_64-darwin";
         homePath = "/Users";
       })
+      (mkHomeConfig {
+        hostname = "toasty";
+        username = "thiago.okada";
+        system = "aarch64-darwin";
+        homePath = "/Users";
+      })
 
       # Commands
       (mkRunCmd {
