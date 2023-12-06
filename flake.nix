@@ -153,6 +153,14 @@
         username = "thiago.okada";
         system = "aarch64-darwin";
         homePath = "/Users";
+        extraModules = [{
+          home-manager.dev = {
+            clojure.enable = false;
+            go.enable = false;
+            node.enable = false;
+            python.enable = false;
+          };
+        }];
       })
 
       # Commands
