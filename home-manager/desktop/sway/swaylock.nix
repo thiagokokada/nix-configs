@@ -50,6 +50,7 @@
         bs-hl-color = base08;
         key-hl-color = base0C;
         separator-color = "#00000000"; # transparent
+        layout-bg-color = "#00000050"; # semi-transparent black
 
         indicator-radius = 80;
         indicator-thickness = 10;
