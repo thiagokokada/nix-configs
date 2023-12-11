@@ -36,6 +36,12 @@
       flake = false;
     };
 
+    # IntelliJ
+    intellimacs = {
+      url = "github:MarcoIeni/intellimacs";
+      flake = false;
+    };
+
     # custom packages
     arandr = {
       url = "gitlab:thiagokokada/arandr";
@@ -154,10 +160,13 @@
         system = "aarch64-darwin";
         homePath = "/Users";
         extraModules = [{
-          home-manager.dev = {
-            clojure.enable = false;
-            go.enable = false;
-            node.enable = false;
+          home-manager = {
+            editor.jetbrains.enable = true;
+            dev = {
+              clojure.enable = false;
+              go.enable = false;
+              node.enable = false;
+            };
           };
         }];
       })

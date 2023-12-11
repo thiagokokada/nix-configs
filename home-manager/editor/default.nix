@@ -4,6 +4,7 @@
   imports = [
     ./emacs
     ./helix.nix
+    ./jetbrains.nix
     ./neovim.nix
     ./vscode
   ];

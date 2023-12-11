@@ -138,6 +138,22 @@
         "type": "github"
       }
     },
+    "intellimacs": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1699187160,
+        "narHash": "sha256-M7XJ8EBMUg698Q8hhPXPHxEoZhm/bieDKxRbmq9Zqco=",
+        "owner": "MarcoIeni",
+        "repo": "intellimacs",
+        "rev": "f1e78859c902bdf2d95e35683de1e985ad987f52",
+        "type": "github"
+      },
+      "original": {
+        "owner": "MarcoIeni",
+        "repo": "intellimacs",
+        "type": "github"
+      }
+    },
     "nix-alien": {
       "inputs": {
         "flake-compat": [
@@ -313,6 +329,7 @@
         "flake-utils": "flake-utils",
         "hardware": "hardware",
         "home-manager": "home-manager",
+        "intellimacs": "intellimacs",
         "nix-alien": "nix-alien",
         "nix-gaming": "nix-gaming",
         "nix-index-database": [
