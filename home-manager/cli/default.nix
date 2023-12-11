@@ -20,6 +20,9 @@ in
     enableGnu = lib.mkEnableOption "GNU utils config" // {
       default = !pkgs.stdenv.isDarwin;
     };
+    enableOuch = lib.mkEnableOption "Ouch config" // {
+      default = !pkgs.stdenv.isDarwin;
+    };
   };
 
   config = lib.mkIf cfg.enable {
@@ -40,7 +43,6 @@ in
       less
       lsof
       mediainfo
-      ouch
       page
       procps
       pv
@@ -51,7 +53,11 @@ in
       tig
       tokei
       wget
-    ] ++ lib.optionals cfg.enableGnu [
+    ]
+    ++ lib.optionals cfg.enableOuch [
+      ouch
+    ]
+    ++ lib.optionals cfg.enableGnu [
       coreutils
       diffutils
       findutils
@@ -71,9 +77,9 @@ in
       };
       zsh.shellAliases = {
         # For muscle memory...
-        archive = "${pkgs.ouch}/bin/ouch compress";
-        unarchive = "${pkgs.ouch}/bin/ouch decompress";
-        lsarchive = "${pkgs.ouch}/bin/ouch list";
+        archive = lib.mkIf cfg.enableOuch "${pkgs.ouch}/bin/ouch compress";
+        unarchive = lib.mkIf cfg.enableOuch "${pkgs.ouch}/bin/ouch decompress";
+        lsarchive = lib.mkIf cfg.enableOuch "${pkgs.ouch}/bin/ouch list";
         cal = lib.mkIf cfg.enableGnu "${pkgs.gcal}/bin/gcal";
         http = "${pkgs.curlie}/bin/curlie";
         ncdu = "${pkgs.dua}/bin/dua interactive";
