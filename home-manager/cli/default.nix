@@ -32,7 +32,6 @@ in
       bc
       bind.dnsutils
       curl
-      curlie
       dialog
       dos2unix
       dua
@@ -81,7 +80,6 @@ in
         unarchive = lib.mkIf cfg.enableOuch "${pkgs.ouch}/bin/ouch decompress";
         lsarchive = lib.mkIf cfg.enableOuch "${pkgs.ouch}/bin/ouch list";
         cal = lib.mkIf cfg.enableGnu "${pkgs.gcal}/bin/gcal";
-        http = "${pkgs.curlie}/bin/curlie";
         ncdu = "${pkgs.dua}/bin/dua interactive";
         sloccount = "${pkgs.tokei}/bin/tokei";
       };
