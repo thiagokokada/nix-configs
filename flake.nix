@@ -158,7 +158,6 @@
             clojure.enable = false;
             go.enable = false;
             node.enable = false;
-            python.enable = false;
           };
         }];
       })
