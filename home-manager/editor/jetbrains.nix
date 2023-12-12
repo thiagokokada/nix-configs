@@ -9,6 +9,7 @@
     home.file = {
       ".intellimacs".source = flake.inputs.intellimacs;
       ".ideavimrc".source = pkgs.writeText "ideavimrc" /* vim */ ''
+        " Enable Intellimacs
         source ~/.intellimacs/spacemacs.vim
 
         " Enable other Intellimacs modules
@@ -32,6 +33,10 @@
 
         " Vinegar
         nmap - :NERDTreeToggle<CR>
+
+        " Enable ideajoin
+        " https://github.com/JetBrains/ideavim/blob/master/doc/ideajoin-examples.md
+        set ideajoin
       '';
     };
   };
