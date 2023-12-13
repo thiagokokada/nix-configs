@@ -37,6 +37,7 @@ in
       dua
       each
       file
+      hyperfine
       ix
       jq
       less
