@@ -7,7 +7,7 @@ in
   imports = [ flake.inputs.home-manager.nixosModules.home-manager ];
 
   options.nixos.home = {
-    enable = lib.mkDefaultOption "home config";
+    enable = lib.mkEnableOption "home config" // { default = true; };
     imports = lib.mkOption {
       description = "Modules to import";
       type = lib.types.listOf lib.types.path;

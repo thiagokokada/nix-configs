@@ -3,7 +3,7 @@
 {
   # TODO: add declarative IDE setup
   # https://github.com/NixOS/nixpkgs/blob/master/pkgs/applications/editors/jetbrains/readme.md
-  options.home-manager.editor.jetbrains.enable = lib.mkDefaultOption "Jetbrains IDEs config";
+  options.home-manager.editor.jetbrains.enable = lib.mkEnableOption "Jetbrains IDEs config";
 
   config = lib.mkIf config.home-manager.editor.jetbrains.enable {
     home.file = {

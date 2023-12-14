@@ -11,8 +11,8 @@ in
   ];
 
   options.nixos.system = {
-    enable = lib.mkDefaultOption "system config";
-    showMotd = lib.mkDefaultOption "show message of the day";
+    enable = lib.mkEnableOption "system config" // { default = true; };
+    showMotd = lib.mkEnableOption "show message of the day" // { default = true; };
   };
 
   config = lib.mkIf cfg.enable {

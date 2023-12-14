@@ -1,4 +1,4 @@
-{ config, lib, osConfig, ... }:
+{ config, pkgs, lib, osConfig, ... }:
 
 {
   options.home-manager.desktop.i3.picom.enable = lib.mkEnableOption "picom config" // {
@@ -8,7 +8,7 @@
   config = lib.mkIf config.home-manager.desktop.i3.picom.enable {
     services.picom = {
       enable = true;
-      backend = if (lib.isNvidia osConfig) then "glx" else "egl";
+      backend = if (pkgs.lib.isNvidia osConfig) then "glx" else "egl";
       fade = true;
       fadeDelta = 2;
       vSync = true;

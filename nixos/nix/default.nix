@@ -10,9 +10,9 @@ in
   ];
 
   options.nixos.nix = {
-    enable = lib.mkDefaultOption "nix/nixpkgs config";
-    tmpOnDisk = lib.mkDefaultOption "set nix's TMPDIR to /var/tmp (disk instead tmpfs)" // {
-      enable = config.boot.tmp.useTmpfs;
+    enable = lib.mkEnableOption "nix/nixpkgs config" // { default = true; };
+    tmpOnDisk = lib.mkEnableOption "set nix's TMPDIR to /var/tmp (disk instead tmpfs)" // {
+      default = config.boot.tmp.useTmpfs;
     };
   };
 

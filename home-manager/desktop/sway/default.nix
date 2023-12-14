@@ -124,7 +124,7 @@ in
         gtk = true;
       };
 
-      extraOptions = lib.optionals (lib.isNvidia osConfig) [
+      extraOptions = lib.optionals (pkgs.lib.isNvidia osConfig) [
         "--unsupported-gpu"
       ];
     };

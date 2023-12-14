@@ -9,5 +9,7 @@
     ./vscode
   ];
 
-  options.home-manager.editor.enable = lib.mkDefaultOption "editor config";
+  options.home-manager.editor.enable = lib.mkEnableOption "editor config" // {
+    default = true;
+  };
 }

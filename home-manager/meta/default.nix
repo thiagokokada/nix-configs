@@ -6,7 +6,9 @@
     ./diff.nix
   ];
 
-  options.home-manager.meta.enable = lib.mkDefaultOption "Home-Manager config";
+  options.home-manager.meta.enable = lib.mkEnableOption "Home-Manager config" // {
+    default = true;
+  };
 
   config = lib.mkIf config.home-manager.meta.enable {
     # Add some Nix related packages

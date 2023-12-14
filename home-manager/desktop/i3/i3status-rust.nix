@@ -95,7 +95,7 @@ in
               block = "disk_space";
               path = m;
               info_type = "available";
-              format = " $icon ${lib.shortPath m} $available ";
+              format = " $icon ${pkgs.lib.shortPath m} $available ";
             })
             cfg.mountPoints;
 

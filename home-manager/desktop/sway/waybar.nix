@@ -2,7 +2,7 @@
 
 let
   cfg = config.home-manager.desktop.sway.waybar;
-  shortPathName = path: "disk#${lib.shortPathWithSep "_" path}";
+  shortPathName = path: "disk#${pkgs.lib.shortPathWithSep "_" path}";
 in
 {
   options.home-manager.desktop.sway.waybar = {
@@ -96,12 +96,12 @@ in
               format-icons = [ "󰤯" "󰤟" "󰤢" "󰤥" "󰤨" ];
             };
         } //
-        (lib.recursiveMergeAttrs
+        (pkgs.lib.recursiveMergeAttrs
           (map
             (m: {
               "${shortPathName m}" = {
                 inherit (cfg) interval;
-                format = " ${lib.shortPath m}: {free}";
+                format = " ${pkgs.lib.shortPath m}: {free}";
                 path = m;
                 states = {
                   warning = 75;

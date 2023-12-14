@@ -9,7 +9,7 @@ in
   options.nixos.server.rtorrent = {
     enable = lib.mkEnableOption "rTorrent config";
     flood = {
-      enable = lib.mkDefaultOption "Flood UI";
+      enable = lib.mkEnableOption "Flood UI" // { default = true; };
       port = lib.mkOption {
         type = lib.types.int;
         description = "Port to bind webserver";

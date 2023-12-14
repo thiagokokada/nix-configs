@@ -16,7 +16,7 @@ in
   ];
 
   options.home-manager.cli = {
-    enable = lib.mkDefaultOption "CLI config";
+    enable = lib.mkEnableOption "CLI config" // { default = true; };
     enableGnu = lib.mkEnableOption "GNU utils config" // {
       default = !pkgs.stdenv.isDarwin;
     };
