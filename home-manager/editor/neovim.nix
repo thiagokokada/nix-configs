@@ -361,7 +361,7 @@ in
                 },
                 -- configure to use ripgrep
                 vimgrep_arguments = {
-                  "rg",
+                  "${lib.getExe pkgs.ripgrep}",
                   "--follow",        -- Follow symbolic links
                   "--hidden",        -- Search for hidden files
                   "--no-heading",    -- Don't group matches by each file
@@ -374,10 +374,6 @@ in
                   "--glob=!**/.git/*",
                   "--glob=!**/.idea/*",
                   "--glob=!**/.vscode/*",
-                  "--glob=!**/build/*",
-                  "--glob=!**/dist/*",
-                  "--glob=!**/yarn.lock",
-                  "--glob=!**/package-lock.json",
                 },
               },
               pickers = {
@@ -386,16 +382,12 @@ in
                   -- needed to exclude some files & dirs from general search
                   -- when not included or specified in .gitignore
                   find_command = {
-                    "rg",
+                    "${lib.getExe pkgs.ripgrep}",
                     "--files",
                     "--hidden",
                     "--glob=!**/.git/*",
                     "--glob=!**/.idea/*",
                     "--glob=!**/.vscode/*",
-                    "--glob=!**/build/*",
-                    "--glob=!**/dist/*",
-                    "--glob=!**/yarn.lock",
-                    "--glob=!**/package-lock.json",
                   },
                 },
               },
