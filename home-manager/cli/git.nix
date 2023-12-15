@@ -17,8 +17,8 @@ in
     home.packages = with pkgs; [
       github-cli
     ] ++ lib.optionals cfg.enableGui [
-      (run-bg-alias "gcd" "${git-cola}/bin/git-cola dag")
-      (run-bg-alias "gk" "${config.programs.git.package}/bin/gitk")
+      (run-bg-alias "gcd" "${lib.getExe' git-cola "git-cola"} dag")
+      (run-bg-alias "gk" (lib.getExe' config.programs.git.package "gitk"))
       git-cola
     ];
 

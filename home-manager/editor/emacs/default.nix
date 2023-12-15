@@ -27,8 +27,8 @@ in
       '';
 
       packages = with pkgs; [
-        (run-bg-alias "em" "${config.programs.emacs.package}/bin/emacs")
-        (writeShellScriptBin "et" "${config.programs.emacs.package}/bin/emacs -nw $@")
+        (run-bg-alias "em" "${lib.getExe config.programs.emacs.package}")
+        (writeShellScriptBin "et" "${lib.getExe config.programs.emacs.package} -nw $@")
         # doom-emacs main deps
         emacs-all-the-icons-fonts
         fd
@@ -76,11 +76,11 @@ in
     home.activation = {
       # TODO: check doomemacs commit and only update if it is outdated
       installDoom = lib.hm.dag.entryAfter [ "linkGeneration" ] ''
-        ${pkgs.rsync}/bin/rsync -Er --chmod=u=rwX --exclude='.local/' --mkpath --delete ${flake.inputs.doomemacs}/ ${EMACSDIR}/
+        ${lib.getExe pkgs.rsync} -Er --chmod=u=rwX --exclude='.local/' --mkpath --delete ${flake.inputs.doomemacs}/ ${EMACSDIR}/
       '';
       runDoomSync = lib.mkIf pkgs.stdenv.isLinux
         (lib.hm.dag.entryAfter [ "installDoom" ] ''
-          ${pkgs.systemd}/bin/systemctl start --user doom-sync.service --no-block
+          ${lib.getExe' pkgs.systemd "systemctl"} start --user doom-sync.service --no-block
         '');
     };
   };

@@ -24,7 +24,7 @@ in
       enable = true;
       hooks = {
         postswitch = {
-          notify-i3 = "${pkgs.i3}/bin/i3-msg restart";
+          notify-i3 = "${lib.getExe' pkgs.i3 "i3-msg"} restart";
           reset-wallpaper = "systemctl restart --user wallpaper.service";
         };
       };

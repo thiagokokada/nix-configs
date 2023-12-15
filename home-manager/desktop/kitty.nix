@@ -49,7 +49,7 @@
 
         # Scrollback
         scrollback_lines = 10000;
-        scrollback_pager = "${pkgs.page}/bin/page -f";
+        scrollback_pager = "${lib.getExe' pkgs.page "page"} -f";
 
         # Reduce lag
         sync_to_monitor = false;
@@ -63,11 +63,8 @@
         bell_on_tab = true;
 
         # Misc
-        editor =
-          if config.programs.neovim.enable then
-            "${config.programs.neovim.finalPackage}/bin/nvim"
-          else
-            "${pkgs.neovim}/bin/nvim";
+        editor = lib.mkIf config.programs.neovim.enable
+          (lib.getExe config.programs.neovim.finalPackage);
         strip_trailing_spaces = "smart";
         clipboard_control =
           "write-clipboard write-primary read-clipboard read-primary";

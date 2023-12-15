@@ -6,10 +6,10 @@ let
 
   commonOptions =
     let
-      rofi = "${config.programs.rofi.package}/bin/rofi";
-      mons = "${pkgs.mons}/bin/mons";
+      rofi = lib.getExe config.programs.rofi.package;
+      mons = lib.getExe pkgs.mons;
       screenShotName = with config.xdg.userDirs;
-        "${pictures}/$(${pkgs.coreutils}/bin/date +%Y-%m-%d_%H-%M-%S)-screenshot.png";
+        "${pictures}/$(${lib.getExe' pkgs.coreutils "date"} +%Y-%m-%d_%H-%M-%S)-screenshot.png";
       displayLayoutMode =
         " : [h]  , [j]  , [k]  , [l]  , [a]uto, [d]uplicate, [m]irror, [s]econd-only, primary-[o]nly";
     in
@@ -22,12 +22,12 @@ let
 
       # Screenshots
       fullScreenShot = ''
-        ${pkgs.maim}/bin/maim -u "${screenShotName}" && \
-        ${pkgs.libnotify}/bin/notify-send -u normal -t 5000 'Full screenshot taken'
+        ${lib.getExe pkgs.maim} -u "${screenShotName}" && \
+        ${lib.getExe' pkgs.libnotify "notify-send"} -u normal -t 5000 'Full screenshot taken'
       '';
       areaScreenShot = ''
-        ${pkgs.maim}/bin/maim -u -s "${screenShotName}" && \
-        ${pkgs.libnotify}/bin/notify-send -u normal -t 5000 'Area screenshot taken'
+        ${lib.getExe pkgs.maim} -u -s "${screenShotName}" && \
+        ${lib.getExe' pkgs.libnotify "notify-send"} -u normal -t 5000 'Area screenshot taken'
       '';
 
       extraBindings = {
@@ -48,7 +48,7 @@ let
           upCmd = runMons "-e top";
           rightCmd = runMons "-e right";
         }) // {
-          a = "mode default, exec ${pkgs.change-res}/bin/change-res";
+          a = "mode default, exec ${lib.getExe pkgs.change-res}";
           d = runMons "-d";
           m = runMons "-m";
           s = runMons "-s";
@@ -111,7 +111,7 @@ in
       config = commonOptions.config // {
         startup = [
           {
-            command = "${pkgs.dex}/bin/dex --autostart";
+            command = "${lib.getExe pkgs.dex} --autostart";
             notification = false;
           }
         ];

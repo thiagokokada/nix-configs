@@ -24,7 +24,7 @@ in
       get-ip'
       remove-symlink
     ] ++ lib.optionals (!stdenv.isDarwin) [
-      (run-bg-alias "open" "${xdg-utils}/bin/xdg-open")
+      (run-bg-alias "open" (lib.getExe' xdg-utils "xdg-open"))
     ];
 
     programs.zsh = {

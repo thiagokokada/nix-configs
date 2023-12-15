@@ -7,21 +7,21 @@ let
   commonOptions =
     let
       screenShotName = with config.xdg.userDirs;
-        "${pictures}/$(${pkgs.coreutils}/bin/date +%Y-%m-%d_%H-%M-%S)-screenshot.png";
+        "${pictures}/$(${lib.getExe' pkgs.coreutils "date"} +%Y-%m-%d_%H-%M-%S)-screenshot.png";
       displayLayoutMode = " : [a]uto, [g]ui";
     in
     import ../i3/common.nix rec {
       inherit config lib pkgs modifier alt;
-      bars = [{ command = "${config.programs.waybar.package}/bin/waybar"; }];
-      menu = "${config.programs.fuzzel.package}/bin/fuzzel";
+      bars = [{ command = lib.getExe config.programs.waybar.package; }];
+      menu = lib.getExe config.programs.fuzzel.package;
 
       fullScreenShot = ''
-        ${pkgs.grim}/bin/grim "${screenShotName}" && \
-        ${pkgs.libnotify}/bin/notify-send -u normal -t 5000 'Full screenshot taken'
+        ${lib.getExe pkgs.grim} "${screenShotName}" && \
+        ${lib.getExe' pkgs.libnotify "notify-send"} -u normal -t 5000 'Full screenshot taken'
       '';
       areaScreenShot = ''
-        ${pkgs.grim}/bin/grim -g "$(${pkgs.slurp}/bin/slurp)" "${screenShotName}" && \
-        ${pkgs.libnotify}/bin/notify-send -u normal -t 5000 'Area screenshot taken'
+        ${lib.getExe pkgs.grim} -g "$(${lib.getExe pkgs.slurp})" "${screenShotName}" && \
+        ${lib.getExe' pkgs.libnotify "notify-send"} -u normal -t 5000 'Area screenshot taken'
       '';
 
       extraBindings = {
@@ -31,7 +31,7 @@ let
       extraModes = {
         ${displayLayoutMode} = {
           a = "mode default, exec systemctl restart --user kanshi.service";
-          g = "mode default, exec ${pkgs.wdisplays}/bin/wdisplays";
+          g = "mode default, exec ${lib.getExe pkgs.wdisplays}";
           "Escape" = "mode default";
           "Return" = "mode default";
         };

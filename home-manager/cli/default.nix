@@ -77,12 +77,12 @@ in
       };
       zsh.shellAliases = {
         # For muscle memory...
-        archive = lib.mkIf cfg.enableOuch "${pkgs.ouch}/bin/ouch compress";
-        unarchive = lib.mkIf cfg.enableOuch "${pkgs.ouch}/bin/ouch decompress";
-        lsarchive = lib.mkIf cfg.enableOuch "${pkgs.ouch}/bin/ouch list";
-        cal = lib.mkIf cfg.enableGnu "${pkgs.gcal}/bin/gcal";
-        ncdu = "${pkgs.dua}/bin/dua interactive";
-        sloccount = "${pkgs.tokei}/bin/tokei";
+        archive = lib.mkIf cfg.enableOuch "${lib.getExe pkgs.ouch} compress";
+        unarchive = lib.mkIf cfg.enableOuch "${lib.getExe pkgs.ouch} decompress";
+        lsarchive = lib.mkIf cfg.enableOuch "${lib.getExe pkgs.ouch} list";
+        cal = lib.mkIf cfg.enableGnu (lib.getExe' pkgs.gcal "gcal");
+        ncdu = "${lib.getExe pkgs.dua} interactive";
+        sloccount = lib.getExe pkgs.tokei;
       };
     };
   };

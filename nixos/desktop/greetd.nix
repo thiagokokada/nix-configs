@@ -28,7 +28,7 @@
             in
             {
               command = lib.concatStringsSep " " [
-                "${pkgs.greetd.tuigreet}/bin/tuigreet"
+                (lib.getExe pkgs.greetd.tuigreet)
                 "--remember"
                 "--remember-session"
                 "--time"

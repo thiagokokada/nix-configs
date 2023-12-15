@@ -81,10 +81,10 @@ in
         Service.ExecStart = toString
           (pkgs.writeShellScript "home-manager-auto-expire" (''
             echo "Expire old Home Manager generations"
-            ${pkgs.home-manager}/bin/home-manager expire-generations '${cfg.timestamp}'
+            ${lib.getExe pkgs.home-manager} expire-generations '${cfg.timestamp}'
           '' + lib.optionalString cfg.store.cleanup ''
             echo "Clean-up Nix store"
-            ${pkgs.nix}/bin/nix-collect-garbage ${cfg.store.options}
+            ${lib.getExe' pkgs.nix "nix-collect-garbage"} ${cfg.store.options}
           ''));
       };
     };

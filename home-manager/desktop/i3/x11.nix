@@ -32,16 +32,16 @@ in
       initExtra =
         # NVIDIA sync
         lib.optionalString (osConfig.hardware.nvidia.prime.sync.enable or false) ''
-          ${pkgs.xorg.xrandr}/bin/xrandr --setprovideroutputsource modesetting NVIDIA-0
-          ${pkgs.xorg.xrandr}/bin/xrandr --auto
+          ${lib.geExe pkgs.xorg.xrandr} --setprovideroutputsource modesetting NVIDIA-0
+          ${lib.getExe pkgs.xorg.xrandr} --auto
         ''
         # Reverse PRIME
         + lib.optionalString (osConfig.hardware.nvidia.prime.offload.enable or false) ''
-          ${pkgs.xorg.xrandr}/bin/xrandr --setprovideroutputsource NVIDIA-G0 modesetting
+          ${lib.getExe pkgs.xorg.xrandr} --setprovideroutputsource NVIDIA-G0 modesetting
         ''
         # Automatically loads the resolution
         + ''
-          ${pkgs.change-res}/bin/change-res
+          ${lib.getExe pkgs.change-res}
         '';
     };
   };

@@ -27,7 +27,7 @@
         extraOptions =
           let
             notify = pkgs.writeShellScript "notify" ''
-              ${pkgs.dunst}/bin/dunstify -t 30000 "30 seconds to lock"
+              ${lib.getExe' pkgs.dunst "dunstify"} -t 30000 "30 seconds to lock"
             '';
           in
           [

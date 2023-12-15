@@ -1,12 +1,12 @@
 { config, pkgs, lib, ... }:
 
 let
-  swaylock = "${config.programs.swaylock.package}/bin/swaylock -f";
+  swaylock = "${lib.getExe config.programs.swaylock.package} -f";
   notify = pkgs.writeShellScript "notify" ''
-    ${pkgs.dunst}/bin/dunstify -t 30000 "30 seconds to lock"
+    ${lib.getExe' pkgs.dunst "dunstify"} -t 30000 "30 seconds to lock"
   '';
-  displayOn = ''${pkgs.sway}/bin/swaymsg "output * power on"'';
-  displayOff = ''${pkgs.sway}/bin/swaymsg "output * power off"'';
+  displayOn = ''${lib.getExe' pkgs.sway "swaymsg"} "output * power on"'';
+  displayOff = ''${lib.getExe' pkgs.sway "swaymsg"} "output * power off"'';
 in
 {
 

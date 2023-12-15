@@ -140,7 +140,7 @@ in
             critical-threshold = 75;
           };
           "custom/dunst" = {
-            exec = (pkgs.writeShellApplication {
+            exec = lib.getExe (pkgs.writeShellApplication {
               name = "dunst-status";
               runtimeInputs = with pkgs; [ coreutils dbus dunst procps ];
               text = ''
@@ -173,8 +173,8 @@ in
                     printf '{"text": "%s", "class": "%s"}\n' "$TEXT" "$CLASS"
                   done
               '';
-            }) + "/bin/dunst-status";
-            on-click = "${pkgs.dunst}/bin/dunstctl set-paused toggle";
+            });
+            on-click = "${lib.getExe' pkgs.dunst "dunstctl"} set-paused toggle";
             restart-interval = 1;
             return-type = "json";
             tooltip = false;
@@ -188,8 +188,8 @@ in
             format = "{icon} {volume}%";
             format-muted = "";
             format-icons = [ "" "" "" ];
-            on-click = "${pkgs.pavucontrol}/bin/pavucontrol";
-            on-click-right = "${pkgs.pamixer}/bin/pamixer --toggle-mute";
+            on-click = lib.getExe pkgs.pavucontrol;
+            on-click-right = "${lib.getExe pkgs.pamixer} --toggle-mute";
             scroll-step = 5;
             max-volume = 150;
             ignored-sinks = [ "Easy Effects Sink" ];
@@ -200,8 +200,8 @@ in
           };
           backlight = {
             format = " {percent}%";
-            on-scroll-up = "${pkgs.light}/bin/light -A 5%";
-            on-scroll-down = "${pkgs.light}/bin/light -U 5%";
+            on-scroll-up = "light -A 5%";
+            on-scroll-down = "light -U 5%";
           };
           battery = {
             inherit (cfg) interval;

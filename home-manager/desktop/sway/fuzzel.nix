@@ -1,4 +1,5 @@
 { config, lib, ... }:
+
 {
   options.home-manager.desktop.sway.fuzzel.enable = lib.mkEnableOption "Fuzzel config" // {
     default = config.home-manager.desktop.sway.enable;
@@ -10,7 +11,8 @@
       settings = with config.home-manager.desktop.theme.fonts; {
         main = {
           font = "${gui.name}:style=regular:size=14";
-          terminal = "${config.programs.kitty.package}/bin/kitty";
+          terminal = lib.mkIf config.programs.kitty.enable
+            (lib.getExe config.programs.kitty.package);
           icon-theme = config.gtk.iconTheme.name;
           lines = 15;
           horizontal-pad = 10;

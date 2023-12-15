@@ -86,7 +86,7 @@ in
             Group = group;
             Type = "simple";
             Restart = "always";
-            ExecStart = "${pkgs.nodePackages.flood}/bin/flood --host ${cfg.flood.host} --port ${toString cfg.flood.port}";
+            ExecStart = "${lib.getExe pkgs.nodePackages.flood} --host ${cfg.flood.host} --port ${toString cfg.flood.port}";
 
             CapabilityBoundingSet = "";
             LockPersonality = true;
