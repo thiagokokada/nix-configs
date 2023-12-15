@@ -18,8 +18,8 @@
       # Configure greetd, a lightweight session manager
       greetd = {
         enable = true;
-        settings = rec {
-          initial_session =
+        settings = {
+          default_session =
             let
               genSessionsFor = path:
                 lib.concatStringsSep ":"
@@ -38,17 +38,10 @@
                 # X or Wayland, so add both to path
                 "${genSessionsFor "share/xsessions"}:${genSessionsFor "share/wayland-sessions"}"
               ];
-              user = "greeter";
             };
-          default_session = initial_session;
         };
         vt = 7;
       };
     };
-
-    # https://github.com/apognu/tuigreet/issues/76
-    systemd.tmpfiles.rules = [
-      "d /var/cache/tuigreet 700 ${config.services.greetd.settings.initial_session.user} nobody"
-    ];
   };
 }
