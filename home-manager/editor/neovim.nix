@@ -117,7 +117,7 @@ in
           # before the plugins are initialized
           # See: https://github.com/nix-community/home-manager/pull/2391
           plugin = pkgs.writeText "00-init-pre" "";
-          config = /* vimscript */ ''
+          config = /* vim */ ''
             " remap leader
             let g:mapleader = "\<Space>"
             let g:maplocalleader = ','
@@ -125,7 +125,7 @@ in
         }
         {
           plugin = undotree;
-          config = /* vimscript */ ''
+          config = /* vim */ ''
             if !isdirectory($HOME . "/.config/nvim/undotree")
                 call mkdir($HOME . "/.config/nvim/undotree", "p", 0755)
             endif
@@ -140,7 +140,7 @@ in
         }
         {
           plugin = vim-polyglot;
-          config = /* vimscript */ ''
+          config = /* vim */ ''
             " use a simpler and faster regex to parse CSV
             " does not work with CSVs where the delimiter is quoted inside the field
             " let g:csv_strict_columns = 1
@@ -150,7 +150,7 @@ in
         }
         {
           plugin = vim-sneak;
-          config = /* vimscript */ ''
+          config = /* vim */ ''
             let g:sneak#label = 1
             map f <Plug>Sneak_f
             map F <Plug>Sneak_F
@@ -160,7 +160,7 @@ in
         }
         {
           plugin = vim-test;
-          config = /* vimscript */ ''
+          config = /* vim */ ''
             let g:test#strategy = "neovim"
             let g:test#neovim#start_normal = 1
             let g:test#neovim#term_position = "vert botright"
@@ -342,8 +342,6 @@ in
             local telescope = require('telescope')
             telescope.setup {
               defaults = {
-                -- Default configuration for telescope goes here:
-                -- config_key = value,
                 mappings = {
                   i = {
                     ["<C-j>"] = actions.move_selection_next,
@@ -361,18 +359,50 @@ in
                   -- set timeout low enough that it never feels too slow
                   timeout = 50,
                 },
+                -- configure to use ripgrep
+                vimgrep_arguments = {
+                  "rg",
+                  "--follow",        -- Follow symbolic links
+                  "--hidden",        -- Search for hidden files
+                  "--no-heading",    -- Don't group matches by each file
+                  "--with-filename", -- Print the file path with the matched lines
+                  "--line-number",   -- Show line numbers
+                  "--column",        -- Show column numbers
+                  "--smart-case",    -- Smart case search
+
+                  -- Exclude some patterns from search
+                  "--glob=!**/.git/*",
+                  "--glob=!**/.idea/*",
+                  "--glob=!**/.vscode/*",
+                  "--glob=!**/build/*",
+                  "--glob=!**/dist/*",
+                  "--glob=!**/yarn.lock",
+                  "--glob=!**/package-lock.json",
+                },
               },
-              extensions = {
-                fzf = {
-                  fuzzy = true,                    -- false will only do exact matching
-                  override_generic_sorter = true,  -- override the generic sorter
-                  override_file_sorter = true,     -- override the file sorter
-                  case_mode = "smart_case",        -- or "ignore_case" or "respect_case"
+              pickers = {
+                find_files = {
+                  hidden = true,
+                  -- needed to exclude some files & dirs from general search
+                  -- when not included or specified in .gitignore
+                  find_command = {
+                    "rg",
+                    "--files",
+                    "--hidden",
+                    "--glob=!**/.git/*",
+                    "--glob=!**/.idea/*",
+                    "--glob=!**/.vscode/*",
+                    "--glob=!**/build/*",
+                    "--glob=!**/dist/*",
+                    "--glob=!**/yarn.lock",
+                    "--glob=!**/package-lock.json",
+                  },
                 },
               },
             }
             telescope.load_extension('fzf')
             telescope.load_extension('projects')
+
             local builtin = require('telescope.builtin')
             vim.keymap.set('n', '<Leader><Leader>', builtin.find_files, { desc = "Find files" })
             vim.keymap.set('n', '<Leader>/', builtin.live_grep, { desc = "Live grep" })
