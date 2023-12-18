@@ -5,9 +5,7 @@ let
   cfg = config.nixos.games.corectrl;
 in
 {
-  options.nixos.games.corectrl.enable = lib.mkEnableOption "corectrl config" // {
-    default = config.nixos.games.enable && (config.nixos.games.gpu == "amd");
-  };
+  options.nixos.games.corectrl.enable = lib.mkEnableOption "corectrl config";
 
   config = lib.mkIf cfg.enable {
     programs.corectrl = {
