@@ -10,16 +10,13 @@
 
     programs.ssh = {
       enable = true;
+      addKeysToAgent = "yes";
       compression = true;
       forwardAgent = true;
       serverAliveCountMax = 2;
       serverAliveInterval = 300;
-      extraOptionOverrides = {
-        Include = "local.d/*";
-      };
-      extraConfig = ''
-        AddKeysToAgent yes
-      '' + lib.optionalString pkgs.stdenv.isDarwin ''
+      includes = [ "local.d/*" ];
+      extraConfig = lib.optionalString pkgs.stdenv.isDarwin ''
         IgnoreUnknown UseKeychain
         UseKeychain yes
       '';
