@@ -152,7 +152,6 @@
       (mkHomeConfig {
         hostname = "steamdeck";
         username = "deck";
-        extraModules = [{ home-manager.cli.enableGnu = false; }];
       })
       (mkHomeConfig {
         hostname = "home-macos";

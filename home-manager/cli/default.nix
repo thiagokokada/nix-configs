@@ -18,7 +18,7 @@ in
   options.home-manager.cli = {
     enable = lib.mkEnableOption "CLI config" // { default = true; };
     enableGnu = lib.mkEnableOption "GNU utils config" // {
-      default = !pkgs.stdenv.isDarwin;
+      default = !(config.targets.genericLinux.enable || pkgs.stdenv.isDarwin);
     };
     enableOuch = lib.mkEnableOption "Ouch config" // {
       default = !pkgs.stdenv.isDarwin;
