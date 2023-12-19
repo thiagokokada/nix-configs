@@ -491,7 +491,9 @@ in
                     formatting = {
                       command = { "nixpkgs-fmt" },
                     },
-                  ${lib.optionalString (!cfg.enableLowMemory) ''
+                  ${if cfg.enableLowMemory then ''
+                    nix = { flake = { autoArchive = false }},
+                  '' else ''
                     nix = {
                       maxMemoryMB = 8192,
                       flake = {
