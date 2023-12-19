@@ -136,12 +136,22 @@
       })
       (mkHomeConfig {
         hostname = "home-linux";
-        extraModules = [{ home-manager.dev.enable = true; }];
+        extraModules = [{
+          home-manager = {
+            dev.enable = true;
+            editor.neovim.enableLowMemory = true;
+          };
+        }];
       })
       (mkHomeConfig {
         hostname = "home-linux-aarch64";
         system = "aarch64-linux";
-        extraModules = [{ home-manager.dev.enable = true; }];
+        extraModules = [{
+          home-manager = {
+            dev.enable = true;
+            editor.neovim.enableLowMemory = true;
+          };
+        }];
       })
       (mkHomeConfig {
         hostname = "home-linux-minimal";
