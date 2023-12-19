@@ -139,6 +139,11 @@
         extraModules = [{ home-manager.dev.enable = true; }];
       })
       (mkHomeConfig {
+        hostname = "home-linux-aarch64";
+        system = "aarch64-linux";
+        extraModules = [{ home-manager.dev.enable = true; }];
+      })
+      (mkHomeConfig {
         hostname = "home-linux-minimal";
         username = getEnvOrDefault "USER" "thiagoko";
         homePath = (getEnvOrDefault "TMPDIR" "/tmp") + "/home";
