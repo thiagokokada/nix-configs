@@ -35,9 +35,6 @@ in
         findutils
         ripgrep
 
-        # needed by native compile
-        gcc
-
         # font for my config
         fira-code
         hack-font

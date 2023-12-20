@@ -14,7 +14,6 @@
   config = lib.mkIf config.home-manager.dev.enable {
     home.packages = with pkgs; [
       expect
-      gcc
       marksman
       nodePackages.bash-language-server
       shellcheck
