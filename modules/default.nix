@@ -3,6 +3,6 @@
 {
   imports = [
     ./device.nix
-    ./mainUser.nix
+    ./main-user.nix
   ];
 }
