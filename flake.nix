@@ -124,7 +124,7 @@
       (mkNixOSConfig { hostname = "zatsune-nixos"; })
       (mkNixOSConfig { hostname = "zachune-nixos"; })
 
-      # Home-Manager configs
+      # Home-Manager generic configs
       (mkHomeConfig {
         hostname = "home-linux-desktop";
         extraModules = [{
@@ -144,7 +144,23 @@
         }];
       })
       (mkHomeConfig {
-        hostname = "home-linux-aarch64";
+        hostname = "home-linux-minimal";
+        username = getEnvOrDefault "USER" "thiagoko";
+        homePath = (getEnvOrDefault "TMPDIR" "/tmp") + "/home";
+        configuration = ./home-manager/minimal.nix;
+      })
+      (mkHomeConfig {
+        hostname = "home-macos";
+        system = "x86_64-darwin";
+        homePath = "/Users";
+      })
+      # Home-Manager specific configs
+      (mkHomeConfig {
+        hostname = "steamdeck";
+        username = "deck";
+      })
+      (mkHomeConfig {
+        hostname = "penguin";
         system = "aarch64-linux";
         extraModules = [{
           home-manager = {
@@ -152,21 +168,6 @@
             editor.neovim.enableLowMemory = true;
           };
         }];
-      })
-      (mkHomeConfig {
-        hostname = "home-linux-minimal";
-        username = getEnvOrDefault "USER" "thiagoko";
-        homePath = (getEnvOrDefault "TMPDIR" "/tmp") + "/home";
-        configuration = ./home-manager/minimal.nix;
-      })
-      (mkHomeConfig {
-        hostname = "steamdeck";
-        username = "deck";
-      })
-      (mkHomeConfig {
-        hostname = "home-macos";
-        system = "x86_64-darwin";
-        homePath = "/Users";
       })
       (mkHomeConfig {
         hostname = "toasty";
