@@ -5,6 +5,7 @@
 
   config = lib.mkIf config.home-manager.crostini.enable {
     home-manager = {
+      desktop.firefox.enable = lib.mkDefault true;
       dev.enable = lib.mkDefault true;
       editor.neovim.enableLowMemory = lib.mkDefault true;
     };
