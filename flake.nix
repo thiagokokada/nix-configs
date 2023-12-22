@@ -169,12 +169,7 @@
       (mkHomeConfig {
         hostname = "penguin";
         system = "aarch64-linux";
-        extraModules = [{
-          home-manager = {
-            dev.enable = true;
-            editor.neovim.enableLowMemory = true;
-          };
-        }];
+        extraModules = [{ home-manager.crostini.enable = true; }];
       })
       (mkHomeConfig {
         hostname = "toasty";

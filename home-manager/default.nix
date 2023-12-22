@@ -4,6 +4,7 @@
   imports = [
     ../modules
     ./cli
+    ./crostini.nix
     ./darwin.nix
     ./desktop
     ./dev
