@@ -30,6 +30,13 @@
       inputs.flake-utils.follows = "flake-utils";
     };
 
+    # twenty-twenty-twenty
+    twenty-twenty-twenty = {
+      url = "github:thiagokokada/twenty-twenty-twenty";
+      inputs.flake-compat.follows = "flake-compat";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     # emacs
     doomemacs = {
       url = "github:doomemacs/doomemacs";

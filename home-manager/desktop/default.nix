@@ -11,6 +11,7 @@
     ./mpv
     ./sway
     ./theme
+    ./twenty-twenty-twenty.nix
     ./xterm.nix
   ];
 

@@ -52,4 +52,6 @@ final: prev:
   nom-rebuild = prev.callPackage ../packages/nom-rebuild { };
 
   run-bg-alias = name: command: prev.callPackage ../packages/run-bg-alias { inherit name command; };
+
+  inherit (flake.inputs.twenty-twenty-twenty.packages.${prev.system}) twenty-twenty-twenty;
 }
