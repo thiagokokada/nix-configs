@@ -8,15 +8,17 @@ in
     enable = lib.mkEnableOption "Git config" // {
       default = config.home-manager.cli.enable;
     };
-    enableGui = lib.mkEnableOption "enable Git GUI" // {
+    enableGh = lib.mkEnableOption "GitHub CLI config" // { default = true; };
+    enableGui = lib.mkEnableOption "Git GUIconfig " // {
       default = config.home-manager.desktop.enable;
     };
   };
 
   config = lib.mkIf cfg.enable {
-    home.packages = with pkgs; [
+    home.packages = with pkgs; lib.optionals cfg.enableGh [
       github-cli
-    ] ++ lib.optionals cfg.enableGui [
+    ]
+    ++ lib.optionals cfg.enableGui [
       (run-bg-alias "gcd" "${lib.getExe' git-cola "git-cola"} dag")
       (run-bg-alias "gk" (lib.getExe' config.programs.git.package "gitk"))
       git-cola
@@ -108,6 +110,17 @@ in
           default = "simple";
         };
         rebase = { autoStash = true; };
+      };
+    };
+
+    xdg.configFile = lib.mkIf cfg.enableGh {
+      "gh/config.yml".text = lib.generators.toYAML { } {
+        git_protocol = "ssh";
+        prompt = "enabled";
+        aliases = {
+          co = "pr checkout";
+        };
+        version = "1";
       };
     };
   };
