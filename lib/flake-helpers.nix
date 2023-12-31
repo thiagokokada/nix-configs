@@ -63,10 +63,12 @@ in
       nixosConfigurations.${hostname} = nixpkgs.lib.nixosSystem {
         inherit system;
         modules = [ ../hosts/${hostname} ] ++ extraModules;
-        lib = nixpkgs.lib.extend (final: prev:
-          (import ../lib { lib = final; })
-        );
-        specialArgs.flake = self;
+        specialArgs = {
+          flake = self;
+          libEx = nixpkgs.lib.extend (final: prev:
+            (import ../lib { lib = final; })
+          );
+        };
       };
 
       apps.${pkgs.system} = {
@@ -107,11 +109,11 @@ in
             imports = [ configuration ];
           })
         ] ++ extraModules;
-        lib = nixpkgs.lib.extend (final: prev:
-          (import ../lib { lib = final; })
-        );
         extraSpecialArgs = {
           flake = self;
+          libEx = nixpkgs.lib.extend (final: prev:
+            (import ../lib { lib = final; })
+          );
           osConfig = {
             device.type = deviceType;
             mainUser.username = username;

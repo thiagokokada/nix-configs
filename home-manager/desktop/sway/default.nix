@@ -1,4 +1,4 @@
-{ config, lib, pkgs, osConfig, ... }:
+{ config, lib, libEx, pkgs, osConfig, ... }:
 let
   # Aliases
   alt = "Mod1";
@@ -124,7 +124,7 @@ in
         gtk = true;
       };
 
-      extraOptions = lib.optionals (pkgs.lib.isNvidia osConfig) [
+      extraOptions = lib.optionals (libEx.isNvidia osConfig) [
         "--unsupported-gpu"
       ];
     };

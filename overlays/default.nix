@@ -3,7 +3,7 @@ final: prev:
 
 {
   # namespaces
-  lib = prev.lib.extend (finalLib: prevLib:
+  libEx = prev.lib.extend (finalLib: prevLib:
     (import ../lib { lib = finalLib; })
   );
 

@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, libEx, pkgs, ... }:
 
 let
   cfg = config.home-manager.desktop.i3.i3status-rust;
@@ -95,7 +95,7 @@ in
               block = "disk_space";
               path = m;
               info_type = "available";
-              format = " $icon ${pkgs.lib.shortPath m} $available ";
+              format = " $icon ${libEx.shortPath m} $available ";
             })
             cfg.mountPoints;
 

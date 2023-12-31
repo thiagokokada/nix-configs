@@ -1,4 +1,4 @@
-{ config, lib, flake, pkgs, ... }:
+{ config, lib, libEx, flake, pkgs, ... }:
 
 let
   cfg = config.nixos.home;
@@ -25,7 +25,9 @@ in
       users.${config.mainUser.username} = {
         inherit (config.nixos.home) imports;
       };
-      extraSpecialArgs = { inherit flake; };
+      extraSpecialArgs = {
+        inherit flake libEx;
+      };
     };
 
     # Define a user account. Don't forget to set a password with ‘passwd’.

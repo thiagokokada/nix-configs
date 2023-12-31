@@ -1,8 +1,8 @@
-{ pkgs, lib, config, ... }:
+{ pkgs, lib, libEx, config, ... }:
 
 let
   cfg = config.home-manager.desktop.sway.waybar;
-  shortPathName = path: "disk#${pkgs.lib.shortPathWithSep "_" path}";
+  shortPathName = path: "disk#${libEx.shortPathWithSep "_" path}";
 in
 {
   options.home-manager.desktop.sway.waybar = {
@@ -96,12 +96,12 @@ in
               format-icons = [ "󰤯" "󰤟" "󰤢" "󰤥" "󰤨" ];
             };
         } //
-        (pkgs.lib.recursiveMergeAttrs
+        (libEx.recursiveMergeAttrs
           (map
             (m: {
               "${shortPathName m}" = {
                 inherit (cfg) interval;
-                format = " ${pkgs.lib.shortPath m}: {free}";
+                format = " ${libEx.shortPath m}: {free}";
                 path = m;
                 states = {
                   warning = 75;
