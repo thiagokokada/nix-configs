@@ -29,9 +29,7 @@
       ];
     };
 
-    # Set custom nixpkgs config (e.g.: allowUnfree), both for this
-    # config and for ad-hoc nix commands invocation
-    nixpkgs.config = import ./nixpkgs-config.nix;
+    # Config for ad-hoc nix commands invocation
     xdg.configFile."nixpkgs/config.nix".source = ./nixpkgs-config.nix;
 
     programs = {
