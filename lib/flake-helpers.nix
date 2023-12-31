@@ -7,7 +7,7 @@ in
   mkGHActionsYAMLs = names: eachDefaultSystem (system:
     let
       inherit (nixpkgs) lib;
-      pkgs = self.outputs.legacyPackages.${system};
+      pkgs = nixpkgs.legacyPackages.${system};
       mkGHActionsYAML = name:
         let
           file = import (../actions/${name}.nix);
@@ -38,7 +38,7 @@ in
     , deps ? pkgs: [ ]
     }: eachDefaultSystem (system:
     let
-      pkgs = self.outputs.legacyPackages.${system};
+      pkgs = nixpkgs.legacyPackages.${system};
     in
     {
       apps.${name} = mkApp {
@@ -60,9 +60,6 @@ in
       inherit (self.outputs.nixosConfigurations.${hostname}) config pkgs;
     in
     {
-      # `pkgs` argument is optional, but setting it here so we can reuse
-      # our imported nixpkgs with overlays+custom config
-      pkgs = self.outputs.legacyPackages.${system};
       nixosConfigurations.${hostname} = nixpkgs.lib.nixosSystem {
         inherit system;
         modules = [ ../hosts/${hostname} ] ++ extraModules;
@@ -105,7 +102,7 @@ in
     }:
     {
       homeConfigurations.${hostname} = home-manager.lib.homeManagerConfiguration {
-        pkgs = self.outputs.legacyPackages.${system};
+        pkgs = nixpkgs.legacyPackages.${system};
         modules = [
           ({ ... }: {
             home = { inherit username homeDirectory; };
