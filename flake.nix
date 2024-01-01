@@ -215,7 +215,6 @@
           devShells.default =
             let
               homeManager = self.outputs.homeConfigurations.home-linux-minimal;
-              inherit (homeManager) pkgs;
               inherit (homeManager.config.home) homeDirectory packages profileDirectory;
             in
             pkgs.mkShell {
