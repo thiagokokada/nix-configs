@@ -212,29 +212,10 @@
           };
         in
         {
-          devShells.default =
-            let
-              homeManager = self.outputs.homeConfigurations.home-linux-minimal;
-              inherit (homeManager.config.home) homeDirectory packages profileDirectory;
-            in
-            pkgs.mkShell {
-              # Ensure that nix/nix-build is in PATH
-              packages = [ pkgs.nix ] ++ packages;
-              shellHook = ''
-                export HOME=${homeDirectory}
-                mkdir -p "$HOME"
-
-                if ${homeManager.activationPackage}/activate; then
-                  . ${profileDirectory}/etc/profile.d/hm-session-vars.sh
-                  zsh -l && exit 0
-                else
-                  >&2 echo "[ERROR] Could not activate Home Manager!"
-                  >&2 echo "[ERROR] Did you pass '--impure' flag to 'nix develop'?"
-                  >&2 echo "[INFO] You can run the following command manually to debug the issue:"
-                  >&2 echo "[INFO] $ ${homeManager.activationPackage}/activate"
-                fi
-              '';
-            };
+          devShells.default = import ./dev-shell.nix {
+            inherit pkgs;
+            homeManagerConfiguration = self.outputs.homeConfigurations.home-linux-minimal;
+          };
           checks = import ./checks.nix { inherit pkgs; };
           formatter = pkgs.nixpkgs-fmt;
           legacyPackages = pkgs;
