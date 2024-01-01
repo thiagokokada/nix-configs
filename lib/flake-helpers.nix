@@ -7,7 +7,7 @@ in
   mkGHActionsYAMLs = names: eachDefaultSystem (system:
     let
       inherit (nixpkgs) lib;
-      pkgs = nixpkgs.legacyPackages.${system};
+      pkgs = self.outputs.legacyPackages.${system};
       mkGHActionsYAML = name:
         let
           file = import (../actions/${name}.nix);
@@ -38,7 +38,7 @@ in
     , deps ? pkgs: [ ]
     }: eachDefaultSystem (system:
     let
-      pkgs = nixpkgs.legacyPackages.${system};
+      pkgs = self.outputs.legacyPackages.${system};
     in
     {
       apps.${name} = mkApp {
@@ -102,7 +102,7 @@ in
     }:
     {
       homeConfigurations.${hostname} = home-manager.lib.homeManagerConfiguration {
-        pkgs = nixpkgs.legacyPackages.${system};
+        pkgs = self.outputs.legacyPackages.${system};
         modules = [
           ({ ... }: {
             home = { inherit username homeDirectory; };

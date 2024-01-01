@@ -22,6 +22,7 @@ in
 
     home-manager = {
       useUserPackages = true;
+      useGlobalPkgs = true;
       users.${config.mainUser.username} = {
         inherit (config.nixos.home) imports;
       };
