@@ -24,7 +24,6 @@ in
 
   config = lib.mkIf cfg.enable {
     home.packages = with pkgs; [
-      par
       ripgrep
     ]
     # For clipboard=unnamedplus
@@ -58,9 +57,6 @@ in
 
         -- live substitutions as you type
         vim.opt.inccommand = 'nosplit'
-
-        -- use par for formatting (`gq`)
-        vim.opt.formatprg = '${lib.getExe' pkgs.par "par"}'
 
         -- copy and paste use the system clipboard
         vim.opt.clipboard:append { 'unnamedplus' }
