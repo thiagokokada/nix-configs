@@ -88,7 +88,7 @@ in
       # systemd's out-of-memory daemon
       oomd = {
         enableRootSlice = true;
-        enableUserServices = true;
+        enableUserSlices = true;
       };
     };
 
