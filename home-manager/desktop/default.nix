@@ -9,6 +9,7 @@
     ./i3
     ./kitty.nix
     ./mpv
+    ./nixgl.nix
     ./sway
     ./theme
     ./twenty-twenty-twenty.nix

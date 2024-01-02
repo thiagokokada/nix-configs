@@ -1,28 +1,20 @@
-{ config, lib, libEx, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 
 {
   options.home-manager.crostini.enable = lib.mkEnableOption "Crostini (ChromeOS) config";
 
   config = lib.mkIf config.home-manager.crostini.enable {
-    home.packages = with pkgs; [
-      nixgl.nixGLMesa
-      (libEx.nixGLWrapper { pkg = firefox; nixGL = nixgl.nixGLMesa; })
-    ];
-
     home-manager = {
-      # Not using the desktop.firefox here since we are wrapping it with
-      # nixGLWrapper, that it is incompatible with the Home-Manager
-      # module
-      desktop.mpv.enable = lib.mkDefault true;
-      dev.enable = lib.mkDefault true;
-      editor.neovim.enableLowMemory = lib.mkDefault true;
-    };
-
-    programs = {
-      mpv.package = libEx.nixGLWrapper {
-        pkg = pkgs.mpv;
-        nixGL = pkgs.nixgl.nixGLMesa;
+      desktop = {
+        firefox.enable = true;
+        mpv.enable = true;
+        nixgl = {
+          enable = true;
+          package = pkgs.nixgl.nixGLMesa;
+        };
       };
+      dev.enable = true;
+      editor.neovim.enableLowMemory = true;
     };
 
     # https://nixos.wiki/wiki/Installing_Nix_on_Crostini
