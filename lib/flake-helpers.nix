@@ -66,7 +66,10 @@ in
         specialArgs = {
           flake = self;
           libEx = nixpkgs.lib.extend (final: prev:
-            (import ../lib { lib = final; })
+            (import ../lib {
+              inherit pkgs;
+              lib = final;
+            })
           );
         };
       };
@@ -101,7 +104,7 @@ in
     , home-manager ? inputs.home-manager
     }:
     {
-      homeConfigurations.${hostname} = home-manager.lib.homeManagerConfiguration {
+      homeConfigurations.${hostname} = home-manager.lib.homeManagerConfiguration rec {
         pkgs = self.outputs.legacyPackages.${system};
         modules = [
           ({ ... }: {
@@ -112,7 +115,10 @@ in
         extraSpecialArgs = {
           flake = self;
           libEx = nixpkgs.lib.extend (final: prev:
-            (import ../lib { lib = final; })
+            (import ../lib {
+              inherit pkgs;
+              lib = final;
+            })
           );
           osConfig = {
             device.type = deviceType;

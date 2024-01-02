@@ -5,7 +5,7 @@ final: prev:
 {
   # namespaces
   libEx = prev.lib.extend (finalLib: prevLib:
-    (import ../lib { lib = finalLib; })
+    (import ../lib { lib = finalLib; pkgs = final; })
   );
 
   gaming = flake.inputs.nix-gaming.packages.${prev.system};

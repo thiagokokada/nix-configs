@@ -23,7 +23,7 @@ in
 
       package = with pkgs;
         if (!cfg.enableVapoursynth) then
-          pkgs.mpv
+          lib.mkDefault pkgs.mpv
         else
           wrapMpv (mpv-unwrapped.override { vapoursynthSupport = true; }) {
             extraMakeWrapperArgs = [
