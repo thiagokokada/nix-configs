@@ -1,11 +1,18 @@
-{ config, lib, ... }:
+{ config, lib, pkgs, ... }:
 
 {
   options.home-manager.crostini.enable = lib.mkEnableOption "Crostini (ChromeOS) config";
 
   config = lib.mkIf config.home-manager.crostini.enable {
+    home.packages = with pkgs; [
+      nixgl.nixGLMesa
+    ];
+
     home-manager = {
-      desktop.firefox.enable = lib.mkDefault true;
+      desktop = {
+        firefox.enable = lib.mkDefault true;
+        mpv.enable = lib.mkDefault true;
+      };
       dev.enable = lib.mkDefault true;
       editor.neovim.enableLowMemory = lib.mkDefault true;
     };

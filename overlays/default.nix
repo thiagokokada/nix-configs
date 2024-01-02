@@ -1,6 +1,7 @@
 { flake }:
 final: prev:
 
+(flake.inputs.nixgl.overlays.default final prev) //
 {
   # namespaces
   libEx = prev.lib.extend (finalLib: prevLib:
