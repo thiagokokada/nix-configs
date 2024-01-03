@@ -12,6 +12,11 @@ in
       default = lib.meta.availableOn pkgs.stdenv.hostPlatform pkgs.vapoursynth;
     };
     enableHQ = lib.mkEnableOption "high-quality config (needs good CPU/GPU)";
+    defaultProfiles = lib.mkOption {
+      type = with lib.types; listOf str;
+      default = [ "gpu-hq" ];
+      description = "Default mpv profiles.";
+    };
   };
 
   config = lib.mkIf cfg.enable {
@@ -40,7 +45,7 @@ in
         osd-level = 3;
         slang = "enUS,enGB,en,eng,ptBR,pt,por";
         alang = "ja,jpn,enUS,enGB,en,eng,ptBR,pt,por";
-        profile = [ "gpu-hq" ];
+        profile = cfg.defaultProfiles;
       };
 
       profiles = {
