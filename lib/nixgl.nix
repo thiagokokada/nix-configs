@@ -20,15 +20,20 @@
         # Delete lines that start with exec
         cat '${lib.getExe nixGL}' | sed '/^exec/d' > $out/share/nixgl/env
 
-        # Wrap programs in nixGL by loading the nixGL environment variables
-        for bin in "$out/bin/"*; do
-          wrapProgram "$bin" --run ". $out/share/nixgl/env"
-        done
+        (
+          # Prevent loop from running if no files
+          shopt -s nullglob
 
-        # Fix desktop entries to point to the new binaries, if needed
-        for desktop in "$out/share/applications/"*".desktop"; do
-          sed -i "s|${pkg}|$out|g" "$desktop"
-        done
+          # Wrap programs in nixGL by loading the nixGL environment variables
+          for bin in "$out/bin/"*; do
+            wrapProgram "$bin" --run ". $out/share/nixgl/env"
+          done
+
+          # Fix desktop entries to point to the new binaries, if needed
+          for desktop in "$out/share/applications/"*".desktop"; do
+            sed -i "s|${pkg}|$out|g" "$desktop"
+          done
+        )
       '';
     };
 }
