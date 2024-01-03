@@ -21,6 +21,9 @@ in
       (lib.hiPrio (libEx.nixGLWrapper { pkg = firefox; nixGL = cfg.package; }))
     ];
 
+    # Needs Vapoursynth disabled so we don't wrap the package
+    home-manager.desktop.mpv.enableVapoursynth = false;
+
     programs = {
       mpv.package = libEx.nixGLWrapper {
         pkg = pkgs.mpv;
