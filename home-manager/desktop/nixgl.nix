@@ -8,7 +8,7 @@ in
     enable = lib.mkEnableOption "nixGL config" // {
       default = config.targets.genericLinux.enable;
     };
-    package = lib.mkPackageOption pkgs [ "nixgl" "auto" "nixGLDefault" ] { };
+    package = lib.mkPackageOption pkgs [ "nixgl" "nixGLMesa" ] { };
   };
 
   config = lib.mkIf cfg.enable {

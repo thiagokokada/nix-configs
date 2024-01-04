@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, ... }:
 
 {
   options.home-manager.crostini.enable = lib.mkEnableOption "Crostini (ChromeOS) config";
@@ -8,10 +8,7 @@
       desktop = {
         firefox.enable = true;
         mpv.enable = true;
-        nixgl = {
-          enable = true;
-          package = pkgs.nixgl.nixGLMesa;
-        };
+        nixgl.enable = true;
       };
       dev.enable = true;
       editor.neovim.enableLowMemory = true;
