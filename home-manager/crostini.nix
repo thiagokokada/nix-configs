@@ -1,9 +1,14 @@
-{ config, lib, ... }:
+{ config, lib, libEx, pkgs, ... }:
 
 {
   options.home-manager.crostini.enable = lib.mkEnableOption "Crostini (ChromeOS) config";
 
   config = lib.mkIf config.home-manager.crostini.enable {
+    # TODO: move this somewhere else
+    home.packages = with pkgs; [
+      deluge
+    ];
+
     home-manager = {
       desktop = {
         firefox.enable = true;
