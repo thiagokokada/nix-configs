@@ -1,4 +1,4 @@
-{ config, lib, libEx, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 
 {
   options.home-manager.crostini.enable = lib.mkEnableOption "Crostini (ChromeOS) config";
