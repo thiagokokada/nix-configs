@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, libEx, pkgs, ... }:
 
 {
   options.home-manager.crostini.enable = lib.mkEnableOption "Crostini (ChromeOS) config";
@@ -7,6 +7,22 @@
     # TODO: move this somewhere else
     home.packages = with pkgs; [
       deluge
+      (libEx.nixGLWrapper {
+        pkg = retroarch.override {
+          cores = with libretro; [
+            beetle-supafaust
+            gambatte
+            genesis-plus-gx
+            melonds
+            mgba
+            nestopia
+            stella
+            swanstation
+          ];
+          # OpenGL window is too small
+          settings = { "video_driver" = "sdl2"; };
+        };
+      })
     ];
 
     home-manager = {
