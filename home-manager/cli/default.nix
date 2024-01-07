@@ -50,7 +50,6 @@ in
       ripgrep
       rlwrap
       tealdeer
-      tig
       tokei
       wget
     ]

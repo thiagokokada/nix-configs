@@ -24,92 +24,146 @@ in
       git-cola
     ];
 
-    programs.git = {
-      enable = true;
-
-      userName = config.mainUser.fullname;
-      userEmail = config.mainUser.email;
-      package = with pkgs;
-        if cfg.enableGui then
-          gitFull.override
-            {
-              # Use SSH from macOS instead with support for Keyring
-              # https://github.com/NixOS/nixpkgs/issues/62353
-              withSsh = !stdenv.isDarwin;
-            }
-        else git;
-
-      delta = {
+    programs = {
+      git = {
         enable = true;
-        options = {
-          features = "side-by-side line-numbers decorations";
-          syntax-theme = "Dracula";
-          plus-style = ''syntax "#003800"'';
-          minus-style = ''syntax "#3f0001"'';
-          decorations = {
-            commit-decoration-style = "bold yellow box ul";
-            file-style = "bold yellow ul";
-            file-decoration-style = "none";
-            hunk-header-decoration-style = "cyan box ul";
+
+        userName = config.mainUser.fullname;
+        userEmail = config.mainUser.email;
+        package = with pkgs;
+          if cfg.enableGui then
+            gitFull.override
+              {
+                # Use SSH from macOS instead with support for Keyring
+                # https://github.com/NixOS/nixpkgs/issues/62353
+                withSsh = !stdenv.isDarwin;
+              }
+          else git;
+
+        delta = {
+          enable = true;
+          options = {
+            features = "side-by-side line-numbers decorations";
+            syntax-theme = "Dracula";
+            plus-style = ''syntax "#003800"'';
+            minus-style = ''syntax "#3f0001"'';
+            decorations = {
+              commit-decoration-style = "bold yellow box ul";
+              file-style = "bold yellow ul";
+              file-decoration-style = "none";
+              hunk-header-decoration-style = "cyan box ul";
+            };
+            delta = {
+              navigate = true;
+            };
+            line-numbers = {
+              line-numbers-left-style = "cyan";
+              line-numbers-right-style = "cyan";
+              line-numbers-minus-style = 124;
+              line-numbers-plus-style = 28;
+            };
           };
-          delta = {
-            navigate = true;
+        };
+
+        aliases = {
+          branch-default = ''!git symbolic-ref --short refs/remotes/origin/HEAD | sed "s|^origin/||"'';
+          checkout-default = ''!git checkout "$(git branch-default)"'';
+          rebase-default = ''!git rebase "$(git branch-default)"'';
+          merge-default = ''!git merge "$(git branch-default)"'';
+          branch-cleanup = ''!git branch --merged | egrep -v "(^\*|master|main|dev|development)" | xargs git branch -d #'';
+          # Restores the commit message from a failed commit for some reason
+          fix-commit = ''!git commit -F "$(git rev-parse --git-dir)/COMMIT_EDITMSG" --edit'';
+          pushf = "push --force-with-lease";
+          logs = "log --show-signature";
+        };
+
+        ignores = [
+          "*.swp"
+          "*~"
+          ".clj-kondo"
+          ".dir-locals.el"
+          ".DS_Store"
+          ".lsp"
+          ".projectile"
+          "Thumbs.db"
+        ];
+
+        includes = [{ path = "~/.config/git/local"; }];
+
+        extraConfig = {
+          init = { defaultBranch = "master"; };
+          branch = { sort = "-committerdate"; };
+          color = { ui = true; };
+          commit = { verbose = true; };
+          core = {
+            editor = "nvim";
+            whitespace = "trailing-space,space-before-tab,indent-with-non-tab";
           };
-          line-numbers = {
-            line-numbers-left-style = "cyan";
-            line-numbers-right-style = "cyan";
-            line-numbers-minus-style = 124;
-            line-numbers-plus-style = 28;
+          checkout = { defaultRemote = "origin"; };
+          github = { user = "thiagokokada"; };
+          merge = {
+            conflictstyle = "zdiff3";
+            tool = "nvim -d";
           };
+          pull = { rebase = true; };
+          push = {
+            autoSetupRemote = true;
+            default = "simple";
+          };
+          rebase = { autoStash = true; };
         };
       };
 
-      aliases = {
-        branch-default = ''!git symbolic-ref --short refs/remotes/origin/HEAD | sed "s|^origin/||"'';
-        checkout-default = ''!git checkout "$(git branch-default)"'';
-        rebase-default = ''!git rebase "$(git branch-default)"'';
-        merge-default = ''!git merge "$(git branch-default)"'';
-        branch-cleanup = ''!git branch --merged | egrep -v "(^\*|master|main|dev|development)" | xargs git branch -d #'';
-        # Restores the commit message from a failed commit for some reason
-        fix-commit = ''!git commit -F "$(git rev-parse --git-dir)/COMMIT_EDITMSG" --edit'';
-        pushf = "push --force-with-lease";
-        logs = "log --show-signature";
-      };
+      gitui = {
+        enable = true;
+        # https://github.com/extrawurst/gitui/blob/master/vim_style_key_config.ron
+        keyConfig = ''
+          // bit for modifiers
+          // bits: 0  None
+          // bits: 1  SHIFT
+          // bits: 2  CONTROL
+          //
+          // Note:
+          // If the default key layout is lower case,
+          // and you want to use `Shift + q` to trigger the exit event,
+          // the setting should like this `exit: Some(( code: Char('Q'), modifiers: ( bits: 1,),)),`
+          // The Char should be upper case, and the shift modified bit should be set to 1.
+          //
+          // Note:
+          // find `KeysList` type in src/keys/key_list.rs for all possible keys.
+          // every key not overwritten via the config file will use the default specified there
+          (
+              open_help: Some(( code: F(1), modifiers: ( bits: 0,),)),
 
-      ignores = [
-        "*.swp"
-        "*~"
-        ".clj-kondo"
-        ".dir-locals.el"
-        ".DS_Store"
-        ".lsp"
-        ".projectile"
-        "Thumbs.db"
-      ];
+              move_left: Some(( code: Char('h'), modifiers: ( bits: 0,),)),
+              move_right: Some(( code: Char('l'), modifiers: ( bits: 0,),)),
+              move_up: Some(( code: Char('k'), modifiers: ( bits: 0,),)),
+              move_down: Some(( code: Char('j'), modifiers: ( bits: 0,),)),
 
-      includes = [{ path = "~/.config/git/local"; }];
+              popup_up: Some(( code: Char('p'), modifiers: ( bits: 2,),)),
+              popup_down: Some(( code: Char('n'), modifiers: ( bits: 2,),)),
+              page_up: Some(( code: Char('b'), modifiers: ( bits: 2,),)),
+              page_down: Some(( code: Char('f'), modifiers: ( bits: 2,),)),
+              home: Some(( code: Char('g'), modifiers: ( bits: 0,),)),
+              end: Some(( code: Char('G'), modifiers: ( bits: 1,),)),
+              shift_up: Some(( code: Char('K'), modifiers: ( bits: 1,),)),
+              shift_down: Some(( code: Char('J'), modifiers: ( bits: 1,),)),
 
-      extraConfig = {
-        init = { defaultBranch = "master"; };
-        branch = { sort = "-committerdate"; };
-        color = { ui = true; };
-        commit = { verbose = true; };
-        core = {
-          editor = "nvim";
-          whitespace = "trailing-space,space-before-tab,indent-with-non-tab";
-        };
-        checkout = { defaultRemote = "origin"; };
-        github = { user = "thiagokokada"; };
-        merge = {
-          conflictstyle = "zdiff3";
-          tool = "nvim -d";
-        };
-        pull = { rebase = true; };
-        push = {
-          autoSetupRemote = true;
-          default = "simple";
-        };
-        rebase = { autoStash = true; };
+              edit_file: Some(( code: Char('I'), modifiers: ( bits: 1,),)),
+
+              status_reset_item: Some(( code: Char('U'), modifiers: ( bits: 1,),)),
+
+              diff_reset_lines: Some(( code: Char('u'), modifiers: ( bits: 0,),)),
+              diff_stage_lines: Some(( code: Char('s'), modifiers: ( bits: 0,),)),
+
+              stashing_save: Some(( code: Char('w'), modifiers: ( bits: 0,),)),
+              stashing_toggle_index: Some(( code: Char('m'), modifiers: ( bits: 0,),)),
+
+              stash_open: Some(( code: Char('l'), modifiers: ( bits: 0,),)),
+
+              abort_merge: Some(( code: Char('M'), modifiers: ( bits: 1,),)),
+          )
+        '';
       };
     };
 
