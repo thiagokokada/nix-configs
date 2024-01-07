@@ -1,5 +1,5 @@
 jobs:
-  update-flakes-macos:
+  update-flakes-darwin:
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: macos-13
     steps:

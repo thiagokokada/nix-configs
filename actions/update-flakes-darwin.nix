@@ -13,7 +13,7 @@ with constants;
     workflow_dispatch = null;
   };
   jobs = {
-    update-flakes-macos = {
+    update-flakes-darwin = {
       inherit (macos) runs-on;
       "if" = "\${{ github.event.workflow_run.conclusion == 'success' }}";
       steps = with steps; [
