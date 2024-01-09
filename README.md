@@ -82,6 +82,20 @@ this case, you can just run:
 $ nix run github:numtide/nixos-anywhere -- --flake '.#hostname' root@hostname
 ```
 
+### system-manager
+
+Start by installing Nix:
+
+```console
+$ sh <(curl -L https://nixos.org/nix/install) --daemon
+```
+
+Run:
+
+```console
+$ nix run 'github:numtide/system-manager' -- switch --flake '.'
+```
+
 ### Home Manager (standalone)
 
 Start by installing Nix:
