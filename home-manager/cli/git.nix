@@ -27,6 +27,10 @@ in
     programs = {
       gh = {
         enable = true;
+        extensions = with pkgs; [
+          gh-dash
+          gh-markdown-preview
+        ];
         settings = {
           git_protocol = "ssh";
           editor = "nvim";
