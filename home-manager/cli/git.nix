@@ -25,6 +25,18 @@ in
     ];
 
     programs = {
+      gh = {
+        enable = true;
+        settings = {
+          git_protocol = "ssh";
+          editor = "nvim";
+          prompt = "enabled";
+          aliases = {
+            co = "pr checkout";
+          };
+        };
+      };
+
       git = {
         enable = true;
 
@@ -190,17 +202,6 @@ in
               branch_fg: Some(Rgb(139, 213, 202))
           )
         '';
-      };
-    };
-
-    xdg.configFile = lib.mkIf cfg.enableGh {
-      "gh/config.yml".text = lib.generators.toYAML { } {
-        git_protocol = "ssh";
-        prompt = "enabled";
-        aliases = {
-          co = "pr checkout";
-        };
-        version = "1";
       };
     };
   };
