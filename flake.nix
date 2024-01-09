@@ -22,10 +22,6 @@
       inputs.flake-utils.follows = "flake-utils";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    system-manager = {
-      url = "github:numtide/system-manager";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
 
     # helpers
     flake-compat.url = "github:edolstra/flake-compat";
@@ -113,7 +109,7 @@
     };
   };
 
-  outputs = { self, nixpkgs, system-manager, flake-utils, ... }@inputs:
+  outputs = { self, nixpkgs, flake-utils, ... }@inputs:
     let
       inherit (import ./lib/attrsets.nix { inherit (nixpkgs) lib; }) recursiveMergeAttrs;
       inherit (import ./lib/flake-helpers.nix inputs) mkGHActionsYAMLs mkRunCmd mkNixOSConfig mkHomeConfig;
@@ -139,29 +135,6 @@
       (mkNixOSConfig { hostname = "sankyuu-nixos"; })
       (mkNixOSConfig { hostname = "zatsune-nixos"; })
       (mkNixOSConfig { hostname = "zachune-nixos"; })
-
-      # system-manager
-      {
-        systemConfigs.penguin = system-manager.lib.makeSystemConfig {
-          modules = [
-            ({ ... }: {
-              nixpkgs.hostPlatform = "aarch64-linux";
-
-              environment.etc = {
-                "nix/nix.conf".text = ''
-                  build-users-group = nixbld
-                  experimental-features = nix-command flakes
-                  trusted-users = @sudo
-                  builders-use-substitutes = true
-                '';
-                "nix/machines".text = ''
-                  ssh-ng://100.103.30.119 aarch64-linux - 4 1 - - c3NoLWVkMjU1MTkgQUFBQUMzTnphQzFsWkRJMU5URTVBQUFBSUY5a3NRZkFGWTRSbVRmdUEzTDdTQ1Z0YlpsZ2hodVBWSDAxWTRDbytvOHIgcm9vdEB6YXRzdW5lLW5peG9zCg==
-                '';
-              };
-            })
-          ];
-        };
-      }
 
       # Home-Manager generic configs
       (mkHomeConfig {
