@@ -7,6 +7,7 @@ in
   imports = [
     ./cross-compiling.nix
     ./diff.nix
+    ./remote-builders.nix
   ];
 
   options.nixos.nix = {

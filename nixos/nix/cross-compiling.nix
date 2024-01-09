@@ -20,22 +20,5 @@ in
     boot.binfmt = {
       inherit (cfg) emulatedSystems;
     };
-
-    # Compile via remote builders+Tailscale
-    nix = lib.mkIf config.nixos.desktop.tailscale.enable {
-      buildMachines = [{
-        hostName = "zatsune-nixos-uk";
-        system = "aarch64-linux";
-        protocol = "ssh-ng";
-        maxJobs = 4;
-        publicHostKey = "c3NoLWVkMjU1MTkgQUFBQUMzTnphQzFsWkRJMU5URTVBQUFBSUY5a3NRZkFGWTRSbVRmdUEzTDdTQ1Z0YlpsZ2hodVBWSDAxWTRDbytvOHIgcm9vdEB6YXRzdW5lLW5peG9zCg==";
-      }];
-
-      distributedBuilds = true;
-
-      settings = {
-        builders-use-substitutes = true;
-      };
-    };
   };
 }
