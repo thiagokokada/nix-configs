@@ -20,7 +20,7 @@
       Install.WantedBy = [ "graphical-session.target" ];
 
       Service = {
-        ExecStart = lib.getExe pkgs.twenty-twenty-twenty;
+        ExecStart = ''${lib.getExe pkgs.twenty-twenty-twenty} -disable-sound'';
         Type = "simple";
       };
     };
