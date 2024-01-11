@@ -16,6 +16,13 @@
           with colors; /* lua */''
             local act = wezterm.action
             local config = wezterm.config_builder()
+            local mux = wezterm.mux
+
+            -- Automatically maximize window on startup
+            wezterm.on("gui-startup", function()
+              local tab, pane, window = mux.spawn_window{}
+              window:gui_window():maximize()
+            end)
 
             config.audible_bell = "Disabled"
             config.color_scheme = "Builtin Pastel Dark"
