@@ -28,7 +28,7 @@ in
     ]
     # For clipboard=unnamedplus
     ++ lib.optionals stdenv.isLinux [
-      wl-clipboard
+      wl-clipboard-rs
       xclip
     ]
     ++ lib.optionals cfg.enableIcons [

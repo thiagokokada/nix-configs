@@ -56,13 +56,5 @@ final: prev:
 
   inherit (flake.inputs.twenty-twenty-twenty.packages.${prev.system}) twenty-twenty-twenty;
 
-  wl-clipboard = prev.wl-clipboard.overrideAttrs (oldAttrs: {
-    patches = [
-      (prev.fetchpatch {
-        name = "fix-wrong-flushing-issue";
-        url = "https://github.com/bugaevc/wl-clipboard/commit/4f20741f66c4e9bcf45481e941e344f8fe5e998d.patch";
-        hash = "sha256-Z15Ouc6/2SjUuWmg5hKXELzzoeKLfa8eEY+bCng68YI=";
-      })
-    ];
-  });
+  wl-clipboard-rs = prev.callPackage ../packages/wl-clipboard-rs { };
 }
