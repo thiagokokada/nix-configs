@@ -1,21 +1,20 @@
 { lib, ... }:
 
-with lib;
 {
   options.mainUser = {
-    username = mkOption {
+    username = lib.mkOption {
       description = "Main username";
-      type = types.str;
+      type = lib.types.str;
       default = "thiagoko";
     };
-    fullname = mkOption {
+    fullname = lib.mkOption {
       description = "Main user full name";
-      type = types.str;
+      type = lib.types.str;
       default = "Thiago Kenji Okada";
     };
-    email = mkOption {
+    email = lib.mkOption {
       description = "Main e-mail";
-      type = types.str;
+      type = lib.types.str;
       default = "thiagokokada@gmail.com";
     };
   };
