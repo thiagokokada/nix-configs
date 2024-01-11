@@ -1,11 +1,29 @@
 { config, lib, ... }:
 
+let
+  cfg = config.home-manager.desktop.wezterm;
+in
 {
-  options.home-manager.desktop.wezterm.enable = lib.mkEnableOption "WezTerm config" // {
-    default = config.home-manager.desktop.enable;
+  options.home-manager.desktop.wezterm = {
+    enable = lib.mkEnableOption "WezTerm config" // {
+      default = config.home-manager.desktop.enable;
+    };
+    fullscreenOnStartup = lib.mkEnableOption "automatically fullscreen on startup" // {
+      default = true;
+    };
+    fontSize = lib.mkOption {
+      type = lib.types.float;
+      description = "Font size.";
+      default = 12.0;
+    };
+    opacity = lib.mkOption {
+      type = lib.types.float;
+      description = "Background opacity.";
+      default = 0.9;
+    };
   };
 
-  config = lib.mkIf config.home-manager.desktop.wezterm.enable {
+  config = lib.mkIf cfg.enable {
     programs = {
       wezterm = {
         enable = true;
@@ -16,22 +34,24 @@
           with colors; /* lua */''
             local act = wezterm.action
             local config = wezterm.config_builder()
-            local mux = wezterm.mux
 
-            -- Automatically maximize window on startup
-            wezterm.on("gui-startup", function()
-              local tab, pane, window = mux.spawn_window{}
-              window:gui_window():maximize()
-            end)
+            ${lib.optionalString cfg.fullscreenOnStartup /* lua */ ''
+              local mux = wezterm.mux
+              -- Automatically maximize window on startup
+              wezterm.on("gui-startup", function()
+                local tab, pane, window = mux.spawn_window{}
+                window:gui_window():maximize()
+              end)
+            ''}
 
             config.audible_bell = "Disabled"
             config.color_scheme = "Builtin Pastel Dark"
             config.enable_kitty_keyboard = true
             config.font = wezterm.font("${fonts.symbols.name}")
-            config.font_size = 12.0
+            config.font_size = ${toString cfg.fontSize}
             config.hide_tab_bar_if_only_one_tab = true
             config.scrollback_lines = 10000
-            config.window_background_opacity = 0.9
+            config.window_background_opacity = ${toString cfg.opacity}
             config.colors = {
               foreground = "${base05}",
               background = "${base00}",
