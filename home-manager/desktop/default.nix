@@ -20,9 +20,13 @@
   options.home-manager.desktop = {
     enable = lib.mkEnableOption "desktop config";
     defaultTerminal = lib.mkOption {
-      type = lib.types.path;
-      description = "Default terminal emulator to be used.";
-      default = lib.getExe config.programs.wezterm.package;
+      type = lib.types.str;
+      description = ''
+        Default terminal emulator to be used.
+
+        Should allow starting programs as parameter.
+      '';
+      default = "${lib.getExe config.programs.wezterm.package} start";
     };
   };
 
