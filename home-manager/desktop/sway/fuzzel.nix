@@ -11,8 +11,7 @@
       settings = with config.home-manager.desktop.theme.fonts; {
         main = {
           font = "${gui.name}:style=regular:size=14";
-          terminal = lib.mkIf config.programs.kitty.enable
-            (lib.getExe config.programs.kitty.package);
+          terminal = config.home-manager.desktop.defaultTerminal;
           icon-theme = config.gtk.iconTheme.name;
           lines = 15;
           horizontal-pad = 10;

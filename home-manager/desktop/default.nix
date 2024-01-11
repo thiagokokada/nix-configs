@@ -17,7 +17,14 @@
     ./xterm.nix
   ];
 
-  options.home-manager.desktop.enable = lib.mkEnableOption "desktop config";
+  options.home-manager.desktop = {
+    enable = lib.mkEnableOption "desktop config";
+    defaultTerminal = lib.mkOption {
+      type = lib.types.path;
+      description = "Default terminal emulator to be used.";
+      default = lib.getExe config.programs.kitty.package;
+    };
+  };
 
   config = lib.mkIf config.home-manager.desktop.enable {
     i18n.inputMethod.enabled = "fcitx5";

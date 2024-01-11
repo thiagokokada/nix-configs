@@ -10,7 +10,7 @@
 , light ? "light" # needs to be installed system-wide
 , pamixer ? (lib.getExe pkgs.pamixer)
 , playerctl ? (lib.getExe pkgs.playerctl)
-, terminal ? (lib.getExe config.programs.kitty.package)
+, terminal ? config.home-manager.desktop.defaultTerminal
 , statusCommand ? null
 , alt ? "Mod1"
 , modifier ? "Mod4"
