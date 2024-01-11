@@ -14,7 +14,7 @@
           window_background_opacity = 0.9,
           font = wezterm.font("${name}"),
           font_size = 12.0,
-          color_scheme = "Tomorrow Night",
+          color_scheme = "Builtin Pastel Dark",
           hide_tab_bar_if_only_one_tab = true,
           scrollback_lines = 10000,
           audible_bell = "Disabled",
