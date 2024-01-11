@@ -22,7 +22,7 @@
     defaultTerminal = lib.mkOption {
       type = lib.types.path;
       description = "Default terminal emulator to be used.";
-      default = lib.getExe config.programs.kitty.package;
+      default = lib.getExe config.programs.wezterm.package;
     };
   };
 
