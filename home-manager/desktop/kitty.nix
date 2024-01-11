@@ -81,11 +81,8 @@
 
     programs.zsh.initExtra = lib.mkIf config.programs.zsh.enable /* bash */ ''
       # Do not enable those alias in non-kitty terminal
-      if [[ -n "$KITTY_INSTALLATION_DIR" ]]; then
-        alias copy="kitty +kitten clipboard"
-        alias d="kitty +kitten diff"
-        alias icat="kitty +kitten icat"
-        alias paste="kitty +kitten clipboard --get-clipboard"
+      if [[ -n "$KITTY_PID" ]]; then
+        alias imgcat="kitty +kitten icat"
         alias ssh="kitty +kitten ssh $@"
         alias ssh-compat="TERM=xterm-256color \ssh"
       fi
