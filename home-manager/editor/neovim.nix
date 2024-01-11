@@ -19,7 +19,6 @@ in
     enableTreeSitter = lib.mkEnableOption "TreeSitter" // {
       default = config.home-manager.dev.enable;
     };
-    enableLowMemory = lib.mkEnableOption "low memory config (< 8GiB)";
   };
 
   config = lib.mkIf cfg.enable {
@@ -491,17 +490,6 @@ in
                     formatting = {
                       command = { "nixpkgs-fmt" },
                     },
-                  ${if cfg.enableLowMemory then ''
-                    nix = { flake = { autoArchive = false }},
-                  '' else ''
-                    nix = {
-                      maxMemoryMB = 8192,
-                      flake = {
-                        autoArchive = true,
-                        autoEvalInputs = true,
-                      },
-                    },
-                  ''}
                   },
                 },
               }

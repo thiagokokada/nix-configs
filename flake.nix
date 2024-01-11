@@ -148,12 +148,7 @@
       })
       (mkHomeConfig {
         hostname = "home-linux";
-        extraModules = [{
-          home-manager = {
-            dev.enable = true;
-            editor.neovim.enableLowMemory = true;
-          };
-        }];
+        extraModules = [{ home-manager.dev.enable = true; }];
       })
       (mkHomeConfig {
         hostname = "home-linux-minimal";

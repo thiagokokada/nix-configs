@@ -11,7 +11,6 @@
         nixgl.enable = true;
       };
       dev.enable = true;
-      editor.neovim.enableLowMemory = true;
     };
 
     # https://nixos.wiki/wiki/Installing_Nix_on_Crostini
