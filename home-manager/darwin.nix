@@ -7,7 +7,13 @@
 
   config = lib.mkIf config.home-manager.darwin.enable {
     home-manager = {
-      dev.enable = lib.mkDefault true;
+      dev.enable = true;
+      desktop.wezterm = {
+        enable = true;
+        fullscreenOnStartup = false;
+        fontSize = 14.0;
+        opacity = 1.0;
+      };
     };
 
     targets.darwin.defaults = {
