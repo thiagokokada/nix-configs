@@ -133,7 +133,7 @@ in
 
     home.packages = with pkgs; [
       wdisplays
-      wl-clipboard-rs
+      wl-clipboard
     ];
   };
 }
