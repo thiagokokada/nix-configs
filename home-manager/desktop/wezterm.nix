@@ -1,4 +1,4 @@
-{ config, lib, ... }:
+{ config, lib, pkgs, ... }:
 
 let
   cfg = config.home-manager.desktop.wezterm;
@@ -61,6 +61,18 @@ in
               selection_bg = "${base02}",
               selection_fg = "${base05}",
             };
+            config.keys = {
+              -- Clears the scrollback and viewport, and then sends CTRL-L to ask the
+              -- shell to redraw its prompt
+              {
+                key = 'K',
+                mods = 'CTRL|SHIFT',
+                action = act.Multiple {
+                  act.ClearScrollback 'ScrollbackAndViewport',
+                  act.SendKey { key = 'L', mods = 'CTRL' },
+                },
+              },
+            }
             config.mouse_bindings = {
               -- Change the default click behavior so that it only selects
               -- text and doesn't open hyperlinks
