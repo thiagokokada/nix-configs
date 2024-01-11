@@ -13,6 +13,7 @@
     ./sway
     ./theme
     ./twenty-twenty-twenty.nix
+    ./wezterm.nix
     ./xterm.nix
   ];
 
