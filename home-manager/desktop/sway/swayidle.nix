@@ -15,6 +15,8 @@ in
   };
 
   config = lib.mkIf config.home-manager.desktop.sway.swayidle.enable {
+    home.packages = with pkgs; [ swayidle ];
+
     services.swayidle = {
       enable = true;
       events = [
