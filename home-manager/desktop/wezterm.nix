@@ -76,6 +76,11 @@ in
             ''}
 
             config.audible_bell = "Disabled"
+            config.visual_bell = {
+              fade_in_duration_ms = 100,
+              fade_out_duration_ms = 100,
+              target = 'CursorColor',
+            }
             config.color_scheme = "Builtin Pastel Dark"
             config.enable_kitty_keyboard = true
             config.font = wezterm.font("${fonts.symbols.name}")
