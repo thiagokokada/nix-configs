@@ -34,13 +34,14 @@ in
           with colors; /* lua */''
             local act = wezterm.action
             local config = wezterm.config_builder()
+            local scrollback_lines = 10000
 
             wezterm.on('trigger-editor-with-visible-text', function(window, pane)
               -- Retrieve the current viewport's text.
               --
               -- Note: You could also pass an optional number of lines (eg: 2000) to
               -- retrieve that number of lines starting from the bottom of the viewport.
-              local viewport_text = pane:get_lines_as_text(10000)
+              local viewport_text = pane:get_lines_as_text(scrollback_lines)
 
               -- Create a temporary file to pass to vim
               local name = os.tmpname()
@@ -54,8 +55,9 @@ in
                 act.SpawnCommandInNewTab {
                   args = {
                     '${pkgs.writeShellScript "scrollback-buffer-viewer" ''
-                      trap "rm -rf $1" EXIT
-                      ${lib.getExe' pkgs.page "page"} "$1"
+                      cleanup() { rm -f "$1"; }
+                      trap cleanup EXIT
+                      ${lib.getExe config.programs.neovim.finalPackage} "$1"
                     ''}',
                     name,
                   },
@@ -79,7 +81,7 @@ in
             config.font = wezterm.font("${fonts.symbols.name}")
             config.font_size = ${toString cfg.fontSize}
             config.hide_tab_bar_if_only_one_tab = true
-            config.scrollback_lines = 10000
+            config.scrollback_lines = scrollback_lines
             config.window_background_opacity = ${toString cfg.opacity}
             config.colors = {
               foreground = "${base05}",
