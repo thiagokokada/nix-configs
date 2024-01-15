@@ -63,8 +63,7 @@
         bell_on_tab = true;
 
         # Misc
-        editor = lib.mkIf config.programs.neovim.enable
-          (lib.getExe config.programs.neovim.finalPackage);
+        editor = config.home-manager.desktop.defaultEditor;
         strip_trailing_spaces = "smart";
         clipboard_control =
           "write-clipboard write-primary read-clipboard read-primary";

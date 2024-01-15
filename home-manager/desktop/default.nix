@@ -19,6 +19,15 @@
 
   options.home-manager.desktop = {
     enable = lib.mkEnableOption "desktop config";
+    defaultEditor = lib.mkOption {
+      type = lib.types.str;
+      description = ''
+        Default editor to be used.
+
+        Should allow starting programs as parameter.
+      '';
+      default = lib.getExe config.programs.neovim.finalPackage;
+    };
     defaultTerminal = lib.mkOption {
       type = lib.types.str;
       description = ''

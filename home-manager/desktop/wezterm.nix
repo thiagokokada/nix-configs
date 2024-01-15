@@ -57,7 +57,7 @@ in
                     '${pkgs.writeShellScript "scrollback-buffer-viewer" ''
                       cleanup() { rm -f "$1"; }
                       trap cleanup EXIT
-                      ${lib.getExe config.programs.neovim.finalPackage} "$1"
+                      ${config.home-manager.desktop.defaultEditor} "$1"
                     ''}',
                     name,
                   },
