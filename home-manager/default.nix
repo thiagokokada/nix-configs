@@ -5,7 +5,7 @@
     ../modules
     ./cli
     ./crostini.nix
-    ./darwin.nix
+    ./darwin
     ./desktop
     ./dev
     ./editor
