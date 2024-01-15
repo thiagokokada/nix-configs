@@ -1,6 +1,8 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, flake, ... }:
 
 {
+  imports = [ flake.inputs.mac-app-util.homeManagerModules.default ];
+
   options.home-manager.darwin.enable = lib.mkEnableOption "Darwin (macOS) config" // {
     default = pkgs.stdenv.isDarwin;
   };
