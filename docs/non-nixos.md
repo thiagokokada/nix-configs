@@ -15,21 +15,29 @@ builders-use-substitutes = true
 
 ## (Optional) Setup remote builders
 
-In `/etc/nix/machines` file:
+[See](https://nixos.org/manual/nix/stable/advanced-topics/distributed-builds.html)
+for more information about what remote builders are.
 
-```
-ssh-ng://100.103.30.119 aarch64-linux - 4 1 - - c3NoLWVkMjU1MTkgQUFBQUMzTnphQzFsWkRJMU5URTVBQUFBSUY5a3NRZkFGWTRSbVRmdUEzTDdTQ1Z0YlpsZ2hodVBWSDAxWTRDbytvOHIgcm9vdEB6YXRzdW5lLW5peG9zCg==
-```
-
-Needs Tailscale configured. You also may need to do:
+To setup it:
 
 ```console
-# nix store info --store ssh-ng://100.103.30.119
-The authenticity of host '100.103.30.119 (100.103.30.119)' can't be established.
+$ nix eval --raw .#nixosConfigurations.sankyuu-nixos.config.environment.etc."nix/machines".text | sudo tee -a /etc/nix/machines
+```
+
+This will populate `/etc/nix/machines` file.
+
+Needs Tailscale configured. If for some reason you can't use MagicDNS, you need
+to replace the names with the Tailscale IPs.
+
+You also may need to do:
+
+```console
+# nix store info --store ssh-ng://zatsune-nixos-uk
+The authenticity of host 'zatsune-nixos-uk (100.103.30.119)' can't be established.
 ED25519 key fingerprint is SHA256:MGRSSdbNCipNa+4LmdHhq7F7xQMuEX+sJDFqcQq3qgs.
 This key is not known by any other names.
 Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
-Warning: Permanently added '100.103.30.119' (ED25519) to the list of known hosts.
+Warning: Permanently added 'zatsune-nixos-uk' (ED25519) to the list of known hosts.
 Version: 2.18.1
 Trusted: 1
 ```
