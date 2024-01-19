@@ -400,11 +400,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1705411775,
-        "narHash": "sha256-nzP0tLVm2A7PcLTV40tAlqlyM1vKf9r+NJri0lDecXg=",
+        "lastModified": 1705687257,
+        "narHash": "sha256-s6MyYo2rGF+3Hh/FGaslt84FWfVl4gWABinLhVF3rs8=",
         "owner": "thiagokokada",
         "repo": "twenty-twenty-twenty",
-        "rev": "d541fba98a3bbc0daa217d3a9370642a87fd3fe4",
+        "rev": "a7f124c4b49b09831a4776d1a2759bbaa76b254b",
         "type": "github"
       },
       "original": {
