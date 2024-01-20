@@ -26,14 +26,11 @@ $ nix eval --raw .#nixosConfigurations.sankyuu-nixos.config.environment.etc."nix
 
 This will populate `/etc/nix/machines` file.
 
-Needs Tailscale configured. If for some reason you can't use MagicDNS, you need
-to replace the names with the Tailscale IPs.
-
-You also may need to do:
+Needs Tailscale configured. You also may need to do:
 
 ```console
-# nix store info --store ssh-ng://zatsune-nixos-uk
-The authenticity of host 'zatsune-nixos-uk (100.103.30.119)' can't be established.
+# nix store info --store ssh-ng://100.103.30.119
+The authenticity of host '100.103.30.119 (100.103.30.119)' can't be established.
 ED25519 key fingerprint is SHA256:MGRSSdbNCipNa+4LmdHhq7F7xQMuEX+sJDFqcQq3qgs.
 This key is not known by any other names.
 Are you sure you want to continue connecting (yes/no/[fingerprint])? yes

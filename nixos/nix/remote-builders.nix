@@ -15,7 +15,7 @@ in
     nix = {
       buildMachines = [
         {
-          hostName = "zatsune-nixos-uk";
+          hostName = "100.103.30.119";
           system = "aarch64-linux";
           protocol = "ssh-ng";
           maxJobs = 4;
