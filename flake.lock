@@ -23,11 +23,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1705540973,
-        "narHash": "sha256-kNt/qAEy7ueV7NKbVc8YMHWiQAAgrir02MROYNI8fV0=",
+        "lastModified": 1705890365,
+        "narHash": "sha256-MObB+fipA/2Ai3uMuNouxcwz0cqvELPpJ+hfnhSaUeA=",
         "owner": "nix-community",
         "repo": "disko",
-        "rev": "0033adc6e3f1ed076f3ed1c637ef1dfe6bef6733",
+        "rev": "9fcdf3375e01e2938a49df103af9fd21bd0f89d9",
         "type": "github"
       },
       "original": {
@@ -125,11 +125,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1705708511,
-        "narHash": "sha256-3f4BkRY70Fj7yvuo87c4QQPAjnt571g2wJ50jY7hnYc=",
+        "lastModified": 1705879479,
+        "narHash": "sha256-ZIohbyly1KOe+8I3gdyNKgVN/oifKdmeI0DzMfytbtg=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "ce4b88c465d928f4f8b75d0920f1788d5b65ca94",
+        "rev": "2d47379ad591bcb14ca95a90b6964b8305f6c913",
         "type": "github"
       },
       "original": {
@@ -207,11 +207,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1705540761,
-        "narHash": "sha256-Bj5XUG194u0AC0KL4d+nmX3Xuz56u0PVzTFYYHdqh7o=",
+        "lastModified": 1705886383,
+        "narHash": "sha256-AXP+WRbsyCYdT0AQNHEBvblMed64oV2siReHwK+BmRk=",
         "owner": "fufexan",
         "repo": "nix-gaming",
-        "rev": "184c9a3f7c289f12d2732bcd6b24f0967f4a380f",
+        "rev": "620f74d52371e5fbbd8c6d6dae3b3b36de26d1f7",
         "type": "github"
       },
       "original": {
@@ -297,11 +297,11 @@
     },
     "nixpkgs_2": {
       "locked": {
-        "lastModified": 1705496572,
-        "narHash": "sha256-rPIe9G5EBLXdBdn9ilGc0nq082lzQd0xGGe092R/5QE=",
+        "lastModified": 1705856552,
+        "narHash": "sha256-JXfnuEf5Yd6bhMs/uvM67/joxYKoysyE3M2k6T3eWbg=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "842d9d80cfd4560648c785f8a4e6f3b096790e19",
+        "rev": "612f97239e2cc474c13c9dafa0df378058c5ad8d",
         "type": "github"
       },
       "original": {
@@ -400,11 +400,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1705778916,
-        "narHash": "sha256-hTwdcxHYWVgI3y4T3+JUJpOD9+/WUb79lGe/vBVHK+w=",
+        "lastModified": 1705929815,
+        "narHash": "sha256-imxG0hJxJ7VmrgezXfCqovgW5D4is9QmarDC11zaSeQ=",
         "owner": "thiagokokada",
         "repo": "twenty-twenty-twenty",
-        "rev": "56d81571573911cec8d7bb6590d9c4b972c6f7ce",
+        "rev": "a5feabef421072aafe45bef0261907c53ea08932",
         "type": "github"
       },
       "original": {
