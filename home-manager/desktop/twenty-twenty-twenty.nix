@@ -12,6 +12,7 @@
 
     systemd.user.services.twenty-twenty-twenty = {
       Unit = {
+        BusName = "org.freedesktop.Notifications";
         Description = "Twenty-Twenty-Twenty";
         After = [ "graphical-session-pre.target" ];
         PartOf = [ "graphical-session.target" ];
