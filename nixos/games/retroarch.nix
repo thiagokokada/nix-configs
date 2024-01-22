@@ -40,7 +40,7 @@ in
         # "mupen64plus"
         "neocd"
         "nestopia"
-        "pcsx2"
+        # "pcsx2"
         "ppsspp"
         "prosystem"
         "snes9x"
