@@ -37,6 +37,8 @@ in
         dates = "3:15";
         options = "--delete-older-than 7d";
       };
+      # Optimise nix-store via service
+      optimise.automatic = true;
       # Reduce disk usage
       daemonIOSchedClass = "best-effort";
       daemonIOSchedPriority = 7;
