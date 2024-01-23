@@ -13,7 +13,7 @@
       desktop = {
         twenty-twenty-twenty.enable = true;
         wezterm = {
-          enable = true;
+          enable = pkgs.stdenv.isAarch64; # broken in x86_64-darwin
           fullscreenOnStartup = false;
           fontSize = 14.0;
           opacity = 1.0;
