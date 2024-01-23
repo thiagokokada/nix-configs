@@ -37,7 +37,7 @@ in
         "genesis-plus-gx"
         "melonds"
         "mgba"
-        # "mupen64plus"
+        "mupen64plus"
         "neocd"
         "nestopia"
         # "pcsx2"
