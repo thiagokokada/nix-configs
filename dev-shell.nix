@@ -1,7 +1,8 @@
-{ pkgs, homeManagerConfiguration, ... }:
+{ homeManagerConfiguration, ... }:
 
 let
-  inherit (homeManagerConfiguration.config.home) homeDirectory packages profileDirectory;
+  inherit (homeManagerConfiguration) config pkgs;
+  inherit (config.home) homeDirectory packages profileDirectory;
 in
 pkgs.mkShell {
   # Ensure that nix/nix-build is in PATH

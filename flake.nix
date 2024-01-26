@@ -151,12 +151,6 @@
         extraModules = [{ home-manager.dev.enable = true; }];
       })
       (mkHomeConfig {
-        hostname = "home-linux-minimal";
-        username = getEnvOrDefault "USER" "thiagoko";
-        homePath = (getEnvOrDefault "TMPDIR" "/tmp") + "/home";
-        configuration = ./home-manager/minimal.nix;
-      })
-      (mkHomeConfig {
         hostname = "home-macos";
         system = "x86_64-darwin";
         homePath = "/Users";
@@ -234,11 +228,16 @@
             config.allowUnfree = true;
             overlays = [ self.overlays.default ];
           };
+          hostname = "devshell";
         in
         {
           devShells.default = import ./dev-shell.nix {
-            inherit pkgs;
-            homeManagerConfiguration = self.outputs.homeConfigurations.home-linux-minimal;
+            homeManagerConfiguration = (mkHomeConfig {
+              inherit hostname system;
+              username = getEnvOrDefault "USER" "thiagoko";
+              homePath = (getEnvOrDefault "TMPDIR" "/tmp") + "/home";
+              configuration = ./home-manager/minimal.nix;
+            }).homeConfigurations.${hostname};
           };
           checks = import ./checks.nix { inherit pkgs; };
           formatter = pkgs.nixpkgs-fmt;
