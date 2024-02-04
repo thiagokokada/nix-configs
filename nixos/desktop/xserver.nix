@@ -37,12 +37,13 @@
           };
         };
 
-        # X11 keyboard layout
-        layout = lib.mkDefault "us";
-        xkbVariant = lib.mkDefault "intl";
-        # Remap Caps Lock to Esc, and use Super+Space to change layouts
-        xkbOptions = lib.mkDefault "caps:escape,grp:win_space_toggle";
-
+        xkb = {
+          # X11 keyboard layout
+          layout = lib.mkDefault "us";
+          variant = lib.mkDefault "intl";
+          # Remap Caps Lock to Esc, and use Super+Space to change layouts
+          options = lib.mkDefault "caps:escape,grp:win_space_toggle";
+        };
       };
     };
 
