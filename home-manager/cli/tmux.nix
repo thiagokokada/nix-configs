@@ -11,13 +11,14 @@
       aggressiveResize = true;
       baseIndex = 1;
       clock24 = true;
+      escapeTime = 0;
       historyLimit = 10000;
       keyMode = "vi";
+      mouse = true;
       newSession = true;
       sensibleOnTop = true;
-      shortcut = "a";
-      terminal = "screen-256color";
       secureSocket = false;
+      terminal = "screen-256color";
       extraConfig = ''
         # enable auto renaming
         setw -g automatic-rename on
@@ -27,9 +28,6 @@
 
         # hostname, window number, program name
         set -g set-titles-string '#H: #S.#I.#P #W'
-
-        # enable mouse pointer actions
-        set -g mouse on
 
         # monitor activity between windows
         setw -g monitor-activity on
