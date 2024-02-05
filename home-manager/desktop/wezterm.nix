@@ -41,7 +41,7 @@ in
               --
               -- Note: You could also pass an optional number of lines (eg: 2000) to
               -- retrieve that number of lines starting from the bottom of the viewport.
-              local viewport_text = pane:get_lines_as_text(scrollback_lines)
+              local viewport_text = pane:get_lines_as_escapes(scrollback_lines)
 
               -- Create a temporary file to pass to vim
               local name = os.tmpname()
@@ -57,7 +57,7 @@ in
                     '${pkgs.writeShellScript "scrollback-buffer-viewer" ''
                       cleanup() { rm -f "$1"; }
                       trap cleanup EXIT
-                      ${config.home-manager.desktop.defaultEditor} "$1"
+                      ${lib.getExe pkgs.less} +G "$1"
                     ''}',
                     name,
                   },
