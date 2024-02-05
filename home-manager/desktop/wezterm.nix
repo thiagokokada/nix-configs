@@ -21,6 +21,11 @@ in
       description = "Background opacity.";
       default = 0.9;
     };
+    scrollbackLines = lib.mkOption {
+      type = lib.types.int;
+      description = "Scrollback buffer lines. ~100000 is the limit (because of I60R/page).";
+      default = 100000;
+    };
   };
 
   config = lib.mkIf cfg.enable {
@@ -34,7 +39,7 @@ in
           with colors; /* lua */''
             local act = wezterm.action
             local config = wezterm.config_builder()
-            local scrollback_lines = 10000
+            local scrollback_lines = ${toString cfg.scrollbackLines}
 
             wezterm.on('trigger-editor-with-visible-text', function(window, pane)
               -- Retrieve the current viewport's text.
