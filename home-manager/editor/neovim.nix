@@ -456,21 +456,16 @@ in
         {
           # Workaround issue with those mappings being overwritten by some
           # plugins, needs to be Lua since it needs to load later than
-          # vimscript, however for some reason vim.keymap.set is giving errors
-          # here
+          # vimscript
           plugin = pkgs.writeText "50-completion-maps" "";
           type = "lua";
           config = /* lua */ ''
-            vim.cmd [[
-              " insert mode
-              inoremap <expr> <C-j> pumvisible() ? "<C-n>" : "<C-j>"
-              inoremap <expr> <C-k> pumvisible() ? "<C-p>" : "<C-k>"
-              inoremap <expr> <CR> pumvisible() ? "<C-y>" : "<CR>"
-              " command line
-              cnoremap <expr> <C-j> pumvisible() ? "<C-n>" : "<C-j>"
-              cnoremap <expr> <C-k> pumvisible() ? "<C-p>" : "<C-k>"
-              cnoremap <expr> <CR> pumvisible() ? "<C-y>" : "<CR>"
-            ]]
+            local opts = { silent = true, expr = true }
+            local keys = { 'i', 'c' }
+
+            vim.keymap.set(keys, '<C-j>', function() return vim.fn.pumvisible() ~= 0 and '<C-n>' or '<C-j>' end, opts)
+            vim.keymap.set(keys, '<C-k>', function() return vim.fn.pumvisible() ~= 0 and '<C-p>' or '<C-k>' end, opts)
+            vim.keymap.set(keys, '<CR>', function() return vim.fn.pumvisible() ~= 0 and '<C-y>' or '<CR>' end, opts)
           '';
         }
       ]
