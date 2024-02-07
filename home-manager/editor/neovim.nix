@@ -398,6 +398,7 @@ in
             }
             telescope.load_extension('fzf')
             telescope.load_extension('projects')
+            telescope.load_extension('ui-select')
 
             local builtin = require('telescope.builtin')
             vim.keymap.set('n', '<Leader><Leader>', builtin.find_files, { desc = "Find files" })
@@ -444,6 +445,7 @@ in
         }
         mkdir-nvim
         telescope-fzf-native-nvim
+        telescope-ui-select-nvim
         vim-advanced-sorters
         vim-easy-align
         vim-endwise
