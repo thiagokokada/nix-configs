@@ -59,21 +59,29 @@ in
         ZSH_HIGHLIGHT_HIGHLIGHTERS = [ "main" "brackets" "cursor" ];
       };
 
-      profileExtra = ''
-        # Source .profile
-        [[ -e ~/.profile ]] && emulate sh -c '. ~/.profile'
-      '' + lib.optionalString pkgs.stdenv.isDarwin ''
-        # Source nix-daemon profile since macOS updates can remove it from /etc/zshrc
-        # https://github.com/NixOS/nix/issues/3616
-        if [ -e '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh' ]; then
-          source '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh'
-        fi
-        # Set the soft ulimit to something sensible
-        # https://developer.apple.com/forums/thread/735798
-        ulimit -Sn 524288
-      '';
+      profileExtra = lib.concatStringsSep "\n" (lib.filter (x: x != "") [
+        (lib.optionalString config.home-manager.crostini.enable /* bash */ ''
+          # Force truecolor support in Crostini
+          export COLORTERM=truecolor
+        '')
+        (lib.optionalString pkgs.stdenv.isDarwin /* bash */ ''
+          # Source nix-daemon profile since macOS updates can remove it from /etc/zshrc
+          # https://github.com/NixOS/nix/issues/3616
+          if [ -e '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh' ]; then
+            source '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh'
+          fi
+          # Set the soft ulimit to something sensible
+          # https://developer.apple.com/forums/thread/735798
+          ulimit -Sn 524288
+        '')
+        /* bash */
+        ''
+          # Source .profile
+          [[ -e ~/.profile ]] && emulate sh -c '. ~/.profile'
+        ''
+      ]);
 
-      initExtraBeforeCompInit = ''
+      initExtraBeforeCompInit = /* bash */ ''
         # zimfw config
         zstyle ':zim:input' double-dot-expand no
         zstyle ':zim:ssh' ids /dev/null
