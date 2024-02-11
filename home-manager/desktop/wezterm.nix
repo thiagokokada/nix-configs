@@ -62,7 +62,7 @@ in
                     '${pkgs.writeShellScript "scrollback-buffer-viewer" ''
                       cleanup() { rm -f "$1"; }
                       trap cleanup EXIT
-                      ${lib.getExe' pkgs.page "page"} -f < "$1"
+                      ${lib.getExe pkgs.page} -f < "$1"
                     ''}',
                     name,
                   },

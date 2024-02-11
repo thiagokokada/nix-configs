@@ -49,7 +49,7 @@
 
         # Scrollback
         scrollback_lines = 10000;
-        scrollback_pager = "${lib.getExe' pkgs.page "page"} -f";
+        scrollback_pager = "${lib.getExe pkgs.page} -f";
 
         # Reduce lag
         sync_to_monitor = false;
