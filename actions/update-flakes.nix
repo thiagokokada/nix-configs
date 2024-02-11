@@ -1,7 +1,6 @@
 let
   steps = import ./steps.nix;
   constants = import ./constants.nix;
-  first = list: builtins.elemAt list 0;
 in
 with constants;
 {
@@ -14,7 +13,7 @@ with constants;
     update-flakes = {
       inherit (ubuntu) runs-on;
       steps = with steps; [
-        maximimizeBuildSpaceStep
+        freeDiskSpaceStep
         checkoutStep
         (installNixActionStep { })
         setDefaultGitBranchStep

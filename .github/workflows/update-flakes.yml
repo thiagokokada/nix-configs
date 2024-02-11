@@ -2,16 +2,10 @@ jobs:
   update-flakes:
     runs-on: ubuntu-latest
     steps:
-      - uses: easimon/maximize-build-space@v7
+      - uses: jlumbroso/free-disk-space@v1.3.1
         with:
-          overprovision-lvm: true
-          remove-android: true
-          remove-codeql: true
-          remove-docker-images: true
-          remove-dotnet: true
-          remove-haskell: true
-          root-reserve-mb: 512
-          swap-size-mb: 1024
+          swap-storage: false
+          tool-cache: true
       - uses: actions/checkout@v4
       - uses: cachix/install-nix-action@v22
         with:

@@ -4,17 +4,11 @@ let
 in
 with constants;
 {
-  maximimizeBuildSpaceStep = {
-    uses = actions.maximize-build-space;
+  freeDiskSpaceStep = {
+    uses = actions.free-disk-space;
     "with" = {
-      remove-dotnet = true;
-      remove-android = true;
-      remove-haskell = true;
-      remove-codeql = true;
-      remove-docker-images = true;
-      overprovision-lvm = true;
-      root-reserve-mb = 512;
-      swap-size-mb = 1024;
+      swap-storage = false;
+      tool-cache = true;
     };
   };
   checkoutStep = {
