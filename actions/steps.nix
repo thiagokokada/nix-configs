@@ -64,14 +64,6 @@ with constants;
       nix flake update --commit-lock-file
     '';
   };
-  diffNixOutputs = id: old: new: {
-    inherit id;
-    name = "Diff Nix outputs: ${old} vs ${new}";
-    uses = actions.command-output;
-    "with".run = ''
-      nix run github:NixOS/nixpkgs/nixos-unstable#nvd -- --color never diff '${old}' '${new}'
-    '';
-  };
   createPullRequestStep = diffIds: {
     name = "Create Pull Request";
     uses = actions.create-pull-request;
