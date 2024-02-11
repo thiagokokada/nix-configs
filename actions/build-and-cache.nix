@@ -10,7 +10,7 @@ with constants;
     build-linux = {
       inherit (ubuntu) runs-on;
       steps = with steps; [
-        maximimizeBuildSpaceStep
+        freeDiskSpaceStep
         checkoutStep
         (installNixActionStep { })
         cachixActionStep
