@@ -2,7 +2,6 @@
   actions = {
     cachix-action = "cachix/cachix-action@v14";
     checkout = "actions/checkout@v4";
-    command-output = "mathiasvr/command-output@v2.0.0";
     create-pull-request = "peter-evans/create-pull-request@v6";
     free-disk-space = "jlumbroso/free-disk-space@v1.3.1";
     install-nix-action = "cachix/install-nix-action@v25";
