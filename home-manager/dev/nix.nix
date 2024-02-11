@@ -8,9 +8,9 @@
   config = lib.mkIf config.home-manager.dev.nix.enable {
     home.packages = with pkgs; [
       nil
-      nix-prefetch
       nix-update
       nixpkgs-fmt
+      nurl
       statix
     ];
   };
