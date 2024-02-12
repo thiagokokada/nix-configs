@@ -8,8 +8,6 @@ final: prev:
     (import ../lib { lib = finalLib; pkgs = final; })
   );
 
-  gaming = flake.inputs.nix-gaming.packages.${prev.system};
-
   wallpapers = prev.callPackage ../packages/wallpapers { };
 
   # custom packages

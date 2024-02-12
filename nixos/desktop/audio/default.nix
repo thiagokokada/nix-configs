@@ -4,8 +4,6 @@ let
   cfg = config.nixos.desktop.audio;
 in
 {
-  imports = [ ./low-latency.nix ];
-
   options.nixos.desktop.audio = {
     enable = lib.mkEnableOption "audio config" // {
       default = config.nixos.desktop.enable;

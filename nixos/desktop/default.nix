@@ -2,7 +2,7 @@
 
 {
   imports = [
-    ./audio.nix
+    ./audio
     ./fonts.nix
     ./greetd.nix
     ./locale.nix

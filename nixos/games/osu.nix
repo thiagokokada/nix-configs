@@ -4,7 +4,9 @@ let
   cfg = config.nixos.games.osu;
 in
 {
-  options.nixos.games.osu.enable = lib.mkEnableOption "osu! config";
+  options.nixos.games.osu.enable = lib.mkEnableOption "osu! config" // {
+    default = config.nixos.games.enable;
+  };
 
   config = lib.mkIf cfg.enable {
     environment.systemPackages = with pkgs; let
@@ -24,8 +26,7 @@ in
       };
     in
     [
-      gaming.osu-lazer-bin
-      gaming.osu-stable
+      osu-lazer-bin
       import-osu-songs
     ];
 
