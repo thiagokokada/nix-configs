@@ -111,7 +111,7 @@ in
       '';
 
       # To install non-packaged plugins, use
-      # pkgs.vimUtils.buildVimPluginFrom2Nix { }
+      # pkgs.vimUtils.buildVimPlugin { }
       plugins = with pkgs; with vimPlugins; [
         {
           # FIXME: dummy plugin since there is no way currently to set a config
