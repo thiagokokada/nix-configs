@@ -11,14 +11,16 @@ with constants;
       inherit (ubuntu) runs-on;
       steps = with steps; [
         checkoutStep
+        (installUbuntuPackages [
+          "binfmt-support"
+          "qemu-efi"
+          "qemu-system-aarch64"
+          "qemu-user-static"
+        ])
         (installNixActionStep {
-          extraNixConfig = ''
-            extra-platforms = aarch64-linux
-          '';
+          extraNixConfig = [ "extra-platforms = aarch64-linux" ];
         })
-        setupAarch64
         cachixActionStep
-        setDefaultGitBranchStep
         validateFlakesStep
       ];
     };

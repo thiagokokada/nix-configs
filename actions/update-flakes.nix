@@ -16,12 +16,11 @@ with constants;
         freeDiskSpaceStep
         checkoutStep
         (installNixActionStep { })
-        setDefaultGitBranchStep
         cachixActionStep
         updateFlakeLockStep
-        (buildHomeManagerConfigurations { })
-        (buildNixOSConfigurations { })
-        (createPullRequestStep [ ])
+        (buildHomeManagerConfigurations { inherit (home-manager.linux) hostnames; })
+        (buildNixOSConfigurations { inherit (nixos) hostnames; })
+        createPullRequestStep
       ];
     };
   };
