@@ -271,7 +271,7 @@ in
           plugin = onedarkpro-nvim;
           type = "lua";
           config = /* lua */ ''
-            vim.cmd("colorscheme onedark")
+            vim.cmd.colorscheme("onedark")
           '';
         }
         {
