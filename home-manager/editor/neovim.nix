@@ -141,16 +141,6 @@ in
           '';
         }
         {
-          plugin = vim-polyglot;
-          config = /* vim */ ''
-            " use a simpler and faster regex to parse CSV
-            " does not work with CSVs where the delimiter is quoted inside the field
-            " let g:csv_strict_columns = 1
-            " disabled CSV concealing (e.g.: `,` -> `|`), also faster
-            let g:csv_no_conceal = 1
-          '';
-        }
-        {
           plugin = vim-sneak;
           config = /* vim */ ''
             let g:sneak#label = 1
