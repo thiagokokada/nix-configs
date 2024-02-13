@@ -308,7 +308,6 @@
         "twenty-twenty-twenty": "twenty-twenty-twenty",
         "zim-completion": "zim-completion",
         "zim-environment": "zim-environment",
-        "zim-git": "zim-git",
         "zim-input": "zim-input",
         "zim-ssh": "zim-ssh",
         "zim-utility": "zim-utility",
@@ -384,22 +383,6 @@
       "original": {
         "owner": "zimfw",
         "repo": "environment",
-        "type": "github"
-      }
-    },
-    "zim-git": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1695922401,
-        "narHash": "sha256-mTmcp6hmtWc6012vaznbXdIojoRT5rux1HZ54VxtPY4=",
-        "owner": "zimfw",
-        "repo": "git",
-        "rev": "de3a9f1553994d9fe5e6187f40ceac8afbfd1707",
-        "type": "github"
-      },
-      "original": {
-        "owner": "zimfw",
-        "repo": "git",
         "type": "github"
       }
     },

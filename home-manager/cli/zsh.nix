@@ -138,15 +138,14 @@ in
             zshPlugin name // { file = "init.zsh"; };
         in
         lib.flatten [
-          (zimPlugin "zim-completion")
           (zimPlugin "zim-input")
-          (zimPlugin "zim-git")
           (zimPlugin "zim-ssh")
           (zimPlugin "zim-utility")
           (zshPlugin "pure")
           (zshPlugin "zsh-autopair")
           (zshPlugin "zsh-completions")
           (zshPlugin "zsh-syntax-highlighting")
+          (zimPlugin "zim-completion") # needs to be the last one
         ];
     };
 

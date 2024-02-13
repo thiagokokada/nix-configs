@@ -15,14 +15,17 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    home.packages = with pkgs; lib.optionals cfg.enableGh [
-      github-cli
-    ]
-    ++ lib.optionals cfg.enableGui [
-      (run-bg-alias "gcd" "${lib.getExe' git-cola "git-cola"} dag")
-      (run-bg-alias "gk" (lib.getExe' config.programs.git.package "gitk"))
-      git-cola
-    ];
+    home = {
+      packages = with pkgs; lib.optionals cfg.enableGh [
+        github-cli
+      ]
+      ++ lib.optionals cfg.enableGui [
+        (run-bg-alias "gcd" "${lib.getExe' git-cola "git-cola"} dag")
+        (run-bg-alias "gk" (lib.getExe' config.programs.git.package "gitk"))
+        git-cola
+      ];
+      shellAliases.g = "git";
+    };
 
     programs = {
       gh = {
