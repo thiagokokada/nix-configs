@@ -459,8 +459,9 @@ in
         {
           # Workaround issue with those mappings being overwritten by some
           # plugins, needs to be Lua since it needs to load later than
-          # vimscript, however for some reason vim.keymap.set is giving errors
-          # here
+          # vimscript, however for some reason vim.keymap.set is having
+          # weird issues with vim-endwise here
+          # FIXME: find a replacement for vim-endwise
           plugin = pkgs.writeText "50-completion-maps" "";
           type = "lua";
           config = /* lua */ ''
