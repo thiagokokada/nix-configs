@@ -284,29 +284,6 @@ in
           '';
         }
         {
-          plugin = other-nvim;
-          type = "lua";
-          config = /* lua */ ''
-            require("other-nvim").setup {
-              mappings = {
-                "livewire",
-                "angular",
-                "laravel",
-                "rails",
-                "golang",
-              },
-            }
-
-            vim.keymap.set("n", "<leader>aa", "<cmd>:Other<CR>", { silent = true, desc = "Other" })
-            vim.keymap.set("n", "<leader>as", "<cmd>:OtherSplit<CR>", { silent = true, desc = "Other h-split" })
-            vim.keymap.set("n", "<leader>av", "<cmd>:OtherVSplit<CR>", { silent = true, desc = "Other v-split" })
-            vim.keymap.set("n", "<leader>ac", "<cmd>:OtherClear<CR>", { silent = true, desc = "Other clear" })
-
-            -- Context specific bindings
-            vim.keymap.set("n", "<leader>at", "<cmd>:Other test<CR>", { silent = true, desc = "Other test" })
-          '';
-        }
-        {
           plugin = project-nvim;
           type = "lua";
           config = /* lua */ ''
