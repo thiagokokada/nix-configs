@@ -586,7 +586,84 @@ in
               autotag = {
                 enable = true,
               },
+              textobjects = {
+                select = {
+                  enable = true,
+
+                  -- Automatically jump forward to textobj, similar to targets.vim
+                  lookahead = true,
+
+                  keymaps = {
+                    ["af"] = { query = "@function.outer", desc = "Select outer part of a function region" },
+                    ["if"] = { query = "@function.inner", desc = "Select inner part of a function region" },
+                    ["ac"] = { query = "@class.outer", desc = "Select outer part of a class region" },
+                    ["ic"] = { query = "@class.inner", desc = "Select inner part of a class region" },
+                    ["as"] = { query = "@scope", query_group = "locals", desc = "Select language scope" },
+                  },
+
+                  -- You can choose the select mode (default is charwise 'v')
+                  selection_modes = {
+                    ['@parameter.outer'] = 'v', -- charwise
+                    ['@function.outer'] = 'V', -- linewise
+                    ['@class.outer'] = '<c-v>', -- blockwise
+                  },
+
+                  -- If you set this to `true` (default is `false`) then any textobject is
+                  -- extended to include preceding or succeeding whitespace. Succeeding
+                  -- whitespace has priority in order to act similarly to eg the built-in
+                  -- `ap`.
+                  include_surrounding_whitespace = false,
+                },
+                swap = {
+                  enable = true,
+                  swap_next = {
+                    ["<leader>a"] = { query = "@parameter.inner", desc = "Swap parameter with next" },
+                  },
+                  swap_previous = {
+                    ["<leader>A"] = { query = "@parameter.inner", desc = "Swap parameter with previous" },
+                  },
+                },
+                move = {
+                  enable = true,
+                  set_jumps = true, -- whether to set jumps in the jumplist
+                  goto_next_start = {
+                    ["]m"] = { query = "@function.outer", desc = "Next function start" },
+                    ["]]"] = { query = "@class.outer", desc = "Next class start" },
+                  },
+                  goto_next_end = {
+                    ["]M"] = { query = "@function.outer", desc = "Next function end" },
+                    ["]["] = { query = "@class.outer", desc = "Next class end" },
+                  },
+                  goto_previous_start = {
+                    ["[m"] = { query = "@function.outer", desc = "Previous function start" },
+                    ["[["] = { query = "@class.outer", desc = "Previous class start" },
+                  },
+                  goto_previous_end = {
+                    ["[M"] = { query = "@function.outer", desc = "Previous function end" },
+                    ["[]"] = { query = "@class.outer", desc = "Previous class end" },
+                  },
+                  -- Below will go to either the start or the end, whichever is closer.
+                  goto_next = {
+                    ["]d"] = "@conditional.outer",
+                  },
+                  goto_previous = {
+                    ["[d"] = "@conditional.outer",
+                  }
+                },
+              },
             }
+          '';
+        }
+        {
+          plugin = nvim-treesitter-textobjects;
+          type = "lua";
+          config = /* lua */ ''
+            -- most config is in nvim-treesitter itself
+            local ts_repeat_move = require("nvim-treesitter.textobjects.repeatable_move")
+
+            -- vim way: ; goes to the direction you were moving.
+            vim.keymap.set({ "n", "x", "o" }, ";", ts_repeat_move.repeat_last_move)
+            vim.keymap.set({ "n", "x", "o" }, ",", ts_repeat_move.repeat_last_move_opposite)
           '';
         }
         nvim-ts-autotag
