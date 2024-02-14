@@ -262,12 +262,9 @@ in
             }
 
             -- vinegar
-            vim.api.nvim_set_keymap(
-              'n',
-              '-',
-              [[<Cmd>execute 'e ' .. expand('%:p:h')<CR>]],
-              { desc = "Files" }
-            )
+            vim.keymap.set('n', '-', function()
+              vim.cmd.edit(vim.fn.expand('%:p:h'))
+            end, { desc = "Files" })
           '';
         }
         {
