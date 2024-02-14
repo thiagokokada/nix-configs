@@ -54,7 +54,7 @@ in
         -- reload unchanged files automatically
         vim.opt.autoread = true
 
-        -- autoindent when starting a new file with 'o' or 'O'
+        -- autoindent when starting a new line with 'o' or 'O'
         vim.opt.autoindent = true
 
         -- avoid swapfile warning
@@ -177,6 +177,16 @@ in
             vim.keymap.set('n', '<Leader>tl', ':TestLast<CR>', { desc = "Test last" })
             vim.keymap.set('n', '<Leader>tv', ':TestVisit<CR>', { desc = "Test visit" })
             EOF
+          '';
+        }
+        {
+          plugin = vim-easy-align;
+          config = /* vim */ ''
+            " Start interactive EasyAlign in visual mode (e.g. vipga)
+            xmap ga <Plug>(EasyAlign)
+
+            " Start interactive EasyAlign for a motion/text object (e.g. gaip)
+            nmap ga <Plug>(EasyAlign)
           '';
         }
         {
@@ -436,7 +446,6 @@ in
         telescope-fzf-native-nvim
         telescope-ui-select-nvim
         vim-advanced-sorters
-        vim-easy-align
         vim-endwise
         vim-fugitive
         vim-sleuth
