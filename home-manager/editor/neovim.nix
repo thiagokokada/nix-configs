@@ -50,6 +50,16 @@ in
 
       extraLuaConfig = /* lua */ ''
         -- general config
+
+        -- reload unchanged files automatically
+        vim.opt.autoread = true
+
+        -- autoindent when starting a new file with 'o' or 'O'
+        vim.opt.autoindent = true
+
+        -- avoid swapfile warning
+        vim.opt.shortmess = 'A'
+
         -- show line numbers
         vim.opt.number = true
 
