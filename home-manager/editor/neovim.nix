@@ -258,6 +258,13 @@ in
           '';
         }
         {
+          plugin = nvim-surround;
+          type = "lua";
+          config = /* lua */ ''
+            require("nvim-surround").setup {}
+          '';
+        }
+        {
           plugin = onedarkpro-nvim;
           type = "lua";
           config = /* lua */ ''
@@ -430,11 +437,9 @@ in
         vim-advanced-sorters
         vim-endwise
         vim-fugitive
-        vim-repeat
         vim-sexp
         vim-sexp-mappings-for-regular-people
         vim-sleuth
-        vim-surround
         {
           # Workaround issue with those mappings being overwritten by some
           # plugins, needs to be Lua since it needs to load later than
