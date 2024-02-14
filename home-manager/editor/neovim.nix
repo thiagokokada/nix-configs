@@ -414,8 +414,6 @@ in
         vim-advanced-sorters
         vim-endwise
         vim-fugitive
-        vim-sexp
-        vim-sexp-mappings-for-regular-people
         vim-sleuth
         {
           # Workaround issue with those mappings being overwritten by some
