@@ -60,6 +60,13 @@ in
         -- avoid swapfile warning
         vim.opt.shortmess = 'A'
 
+        -- show line numbers
+        vim.opt.number = true
+
+        -- ignore case in search, except if using case
+        vim.opt.ignorecase = true
+        vim.opt.smartcase = true
+
         -- turn on omnicomplete
         vim.opt.omnifunc = "syntaxcomplete#Complete"
 
@@ -79,6 +86,20 @@ in
         vim.cmd.aunmenu { [[PopUp.How-to\ disable\ mouse]] }
         vim.cmd.aunmenu { [[PopUp.-1-]] }
 
+        -- window movement mappings
+        vim.keymap.set('t', '<C-h>', [[<C-\><C-n><C-w>h]])
+        vim.keymap.set('t', '<C-j>', [[<C-\><C-n><C-w>j]])
+        vim.keymap.set('t', '<C-k>', [[<C-\><C-n><C-w>k]])
+        vim.keymap.set('t', '<C-l>', [[<C-\><C-n><C-w>l]])
+        vim.keymap.set('n', '<C-h>', '<C-w>h')
+        vim.keymap.set('n', '<C-j>', '<C-w>j')
+        vim.keymap.set('n', '<C-k>', '<C-w>k')
+        vim.keymap.set('n', '<C-l>', '<C-w>l')
+        vim.keymap.set({'i', 'v'}, '<C-h>', '<Esc><C-w>h')
+        vim.keymap.set({'i', 'v'}, '<C-j>', '<Esc><C-w>j')
+        vim.keymap.set({'i', 'v'}, '<C-k>', '<Esc><C-w>k')
+        vim.keymap.set({'i', 'v'}, '<C-l>', '<Esc><C-w>l')
+
         -- make Esc enter Normal mode in Term
         vim.keymap.set('t', '<Esc>', [[<C-\><C-n>]])
         vim.keymap.set('t', '<M-[>', [[<C-\><C-n>]])
@@ -88,6 +109,7 @@ in
         vim.keymap.set('n', '<C-g>', '<cmd>:noh<CR><CR>')
 
         -- completion
+        vim.opt.completeopt = 'menu'
         vim.keymap.set('i', '<C-Space>', '<C-x><C-o>')
 
         -- syntax highlight flake.lock files as json
@@ -130,6 +152,16 @@ in
             lua << EOF
             vim.keymap.set('n', '<Leader>u', ':UndotreeToggle<CR>', { desc = "Undotree toggle" })
             EOF
+          '';
+        }
+        {
+          plugin = vim-sneak;
+          config = /* vim */ ''
+            let g:sneak#label = 1
+            map f <Plug>Sneak_f
+            map F <Plug>Sneak_F
+            map t <Plug>Sneak_t
+            map T <Plug>Sneak_T
           '';
         }
         {
@@ -243,18 +275,10 @@ in
           '';
         }
         {
-          plugin = mini-nvim;
+          plugin = nvim-autopairs;
           type = "lua";
           config = /* lua */ ''
-            require("mini.align").setup {}
-            require("mini.basics").setup {
-              mappings = {
-                windows = true,
-                move_with_alt = true,
-              }
-            }
-            require("mini.jump").setup {}
-            require("mini.pairs").setup {}
+            require("nvim-autopairs").setup {}
           '';
         }
         {
@@ -412,6 +436,7 @@ in
         telescope-fzf-native-nvim
         telescope-ui-select-nvim
         vim-advanced-sorters
+        vim-easy-align
         vim-endwise
         vim-fugitive
         vim-sleuth
