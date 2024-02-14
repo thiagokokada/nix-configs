@@ -288,7 +288,11 @@ in
           plugin = nvim-autopairs;
           type = "lua";
           config = /* lua */ ''
-            require("nvim-autopairs").setup {}
+            local enable_ts = ${toLuaBool cfg.enableTreeSitter}
+
+            require("nvim-autopairs").setup {
+              check_ts = enable_ts
+            }
           '';
         }
         {
