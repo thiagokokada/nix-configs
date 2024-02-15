@@ -115,7 +115,7 @@ in
         vim.keymap.set('n', '<C-g>', '<cmd>:noh<CR><CR>')
 
         -- completion
-        vim.opt.completeopt = 'menuone,noinsert,noselect'
+        vim.opt.completeopt = 'menu'
         vim.keymap.set('i', '<C-Space>', '<C-x><C-o>')
         vim.keymap.set({'i', 'c'}, '<C-j>', function()
           return vim.fn.pumvisible() ~= 0 and '<C-n>' or '<C-j>'
