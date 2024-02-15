@@ -57,8 +57,8 @@ in
         -- autoindent when starting a new line with 'o' or 'O'
         vim.opt.autoindent = true
 
-        -- avoid swapfile warning
-        vim.opt.shortmess = 'A'
+        -- indent wrapped lines to match line start
+        vim.opt.breakindent = true
 
         -- show line numbers
         vim.opt.number = true
@@ -66,6 +66,9 @@ in
         -- ignore case in search, except if using case
         vim.opt.ignorecase = true
         vim.opt.smartcase = true
+
+        -- show search results while typing
+        vim.opt.incsearch = true
 
         -- turn on omnicomplete
         vim.opt.omnifunc = "syntaxcomplete#Complete"
@@ -81,6 +84,9 @@ in
 
         -- threat words-with-dash as a word
         vim.opt.iskeyword:append { '-' }
+
+        -- avoid swapfile warning
+        vim.opt.shortmess = 'A'
 
         -- disable "How to disable mouse" menu
         vim.cmd.aunmenu { [[PopUp.How-to\ disable\ mouse]] }
@@ -109,7 +115,7 @@ in
         vim.keymap.set('n', '<C-g>', '<cmd>:noh<CR><CR>')
 
         -- completion
-        vim.opt.completeopt = 'menu'
+        vim.opt.completeopt = 'menuone,noinsert,noselect'
         vim.keymap.set('i', '<C-Space>', '<C-x><C-o>')
         vim.keymap.set({'i', 'c'}, '<C-j>', function()
           return vim.fn.pumvisible() ~= 0 and '<C-n>' or '<C-j>'
