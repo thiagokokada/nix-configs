@@ -216,59 +216,6 @@ in
           '';
         }
         {
-          plugin = lir-nvim;
-          type = "lua";
-          config = /* lua */ ''
-            -- disable netrw
-            vim.g.loaded_netrw = 1
-            vim.g.loaded_netrwPlugin = 1
-
-            local actions = require('lir.actions')
-            local mark_actions = require('lir.mark.actions')
-            local clipboard_actions = require('lir.clipboard.actions')
-            local enable_icons = ${toLuaBool cfg.enableIcons}
-
-            require('lir').setup {
-              show_hidden_files = false,
-              ignore = {},
-              devicons = {
-                enable = enable_icons,
-                highlight_dirname = false,
-              },
-              mappings = {
-                ['<Enter>'] = actions.edit,
-                ['<C-s>'] = actions.split,
-                ['<C-v>'] = actions.vsplit,
-                ['<C-t>'] = actions.tabedit,
-
-                ['-'] = actions.up,
-                ['q'] = actions.quit,
-
-                ['K'] = actions.mkdir,
-                ['N'] = actions.newfile,
-                ['R'] = actions.rename,
-                ['@'] = actions.cd,
-                ['Y'] = actions.yank_path,
-                ['.'] = actions.toggle_show_hidden,
-                ['D'] = actions.delete,
-
-                ['J'] = function()
-                  mark_actions.toggle_mark()
-                  vim.cmd('normal! j')
-                end,
-                ['C'] = clipboard_actions.copy,
-                ['X'] = clipboard_actions.cut,
-                ['P'] = clipboard_actions.paste,
-              },
-            }
-
-            -- vinegar
-            vim.keymap.set('n', '-', function()
-              vim.cmd.edit(vim.fn.expand('%:p:h'))
-            end, { desc = "Files" })
-          '';
-        }
-        {
           plugin = lualine-nvim;
           type = "lua";
           # TODO: add support for trailing whitespace
@@ -400,11 +347,20 @@ in
             telescope.load_extension('fzf')
             telescope.load_extension('projects')
             telescope.load_extension('ui-select')
+            telescope.load_extension('file_browser')
 
             local builtin = require('telescope.builtin')
             vim.keymap.set('n', '<Leader><Leader>', builtin.find_files, { desc = "Find files" })
             vim.keymap.set('n', '<Leader>/', builtin.live_grep, { desc = "Live grep" })
             vim.keymap.set({'n', 'v'}, '<Leader>*', builtin.grep_string, { desc = "Grep string" })
+            vim.keymap.set('n', '-', function()
+              telescope.extensions.file_browser.file_browser({
+                path = "%:p:h",
+                select_buffer = true,
+                initial_mode = "normal",
+                layout_config = { height = 100 },
+              })
+            end, { desc = "File browser" })
           '';
         }
         {
@@ -473,6 +429,7 @@ in
           '';
         }
         mkdir-nvim
+        telescope-file-browser-nvim
         telescope-fzf-native-nvim
         telescope-ui-select-nvim
         vim-advanced-sorters
