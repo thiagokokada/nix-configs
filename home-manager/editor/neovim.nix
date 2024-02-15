@@ -166,16 +166,6 @@ in
           '';
         }
         {
-          plugin = vim-sneak;
-          config = /* vim */ ''
-            let g:sneak#label = 1
-            map f <Plug>Sneak_f
-            map F <Plug>Sneak_F
-            map t <Plug>Sneak_t
-            map T <Plug>Sneak_T
-          '';
-        }
-        {
           plugin = vim-easy-align;
           config = /* vim */ ''
             " Start interactive EasyAlign in visual mode (e.g. vipga)
@@ -208,6 +198,13 @@ in
           type = "lua";
           config = /* lua */ ''
             require('gitsigns').setup {}
+          '';
+        }
+        {
+          plugin = leap-nvim;
+          type = "lua";
+          config = /* lua */ ''
+            require('leap').create_default_mappings()
           '';
         }
         {
@@ -645,6 +642,12 @@ in
             -- vim way: ; goes to the direction you were moving.
             vim.keymap.set({ "n", "x", "o" }, ";", ts_repeat_move.repeat_last_move)
             vim.keymap.set({ "n", "x", "o" }, ",", ts_repeat_move.repeat_last_move_opposite)
+
+            -- Optionally, make builtin f, F, t, T also repeatable with ; and ,
+            vim.keymap.set({ "n", "x", "o" }, "f", ts_repeat_move.builtin_f)
+            vim.keymap.set({ "n", "x", "o" }, "F", ts_repeat_move.builtin_F)
+            vim.keymap.set({ "n", "x", "o" }, "t", ts_repeat_move.builtin_t)
+            vim.keymap.set({ "n", "x", "o" }, "T", ts_repeat_move.builtin_T)
           '';
         }
         nvim-ts-autotag
