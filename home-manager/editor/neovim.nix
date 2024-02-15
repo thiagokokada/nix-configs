@@ -88,6 +88,16 @@ in
         -- avoid swapfile warning
         vim.opt.shortmess = 'A'
 
+        -- persistent undo
+        local undodir = vim.fn.expand('~/.config/nvim/undo')
+
+        vim.opt.undofile = true
+        vim.opt.undodir = undodir
+
+        if vim.fn.isdirectory(undodir) ~= 0 then
+          vim.fn.mkdir(undodir, "p", 0755)
+        end
+
         -- disable "How to disable mouse" menu
         vim.cmd.aunmenu { [[PopUp.How-to\ disable\ mouse]] }
         vim.cmd.aunmenu { [[PopUp.-1-]] }
@@ -153,21 +163,6 @@ in
             " remap leader
             let g:mapleader = "\<Space>"
             let g:maplocalleader = ','
-          '';
-        }
-        {
-          plugin = undotree;
-          config = /* vim */ ''
-            if !isdirectory($HOME . "/.config/nvim/undotree")
-                call mkdir($HOME . "/.config/nvim/undotree", "p", 0755)
-            endif
-
-            set undofile
-            set undodir=~/.config/nvim/undotree
-            let undotree_WindowLayout = 3
-            lua << EOF
-            vim.keymap.set('n', '<Leader>u', ':UndotreeToggle<CR>', { desc = "Undotree toggle" })
-            EOF
           '';
         }
         {
@@ -343,11 +338,30 @@ in
                   },
                 },
               },
+              extensions = {
+                undo = {
+                  mappings = {
+                    i = {
+                      ["<cr>"] = require("telescope-undo.actions").restore,
+                      ["<S-cr>"] = require("telescope-undo.actions").yank_deletions,
+                      ["<C-cr>"] = require("telescope-undo.actions").yank_additions,
+                      ["<C-y>"] = require("telescope-undo.actions").yank_deletions,
+                      ["<C-r>"] = require("telescope-undo.actions").restore,
+                    },
+                    n = {
+                      ["u"] = require("telescope-undo.actions").restore,
+                      ["y"] = require("telescope-undo.actions").yank_additions,
+                      ["Y"] = require("telescope-undo.actions").yank_deletions,
+                    },
+                  },
+                },
+              },
             }
             telescope.load_extension('fzf')
             telescope.load_extension('projects')
             telescope.load_extension('ui-select')
             telescope.load_extension('file_browser')
+            telescope.load_extension('undo')
 
             local builtin = require('telescope.builtin')
             vim.keymap.set('n', '<Leader><Leader>', builtin.find_files, { desc = "Find files" })
@@ -361,6 +375,7 @@ in
                 layout_config = { height = 100 },
               })
             end, { desc = "File browser" })
+            vim.keymap.set('n', '<Leader>u', telescope.extensions.undo.undo , { desc = "Undo" })
           '';
         }
         {
@@ -432,6 +447,7 @@ in
         telescope-file-browser-nvim
         telescope-fzf-native-nvim
         telescope-ui-select-nvim
+        telescope-undo-nvim
         vim-advanced-sorters
         vim-fugitive
         vim-sleuth
