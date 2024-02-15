@@ -191,21 +191,6 @@ in
           '';
         }
         {
-          plugin = vim-test;
-          config = /* vim */ ''
-            let g:test#strategy = "neovim"
-            let g:test#neovim#start_normal = 1
-            let g:test#neovim#term_position = "vert botright"
-            lua << EOF
-            vim.keymap.set('n', '<Leader>tt', ':TestNearest<CR>', { desc = "Test nearest" })
-            vim.keymap.set('n', '<Leader>tT', ':TestFile<CR>', { desc = "Test file" })
-            vim.keymap.set('n', '<Leader>ts', ':TestSuite<CR>', { desc = "Test suite" })
-            vim.keymap.set('n', '<Leader>tl', ':TestLast<CR>', { desc = "Test last" })
-            vim.keymap.set('n', '<Leader>tv', ':TestVisit<CR>', { desc = "Test visit" })
-            EOF
-          '';
-        }
-        {
           plugin = pkgs.writeText "01-init-pre-lua" "";
           type = "lua";
           config = /* lua */ ''
@@ -433,6 +418,21 @@ in
                 vim.api.nvim_replace_termcodes('<CR>', true, true, true)
               )
             end, { expr = true })
+          '';
+        }
+        {
+          plugin = vim-test;
+          type = "lua";
+          config = /* lua */ ''
+            vim.g["test#strategy"] = "neovim"
+            vim.g["test#neovim#start_normal"] = 1
+            vim.g["test#neovim#term_position"] = "vert botright"
+
+            vim.keymap.set('n', '<Leader>tt', ':TestNearest<CR>', { desc = "Test nearest" })
+            vim.keymap.set('n', '<Leader>tT', ':TestFile<CR>', { desc = "Test file" })
+            vim.keymap.set('n', '<Leader>ts', ':TestSuite<CR>', { desc = "Test suite" })
+            vim.keymap.set('n', '<Leader>tl', ':TestLast<CR>', { desc = "Test last" })
+            vim.keymap.set('n', '<Leader>tv', ':TestVisit<CR>', { desc = "Test visit" })
           '';
         }
         {
