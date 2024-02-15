@@ -111,6 +111,16 @@ in
         -- completion
         vim.opt.completeopt = 'menu'
         vim.keymap.set('i', '<C-Space>', '<C-x><C-o>')
+        vim.keymap.set({'i', 'c'}, '<C-j>', function()
+          return vim.fn.pumvisible() ~= 0 and '<C-n>' or '<C-j>'
+        end, { expr = true })
+        vim.keymap.set({'i', 'c'}, '<C-k>', function()
+          return vim.fn.pumvisible() ~= 0 and '<C-p>' or '<C-k>'
+        end, { expr = true })
+        -- the insert mode mapping for this one is done in vim-endwise
+        vim.keymap.set('c', '<CR>', function()
+          return vim.fn.pumvisible() ~= 0 and '<C-y>' or '<CR>'
+        end, { expr = true })
 
         -- syntax highlight flake.lock files as json
         vim.api.nvim_create_autocmd({ 'BufNewFile', 'BufRead' }, {
@@ -165,6 +175,16 @@ in
           '';
         }
         {
+          plugin = vim-easy-align;
+          config = /* vim */ ''
+            " Start interactive EasyAlign in visual mode (e.g. vipga)
+            xmap ga <Plug>(EasyAlign)
+
+            " Start interactive EasyAlign for a motion/text object (e.g. gaip)
+            nmap ga <Plug>(EasyAlign)
+          '';
+        }
+        {
           plugin = vim-test;
           config = /* vim */ ''
             let g:test#strategy = "neovim"
@@ -177,16 +197,6 @@ in
             vim.keymap.set('n', '<Leader>tl', ':TestLast<CR>', { desc = "Test last" })
             vim.keymap.set('n', '<Leader>tv', ':TestVisit<CR>', { desc = "Test visit" })
             EOF
-          '';
-        }
-        {
-          plugin = vim-easy-align;
-          config = /* vim */ ''
-            " Start interactive EasyAlign in visual mode (e.g. vipga)
-            xmap ga <Plug>(EasyAlign)
-
-            " Start interactive EasyAlign for a motion/text object (e.g. gaip)
-            nmap ga <Plug>(EasyAlign)
           '';
         }
         {
@@ -407,6 +417,19 @@ in
           '';
         }
         {
+          plugin = vim-endwise;
+          type = "lua";
+          config = /* lua */ ''
+            vim.g.endwise_no_mappings = 1
+
+            vim.keymap.set('i', '<CR>', function()
+              return vim.fn.pumvisible() ~= 0 and '<C-y>' or vim.fn.EndwiseAppend(
+                vim.api.nvim_replace_termcodes('<CR>', true, true, true)
+              )
+            end, { expr = true })
+          '';
+        }
+        {
           plugin = which-key-nvim;
           type = "lua";
           config = /* lua */ ''
@@ -447,30 +470,8 @@ in
         telescope-fzf-native-nvim
         telescope-ui-select-nvim
         vim-advanced-sorters
-        vim-endwise
         vim-fugitive
         vim-sleuth
-        {
-          # Workaround issue with those mappings being overwritten by some
-          # plugins, needs to be Lua since it needs to load later than
-          # vimscript, however for some reason vim.keymap.set is having
-          # weird issues with vim-endwise here
-          # FIXME: find a replacement for vim-endwise
-          plugin = pkgs.writeText "50-completion-maps" "";
-          type = "lua";
-          config = /* lua */ ''
-            vim.cmd [[
-              " insert mode
-              inoremap <expr> <C-j> pumvisible() ? "<C-n>" : "<C-j>"
-              inoremap <expr> <C-k> pumvisible() ? "<C-p>" : "<C-k>"
-              inoremap <expr> <CR> pumvisible() ? "<C-y>" : "<CR>"
-              " command line
-              cnoremap <expr> <C-j> pumvisible() ? "<C-n>" : "<C-j>"
-              cnoremap <expr> <C-k> pumvisible() ? "<C-p>" : "<C-k>"
-              cnoremap <expr> <CR> pumvisible() ? "<C-y>" : "<CR>"
-            ]]
-          '';
-        }
       ]
       ++ lib.optionals cfg.enableLsp [
         {
