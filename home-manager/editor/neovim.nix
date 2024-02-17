@@ -534,6 +534,26 @@ in
       ]
       ++ lib.optionals cfg.enableTreeSitter [
         {
+          plugin = nvim-ufo;
+          type = "lua";
+          config = /* lua */ ''
+            local ufo = require("ufo")
+
+            vim.o.foldcolumn = '0'
+            vim.o.foldlevel = 99
+            vim.o.foldlevelstart = 99
+            vim.o.foldenable = true
+
+            vim.keymap.set('n', 'zR', ufo.openAllFolds)
+            vim.keymap.set('n', 'zM', ufo.closeAllFolds)
+            ufo.setup {
+              provider_selector = function(bufnr, filetype, buftype)
+                return {'treesitter', 'indent'}
+              end
+            }
+          '';
+        }
+        {
           plugin = nvim-treesitter.withAllGrammars;
           type = "lua";
           config = /* lua */ ''
@@ -630,10 +650,6 @@ in
                 },
               },
             }
-
-            vim.opt.foldmethod = "expr"
-            vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
-            vim.opt.foldenable = false
           '';
         }
         {
