@@ -336,6 +336,12 @@ in
                 },
               },
               extensions = {
+                file_browser = {
+                  hijack_netrw = true,
+                  ${lib.optionalString (!cfg.enableIcons) /* lua */ ''
+                    dir_icon = " ",
+                  ''}
+                },
                 undo = {
                   mappings = {
                     i = {
