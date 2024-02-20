@@ -259,19 +259,6 @@ in
           '';
         }
         {
-          plugin = project-nvim;
-          type = "lua";
-          config = /* lua */ ''
-            require('project_nvim').setup {}
-            vim.keymap.set(
-              'n',
-              '<Leader>p',
-              ":Telescope projects<CR>",
-              { desc = "Projects" }
-            )
-          '';
-        }
-        {
           plugin = remember-nvim;
           type = "lua";
           config = /* lua */ ''
@@ -282,8 +269,11 @@ in
           plugin = telescope-nvim;
           type = "lua";
           config = /* lua */ ''
-            local actions = require('telescope.actions')
-            local telescope = require('telescope')
+            local actions = require("telescope.actions")
+            local builtin = require("telescope.builtin")
+            local telescope = require("telescope")
+            local undo_actions = require("telescope-undo.actions")
+
             telescope.setup {
               defaults = {
                 mappings = {
@@ -345,16 +335,16 @@ in
                 undo = {
                   mappings = {
                     i = {
-                      ["<cr>"] = require("telescope-undo.actions").restore,
-                      ["<S-cr>"] = require("telescope-undo.actions").yank_deletions,
-                      ["<C-cr>"] = require("telescope-undo.actions").yank_additions,
-                      ["<C-y>"] = require("telescope-undo.actions").yank_deletions,
-                      ["<C-r>"] = require("telescope-undo.actions").restore,
+                      ["<cr>"] = undo_actions.restore,
+                      ["<S-cr>"] = undo_actions.yank_deletions,
+                      ["<C-cr>"] = undo_actions.yank_additions,
+                      ["<C-y>"] = undo_actions.yank_deletions,
+                      ["<C-r>"] = undo_actions.restore,
                     },
                     n = {
-                      ["u"] = require("telescope-undo.actions").restore,
-                      ["y"] = require("telescope-undo.actions").yank_additions,
-                      ["Y"] = require("telescope-undo.actions").yank_deletions,
+                      ["u"] = undo_actions.restore,
+                      ["y"] = undo_actions.yank_additions,
+                      ["Y"] = undo_actions.yank_deletions,
                     },
                   },
                 },
@@ -366,7 +356,6 @@ in
             telescope.load_extension('file_browser')
             telescope.load_extension('undo')
 
-            local builtin = require('telescope.builtin')
             vim.keymap.set('n', '<Leader><Leader>', builtin.find_files, { desc = "Find files" })
             vim.keymap.set('n', '<Leader>/', builtin.live_grep, { desc = "Live grep" })
             vim.keymap.set({'n', 'v'}, '<Leader>*', builtin.grep_string, { desc = "Grep string" })
@@ -378,9 +367,22 @@ in
                 layout_config = { height = 100 },
               })
             end, { desc = "File browser" })
-            vim.keymap.set('n', '<Leader>u', telescope.extensions.undo.undo , { desc = "Undo" })
+            vim.keymap.set('n', '<Leader>u', telescope.extensions.undo.undo, { desc = "Undo" })
           '';
         }
+        # telescope extensions
+        {
+          plugin = project-nvim;
+          type = "lua";
+          config = /* lua */ ''
+            require('project_nvim').setup {}
+            vim.keymap.set('n', '<Leader>p', telescope.extensions.projects.projects, { desc = "Projects" })
+          '';
+        }
+        telescope-file-browser-nvim
+        telescope-fzf-native-nvim
+        telescope-ui-select-nvim
+        telescope-undo-nvim
         {
           plugin = vim-endwise;
           type = "lua";
@@ -447,10 +449,6 @@ in
           '';
         }
         mkdir-nvim
-        telescope-file-browser-nvim
-        telescope-fzf-native-nvim
-        telescope-ui-select-nvim
-        telescope-undo-nvim
         vim-advanced-sorters
         vim-fugitive
         vim-sleuth
