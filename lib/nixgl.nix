@@ -1,7 +1,8 @@
-{ pkgs, lib, ... }:
+{ lib, ... }:
 
 {
   nixGLWrapper =
+    pkgs:
     { pkg
     , nixGL ? pkgs.nixgl.nixGLMesa
     }:

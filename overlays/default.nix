@@ -4,10 +4,7 @@ final: prev:
 (flake.inputs.nixgl.overlays.default final prev) //
 {
   # namespaces
-  libEx = prev.lib.extend (finalLib: prevLib:
-    flake.outputs.lib //
-    (import ../lib/nixgl.nix { lib = finalLib; pkgs = final; })
-  );
+  libEx = flake.outputs.lib;
 
   wallpapers = prev.callPackage ../packages/wallpapers { };
 

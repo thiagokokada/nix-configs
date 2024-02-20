@@ -18,14 +18,14 @@ in
       # This may "overwrite" some of the personalizations from the
       # home-manager.desktop.firefox module, since the nixGLWrapper is
       # incompatible with it and we are prioritizing the nixGL wrapped binary
-      (lib.hiPrio (libEx.nixGLWrapper { pkg = firefox; nixGL = cfg.package; }))
+      (lib.hiPrio (libEx.nixGLWrapper pkgs { pkg = firefox; nixGL = cfg.package; }))
     ];
 
     # Needs Vapoursynth disabled so we don't wrap the package
     home-manager.desktop.mpv.enableVapoursynth = false;
 
     programs = {
-      mpv.package = libEx.nixGLWrapper {
+      mpv.package = libEx.nixGLWrapper pkgs {
         pkg = pkgs.mpv;
         nixGL = cfg.package;
       };

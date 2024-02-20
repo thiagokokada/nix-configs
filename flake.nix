@@ -164,7 +164,7 @@
 
             home.packages = with pkgs; [
               deluge
-              (libEx.nixGLWrapper {
+              (libEx.nixGLWrapper pkgs {
                 pkg = retroarch.override {
                   cores = with libretro; [
                     beetle-supafaust
