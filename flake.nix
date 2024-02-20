@@ -106,12 +106,13 @@
 
   outputs = { self, nixpkgs, flake-utils, ... }@inputs:
     let
-      inherit (import ./lib/attrsets.nix { inherit (nixpkgs) lib; }) recursiveMergeAttrs;
-      inherit (import ./lib/flake-helpers.nix inputs) mkGHActionsYAMLs mkRunCmd mkNixOSConfig mkHomeConfig;
+      lib = import ./lib inputs;
+      inherit (lib) recursiveMergeAttrs mkGHActionsYAMLs mkRunCmd mkNixOSConfig mkHomeConfig;
     in
     recursiveMergeAttrs [
       # Templates
       {
+        inherit lib;
         templates = {
           default = self.outputs.templates.new-host;
           new-host = {
@@ -217,41 +218,26 @@
 
       (flake-utils.lib.eachDefaultSystem (system:
         let
-          hostname = "devshell";
-          hm = (mkHomeConfig {
-            inherit hostname system;
-            extraModules = [{
-              home-manager = {
-                dev.nix.enable = true;
-                editor.neovim = {
-                  enableIcons = false;
-                  enableLsp = true;
-                  enableTreeSitter = true;
-                };
-              };
-            }];
-          }).homeConfigurations.${hostname};
-          inherit (hm) config pkgs;
+          pkgs = import nixpkgs {
+            inherit system;
+            config.allowUnfree = true;
+            overlays = [ self.overlays.default ];
+          };
         in
         {
           devShells.default = pkgs.mkShell {
             packages = with pkgs; [
-              (config.programs.neovim.finalPackage.override {
-                luaRcContent = config.xdg.configFile."nvim/init.lua".text;
-                wrapRc = true;
-              })
+              fd
+              neovim-standalone
               nil
               nixpkgs-fmt
+              ripgrep
               statix
             ];
           };
           checks = import ./checks.nix { inherit pkgs; };
           formatter = pkgs.nixpkgs-fmt;
-          legacyPackages = import nixpkgs {
-            inherit system;
-            config.allowUnfree = true;
-            overlays = [ self.overlays.default ];
-          };
+          legacyPackages = pkgs;
         }))
     ]; # END recursiveMergeAttrs
 

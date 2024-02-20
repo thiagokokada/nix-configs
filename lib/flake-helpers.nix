@@ -66,7 +66,8 @@ in
         specialArgs = {
           flake = self;
           libEx = nixpkgs.lib.extend (final: prev:
-            (import ../lib {
+            self.outputs.lib //
+            (import ../lib/nixgl.nix {
               inherit pkgs;
               lib = final;
             })
@@ -115,7 +116,8 @@ in
         extraSpecialArgs = {
           flake = self;
           libEx = nixpkgs.lib.extend (final: prev:
-            (import ../lib {
+            self.outputs.lib //
+            (import ../lib/nixgl.nix {
               inherit pkgs;
               lib = final;
             })

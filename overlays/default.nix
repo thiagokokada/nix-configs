@@ -5,7 +5,8 @@ final: prev:
 {
   # namespaces
   libEx = prev.lib.extend (finalLib: prevLib:
-    (import ../lib { lib = finalLib; pkgs = final; })
+    flake.outputs.lib //
+    (import ../lib/nixgl.nix { lib = finalLib; pkgs = final; })
   );
 
   wallpapers = prev.callPackage ../packages/wallpapers { };
@@ -21,11 +22,32 @@ final: prev:
 
   open-browser = prev.callPackage ../packages/open-browser { };
 
+  neovim-standalone =
+    let
+      hostname = "neovim";
+      hm = (flake.outputs.lib.mkHomeConfig {
+        inherit hostname;
+        inherit (prev) system;
+        extraModules = [{
+          home-manager = {
+            dev.nix.enable = true;
+            editor.neovim = {
+              enableIcons = false;
+              enableLsp = true;
+              enableTreeSitter = true;
+            };
+          };
+        }];
+      }).homeConfigurations.${hostname};
+    in
+    hm.config.programs.neovim.finalPackage.override {
+      luaRcContent = hm.config.xdg.configFile."nvim/init.lua".text;
+      wrapRc = true;
+    };
+
   nix-cleanup = prev.callPackage ../packages/nix-cleanup { };
 
-  nixos-cleanup = prev.callPackage ../packages/nix-cleanup {
-    isNixOS = true;
-  };
+  nixos-cleanup = prev.callPackage ../packages/nix-cleanup { isNixOS = true; };
 
   nix-whereis = prev.callPackage ../packages/nix-whereis { };
 
