@@ -392,16 +392,13 @@ in
           plugin = vim-endwise;
           type = "lua";
           config = /* lua */ ''
-            -- manually mapping vim-endwise to avoid issue with pumvisible map
-            -- https://github.com/tpope/vim-endwise/blob/3719ffddb5e42bf67b55b2183d7a6fb8d3e5a2b8/plugin/endwise.vim#L141
             vim.g.endwise_no_mappings = 1
-            local m = vim.fn.maparg('<CR>', 'i', 0, 1)
 
             vim.keymap.set('i', '<CR>', function()
-              return vim.fn.pumvisible() ~= 0 and '<C-y>' or m.rhs or vim.fn.EndwiseAppend(
-                vim.api.nvim_replace_termcodes(m.callback(), true, true, m.replace_keycodes)
+              return vim.fn.pumvisible() ~= 0 and '<C-y>' or vim.fn.EndwiseAppend(
+                vim.api.nvim_replace_termcodes('<CR>', true, true, true)
               )
-            end, { expr = true, desc = "Endwise", silent = true })
+            end, { expr = true })
           '';
         }
         {
