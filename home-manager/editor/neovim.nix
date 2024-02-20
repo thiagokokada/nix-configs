@@ -273,6 +273,18 @@ in
             local builtin = require("telescope.builtin")
             local telescope = require("telescope")
             local undo_actions = require("telescope-undo.actions")
+            -- Exclude some patterns from search
+            local rg_common_args = {
+              "--glob=!**/.git/*",
+              "--glob=!**/.hg/*",
+              "--glob=!**/.svn/*",
+              "--glob=!**/.bzr/*",
+
+              "--glob=!**/.DS_Store/*",
+              "--glob=!**/node_modules/*",
+              "--glob=!**/.idea/*",
+              "--glob=!**/.vscode/*",
+            }
 
             telescope.setup {
               defaults = {
@@ -303,25 +315,18 @@ in
                   "--line-number",   -- Show line numbers
                   "--column",        -- Show column numbers
                   "--smart-case",    -- Smart case search
-
-                  -- Exclude some patterns from search
-                  "--glob=!**/.git/*",
-                  "--glob=!**/.idea/*",
-                  "--glob=!**/.vscode/*",
+                  unpack(rg_common_args)
                 },
               },
               pickers = {
                 find_files = {
-                  hidden = true,
                   -- needed to exclude some files & dirs from general search
                   -- when not included or specified in .gitignore
                   find_command = {
                     "${lib.getExe pkgs.ripgrep}",
                     "--files",
                     "--hidden",
-                    "--glob=!**/.git/*",
-                    "--glob=!**/.idea/*",
-                    "--glob=!**/.vscode/*",
+                    unpack(rg_common_args)
                   },
                 },
               },
