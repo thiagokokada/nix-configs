@@ -8,7 +8,9 @@ in
   options.nixos.server.ssh = {
     enable = lib.mkEnableOption "SSH config";
     enableRootLogin = lib.mkEnableOption "root login via SSH";
-    enableWaypipe = lib.mkEnableOption "waypipe" // { default = true; };
+    enableWaypipe = lib.mkEnableOption "waypipe" // {
+      default = config.nixos.desktop.wayland.enable;
+    };
     authorizedKeys = lib.mkOption {
       description = "List of authorized keys.";
       type = lib.types.listOf lib.types.str;

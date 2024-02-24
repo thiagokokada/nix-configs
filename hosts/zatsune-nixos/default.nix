@@ -25,6 +25,7 @@ in
     dev.enable = true;
     # Has tons of memory and slow disk
     nix.tmpOnDisk = false;
+    desktop.wayland.enable = true;
     server = {
       iperf3.enable = true;
       ssh.enable = true;
