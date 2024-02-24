@@ -1,4 +1,4 @@
-{ config, lib, ... }:
+{ config, lib, pkgs, ... }:
 
 let
   inherit (config.mainUser) username;
@@ -7,7 +7,8 @@ in
 {
   options.nixos.server.ssh = {
     enable = lib.mkEnableOption "SSH config";
-    enableRootLogin = lib.mkEnableOption "Root login via SSH";
+    enableRootLogin = lib.mkEnableOption "root login via SSH";
+    enableWaypipe = lib.mkEnableOption "waypipe" // { default = true; };
     authorizedKeys = lib.mkOption {
       description = "List of authorized keys.";
       type = lib.types.listOf lib.types.str;
@@ -16,6 +17,10 @@ in
   };
 
   config = lib.mkIf cfg.enable {
+    environment.systemPackages = with pkgs; lib.mkIf cfg.enableWaypipe [
+      waypipe
+    ];
+
     # Enable OpenSSH
     services.openssh = {
       enable = true;
