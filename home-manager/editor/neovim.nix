@@ -190,21 +190,21 @@ in
           plugin = comment-nvim;
           type = "lua";
           config = /* lua */ ''
-            require('Comment').setup {}
+            require("Comment").setup {}
           '';
         }
         {
           plugin = gitsigns-nvim;
           type = "lua";
           config = /* lua */ ''
-            require('gitsigns').setup {}
+            require("gitsigns").setup {}
           '';
         }
         {
           plugin = leap-nvim;
           type = "lua";
           config = /* lua */ ''
-            require('leap').create_default_mappings()
+            require("leap").create_default_mappings()
           '';
         }
         {
@@ -240,7 +240,7 @@ in
               return space ~= 0 and "trailing[" .. space .. "]" or ""
             end
 
-            require('lualine').setup {
+            require("lualine").setup {
               sections = {
                 lualine_y = { mixed_indent },
                 lualine_z = { trailing_whitespace },
@@ -289,7 +289,8 @@ in
           });
           type = "lua";
           config = /* lua */ ''
-            require("oil").setup {
+            local oil = require("oil")
+            oil.setup {
               default_file_explorer = true,
               skip_confirm_for_simple_edits = true,
               constrain_cursor = "name",
@@ -297,7 +298,7 @@ in
               experimental_watch_for_changes = true,
             }
 
-            vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Open parent directory" })
+            vim.keymap.set("n", "-", oil.open, { desc = "Open parent directory" })
           '';
         }
         {
@@ -323,7 +324,7 @@ in
           plugin = remember-nvim;
           type = "lua";
           config = /* lua */ ''
-            require('remember').setup {}
+            require("remember").setup {}
           '';
         }
         {
@@ -426,7 +427,7 @@ in
           plugin = project-nvim;
           type = "lua";
           config = /* lua */ ''
-            require('project_nvim').setup {}
+            require("project_nvim").setup {}
             vim.keymap.set('n', '<Leader>p', telescope.extensions.projects.projects, { desc = "Projects" })
           '';
         }
@@ -474,7 +475,8 @@ in
           plugin = whitespace-nvim;
           type = "lua";
           config = /* lua */ ''
-            require('whitespace-nvim').setup {
+            local whitespace = require("whitespace-nvim")
+            whitespace.setup {
               -- configuration options and their defaults
 
               -- `highlight` configures which highlight is used to display
@@ -490,12 +492,7 @@ in
             }
 
             -- remove trailing whitespace with a keybinding
-            vim.keymap.set(
-              'n',
-              '<Leader>w',
-              require('whitespace-nvim').trim,
-              { desc = "Trim whitespace" }
-            )
+            vim.keymap.set('n', '<Leader>w', whitespace.trim, { desc = "Trim whitespace" })
           '';
         }
         mkdir-nvim
@@ -510,7 +507,7 @@ in
           config = /* lua */ ''
             -- Setup language servers.
             -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
-            local lspconfig = require('lspconfig')
+            local lspconfig = require("lspconfig")
 
             ${lib.optionalString devCfg.enable /* lua */ ''
               lspconfig.bashls.setup {}
@@ -549,7 +546,7 @@ in
               lspconfig.jsonls.setup {}
             ''}
 
-            local builtin = require('telescope.builtin')
+            local builtin = require("telescope.builtin")
 
             -- Global mappings.
             -- See `:help vim.diagnostic.*` for documentation on any of the below functions
@@ -611,7 +608,7 @@ in
           plugin = nvim-treesitter.withAllGrammars;
           type = "lua";
           config = /* lua */ ''
-            require('nvim-treesitter.configs').setup {
+            require("nvim-treesitter.configs").setup {
               highlight = {
                 enable = true,
                 -- disable slow treesitter highlight for large files
