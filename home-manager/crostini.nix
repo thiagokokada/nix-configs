@@ -6,7 +6,6 @@
   config = lib.mkIf config.home-manager.crostini.enable {
     home-manager = {
       desktop = {
-        firefox.enable = true;
         mpv.enable = true;
         nixgl.enable = true;
       };

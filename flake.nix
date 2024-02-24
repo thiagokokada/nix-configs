@@ -158,31 +158,7 @@
       (mkHomeConfig {
         hostname = "penguin";
         system = "aarch64-linux";
-        extraModules = [
-          ({ pkgs, libEx, ... }: {
-            home-manager.crostini.enable = true;
-
-            home.packages = with pkgs; [
-              deluge
-              (libEx.nixGLWrapper pkgs {
-                pkg = retroarch.override {
-                  cores = with libretro; [
-                    beetle-supafaust
-                    gambatte
-                    genesis-plus-gx
-                    melonds
-                    mgba
-                    nestopia
-                    pcsx-rearmed
-                    stella
-                  ];
-                  # OpenGL window is too small
-                  settings = { "video_driver" = "sdl2"; };
-                };
-              })
-            ];
-          })
-        ];
+        extraModules = [{ home-manager.crostini.enable = true; }];
       })
       (mkHomeConfig {
         hostname = "toasty";
