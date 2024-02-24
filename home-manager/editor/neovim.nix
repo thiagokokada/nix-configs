@@ -270,7 +270,23 @@ in
           '';
         }
         {
-          plugin = oil-nvim;
+          plugin = oil-nvim.overrideAttrs (oldAttrs: {
+            # https://github.com/stevearc/oil.nvim/pull/305
+            patches = [
+              (fetchpatch {
+                url = "https://github.com/pi314ever/oil.nvim/commit/4e71530846202c71771d03f7d16506a87cbd86aa.patch";
+                hash = "sha256-qVFDcpthtIFSsZa/Jok/62RY0NseZaCciO4vB9H5WEM=";
+              })
+              (fetchpatch {
+                url = "https://github.com/pi314ever/oil.nvim/commit/7743b4c39a31a517fa13a01e48ae44d0cf1129a9.patch";
+                hash = "sha256-CZiwU2D5mtx6jTPJJdIVf2TKN1a5YdTWkq31oeznUwM=";
+              })
+              (fetchpatch {
+                url = "https://github.com/pi314ever/oil.nvim/commit/65b26c30f0881514acc6a6fdf1319458ed16e983.patch";
+                hash = "sha256-PdCCfcUq1lLEAOptnv8sLqW6nMa/QfO/1cpU3ompCGU=";
+              })
+            ];
+          });
           type = "lua";
           config = /* lua */ ''
             require("oil").setup {
