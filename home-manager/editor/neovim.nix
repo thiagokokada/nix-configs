@@ -14,6 +14,9 @@ in
     enableIcons = lib.mkEnableOption "icons" // {
       default = config.home-manager.desktop.enable || config.home-manager.darwin.enable;
     };
+    enableCmp = lib.mkEnableOption "nvim-cmp and nvim-snippy" // {
+      default = config.home-manager.dev.enable;
+    };
     enableLsp = lib.mkEnableOption "LSP" // {
       default = config.home-manager.dev.enable;
     };
@@ -500,6 +503,61 @@ in
         vim-fugitive
         vim-sleuth
       ]
+      ++ lib.optionals cfg.enableCmp [
+        cmp-buffer
+        cmp-nvim-lsp
+        cmp-path
+        cmp-snippy
+        {
+          plugin = nvim-cmp;
+          type = "lua";
+          config = /* lua */ ''
+            local cmp = require("cmp")
+            cmp.setup({
+              completion = { autocomplete = false },
+              mapping = cmp.mapping.preset.insert({
+                ['<C-b>'] = cmp.mapping.scroll_docs(-4),
+                ['<C-f>'] = cmp.mapping.scroll_docs(4),
+                ['<C-k>'] = cmp.mapping.select_prev_item(),
+                ['<C-j>'] = cmp.mapping.select_next_item(),
+                ['<C-Space>'] = cmp.mapping.complete(),
+                ['<C-e>'] = cmp.mapping.abort(),
+                ['<CR>'] = cmp.mapping.confirm(),
+              }),
+              snippet = {
+                expand = function(args)
+                  require('snippy').expand_snippet(args.body)
+                end,
+              },
+              sources = cmp.config.sources({
+                { name = 'nvim_lsp' },
+                { name = 'path' },
+                { name = 'snippy' },
+              }, {
+                { name = 'path' },
+                { name = 'buffer' },
+              })
+            })
+          '';
+        }
+        {
+          plugin = nvim-snippy;
+          type = "lua";
+          config = /* lua */ ''
+            require("snippy").setup {
+              mappings = {
+                is = {
+                  ['<Tab>'] = 'expand_or_advance',
+                  ['<S-Tab>'] = 'previous',
+                },
+                nx = {
+                  ['<leader>x'] = 'cut_text',
+                },
+              },
+            }
+          '';
+        }
+      ]
       ++ lib.optionals cfg.enableLsp [
         {
           plugin = nvim-lspconfig;
@@ -508,13 +566,18 @@ in
             -- Setup language servers.
             -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
             local lspconfig = require("lspconfig")
+            local capabilities = {}
+            ${lib.optionalString cfg.enableCmp /* lua */ ''
+              capabilities = require("cmp_nvim_lsp").default_capabilities()
+            ''}
 
             ${lib.optionalString devCfg.enable /* lua */ ''
-              lspconfig.bashls.setup {}
-              lspconfig.marksman.setup {}
+              lspconfig.bashls.setup { capabilities = capabilities }
+              lspconfig.marksman.setup { capabilities = capabilities }
             ''}
             ${lib.optionalString devCfg.nix.enable /* lua */ ''
               lspconfig.nil_ls.setup {
+                capabilities = capabilities,
                 settings = {
                   ['nil'] = {
                     formatting = {
@@ -530,20 +593,20 @@ in
               }
             ''}
             ${lib.optionalString devCfg.clojure.enable /* lua */ ''
-              lspconfig.clojure_lsp.setup {}
+              lspconfig.clojure_lsp.setup { capabilities = capabilities }
             ''}
             ${lib.optionalString devCfg.go.enable /* lua */ ''
-              lspconfig.gopls.setup {}
+              lspconfig.gopls.setup { capabilities = capabilities }
             ''}
             ${lib.optionalString devCfg.python.enable /* lua */ ''
-              lspconfig.pyright.setup {}
-              lspconfig.ruff_lsp.setup {}
+              lspconfig.pyright.setup { capabilities = capabilities }
+              lspconfig.ruff_lsp.setup { capabilities = capabilities }
             ''}
             ${lib.optionalString devCfg.node.enable /* lua */''
-              lspconfig.cssls.setup {}
-              lspconfig.eslint.setup {}
-              lspconfig.html.setup {}
-              lspconfig.jsonls.setup {}
+              lspconfig.cssls.setup { capabilities = capabilities }
+              lspconfig.eslint.setup { capabilities = capabilities }
+              lspconfig.html.setup { capabilities = capabilities }
+              lspconfig.jsonls.setup { capabilities = capabilities }
             ''}
 
             local builtin = require("telescope.builtin")
