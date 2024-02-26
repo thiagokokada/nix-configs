@@ -503,7 +503,6 @@ in
         vim-sleuth
       ]
       ++ lib.optionals cfg.enableCmp [
-        cmp-buffer
         cmp-nvim-lsp
         cmp-path
         cmp-snippy
@@ -528,14 +527,11 @@ in
                   require("snippy").expand_snippet(args.body)
                 end,
               },
-              sources = cmp.config.sources({
+              sources = {
                 { name = 'nvim_lsp' },
                 { name = 'path' },
                 { name = 'snippy' },
-              }, {
-                { name = 'path' },
-                { name = 'buffer' },
-              })
+              },
             })
           '';
         }
