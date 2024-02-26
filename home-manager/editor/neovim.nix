@@ -45,7 +45,7 @@ in
 
       withRuby = false;
       withNodeJs = false;
-      withPython3 = true;
+      withPython3 = false;
 
       viAlias = true;
       vimAlias = true;
