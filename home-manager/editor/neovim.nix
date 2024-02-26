@@ -142,13 +142,13 @@ in
         end, { expr = true })
 
         -- syntax highlight flake.lock files as json
-        vim.api.nvim_create_autocmd({ 'BufNewFile', 'BufRead' }, {
+        vim.api.nvim_create_autocmd({'BufNewFile', 'BufRead'}, {
           pattern = 'flake.lock',
           command = 'set filetype=json',
         })
 
         -- keep comment leader when 'o' or 'O' is used in Normal mode
-        vim.api.nvim_create_autocmd({ 'FileType' }, {
+        vim.api.nvim_create_autocmd({'FileType'}, {
           pattern = '*',
           command = 'set formatoptions+=o',
         })
@@ -166,16 +166,6 @@ in
             " remap leader
             let g:mapleader = "\<Space>"
             let g:maplocalleader = ','
-          '';
-        }
-        {
-          plugin = vim-easy-align;
-          config = /* vim */ ''
-            " Start interactive EasyAlign in visual mode (e.g. vipga)
-            xmap ga <Plug>(EasyAlign)
-
-            " Start interactive EasyAlign for a motion/text object (e.g. gaip)
-            nmap ga <Plug>(EasyAlign)
           '';
         }
         {
@@ -438,6 +428,13 @@ in
         telescope-ui-select-nvim
         telescope-undo-nvim
         {
+          plugin = vim-easy-align;
+          type = "lua";
+          config = /* lua */ ''
+            vim.keymap.set({'n', 'x'}, 'ga', '<Plug>(EasyAlign)', { remap = true })
+          '';
+        }
+        {
           plugin = vim-endwise;
           type = "lua";
           config = /* lua */ ''
@@ -549,7 +546,7 @@ in
 
             vim.keymap.set('i', '<Tab>', mappings.expand_or_advance('<Tab>'), { desc = "Snippy expand or advance" })
             vim.keymap.set('s', '<Tab>', mappings.next('<Tab>'), { desc = "Snippy next" })
-            vim.keymap.set({ 'i', 's' }, '<S-Tab>', mappings.previous('<S-Tab>'), { desc = "Snippy previous" })
+            vim.keymap.set({'i', 's'}, '<S-Tab>', mappings.previous('<S-Tab>'), { desc = "Snippy previous" })
             vim.keymap.set({'n', 'x'}, '<Leader>x', mappings.cut_text, { remap = true, desc = "Snippy delete" })
           '';
         }
@@ -633,7 +630,7 @@ in
                 end, { buffer = ev.buf, desc = "LSP list workspaces" })
                 vim.keymap.set('n', '<Leader>lt', builtin.lsp_type_definitions, { buffer = ev.buf, desc = "LSP type definitions" })
                 vim.keymap.set('n', '<Leader>lr', vim.lsp.buf.rename, { buffer = ev.buf, desc = "LSP rename" })
-                vim.keymap.set({ 'n', 'v' }, '<Leader>la', vim.lsp.buf.code_action, { buffer = ev.buf, desc = "LSP code action" })
+                vim.keymap.set({'n', 'v'}, '<Leader>la', vim.lsp.buf.code_action, { buffer = ev.buf, desc = "LSP code action" })
                 vim.keymap.set('n', '<Leader>f', function()
                   vim.lsp.buf.format { async = true }
                 end, { buffer = ev.buf, desc = "LSP format" })
@@ -770,14 +767,14 @@ in
             local ts_repeat_move = require("nvim-treesitter.textobjects.repeatable_move")
 
             -- vim way: ; goes to the direction you were moving.
-            vim.keymap.set({ "n", "x", "o" }, ";", ts_repeat_move.repeat_last_move)
-            vim.keymap.set({ "n", "x", "o" }, ",", ts_repeat_move.repeat_last_move_opposite)
+            vim.keymap.set({"n", "x", "o"}, ";", ts_repeat_move.repeat_last_move)
+            vim.keymap.set({"n", "x", "o"}, ",", ts_repeat_move.repeat_last_move_opposite)
 
             -- Optionally, make builtin f, F, t, T also repeatable with ; and ,
-            vim.keymap.set({ "n", "x", "o" }, "f", ts_repeat_move.builtin_f)
-            vim.keymap.set({ "n", "x", "o" }, "F", ts_repeat_move.builtin_F)
-            vim.keymap.set({ "n", "x", "o" }, "t", ts_repeat_move.builtin_t)
-            vim.keymap.set({ "n", "x", "o" }, "T", ts_repeat_move.builtin_T)
+            vim.keymap.set({"n", "x", "o"}, "f", ts_repeat_move.builtin_f)
+            vim.keymap.set({"n", "x", "o"}, "F", ts_repeat_move.builtin_F)
+            vim.keymap.set({"n", "x", "o"}, "t", ts_repeat_move.builtin_t)
+            vim.keymap.set({"n", "x", "o"}, "T", ts_repeat_move.builtin_T)
           '';
         }
         nvim-ts-autotag
