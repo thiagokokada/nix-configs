@@ -526,7 +526,7 @@ in
               }),
               snippet = {
                 expand = function(args)
-                  require('snippy').expand_snippet(args.body)
+                  require("snippy").expand_snippet(args.body)
                 end,
               },
               sources = cmp.config.sources({
@@ -544,17 +544,13 @@ in
           plugin = nvim-snippy;
           type = "lua";
           config = /* lua */ ''
-            require("snippy").setup {
-              mappings = {
-                is = {
-                  ['<Tab>'] = 'expand_or_advance',
-                  ['<S-Tab>'] = 'previous',
-                },
-                nx = {
-                  ['<leader>x'] = 'cut_text',
-                },
-              },
-            }
+            require("snippy").setup {}
+            local mappings = require("snippy.mapping")
+
+            vim.keymap.set('i', '<Tab>', mappings.expand_or_advance('<Tab>'), { desc = "Snippy expand or advance" })
+            vim.keymap.set('s', '<Tab>', mappings.next('<Tab>'), { desc = "Snippy next" })
+            vim.keymap.set({ 'i', 's' }, '<S-Tab>', mappings.previous('<S-Tab>'), { desc = "Snippy previous" })
+            vim.keymap.set({'n', 'x'}, '<Leader>x', mappings.cut_text, { remap = true, desc = "Snippy delete" })
           '';
         }
       ]
