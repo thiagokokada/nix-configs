@@ -129,7 +129,6 @@ in
 
         -- completion
         vim.opt.completeopt = 'menu'
-        vim.keymap.set('i', '<C-Space>', '<C-x><C-o>')
         vim.keymap.set({'i', 'c'}, '<C-j>', function()
           return vim.fn.pumvisible() ~= 0 and '<C-n>' or '<C-j>'
         end, { expr = true })
@@ -140,6 +139,9 @@ in
         vim.keymap.set('c', '<CR>', function()
           return vim.fn.pumvisible() ~= 0 and '<C-y>' or '<CR>'
         end, { expr = true })
+        ${lib.optionalString (!cfg.enableCmp) /* lua */ ''
+          vim.keymap.set('i', '<C-Space>', '<C-x><C-o>')
+        ''}
 
         -- syntax highlight flake.lock files as json
         vim.api.nvim_create_autocmd({'BufNewFile', 'BufRead'}, {
@@ -512,7 +514,7 @@ in
             local cmp = require("cmp")
             cmp.setup({
               completion = { autocomplete = false },
-              mapping = cmp.mapping.preset.insert({
+              mapping = {
                 ['<C-b>'] = cmp.mapping.scroll_docs(-4),
                 ['<C-f>'] = cmp.mapping.scroll_docs(4),
                 ['<C-k>'] = cmp.mapping.select_prev_item(),
@@ -520,7 +522,7 @@ in
                 ['<C-Space>'] = cmp.mapping.complete(),
                 ['<C-e>'] = cmp.mapping.abort(),
                 ['<CR>'] = cmp.mapping.confirm(),
-              }),
+              },
               snippet = {
                 expand = function(args)
                   require("snippy").expand_snippet(args.body)
