@@ -45,6 +45,9 @@ in
       # Leave nix builds as a background task
       daemonCPUSchedPolicy = "batch";
 
+      # Customized nixpkgs, e.g.: `nix shell nixpkgs_#snes9x`
+      registry.nixpkgs_.flake = flake;
+
       settings =
         let
           substituters = import ../../shared/substituters.nix;
