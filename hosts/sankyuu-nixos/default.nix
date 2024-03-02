@@ -60,7 +60,10 @@ in
       start = 75;
       stop = 80;
     };
-    server.tailscale.enable = true;
+    server = {
+      ssh.enable = true;
+      tailscale.enable = true;
+    };
   };
 
   programs.steam.gamescopeSession.args = [
