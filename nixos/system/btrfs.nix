@@ -4,10 +4,9 @@
   options.nixos.system.btrfs = {
     enable =
       let
-        inherit (config.boot) initrd supportedFilesystems;
-        btrfsInInitrd = builtins.elem "btrfs" initrd.supportedFilesystems;
-        btrfsInSystem = builtins.elem "brtfs" supportedFilesystems;
-        default = btrfsInInitrd || btrfsInSystem;
+        inInitrd = config.boot.initrd.supportedFilesystems.btrfs or false;
+        inSystem = config.boot.supportedFilesystems.btrfs or false;
+        default = inInitrd || inSystem;
       in
       lib.mkEnableOption "btrfs config" // { inherit default; };
   };
