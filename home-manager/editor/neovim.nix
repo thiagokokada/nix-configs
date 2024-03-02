@@ -30,8 +30,9 @@ in
       fd
       ripgrep
     ]
-    # For clipboard=unnamedplus
     ++ lib.optionals stdenv.isLinux [
+      fswatch
+      # For clipboard=unnamedplus
       wl-clipboard
       xclip
     ]
@@ -41,6 +42,8 @@ in
 
     programs.neovim = {
       enable = true;
+      package = pkgs.neovim-nightly;
+
       defaultEditor = true;
 
       withRuby = false;
