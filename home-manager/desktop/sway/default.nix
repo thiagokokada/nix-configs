@@ -100,6 +100,8 @@ in
       extraSessionCommands = ''
         # Source home-manager session vars
         . "${config.home.profileDirectory}/etc/profile.d/hm-session-vars.sh"
+        # Vulkan renderer
+        export WLR_RENDERER=vulkan
         # Firefox
         export MOZ_ENABLE_WAYLAND=1
         # Chrome/Chromium/Electron
