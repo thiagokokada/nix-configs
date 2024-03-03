@@ -19,7 +19,7 @@ in
     opacity = lib.mkOption {
       type = lib.types.float;
       description = "Background opacity.";
-      default = 0.9;
+      default = 0.95;
     };
     scrollbackLines = lib.mkOption {
       type = lib.types.int;
