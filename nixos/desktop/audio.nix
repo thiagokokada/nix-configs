@@ -1,14 +1,17 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, flake, ... }:
 
 let
   cfg = config.nixos.desktop.audio;
 in
 {
-  imports = [ ./low-latency.nix ];
+  imports = [ flake.inputs.nix-gaming.nixosModules.pipewireLowLatency ];
 
   options.nixos.desktop.audio = {
     enable = lib.mkEnableOption "audio config" // {
       default = config.nixos.desktop.enable;
+    };
+    lowLatency.enable = lib.mkEnableOption "low latency config" // {
+      default = config.nixos.games.enable;
     };
   };
 
@@ -25,6 +28,12 @@ in
           support32Bit = true;
         };
         pulse.enable = true;
+        lowLatency = {
+          inherit (cfg.lowLatency) enable;
+          # The default for this module is 64 that generally is too low and
+          # generates e.g.: cracking
+          quantum = lib.mkDefault 128;
+        };
         wireplumber = {
           enable = true;
           configPackages =
