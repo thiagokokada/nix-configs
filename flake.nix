@@ -185,7 +185,6 @@
             editor.jetbrains.enable = true;
             dev = {
               clojure.enable = false;
-              go.enable = false;
               node.enable = false;
             };
           };
