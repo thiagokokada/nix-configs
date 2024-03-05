@@ -567,44 +567,43 @@ in
             ${lib.optionalString cfg.enableCmp /* lua */ ''
               capabilities = require("cmp_nvim_lsp").default_capabilities()
             ''}
-
-            ${lib.optionalString devCfg.enable /* lua */ ''
-              lspconfig.bashls.setup { capabilities = capabilities }
-              lspconfig.marksman.setup { capabilities = capabilities }
-            ''}
-            ${lib.optionalString devCfg.nix.enable /* lua */ ''
-              lspconfig.nil_ls.setup {
-                capabilities = capabilities,
-                settings = {
-                  ['nil'] = {
-                    formatting = {
-                      command = { "nixpkgs-fmt" },
-                    },
-                    nix = {
-                      flake = {
-                        autoArchive = false,
+            local servers = {
+              { "bashls" },
+              { "marksman" },
+              { "nil_ls",
+                opts = {
+                  settings = {
+                    ["nil"] = {
+                      formatting = {
+                        command = { "nixpkgs-fmt" },
+                      },
+                      nix = {
+                        flake = {
+                          autoArchive = false,
+                        },
                       },
                     },
                   },
                 },
-              }
-            ''}
-            ${lib.optionalString devCfg.clojure.enable /* lua */ ''
-              lspconfig.clojure_lsp.setup { capabilities = capabilities }
-            ''}
-            ${lib.optionalString devCfg.go.enable /* lua */ ''
-              lspconfig.gopls.setup { capabilities = capabilities }
-            ''}
-            ${lib.optionalString devCfg.python.enable /* lua */ ''
-              lspconfig.pyright.setup { capabilities = capabilities }
-              lspconfig.ruff_lsp.setup { capabilities = capabilities }
-            ''}
-            ${lib.optionalString devCfg.node.enable /* lua */''
-              lspconfig.cssls.setup { capabilities = capabilities }
-              lspconfig.eslint.setup { capabilities = capabilities }
-              lspconfig.html.setup { capabilities = capabilities }
-              lspconfig.jsonls.setup { capabilities = capabilities }
-            ''}
+              },
+              { "clojure_lsp" },
+              { "gopls" },
+              { "pyright" },
+              { "ruff_lsp" },
+              { "cssls" },
+              { "eslint" },
+              { "html" },
+              { "jsonls" },
+            }
+            for _, server in pairs(servers) do
+              local config = lspconfig[server[1]]
+
+              if vim.fn.executable(config.document_config.default_config.cmd[1]) ~= 0 then
+                local shared_config = { capabilities = capabilities }
+
+                config.setup(vim.tbl_deep_extend("force", shared_config, server["opts"] or {}))
+              end
+            end
 
             local builtin = require("telescope.builtin")
 
