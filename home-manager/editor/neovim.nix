@@ -1,9 +1,8 @@
 { config, pkgs, lib, ... }:
 
 let
-  devCfg = config.home-manager.dev;
   cfg = config.home-manager.editor.neovim;
-  toLuaBool = x: if x then "true" else "false";
+  toLua = lib.generators.toLua { };
 in
 {
   options.home-manager.editor.neovim = {
@@ -209,7 +208,7 @@ in
           plugin = lualine-nvim;
           type = "lua";
           config = /* lua */ ''
-            local enable_icons = ${toLuaBool cfg.enableIcons}
+            local enable_icons = ${toLua cfg.enableIcons}
             local function mixed_indent()
               local space_pat = [[\v^ +]]
               local tab_pat = [[\v^\t+]]
@@ -253,7 +252,7 @@ in
           plugin = nvim-autopairs;
           type = "lua";
           config = /* lua */ ''
-            local enable_ts = ${toLuaBool cfg.enableTreeSitter}
+            local enable_ts = ${toLua cfg.enableTreeSitter}
 
             require("nvim-autopairs").setup {
               check_ts = enable_ts
