@@ -96,19 +96,6 @@ To build the Home Manager standalone and activate its configuration, run:
 $ nix run '.#homeActivations/<hostname>'
 ```
 
-#### devShell
-
-You can also start a minimal configuration based on my Home-Manager setup by
-running `nix develop --impure`. A quick way to have a working shell in any
-Nix-enabled system is to run:
-
-```console
-$ nix --experimental-features 'nix-command flakes' develop github:thiagokokada/nix-configs --impure
-```
-
-This will bring a `zsh` setup with some other tooling (like `neovim`) all self
-contained inside your shell (once it is closed, everything is gone!).
-
 ## Testing
 
 You can build a VM to test NixOS configurations with safety running the
