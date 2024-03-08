@@ -47,18 +47,6 @@ in
         searchDownKey = [ "$terminfo[kcud1]" ];
       };
 
-      sessionVariables = {
-        # Enable scroll support
-        LESS = "--RAW-CONTROL-CHARS";
-        # Reduce time to wait for multi-key sequences
-        KEYTIMEOUT = 1;
-        # Set right prompt to show time
-        RPROMPT = "%F{8}%*";
-        # zsh-users config
-        ZSH_AUTOSUGGEST_USE_ASYNC = 1;
-        ZSH_HIGHLIGHT_HIGHLIGHTERS = [ "main" "brackets" "cursor" ];
-      };
-
       profileExtra = lib.concatStringsSep "\n" (lib.filter (x: x != "") [
         (lib.optionalString config.home-manager.crostini.enable /* bash */ ''
           # Force truecolor support in Crostini
@@ -147,6 +135,23 @@ in
           (zshPlugin "zsh-syntax-highlighting")
           (zimPlugin "zim-completion") # needs to be the last one
         ];
+
+      sessionVariables = {
+        # Enable scroll support
+        LESS = "--RAW-CONTROL-CHARS";
+        # Reduce time to wait for multi-key sequences
+        KEYTIMEOUT = 1;
+        # Set right prompt to show time
+        RPROMPT = "%F{8}%*";
+        # zsh-users config
+        ZSH_AUTOSUGGEST_USE_ASYNC = 1;
+        ZSH_HIGHLIGHT_HIGHLIGHTERS = [ "main" "brackets" "cursor" ];
+      };
+
+      shellAliases = {
+        # https://unix.stackexchange.com/questions/335648/why-does-the-reset-command-include-a-delay
+        reset = "${lib.getExe' pkgs.ncurses "tput"} reset";
+      };
     };
 
     home.file =
