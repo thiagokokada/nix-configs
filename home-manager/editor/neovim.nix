@@ -79,7 +79,7 @@ in
         vim.opt.omnifunc = "syntaxcomplete#Complete"
 
         -- live substitutions as you type
-        vim.opt.inccommand = 'nosplit'
+        vim.opt.inccommand = "nosplit"
 
         -- copy and paste use the system clipboard
         vim.opt.clipboard:append { 'unnamedplus' }
@@ -88,16 +88,17 @@ in
         vim.opt.colorcolumn:append { 81, 121 }
 
         -- threat words-with-dash as a word
-        vim.opt.iskeyword:append { '-' }
+        vim.opt.iskeyword:append { "-" }
 
         -- avoid swapfile warning
-        vim.opt.shortmess = 'A'
+        vim.opt.shortmess = "A"
 
         -- persistent undo
-        local undodir = vim.fn.expand('~/.config/nvim/undo')
+        local undodir = vim.fn.expand("~/.config/nvim/undo")
 
         vim.opt.undofile = true
         vim.opt.undodir = undodir
+
 
         if vim.fn.isdirectory(undodir) ~= 0 then
           vim.fn.mkdir(undodir, "p", 0755)
@@ -145,16 +146,22 @@ in
           vim.keymap.set('i', '<C-Space>', '<C-x><C-o>')
         ''}
 
+        -- reload file if changed
+        vim.opt.autoread = true
+        vim.api.nvim_create_autocmd({ "BufEnter", "CursorHold", "CursorHoldI", "FocusGained" }, {
+          command = "if mode() != 'c' | checktime | endif",
+          pattern = { "*" },
+        })
+        -- keep comment leader when 'o' or 'O' is used in Normal mode
+        -- remove comment character when joining commented lines
+        vim.api.nvim_create_autocmd({'FileType'}, {
+          pattern = { "*" },
+          command = "set formatoptions+=oj",
+        })
         -- syntax highlight flake.lock files as json
         vim.api.nvim_create_autocmd({'BufNewFile', 'BufRead'}, {
-          pattern = 'flake.lock',
-          command = 'set filetype=json',
-        })
-
-        -- keep comment leader when 'o' or 'O' is used in Normal mode
-        vim.api.nvim_create_autocmd({'FileType'}, {
-          pattern = '*',
-          command = 'set formatoptions+=o',
+          pattern = { "flake.lock" },
+          command = "set filetype=json",
         })
       '';
 
