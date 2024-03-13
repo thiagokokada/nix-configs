@@ -5,7 +5,6 @@ let
   inherit (flake) outputs inputs;
 in
 outputs.lib.recursiveMergeAttrs [
-  (inputs.neovim-nightly-overlay.overlays.default final prev)
   (inputs.nixgl.overlays.default final prev)
   {
     # namespaces
