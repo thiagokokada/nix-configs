@@ -53,6 +53,6 @@ in
     };
 
     # Alternative driver for Xbox One/Series S/Series X controllers
-    hardware.xone.enable = true;
+    # hardware.xone.enable = true;
   };
 }
