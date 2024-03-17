@@ -32,7 +32,8 @@ in
       autocd = true;
       defaultKeymap = "viins";
       enableCompletion = true;
-      enableAutosuggestions = true;
+
+      autosuggestion.enable = true;
 
       history = {
         ignoreDups = true;
