@@ -297,8 +297,11 @@ in
               default_file_explorer = true,
               skip_confirm_for_simple_edits = true,
               constrain_cursor = "name",
-              lsp_rename_autosave = true,
               experimental_watch_for_changes = true,
+              lsp_file_methods = {
+                timeout_ms = 1000,
+                autosave_changes = false,
+              },
             }
 
             vim.keymap.set("n", "-", oil.open, { desc = "Open parent directory" })
