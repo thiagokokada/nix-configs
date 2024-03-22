@@ -495,7 +495,9 @@ in
         mkdir-nvim
         vim-advanced-sorters
         vim-fugitive
+        vim-repeat
         vim-sleuth
+        vim-speeddating
       ]
       ++ lib.optionals cfg.enableCmp [
         cmp-nvim-lsp
