@@ -130,7 +130,7 @@ in
         vim.keymap.set('n', '<C-g>', '<cmd>:noh<CR><CR>')
 
         -- completion
-        vim.opt.completeopt = 'menu,menuone,noinsert'
+        vim.opt.completeopt = 'menu,menuone,noinsert,noselect'
         vim.keymap.set({'i', 'c'}, '<C-j>', function()
           return vim.fn.pumvisible() ~= 0 and '<C-n>' or '<C-j>'
         end, { expr = true })
@@ -511,7 +511,7 @@ in
             cmp.setup({
               completion = {
                 autocomplete = false,
-                completeopt = 'menu,menuone,noinsert'
+                completeopt = vim.opt.completeopt._value,
               },
               mapping = {
                 ['<C-b>'] = cmp.mapping.scroll_docs(-4),
