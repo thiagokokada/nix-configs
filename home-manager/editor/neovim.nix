@@ -81,7 +81,7 @@ in
         vim.opt.inccommand = "nosplit"
 
         -- copy and paste use the system clipboard
-        vim.opt.clipboard:append { 'unnamedplus' }
+        vim.opt.clipboard:append { "unnamedplus" }
 
         -- show vertical colum
         vim.opt.colorcolumn:append { 81, 121 }
@@ -89,8 +89,18 @@ in
         -- threat words-with-dash as a word
         vim.opt.iskeyword:append { "-" }
 
-        -- avoid swapfile warning
-        vim.opt.shortmess = "A"
+        vim.opt.shortmess = {
+          -- defaults
+          l = true,
+          t = true,
+          T = true,
+          o = true,
+          O = true,
+          C = true,
+          F = true,
+          -- avoid swapfile warning
+          A = true,
+        }
 
         -- persistent undo
         local undodir = vim.fn.expand("~/.config/nvim/undo")
