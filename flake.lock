@@ -40,11 +40,11 @@
     "doomemacs": {
       "flake": false,
       "locked": {
-        "lastModified": 1711599797,
-        "narHash": "sha256-cAIFnvtmUNV4JUiRTW+7mEvFXAn4bwBtxd2tm81+niU=",
+        "lastModified": 1711770073,
+        "narHash": "sha256-RD+oSCuBM5ZK29Ot1xed4eE9avtAuN/n5M2HtXkYeZY=",
         "owner": "doomemacs",
         "repo": "doomemacs",
-        "rev": "b44337198171bf612047d78f99968e17054cf48c",
+        "rev": "5f5a163c49207a7083ab1ecc9e78d268fd6600b8",
         "type": "github"
       },
       "original": {
@@ -128,11 +128,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1711554349,
-        "narHash": "sha256-RypwcWEIFePBI0Hubfj4chanbM/G2yzJzC6wgz+dmS4=",
+        "lastModified": 1711625603,
+        "narHash": "sha256-W+9dfqA9bqUIBV5u7jaIARAzMe3kTq/Hp2SpSVXKRQw=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "179f6acaf7c068c7870542cdae72afec9427a5b0",
+        "rev": "c0ef0dab55611c676ad7539bf4e41b3ec6fa87d2",
         "type": "github"
       },
       "original": {
@@ -212,11 +212,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1711501815,
-        "narHash": "sha256-mHtxlnqdIZAPAAXT0em6O5n9yW/6ri937i0NWAvEErU=",
+        "lastModified": 1711729493,
+        "narHash": "sha256-lHC0WAg3r7Akxl2jX1WTiaiUuwzClQhJZUcbcQLrVI4=",
         "owner": "fufexan",
         "repo": "nix-gaming",
-        "rev": "63ded1ffc0846c259f9cd0f62aa2ea9f7f804f56",
+        "rev": "350a57349ed40f0166e2afaf1d5c1ee955c53111",
         "type": "github"
       },
       "original": {
@@ -284,11 +284,11 @@
     },
     "nixpkgs_2": {
       "locked": {
-        "lastModified": 1711523803,
-        "narHash": "sha256-UKcYiHWHQynzj6CN/vTcix4yd1eCu1uFdsuarupdCQQ=",
+        "lastModified": 1711703276,
+        "narHash": "sha256-iMUFArF0WCatKK6RzfUJknjem0H9m4KgorO/p3Dopkk=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "2726f127c15a4cc9810843b96cad73c7eb39e443",
+        "rev": "d8fe5e6c92d0d190646fb9f1056741a229980089",
         "type": "github"
       },
       "original": {
@@ -301,11 +301,11 @@
     "nnn-plugins": {
       "flake": false,
       "locked": {
-        "lastModified": 1709661705,
-        "narHash": "sha256-1AgOzmnEPnycYf/YbPvcHV1O+vGlcddHCoIkgpbcbv0=",
+        "lastModified": 1711742600,
+        "narHash": "sha256-7cI0O4duEXy7mXjJhFoGTHL7uvkgg+x0j0ULpFeXns8=",
         "owner": "jarun",
         "repo": "nnn",
-        "rev": "5456ba458292e4a8ab3c822e116bcbee77dbf103",
+        "rev": "22aa1455a6081ace0e1b1c09435a447296f914bf",
         "type": "github"
       },
       "original": {
