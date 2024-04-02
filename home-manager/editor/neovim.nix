@@ -283,7 +283,11 @@ in
           '';
         }
         {
-          plugin = oil-nvim.overrideAttrs (_: { src = flake.inputs.oil-nvim; });
+          plugin = oil-nvim.overrideAttrs (_: {
+            patches = [
+              ./oil_nvim-add-ability-to-move-files-into-folders.patch
+            ];
+          });
           type = "lua";
           config = /* lua */ ''
             local oil = require("oil")
