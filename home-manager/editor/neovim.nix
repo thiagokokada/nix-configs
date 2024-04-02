@@ -1,4 +1,4 @@
-{ config, pkgs, lib, flake, ... }:
+{ config, pkgs, lib, ... }:
 
 let
   cfg = config.home-manager.editor.neovim;
@@ -337,13 +337,6 @@ in
           '';
         }
         {
-          plugin = onedarkpro-nvim;
-          type = "lua";
-          config = /* lua */ ''
-            vim.cmd.colorscheme("onedark")
-          '';
-        }
-        {
           plugin = openingh-nvim;
           type = "lua";
           config = /* lua */ ''
@@ -455,6 +448,13 @@ in
             vim.keymap.set('n', '<Leader>/', builtin.live_grep, { desc = "Live grep" })
             vim.keymap.set({'n', 'v'}, '<Leader>*', builtin.grep_string, { desc = "Grep string" })
             vim.keymap.set('n', '<Leader>u', telescope.extensions.undo.undo, { desc = "Undo" })
+          '';
+        }
+        {
+          plugin = tokyonight-nvim;
+          type = "lua";
+          config = /* lua */ ''
+            vim.cmd.colorscheme("tokyonight-moon")
           '';
         }
         # telescope extensions
