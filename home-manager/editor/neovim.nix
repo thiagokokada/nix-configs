@@ -207,6 +207,37 @@ in
           '';
         }
         {
+          plugin = dial-nvim;
+          type = "lua";
+          config = /* lua */ ''
+            local dial_map = require("dial.map")
+            vim.keymap.set("n", "<C-a>", function()
+                dial_map.manipulate("increment", "normal")
+            end)
+            vim.keymap.set("n", "<C-x>", function()
+                dial_map.manipulate("decrement", "normal")
+            end)
+            vim.keymap.set("n", "g<C-a>", function()
+                dial_map.manipulate("increment", "gnormal")
+            end)
+            vim.keymap.set("n", "g<C-x>", function()
+                dial_map.manipulate("decrement", "gnormal")
+            end)
+            vim.keymap.set("v", "<C-a>", function()
+                dial_map.manipulate("increment", "visual")
+            end)
+            vim.keymap.set("v", "<C-x>", function()
+                dial_map.manipulate("decrement", "visual")
+            end)
+            vim.keymap.set("v", "g<C-a>", function()
+                dial_map.manipulate("increment", "gvisual")
+            end)
+            vim.keymap.set("v", "g<C-x>", function()
+                dial_map.manipulate("decrement", "gvisual")
+            end)
+          '';
+        }
+        {
           plugin = gitsigns-nvim;
           type = "lua";
           config = /* lua */ ''
@@ -509,9 +540,7 @@ in
         mkdir-nvim
         vim-advanced-sorters
         vim-fugitive
-        vim-repeat
         vim-sleuth
-        vim-speeddating
       ]
       ++ lib.optionals cfg.enableCmp [
         cmp-nvim-lsp
