@@ -40,11 +40,11 @@
     "doomemacs": {
       "flake": false,
       "locked": {
-        "lastModified": 1712377319,
-        "narHash": "sha256-N2pwgbWI5cbTJETt0umoM+a+Exh6REcjWIEE3YOEogI=",
+        "lastModified": 1712422753,
+        "narHash": "sha256-b2pkWafiYHQqE9lNwJYKjQBTtP2rtAfPSYgn48rpaHs=",
         "owner": "doomemacs",
         "repo": "doomemacs",
-        "rev": "813c96151143f147ad6b71ee7e916918bdfb0a42",
+        "rev": "ead2ad19dcac2d9696d735dfc9180260b1f203e0",
         "type": "github"
       },
       "original": {
@@ -128,11 +128,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1712317700,
-        "narHash": "sha256-rnkQ6qMhlxfjpCECkTMlFXHU/88QvC5KpdJWq5H6F1E=",
+        "lastModified": 1712390667,
+        "narHash": "sha256-ebq+fJZfobqpsAdGDGpxNWSySbQejRwW9cdiil6krCo=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "782eed8bb64b27acaeb7c17be4a095c85e65717f",
+        "rev": "b787726a8413e11b074cde42704b4af32d95545c",
         "type": "github"
       },
       "original": {
@@ -212,11 +212,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1712141380,
-        "narHash": "sha256-C2i314gBs1PS98CDbUJGRKx+avs0y9dBLwdWI7O36hs=",
+        "lastModified": 1712452624,
+        "narHash": "sha256-R35K+4krhK5B2fcV6W2HFe/uhXmP8YGTb35uZ+nDAxw=",
         "owner": "fufexan",
         "repo": "nix-gaming",
-        "rev": "2a90858fa6ab2d051cfd1b940f3560f679e92a1a",
+        "rev": "06314bbf8fedd83c7253442994a2f0c81d47988e",
         "type": "github"
       },
       "original": {
