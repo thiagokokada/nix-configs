@@ -1,32 +1,31 @@
 {
   disk = {
-    vda = {
+    vdb = {
       device = "/dev/vda";
       type = "disk";
       content = {
-        type = "table";
-        format = "msdos";
-        partitions = [
-          {
-            name = "swap";
-            start = "1M";
-            end = "5G";
-            content = {
-              type = "swap";
-            };
-          }
-          {
-            name = "root";
-            start = "5G";
-            end = "100%";
-            bootable = true;
+        type = "gpt";
+        partitions = {
+          ESP = {
+            size = "1M";
+            type = "EF02"; # for GRUB MBR
+          };
+          root = {
+            end = "-5G";
             content = {
               type = "filesystem";
-              format = "xfs";
+              format = "ext4";
               mountpoint = "/";
             };
-          }
-        ];
+          };
+          plainSwap = {
+            size = "100%";
+            content = {
+              type = "swap";
+              resumeDevice = true; # resume from hiberation from this device
+            };
+          };
+        };
       };
     };
   };

@@ -6,10 +6,7 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     hardware.url = "github:NixOS/nixos-hardware";
     disko = {
-      # there is a deprecation warn happening in current `master`
-      # FIXME: use GPT table in mirai-nixos
-      # https://github.com/nix-community/disko/commit/1ae1f57dad13595600dd57b6a55fcbaef6673804
-      url = "github:nix-community/disko/v1.3.0";
+      url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     home-manager = {
