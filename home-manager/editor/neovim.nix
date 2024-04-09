@@ -104,10 +104,8 @@ in
 
         -- persistent undo
         local undodir = vim.fn.expand("~/.config/nvim/undo")
-
         vim.opt.undofile = true
         vim.opt.undodir = undodir
-
 
         if vim.fn.isdirectory(undodir) ~= 0 then
           vim.fn.mkdir(undodir, "p", 0755)
