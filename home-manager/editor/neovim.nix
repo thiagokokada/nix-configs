@@ -86,9 +86,6 @@ in
         -- show vertical colum
         vim.opt.colorcolumn:append { 81, 121 }
 
-        -- threat words-with-dash as a word
-        vim.opt.iskeyword:append { "-" }
-
         vim.opt.shortmess = {
           -- defaults
           l = true,
