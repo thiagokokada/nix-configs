@@ -11,7 +11,6 @@
     home-manager = {
       dev.enable = true;
       desktop = {
-        twenty-twenty-twenty.enable = true;
         wezterm = {
           enable = pkgs.stdenv.isAarch64; # broken in x86_64-darwin
           fullscreenOnStartup = false;

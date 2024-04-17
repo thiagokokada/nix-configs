@@ -350,7 +350,6 @@
         "nixpkgs": "nixpkgs_2",
         "nnn-plugins": "nnn-plugins",
         "pure": "pure",
-        "twenty-twenty-twenty": "twenty-twenty-twenty",
         "zim-completion": "zim-completion",
         "zim-environment": "zim-environment",
         "zim-input": "zim-input",
@@ -373,29 +372,6 @@
       "original": {
         "owner": "nix-systems",
         "repo": "default",
-        "type": "github"
-      }
-    },
-    "twenty-twenty-twenty": {
-      "inputs": {
-        "flake-compat": [
-          "flake-compat"
-        ],
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1709657994,
-        "narHash": "sha256-0R+6F7EUKcNUMp15URl0ScAgetOjRRYIHZOfXAeWlCg=",
-        "owner": "thiagokokada",
-        "repo": "twenty-twenty-twenty",
-        "rev": "501bc266e082cf1e3af3ca714230521dcfbba00b",
-        "type": "github"
-      },
-      "original": {
-        "owner": "thiagokokada",
-        "repo": "twenty-twenty-twenty",
         "type": "github"
       }
     },

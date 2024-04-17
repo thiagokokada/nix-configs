@@ -76,7 +76,5 @@ outputs.lib.recursiveMergeAttrs [
     nom-rebuild = prev.callPackage ../packages/nom-rebuild { };
 
     run-bg-alias = name: command: prev.callPackage ../packages/run-bg-alias { inherit name command; };
-
-    inherit (inputs.twenty-twenty-twenty.packages.${prev.system}) twenty-twenty-twenty;
   }
 ]
