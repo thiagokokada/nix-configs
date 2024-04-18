@@ -24,7 +24,7 @@
               genSessionsFor = path:
                 lib.concatStringsSep ":"
                   (map (s: "${s}/${path}")
-                    config.services.xserver.displayManager.sessionPackages);
+                    config.services.displayManager.sessionPackages);
             in
             {
               command = lib.concatStringsSep " " [
