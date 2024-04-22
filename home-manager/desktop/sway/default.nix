@@ -61,6 +61,8 @@ in
   config = lib.mkIf config.home-manager.desktop.sway.enable {
     wayland.windowManager.sway = with commonOptions; {
       enable = true;
+      # https://github.com/nix-community/home-manager/issues/5311
+      checkConfig = false;
 
       inherit extraConfig;
 
@@ -99,7 +101,7 @@ in
 
       extraSessionCommands = ''
         # Source home-manager session vars
-        . "${config.home.profileDirectory}/etc/profile.d/hm-session-vars.sh"
+        . "${config.home.sessionVariablesPackage}/etc/profile.d/hm-session-vars.sh"
         # Vulkan renderer
         export WLR_RENDERER=vulkan
         # Firefox
