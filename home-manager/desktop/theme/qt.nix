@@ -8,7 +8,7 @@
   config = lib.mkIf config.home-manager.desktop.theme.qt.enable {
     qt = {
       enable = true;
-      platformTheme = "qtct";
+      platformTheme.name = "qtct";
       style.name = "kvantum";
     };
 
