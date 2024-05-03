@@ -10,7 +10,6 @@
       pyright
       python3
       ruff
-      ruff-lsp
     ];
   };
 }
