@@ -19,23 +19,23 @@
       # Enable autorandr service, i.e.: sleep.target
       autorandr.enable = true;
 
+      # Enable libinput
+      libinput = {
+        enable = true;
+        touchpad = {
+          naturalScrolling = true;
+          tapping = true;
+        };
+        mouse = {
+          accelProfile = "flat";
+        };
+      };
+
       xserver = {
         enable = true;
 
         # Enable sx, a lightweight startx alternative
         displayManager.sx.enable = true;
-
-        # Enable libinput
-        libinput = {
-          enable = true;
-          touchpad = {
-            naturalScrolling = true;
-            tapping = true;
-          };
-          mouse = {
-            accelProfile = "flat";
-          };
-        };
 
         xkb = {
           # X11 keyboard layout
