@@ -1,8 +1,5 @@
 { config, lib, pkgs, osConfig, ... }:
 
-let
-  xsession = "${config.home.homeDirectory}/.xsession";
-in
 {
   options.home-manager.desktop.i3.x11.enable = lib.mkEnableOption "x11 config" // {
     default = config.home-manager.desktop.i3.enable;
@@ -20,8 +17,12 @@ in
     ];
 
     # Compatibility with xinit/sx
-    home.file.".xinitrc".source = config.lib.file.mkOutOfStoreSymlink xsession;
-    xdg.configFile."sx/sxrc".source = config.lib.file.mkOutOfStoreSymlink xsession;
+    home.file.".xinitrc" = {
+      inherit (config.home.file.".xsession") executable text;
+    };
+    xdg.configFile."sx/sxrc" = {
+      inherit (config.home.file.".xsession") executable text;
+    };
 
     xresources.properties = with config.home-manager.desktop.theme.fonts; {
       "Xft.dpi" = toString dpi;
