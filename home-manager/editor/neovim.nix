@@ -617,6 +617,7 @@ in
               { "clojure_lsp" },
               { "gopls" },
               { "pyright" },
+              { "ruff_lsp" },
               { "cssls" },
               { "eslint" },
               { "html" },
