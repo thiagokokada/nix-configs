@@ -34,8 +34,6 @@ in
     };
   };
 
-  boot.kernelPackages = pkgs.linuxKernel.packages.linux_zen;
-
   fileSystems."/".options = [ "compress=zstd" ];
   fileSystems."/home".options = [ "compress=zstd" ];
   fileSystems."/nix".options = [ "compress=zstd" "noatime" ];
