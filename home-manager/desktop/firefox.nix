@@ -2,15 +2,21 @@
 
 let
   inherit (config.home) username;
-  subpixelRender = (osConfig.fonts.fontconfig.antialias or false) &&
-    (osConfig.fonts.fontconfig.subpixel.rgba != "none");
+  cfg = config.home-manager.desktop.firefox;
 in
 {
-  options.home-manager.desktop.firefox.enable = lib.mkEnableOption "Firefox config" // {
-    default = config.home-manager.desktop.enable;
+  options.home-manager.desktop.firefox = {
+    enable = lib.mkEnableOption "Firefox config" // {
+      default = config.home-manager.desktop.enable;
+    };
+    enableSubpixelRender = lib.mkEnableOption {
+      default =
+        (osConfig.fonts.fontconfig.antialias or false) &&
+        (osConfig.fonts.fontconfig.subpixel.rgba != "none");
+    };
   };
 
-  config = lib.mkIf config.home-manager.desktop.firefox.enable {
+  config = lib.mkIf cfg.enable {
     programs.firefox = {
       enable = true;
       profiles.${username} = {
@@ -33,7 +39,7 @@ in
           "app.shield.optoutstudies.enabled" = false;
           "app.normandy.enabled" = false;
           "browser.tabs.crashReporting.sendReport" = false;
-        } // lib.optionalAttrs subpixelRender {
+        } // lib.optionalAttrs cfg.enableSubpixelRender {
           # https://pandasauce.org/get-fonts-done/
           "gfx.text.subpixel-position.force-enabled" = true;
           "gfx.webrender.quality.force-subpixel-aa-where-possible" = true;
