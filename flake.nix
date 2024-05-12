@@ -58,12 +58,6 @@
       flake = false;
     };
 
-    # neovim plugins
-    oil-nvim = {
-      url = "github:pi314ever/oil.nvim";
-      flake = false;
-    };
-
     # nnn plugins
     nnn-plugins = {
       url = "github:jarun/nnn";

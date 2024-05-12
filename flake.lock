@@ -313,22 +313,6 @@
         "type": "github"
       }
     },
-    "oil-nvim": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1711489494,
-        "narHash": "sha256-bYff7rAhWRrWB/Qd8geri+XazzckBA93SHC/3WKdZHY=",
-        "owner": "pi314ever",
-        "repo": "oil.nvim",
-        "rev": "8157e6b9fee810e4d0dda942a3f56cb02fc1ca44",
-        "type": "github"
-      },
-      "original": {
-        "owner": "pi314ever",
-        "repo": "oil.nvim",
-        "type": "github"
-      }
-    },
     "pure": {
       "flake": false,
       "locked": {
@@ -365,7 +349,6 @@
         "nixgl": "nixgl",
         "nixpkgs": "nixpkgs_2",
         "nnn-plugins": "nnn-plugins",
-        "oil-nvim": "oil-nvim",
         "pure": "pure",
         "zim-completion": "zim-completion",
         "zim-environment": "zim-environment",
