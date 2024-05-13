@@ -1,16 +1,27 @@
 { config, lib, pkgs, osConfig, ... }:
 
+let
+  cfg = config.home-manager.meta;
+in
 {
   imports = [
     ./home-manager-auto-expire.nix
     ./diff.nix
   ];
 
-  options.home-manager.meta.enable = lib.mkEnableOption "Home-Manager config" // {
-    default = true;
+  options.home-manager.meta = {
+    enable = lib.mkEnableOption "Home-Manager config" // {
+      default = true;
+    };
+    enableAutoExpire = lib.mkEnableOption "auto expire Home-Manager generations" // {
+      default = pkgs.stdenv.isLinux;
+    };
+    enableSdSwitch = lib.mkEnableOption "more reliable user service restart" // {
+      default = pkgs.stdenv.isLinux;
+    };
   };
 
-  config = lib.mkIf config.home-manager.meta.enable {
+  config = lib.mkIf cfg.enable {
     # Add some Nix related packages
     home.packages = with pkgs; [
       nix-cleanup
@@ -39,7 +50,7 @@
       git.enable = true;
     };
 
-    services.home-manager.autoExpire = lib.mkIf pkgs.stdenv.isLinux {
+    services.home-manager.autoExpire = lib.mkIf cfg.enableAutoExpire {
       enable = true;
       timestamp = "-7 days";
       frequency = "3:05";
@@ -57,7 +68,7 @@
     home.stateVersion = osConfig.system.stateVersion or "24.05";
 
     # More reliable user service restart
-    systemd.user.startServices = lib.mkIf pkgs.stdenv.isLinux "sd-switch";
+    systemd.user.startServices = lib.mkIf cfg.enableSdSwitch "sd-switch";
 
     manual.html.enable = true;
   };

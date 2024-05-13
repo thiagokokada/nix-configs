@@ -145,6 +145,16 @@
         extraModules = [{ home-manager.dev.enable = true; }];
       })
       (mkHomeConfig {
+        hostname = "home-linux-wsl";
+        extraModules = [{
+          home-manager = {
+            # https://github.com/nix-community/home-manager/issues/5025
+            dev.enable = true;
+            meta.enableSdSwitch = false;
+          };
+        }];
+      })
+      (mkHomeConfig {
         hostname = "home-macos";
         system = "x86_64-darwin";
         homePath = "/Users";
