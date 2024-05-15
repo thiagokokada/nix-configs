@@ -22,7 +22,7 @@ in
     ];
 
     # Needs Vapoursynth disabled so we don't wrap the package
-    home-manager.desktop.mpv.enableVapoursynth = false;
+    home-manager.desktop.mpv.vapoursynth.enable = false;
 
     programs = {
       mpv.package = libEx.nixGLWrapper pkgs {

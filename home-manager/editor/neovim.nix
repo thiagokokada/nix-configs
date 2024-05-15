@@ -10,16 +10,16 @@ in
       default = config.home-manager.editor.enable;
     };
     # Do not forget to set 'Hack Nerd Mono Font' as the terminal font
-    enableIcons = lib.mkEnableOption "icons" // {
+    icons.enable = lib.mkEnableOption "icons" // {
       default = config.home-manager.desktop.enable || config.home-manager.darwin.enable;
     };
-    enableCmp = lib.mkEnableOption "nvim-cmp and nvim-snippy" // {
+    cmp.enable = lib.mkEnableOption "nvim-cmp and nvim-snippy" // {
       default = config.home-manager.dev.enable;
     };
-    enableLsp = lib.mkEnableOption "LSP" // {
+    lsp.enable = lib.mkEnableOption "LSP" // {
       default = config.home-manager.dev.enable;
     };
-    enableTreeSitter = lib.mkEnableOption "TreeSitter" // {
+    treeSitter.enable = lib.mkEnableOption "TreeSitter" // {
       default = config.home-manager.dev.enable;
     };
   };
@@ -35,7 +35,7 @@ in
       wl-clipboard
       xclip
     ]
-    ++ lib.optionals cfg.enableIcons [
+    ++ lib.optionals cfg.icons.enable [
       config.home-manager.desktop.theme.fonts.symbols.package
     ];
 
@@ -146,7 +146,7 @@ in
         vim.keymap.set('c', '<CR>', function()
           return vim.fn.pumvisible() ~= 0 and '<C-y>' or '<CR>'
         end, { expr = true })
-        ${lib.optionalString (!cfg.enableCmp) /* lua */ ''
+        ${lib.optionalString (!cfg.cmp.enable) /* lua */ ''
           vim.keymap.set('i', '<C-Space>', '<C-x><C-o>')
         ''}
 
@@ -257,7 +257,7 @@ in
             local actions = require('lir.actions')
             local mark_actions = require('lir.mark.actions')
             local clipboard_actions = require('lir.clipboard.actions')
-            local enable_icons = ${toLua cfg.enableIcons}
+            local enable_icons = ${toLua cfg.icons.enable}
 
             require('lir').setup {
               show_hidden_files = false,
@@ -303,7 +303,7 @@ in
           plugin = lualine-nvim;
           type = "lua";
           config = /* lua */ ''
-            local enable_icons = ${toLua cfg.enableIcons}
+            local enable_icons = ${toLua cfg.icons.enable}
             local function mixed_indent()
               local space_pat = [[\v^ +]]
               local tab_pat = [[\v^\t+]]
@@ -347,7 +347,7 @@ in
           plugin = nvim-autopairs;
           type = "lua";
           config = /* lua */ ''
-            local enable_ts = ${toLua cfg.enableTreeSitter}
+            local enable_ts = ${toLua cfg.treeSitter.enable}
 
             require("nvim-autopairs").setup {
               check_ts = enable_ts
@@ -567,7 +567,7 @@ in
         vim-fugitive
         vim-sleuth
       ]
-      ++ lib.optionals cfg.enableCmp [
+      ++ lib.optionals cfg.cmp.enable [
         cmp-nvim-lsp
         cmp-path
         cmp-snippy
@@ -617,7 +617,7 @@ in
           '';
         }
       ]
-      ++ lib.optionals cfg.enableLsp [
+      ++ lib.optionals cfg.lsp.enable [
         {
           plugin = nvim-lspconfig;
           type = "lua";
@@ -626,7 +626,7 @@ in
             -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
             local lspconfig = require("lspconfig")
             local capabilities = {}
-            ${lib.optionalString cfg.enableCmp /* lua */ ''
+            ${lib.optionalString cfg.cmp.enable /* lua */ ''
               capabilities = require("cmp_nvim_lsp").default_capabilities()
             ''}
             local servers = {
@@ -704,7 +704,7 @@ in
           '';
         }
       ]
-      ++ lib.optionals cfg.enableTreeSitter [
+      ++ lib.optionals cfg.treeSitter.enable [
         {
           plugin = nvim-ufo;
           type = "lua";
@@ -844,7 +844,7 @@ in
         }
         nvim-ts-autotag
       ]
-      ++ lib.optionals cfg.enableIcons [
+      ++ lib.optionals cfg.icons.enable [
         nvim-web-devicons
       ];
     };

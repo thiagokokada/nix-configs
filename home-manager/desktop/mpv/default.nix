@@ -8,14 +8,14 @@ in
     enable = lib.mkEnableOption "mpv config" // {
       default = config.home-manager.desktop.enable;
     };
-    enableVapoursynth = lib.mkEnableOption "Vapoursynth config" // {
-      default = lib.meta.availableOn pkgs.stdenv.hostPlatform pkgs.vapoursynth;
-    };
-    enableHQ = lib.mkEnableOption "high-quality config (needs good CPU/GPU)";
     defaultProfiles = lib.mkOption {
       type = with lib.types; listOf str;
       default = [ "gpu-hq" ];
       description = "Default mpv profiles.";
+    };
+    hq.enable = lib.mkEnableOption "high-quality config (needs good CPU/GPU)";
+    vapoursynth.enable = lib.mkEnableOption "Vapoursynth config" // {
+      default = lib.meta.availableOn pkgs.stdenv.hostPlatform pkgs.vapoursynth;
     };
   };
 
@@ -28,7 +28,7 @@ in
       enable = true;
 
       package = with pkgs;
-        if (!cfg.enableVapoursynth) then
+        if (!cfg.vapoursynth.enable) then
           lib.mkDefault pkgs.mpv
         else
           wrapMpv (mpv-unwrapped.override { vapoursynthSupport = true; }) {
@@ -79,9 +79,9 @@ in
       bindings = {
         F1 = "seek -85";
         F2 = "seek 85";
-        "CTRL+i" = lib.mkIf cfg.enableVapoursynth "vf toggle vapoursynth=${./motion-based-interpolation.vpy}";
+        "CTRL+i" = lib.mkIf cfg.vapoursynth.enable "vf toggle vapoursynth=${./motion-based-interpolation.vpy}";
       } //
-      (if cfg.enableHQ then {
+      (if cfg.hq.enable then {
         # HQ variants
         "CTRL+1" = ''no-osd change-list glsl-shaders set "${pkgs.anime4k}/Anime4K_Clamp_Highlights.glsl:${pkgs.anime4k}/Anime4K_Restore_CNN_VL.glsl:${pkgs.anime4k}/Anime4K_Upscale_CNN_x2_VL.glsl:${pkgs.anime4k}/Anime4K_AutoDownscalePre_x2.glsl:${pkgs.anime4k}/Anime4K_AutoDownscalePre_x4.glsl:${pkgs.anime4k}/Anime4K_Upscale_CNN_x2_M.glsl"; show-text "Anime4K: Mode A (HQ)"'';
         "CTRL+2" = ''no-osd change-list glsl-shaders set "${pkgs.anime4k}/Anime4K_Clamp_Highlights.glsl:${pkgs.anime4k}/Anime4K_Restore_CNN_Soft_VL.glsl:${pkgs.anime4k}/Anime4K_Upscale_CNN_x2_VL.glsl:${pkgs.anime4k}/Anime4K_AutoDownscalePre_x2.glsl:${pkgs.anime4k}/Anime4K_AutoDownscalePre_x4.glsl:${pkgs.anime4k}/Anime4K_Upscale_CNN_x2_M.glsl"; show-text "Anime4K: Mode B (HQ)"'';

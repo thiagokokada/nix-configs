@@ -35,9 +35,9 @@ outputs.lib.recursiveMergeAttrs [
             home-manager = {
               dev.nix.enable = true;
               editor.neovim = {
-                enableIcons = false;
-                enableLsp = true;
-                enableTreeSitter = true;
+                icons.enable = false;
+                lsp.enable = true;
+                treeSitter.enable = true;
               };
             };
           }];

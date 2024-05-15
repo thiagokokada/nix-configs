@@ -17,10 +17,10 @@ in
 
   options.home-manager.cli = {
     enable = lib.mkEnableOption "CLI config" // { default = true; };
-    enableGnu = lib.mkEnableOption "GNU utils config" // {
+    gnu.enable = lib.mkEnableOption "GNU utils config" // {
       default = !(config.targets.genericLinux.enable || pkgs.stdenv.isDarwin);
     };
-    enableOuch = lib.mkEnableOption "Ouch config" // {
+    ouch.enable = lib.mkEnableOption "Ouch (compress/decompress util) config" // {
       default = !pkgs.stdenv.isDarwin;
     };
   };
@@ -54,7 +54,7 @@ in
         tokei
         wget
       ]
-      ++ lib.optionals cfg.enableGnu [
+      ++ lib.optionals cfg.gnu.enable [
         coreutils
         diffutils
         findutils
@@ -66,16 +66,16 @@ in
         inetutils
         netcat-gnu
       ]
-      ++ lib.optionals cfg.enableOuch [
+      ++ lib.optionals cfg.ouch.enable [
         ouch
       ];
 
       shellAliases = {
         # For muscle memory...
-        archive = lib.mkIf cfg.enableOuch "${lib.getExe pkgs.ouch} compress";
-        unarchive = lib.mkIf cfg.enableOuch "${lib.getExe pkgs.ouch} decompress";
-        lsarchive = lib.mkIf cfg.enableOuch "${lib.getExe pkgs.ouch} list";
-        cal = lib.mkIf cfg.enableGnu (lib.getExe' pkgs.gcal "gcal");
+        archive = lib.mkIf cfg.ouch.enable "${lib.getExe pkgs.ouch} compress";
+        unarchive = lib.mkIf cfg.ouch.enable "${lib.getExe pkgs.ouch} decompress";
+        lsarchive = lib.mkIf cfg.ouch.enable "${lib.getExe pkgs.ouch} list";
+        cal = lib.mkIf cfg.gnu.enable (lib.getExe' pkgs.gcal "gcal");
         ncdu = "${lib.getExe pkgs.dua} interactive";
         sloccount = lib.getExe pkgs.tokei;
       };

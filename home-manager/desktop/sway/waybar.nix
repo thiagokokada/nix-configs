@@ -9,21 +9,21 @@ in
     enable = lib.mkEnableOption "Waybar config" // {
       default = config.home-manager.desktop.sway.enable;
     };
-    enableBacklight = lib.mkEnableOption "backlight block" // {
-      default = config.device.type == "laptop";
-    };
-    enableBattery = lib.mkEnableOption "battery block" // {
-      default = config.device.type == "laptop";
-    };
-    mountPoints = lib.mkOption {
-      type = with lib.types; listOf path;
-      description = "Disks to show in disk block";
-      default = config.device.mountPoints;
-    };
     interval = lib.mkOption {
       type = lib.types.int;
       default = 5;
-      description = "Block update interval";
+      description = "Block update default interval";
+    };
+    backlight.enable = lib.mkEnableOption "backlight block" // {
+      default = config.device.type == "laptop";
+    };
+    battery.enable = lib.mkEnableOption "battery block" // {
+      default = config.device.type == "laptop";
+    };
+    mount.points = lib.mkOption {
+      type = with lib.types; listOf path;
+      description = "Disks to show in disk block";
+      default = config.device.mountPoints;
     };
   };
 
@@ -46,15 +46,15 @@ in
           modules-right =
             lib.pipe [
               "network"
-              (map shortPathName cfg.mountPoints)
+              (map shortPathName cfg.mount.points)
               "memory"
               "cpu#usage"
               "temperature"
               "cpu#load"
               "custom/dunst"
               "idle_inhibitor"
-              (lib.optionalString cfg.enableBacklight "backlight")
-              (lib.optionalString cfg.enableBattery "battery")
+              (lib.optionalString cfg.backlight.enable "backlight")
+              (lib.optionalString cfg.battery.enable "battery")
               "pulseaudio" # wireplumber is causing segfault
               "clock"
               "tray"
@@ -109,7 +109,7 @@ in
                 };
               };
             })
-            config.device.mountPoints))
+            cfg.mount.points))
         // {
           memory = {
             inherit (cfg) interval;

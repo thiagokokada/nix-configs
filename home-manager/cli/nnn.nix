@@ -10,19 +10,19 @@ in
       default = config.home-manager.cli.enable;
     };
     # Do not forget to set 'Hack Nerd Mono Font' as the terminal font
-    enableIcons = lib.mkEnableOption "icons" // {
+    icons.enable = lib.mkEnableOption "icons" // {
       default = config.home-manager.desktop.enable || config.home-manager.darwin.enable;
     };
   };
 
   config = lib.mkIf cfg.enable {
-    home.packages = lib.optionals cfg.enableIcons [
+    home.packages = lib.optionals cfg.icons.enable [
       config.home-manager.desktop.theme.fonts.symbols.package
     ];
 
     programs.nnn = {
       enable = true;
-      package = pkgs.nnn.override { withNerdIcons = cfg.enableIcons; };
+      package = pkgs.nnn.override { withNerdIcons = cfg.icons.enable; };
       bookmarks = {
         d = "~/Documents";
         D = "~/Downloads";

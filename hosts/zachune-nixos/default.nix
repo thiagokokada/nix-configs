@@ -17,7 +17,7 @@
       iperf3.enable = true;
       ssh = {
         enable = true;
-        enableRootLogin = true;
+        root.enableLogin = true;
       };
       tailscale.enable = true;
     };

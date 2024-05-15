@@ -8,26 +8,26 @@ in
     enable = lib.mkEnableOption "i3status-rust config" // {
       default = config.home-manager.desktop.i3.enable;
     };
-    enableBacklight = lib.mkEnableOption "backlight block" // {
+    interval = lib.mkOption {
+      type = lib.types.int;
+      default = 5;
+      description = "Block update default interval";
+    };
+    backlight.enable = lib.mkEnableOption "backlight block" // {
       default = config.device.type == "laptop";
     };
-    enableBattery = lib.mkEnableOption "battery block" // {
+    battery.enable = lib.mkEnableOption "battery block" // {
       default = config.device.type == "laptop";
     };
-    mountPoints = lib.mkOption {
+    mount.points = lib.mkOption {
       type = with lib.types; listOf path;
       description = "Mount points to show in disk block";
       default = config.device.mountPoints;
     };
-    netDevices = lib.mkOption {
+    net.devices = lib.mkOption {
       type = with lib.types; listOf str;
       description = "Net devices to show in net block";
       default = config.device.netDevices;
-    };
-    interval = lib.mkOption {
-      type = lib.types.int;
-      default = 5;
-      description = "Block update interval";
     };
   };
 
@@ -87,7 +87,7 @@ in
               inactive_format = "";
               missing_format = "";
             })
-            cfg.netDevices;
+            cfg.net.devices;
 
           disksBlocks = map
             (m: {
@@ -97,7 +97,7 @@ in
               info_type = "available";
               format = " $icon ${libEx.shortPath m} $available ";
             })
-            cfg.mountPoints;
+            cfg.mount.points;
 
           memoryBlock = {
             inherit (cfg) interval;
@@ -130,13 +130,13 @@ in
             warning = 80;
           };
 
-          backlightBlock = lib.optionalAttrs cfg.enableBacklight {
+          backlightBlock = lib.optionalAttrs cfg.backlight.enable {
             block = "backlight";
             format = " ^icon_monitor $brightness |";
             invert_icons = true;
           };
 
-          batteryBlock = lib.optionalAttrs cfg.enableBattery {
+          batteryBlock = lib.optionalAttrs cfg.battery.enable {
             block = "battery";
             device = "DisplayDevice";
             driver = "upower";

@@ -148,9 +148,9 @@
         hostname = "home-linux-wsl";
         extraModules = [{
           home-manager = {
-            # https://github.com/nix-community/home-manager/issues/5025
             dev.enable = true;
-            meta.enableSdSwitch = false;
+            # https://github.com/nix-community/home-manager/issues/5025
+            meta.sdSwitch.enable = false;
           };
         }];
       })

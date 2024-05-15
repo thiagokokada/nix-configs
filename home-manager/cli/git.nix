@@ -8,18 +8,18 @@ in
     enable = lib.mkEnableOption "Git config" // {
       default = config.home-manager.cli.enable;
     };
-    enableGh = lib.mkEnableOption "GitHub CLI config" // { default = true; };
-    enableGui = lib.mkEnableOption "Git GUIconfig " // {
+    gh.enable = lib.mkEnableOption "GitHub CLI config" // { default = true; };
+    gui.enable = lib.mkEnableOption "Git GUIconfig " // {
       default = config.home-manager.desktop.enable;
     };
   };
 
   config = lib.mkIf cfg.enable {
     home = {
-      packages = with pkgs; lib.optionals cfg.enableGh [
+      packages = with pkgs; lib.optionals cfg.gh.enable [
         github-cli
       ]
-      ++ lib.optionals cfg.enableGui [
+      ++ lib.optionals cfg.gui.enable [
         (run-bg-alias "gcd" "${lib.getExe' git-cola "git-cola"} dag")
         (run-bg-alias "gk" (lib.getExe' config.programs.git.package "gitk"))
         git-cola
@@ -53,7 +53,7 @@ in
         userName = config.mainUser.fullname;
         userEmail = config.mainUser.email;
         package = with pkgs;
-          if cfg.enableGui then
+          if cfg.gui.enable then
             gitFull.override
               {
                 # Use SSH from macOS instead with support for Keyring

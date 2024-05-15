@@ -9,7 +9,7 @@ in
     enable = lib.mkEnableOption "Firefox config" // {
       default = config.home-manager.desktop.enable;
     };
-    enableSubpixelRender = lib.mkEnableOption {
+    subpixelRender.enable = lib.mkEnableOption {
       default =
         (osConfig.fonts.fontconfig.antialias or false) &&
         (osConfig.fonts.fontconfig.subpixel.rgba != "none");
@@ -39,7 +39,7 @@ in
           "app.shield.optoutstudies.enabled" = false;
           "app.normandy.enabled" = false;
           "browser.tabs.crashReporting.sendReport" = false;
-        } // lib.optionalAttrs cfg.enableSubpixelRender {
+        } // lib.optionalAttrs cfg.subpixelRender.enable {
           # https://pandasauce.org/get-fonts-done/
           "gfx.text.subpixel-position.force-enabled" = true;
           "gfx.webrender.quality.force-subpixel-aa-where-possible" = true;

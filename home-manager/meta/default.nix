@@ -13,10 +13,10 @@ in
     enable = lib.mkEnableOption "Home-Manager config" // {
       default = true;
     };
-    enableAutoExpire = lib.mkEnableOption "auto expire Home-Manager generations" // {
+    autoExpire.enable = lib.mkEnableOption "auto expire Home-Manager generations" // {
       default = pkgs.stdenv.isLinux;
     };
-    enableSdSwitch = lib.mkEnableOption "more reliable user service restart" // {
+    sdSwitch.enable = lib.mkEnableOption "more reliable user service restart" // {
       default = pkgs.stdenv.isLinux;
     };
   };
@@ -50,7 +50,7 @@ in
       git.enable = true;
     };
 
-    services.home-manager.autoExpire = lib.mkIf cfg.enableAutoExpire {
+    services.home-manager.autoExpire = lib.mkIf cfg.autoExpire.enable {
       enable = true;
       timestamp = "-7 days";
       frequency = "3:05";
@@ -68,7 +68,7 @@ in
     home.stateVersion = osConfig.system.stateVersion or "24.05";
 
     # More reliable user service restart
-    systemd.user.startServices = lib.mkIf cfg.enableSdSwitch "sd-switch";
+    systemd.user.startServices = lib.mkIf cfg.sdSwitch.enable "sd-switch";
 
     manual.html.enable = true;
   };
