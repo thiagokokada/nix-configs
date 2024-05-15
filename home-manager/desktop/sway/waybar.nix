@@ -23,7 +23,7 @@ in
     mount.points = lib.mkOption {
       type = with lib.types; listOf path;
       description = "Disks to show in disk block";
-      default = config.device.mountPoints;
+      default = config.device.mount.points;
     };
   };
 

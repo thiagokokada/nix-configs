@@ -2,7 +2,7 @@
 
 let
   inherit (config.mainUser) username;
-  inherit (config.device) mediaDir;
+  inherit (config.device.media) directory;
 in
 with config.users.users.${username}; {
   options.nixos.server.plex.enable = lib.mkEnableOption "Plex config";
@@ -40,10 +40,10 @@ with config.users.users.${username}; {
     };
 
     systemd.tmpfiles.rules = [
-      "d ${mediaDir}/Other 2775 ${username} ${group}"
-      "d ${mediaDir}/Music 2775 ${username} ${group}"
-      "d ${mediaDir}/Photos 2775 ${username} ${group}"
-      "d ${mediaDir}/Videos 2775 ${username} ${group}"
+      "d ${directory}/Other 2775 ${username} ${group}"
+      "d ${directory}/Music 2775 ${username} ${group}"
+      "d ${directory}/Photos 2775 ${username} ${group}"
+      "d ${directory}/Videos 2775 ${username} ${group}"
     ];
   };
 }

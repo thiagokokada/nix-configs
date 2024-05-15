@@ -1,7 +1,7 @@
 { config, pkgs, lib, ... }:
 
 let
-  inherit (config.device) mediaDir;
+  inherit (config.device.media) directory;
   inherit (config.mainUser) username;
   cfg = config.nixos.server.samba;
 in
@@ -13,7 +13,7 @@ in
       description = "Samba shares";
       default = {
         inherit (config.users.users.${username}) home;
-        media = mediaDir;
+        media = directory;
       };
     };
   };

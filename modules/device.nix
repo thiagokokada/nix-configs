@@ -7,13 +7,13 @@
       description = "Type of device";
       default = "desktop";
     };
-    netDevices = lib.mkOption {
+    net.devices = lib.mkOption {
       type = with lib.types; listOf str;
       description = "Available net devices";
       example = [ "eno1" "wlp2s0" ];
       default = [ "eth0" ];
     };
-    mountPoints = lib.mkOption {
+    mount.points = lib.mkOption {
       type = with lib.types; listOf path;
       description = "Available mount points";
       example = [ "/" "/mnt/backup" ];
@@ -24,7 +24,7 @@
         else
           [ "/" ];
     };
-    mediaDir = lib.mkOption {
+    media.directory = lib.mkOption {
       type = lib.types.path;
       description = "Shared media directory";
       example = "/mnt/media";

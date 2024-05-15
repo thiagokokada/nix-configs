@@ -22,12 +22,12 @@ in
     mount.points = lib.mkOption {
       type = with lib.types; listOf path;
       description = "Mount points to show in disk block";
-      default = config.device.mountPoints;
+      default = config.device.mount.points;
     };
     net.devices = lib.mkOption {
       type = with lib.types; listOf str;
       description = "Net devices to show in net block";
-      default = config.device.netDevices;
+      default = config.device.net.devices;
     };
   };
 

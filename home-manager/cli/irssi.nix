@@ -11,7 +11,7 @@ in
     dcc = {
       downloadPath = lib.mkOption {
         type = lib.types.path;
-        default = "${config.device.mediaDir}/Other";
+        default = "${config.device.media.directory}/Other";
         description = "DCC's download path";
       };
     };

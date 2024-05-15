@@ -17,8 +17,8 @@ in
 
   device = {
     type = "desktop";
-    netDevices = [ "enp2s0f1" ];
-    mediaDir = "/mnt/media/${config.mainUser.username}";
+    net.devices = [ "enp2s0f1" ];
+    media.directory = "/mnt/media/${config.mainUser.username}";
   };
 
   nixos = {
