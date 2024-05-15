@@ -3,6 +3,12 @@
 let
   cfg = config.home-manager.editor.neovim;
   toLua = lib.generators.toLua { };
+  # Custom associations for filetypes
+  # { "<pattern>" = "<filetype>"; }
+  # E.g.: { "*.json" = "json"; }
+  customAssociations = {
+    "flake.lock" = "json";
+  };
 in
 {
   options.home-manager.editor.neovim = {
@@ -150,6 +156,18 @@ in
           vim.keymap.set('i', '<C-Space>', '<C-x><C-o>')
         ''}
 
+        ${lib.pipe customAssociations [
+            (lib.mapAttrsToList
+              (pattern: filetype: /* lua */ ''
+                vim.api.nvim_create_autocmd({ "BufNewFile", "BufRead" }, {
+                  pattern = { "${pattern}" },
+                  command = "set filetype=${filetype}",
+                })
+              ''))
+            (lib.concatStringsSep "\n")
+          ]
+        }
+
         -- reload file if changed
         vim.opt.autoread = true
         vim.api.nvim_create_autocmd({ "BufEnter", "CursorHold", "CursorHoldI", "FocusGained" }, {
@@ -158,14 +176,9 @@ in
         })
         -- keep comment leader when 'o' or 'O' is used in Normal mode
         -- remove comment character when joining commented lines
-        vim.api.nvim_create_autocmd({'FileType'}, {
+        vim.api.nvim_create_autocmd({ "FileType" }, {
           pattern = { "*" },
           command = "set formatoptions+=oj",
-        })
-        -- syntax highlight flake.lock files as json
-        vim.api.nvim_create_autocmd({'BufNewFile', 'BufRead'}, {
-          pattern = { "flake.lock" },
-          command = "set filetype=json",
         })
       '';
 
