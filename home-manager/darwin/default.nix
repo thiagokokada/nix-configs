@@ -10,18 +10,17 @@ in
     enable = lib.mkEnableOption "Darwin (macOS) config" // {
       default = pkgs.stdenv.isDarwin;
     };
-    # https://developer.apple.com/library/archive/technotes/tn2450/_index.html
-    remapKeys.enable = lib.mkEnableOption "remap '§±' with '`~' (for UK keyboards, requires root)" // {
-      default = cfg.enable;
-    };
+    # https://gist.github.com/paultheman/808be117d447c490a29d6405975d41bd
+    remapKeys.enable = lib.mkEnableOption "remap internal Macbook keyboard keys from '§±' to '`~' (EU -> US, requires root)";
   };
 
   config = lib.mkIf cfg.enable {
     home.activation.remapKeys = lib.mkIf cfg.remapKeys.enable
       (lib.hm.dag.entryAfter [ "writeBoundary" ] /* bash */ ''
+        source="${./remapkeys.plist}"
         destination="/Library/LaunchDaemons/com.nix.remakeys.plist"
-        if ! ${lib.getExe' pkgs.diffutils "diff"} "${./remapkeys.plist}" "$destination"; then
-          $DRY_RUN_CMD /usr/bin/sudo ${lib.getExe' pkgs.coreutils "cp"} "${./remapkeys.plist}" "$destination"
+        if ! ${lib.getExe' pkgs.diffutils "diff"} "$source" "$destination"; then
+          $DRY_RUN_CMD /usr/bin/sudo ${lib.getExe' pkgs.coreutils "install"} -m 644 "$source" "$destination"
           $DRY_RUN_CMD /usr/bin/sudo /bin/launchctl load -w "$destination"
         fi
       '');

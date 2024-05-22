@@ -12,7 +12,7 @@
             <string>{"UserKeyMapping":[{"HIDKeyboardModifierMappingSrc":0x700000035, "HIDKeyboardModifierMappingDst":0x700000064}, {"HIDKeyboardModifierMappingSrc":0x700000064, "HIDKeyboardModifierMappingDst":0x700000035}]}</string>
             <string>property</string>
             <string>--matching</string>
-            <string>{"ProductID":0x343}</string>
+            <string>{"ProductID":0x343, "VendorID":0x5ac}</string>
         </array>
         <key>RunAtLoad</key>
         <true/>
