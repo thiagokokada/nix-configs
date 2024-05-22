@@ -21,8 +21,11 @@
     };
 
     targets.darwin.defaults = {
-      # Disable all automatic substitution
       NSGlobalDomain = {
+        ApplePressAndHoldEnabled = true;
+        AppleShowAllExtensions = true;
+        KeyRepeat = 2;
+        # Disable all automatic substitution
         NSAutomaticCapitalizationEnabled = false;
         NSAutomaticDashSubstitutionEnabled = false;
         NSAutomaticPeriodSubstitutionEnabled = false;
