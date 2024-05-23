@@ -3,16 +3,16 @@
 <plist version="1.0">
     <dict>
         <key>Label</key>
-        <string>com.nix.remapkeys</string>
+        <string>com.nix.remapkeys.@productID@-@vendorID@</string>
         <key>ProgramArguments</key>
         <array>
             <string>/usr/bin/hidutil</string>
             <string>property</string>
             <string>--set</string>
-            <string>{"UserKeyMapping":[{"HIDKeyboardModifierMappingSrc":0x700000035, "HIDKeyboardModifierMappingDst":0x700000064}, {"HIDKeyboardModifierMappingSrc":0x700000064, "HIDKeyboardModifierMappingDst":0x700000035}]}</string>
+            <string>{"UserKeyMapping":[@remappings@]}</string>
             <string>property</string>
             <string>--matching</string>
-            <string>{"ProductID":0x343, "VendorID":0x5ac}</string>
+            <string>{"ProductID":@productID@, "VendorID":@vendorID@}</string>
         </array>
         <key>RunAtLoad</key>
         <true/>

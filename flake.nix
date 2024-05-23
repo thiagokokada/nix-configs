@@ -176,7 +176,11 @@
         homePath = "/Users";
         extraModules = [{
           home-manager = {
-            darwin.remapKeys.enable = true;
+            darwin.remapKeys.mappings = {
+              # '§±' <-> '`~'
+              "0x700000035" = "0x700000064";
+              "0x700000064" = "0x700000035";
+            };
             editor.jetbrains.enable = true;
             dev = {
               clojure.enable = false;

@@ -4,27 +4,18 @@ let
   cfg = config.home-manager.darwin;
 in
 {
-  imports = [ ./trampoline-apps.nix ];
+  imports = [
+    ./remap-keys.nix
+    ./trampoline-apps.nix
+  ];
 
   options.home-manager.darwin = {
     enable = lib.mkEnableOption "Darwin (macOS) config" // {
       default = pkgs.stdenv.isDarwin;
     };
-    # https://gist.github.com/paultheman/808be117d447c490a29d6405975d41bd
-    remapKeys.enable = lib.mkEnableOption "remap internal Macbook keyboard keys from '§±' to '`~' (EU -> US, requires root)";
   };
 
   config = lib.mkIf cfg.enable {
-    home.activation.remapKeys = lib.mkIf cfg.remapKeys.enable
-      (lib.hm.dag.entryAfter [ "writeBoundary" ] /* bash */ ''
-        source="${./remapkeys.plist}"
-        destination="/Library/LaunchDaemons/com.nix.remakeys.plist"
-        if ! ${lib.getExe' pkgs.diffutils "diff"} "$source" "$destination"; then
-          $DRY_RUN_CMD /usr/bin/sudo ${lib.getExe' pkgs.coreutils "install"} -m 644 "$source" "$destination"
-          $DRY_RUN_CMD /usr/bin/sudo /bin/launchctl load -w "$destination"
-        fi
-      '');
-
     home-manager = {
       dev.enable = true;
       desktop = {
