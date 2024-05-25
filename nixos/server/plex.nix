@@ -17,26 +17,8 @@ with config.users.users.${username}; {
     services.plex = {
       enable = true;
       openFirewall = true;
+      accelerationDevices = [ "*" ];
       inherit group;
-    };
-
-    systemd.services.plex.serviceConfig = {
-      LockPersonality = true;
-      NoNewPrivileges = true;
-      PrivateDevices = false; # hardware acceleration
-      PrivateUsers = true;
-      PrivateTmp = true;
-      ProtectClock = true;
-      ProtectControlGroups = true;
-      ProtectHostname = true;
-      ProtectKernelLogs = true;
-      ProtectKernelModules = true;
-      ProtectKernelTunables = true;
-      ProtectProc = "invisible";
-      ProtectSystem = "full";
-      RestrictRealtime = true;
-      RestrictSUIDSGID = true;
-      SystemCallArchitectures = "native";
     };
 
     systemd.tmpfiles.rules = [
