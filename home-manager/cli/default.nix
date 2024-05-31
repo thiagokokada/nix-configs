@@ -17,9 +17,6 @@ in
 
   options.home-manager.cli = {
     enable = lib.mkEnableOption "CLI config" // { default = true; };
-    gnu.enable = lib.mkEnableOption "GNU utils config" // {
-      default = !(config.targets.genericLinux.enable || pkgs.stdenv.isDarwin);
-    };
     ouch.enable = lib.mkEnableOption "Ouch (compress/decompress util) config" // {
       default = !pkgs.stdenv.isDarwin;
     };
@@ -34,10 +31,17 @@ in
         bind.dnsutils
         curl
         dialog
+        diffutils
         dos2unix
         dua
         each
         file
+        findutils
+        gawk
+        gcal
+        gnugrep
+        gnumake
+        gnused
         hyperfine
         ix
         jq
@@ -54,18 +58,6 @@ in
         tokei
         wget
       ]
-      ++ lib.optionals cfg.gnu.enable [
-        coreutils
-        diffutils
-        findutils
-        gawk
-        gcal
-        gnugrep
-        gnumake
-        gnused
-        inetutils
-        netcat-gnu
-      ]
       ++ lib.optionals cfg.ouch.enable [
         ouch
       ];
@@ -75,7 +67,7 @@ in
         archive = lib.mkIf cfg.ouch.enable "${lib.getExe pkgs.ouch} compress";
         unarchive = lib.mkIf cfg.ouch.enable "${lib.getExe pkgs.ouch} decompress";
         lsarchive = lib.mkIf cfg.ouch.enable "${lib.getExe pkgs.ouch} list";
-        cal = lib.mkIf cfg.gnu.enable (lib.getExe' pkgs.gcal "gcal");
+        cal = lib.getExe' pkgs.gcal "gcal";
         ncdu = "${lib.getExe pkgs.dua} interactive";
         sloccount = lib.getExe pkgs.tokei;
       };
