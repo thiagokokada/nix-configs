@@ -14,14 +14,10 @@
     ./samba.nix
     ./ssh.nix
     ./tailscale.nix
+    ./watchdogd.nix
   ];
 
   config = lib.mkIf config.nixos.server.enable {
-    # Enable watchdog
-    systemd.watchdog = {
-      runtimeTime = "1m";
-      rebootTime = "10m";
-    };
     # Enable NixOS auto-upgrade
     system.autoUpgrade = {
       enable = true;
