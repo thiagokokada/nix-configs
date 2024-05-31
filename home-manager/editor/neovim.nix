@@ -208,13 +208,6 @@ in
           '';
         }
         {
-          plugin = comment-nvim;
-          type = "lua";
-          config = /* lua */ ''
-            require("Comment").setup {}
-          '';
-        }
-        {
           plugin = dial-nvim;
           type = "lua";
           config = /* lua */ ''
