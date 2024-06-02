@@ -10,8 +10,7 @@ in
 
   config = lib.mkIf cfg.enable {
     environment.systemPackages = with pkgs; [
-      gaming.osu-lazer-bin
-      gaming.osu-mime
+      osu-lazer
     ];
 
     # Enable opentabletdriver

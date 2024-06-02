@@ -1,17 +1,28 @@
-{ config, lib, pkgs, flake, ... }:
+{ config, lib, pkgs, ... }:
 
 let
   cfg = config.nixos.desktop.audio;
 in
 {
-  imports = [ flake.inputs.nix-gaming.nixosModules.pipewireLowLatency ];
-
   options.nixos.desktop.audio = {
     enable = lib.mkEnableOption "audio config" // {
       default = config.nixos.desktop.enable;
     };
-    lowLatency.enable = lib.mkEnableOption "low latency config" // {
-      default = config.nixos.games.enable;
+    lowLatency = {
+      enable = lib.mkEnableOption "low latency config" // {
+        default = config.nixos.games.enable;
+      };
+      quantum = lib.mkOption {
+        description = "Quantum.";
+        type = lib.types.int;
+        default = 128;
+        example = 32; # lowest latency possible
+      };
+      rate = lib.mkOption {
+        description = "Audio rate.";
+        type = lib.types.int;
+        default = 48000;
+      };
     };
   };
 
@@ -28,11 +39,13 @@ in
           support32Bit = true;
         };
         pulse.enable = true;
-        lowLatency = {
-          inherit (cfg.lowLatency) enable;
-          # The default for this module is 64 that generally is too low and
-          # generates e.g.: cracking
-          quantum = lib.mkDefault 128;
+        extraConfig.pipewire."92-low-latency" = lib.mkIf cfg.lowLatency.enable {
+          context.properties = {
+            default.clock.rate = cfg.lowLatency.rate;
+            default.clock.quantum = cfg.lowLatency.quantum;
+            default.clock.min-quantum = cfg.lowLatency.quantum;
+            default.clock.max-quantum = cfg.lowLatency.quantum;
+          };
         };
         wireplumber = {
           enable = true;

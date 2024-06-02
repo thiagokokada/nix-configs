@@ -10,8 +10,6 @@ outputs.lib.recursiveMergeAttrs [
     # namespaces
     libEx = outputs.lib;
 
-    gaming = flake.inputs.nix-gaming.packages.${prev.system};
-
     wallpapers = prev.callPackage ../packages/wallpapers { };
 
     # custom packages
