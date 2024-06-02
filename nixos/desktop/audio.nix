@@ -39,13 +39,37 @@ in
           support32Bit = true;
         };
         pulse.enable = true;
-        extraConfig.pipewire."92-low-latency" = lib.mkIf cfg.lowLatency.enable {
-          context.properties = {
-            default.clock.rate = cfg.lowLatency.rate;
-            default.clock.quantum = cfg.lowLatency.quantum;
-            default.clock.min-quantum = cfg.lowLatency.quantum;
-            default.clock.max-quantum = cfg.lowLatency.quantum;
+        extraConfig = lib.mkIf cfg.lowLatency.enable {
+          pipewire."92-low-latency" = {
+            context.properties = {
+              default.clock.rate = cfg.lowLatency.rate;
+              default.clock.quantum = cfg.lowLatency.quantum;
+              default.clock.min-quantum = cfg.lowLatency.quantum;
+              default.clock.max-quantum = cfg.lowLatency.quantum;
+            };
           };
+          pipewire-pulse."92-low-latency" =
+            let
+              req = "${toString cfg.lowLatency.quantum}/${toString cfg.lowLatency.rate}";
+            in
+            {
+              context.modules = [
+                {
+                  name = "libpipewire-module-protocol-pulse";
+                  args = {
+                    pulse.min.req = req;
+                    pulse.default.req = req;
+                    pulse.max.req = req;
+                    pulse.min.quantum = req;
+                    pulse.max.quantum = req;
+                  };
+                }
+              ];
+              stream.properties = {
+                node.latency = req;
+                resample.quality = 1;
+              };
+            };
         };
         wireplumber = {
           enable = true;
