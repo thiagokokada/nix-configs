@@ -22,6 +22,7 @@ in
     home.packages = with pkgs; [
       get-ip
       get-ip'
+      nix-zsh-completions
       remove-symlink
     ] ++ lib.optionals (!stdenv.isDarwin) [
       (run-bg-alias "open" (lib.getExe' xdg-utils "xdg-open"))
@@ -31,7 +32,8 @@ in
       enable = true;
       autocd = true;
       defaultKeymap = "viins";
-      enableCompletion = true;
+      # taken care by zim-completion
+      enableCompletion = false;
 
       autosuggestion.enable = true;
 
