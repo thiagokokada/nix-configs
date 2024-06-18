@@ -27,16 +27,17 @@ in
     programs.mpv = {
       enable = true;
 
-      package = with pkgs;
+      package =
         if (!cfg.vapoursynth.enable) then
           lib.mkDefault pkgs.mpv
         else
-          wrapMpv (mpv-unwrapped.override { vapoursynthSupport = true; }) {
+          pkgs.mpv-unwrapped.wrapper {
+            mpv = pkgs.mpv-unwrapped.override { vapoursynthSupport = true; };
             extraMakeWrapperArgs = [
               "--prefix"
               "LD_LIBRARY_PATH"
               ":"
-              "${vapoursynth-mvtools}/lib/vapoursynth"
+              "${pkgs.vapoursynth-mvtools}/lib/vapoursynth"
             ];
           };
 
