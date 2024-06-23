@@ -8,51 +8,47 @@ in
 {
   options.nixos.server.rtorrent = {
     enable = lib.mkEnableOption "rTorrent config";
-    flood = {
-      enable = lib.mkEnableOption "Flood UI" // { default = true; };
-      port = lib.mkOption {
-        type = lib.types.int;
-        description = "Port to bind webserver";
-        default = 3000;
-      };
-      host = lib.mkOption {
-        type = lib.types.str;
-        description = "Host to bind webserver";
-        default = "0.0.0.0";
-      };
-    };
+    flood.enable = lib.mkEnableOption "Flood UI" // { default = true; };
   };
 
   config = with config.users.users.${username};
     lib.mkIf cfg.enable {
       environment.systemPackages = with pkgs; [ rtorrent ];
 
-      services.rtorrent = {
-        enable = true;
-        downloadDir = "${directory}/Downloads";
-        user = username;
-        inherit group;
-        port = 60001;
-        openFirewall = true;
-        configText = ''
-          # Enable the default ratio group.
-          ratio.enable=
+      services = {
+        flood = {
+          inherit (cfg.flood) enable;
+          host = "::";
+          openFirewall = true;
+          extraArgs = [ "--rtsocket=${config.services.rtorrent.rpcSocket}" ];
+        };
+        rtorrent = {
+          inherit (cfg) enable;
+          inherit group;
+          downloadDir = "${directory}/Downloads";
+          user = username;
+          port = 60001;
+          openFirewall = true;
+          configText = ''
+            # Enable the default ratio group.
+            ratio.enable=
 
-          # Change the limits, the defaults should be sufficient.
-          ratio.min.set=100
-          ratio.max.set=300
-          ratio.upload.set=500M
+            # Change the limits, the defaults should be sufficient.
+            ratio.min.set=100
+            ratio.max.set=300
+            ratio.upload.set=500M
 
-          # Watch directory
-          schedule2 = watch_directory,5,5,load.start="${directory}/Torrents/*.torrent"
-          schedule2 = untied_directory,5,5,stop_untied=
+            # Watch directory
+            schedule2 = watch_directory,5,5,load.start="${directory}/Torrents/*.torrent"
+            schedule2 = untied_directory,5,5,stop_untied=
 
-          # Disable when diskspace is low
-          schedule2 = monitor_diskspace, 15, 60, ((close_low_diskspace, 1000M))
+            # Disable when diskspace is low
+            schedule2 = monitor_diskspace, 15, 60, ((close_low_diskspace, 1000M))
 
-          # Set umask for download files
-          system.umask.set = 0002
-        '';
+            # Set umask for download files
+            system.umask.set = 0002
+          '';
+        };
       };
 
       systemd.services = {
@@ -77,43 +73,10 @@ in
           SystemCallArchitectures = "native";
           SystemCallFilter = [ "@system-service" "~@privileged" ];
         };
-        flood = lib.mkIf cfg.flood.enable {
-          description = "A web UI for rTorrent with a Node.js backend and React frontend.";
-          after = [ "rtorrent.service" ];
-          wantedBy = [ "multi-user.target" ];
-          serviceConfig = {
-            User = username;
-            Group = group;
-            Type = "simple";
-            Restart = "always";
-            ExecStart = "${lib.getExe pkgs.nodePackages.flood} --host ${cfg.flood.host} --port ${toString cfg.flood.port}";
-
-            CapabilityBoundingSet = "";
-            LockPersonality = true;
-            NoNewPrivileges = true;
-            PrivateDevices = true;
-            PrivateTmp = true;
-            ProtectClock = true;
-            ProtectControlGroups = true;
-            ProtectHostname = true;
-            ProtectKernelLogs = true;
-            ProtectKernelModules = true;
-            ProtectKernelTunables = true;
-            ProtectProc = "invisible";
-            ProtectSystem = "strict";
-            RestrictAddressFamilies = [ "AF_UNIX" "AF_INET" "AF_INET6" ];
-            RestrictNamespaces = true;
-            RestrictRealtime = true;
-            RestrictSUIDSGID = true;
-            SystemCallArchitectures = "native";
-            SystemCallFilter = [ "~@privileged" ];
-          };
+        flood.serviceConfig = {
+          SupplementaryGroups = [ group ];
         };
       };
-
-      networking.firewall.allowedTCPPorts = lib.mkIf cfg.flood.enable [
-        cfg.flood.port
-      ];
 
       systemd.tmpfiles.rules = [
         "d ${directory}/Downloads 2775 ${username} ${group}"
