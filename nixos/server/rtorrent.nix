@@ -8,6 +8,24 @@ in
 {
   options.nixos.server.rtorrent = {
     enable = lib.mkEnableOption "rTorrent config";
+    ratio = {
+      enable = lib.mkEnableOption "ratio control";
+      min = lib.mkOption {
+        type = lib.types.int;
+        description = "Minimum ratio (if size is reached).";
+        default = 200;
+      };
+      max = lib.mkOption {
+        description = "Maximum ratio (if size is not reached).";
+        type = lib.types.int;
+        default = 300;
+      };
+      size = lib.mkOption {
+        description = "Upload size that should be reached.";
+        type = lib.types.str;
+        default = "500M";
+      };
+    };
     flood.enable = lib.mkEnableOption "Flood UI" // { default = true; };
   };
 
@@ -30,13 +48,15 @@ in
           port = 60001;
           openFirewall = true;
           configText = ''
-            # Enable the default ratio group.
-            ratio.enable=
+            ${lib.optionalString cfg.ratio.enable ''
+              # Enable the default ratio group.
+              ratio.enable=
 
-            # Change the limits, the defaults should be sufficient.
-            ratio.min.set=100
-            ratio.max.set=300
-            ratio.upload.set=500M
+              # Change the limits, the defaults should be sufficient.
+              ratio.min.set=${toString cfg.ratio.min}
+              ratio.max.set=${toString cfg.ratio.max}
+              ratio.upload.set=${cfg.ratio.size}
+            ''}
 
             # Watch directory
             schedule2 = watch_directory,5,5,load.start="${directory}/Torrents/*.torrent"
