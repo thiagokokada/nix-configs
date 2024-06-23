@@ -47,7 +47,11 @@
         withNodeJs = false;
       };
       traceroute.enable = true;
-      zsh.enable = true;
+      zsh = {
+        enable = true;
+        # Will be set by zim-completion
+        enableCompletion = false;
+      };
     };
   };
 }
