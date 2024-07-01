@@ -17,9 +17,6 @@ in
 
   options.home-manager.cli = {
     enable = lib.mkEnableOption "CLI config" // { default = true; };
-    ouch.enable = lib.mkEnableOption "Ouch (compress/decompress util) config" // {
-      default = !pkgs.stdenv.isDarwin;
-    };
   };
 
   config = lib.mkIf cfg.enable {
@@ -48,6 +45,7 @@ in
         less
         lsof
         mediainfo
+        ouch
         page
         procps
         pv
@@ -57,16 +55,13 @@ in
         tealdeer
         tokei
         wget
-      ]
-      ++ lib.optionals cfg.ouch.enable [
-        ouch
       ];
 
       shellAliases = {
         # For muscle memory...
-        archive = lib.mkIf cfg.ouch.enable "${lib.getExe pkgs.ouch} compress";
-        unarchive = lib.mkIf cfg.ouch.enable "${lib.getExe pkgs.ouch} decompress";
-        lsarchive = lib.mkIf cfg.ouch.enable "${lib.getExe pkgs.ouch} list";
+        archive = "${lib.getExe pkgs.ouch} compress";
+        unarchive = "${lib.getExe pkgs.ouch} decompress";
+        lsarchive = "${lib.getExe pkgs.ouch} list";
         cal = lib.getExe' pkgs.gcal "gcal";
         ncdu = "${lib.getExe pkgs.dua} interactive";
         sloccount = lib.getExe pkgs.tokei;
