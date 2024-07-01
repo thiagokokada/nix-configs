@@ -61,6 +61,12 @@ in
       extraLuaConfig = /* lua */ ''
         -- general config
 
+        -- bytecompile lua modules
+        vim.loader.enable()
+
+        -- load .exrc, .nvimrc and .nvim.lua local files
+        vim.opt.exrc = true
+
         -- indent wrapped lines to match line start
         vim.opt.breakindent = true
 
@@ -181,17 +187,6 @@ in
             " remap leader
             let g:mapleader = "\<Space>"
             let g:maplocalleader = ','
-          '';
-        }
-        {
-          plugin = pkgs.writeText "01-init-pre-lua" "";
-          type = "lua";
-          config = /* lua */ ''
-            -- bytecompile lua modules
-            vim.loader.enable()
-
-            -- load .exrc, .nvimrc and .nvim.lua local files
-            vim.o.exrc = true
           '';
         }
         {
