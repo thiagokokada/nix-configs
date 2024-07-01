@@ -62,6 +62,8 @@ in
     }];
 
     services = {
+      cron.enable = true;
+
       # Trim SSD weekly
       fstrim = {
         enable = true;
