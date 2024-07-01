@@ -61,12 +61,6 @@ in
       extraLuaConfig = /* lua */ ''
         -- general config
 
-        -- reload unchanged files automatically
-        vim.opt.autoread = true
-
-        -- autoindent when starting a new line with 'o' or 'O'
-        vim.opt.autoindent = true
-
         -- indent wrapped lines to match line start
         vim.opt.breakindent = true
 
@@ -174,6 +168,9 @@ in
           command = "if mode() != 'c' | checktime | endif",
           pattern = { "*" },
         })
+
+        -- autoindent when starting a new line with 'o' or 'O'
+        vim.opt.autoindent = true
         -- keep comment leader when 'o' or 'O' is used in Normal mode
         -- remove comment character when joining commented lines
         vim.api.nvim_create_autocmd({ "FileType" }, {
