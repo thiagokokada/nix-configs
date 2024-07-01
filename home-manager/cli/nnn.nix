@@ -32,7 +32,6 @@ in
         "/" = "/";
       };
       extraPackages = with pkgs; [
-        bat
         eza
         fzf
         mediainfo
