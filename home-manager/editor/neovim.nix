@@ -86,18 +86,8 @@ in
         -- show vertical colum
         vim.opt.colorcolumn:append { 81, 121 }
 
-        vim.opt.shortmess = {
-          -- defaults
-          l = true,
-          t = true,
-          T = true,
-          o = true,
-          O = true,
-          C = true,
-          F = true,
-          -- avoid swapfile warning
-          A = true,
-        }
+        -- avoid swapfile warning
+        vim.opt.shortmess:append { A = true }
 
         -- persistent undo
         local undodir = vim.fn.expand("~/.config/nvim/undo")
