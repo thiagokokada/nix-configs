@@ -44,7 +44,6 @@ in
           inherit (cfg) enable;
           inherit group;
           downloadDir = "${directory}/Downloads";
-          package = pkgs.jesec-rtorrent;
           user = username;
           port = 60001;
           openFirewall = true;
