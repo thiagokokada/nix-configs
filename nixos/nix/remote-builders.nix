@@ -19,7 +19,8 @@ in
           system = "aarch64-linux";
           protocol = "ssh-ng";
           maxJobs = 4;
-          publicHostKey = "c3NoLWVkMjU1MTkgQUFBQUMzTnphQzFsWkRJMU5URTVBQUFBSUY5a3NRZkFGWTRSbVRmdUEzTDdTQ1Z0YlpsZ2hodVBWSDAxWTRDbytvOHIgcm9vdEB6YXRzdW5lLW5peG9zCg==";
+          # base64 -w0 /etc/ssh/ssh_host_<type>_key.pub
+          publicHostKey = "c3NoLWVkMjU1MTkgQUFBQUMzTnphQzFsWkRJMU5URTVBQUFBSUZEbENUZlZyQUlIVFI0T1RSMENtL2FUdUhOQmdEcE5RMFBncDEvaWFQaFAgcm9vdEB6YXRzdW5lLW5peG9zCg==";
         }
       ];
 
