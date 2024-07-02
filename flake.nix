@@ -123,7 +123,6 @@
       (mkNixOSConfig { hostname = "mirai-nixos"; })
       (mkNixOSConfig { hostname = "sankyuu-nixos"; })
       (mkNixOSConfig { hostname = "zatsune-nixos"; })
-      (mkNixOSConfig { hostname = "zachune-nixos"; })
 
       # Home-Manager generic configs
       (mkHomeConfig {
