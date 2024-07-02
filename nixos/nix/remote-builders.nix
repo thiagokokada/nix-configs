@@ -15,7 +15,7 @@ in
     nix = {
       buildMachines = [
         {
-          hostName = "100.103.30.119";
+          hostName = "100.97.139.21";
           system = "aarch64-linux";
           protocol = "ssh-ng";
           maxJobs = 4;
