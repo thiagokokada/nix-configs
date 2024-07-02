@@ -38,7 +38,10 @@ in
         };
         domain = "zatsune-nixos.duckdns.org";
         onCalendar = "daily"; # fixed IP, mostly for health checking
-        certs.enable = true;
+        certs = {
+          enable = true;
+          useHttpServer = true;
+        };
       };
     };
     system.smart.enable = false;
