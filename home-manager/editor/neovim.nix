@@ -22,6 +22,9 @@ in
     cmp.enable = lib.mkEnableOption "nvim-cmp and nvim-snippy" // {
       default = config.home-manager.dev.enable;
     };
+    markdownPreview.enable = lib.mkEnableOption "markdown-preview.nvim" // {
+      default = config.home-manager.desktop.enable || config.home-manager.darwin.enable;
+    };
     lsp.enable = lib.mkEnableOption "LSP" // {
       default = config.home-manager.dev.enable;
     };
@@ -51,7 +54,7 @@ in
       defaultEditor = true;
 
       withRuby = false;
-      withNodeJs = false;
+      withNodeJs = cfg.markdownPreview.enable;
       withPython3 = false;
 
       viAlias = true;
@@ -554,6 +557,15 @@ in
         vim-advanced-sorters
         vim-fugitive
         vim-sleuth
+      ]
+      ++ lib.optionals cfg.markdownPreview.enable [
+        {
+          plugin = markdown-preview-nvim;
+          type = "lua";
+          config = /* lua */ ''
+            vim.keymap.set("n", "<Leader>P", "<Plug>MarkdownPreviewToggle", { desc = "Markdown Preview toggle" })
+          '';
+        }
       ]
       ++ lib.optionals cfg.cmp.enable [
         cmp-nvim-lsp
