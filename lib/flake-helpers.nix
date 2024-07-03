@@ -28,7 +28,6 @@ in
           done
           echo Done!
         '';
-        exePath = "/bin/generate-gh-actions";
       };
     });
 
@@ -46,7 +45,6 @@ in
           inherit name text;
           runtimeInputs = deps pkgs;
         };
-        exePath = "/bin/${name}";
       };
     });
 
@@ -83,7 +81,6 @@ in
             env QEMU_OPTS="''${QEMU_OPTS:--cpu max -smp 4 -m 4096M -machine type=q35}" \
               ${config.system.build.vm}/bin/run-${hostname}-vm
           '';
-          exePath = "/bin/run-${hostname}-vm";
         };
       };
     };
