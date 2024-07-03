@@ -62,7 +62,10 @@ in
     {
       nixosConfigurations.${hostname} = nixpkgs.lib.nixosSystem {
         inherit system;
-        modules = [ ../hosts/${hostname} ] ++ extraModules;
+        modules = [
+          ({ lib, ... }: { networking.hostName = lib.mkDefault hostname; })
+          ../hosts/${hostname}
+        ] ++ extraModules;
         specialArgs = {
           flake = self;
           libEx = self.outputs.lib;

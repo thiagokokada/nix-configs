@@ -38,8 +38,6 @@ in
   fileSystems."/home".options = [ "compress=zstd" ];
   fileSystems."/nix".options = [ "compress=zstd" "noatime" ];
 
-  networking.hostName = "sankyuu-nixos";
-
   home-manager.users.${config.mainUser.username} = {
     home-manager.desktop.theme = {
       fonts.dpi = 150;

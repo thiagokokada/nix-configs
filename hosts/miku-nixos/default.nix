@@ -52,6 +52,4 @@ in
       allowDiscards = true;
     };
   };
-
-  networking.hostName = "miku-nixos";
 }

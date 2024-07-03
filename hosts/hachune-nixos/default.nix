@@ -48,8 +48,6 @@ in
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  networking.hostName = "hachune-nixos";
-
   # Use ultrawide wallpaper
   home-manager.users.${config.mainUser.username}.home-manager.desktop.theme.wallpaper.path =
     pkgs.wallpapers.hatsune-miku_stylized-ultrawide;
