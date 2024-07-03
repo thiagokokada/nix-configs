@@ -51,6 +51,4 @@ in
   # Use ultrawide wallpaper
   home-manager.users.${config.mainUser.username}.home-manager.desktop.theme.wallpaper.path =
     pkgs.wallpapers.hatsune-miku_stylized-ultrawide;
-
-  time.timeZone = "America/Sao_Paulo";
 }
