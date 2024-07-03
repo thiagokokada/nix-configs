@@ -8,6 +8,7 @@ in
     ./cli.nix
     ./btrfs.nix
     ./smart.nix
+    ./vm.nix
   ];
 
   options.nixos.system = {

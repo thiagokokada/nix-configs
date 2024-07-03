@@ -77,10 +77,8 @@ in
         };
 
         "nixosVMs/${hostname}" = mkApp {
-          drv = pkgs.writeShellScriptBin "run-${hostname}-vm" ''
-            env QEMU_OPTS="''${QEMU_OPTS:--cpu max -smp 4 -m 4096M -machine type=q35}" \
-              ${config.system.build.vm}/bin/run-${hostname}-vm
-          '';
+          drv = config.system.build.vm;
+          exePath = "/bin/run-${hostname}-vm";
         };
       };
     };
