@@ -41,13 +41,6 @@
       flake = false;
     };
 
-    # evil-helix
-    evil-helix = {
-      url = "github:usagi-flow/evil-helix";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.flake-utils.follows = "flake-utils";
-    };
-
     # IntelliJ
     intellimacs = {
       url = "github:MarcoIeni/intellimacs";
