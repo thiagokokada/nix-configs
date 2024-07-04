@@ -26,7 +26,7 @@ in
       ];
       shellAliases = {
         g = "git";
-        gu = "gitui";
+        gui = "gitui";
       };
     };
 
