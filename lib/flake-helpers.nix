@@ -15,7 +15,7 @@ in
         in
         pkgs.runCommand name { } ''
           mkdir -p $out
-          echo ${lib.escapeShellArg json} | ${lib.getExe' pkgs.yj "yj"} -jy > $out/${name}.yml
+          echo ${lib.escapeShellArg json} | ${lib.getExe pkgs.yj} -jy > $out/${name}.yml
           ${lib.getExe pkgs.action-validator} -v $out/${name}.yml
         '';
       ghActionsYAMLs = map mkGHActionsYAML names;

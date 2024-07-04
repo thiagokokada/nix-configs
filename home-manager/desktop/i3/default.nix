@@ -23,11 +23,11 @@ let
       # Screenshots
       fullScreenShot = ''
         ${lib.getExe pkgs.maim} -u "${screenShotName}" && \
-        ${lib.getExe' pkgs.libnotify "notify-send"} -u normal -t 5000 'Full screenshot taken'
+        ${lib.getExe pkgs.libnotify} -u normal -t 5000 'Full screenshot taken'
       '';
       areaScreenShot = ''
         ${lib.getExe pkgs.maim} -u -s "${screenShotName}" && \
-        ${lib.getExe' pkgs.libnotify "notify-send"} -u normal -t 5000 'Area screenshot taken'
+        ${lib.getExe pkgs.libnotify} -u normal -t 5000 'Area screenshot taken'
       '';
 
       extraBindings = {

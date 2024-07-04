@@ -46,8 +46,8 @@ in
           renice = 10;
         };
         custom = {
-          start = "${lib.getExe' pkgs.libnotify "notify-send"} 'GameMode started'";
-          end = "${lib.getExe' pkgs.libnotify "notify-send"} 'GameMode ended'";
+          start = "${lib.getExe pkgs.libnotify} 'GameMode started'";
+          end = "${lib.getExe pkgs.libnotify} 'GameMode ended'";
         };
       };
     };
