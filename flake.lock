@@ -16,6 +16,27 @@
         "type": "gitlab"
       }
     },
+    "crane": {
+      "inputs": {
+        "nixpkgs": [
+          "evil-helix",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1709610799,
+        "narHash": "sha256-5jfLQx0U9hXbi2skYMGodDJkIgffrjIOgMRjZqms2QE=",
+        "owner": "ipetkov",
+        "repo": "crane",
+        "rev": "81c393c776d5379c030607866afef6406ca1be57",
+        "type": "github"
+      },
+      "original": {
+        "owner": "ipetkov",
+        "repo": "crane",
+        "type": "github"
+      }
+    },
     "disko": {
       "inputs": {
         "nixpkgs": [
@@ -49,6 +70,31 @@
       "original": {
         "owner": "doomemacs",
         "repo": "doomemacs",
+        "type": "github"
+      }
+    },
+    "evil-helix": {
+      "inputs": {
+        "crane": "crane",
+        "flake-utils": [
+          "flake-utils"
+        ],
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "rust-overlay": "rust-overlay"
+      },
+      "locked": {
+        "lastModified": 1718440344,
+        "narHash": "sha256-lzae2ypoTyHDpAkL3L7t8FhZ1XXSSkD5958dBEcsTOc=",
+        "owner": "usagi-flow",
+        "repo": "evil-helix",
+        "rev": "2dc286a4ef08af9cafc08ca9afe4c7495ee8a795",
+        "type": "github"
+      },
+      "original": {
+        "owner": "usagi-flow",
+        "repo": "evil-helix",
         "type": "github"
       }
     },
@@ -311,6 +357,7 @@
         "arandr": "arandr",
         "disko": "disko",
         "doomemacs": "doomemacs",
+        "evil-helix": "evil-helix",
         "flake-compat": "flake-compat",
         "flake-parts": "flake-parts",
         "flake-utils": "flake-utils",
@@ -334,6 +381,31 @@
         "zsh-autopair": "zsh-autopair",
         "zsh-completions": "zsh-completions",
         "zsh-syntax-highlighting": "zsh-syntax-highlighting"
+      }
+    },
+    "rust-overlay": {
+      "inputs": {
+        "flake-utils": [
+          "evil-helix",
+          "flake-utils"
+        ],
+        "nixpkgs": [
+          "evil-helix",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1709604635,
+        "narHash": "sha256-le4fwmWmjGRYWwkho0Gr7mnnZndOOe4XGbLw68OvF40=",
+        "owner": "oxalica",
+        "repo": "rust-overlay",
+        "rev": "e86c0fb5d3a22a5f30d7f64ecad88643fe26449d",
+        "type": "github"
+      },
+      "original": {
+        "owner": "oxalica",
+        "repo": "rust-overlay",
+        "type": "github"
       }
     },
     "systems": {
