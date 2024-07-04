@@ -177,10 +177,7 @@ in
       };
 
     programs = {
-      eza = {
-        enable = true;
-        git = true;
-      };
+      dircolors.enable = true;
       fzf = {
         enable = true;
         fileWidgetOptions = [ "--preview 'head {}'" ];

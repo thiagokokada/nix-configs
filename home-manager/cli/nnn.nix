@@ -32,7 +32,6 @@ in
         "/" = "/";
       };
       extraPackages = with pkgs; [
-        eza
         fzf
         mediainfo
       ] ++ lib.optionals (!stdenv.isDarwin) [
