@@ -2,24 +2,32 @@
 
 let
   inherit (config.mainUser) username;
-  inherit (config.services.tailscale) interfaceName port;
+  cfg = config.nixos.server.tailscale;
+  serviceCfg = config.services.tailscale;
 in
 {
-  options.nixos.server.tailscale.enable = lib.mkEnableOption "Tailscale config (server side)";
+  options.nixos.server.tailscale = {
+    enable = lib.mkEnableOption "Tailscale config (server side)";
+    net.ifaces = lib.mkOption {
+      type = with lib.types; listOf str;
+      description = "Net interfaces to enable transport layer offload.";
+      default = config.device.net.ifaces;
+    };
+  };
 
-  config = lib.mkIf config.nixos.server.tailscale.enable {
+  config = lib.mkIf cfg.enable {
     environment.systemPackages = with pkgs; [ tailscale ];
 
     networking.firewall = {
       # always allow traffic from your Tailscale network
-      trustedInterfaces = [ interfaceName ];
+      trustedInterfaces = [ serviceCfg.interfaceName ];
 
       # allow the Tailscale UDP port through the firewall
-      allowedUDPPorts = [ port ];
+      allowedUDPPorts = [ serviceCfg.port ];
     };
 
     services = {
-      networkd-dispatcher = {
+      networkd-dispatcher = lib.mkIf (cfg.net.ifaces != [ ]) {
         enable = true;
         # https://tailscale.com/kb/1320/performance-best-practices#linux-optimizations-for-subnet-routers-and-exit-nodes
         rules."enable-transport-layer-offload" = {
