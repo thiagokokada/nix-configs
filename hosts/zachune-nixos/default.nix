@@ -2,13 +2,22 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ modulesPath, ... }:
+{ modulesPath, flake, ... }@inputs:
 
+let
+  oci-common = import "${modulesPath}/virtualisation/oci-common.nix" { inherit (inputs) pkgs lib config; };
+in
 {
   imports = [
+    # Include the results of the hardware scan.
+    ./hardware-configuration.nix
     ../../nixos
-    "${modulesPath}/virtualisation/oci-common.nix"
-  ];
+    flake.inputs.disko.nixosModules.disko
+  ] ++ oci-common.imports;
+
+  boot = { inherit (oci-common.boot) kernelParams; };
+
+  disko.devices = import ./disk-config.nix;
 
   device.type = "server";
 
@@ -24,14 +33,11 @@
     system.smart.enable = false;
   };
 
-  networking.hostName = "zachune-nixos";
+  # Use the systemd-boot EFI boot loader.
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.canTouchEfiVariables = true;
 
-  swapDevices = [
-    { device = "/swapfile"; }
-  ];
+  networking = { inherit (oci-common.networking) timeServers; };
 
-  # Does not support boot.growPartition yet
-  boot.initrd.systemd.enable = false;
-
-  nixpkgs.hostPlatform = "x86_64-linux";
+  time.timeZone = "Europe/Dublin";
 }

@@ -2,10 +2,10 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ modulesPath, flake, config, lib, pkgs, ... }:
+{ modulesPath, flake, ... }@inputs:
 
 let
-  oci-common = import "${modulesPath}/virtualisation/oci-common.nix" { inherit config lib pkgs; };
+  oci-common = import "${modulesPath}/virtualisation/oci-common.nix" { inherit (inputs) pkgs lib config; };
 in
 {
   imports = [
@@ -51,8 +51,5 @@ in
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  networking = {
-    inherit (oci-common.networking) timeServers;
-    hostName = "zatsune-nixos";
-  };
+  networking = { inherit (oci-common.networking) timeServers; };
 }
