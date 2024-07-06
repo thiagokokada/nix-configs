@@ -133,6 +133,7 @@ in
             default = "simple";
           };
           rebase = { autoStash = true; };
+          tag.sort = "-version:refname";
         };
       };
 
