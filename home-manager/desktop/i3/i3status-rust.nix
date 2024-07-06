@@ -11,7 +11,7 @@ in
     interval = lib.mkOption {
       type = lib.types.int;
       default = 5;
-      description = "Block update default interval";
+      description = "Block update default interval.";
     };
     backlight.enable = lib.mkEnableOption "backlight block" // {
       default = config.device.type == "laptop";
@@ -21,12 +21,12 @@ in
     };
     mount.points = lib.mkOption {
       type = with lib.types; listOf path;
-      description = "Mount points to show in disk block";
+      description = "Mount points to show in disk block.";
       default = config.device.mount.points;
     };
     net.ifaces = lib.mkOption {
       type = with lib.types; listOf str;
-      description = "Net interfaces to show in net block";
+      description = "Net interfaces to show in net block.";
       default = config.device.net.ifaces;
     };
   };
