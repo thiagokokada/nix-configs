@@ -28,7 +28,7 @@ in
 
   device = {
     type = "desktop";
-    net.devices = [ "eno1" ];
+    net.ifaces = [ "eno1" ];
     media.directory = "/mnt/archive/${config.mainUser.username}";
   };
 

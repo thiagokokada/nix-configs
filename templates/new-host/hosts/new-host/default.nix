@@ -17,7 +17,7 @@ in
 
   device = {
     type = "laptop";
-    net.devices = [ "enp3s0" "wlan0" ];
+    net.ifaces = [ "enp3s0" "wlan0" ];
   };
 
   # Use the systemd-boot EFI boot loader.

@@ -24,10 +24,10 @@ in
       description = "Mount points to show in disk block";
       default = config.device.mount.points;
     };
-    net.devices = lib.mkOption {
+    net.ifaces = lib.mkOption {
       type = with lib.types; listOf str;
-      description = "Net devices to show in net block";
-      default = config.device.net.devices;
+      description = "Net interfaces to show in net block";
+      default = config.device.net.ifaces;
     };
   };
 
@@ -87,7 +87,7 @@ in
               inactive_format = "";
               missing_format = "";
             })
-            cfg.net.devices;
+            cfg.net.ifaces;
 
           disksBlocks = map
             (m: {

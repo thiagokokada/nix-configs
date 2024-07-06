@@ -7,9 +7,9 @@
       description = "Type of device";
       default = "desktop";
     };
-    net.devices = lib.mkOption {
+    net.ifaces = lib.mkOption {
       type = with lib.types; listOf str;
-      description = "Available net devices";
+      description = "Available net interfaces";
       example = [ "eno1" "wlp2s0" ];
       default = [ "eth0" ];
     };

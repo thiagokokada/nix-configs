@@ -30,7 +30,7 @@ in
               (builtins.map
                 (iface:
                   "${lib.getExe pkgs.ethtool} -K ${iface} rx-udp-gro-forwarding on rx-gro-list off")
-                config.device.net.devices)}
+                config.device.net.ifaces)}
           '';
         };
       };

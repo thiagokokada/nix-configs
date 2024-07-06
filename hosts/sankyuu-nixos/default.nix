@@ -16,7 +16,7 @@ in
 
   device = {
     type = "laptop";
-    net.devices = [ "enp2s0f0" "enp5s0" "wlan0" ];
+    net.ifaces = [ "enp2s0f0" "enp5s0" "wlan0" ];
     # This system is using btrfs subvolumes, so there is only root
     mount.points = [ "/" ];
   };
