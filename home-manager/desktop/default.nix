@@ -50,11 +50,11 @@
         (cinnamon.nemo-with-extensions.override { extensions = with cinnamon; [ nemo-fileroller ]; })
         desktop-file-utils
         ffmpeg
+        evince
+        file-roller
         gammastep
         gimp
-        gnome.evince
-        gnome.file-roller
-        gnome.gnome-disk-utility
+        gnome-disk-utility
         gthumb
         inkscape
         libreoffice-fresh

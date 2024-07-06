@@ -94,7 +94,7 @@ in
         fonts.gui.package
         fonts.icons.package
         fonts.symbols.package
-        gnome.gnome-themes-extra
+        gnome-themes-extra
         hack-font
         hicolor-icon-theme
         liberation_ttf
