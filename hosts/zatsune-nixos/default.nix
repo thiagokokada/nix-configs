@@ -19,7 +19,10 @@ in
 
   disko.devices = import ./disk-config.nix;
 
-  device.type = "server";
+  device = {
+    net.ifaces = [ "enp0s6" ];
+    type = "server";
+  };
 
   nixos = {
     dev.enable = true;

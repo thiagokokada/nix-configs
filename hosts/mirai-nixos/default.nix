@@ -14,7 +14,10 @@
 
   disko.devices = import ./disk-config.nix;
 
-  device.type = "server";
+  device = {
+    net.ifaces = [ "ens3" ];
+    type = "server";
+  };
 
   nixos = {
     server = {
