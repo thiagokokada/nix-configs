@@ -18,14 +18,31 @@ in
       allowedUDPPorts = [ port ];
     };
 
-    services.tailscale = {
-      enable = true;
-      permitCertUid = toString config.users.users.${username}.uid;
-      useRoutingFeatures = lib.mkDefault "server";
-      extraUpFlags = [
-        "--advertise-exit-node"
-        "--ssh"
-      ];
+    services = {
+      networkd-dispatcher = {
+        enable = true;
+        # https://tailscale.com/kb/1320/performance-best-practices#linux-optimizations-for-subnet-routers-and-exit-nodes
+        rules."enable-transport-layer-offload" = {
+          onState = [ "routable" ];
+          script = /* bash */ ''
+            #!${pkgs.runtimeShell}
+            ${lib.concatStringsSep "\n"
+              (builtins.map
+                (iface:
+                  "${lib.getExe pkgs.ethtool} -K ${iface} rx-udp-gro-forwarding on rx-gro-list off")
+                config.device.net.devices)}
+          '';
+        };
+      };
+      tailscale = {
+        enable = true;
+        permitCertUid = toString config.users.users.${username}.uid;
+        useRoutingFeatures = lib.mkDefault "server";
+        extraUpFlags = [
+          "--advertise-exit-node"
+          "--ssh"
+        ];
+      };
     };
 
     # Disable wait online for all interfaces as it's causing trouble at rebuild
