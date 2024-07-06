@@ -35,10 +35,7 @@ in
       tailscale.enable = true;
       duckdns-updater = {
         enable = true;
-        ipv6 = {
-          enable = true;
-          device = "enp0s6";
-        };
+        ipv6.enable = true;
         domain = "zatsune-nixos.duckdns.org";
         onCalendar = "daily"; # fixed IP, mostly for health checking
         certs = {

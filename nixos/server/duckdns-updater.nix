@@ -11,10 +11,10 @@ in
     enable = lib.mkEnableOption "DuckDNS config";
     ipv6 = {
       enable = lib.mkEnableOption "enable IPv6";
-      device = lib.mkOption {
+      iface = lib.mkOption {
         type = lib.types.str;
-        description = "Device to get IPv6.";
-        default = "eth0";
+        description = "Network interface to get IPv6.";
+        default = builtins.elemAt config.device.net.ifaces 0;
       };
     };
     certs = {
@@ -55,7 +55,7 @@ in
       wants = [ "network-online.target" ];
       path = with pkgs; [ curl iproute2 ];
       script = lib.optionalString cfg.ipv6.enable ''
-        readonly ipv6addr="$(ip addr show dev '${cfg.ipv6.device}' | \
+        readonly ipv6addr="$(ip addr show dev '${cfg.ipv6.iface}' | \
         sed -e's/^.*inet6 \([^ ]*\)\/.*$/\1/;t;d' | \
         grep -v '^fd' | \
         grep -v '^fe80' | \
