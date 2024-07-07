@@ -577,7 +577,7 @@ in
           type = "lua";
           config = /* lua */ ''
             local cmp = require("cmp")
-            cmp.setup({
+            cmp.setup {
               completion = {
                 autocomplete = false,
                 completeopt = vim.opt.completeopt._value,
@@ -601,7 +601,7 @@ in
                 { name = 'path' },
                 { name = 'snippy' },
               },
-            })
+            }
           '';
         }
         {
