@@ -36,8 +36,11 @@ in
             #!${pkgs.runtimeShell}
             ${lib.concatStringsSep "\n"
               (builtins.map
-                (iface:
-                  "${lib.getExe pkgs.ethtool} -K ${iface} rx-udp-gro-forwarding on rx-gro-list off")
+                (iface: /* bash */ ''
+                  if [[ "$IFACE" == "${iface}" ]]; then
+                    ${lib.getExe pkgs.ethtool} -K "${iface}" rx-udp-gro-forwarding on rx-gro-list off
+                  fi
+                '')
                 config.device.net.ifaces)}
           '';
         };
