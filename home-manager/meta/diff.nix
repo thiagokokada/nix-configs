@@ -13,7 +13,7 @@ in
       if [[ -n ''${oldGenPath:-} ]] && [[ -n ''${newGenPath:-} ]]; then
         ${lib.getExe config.nix.package} \
           --extra-experimental-features 'nix-command' \
-          store diff-closures $oldGenPath $newGenPath
+          store diff-closures $oldGenPath $newGenPath || true
       fi
     '';
   };
