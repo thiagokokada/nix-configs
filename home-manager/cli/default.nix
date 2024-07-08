@@ -69,7 +69,7 @@ in
         archive = "${lib.getExe pkgs.ouch} compress";
         unarchive = "${lib.getExe pkgs.ouch} decompress";
         lsarchive = "${lib.getExe pkgs.ouch} list";
-        cal = lib.getExe' pkgs.gcal "gcal";
+        cal = lib.getExe pkgs.gcal;
         ncdu = "${lib.getExe pkgs.dua} interactive";
         sloccount = lib.getExe pkgs.tokei;
       };
