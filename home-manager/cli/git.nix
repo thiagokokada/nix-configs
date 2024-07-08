@@ -27,9 +27,7 @@ in
         with pkgs;
         lib.optionals cfg.gh.enable [ github-cli ]
         ++ lib.optionals cfg.gui.enable [
-          (run-bg-alias "gcd" "${lib.getExe git-cola} dag")
           (run-bg-alias "gk" (lib.getExe' config.programs.git.package "gitk"))
-          git-cola
         ];
       shellAliases = {
         g = "git";
