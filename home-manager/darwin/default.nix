@@ -25,7 +25,7 @@ in
       dev.enable = true;
       desktop = {
         wezterm = {
-          enable = pkgs.stdenv.isAarch64; # broken in x86_64-darwin
+          enable = true;
           fullscreenOnStartup = false;
           fontSize = 14.0;
           opacity = 1.0;
