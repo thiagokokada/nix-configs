@@ -1,4 +1,9 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
 {
   options.nixos.system.cli.enable = lib.mkEnableOption "CLI config" // {
@@ -11,19 +16,23 @@
       # To get zsh completion for system packages
       pathsToLink = [ "/share/zsh" ];
 
-      systemPackages = with pkgs; with config.boot.kernelPackages; [
-        cpupower
-        glxinfo
-        lm_sensors
-        lshw
-        pciutils
-        powertop
-        psmisc
-        usbutils
-      ] ++ lib.optionals stdenv.isx86_64 [
-        ryzenadj
-        turbostat
-      ];
+      systemPackages =
+        with pkgs;
+        with config.boot.kernelPackages;
+        [
+          cpupower
+          glxinfo
+          lm_sensors
+          lshw
+          pciutils
+          powertop
+          psmisc
+          usbutils
+        ]
+        ++ lib.optionals stdenv.isx86_64 [
+          ryzenadj
+          turbostat
+        ];
     };
 
     # Enable programs that need special configuration.

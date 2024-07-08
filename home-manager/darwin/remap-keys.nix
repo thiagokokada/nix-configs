@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   cfg = config.home-manager.darwin.remapKeys;
@@ -31,22 +36,27 @@ in
   };
 
   config = lib.mkIf (cfg.mappings != { }) {
-    home.activation.remapKeys = lib.hm.dag.entryAfter [ "writeBoundary" ] /* bash */ ''
-      source="${pkgs.substituteAll {
-        inherit (cfg) productID vendorID;
-        src = ./remap-keys.plist;
-        remappings = lib.pipe cfg.mappings [
-          (lib.mapAttrsToList
-            (src: dst: /* json */
-              ''{"HIDKeyboardModifierMappingSrc": ${src}, "HIDKeyboardModifierMappingDst": ${dst}}''))
-          (lib.concatStringsSep ", ")
-        ];
-      }}"
-      destination="/Library/LaunchDaemons/com.nix.remapkeys.${cfg.vendorID}-${cfg.productID}.plist"
-      if ! ${lib.getExe' pkgs.diffutils "diff"} "$source" "$destination"; then
-        $DRY_RUN_CMD /usr/bin/sudo ${lib.getExe' pkgs.coreutils "install"} -m644 "$source" "$destination"
-        $DRY_RUN_CMD /usr/bin/sudo /bin/launchctl load -w "$destination"
-      fi
-    '';
+    home.activation.remapKeys =
+      lib.hm.dag.entryAfter [ "writeBoundary" ] # bash
+        ''
+          source="${
+            pkgs.substituteAll {
+              inherit (cfg) productID vendorID;
+              src = ./remap-keys.plist;
+              remappings = lib.pipe cfg.mappings [
+                (lib.mapAttrsToList (
+                  src: dst: # json
+                  ''{"HIDKeyboardModifierMappingSrc": ${src}, "HIDKeyboardModifierMappingDst": ${dst}}''
+                ))
+                (lib.concatStringsSep ", ")
+              ];
+            }
+          }"
+          destination="/Library/LaunchDaemons/com.nix.remapkeys.${cfg.vendorID}-${cfg.productID}.plist"
+          if ! ${lib.getExe' pkgs.diffutils "diff"} "$source" "$destination"; then
+            $DRY_RUN_CMD /usr/bin/sudo ${lib.getExe' pkgs.coreutils "install"} -m644 "$source" "$destination"
+            $DRY_RUN_CMD /usr/bin/sudo /bin/launchctl load -w "$destination"
+          fi
+        '';
   };
 }

@@ -1,4 +1,9 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
 {
   options.home-manager.dev.clojure.enable = lib.mkEnableOption "Clojure config" // {

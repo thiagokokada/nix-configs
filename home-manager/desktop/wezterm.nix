@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   cfg = config.home-manager.desktop.wezterm;
@@ -36,7 +41,8 @@ in
           let
             inherit (config.home-manager.desktop.theme) fonts colors;
           in
-          with colors; /* lua */''
+          with colors; # lua
+          ''
             local act = wezterm.action
             local config = wezterm.config_builder()
             local scrollback_lines = ${toString cfg.scrollbackLines}
@@ -71,14 +77,16 @@ in
               )
             end)
 
-            ${lib.optionalString cfg.fullscreenOnStartup /* lua */ ''
-              local mux = wezterm.mux
-              -- Automatically maximize window on startup
-              wezterm.on("gui-startup", function()
-                local tab, pane, window = mux.spawn_window{}
-                window:gui_window():maximize()
-              end)
-            ''}
+            ${lib.optionalString cfg.fullscreenOnStartup # lua
+              ''
+                local mux = wezterm.mux
+                -- Automatically maximize window on startup
+                wezterm.on("gui-startup", function()
+                  local tab, pane, window = mux.spawn_window{}
+                  window:gui_window():maximize()
+                end)
+              ''
+            }
 
             config.audible_bell = "Disabled"
             config.visual_bell = {
@@ -158,12 +166,14 @@ in
           '';
       };
 
-      zsh.initExtra = lib.mkIf config.programs.zsh.enable /* bash */ ''
-        # Do not enable those alias in non-wezterm terminal
-        if [[ -n "$WEZTERM_EXECUTABLE_DIR" ]]; then
-          alias imgcat="$WEZTERM_EXECUTABLE_DIR/bin/wezterm imgcat"
-        fi
-      '';
+      zsh.initExtra =
+        lib.mkIf config.programs.zsh.enable # bash
+          ''
+            # Do not enable those alias in non-wezterm terminal
+            if [[ -n "$WEZTERM_EXECUTABLE_DIR" ]]; then
+              alias imgcat="$WEZTERM_EXECUTABLE_DIR/bin/wezterm imgcat"
+            fi
+          '';
     };
   };
 }

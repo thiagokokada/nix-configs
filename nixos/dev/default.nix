@@ -3,9 +3,7 @@ let
   inherit (config.mainUser) username;
 in
 {
-  imports = [
-    ./virtualisation.nix
-  ];
+  imports = [ ./virtualisation.nix ];
 
   options.nixos.dev.enable = lib.mkEnableOption "dev config";
 

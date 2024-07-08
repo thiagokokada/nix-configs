@@ -1,4 +1,9 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
 {
   options.nixos.laptop.wireless.enable = lib.mkEnableOption "Wi-Fi/Bluetooth config" // {

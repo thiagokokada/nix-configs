@@ -2,7 +2,13 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, lib, flake, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  flake,
+  ...
+}:
 
 let
   inherit (flake) inputs;
@@ -17,7 +23,10 @@ in
 
   device = {
     type = "laptop";
-    net.ifaces = [ "enp3s0" "wlan0" ];
+    net.ifaces = [
+      "enp3s0"
+      "wlan0"
+    ];
   };
 
   # Use the systemd-boot EFI boot loader.

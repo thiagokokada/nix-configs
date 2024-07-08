@@ -1,4 +1,9 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
 {
   options.home-manager.cli.tmux.enable = lib.mkEnableOption "Tmux config" // {

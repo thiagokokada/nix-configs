@@ -14,21 +14,25 @@ with constants;
   checkoutStep = {
     uses = actions.checkout;
   };
-  installNixActionStep = { extraNixConfig ? [ ] }: {
-    uses = actions.install-nix-action;
-    "with" = {
-      # Need to define a channel, otherwise it will use bash from environment
-      nix_path = "nixpkgs=channel:nixos-unstable";
-      extra_nix_config = builtins.concatStringsSep "\n" (
-        [
-          "accept-flake-config = true"
-          # Should avoid GitHub API rate limit
-          "access-tokens = github.com=\${{ secrets.GITHUB_TOKEN }}"
-        ]
-        ++ extraNixConfig
-      );
+  installNixActionStep =
+    {
+      extraNixConfig ? [ ],
+    }:
+    {
+      uses = actions.install-nix-action;
+      "with" = {
+        # Need to define a channel, otherwise it will use bash from environment
+        nix_path = "nixpkgs=channel:nixos-unstable";
+        extra_nix_config = builtins.concatStringsSep "\n" (
+          [
+            "accept-flake-config = true"
+            # Should avoid GitHub API rate limit
+            "access-tokens = github.com=\${{ secrets.GITHUB_TOKEN }}"
+          ]
+          ++ extraNixConfig
+        );
+      };
     };
-  };
   cachixActionStep = {
     uses = actions.cachix-action;
     "with" = {
@@ -41,20 +45,38 @@ with constants;
     name = "Validate Flakes";
     run = "nix flake check ${toString nixFlags}";
   };
-  buildHomeManagerConfigurations = { hostnames ? [ ], extraNixFlags ? [ ] }: {
-    name = "Build Home-Manager configs for: ${builtins.concatStringsSep ", " hostnames}";
-    run = builtins.concatStringsSep "\n"
-      (map
-        (hostname: "nix build ${toString (nixFlags ++ extraNixFlags)} '.#homeConfigurations.${hostname}.activationPackage'")
-        hostnames);
-  };
-  buildNixOSConfigurations = { hostnames ? [ ], extraNixFlags ? [ ] }: {
-    name = "Build NixOS configs for: ${builtins.concatStringsSep ", " hostnames}";
-    run = builtins.concatStringsSep "\n"
-      (map
-        (hostname: "nix build ${toString (nixFlags ++ extraNixFlags)} '.#nixosConfigurations.${hostname}.config.system.build.toplevel'")
-        hostnames);
-  };
+  buildHomeManagerConfigurations =
+    {
+      hostnames ? [ ],
+      extraNixFlags ? [ ],
+    }:
+    {
+      name = "Build Home-Manager configs for: ${builtins.concatStringsSep ", " hostnames}";
+      run = builtins.concatStringsSep "\n" (
+        map (
+          hostname:
+          "nix build ${
+            toString (nixFlags ++ extraNixFlags)
+          } '.#homeConfigurations.${hostname}.activationPackage'"
+        ) hostnames
+      );
+    };
+  buildNixOSConfigurations =
+    {
+      hostnames ? [ ],
+      extraNixFlags ? [ ],
+    }:
+    {
+      name = "Build NixOS configs for: ${builtins.concatStringsSep ", " hostnames}";
+      run = builtins.concatStringsSep "\n" (
+        map (
+          hostname:
+          "nix build ${
+            toString (nixFlags ++ extraNixFlags)
+          } '.#nixosConfigurations.${hostname}.config.system.build.toplevel'"
+        ) hostnames
+      );
+    };
   updateFlakeLockStep = {
     name = "Update flake.lock";
     run = ''

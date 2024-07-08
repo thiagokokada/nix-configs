@@ -1,4 +1,11 @@
-{ config, lib, pkgs, flake, osConfig, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  flake,
+  osConfig,
+  ...
+}:
 
 let
   cfg = config.home-manager.meta;

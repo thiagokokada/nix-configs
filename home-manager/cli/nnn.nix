@@ -1,4 +1,10 @@
-{ config, lib, pkgs, flake, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  flake,
+  ...
+}:
 
 let
   inherit (flake) inputs;
@@ -31,13 +37,16 @@ in
         m = "/mnt";
         "/" = "/";
       };
-      extraPackages = with pkgs; [
-        fzf
-        mediainfo
-      ] ++ lib.optionals (!stdenv.isDarwin) [
-        ffmpegthumbnailer
-        sxiv
-      ];
+      extraPackages =
+        with pkgs;
+        [
+          fzf
+          mediainfo
+        ]
+        ++ lib.optionals (!stdenv.isDarwin) [
+          ffmpegthumbnailer
+          sxiv
+        ];
       plugins = {
         src = "${inputs.nnn-plugins}/plugins";
         mappings = {
@@ -51,10 +60,12 @@ in
       };
     };
 
-    programs.zsh.initExtra = lib.optionalString config.programs.zsh.enable /* bash */ ''
-      # Export NNN_TMPFILE to quit on cd always
-      export NNN_TMPFILE="${config.xdg.configHome}/nnn/.lastd"
-      . ${config.programs.nnn.finalPackage}/share/quitcd/quitcd.bash_sh_zsh
-    '';
+    programs.zsh.initExtra =
+      lib.optionalString config.programs.zsh.enable # bash
+        ''
+          # Export NNN_TMPFILE to quit on cd always
+          export NNN_TMPFILE="${config.xdg.configHome}/nnn/.lastd"
+          . ${config.programs.nnn.finalPackage}/share/quitcd/quitcd.bash_sh_zsh
+        '';
   };
 }

@@ -1,4 +1,10 @@
-{ config, pkgs, lib, flake, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  flake,
+  ...
+}:
 
 let
   get-ip = pkgs.writeShellScriptBin "get-ip" ''
@@ -19,14 +25,15 @@ in
   };
 
   config = lib.mkIf config.home-manager.cli.zsh.enable {
-    home.packages = with pkgs; [
-      get-ip
-      get-ip'
-      nix-zsh-completions
-      remove-symlink
-    ] ++ lib.optionals (!stdenv.isDarwin) [
-      (run-bg-alias "open" (lib.getExe' xdg-utils "xdg-open"))
-    ];
+    home.packages =
+      with pkgs;
+      [
+        get-ip
+        get-ip'
+        nix-zsh-completions
+        remove-symlink
+      ]
+      ++ lib.optionals (!stdenv.isDarwin) [ (run-bg-alias "open" (lib.getExe' xdg-utils "xdg-open")) ];
 
     programs.zsh = {
       enable = true;
@@ -50,83 +57,91 @@ in
         searchDownKey = [ "$terminfo[kcud1]" ];
       };
 
-      profileExtra = lib.concatStringsSep "\n" (lib.filter (x: x != "") [
-        (lib.optionalString config.home-manager.crostini.enable /* bash */ ''
-          # Force truecolor support in Crostini
-          export COLORTERM=truecolor
-        '')
-        (lib.optionalString pkgs.stdenv.isDarwin /* bash */ ''
-          # Source nix-daemon profile since macOS updates can remove it from /etc/zshrc
-          # https://github.com/NixOS/nix/issues/3616
-          if [ -e '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh' ]; then
-            source '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh'
-          fi
-          # Set the soft ulimit to something sensible
-          # https://developer.apple.com/forums/thread/735798
-          ulimit -Sn 524288
-        '')
-        /* bash */
+      profileExtra = lib.concatStringsSep "\n" (
+        lib.filter (x: x != "") [
+          (lib.optionalString config.home-manager.crostini.enable # bash
+            ''
+              # Force truecolor support in Crostini
+              export COLORTERM=truecolor
+            ''
+          )
+          (lib.optionalString pkgs.stdenv.isDarwin # bash
+            ''
+              # Source nix-daemon profile since macOS updates can remove it from /etc/zshrc
+              # https://github.com/NixOS/nix/issues/3616
+              if [ -e '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh' ]; then
+                source '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh'
+              fi
+              # Set the soft ulimit to something sensible
+              # https://developer.apple.com/forums/thread/735798
+              ulimit -Sn 524288
+            ''
+          )
+          # bash
+          ''
+            # Source .profile
+            [[ -e ~/.profile ]] && emulate sh -c '. ~/.profile'
+          ''
+        ]
+      );
+
+      initExtraBeforeCompInit = # bash
         ''
-          # Source .profile
-          [[ -e ~/.profile ]] && emulate sh -c '. ~/.profile'
+          # zimfw config
+          zstyle ':zim:input' double-dot-expand no
+          zstyle ':zim:ssh' ids /dev/null
+        '';
+
+      initExtra = # bash
         ''
-      ]);
+          # avoid duplicated entries in PATH
+          typeset -U PATH
 
-      initExtraBeforeCompInit = /* bash */ ''
-        # zimfw config
-        zstyle ':zim:input' double-dot-expand no
-        zstyle ':zim:ssh' ids /dev/null
-      '';
+          # try to correct the spelling of commands
+          setopt correct
+          # disable C-S/C-Q
+          setopt noflowcontrol
+          # disable "no matches found" check
+          unsetopt nomatch
 
-      initExtra = /* bash */ ''
-        # avoid duplicated entries in PATH
-        typeset -U PATH
+          # edit the current command line in $EDITOR
+          bindkey -M vicmd v edit-command-line
 
-        # try to correct the spelling of commands
-        setopt correct
-        # disable C-S/C-Q
-        setopt noflowcontrol
-        # disable "no matches found" check
-        unsetopt nomatch
+          # zsh-history-substring-search
+          # historySubstringSearch.{searchUpKey,searchDownKey} does not work with
+          # vicmd, this is why we have this here
+          bindkey -M vicmd 'k' history-substring-search-up
+          bindkey -M vicmd 'j' history-substring-search-down
 
-        # edit the current command line in $EDITOR
-        bindkey -M vicmd v edit-command-line
+          # allow ad-hoc scripts to be add to PATH locally
+          export PATH="$HOME/.local/bin:$PATH"
 
-        # zsh-history-substring-search
-        # historySubstringSearch.{searchUpKey,searchDownKey} does not work with
-        # vicmd, this is why we have this here
-        bindkey -M vicmd 'k' history-substring-search-up
-        bindkey -M vicmd 'j' history-substring-search-down
-
-        # allow ad-hoc scripts to be add to PATH locally
-        export PATH="$HOME/.local/bin:$PATH"
-
-        # source contents from ~/.zshrc.d/*.zsh
-        for file in "$HOME/.zshrc.d/"*.zsh; do
-          [[ -f "$file" ]] && source "$file"
-        done
-      '';
+          # source contents from ~/.zshrc.d/*.zsh
+          for file in "$HOME/.zshrc.d/"*.zsh; do
+            [[ -f "$file" ]] && source "$file"
+          done
+        '';
 
       plugins =
         let
-          zshCompilePlugin = name: src:
+          zshCompilePlugin =
+            name: src:
             pkgs.runCommand name
               {
                 name = "${name}-zwc";
                 nativeBuildInputs = [ pkgs.zsh ];
-              } ''
-              mkdir $out
-              cp -rT ${src} $out
-              cd $out
-              find -name '*.zsh' -execdir zsh -c 'zcompile {}' \;
-            '';
-          zshPlugin = name:
-            {
-              inherit name;
-              src = zshCompilePlugin name (builtins.getAttr name flake.inputs);
-            };
-          zimPlugin = name:
-            zshPlugin name // { file = "init.zsh"; };
+              }
+              ''
+                mkdir $out
+                cp -rT ${src} $out
+                cd $out
+                find -name '*.zsh' -execdir zsh -c 'zcompile {}' \;
+              '';
+          zshPlugin = name: {
+            inherit name;
+            src = zshCompilePlugin name (builtins.getAttr name flake.inputs);
+          };
+          zimPlugin = name: zshPlugin name // { file = "init.zsh"; };
         in
         lib.flatten [
           (zimPlugin "zim-input")
@@ -148,7 +163,11 @@ in
         RPROMPT = "%F{8}%*";
         # zsh-users config
         ZSH_AUTOSUGGEST_USE_ASYNC = 1;
-        ZSH_HIGHLIGHT_HIGHLIGHTERS = [ "main" "brackets" "cursor" ];
+        ZSH_HIGHLIGHT_HIGHLIGHTERS = [
+          "main"
+          "brackets"
+          "cursor"
+        ];
       };
 
       shellAliases = {
@@ -159,16 +178,18 @@ in
 
     home.file =
       let
-        compileZshConfig = filename:
+        compileZshConfig =
+          filename:
           pkgs.runCommand filename
             {
               name = "${filename}-zwc";
               nativeBuildInputs = [ pkgs.zsh ];
-            } ''
-            cp "${config.home.file.${filename}.source}" "${filename}"
-            zsh -c 'zcompile "${filename}"'
-            cp "${filename}.zwc" "$out"
-          '';
+            }
+            ''
+              cp "${config.home.file.${filename}.source}" "${filename}"
+              zsh -c 'zcompile "${filename}"'
+              cp "${filename}.zwc" "$out"
+            '';
       in
       {
         ".zprofile.zwc".source = compileZshConfig ".zprofile";

@@ -1,4 +1,9 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
 let
   cfg = config.home-manager.cli;
@@ -16,7 +21,9 @@ in
   ];
 
   options.home-manager.cli = {
-    enable = lib.mkEnableOption "CLI config" // { default = true; };
+    enable = lib.mkEnableOption "CLI config" // {
+      default = true;
+    };
   };
 
   config = lib.mkIf cfg.enable {

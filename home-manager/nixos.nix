@@ -1,9 +1,7 @@
 { osConfig, ... }:
 
 {
-  imports = [
-    ./default.nix
-  ];
+  imports = [ ./default.nix ];
 
   home-manager = {
     desktop.enable = osConfig.nixos.desktop.enable;

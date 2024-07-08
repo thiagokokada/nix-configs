@@ -1,6 +1,4 @@
-{ nix-output-monitor
-, writeShellApplication
-}:
+{ nix-output-monitor, writeShellApplication }:
 
 writeShellApplication {
   name = "nom-rebuild";

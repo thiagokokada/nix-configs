@@ -1,21 +1,19 @@
-{ lib
-, stdenvNoCC
-, coreutils
-, gawk
-, findutils
-, gnugrep
-, home-manager
-, nix
-, shellcheck
-, substituteAll
-, isNixOS ? false
+{
+  lib,
+  stdenvNoCC,
+  coreutils,
+  gawk,
+  findutils,
+  gnugrep,
+  home-manager,
+  nix,
+  shellcheck,
+  substituteAll,
+  isNixOS ? false,
 }:
 
 stdenvNoCC.mkDerivation (finalAttrs: {
-  name =
-    if isNixOS
-    then "nixos-cleanup"
-    else "nix-cleanup";
+  name = if isNixOS then "nixos-cleanup" else "nix-cleanup";
 
   src = substituteAll {
     src = ./nix-cleanup.sh;

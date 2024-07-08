@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 {
   options.home-manager.desktop.gammastep.enable = lib.mkEnableOption "gammastep config" // {

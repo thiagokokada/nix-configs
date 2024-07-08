@@ -1,4 +1,10 @@
-{ config, pkgs, lib, osConfig, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  osConfig,
+  ...
+}:
 
 let
   cfg = config.home-manager.desktop.theme;
@@ -77,7 +83,12 @@ in
         default = pkgs.wallpapers.hatsune-miku_walking-4k;
       };
       scale = lib.mkOption {
-        type = lib.types.enum [ "tile" "center" "fill" "scale" ];
+        type = lib.types.enum [
+          "tile"
+          "center"
+          "fill"
+          "scale"
+        ];
         default = "fill";
         description = "Wallpaper scaling";
       };
@@ -89,20 +100,23 @@ in
     fonts.fontconfig.enable = true;
 
     home = {
-      packages = with pkgs; with cfg; [
-        dejavu_fonts
-        fonts.gui.package
-        fonts.icons.package
-        fonts.symbols.package
-        gnome-themes-extra
-        hack-font
-        hicolor-icon-theme
-        liberation_ttf
-        noto-fonts
-        noto-fonts-cjk-sans
-        noto-fonts-cjk-serif
-        noto-fonts-color-emoji
-      ];
+      packages =
+        with pkgs;
+        with cfg;
+        [
+          dejavu_fonts
+          fonts.gui.package
+          fonts.icons.package
+          fonts.symbols.package
+          gnome-themes-extra
+          hack-font
+          hicolor-icon-theme
+          liberation_ttf
+          noto-fonts
+          noto-fonts-cjk-sans
+          noto-fonts-cjk-serif
+          noto-fonts-color-emoji
+        ];
 
       pointerCursor = {
         package = pkgs.nordzy-cursor-theme;
@@ -118,11 +132,7 @@ in
       "org/gnome/desktop/interface" = with osConfig.fonts.fontconfig; {
         "color-scheme" = "prefer-dark";
         "font-antialiasing" =
-          if antialias then
-            if (subpixel.rgba == "none")
-            then "grayscale"
-            else "rgba"
-          else "none";
+          if antialias then if (subpixel.rgba == "none") then "grayscale" else "rgba" else "none";
         "font-hinting" = builtins.replaceStrings [ "hint" ] [ "" ] hinting.style;
         "font-rgba-order" = subpixel.rgba;
       };

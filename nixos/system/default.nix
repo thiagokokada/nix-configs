@@ -12,8 +12,12 @@ in
   ];
 
   options.nixos.system = {
-    enable = lib.mkEnableOption "system config" // { default = true; };
-    showMotd = lib.mkEnableOption "show message of the day" // { default = true; };
+    enable = lib.mkEnableOption "system config" // {
+      default = true;
+    };
+    showMotd = lib.mkEnableOption "show message of the day" // {
+      default = true;
+    };
   };
 
   config = lib.mkIf cfg.enable {
@@ -55,12 +59,14 @@ in
     networking.nftables.enable = lib.mkDefault true;
 
     # Increase file handler limit
-    security.pam.loginLimits = [{
-      domain = "*";
-      type = "-";
-      item = "nofile";
-      value = "524288";
-    }];
+    security.pam.loginLimits = [
+      {
+        domain = "*";
+        type = "-";
+        item = "nofile";
+        value = "524288";
+      }
+    ];
 
     services = {
       cron.enable = true;
@@ -96,8 +102,7 @@ in
     };
 
     # nixos/modules/misc/version.nix
-    users.motd = lib.mkIf cfg.showMotd ''
-      Welcome to '${config.networking.hostName}' running NixOS ${config.system.nixos.version}!'';
+    users.motd = lib.mkIf cfg.showMotd ''Welcome to '${config.networking.hostName}' running NixOS ${config.system.nixos.version}!'';
 
     # Enable zram to have better memory management
     zramSwap = {

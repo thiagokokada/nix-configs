@@ -1,4 +1,11 @@
-{ config, lib, libEx, pkgs, osConfig, ... }:
+{
+  config,
+  lib,
+  libEx,
+  pkgs,
+  osConfig,
+  ...
+}:
 let
   # Aliases
   alt = "Mod1";
@@ -6,13 +13,20 @@ let
 
   commonOptions =
     let
-      screenShotName = with config.xdg.userDirs;
+      screenShotName =
+        with config.xdg.userDirs;
         "${pictures}/$(${lib.getExe' pkgs.coreutils "date"} +%Y-%m-%d_%H-%M-%S)-screenshot.png";
       displayLayoutMode = " : [a]uto, [g]ui";
     in
     import ../i3/common.nix rec {
-      inherit config lib pkgs modifier alt;
-      bars = [{ command = lib.getExe config.programs.waybar.package; }];
+      inherit
+        config
+        lib
+        pkgs
+        modifier
+        alt
+        ;
+      bars = [ { command = lib.getExe config.programs.waybar.package; } ];
       menu = lib.getExe config.programs.fuzzel.package;
 
       fullScreenShot = ''
@@ -66,7 +80,10 @@ in
 
       config = commonOptions.config // {
         startup = [
-          { command = "systemctl restart --user kanshi.service"; always = true; }
+          {
+            command = "systemctl restart --user kanshi.service";
+            always = true;
+          }
         ];
 
         input = {
@@ -74,7 +91,9 @@ in
             xkb_layout = "us(intl)";
             xkb_options = "caps:escape,grp:win_space_toggle";
           };
-          "type:pointer" = { accel_profile = "flat"; };
+          "type:pointer" = {
+            accel_profile = "flat";
+          };
           "type:touchpad" = {
             drag = "enabled";
             drag_lock = "enabled";
@@ -87,13 +106,16 @@ in
         };
 
         output = {
-          "*" = with config.home-manager.desktop.theme.wallpaper; {
-            bg = "${path} ${scale}";
-            # DPI
-            scale = toString (config.home-manager.desktop.theme.fonts.dpi / 100.0);
-          } // lib.optionalAttrs (osConfig ? fonts.fontconfig) {
-            subpixel = osConfig.fonts.fontconfig.subpixel.rgba;
-          };
+          "*" =
+            with config.home-manager.desktop.theme.wallpaper;
+            {
+              bg = "${path} ${scale}";
+              # DPI
+              scale = toString (config.home-manager.desktop.theme.fonts.dpi / 100.0);
+            }
+            // lib.optionalAttrs (osConfig ? fonts.fontconfig) {
+              subpixel = osConfig.fonts.fontconfig.subpixel.rgba;
+            };
         };
       };
 
@@ -126,9 +148,7 @@ in
         gtk = true;
       };
 
-      extraOptions = lib.optionals (libEx.isNvidia osConfig) [
-        "--unsupported-gpu"
-      ];
+      extraOptions = lib.optionals (libEx.isNvidia osConfig) [ "--unsupported-gpu" ];
     };
 
     xsession.preferStatusNotifierItems = true;

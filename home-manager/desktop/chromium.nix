@@ -1,4 +1,9 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
 {
   options.home-manager.desktop.chromium.enable = lib.mkEnableOption "Chromium config" // {

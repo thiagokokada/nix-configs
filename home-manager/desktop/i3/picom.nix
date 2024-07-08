@@ -1,4 +1,10 @@
-{ config, lib, libEx, osConfig, ... }:
+{
+  config,
+  lib,
+  libEx,
+  osConfig,
+  ...
+}:
 
 {
   options.home-manager.desktop.i3.picom.enable = lib.mkEnableOption "picom config" // {

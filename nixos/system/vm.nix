@@ -20,8 +20,12 @@ in
 
   config = lib.mkIf cfg.enable {
     virtualisation = {
-      vmVariant = { virtualisation = cfg.vmConfig; };
-      vmVariantWithBootLoader = { virtualisation = cfg.vmConfig; };
+      vmVariant = {
+        virtualisation = cfg.vmConfig;
+      };
+      vmVariantWithBootLoader = {
+        virtualisation = cfg.vmConfig;
+      };
     };
   };
 }

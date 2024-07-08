@@ -1,4 +1,9 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
 {
   options.nixos.desktop.non-nix.enable = lib.mkEnableOption "non-Nix config" // {

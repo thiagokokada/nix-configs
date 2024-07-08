@@ -180,7 +180,7 @@
   :after (lsp-mode)
   :demand t
   :custom
-  (lsp-nix-nil-formatter ["nixpkgs-fmt"]))
+  (lsp-nix-nil-formatter ["nixfmt"]))
 
 ;; sort-words
 (use-package! sort-words

@@ -15,9 +15,19 @@
         editor = {
           soft-wrap.enable = true;
           statusline = {
-            left = [ "mode" "spinner" ];
+            left = [
+              "mode"
+              "spinner"
+            ];
             center = [ "file-name" ];
-            right = [ "diagnostics" "selections" "position" "file-encoding" "file-line-ending" "file-type" ];
+            right = [
+              "diagnostics"
+              "selections"
+              "position"
+              "file-encoding"
+              "file-line-ending"
+              "file-type"
+            ];
             separator = "│";
             mode.normal = "NORMAL";
             mode.insert = "INSERT";
@@ -36,7 +46,11 @@
 
           select = {
             # Escape the madness! No more fighting with the cursor! Or with multiple cursors!
-            esc = [ "collapse_selection" "keep_primary_selection" "normal_mode" ];
+            esc = [
+              "collapse_selection"
+              "keep_primary_selection"
+              "normal_mode"
+            ];
           };
         };
       };

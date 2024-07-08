@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   inherit (config.mainUser) username;
@@ -21,14 +26,15 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    environment.systemPackages = with pkgs; lib.mkIf cfg.waypipe.enable [
-      waypipe
-    ];
+    environment.systemPackages = with pkgs; lib.mkIf cfg.waypipe.enable [ waypipe ];
 
     # Enable OpenSSH
     services.openssh = {
       enable = true;
-      ports = [ 22 2222 ];
+      ports = [
+        22
+        2222
+      ];
       settings = {
         PasswordAuthentication = false;
         KbdInteractiveAuthentication = false;

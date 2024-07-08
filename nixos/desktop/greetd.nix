@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 {
   options.nixos.desktop.greetd.enable = lib.mkEnableOption "greetd config" // {
@@ -21,10 +26,9 @@
         settings = {
           default_session =
             let
-              genSessionsFor = path:
-                lib.concatStringsSep ":"
-                  (map (s: "${s}/${path}")
-                    config.services.displayManager.sessionPackages);
+              genSessionsFor =
+                path:
+                lib.concatStringsSep ":" (map (s: "${s}/${path}") config.services.displayManager.sessionPackages);
             in
             {
               command = lib.concatStringsSep " " [

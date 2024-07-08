@@ -1,4 +1,9 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
 {
   options.home-manager.desktop.sway.swaylock.enable = lib.mkEnableOption "swaylock config" // {
@@ -14,10 +19,13 @@
         indicator-caps-lock = true;
         show-keyboard-layout = true;
         # https://stackoverflow.com/a/506662
-        image = with pkgs; toString
-          (runCommand "wallpaper-pixelated" { buildInputs = [ imagemagick ]; } ''
-            convert -scale 1% -scale 10000% ${config.home-manager.desktop.theme.wallpaper.path} $out
-          '');
+        image =
+          with pkgs;
+          toString (
+            runCommand "wallpaper-pixelated" { buildInputs = [ imagemagick ]; } ''
+              convert -scale 1% -scale 10000% ${config.home-manager.desktop.theme.wallpaper.path} $out
+            ''
+          );
         scaling = config.home-manager.desktop.theme.wallpaper.scale;
 
         inside-color = base01;

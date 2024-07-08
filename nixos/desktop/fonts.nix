@@ -1,4 +1,9 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
 {
   options.nixos.desktop.fonts.enable = lib.mkEnableOption "fonts config" // {

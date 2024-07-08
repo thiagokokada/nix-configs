@@ -1,4 +1,10 @@
-{ config, lib, libEx, pkgs, ... }:
+{
+  config,
+  lib,
+  libEx,
+  pkgs,
+  ...
+}:
 
 let
   cfg = config.home-manager.desktop.i3.i3status-rust;
@@ -73,31 +79,29 @@ in
             format = " $title.str(max_w:26) |";
           };
 
-          netBlocks = map
-            (d: {
-              inherit (cfg) interval;
-              block = "net";
-              device = d;
-              format = " {$icon $ssid ($signal_strength) |^icon_ethernet } " +
-                "^icon_net_up $speed_up.eng(prefix:K) " +
-                "^icon_net_down $speed_down.eng(prefix:K) ";
-              format_alt = " {$icon $ssid ($signal_strength) |^icon_ethernet } " +
-                "^icon_net_up $graph_up.str(max_w:3) " +
-                "^icon_net_down$graph_down.str(max_w:3) ";
-              inactive_format = "";
-              missing_format = "";
-            })
-            cfg.net.ifaces;
+          netBlocks = map (d: {
+            inherit (cfg) interval;
+            block = "net";
+            device = d;
+            format =
+              " {$icon $ssid ($signal_strength) |^icon_ethernet } "
+              + "^icon_net_up $speed_up.eng(prefix:K) "
+              + "^icon_net_down $speed_down.eng(prefix:K) ";
+            format_alt =
+              " {$icon $ssid ($signal_strength) |^icon_ethernet } "
+              + "^icon_net_up $graph_up.str(max_w:3) "
+              + "^icon_net_down$graph_down.str(max_w:3) ";
+            inactive_format = "";
+            missing_format = "";
+          }) cfg.net.ifaces;
 
-          disksBlocks = map
-            (m: {
-              inherit (cfg) interval;
-              block = "disk_space";
-              path = m;
-              info_type = "available";
-              format = " $icon ${libEx.shortPath m} $available ";
-            })
-            cfg.mount.points;
+          disksBlocks = map (m: {
+            inherit (cfg) interval;
+            block = "disk_space";
+            path = m;
+            info_type = "available";
+            format = " $icon ${libEx.shortPath m} $available ";
+          }) cfg.mount.points;
 
           memoryBlock = {
             inherit (cfg) interval;
@@ -109,8 +113,7 @@ in
           cpuBlock = {
             inherit (cfg) interval;
             block = "cpu";
-            format = " $icon " +
-              "{$max_frequency.eng(prefix:G,w:3)} ";
+            format = " $icon " + "{$max_frequency.eng(prefix:G,w:3)} ";
             format_alt = " ^icon_microchip $barchart.str(max_w:3) $utilization ";
           };
 
@@ -157,13 +160,15 @@ in
 
           notificationBlock = {
             block = "notify";
-            format = " ^icon_notification " +
-              "{$paused{^icon_toggle_off}|^icon_toggle_on} " +
-              "{($notification_count.eng(w:1)) |}";
+            format =
+              " ^icon_notification "
+              + "{$paused{^icon_toggle_off}|^icon_toggle_on} "
+              + "{($notification_count.eng(w:1)) |}";
           };
 
           dpmsBlock =
-            let xset = "${lib.getExe pkgs.xorg.xset}";
+            let
+              xset = "${lib.getExe pkgs.xorg.xset}";
             in
             {
               inherit (cfg) interval;
@@ -186,24 +191,27 @@ in
           i3 = {
             inherit settings;
 
-            blocks = lib.pipe [
-              windowBlock
-              netBlocks
-              disksBlocks
-              memoryBlock
-              cpuBlock
-              temperatureBlock
-              loadBlock
-              notificationBlock
-              dpmsBlock
-              backlightBlock
-              batteryBlock
-              soundBlock
-              timeBlock
-            ] [
-              lib.lists.flatten
-              (lib.filter (b: b != { }))
-            ];
+            blocks =
+              lib.pipe
+                [
+                  windowBlock
+                  netBlocks
+                  disksBlocks
+                  memoryBlock
+                  cpuBlock
+                  temperatureBlock
+                  loadBlock
+                  notificationBlock
+                  dpmsBlock
+                  backlightBlock
+                  batteryBlock
+                  soundBlock
+                  timeBlock
+                ]
+                [
+                  lib.lists.flatten
+                  (lib.filter (b: b != { }))
+                ];
           };
         };
     };

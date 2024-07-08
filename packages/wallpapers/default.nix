@@ -1,4 +1,8 @@
-{ callPackage, fetchurl, lib }:
+{
+  callPackage,
+  fetchurl,
+  lib,
+}:
 
 let
   mkWallpaperImgur = callPackage (import ./mkWallpaperImgur.nix) { };

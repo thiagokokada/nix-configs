@@ -98,10 +98,22 @@
     };
   };
 
-  outputs = { self, nixpkgs, flake-utils, ... }@inputs:
+  outputs =
+    {
+      self,
+      nixpkgs,
+      flake-utils,
+      ...
+    }@inputs:
     let
       lib = import ./lib inputs;
-      inherit (lib) recursiveMergeAttrs mkGHActionsYAMLs mkRunCmd mkNixOSConfig mkHomeConfig;
+      inherit (lib)
+        recursiveMergeAttrs
+        mkGHActionsYAMLs
+        mkRunCmd
+        mkNixOSConfig
+        mkHomeConfig
+        ;
     in
     recursiveMergeAttrs [
       # Templates
@@ -128,26 +140,30 @@
       # Home-Manager generic configs
       (mkHomeConfig {
         hostname = "home-linux-desktop";
-        extraModules = [{
-          home-manager = {
-            desktop.enable = true;
-            dev.enable = true;
-          };
-        }];
+        extraModules = [
+          {
+            home-manager = {
+              desktop.enable = true;
+              dev.enable = true;
+            };
+          }
+        ];
       })
       (mkHomeConfig {
         hostname = "home-linux";
-        extraModules = [{ home-manager.dev.enable = true; }];
+        extraModules = [ { home-manager.dev.enable = true; } ];
       })
       (mkHomeConfig {
         hostname = "home-linux-wsl";
-        extraModules = [{
-          home-manager = {
-            dev.enable = true;
-            # https://github.com/nix-community/home-manager/issues/5025
-            meta.sdSwitch.enable = false;
-          };
-        }];
+        extraModules = [
+          {
+            home-manager = {
+              dev.enable = true;
+              # https://github.com/nix-community/home-manager/issues/5025
+              meta.sdSwitch.enable = false;
+            };
+          }
+        ];
       })
       (mkHomeConfig {
         hostname = "home-macos";
@@ -162,27 +178,29 @@
       (mkHomeConfig {
         hostname = "penguin";
         system = "aarch64-linux";
-        extraModules = [{ home-manager.crostini.enable = true; }];
+        extraModules = [ { home-manager.crostini.enable = true; } ];
       })
       (mkHomeConfig {
         hostname = "toasty";
         username = "thiago.okada";
         system = "aarch64-darwin";
         homePath = "/Users";
-        extraModules = [{
-          home-manager = {
-            darwin.remapKeys.mappings = {
-              # '§±' <-> '`~'
-              "0x700000035" = "0x700000064";
-              "0x700000064" = "0x700000035";
+        extraModules = [
+          {
+            home-manager = {
+              darwin.remapKeys.mappings = {
+                # '§±' <-> '`~'
+                "0x700000035" = "0x700000064";
+                "0x700000064" = "0x700000035";
+              };
+              editor.jetbrains.enable = true;
+              dev = {
+                clojure.enable = false;
+                node.enable = false;
+              };
             };
-            editor.jetbrains.enable = true;
-            dev = {
-              clojure.enable = false;
-              node.enable = false;
-            };
-          };
-        }];
+          }
+        ];
       })
 
       # Commands
@@ -200,7 +218,8 @@
         "validate-flakes"
       ])
 
-      (flake-utils.lib.eachDefaultSystem (system:
+      (flake-utils.lib.eachDefaultSystem (
+        system:
         let
           pkgs = import nixpkgs {
             inherit system;
@@ -214,15 +233,16 @@
               fd
               neovim-standalone
               nil
-              nixpkgs-fmt
+              nixfmt-rfc-style
               ripgrep
               statix
             ];
           };
           checks = import ./checks.nix { inherit pkgs; };
-          formatter = pkgs.nixpkgs-fmt;
+          formatter = pkgs.nixfmt-rfc-style;
           legacyPackages = pkgs;
-        }))
+        }
+      ))
     ]; # END recursiveMergeAttrs
 
   nixConfig = {

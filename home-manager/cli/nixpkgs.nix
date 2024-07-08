@@ -1,10 +1,18 @@
-{ flake, config, pkgs, lib, ... }:
-
+{
+  flake,
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
 let
   nixpkgs-review =
     if pkgs.stdenv.isLinux then
-      pkgs.nixpkgs-review.override { withSandboxSupport = true; withNom = true; }
+      pkgs.nixpkgs-review.override {
+        withSandboxSupport = true;
+        withNom = true;
+      }
     else
       pkgs.nixpkgs-review.override { withNom = true; };
 in
@@ -24,11 +32,12 @@ in
       nix-index-database.comma.enable = true;
     };
 
-    home.packages = with pkgs; [
-      nix-output-monitor
-      nixpkgs-review
-    ] ++ lib.optionals stdenv.isLinux [
-      flake.inputs.nix-alien.packages.${pkgs.system}.nix-alien
-    ];
+    home.packages =
+      with pkgs;
+      [
+        nix-output-monitor
+        nixpkgs-review
+      ]
+      ++ lib.optionals stdenv.isLinux [ flake.inputs.nix-alien.packages.${pkgs.system}.nix-alien ];
   };
 }

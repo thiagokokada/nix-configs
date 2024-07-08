@@ -1,12 +1,19 @@
-{ pkgs, lib, config, ... }:
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}:
 
 let
   cfg = config.nixos.games.ratbag;
 in
 {
-  options.nixos.games.ratbag.enable = lib.mkEnableOption "Ratbag/Piper (e.g. Logitech devices) config" // {
-    default = config.nixos.games.enable;
-  };
+  options.nixos.games.ratbag.enable =
+    lib.mkEnableOption "Ratbag/Piper (e.g. Logitech devices) config"
+    // {
+      default = config.nixos.games.enable;
+    };
 
   config = lib.mkIf cfg.enable {
     environment.systemPackages = with pkgs; [ piper ];

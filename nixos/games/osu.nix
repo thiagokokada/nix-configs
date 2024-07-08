@@ -1,4 +1,9 @@
-{ pkgs, lib, config, ... }:
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}:
 
 let
   cfg = config.nixos.games.osu;
@@ -9,9 +14,7 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    environment.systemPackages = with pkgs; [
-      osu-lazer
-    ];
+    environment.systemPackages = with pkgs; [ osu-lazer ];
 
     # Enable opentabletdriver
     hardware.opentabletdriver.enable = true;

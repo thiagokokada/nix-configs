@@ -5,7 +5,10 @@ in
 with constants;
 {
   name = "validate-flakes";
-  on = [ "push" "workflow_dispatch" ];
+  on = [
+    "push"
+    "workflow_dispatch"
+  ];
   jobs = {
     build-linux = {
       inherit (ubuntu) runs-on;
@@ -17,9 +20,7 @@ with constants;
           "qemu-system-aarch64"
           "qemu-user-static"
         ])
-        (installNixActionStep {
-          extraNixConfig = [ "extra-platforms = aarch64-linux" ];
-        })
+        (installNixActionStep { extraNixConfig = [ "extra-platforms = aarch64-linux" ]; })
         cachixActionStep
         validateFlakesStep
       ];

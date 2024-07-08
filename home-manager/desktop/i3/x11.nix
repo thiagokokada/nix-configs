@@ -1,4 +1,10 @@
-{ config, lib, pkgs, osConfig, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  osConfig,
+  ...
+}:
 
 {
   options.home-manager.desktop.i3.x11.enable = lib.mkEnableOption "x11 config" // {

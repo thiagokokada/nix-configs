@@ -13,9 +13,7 @@
       "home-linux"
       "steamdeck"
     ];
-    darwin.hostnames = [
-      "home-macos"
-    ];
+    darwin.hostnames = [ "home-macos" ];
   };
   nixos.hostnames = [
     "hachune-nixos"

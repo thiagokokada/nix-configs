@@ -4,7 +4,8 @@ let
   inherit (config.mainUser) username;
   inherit (config.device.media) directory;
 in
-with config.users.users.${username}; {
+with config.users.users.${username};
+{
   options.nixos.server.plex.enable = lib.mkEnableOption "Plex config";
 
   config = lib.mkIf config.nixos.server.plex.enable {

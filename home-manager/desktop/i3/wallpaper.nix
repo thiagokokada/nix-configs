@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 {
   options.home-manager.desktop.i3.wallpaper.enable = lib.mkEnableOption "wallpaper config" // {

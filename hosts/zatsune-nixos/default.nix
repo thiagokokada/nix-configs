@@ -5,7 +5,9 @@
 { modulesPath, flake, ... }@inputs:
 
 let
-  oci-common = import "${modulesPath}/virtualisation/oci-common.nix" { inherit (inputs) pkgs lib config; };
+  oci-common = import "${modulesPath}/virtualisation/oci-common.nix" {
+    inherit (inputs) pkgs lib config;
+  };
 in
 {
   imports = [
@@ -15,7 +17,9 @@ in
     flake.inputs.disko.nixosModules.disko
   ] ++ oci-common.imports;
 
-  boot = { inherit (oci-common.boot) kernelParams; };
+  boot = {
+    inherit (oci-common.boot) kernelParams;
+  };
 
   disko.devices = import ./disk-config.nix;
 
@@ -51,5 +55,7 @@ in
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  networking = { inherit (oci-common.networking) timeServers; };
+  networking = {
+    inherit (oci-common.networking) timeServers;
+  };
 }

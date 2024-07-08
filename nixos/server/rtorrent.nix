@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   inherit (config.device.media) directory;
@@ -26,10 +31,13 @@ in
         default = "500M";
       };
     };
-    flood.enable = lib.mkEnableOption "Flood UI" // { default = true; };
+    flood.enable = lib.mkEnableOption "Flood UI" // {
+      default = true;
+    };
   };
 
-  config = with config.users.users.${username};
+  config =
+    with config.users.users.${username};
     lib.mkIf cfg.enable {
       environment.systemPackages = with pkgs; [ rtorrent ];
 

@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   inherit (config.mainUser) username;
@@ -53,29 +58,34 @@ in
       wantedBy = [ "multi-user.target" ];
       after = [ "network-online.target" ];
       wants = [ "network-online.target" ];
-      path = with pkgs; [ curl iproute2 ];
-      script = lib.optionalString cfg.ipv6.enable ''
-        readonly ipv6addr="$(ip addr show dev '${cfg.ipv6.iface}' | \
-        sed -e's/^.*inet6 \([^ ]*\)\/.*$/\1/;t;d' | \
-        grep -v '^fd' | \
-        grep -v '^fe80' | \
-        head -1)"
+      path = with pkgs; [
+        curl
+        iproute2
+      ];
+      script =
+        lib.optionalString cfg.ipv6.enable ''
+          readonly ipv6addr="$(ip addr show dev '${cfg.ipv6.iface}' | \
+          sed -e's/^.*inet6 \([^ ]*\)\/.*$/\1/;t;d' | \
+          grep -v '^fd' | \
+          grep -v '^fe80' | \
+          head -1)"
 
-        echo "Got IPv6: $ipv6addr"
-      '' + ''
-        readonly curl_out="$(printf \
-        'url="https://www.duckdns.org/update?domains=%s&token=%s&ip=&ipv6=%s"' \
-        '${cfg.domain}' "$DUCKDNS_TOKEN" "''${ipv6addr:-}" \
-        | curl --silent --config -)"
+          echo "Got IPv6: $ipv6addr"
+        ''
+        + ''
+          readonly curl_out="$(printf \
+          'url="https://www.duckdns.org/update?domains=%s&token=%s&ip=&ipv6=%s"' \
+          '${cfg.domain}' "$DUCKDNS_TOKEN" "''${ipv6addr:-}" \
+          | curl --silent --config -)"
 
-        echo "DuckDNS response: $curl_out"
-        if [ "$curl_out" == "OK" ]; then
-          >&2 echo "Domain updated successfully: ${cfg.domain}"
-        else
-          >&2 echo "Error while updating domain: ${cfg.domain}"
-          exit 1
-        fi
-      '';
+          echo "DuckDNS response: $curl_out"
+          if [ "$curl_out" == "OK" ]; then
+            >&2 echo "Domain updated successfully: ${cfg.domain}"
+          else
+            >&2 echo "Error while updating domain: ${cfg.domain}"
+            exit 1
+          fi
+        '';
 
       serviceConfig = {
         CapabilityBoundingSet = "";
@@ -94,12 +104,18 @@ in
         ProtectKernelTunables = true;
         ProtectProc = "invisible";
         ProtectSystem = "strict";
-        RestrictAddressFamilies = [ "AF_UNIX" "AF_INET" "AF_INET6" ]
-          ++ lib.optionals cfg.ipv6.enable [ "AF_NETLINK" ];
+        RestrictAddressFamilies = [
+          "AF_UNIX"
+          "AF_INET"
+          "AF_INET6"
+        ] ++ lib.optionals cfg.ipv6.enable [ "AF_NETLINK" ];
         RestrictNamespaces = true;
         RestrictRealtime = true;
         SystemCallArchitectures = "native";
-        SystemCallFilter = [ "@system-service" "~@privileged" ];
+        SystemCallFilter = [
+          "@system-service"
+          "~@privileged"
+        ];
         Type = "oneshot";
       };
     };
@@ -133,7 +149,8 @@ in
       after = lib.mkIf (cfg.certs.enable && cfg.certs.useHttpServer) [ "duckdns-updater.service" ];
     };
 
-    networking.firewall.allowedTCPPorts =
-      lib.mkIf (cfg.certs.enable && cfg.certs.useHttpServer) [ httpPort ];
+    networking.firewall.allowedTCPPorts = lib.mkIf (cfg.certs.enable && cfg.certs.useHttpServer) [
+      httpPort
+    ];
   };
 }

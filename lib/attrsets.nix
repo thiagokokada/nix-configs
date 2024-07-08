@@ -1,7 +1,8 @@
 { lib, ... }:
 
 {
-  /* Recursively merge a list of attrsets into a single attrset.
+  /*
+    Recursively merge a list of attrsets into a single attrset.
 
     nix-repl> recursiveMergeAttrs [ { a = "foo"; } { b = "bar"; } ];
     { a = "foo"; b = "bar"; }

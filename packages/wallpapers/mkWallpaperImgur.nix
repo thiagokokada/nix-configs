@@ -1,12 +1,14 @@
 # Based on: https://github.com/Misterio77/nix-config/blob/a1b9f1706bd0f9e18b90191bfca4eddcd3f070a8/pkgs/wallpapers/wallpaper.nix
-{ lib
-, stdenvNoCC
-, fetchurl
+{
+  lib,
+  stdenvNoCC,
+  fetchurl,
 }:
-{ name
-, id
-, sha256
-, ext ? "jpg"
+{
+  name,
+  id,
+  sha256,
+  ext ? "jpg",
 }:
 
 stdenvNoCC.mkDerivation {

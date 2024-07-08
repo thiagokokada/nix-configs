@@ -1,4 +1,10 @@
-{ config, lib, pkgs, flake, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  flake,
+  ...
+}:
 
 let
   cfg = config.nixos.nix;
@@ -11,7 +17,9 @@ in
   ];
 
   options.nixos.nix = {
-    enable = lib.mkEnableOption "nix/nixpkgs config" // { default = true; };
+    enable = lib.mkEnableOption "nix/nixpkgs config" // {
+      default = true;
+    };
     tmpOnDisk = lib.mkEnableOption "set nix's TMPDIR to /var/tmp (disk instead tmpfs)" // {
       default = config.boot.tmp.useTmpfs;
     };
@@ -55,7 +63,10 @@ in
         lib.mkMerge [
           (import ../../shared/nix-conf.nix)
           {
-            trusted-users = [ "root" "@wheel" ];
+            trusted-users = [
+              "root"
+              "@wheel"
+            ];
             # For some reason when nix is running as daemon,
             # extra-{substituters,trusted-public-keys} doesn't work
             substituters = substituters.extra-substituters;

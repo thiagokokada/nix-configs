@@ -3,8 +3,9 @@
 {
   nixGLWrapper =
     pkgs:
-    { pkg
-    , nixGL ? pkgs.nixgl.nixGLMesa
+    {
+      pkg,
+      nixGL ? pkgs.nixgl.nixGLMesa,
     }:
     pkgs.symlinkJoin {
       inherit (pkg) meta;

@@ -1,68 +1,71 @@
-{ config
-, lib
-, pkgs
-, areaScreenShot
-, fullScreenShot
-, menu
-, browser ? (lib.getExe config.programs.firefox.package)
-, dunstctl ? (lib.getExe' pkgs.dunst "dunstctl")
-, fileManager ? "${terminal} ${lib.getExe config.programs.nnn.finalPackage} -a -P p"
-, light ? "light" # needs to be installed system-wide
-, pamixer ? (lib.getExe pkgs.pamixer)
-, playerctl ? (lib.getExe pkgs.playerctl)
-, terminal ? config.home-manager.desktop.defaultTerminal
-, statusCommand ? null
-, alt ? "Mod1"
-, modifier ? "Mod4"
-, bars ? with config.home-manager.desktop.theme.colors; [{
-    inherit fonts statusCommand;
+{
+  config,
+  lib,
+  pkgs,
+  areaScreenShot,
+  fullScreenShot,
+  menu,
+  browser ? (lib.getExe config.programs.firefox.package),
+  dunstctl ? (lib.getExe' pkgs.dunst "dunstctl"),
+  fileManager ? "${terminal} ${lib.getExe config.programs.nnn.finalPackage} -a -P p",
+  light ? "light", # needs to be installed system-wide
+  pamixer ? (lib.getExe pkgs.pamixer),
+  playerctl ? (lib.getExe pkgs.playerctl),
+  terminal ? config.home-manager.desktop.defaultTerminal,
+  statusCommand ? null,
+  alt ? "Mod1",
+  modifier ? "Mod4",
+  bars ? with config.home-manager.desktop.theme.colors; [
+    {
+      inherit fonts statusCommand;
 
-    position = "top";
-    colors = {
-      background = base00;
-      separator = base01;
-      statusline = base04;
-      activeWorkspace = {
-        border = base03;
-        background = base03;
-        text = base00;
+      position = "top";
+      colors = {
+        background = base00;
+        separator = base01;
+        statusline = base04;
+        activeWorkspace = {
+          border = base03;
+          background = base03;
+          text = base00;
+        };
+        bindingMode = {
+          border = base0A;
+          background = base0A;
+          text = base00;
+        };
+        focusedWorkspace = {
+          border = base0D;
+          background = base0D;
+          text = base00;
+        };
+        inactiveWorkspace = {
+          border = base01;
+          background = base01;
+          text = base05;
+        };
+        urgentWorkspace = {
+          border = base08;
+          background = base08;
+          text = base00;
+        };
       };
-      bindingMode = {
-        border = base0A;
-        background = base0A;
-        text = base00;
-      };
-      focusedWorkspace = {
-        border = base0D;
-        background = base0D;
-        text = base00;
-      };
-      inactiveWorkspace = {
-        border = base01;
-        background = base01;
-        text = base05;
-      };
-      urgentWorkspace = {
-        border = base08;
-        background = base08;
-        text = base00;
-      };
-    };
-  }]
-, fonts ? with config.home-manager.desktop.theme.fonts; {
+    }
+  ],
+  fonts ? with config.home-manager.desktop.theme.fonts; {
     names = lib.flatten [
       gui.name
       icons.name
     ];
     style = "Regular";
     size = 8.0;
-  }
-, extraBindings ? { }
-, extraWindowOptions ? { }
-, extraFocusOptions ? { }
-, extraModes ? { }
-, extraConfig ? ""
-, workspaces ? [
+  },
+  extraBindings ? { },
+  extraWindowOptions ? { },
+  extraFocusOptions ? { },
+  extraModes ? { },
+  extraConfig ? "",
+  workspaces ? [
     {
       ws = 1;
       name = "1:  ";
@@ -103,17 +106,24 @@
       ws = 0;
       name = "10:  ";
     }
-  ]
+  ],
 }:
 let
   # Modes
-  powerManagementMode =
-    " : Screen [l]ock, [e]xit, [s]uspend, [h]ibernate, [R]eboot, [S]hutdown";
+  powerManagementMode = " : Screen [l]ock, [e]xit, [s]uspend, [h]ibernate, [R]eboot, [S]hutdown";
   resizeMode = " : [h]  , [j]  , [k]  , [l] ";
 
   # Helpers
-  mapDirection = { prefixKey ? null, leftCmd, downCmd, upCmd, rightCmd }:
-    with lib.strings; {
+  mapDirection =
+    {
+      prefixKey ? null,
+      leftCmd,
+      downCmd,
+      upCmd,
+      rightCmd,
+    }:
+    with lib.strings;
+    {
       # Arrow keys
       "${optionalString (prefixKey != null) "${prefixKey}+"}Left" = leftCmd;
       "${optionalString (prefixKey != null) "${prefixKey}+"}Down" = downCmd;
@@ -126,7 +136,11 @@ let
       "${optionalString (prefixKey != null) "${prefixKey}+"}l" = rightCmd;
     };
 
-  mapDirectionDefault = { prefixKey ? null, prefixCmd }:
+  mapDirectionDefault =
+    {
+      prefixKey ? null,
+      prefixCmd,
+    }:
     (mapDirection {
       inherit prefixKey;
       leftCmd = "${prefixCmd} left";
@@ -135,22 +149,36 @@ let
       rightCmd = "${prefixCmd} right";
     });
 
-  mapWorkspacesStr = with builtins;
+  mapWorkspacesStr =
+    with builtins;
     with lib.strings;
-    { workspaces, prefixKey ? null, prefixCmd }:
-    (concatStringsSep "\n" (map
-      ({ ws, name }:
-        ''
-          bindsym ${optionalString (prefixKey != null) "${prefixKey}+"}${
-            toString ws
-          } ${prefixCmd} "${name}"'')
-      workspaces));
+    {
+      workspaces,
+      prefixKey ? null,
+      prefixCmd,
+    }:
+    (concatStringsSep "\n" (
+      map (
+        { ws, name }:
+        ''bindsym ${
+          optionalString (prefixKey != null) "${prefixKey}+"
+        }${toString ws} ${prefixCmd} "${name}"''
+      ) workspaces
+    ));
 in
 {
-  helpers = { inherit mapDirection mapDirectionDefault mapWorkspacesStr; };
+  helpers = {
+    inherit mapDirection mapDirectionDefault mapWorkspacesStr;
+  };
 
   config = {
-    inherit bars fonts modifier menu terminal;
+    inherit
+      bars
+      fonts
+      modifier
+      menu
+      terminal
+      ;
 
     colors = with config.home-manager.desktop.theme.colors; {
       background = base07;
@@ -191,70 +219,71 @@ in
       };
     };
 
-    keybindings = {
-      "${modifier}+Return" = "exec ${terminal}";
-      "${modifier}+Shift+q" = "kill";
-      "${alt}+F4" = "kill";
+    keybindings =
+      {
+        "${modifier}+Return" = "exec ${terminal}";
+        "${modifier}+Shift+q" = "kill";
+        "${alt}+F4" = "kill";
 
-      "${modifier}+n" = "exec ${browser}";
-      "${modifier}+m" = "exec ${fileManager}";
+        "${modifier}+n" = "exec ${browser}";
+        "${modifier}+m" = "exec ${fileManager}";
 
-      "${modifier}+d" = "exec ${menu}";
+        "${modifier}+d" = "exec ${menu}";
 
-      "${modifier}+f" = "fullscreen toggle";
-      "${modifier}+v" = "split v";
-      "${modifier}+b" = "split h";
+        "${modifier}+f" = "fullscreen toggle";
+        "${modifier}+v" = "split v";
+        "${modifier}+b" = "split h";
 
-      "${modifier}+s" = "layout stacking";
-      "${modifier}+w" = "layout tabbed";
-      "${modifier}+e" = "layout toggle split";
+        "${modifier}+s" = "layout stacking";
+        "${modifier}+w" = "layout tabbed";
+        "${modifier}+e" = "layout toggle split";
 
-      "${modifier}+semicolon" = "focus mode_toggle";
-      "${modifier}+Shift+semicolon" = "floating toggle";
+        "${modifier}+semicolon" = "focus mode_toggle";
+        "${modifier}+Shift+semicolon" = "floating toggle";
 
-      "${modifier}+a" = "focus parent";
+        "${modifier}+a" = "focus parent";
 
-      "${modifier}+Shift+minus" = "move scratchpad";
-      "${modifier}+minus" = "scratchpad show";
+        "${modifier}+Shift+minus" = "move scratchpad";
+        "${modifier}+minus" = "scratchpad show";
 
-      "${modifier}+r" = ''mode "${resizeMode}"'';
-      "${modifier}+Escape" = ''mode "${powerManagementMode}"'';
+        "${modifier}+r" = ''mode "${resizeMode}"'';
+        "${modifier}+Escape" = ''mode "${powerManagementMode}"'';
 
-      "${modifier}+Shift+c" = "reload";
-      "${modifier}+Shift+r" = "restart";
+        "${modifier}+Shift+c" = "reload";
+        "${modifier}+Shift+r" = "restart";
 
-      "XF86AudioRaiseVolume" =
-        "exec --no-startup-id ${pamixer} --set-limit 150 --allow-boost -i 5";
-      "XF86AudioLowerVolume" =
-        "exec --no-startup-id ${pamixer} --set-limit 150 --allow-boost -d 5";
-      "XF86AudioMute" =
-        "exec --no-startup-id ${pamixer} --toggle-mute";
-      "XF86AudioMicMute" =
-        "exec --no-startup-id ${pamixer} --toggle-mute --default-source";
+        "XF86AudioRaiseVolume" = "exec --no-startup-id ${pamixer} --set-limit 150 --allow-boost -i 5";
+        "XF86AudioLowerVolume" = "exec --no-startup-id ${pamixer} --set-limit 150 --allow-boost -d 5";
+        "XF86AudioMute" = "exec --no-startup-id ${pamixer} --toggle-mute";
+        "XF86AudioMicMute" = "exec --no-startup-id ${pamixer} --toggle-mute --default-source";
 
-      "XF86MonBrightnessUp" = "exec --no-startup-id ${light} -A 5%";
-      "XF86MonBrightnessDown" = "exec --no-startup-id ${light} -U 5%";
+        "XF86MonBrightnessUp" = "exec --no-startup-id ${light} -A 5%";
+        "XF86MonBrightnessDown" = "exec --no-startup-id ${light} -U 5%";
 
-      "XF86AudioPlay" = "exec --no-startup-id ${playerctl} play-pause";
-      "XF86AudioStop" = "exec --no-startup-id ${playerctl} stop";
-      "XF86AudioNext" = "exec --no-startup-id ${playerctl} next";
-      "XF86AudioPrev" = "exec --no-startup-id ${playerctl} previous";
+        "XF86AudioPlay" = "exec --no-startup-id ${playerctl} play-pause";
+        "XF86AudioStop" = "exec --no-startup-id ${playerctl} stop";
+        "XF86AudioNext" = "exec --no-startup-id ${playerctl} next";
+        "XF86AudioPrev" = "exec --no-startup-id ${playerctl} previous";
 
-      "Print" = "exec --no-startup-id ${fullScreenShot}";
-      "Shift+Print" = "exec --no-startup-id ${areaScreenShot}";
+        "Print" = "exec --no-startup-id ${fullScreenShot}";
+        "Shift+Print" = "exec --no-startup-id ${areaScreenShot}";
 
-      "Ctrl+escape" = "exec ${dunstctl} close";
-      "Ctrl+Shift+escape" = "exec ${dunstctl} close-all";
-    } // (mapDirectionDefault {
-      prefixKey = modifier;
-      prefixCmd = "focus";
-    }) // (mapDirectionDefault {
-      prefixKey = "${modifier}+Shift";
-      prefixCmd = "move";
-    }) // (mapDirectionDefault {
-      prefixKey = "Ctrl+${alt}";
-      prefixCmd = "move workspace to output";
-    }) // extraBindings;
+        "Ctrl+escape" = "exec ${dunstctl} close";
+        "Ctrl+Shift+escape" = "exec ${dunstctl} close-all";
+      }
+      // (mapDirectionDefault {
+        prefixKey = modifier;
+        prefixCmd = "focus";
+      })
+      // (mapDirectionDefault {
+        prefixKey = "${modifier}+Shift";
+        prefixCmd = "move";
+      })
+      // (mapDirectionDefault {
+        prefixKey = "Ctrl+${alt}";
+        prefixCmd = "move workspace to output";
+      })
+      // extraBindings;
 
     modes =
       let
@@ -264,12 +293,14 @@ in
         };
       in
       {
-        ${resizeMode} = (mapDirection {
-          leftCmd = "resize shrink width 10px or 10ppt";
-          downCmd = "resize grow height 10px or 10ppt";
-          upCmd = "resize shrink height 10px or 10ppt";
-          rightCmd = "resize grow width 10px or 10ppt";
-        }) // exitMode;
+        ${resizeMode} =
+          (mapDirection {
+            leftCmd = "resize shrink width 10px or 10ppt";
+            downCmd = "resize grow height 10px or 10ppt";
+            upCmd = "resize shrink height 10px or 10ppt";
+            rightCmd = "resize grow width 10px or 10ppt";
+          })
+          // exitMode;
         ${powerManagementMode} = {
           l = "mode default, exec loginctl lock-session";
           e = "mode default, exec loginctl terminate-session $XDG_SESSION_ID";
@@ -278,7 +309,8 @@ in
           "Shift+r" = "mode default, exec systemctl reboot";
           "Shift+s" = "mode default, exec systemctl poweroff";
         } // exitMode;
-      } // extraModes;
+      }
+      // extraModes;
 
     workspaceAutoBackAndForth = true;
     workspaceLayout = "tabbed";
@@ -289,7 +321,9 @@ in
       titlebar = false;
     } // extraWindowOptions;
 
-    focus = { followMouse = false; } // extraFocusOptions;
+    focus = {
+      followMouse = false;
+    } // extraFocusOptions;
   };
 
   # Until this issue is fixed we need to map workspaces directly to config file

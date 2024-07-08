@@ -2,7 +2,12 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, flake, ... }:
+{
+  config,
+  pkgs,
+  flake,
+  ...
+}:
 
 let
   inherit (flake) inputs;
@@ -16,7 +21,11 @@ in
 
   device = {
     type = "laptop";
-    net.ifaces = [ "enp2s0f0" "enp5s0" "wlan0" ];
+    net.ifaces = [
+      "enp2s0f0"
+      "enp5s0"
+      "wlan0"
+    ];
     # This system is using btrfs subvolumes, so there is only root
     mount.points = [ "/" ];
   };
@@ -36,7 +45,10 @@ in
 
   fileSystems."/".options = [ "compress=zstd" ];
   fileSystems."/home".options = [ "compress=zstd" ];
-  fileSystems."/nix".options = [ "compress=zstd" "noatime" ];
+  fileSystems."/nix".options = [
+    "compress=zstd"
+    "noatime"
+  ];
 
   home-manager.users.${config.mainUser.username} = {
     home-manager.desktop.theme = {

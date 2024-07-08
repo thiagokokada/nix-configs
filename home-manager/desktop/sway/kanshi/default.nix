@@ -1,4 +1,9 @@
-{ lib, config, osConfig, ... }:
+{
+  lib,
+  config,
+  osConfig,
+  ...
+}:
 
 let
   hostName = osConfig.networking.hostName or "generic";
@@ -11,7 +16,5 @@ in
     default = config.home-manager.desktop.sway.enable;
   };
 
-  config = lib.mkIf config.home-manager.desktop.sway.kanshi.enable {
-    services.kanshi.enable = true;
-  };
+  config = lib.mkIf config.home-manager.desktop.sway.kanshi.enable { services.kanshi.enable = true; };
 }

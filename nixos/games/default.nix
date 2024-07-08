@@ -1,10 +1,15 @@
-{ pkgs, lib, config, ... }:
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}:
 
 let
   cfg = config.nixos.games;
-  nvidia-offload = lib.findFirst (p: lib.isDerivation p && p.name == "nvidia-offload")
-    null
-    config.environment.systemPackages;
+  nvidia-offload = lib.findFirst (
+    p: lib.isDerivation p && p.name == "nvidia-offload"
+  ) null config.environment.systemPackages;
 in
 {
   imports = [
@@ -18,7 +23,13 @@ in
   options.nixos.games = {
     enable = lib.mkEnableOption "games config";
     gpu = lib.mkOption {
-      type = lib.types.nullOr (lib.types.enum [ "amd" "intel" "nvidia" ]);
+      type = lib.types.nullOr (
+        lib.types.enum [
+          "amd"
+          "intel"
+          "nvidia"
+        ]
+      );
       default = null;
       description = "GPU maker.";
     };
@@ -29,13 +40,12 @@ in
     boot.kernelParams = lib.mkIf (cfg.gpu == "intel") [ "dev.i915.perf_stream_paranoid=0" ];
 
     environment = {
-      systemPackages = with pkgs; [
-        lutris
-      ];
+      systemPackages = with pkgs; [ lutris ];
 
       # Use nvidia-offload script in gamemode
-      variables.GAMEMODERUNEXEC = lib.mkIf (cfg.gpu == "nvidia" && nvidia-offload != null)
-        "${nvidia-offload}/bin/nvidia-offload";
+      variables.GAMEMODERUNEXEC = lib.mkIf (
+        cfg.gpu == "nvidia" && nvidia-offload != null
+      ) "${nvidia-offload}/bin/nvidia-offload";
     };
 
     programs.gamemode = {

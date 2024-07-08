@@ -13,7 +13,9 @@ outputs.lib.recursiveMergeAttrs [
     wallpapers = prev.callPackage ../packages/wallpapers { };
 
     # custom packages
-    arandr = prev.arandr.overrideAttrs (_: { src = inputs.arandr; });
+    arandr = prev.arandr.overrideAttrs (_: {
+      src = inputs.arandr;
+    });
 
     anime4k = prev.callPackage ../packages/anime4k { };
 
@@ -26,20 +28,23 @@ outputs.lib.recursiveMergeAttrs [
     neovim-standalone =
       let
         hostname = "neovim";
-        hm = (outputs.lib.mkHomeConfig {
-          inherit hostname;
-          inherit (prev) system;
-          extraModules = [{
-            home-manager = {
-              dev.nix.enable = true;
-              editor.neovim = {
-                icons.enable = false;
-                lsp.enable = true;
-                treeSitter.enable = true;
-              };
-            };
-          }];
-        }).homeConfigurations.${hostname};
+        hm =
+          (outputs.lib.mkHomeConfig {
+            inherit hostname;
+            inherit (prev) system;
+            extraModules = [
+              {
+                home-manager = {
+                  dev.nix.enable = true;
+                  editor.neovim = {
+                    icons.enable = false;
+                    lsp.enable = true;
+                    treeSitter.enable = true;
+                  };
+                };
+              }
+            ];
+          }).homeConfigurations.${hostname};
       in
       hm.config.programs.neovim.finalPackage.override {
         luaRcContent = hm.config.xdg.configFile."nvim/init.lua".text;
@@ -61,15 +66,22 @@ outputs.lib.recursiveMergeAttrs [
           }).defaultNix.nixosConfigurations.\$(hostname)
         '';
       in
-      prev.runCommand "nixos-option" { buildInputs = with prev; [ makeWrapper installShellFiles ]; } ''
-        makeWrapper ${prev.nixos-option}/bin/nixos-option $out/bin/nixos-option \
-        --add-flags --config_expr \
-        --add-flags "\"${prefix}.config\"" \
-        --add-flags --options_expr \
-        --add-flags "\"${prefix}.options\""
+      prev.runCommand "nixos-option"
+        {
+          buildInputs = with prev; [
+            makeWrapper
+            installShellFiles
+          ];
+        }
+        ''
+          makeWrapper ${prev.nixos-option}/bin/nixos-option $out/bin/nixos-option \
+          --add-flags --config_expr \
+          --add-flags "\"${prefix}.config\"" \
+          --add-flags --options_expr \
+          --add-flags "\"${prefix}.options\""
 
-        installManPage ${prev.nixos-option}/share/man/**/*
-      '';
+          installManPage ${prev.nixos-option}/share/man/**/*
+        '';
 
     nom-rebuild = prev.callPackage ../packages/nom-rebuild { };
 

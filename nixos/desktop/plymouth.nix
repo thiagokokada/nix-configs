@@ -5,7 +5,5 @@
     default = config.nixos.desktop.enable;
   };
 
-  config = lib.mkIf config.nixos.desktop.plymouth.enable {
-    boot.plymouth.enable = true;
-  };
+  config = lib.mkIf config.nixos.desktop.plymouth.enable { boot.plymouth.enable = true; };
 }

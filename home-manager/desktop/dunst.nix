@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 {
   options.home-manager.desktop.dunst.enable = lib.mkEnableOption "dunst config" // {
@@ -13,8 +18,11 @@
 
     services.dunst = {
       enable = true;
-      iconTheme = with config.gtk.iconTheme; { inherit name package; };
-      settings = with config.home-manager.desktop.theme.colors;
+      iconTheme = with config.gtk.iconTheme; {
+        inherit name package;
+      };
+      settings =
+        with config.home-manager.desktop.theme.colors;
         let
           theme = {
             background = base00;
@@ -51,9 +59,15 @@
             min_icon_size = 48;
             max_icon_size = 48;
           };
-          urgency_low = { timeout = 5; } // theme;
-          urgency_normal = { timeout = 10; } // theme;
-          urgency_high = { timeout = 20; } // theme;
+          urgency_low = {
+            timeout = 5;
+          } // theme;
+          urgency_normal = {
+            timeout = 10;
+          } // theme;
+          urgency_high = {
+            timeout = 20;
+          } // theme;
         };
     };
   };

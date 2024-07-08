@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 {
   options.home-manager.cli.ssh.enable = lib.mkEnableOption "SSH config" // {

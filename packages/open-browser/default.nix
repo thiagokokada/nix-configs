@@ -1,6 +1,4 @@
-{ python3
-, makeDesktopItem
-}:
+{ python3, makeDesktopItem }:
 
 python3.pkgs.buildPythonApplication rec {
   pname = "open-browser";

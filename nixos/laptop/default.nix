@@ -12,8 +12,9 @@
 
   config = lib.mkIf config.nixos.laptop.enable {
     # Configure hibernation
-    boot.resumeDevice = lib.mkIf (config.swapDevices != [ ])
-      (lib.mkDefault (builtins.head config.swapDevices).device);
+    boot.resumeDevice = lib.mkIf (config.swapDevices != [ ]) (
+      lib.mkDefault (builtins.head config.swapDevices).device
+    );
 
     # Enable laptop specific services
     services = {

@@ -1,4 +1,9 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
 {
   options.home-manager.desktop.theme.gtk.enable = lib.mkEnableOption "GTK theme config" // {

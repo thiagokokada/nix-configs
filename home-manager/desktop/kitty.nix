@@ -1,4 +1,9 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
 {
   options.home-manager.desktop.kitty.enable = lib.mkEnableOption "Kitty config" // {
@@ -8,7 +13,9 @@
   config = lib.mkIf config.home-manager.desktop.kitty.enable {
     programs.kitty = {
       enable = true;
-      keybindings = { "ctrl+shift+0" = "change_font_size all 0"; };
+      keybindings = {
+        "ctrl+shift+0" = "change_font_size all 0";
+      };
       font = {
         inherit (config.home-manager.desktop.theme.fonts.symbols) package name;
       };
@@ -65,8 +72,7 @@
         # Misc
         editor = config.home-manager.desktop.defaultEditor;
         strip_trailing_spaces = "smart";
-        clipboard_control =
-          "write-clipboard write-primary read-clipboard read-primary";
+        clipboard_control = "write-clipboard write-primary read-clipboard read-primary";
         background_opacity = "0.9";
 
         # Fix for Wayland slow scrolling
@@ -78,13 +84,15 @@
       };
     };
 
-    programs.zsh.initExtra = lib.mkIf config.programs.zsh.enable /* bash */ ''
-      # Do not enable those alias in non-kitty terminal
-      if [[ -n "$KITTY_PID" ]]; then
-        alias imgcat="kitty +kitten icat"
-        alias ssh="kitty +kitten ssh $@"
-        alias ssh-compat="TERM=xterm-256color \ssh"
-      fi
-    '';
+    programs.zsh.initExtra =
+      lib.mkIf config.programs.zsh.enable # bash
+        ''
+          # Do not enable those alias in non-kitty terminal
+          if [[ -n "$KITTY_PID" ]]; then
+            alias imgcat="kitty +kitten icat"
+            alias ssh="kitty +kitten ssh $@"
+            alias ssh-compat="TERM=xterm-256color \ssh"
+          fi
+        '';
   };
 }

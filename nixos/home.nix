@@ -1,4 +1,11 @@
-{ config, lib, libEx, flake, pkgs, ... }:
+{
+  config,
+  lib,
+  libEx,
+  flake,
+  pkgs,
+  ...
+}:
 
 let
   cfg = config.nixos.home;
@@ -7,7 +14,9 @@ in
   imports = [ flake.inputs.home-manager.nixosModules.home-manager ];
 
   options.nixos.home = {
-    enable = lib.mkEnableOption "home config" // { default = true; };
+    enable = lib.mkEnableOption "home config" // {
+      default = true;
+    };
     imports = lib.mkOption {
       description = "Modules to import";
       type = lib.types.listOf lib.types.path;
@@ -35,7 +44,11 @@ in
     users.users.${config.mainUser.username} = {
       isNormalUser = true;
       uid = 1000;
-      extraGroups = [ "wheel" "networkmanager" "video" ];
+      extraGroups = [
+        "wheel"
+        "networkmanager"
+        "video"
+      ];
       shell = pkgs.zsh;
       password = "changeme";
     };

@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 let
   cfg = config.nixos.server.watchdogd;
   ping = pkgs.writeShellScriptBin "ping-watchdog" ''
@@ -36,8 +41,6 @@ in
       };
     };
 
-    systemd.tmpfiles.rules = [
-      "d ${cfg.logDirectory} 0700"
-    ];
+    systemd.tmpfiles.rules = [ "d ${cfg.logDirectory} 0700" ];
   };
 }

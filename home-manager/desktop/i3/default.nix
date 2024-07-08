@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 let
   # Aliases
   alt = "Mod1";
@@ -8,15 +13,22 @@ let
     let
       rofi = lib.getExe config.programs.rofi.package;
       mons = lib.getExe pkgs.mons;
-      screenShotName = with config.xdg.userDirs;
+      screenShotName =
+        with config.xdg.userDirs;
         "${pictures}/$(${lib.getExe' pkgs.coreutils "date"} +%Y-%m-%d_%H-%M-%S)-screenshot.png";
-      displayLayoutMode =
-        " : [h]  , [j]  , [k]  , [l]  , [a]uto, [d]uplicate, [m]irror, [s]econd-only, primary-[o]nly";
+      displayLayoutMode = " : [h]  , [j]  , [k]  , [l]  , [a]uto, [d]uplicate, [m]irror, [s]econd-only, primary-[o]nly";
     in
     import ./common.nix rec {
-      inherit config lib pkgs modifier alt;
+      inherit
+        config
+        lib
+        pkgs
+        modifier
+        alt
+        ;
 
-      statusCommand = with config;
+      statusCommand =
+        with config;
         "${lib.getExe programs.i3status-rust.package} ${xdg.configHome}/i3status-rust/config-i3.toml";
       menu = "${rofi} -show drun";
 
@@ -32,31 +44,34 @@ let
 
       extraBindings = {
         "${modifier}+p" = ''mode "${displayLayoutMode}"'';
-        "${modifier}+c" =
-          "exec ${rofi} -show calc -modi calc -no-show-match -no-sort";
+        "${modifier}+c" = "exec ${rofi} -show calc -modi calc -no-show-match -no-sort";
         "${modifier}+Tab" = "exec ${rofi} -show window -modi window";
       };
 
-      extraModes = with commonOptions.helpers; let
-        runMons = action:
-          "mode default, exec ${mons} ${action} && systemctl --user restart wallpaper.service";
-      in
-      {
-        ${displayLayoutMode} = (mapDirection {
-          leftCmd = runMons "-e left";
-          downCmd = runMons "-e bottom";
-          upCmd = runMons "-e top";
-          rightCmd = runMons "-e right";
-        }) // {
-          a = "mode default, exec ${lib.getExe pkgs.change-res}";
-          d = runMons "-d";
-          m = runMons "-m";
-          s = runMons "-s";
-          o = runMons "-o";
-          "Escape" = "mode default";
-          "Return" = "mode default";
+      extraModes =
+        with commonOptions.helpers;
+        let
+          runMons =
+            action: "mode default, exec ${mons} ${action} && systemctl --user restart wallpaper.service";
+        in
+        {
+          ${displayLayoutMode} =
+            (mapDirection {
+              leftCmd = runMons "-e left";
+              downCmd = runMons "-e bottom";
+              upCmd = runMons "-e top";
+              rightCmd = runMons "-e right";
+            })
+            // {
+              a = "mode default, exec ${lib.getExe pkgs.change-res}";
+              d = runMons "-d";
+              m = runMons "-m";
+              s = runMons "-s";
+              o = runMons "-o";
+              "Escape" = "mode default";
+              "Return" = "mode default";
+            };
         };
-      };
 
       extraConfig = ''
         # app specific fixes

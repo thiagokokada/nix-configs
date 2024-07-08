@@ -1,4 +1,9 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
 {
   options.home-manager.desktop.xterm.enable = lib.mkEnableOption "Xterm config" // {
@@ -6,7 +11,10 @@
   };
 
   config = lib.mkIf config.home-manager.desktop.xterm.enable {
-    home.packages = with pkgs; [ hack-font xterm ];
+    home.packages = with pkgs; [
+      hack-font
+      xterm
+    ];
 
     xresources.extraConfig = with config.home-manager.desktop.theme.colors; ''
       #define base00 ${base00}

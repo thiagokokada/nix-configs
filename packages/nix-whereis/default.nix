@@ -1,6 +1,7 @@
-{ writeShellApplication
-, coreutils
-, which
+{
+  writeShellApplication,
+  coreutils,
+  which,
 }:
 
 writeShellApplication {
@@ -21,5 +22,8 @@ writeShellApplication {
     readlink -f "$(which "$program_name")"
   '';
 
-  runtimeInputs = [ coreutils which ];
+  runtimeInputs = [
+    coreutils
+    which
+  ];
 }

@@ -1,4 +1,9 @@
-{ lib, config, pkgs, ... }:
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}:
 
 let
   inherit (config.mainUser) username;
@@ -32,17 +37,19 @@ in
         # https://tailscale.com/kb/1320/performance-best-practices#linux-optimizations-for-subnet-routers-and-exit-nodes
         rules."enable-transport-layer-offload" = {
           onState = [ "routable" ];
-          script = /* bash */ ''
-            #!${pkgs.runtimeShell}
-            ${lib.concatStringsSep "\n"
-              (builtins.map
-                (iface: /* bash */ ''
-                  if [[ "$IFACE" == "${iface}" ]]; then
-                    ${lib.getExe pkgs.ethtool} -K "${iface}" rx-udp-gro-forwarding on rx-gro-list off
-                  fi
-                '')
-                config.device.net.ifaces)}
-          '';
+          script = # bash
+            ''
+              #!${pkgs.runtimeShell}
+              ${lib.concatStringsSep "\n" (
+                builtins.map (
+                  iface: # bash
+                  ''
+                    if [[ "$IFACE" == "${iface}" ]]; then
+                      ${lib.getExe pkgs.ethtool} -K "${iface}" rx-udp-gro-forwarding on rx-gro-list off
+                    fi
+                  '') config.device.net.ifaces
+              )}
+            '';
         };
       };
       tailscale = {

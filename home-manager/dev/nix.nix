@@ -1,4 +1,9 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
 {
   options.home-manager.dev.nix.enable = lib.mkEnableOption "Nix config" // {
@@ -9,7 +14,7 @@
     home.packages = with pkgs; [
       nil
       nix-update
-      nixpkgs-fmt
+      nixfmt-rfc-style
       nurl
       statix
     ];

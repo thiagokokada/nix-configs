@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 {
   options.home-manager.desktop.i3.rofi.enable = lib.mkEnableOption "rofi config" // {
@@ -9,12 +14,21 @@
     programs.rofi = {
       enable = true;
       terminal = config.home-manager.desktop.defaultTerminal;
-      package = with pkgs; rofi.override { plugins = [ rofi-calc rofi-emoji ]; };
+      package =
+        with pkgs;
+        rofi.override {
+          plugins = [
+            rofi-calc
+            rofi-emoji
+          ];
+        };
       font = with config.home-manager.desktop.theme.fonts; "${gui.package} 14";
       theme =
-        let l = config.lib.formats.rasi.mkLiteral;
+        let
+          l = config.lib.formats.rasi.mkLiteral;
         in
-        with config.home-manager.desktop.theme.colors; {
+        with config.home-manager.desktop.theme.colors;
+        {
           "*" = {
             background-color = l base00;
             border-color = l base01;
@@ -25,7 +39,10 @@
 
           inputbar = {
             border = l "0 0 1px 0";
-            children = map l [ "prompt" "entry" ];
+            children = map l [
+              "prompt"
+              "entry"
+            ];
           };
 
           prompt = {
@@ -40,7 +57,9 @@
             padding = l "8px 16px";
           };
 
-          entry = { padding = l "16px"; };
+          entry = {
+            padding = l "16px";
+          };
 
           listview = {
             cycle = true;

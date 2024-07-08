@@ -1,8 +1,9 @@
-{ stdenv
-, coreutils
-, writeShellApplication
-, command
-, name
+{
+  stdenv,
+  coreutils,
+  writeShellApplication,
+  command,
+  name,
 }:
 
 writeShellApplication {
@@ -14,29 +15,32 @@ writeShellApplication {
     # background application.
     # This function should make it by expanding the paths, but it
     # is using a heuristic so it may be buggy.
-    if stdenv.isDarwin then ''
-      declare -a parsed_args
+    if stdenv.isDarwin then
+      ''
+        declare -a parsed_args
 
-      while [[ "$#" -gt 0 ]]; do
-        arg="$1"
-        if [[ -d "$arg" ]] || [[ -f "$arg" ]]; then
-          parsed_args+=("$(realpath "$arg")")
-        else
-          parsed_args+=("$arg")
-        fi
-        shift
-      done
+        while [[ "$#" -gt 0 ]]; do
+          arg="$1"
+          if [[ -d "$arg" ]] || [[ -f "$arg" ]]; then
+            parsed_args+=("$(realpath "$arg")")
+          else
+            parsed_args+=("$arg")
+          fi
+          shift
+        done
 
-      exec 0>&-
-      exec 1>&-
-      exec 2>&-
-      ${command} "''${parsed_args[@]}" &
-      disown $!
-    '' else ''
-      exec 0>&-
-      exec 1>&-
-      exec 2>&-
-      ${command} "$@" &
-      disown $!
-    '';
+        exec 0>&-
+        exec 1>&-
+        exec 2>&-
+        ${command} "''${parsed_args[@]}" &
+        disown $!
+      ''
+    else
+      ''
+        exec 0>&-
+        exec 1>&-
+        exec 2>&-
+        ${command} "$@" &
+        disown $!
+      '';
 }
