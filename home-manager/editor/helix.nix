@@ -1,4 +1,4 @@
-{ config, lib, ... }:
+{ config, lib, pkgs, ... }:
 
 {
   options.home-manager.editor.helix.enable = lib.mkEnableOption "Helix editor config" // {
@@ -8,6 +8,7 @@
   config = lib.mkIf config.home-manager.editor.helix.enable {
     programs.helix = {
       enable = true;
+      package = pkgs.evil-helix;
 
       settings = {
         theme = "tokyonight";
