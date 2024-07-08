@@ -167,7 +167,7 @@
       })
       (mkHomeConfig {
         hostname = "home-macos";
-        system = "x86_64-darwin";
+        system = "aarch64-darwin";
         homePath = "/Users";
       })
       # Home-Manager specific configs

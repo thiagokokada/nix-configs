@@ -7,7 +7,7 @@
     install-nix-action = "cachix/install-nix-action@v26";
   };
   ubuntu.runs-on = "ubuntu-latest";
-  macos.runs-on = "macos-13";
+  macos.runs-on = "macos-latest";
   home-manager = {
     linux.hostnames = [
       "home-linux"
