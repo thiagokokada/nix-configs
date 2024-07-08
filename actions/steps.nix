@@ -43,7 +43,8 @@ with constants;
   };
   validateFlakesStep = {
     name = "Validate Flakes";
-    run = "nix flake check --all-systems ${toString nixFlags}";
+    # When 'trace' is found, this generally means some kind of deprecation
+    run = "nix flake check --all-systems ${toString nixFlags} | grep -q --invert-match 'trace'";
   };
   buildHomeManagerConfigurations =
     {
