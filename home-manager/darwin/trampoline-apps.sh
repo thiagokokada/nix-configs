@@ -45,7 +45,7 @@ function copy_paths() {
   temp_dir=$(mktemp -d)
   trap 'rm -rf "$temp_dir"' EXIT
 
-  pushd $temp_dir >/dev/null
+  pushd "$temp_dir" >/dev/null
 
   cp "$from" "orig"
   chmod u+w "orig"

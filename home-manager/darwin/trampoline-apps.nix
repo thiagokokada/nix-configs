@@ -5,17 +5,20 @@
   ...
 }:
 
+let
+  cfg = config.home-manager.darwin.trampoline;
+in
 {
   # https://github.com/rycee/home-manager/issues/1341
   options.home-manager.darwin.trampoline.enable = lib.mkEnableOption "trampoline macOS apps" // {
     default = config.home-manager.darwin.enable;
   };
 
-  config = lib.mkIf config.home-manager.darwin.enable {
+  config = lib.mkIf cfg.enable {
     # Install MacOS applications to the user Applications folder. Also update Docked applications
     home.extraActivationPath = with pkgs; [
       rsync
-      dockutil
+      # dockutil # FIXME: swift is currently broken
       gawk
     ];
 
