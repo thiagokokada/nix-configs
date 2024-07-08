@@ -51,8 +51,8 @@
       "8.8.4.4"
     ];
     routes = [
-      { Gateway = "148.135.35.65"; }
-      { Gateway = "2607:f130:0:f3:0:0:0:1"; }
+      { routeConfig.Gateway = "148.135.35.65"; }
+      { routeConfig.Gateway = "2607:f130:0:f3:0:0:0:1"; }
     ];
     linkConfig.RequiredForOnline = "routable";
   };
