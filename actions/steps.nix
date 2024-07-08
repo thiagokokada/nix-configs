@@ -43,7 +43,7 @@ with constants;
   };
   validateFlakesStep = {
     name = "Validate Flakes";
-    run = "nix flake check ${toString nixFlags}";
+    run = "nix flake check --all-systems ${toString nixFlags}";
   };
   buildHomeManagerConfigurations =
     {
