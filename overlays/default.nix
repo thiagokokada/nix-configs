@@ -21,6 +21,20 @@ outputs.lib.recursiveMergeAttrs [
 
     change-res = prev.callPackage ../packages/change-res { };
 
+    # TODO: remove once https://github.com/NixOS/nixpkgs/pull/325645 is merged
+    gitFull = prev.gitFull.overrideAttrs (oldAttrs: {
+      patches =
+        with prev;
+        (oldAttrs.patches or [ ])
+        ++ (lib.optionals stdenv.isDarwin [
+          (fetchpatch {
+            name = "gitk_check_main_window_visibility_before_waiting_for_it_to_show.patch";
+            url = "https://github.com/git/git/commit/1db62e44b7ec93b6654271ef34065b31496cd02e.patch";
+            hash = "sha256-ntvnrYFFsJ1Ebzc6vM9/AMFLHMS1THts73PIOG5DkQo=";
+          })
+        ]);
+    });
+
     inherit (inputs.home-manager.packages.${prev.system}) home-manager;
 
     open-browser = prev.callPackage ../packages/open-browser { };

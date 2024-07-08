@@ -17,7 +17,7 @@ in
       default = true;
     };
     gui.enable = lib.mkEnableOption "Git GUIconfig " // {
-      default = config.home-manager.desktop.enable;
+      default = config.home-manager.desktop.enable || config.home-manager.darwin.enable;
     };
   };
 
