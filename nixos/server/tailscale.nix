@@ -33,7 +33,7 @@ in
 
     services = {
       networkd-dispatcher = lib.mkIf (cfg.net.ifaces != [ ]) {
-        enable = true;
+        enable = config.networking.useNetworkd;
         # https://tailscale.com/kb/1320/performance-best-practices#linux-optimizations-for-subnet-routers-and-exit-nodes
         rules."enable-transport-layer-offload" = {
           onState = [ "routable" ];
