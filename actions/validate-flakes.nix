@@ -16,8 +16,6 @@ with constants;
         checkoutStep
         (installUbuntuPackages [
           "binfmt-support"
-          "qemu-efi"
-          "qemu-system-aarch64"
           "qemu-user-static"
         ])
         (installNixActionStep { extraNixConfig = [ "extra-platforms = aarch64-linux" ]; })
