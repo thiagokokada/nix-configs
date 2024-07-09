@@ -67,6 +67,8 @@ in
               "root"
               "@wheel"
             ];
+            auto-optimise-store = true;
+            max-jobs = "auto";
             # For some reason when nix is running as daemon,
             # extra-{substituters,trusted-public-keys} doesn't work
             substituters = substituters.extra-substituters;
