@@ -23,6 +23,16 @@
   config = lib.mkIf config.nixos.desktop.enable {
     programs.gnome-disks.enable = true;
 
+    # Increase file handler limit
+    security.pam.loginLimits = [
+      {
+        domain = "*";
+        type = "-";
+        item = "nofile";
+        value = "524288";
+      }
+    ];
+
     services = {
       dbus.implementation = "broker";
       gnome.gnome-keyring.enable = true;
