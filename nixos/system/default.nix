@@ -82,6 +82,16 @@ in
     # Enable nftables-based firewall
     networking.nftables.enable = lib.mkDefault true;
 
+    # Increase file handler limit
+    security.pam.loginLimits = [
+      {
+        domain = "*";
+        type = "-";
+        item = "nofile";
+        value = "524288";
+      }
+    ];
+
     services = {
       cron.enable = true;
 
