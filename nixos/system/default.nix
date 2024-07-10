@@ -58,11 +58,14 @@ in
       kernel.sysctl = {
         # Enable Magic keys
         "kernel.sysrq" = 1;
-        # Reduce swap preference
-        "vm.swappiness" = 10;
         # https://fedoraproject.org/wiki/Changes/IncreaseVmMaxMapCount
         # https://pagure.io/fesco/issue/2993#comment-859763
         "vm.max_map_count" = 1048576;
+        # https://wiki.archlinux.org/title/Zram#Optimizing_swap_on_zram
+        "vm.swappiness" = lib.mkIf (cfg.pageCompression != "none") 180;
+        "vm.watermark_boost_factor" = lib.mkIf (cfg.pageCompression != "none") 0;
+        "vm.watermark_scale_factor" = lib.mkIf (cfg.pageCompression != "none") 125;
+        "vm.page-cluster" = lib.mkIf (cfg.pageCompression != "none") 0;
       };
 
       # Enable NTFS support
