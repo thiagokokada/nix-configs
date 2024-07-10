@@ -36,8 +36,9 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    # Fix: MESA-INTEL: warning: Performance support disabled, consider sysctl dev.i915.perf_stream_paranoid=0
-    boot.kernelParams = lib.mkIf (cfg.gpu == "intel") [ "dev.i915.perf_stream_paranoid=0" ];
+    # https://fedoraproject.org/wiki/Changes/IncreaseVmMaxMapCount
+    # https://pagure.io/fesco/issue/2993#comment-859763
+    kernel.sysctl."vm.max_map_count" = 1048576;
 
     environment = {
       systemPackages = with pkgs; [ lutris ];
