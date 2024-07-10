@@ -18,11 +18,42 @@ in
     motd.enable = lib.mkEnableOption "show message of the day" // {
       default = true;
     };
+    pageCompression = {
+      enable = lib.mkOption {
+        description = "Page compression strategy.";
+        type = lib.types.enum [
+          "none"
+          "zram"
+          "zswap"
+        ];
+        default = "zram";
+      };
+      algorithm = lib.mkOption {
+        description = "Page compression algorithm.";
+        type = lib.types.str;
+        default = "lz4";
+      };
+      memoryPercent = lib.mkOption {
+        description = "Maximum amount of memory (in percentage) that can be used.";
+        type = lib.types.int;
+        default = 50;
+      };
+    };
   };
 
   config = lib.mkIf cfg.enable {
     boot = {
-      initrd.systemd.enable = lib.mkDefault true;
+      initrd = {
+        systemd.enable = lib.mkDefault true;
+        kernelModules = lib.mkIf (cfg.pageCompression.enable == "zswap") [ "z3fold" ];
+      };
+
+      kernelParams = lib.mkIf (cfg.pageCompression.enable == "zswap") [
+        "zswap.compressor=${cfg.pageCompression.algorithm}"
+        "zswap.enabled=1"
+        "zswap.max_pool_percent=${toString cfg.pageCompression.memoryPercent}"
+        "zswap.zpool=z3fold"
+      ];
 
       kernel.sysctl = {
         # Enable Magic keys
@@ -83,9 +114,9 @@ in
     users.motd = lib.mkIf cfg.motd.enable ''Welcome to '${config.networking.hostName}' running NixOS ${config.system.nixos.version}!'';
 
     # Enable zram to have better memory management
-    zramSwap = {
+    zramSwap = lib.mkIf (cfg.pageCompression.enable == "zram") {
       enable = true;
-      algorithm = "zstd";
+      inherit (cfg.pageCompression) algorithm memoryPercent;
     };
   };
 }

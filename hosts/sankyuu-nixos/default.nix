@@ -72,6 +72,10 @@ in
       ssh.enable = true;
       tailscale.enable = true;
     };
+    system.pageCompression = {
+      enable = "zswap";
+      memoryPercent = 30;
+    };
   };
 
   programs.steam.gamescopeSession.args = [
