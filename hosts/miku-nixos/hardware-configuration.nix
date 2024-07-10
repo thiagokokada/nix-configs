@@ -31,6 +31,10 @@
   fileSystems."/boot" = {
     device = "/dev/disk/by-uuid/F77D-A524";
     fsType = "vfat";
+    options = [
+      "fmask=0077"
+      "dmask=0077"
+    ];
   };
 
   fileSystems."/mnt/archive" = {

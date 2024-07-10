@@ -32,6 +32,10 @@
   fileSystems."/boot" = {
     device = "/dev/disk/by-uuid/EF47-A813";
     fsType = "vfat";
+    options = [
+      "fmask=0077"
+      "dmask=0077"
+    ];
   };
 
   fileSystems."/mnt/media" = {

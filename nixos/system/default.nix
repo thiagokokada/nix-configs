@@ -45,13 +45,6 @@ in
       };
     };
 
-    # Fix systemd-boot warning:
-    # Mount point '/boot' which backs the random seed file is world accessible, which is a security hole!
-    # Random seed file '/boot/loader/random-seed' is world accessible, which is a security hole!
-    fileSystems."/boot" = lib.mkIf config.boot.loader.systemd-boot.enable {
-      options = [ "fmask=0077,dmask=0077" ];
-    };
-
     # Enable firmware-linux-nonfree
     hardware.enableRedistributableFirmware = lib.mkDefault true;
 
