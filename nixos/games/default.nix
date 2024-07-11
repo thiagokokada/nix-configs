@@ -38,7 +38,7 @@ in
   config = lib.mkIf cfg.enable {
     # https://fedoraproject.org/wiki/Changes/IncreaseVmMaxMapCount
     # https://pagure.io/fesco/issue/2993#comment-859763
-    kernel.sysctl."vm.max_map_count" = 1048576;
+    boot.kernel.sysctl."vm.max_map_count" = 1048576;
 
     environment = {
       systemPackages = with pkgs; [ lutris ];
