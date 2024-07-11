@@ -15,6 +15,7 @@
     ./dev
     ./editor
     ./meta
+    ./nix
   ];
 
   # Inherit config from NixOS or homeConfigurations

@@ -2,7 +2,6 @@
   config,
   lib,
   pkgs,
-  flake,
   osConfig,
   ...
 }:
@@ -29,30 +28,6 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    home = {
-      # Add some Nix related packages
-      packages = with pkgs; [
-        nix-cleanup
-        nix-whereis
-      ];
-      sessionVariables.NIX_PATH = "nixpkgs=${flake.inputs.nixpkgs}";
-    };
-
-    # To make cachix work you need add the current user as a trusted-user on Nix
-    # sudo echo "trusted-users = $(whoami)" >> /etc/nix/nix.conf
-    # Another option is to add a group by prefixing it by @, e.g.:
-    # sudo echo "trusted-users = @wheel" >> /etc/nix/nix.conf
-    nix = {
-      package = lib.mkDefault pkgs.nix;
-      settings = lib.mkMerge [
-        (import ../../shared/nix-conf.nix)
-        (import ../../shared/substituters.nix)
-      ];
-    };
-
-    # Config for ad-hoc nix commands invocation
-    xdg.configFile."nixpkgs/config.nix".source = ./nixpkgs-config.nix;
-
     programs = {
       # Let Home Manager install and manage itself
       home-manager.enable = true;
