@@ -27,17 +27,6 @@ in
 
   config = lib.mkIf config.home-manager.editor.emacs.enable {
     home = {
-      file.".tree-sitter".source = pkgs.runCommand "grammars" { } ''
-        mkdir -p $out/bin
-        ${
-          lib.concatStringsSep "\n" (
-            lib.mapAttrsToList (
-              name: src: "name=${name}; ln -s ${src}/parser $out/bin/\${name#tree-sitter-}.so"
-            ) pkgs.tree-sitter.builtGrammars
-          )
-        };
-      '';
-
       packages = with pkgs; [
         (run-bg-alias "em" "${lib.getExe config.programs.emacs.package}")
         (writeShellScriptBin "et" "${lib.getExe config.programs.emacs.package} -nw $@")
@@ -59,7 +48,24 @@ in
 
     programs.emacs = {
       enable = true;
-      package = emacs';
+      package =
+        (emacs'.pkgs.withPackages (
+          epkgs: with epkgs; [
+            treesit-grammars.with-all-grammars
+            vterm
+          ]
+        )).overrideAttrs
+          (oldAttrs: {
+            buildCommand =
+              (oldAttrs.buildCommand or (throw "emacs.pkgs.withPackages is not using runCommand anymore?"))
+              # doom-emacs expects site-start.el in the correct place,
+              # otherwise it will fail to start
+              # bash
+              + ''
+                mkdir -p $out/share/emacs/site-lisp
+                touch $out/share/emacs/site-lisp/site-start.el
+              '';
+          });
     };
 
     xdg.configFile."doom".source = ./doom-emacs;
@@ -75,7 +81,7 @@ in
           "PATH=${
             lib.makeBinPath [
               bash
-              emacs'
+              config.programs.emacs.package
               gcc
               git
             ]
