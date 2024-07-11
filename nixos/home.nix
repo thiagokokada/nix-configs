@@ -34,13 +34,15 @@ in
       useGlobalPkgs = true;
       users.${config.mainUser.username} = {
         inherit (config.nixos.home) imports;
+        # As a rule of thumb HM == NixOS version, unless something weird happens
+        home.stateVersion = lib.mkDefault config.system.stateVersion;
       };
       extraSpecialArgs = {
         inherit flake libEx;
       };
     };
 
-    # Define a user account. Don't forget to set a password with ‘passwd’.
+    # Define a user account. Don't forget to set a password with ‘passwd’
     users.users.${config.mainUser.username} = {
       isNormalUser = true;
       uid = 1000;

@@ -84,11 +84,5 @@ in
     systemd.services.nix-daemon = {
       environment.TMPDIR = lib.mkIf cfg.tmpOnDisk "/var/tmp";
     };
-
-    # This value determines the NixOS release with which your system is to be
-    # compatible, in order to avoid breaking some software such as database
-    # servers. You should change this only after NixOS release notes say you
-    # should.
-    system.stateVersion = lib.mkDefault "24.05"; # Did you read the comment?
   };
 }

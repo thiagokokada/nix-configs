@@ -116,6 +116,15 @@ in
       system ? "x86_64-linux",
       nixpkgs ? inputs.nixpkgs,
       home-manager ? inputs.home-manager,
+      # This value determines the Home Manager release that your
+      # configuration is compatible with. This helps avoid breakage
+      # when a new Home Manager release introduces backwards
+      # incompatible changes.
+      #
+      # You can update Home Manager without changing this value. See
+      # the Home Manager release notes for a list of state version
+      # changes in each release.
+      stateVersion ? "24.05",
     }:
     {
       homeConfigurations.${hostname} = home-manager.lib.homeManagerConfiguration {
@@ -125,7 +134,7 @@ in
             { ... }:
             {
               home = {
-                inherit username homeDirectory;
+                inherit username homeDirectory stateVersion;
               };
               imports = [ configuration ];
             }
