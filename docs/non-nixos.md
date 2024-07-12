@@ -38,13 +38,14 @@ This will populate `/etc/nix/machines` file.
 Needs Tailscale configured. You also may need to do:
 
 ```console
-# nix store info --store ssh-ng://100.103.30.119
-The authenticity of host '100.103.30.119 (100.103.30.119)' can't be established.
-ED25519 key fingerprint is SHA256:MGRSSdbNCipNa+4LmdHhq7F7xQMuEX+sJDFqcQq3qgs.
+# nix store ping --store ssh-ng://100.97.139.21
+Store URL: ssh-ng://100.97.139.21
+The authenticity of host '100.97.139.21 (100.97.139.21)' can't be established.
+ED25519 key fingerprint is SHA256:JLZRJZARsvg2jtUYuS7+sTx8+FcEICsSj3vUKTHh9lM.
 This key is not known by any other names.
 Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
-Warning: Permanently added 'zatsune-nixos-uk' (ED25519) to the list of known hosts.
-Version: 2.18.1
+Warning: Permanently added '100.97.139.21' (ED25519) to the list of known hosts.
+Version: 2.18.4
 Trusted: 1
 ```
 
