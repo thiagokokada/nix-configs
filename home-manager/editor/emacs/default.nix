@@ -90,7 +90,7 @@ in
       '';
       runDoomSync = lib.mkIf pkgs.stdenv.isLinux (
         lib.hm.dag.entryAfter [ "installDoom" ] ''
-          run ${lib.getExe' pkgs.systemd "systemctl"} start --user doom-sync.service --no-block
+          run ${config.systemd.user.systemctlPath} start --user doom-sync.service --no-block
         ''
       );
     };
