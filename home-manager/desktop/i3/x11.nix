@@ -6,12 +6,25 @@
   ...
 }:
 
+let
+  cfg = config.home-manager.desktop.i3.x11;
+in
 {
-  options.home-manager.desktop.i3.x11.enable = lib.mkEnableOption "x11 config" // {
-    default = config.home-manager.desktop.i3.enable;
+  options.home-manager.desktop.i3.x11 = {
+    enable = lib.mkEnableOption "x11 config" // {
+      default = config.home-manager.desktop.i3.enable;
+    };
+    nvidia.prime = {
+      sync.enable = lib.mkEnableOption "enable NVIDIA prime sync" // {
+        default = osConfig.hardware.nvidia.prime.sync.enable or false;
+      };
+      offload.enable = lib.mkEnableOption "enable NVIDIA prime offload" // {
+        default = osConfig.hardware.nvidia.prime.offload.enable or false;
+      };
+    };
   };
 
-  config = lib.mkIf config.home-manager.desktop.i3.x11.enable {
+  config = lib.mkIf cfg.enable {
     home.packages = with pkgs; [
       xclip
       xdotool
@@ -19,6 +32,7 @@
       xorg.xdpyinfo
       xorg.xhost
       xorg.xkill
+      xorg.xrandr
       xorg.xset
     ];
 
@@ -37,19 +51,21 @@
     xsession = {
       enable = true;
       initExtra =
-        # NVIDIA sync
-        lib.optionalString (osConfig.hardware.nvidia.prime.sync.enable or false) ''
-          ${lib.geExe pkgs.xorg.xrandr} --setprovideroutputsource modesetting NVIDIA-0
-          ${lib.getExe pkgs.xorg.xrandr} --auto
-        ''
-        # Reverse PRIME
-        + lib.optionalString (osConfig.hardware.nvidia.prime.offload.enable or false) ''
-          ${lib.getExe pkgs.xorg.xrandr} --setprovideroutputsource NVIDIA-G0 modesetting
-        ''
-        # Automatically loads the resolution
-        + ''
-          ${lib.getExe pkgs.change-res}
-        '';
+        let
+          xrandr = lib.getExe pkgs.xorg.xrandr;
+        in
+        lib.concatStringsSep "\n" [
+          # NVIDIA sync
+          (lib.optionalString cfg.nvidia.prime.sync.enable ''
+            ${xrandr} --setprovideroutputsource modesetting NVIDIA-0
+            ${xrandr} --auto
+          '')
+          # Reverse PRIME
+          (lib.optionalString cfg.nvidia.prime.offload.enable ''
+            ${xrandr} --setprovideroutputsource NVIDIA-G0 modesetting
+          '')
+          (lib.getExe pkgs.change-res)
+        ];
     };
   };
 }
