@@ -1,17 +1,8 @@
-{
-  writeShellApplication,
-  autorandr,
-  mons,
-  systemd,
-}:
+{ writeShellApplication, autorandr }:
 
 writeShellApplication {
   name = "change-res";
-  runtimeInputs = [
-    autorandr
-    mons
-    systemd
-  ];
+  runtimeInputs = [ autorandr ];
   text = ''
     autorandr --change --default default
   '';
