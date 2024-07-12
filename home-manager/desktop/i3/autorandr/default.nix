@@ -9,24 +9,31 @@
 let
   hostName = osConfig.networking.hostName or "generic";
   hostConfigFile = ./${hostName}.nix;
+  cfg = config.home-manager.desktop.i3.autorandr;
 in
 {
   imports = lib.optionals (builtins.pathExists hostConfigFile) [ hostConfigFile ];
 
-  options.home-manager.desktop.i3.autorandr.enable = lib.mkEnableOption "autorandr config" // {
-    default = config.home-manager.desktop.i3.enable;
+  options.home-manager.desktop.i3.autorandr = {
+    enable = lib.mkEnableOption "autorandr config" // {
+      default = config.home-manager.desktop.i3.enable;
+    };
+    defaultProfile = lib.mkOption {
+      description = "Default autorandr profile";
+      type = lib.types.str;
+      default = "horizontal";
+    };
   };
 
-  config = lib.mkIf config.home-manager.desktop.i3.autorandr.enable {
+  config = lib.mkIf cfg.enable {
     home.activation =
       let
         inherit (config.xdg) configHome;
       in
       {
-        # Set default profile to the virtual horizontal profile
-        autorandrCreateDefaultProfile = lib.hm.dag.entryAfter [ "linkGeneration" ] ''
+        autorandrCreateDefaultProfile = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
           cd "${configHome}/autorandr"
-          $DRY_RUN_CMD ln -sf $VERBOSE_ARG horizontal default
+          run ln -sf $VERBOSE_ARG ${cfg.defaultProfile} default
         '';
       };
 
