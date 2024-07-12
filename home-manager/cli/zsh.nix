@@ -96,6 +96,9 @@ in
 
       initExtra = # bash
         ''
+          # open nix-shell inside ZSH
+          ${lib.getExe pkgs.any-nix-shell} zsh | source /dev/stdin
+
           # avoid duplicated entries in PATH
           typeset -U PATH
 
