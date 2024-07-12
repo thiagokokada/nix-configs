@@ -9,14 +9,7 @@
 let
   inherit (config.home) homeDirectory;
   inherit (config.home.sessionVariables) EMACSDIR;
-  emacs' =
-    with pkgs;
-    if stdenv.isDarwin then
-      emacs29
-    else
-      emacs29-pgtk.overrideAttrs (old: {
-        patches = (old.patches or [ ]) ++ [ ./disable_pgtk_display_x_warning.patch ];
-      });
+  inherit (config.programs.emacs) finalPackage;
 in
 {
   options.home-manager.editor.emacs.enable = lib.mkEnableOption "Emacs config" // {
@@ -49,23 +42,18 @@ in
     programs.emacs = {
       enable = true;
       package =
-        (emacs'.pkgs.withPackages (
-          epkgs: with epkgs; [
-            treesit-grammars.with-all-grammars
-            vterm
-          ]
-        )).overrideAttrs
-          (oldAttrs: {
-            buildCommand =
-              (oldAttrs.buildCommand or (throw "emacs.pkgs.withPackages is not using runCommand anymore?"))
-              # doom-emacs expects site-start.el in the correct place,
-              # otherwise it will fail to start
-              # bash
-              + ''
-                mkdir -p $out/share/emacs/site-lisp
-                touch $out/share/emacs/site-lisp/site-start.el
-              '';
+        with pkgs;
+        if stdenv.isDarwin then
+          emacs29
+        else
+          emacs29-pgtk.overrideAttrs (old: {
+            patches = (old.patches or [ ]) ++ [ ./disable_pgtk_display_x_warning.patch ];
           });
+      extraPackages =
+        epkgs: with epkgs; [
+          treesit-grammars.with-all-grammars
+          vterm
+        ];
     };
 
     xdg.configFile."doom".source = ./doom-emacs;
@@ -81,7 +69,7 @@ in
           "PATH=${
             lib.makeBinPath [
               bash
-              config.programs.emacs.package
+              finalPackage
               gcc
               git
             ]
