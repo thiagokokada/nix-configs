@@ -63,6 +63,8 @@ in
             ''
               # Force truecolor support in Crostini
               export COLORTERM=truecolor
+              # https://github.com/nix-community/home-manager/issues/3711
+              export LC_CTYPE=C.UTF-8
             ''
           )
           (lib.optionalString pkgs.stdenv.isDarwin # bash
