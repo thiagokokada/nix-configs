@@ -8,9 +8,18 @@ In `/etc/nix/nix.conf` file:
 
 ```
 build-users-group = nixbld
-experimental-features = nix-command flakes auto-allocate-uids configurable-impure-env
-trusted-users = @sudo # or @wheel
+experimental-features = nix-command flakes
+trusted-users = [ root @sudo ] # or @wheel/@admin
 builders-use-substitutes = true
+```
+
+### Restart nix-daemon (macOS)
+
+After changing the `/etc/nix/nix.conf` file, you will need to restart the
+`nix-daemon`:
+
+```
+# launchctl kickstart -k system/org.nixos.nix-daemon
 ```
 
 ## (Optional) Setup remote builders
