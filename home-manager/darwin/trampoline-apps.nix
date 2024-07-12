@@ -26,7 +26,7 @@ in
       . ${./trampoline-apps.sh}
       fromDir="$HOME/Applications/Home Manager Apps"
       toDir="$HOME/Applications/Home Manager Trampolines"
-      sync_trampolines "$fromDir" "$toDir"
+      run sync_trampolines "$fromDir" "$toDir"
     '';
   };
 }

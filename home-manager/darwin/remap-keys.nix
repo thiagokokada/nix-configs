@@ -54,8 +54,8 @@ in
           }"
           destination="/Library/LaunchDaemons/com.nix.remapkeys.${cfg.vendorID}-${cfg.productID}.plist"
           if ! ${lib.getExe' pkgs.diffutils "diff"} "$source" "$destination"; then
-            $DRY_RUN_CMD /usr/bin/sudo ${lib.getExe' pkgs.coreutils "install"} -m644 "$source" "$destination"
-            $DRY_RUN_CMD /usr/bin/sudo /bin/launchctl load -w "$destination"
+            run /usr/bin/sudo ${lib.getExe' pkgs.coreutils "install"} -m644 "$source" "$destination"
+            run /usr/bin/sudo /bin/launchctl load -w "$destination"
           fi
         '';
   };
