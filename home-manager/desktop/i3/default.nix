@@ -63,7 +63,7 @@ let
               rightCmd = runMons "-e right";
             })
             // {
-              a = "mode default, exec ${lib.getExe pkgs.change-res}";
+              a = lib.mkIf config.home-manager.desktop.i3.autorandr.enable "mode default, exec ${lib.getExe pkgs.autorandr} --change --default default";
               d = runMons "-d";
               m = runMons "-m";
               s = runMons "-s";

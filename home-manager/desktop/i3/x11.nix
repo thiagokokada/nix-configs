@@ -64,7 +64,10 @@ in
           (lib.optionalString cfg.nvidia.prime.offload.enable ''
             ${xrandr} --setprovideroutputsource NVIDIA-G0 modesetting
           '')
-          (lib.getExe pkgs.change-res)
+          # Set resolution with autorandr
+          (lib.optionalString config.home-manager.desktop.i3.autorandr.enable ''
+            ${lib.getExe pkgs.autorandr} --change --default default
+          '')
         ];
     };
   };
