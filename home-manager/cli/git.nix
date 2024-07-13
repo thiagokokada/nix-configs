@@ -161,77 +161,18 @@ in
 
       gitui = {
         enable = true;
-        # https://github.com/extrawurst/gitui/blob/master/vim_style_key_config.ron
-        keyConfig = # rust
-          ''
-            // Note:
-            // If the default key layout is lower case,
-            // and you want to use `Shift + q` to trigger the exit event,
-            // the setting should like this `exit: Some(( code: Char('Q'), modifiers: "SHIFT")),`
-            // The Char should be upper case, and the modifier should be set to "SHIFT".
-            //
-            // Note:
-            // find `KeysList` type in src/keys/key_list.rs for all possible keys.
-            // every key not overwritten via the config file will use the default specified there
-            (
-                open_help: Some(( code: F(1), modifiers: "")),
-
-                move_left: Some(( code: Char('h'), modifiers: "")),
-                move_right: Some(( code: Char('l'), modifiers: "")),
-                move_up: Some(( code: Char('k'), modifiers: "")),
-                move_down: Some(( code: Char('j'), modifiers: "")),
-
-                popup_up: Some(( code: Char('p'), modifiers: "CONTROL")),
-                popup_down: Some(( code: Char('n'), modifiers: "CONTROL")),
-                page_up: Some(( code: Char('b'), modifiers: "CONTROL")),
-                page_down: Some(( code: Char('f'), modifiers: "CONTROL")),
-                home: Some(( code: Char('g'), modifiers: "")),
-                end: Some(( code: Char('G'), modifiers: "SHIFT")),
-                shift_up: Some(( code: Char('K'), modifiers: "SHIFT")),
-                shift_down: Some(( code: Char('J'), modifiers: "SHIFT")),
-
-                edit_file: Some(( code: Char('I'), modifiers: "SHIFT")),
-
-                status_reset_item: Some(( code: Char('U'), modifiers: "SHIFT")),
-
-                diff_reset_lines: Some(( code: Char('u'), modifiers: "")),
-                diff_stage_lines: Some(( code: Char('s'), modifiers: "")),
-
-                stashing_save: Some(( code: Char('w'), modifiers: "")),
-                stashing_toggle_index: Some(( code: Char('m'), modifiers: "")),
-
-                stash_open: Some(( code: Char('l'), modifiers: "")),
-
-                abort_merge: Some(( code: Char('M'), modifiers: "SHIFT")),
-            )
-          '';
-        # https://github.com/catppuccin/gitui/blob/main/theme/macchiato.ron
-        theme = # rust
-          ''
-            (
-                selected_tab: Some(Reset),
-                command_fg: Some(Rgb(202, 211, 245)),
-                selection_bg: Some(Rgb(91, 96, 120)),
-                selection_fg: Some(Rgb(202, 211, 245)),
-                cmdbar_bg: Some(Rgb(30, 32, 48)),
-                cmdbar_extra_lines_bg: Some(Rgb(30, 32, 48)),
-                disabled_fg: Some(Rgb(128, 135, 162)),
-                diff_line_add: Some(Rgb(166, 218, 149)),
-                diff_line_delete: Some(Rgb(237, 135, 150)),
-                diff_file_added: Some(Rgb(238, 212, 159)),
-                diff_file_removed: Some(Rgb(238, 153, 160)),
-                diff_file_moved: Some(Rgb(198, 160, 246)),
-                diff_file_modified: Some(Rgb(245, 169, 127)),
-                commit_hash: Some(Rgb(183, 189, 248)),
-                commit_time: Some(Rgb(184, 192, 224)),
-                commit_author: Some(Rgb(125, 196, 228)),
-                danger_fg: Some(Rgb(237, 135, 150)),
-                push_gauge_bg: Some(Rgb(138, 173, 244)),
-                push_gauge_fg: Some(Rgb(36, 39, 58)),
-                tag_fg: Some(Rgb(244, 219, 214)),
-                branch_fg: Some(Rgb(139, 213, 202))
-            )
-          '';
+        keyConfig = builtins.readFile (
+          pkgs.fetchurl {
+            url = "https://raw.githubusercontent.com/extrawurst/gitui/8876c1d0f616d55a0c0957683781fd32af815ae3/vim_style_key_config.ron";
+            hash = "sha256-uYL9CSCOlTdW3E87I7GsgvDEwOPHoz1LIxo8DARDX1Y=";
+          }
+        );
+        theme = builtins.readFile (
+          pkgs.fetchurl {
+            url = "https://raw.githubusercontent.com/catppuccin/gitui/c7661f043cb6773a1fc96c336738c6399de3e617/themes/catppuccin-macchiato.ron";
+            hash = "sha256-tmRc/8hpWVo2FIsnAShWoM4Lfpx3WoENt6gF4J+JlRA=";
+          }
+        );
       };
     };
   };
