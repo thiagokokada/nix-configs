@@ -60,6 +60,7 @@ in
         ripgrep
         rlwrap
         tealdeer
+        time
         tokei
         wget
       ];
@@ -67,11 +68,12 @@ in
       shellAliases = {
         # For muscle memory...
         archive = "${lib.getExe pkgs.ouch} compress";
-        unarchive = "${lib.getExe pkgs.ouch} decompress";
         lsarchive = "${lib.getExe pkgs.ouch} list";
+        unarchive = "${lib.getExe pkgs.ouch} decompress";
         cal = lib.getExe pkgs.gcal;
         ncdu = "${lib.getExe pkgs.dua} interactive";
         sloccount = lib.getExe pkgs.tokei;
+        time = lib.getExe pkgs.time; # GNU time with more features, e.g.: time -v
       };
     };
   };
