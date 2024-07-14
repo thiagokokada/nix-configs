@@ -526,7 +526,9 @@ in
             config = # lua
               ''
                 require("url-open").setup {}
-                vim.keymap.set("n", "gx", "<esc>:URLOpenUnderCursor<cr>")
+                vim.keymap.set("n", "gx", function()
+                  vim.cmd("URLOpenUnderCursor")
+                end , { desc = "Open URL under cursor" })
               '';
           }
           {
