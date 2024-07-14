@@ -213,28 +213,28 @@ in
                 local dial_map = require("dial.map")
                 vim.keymap.set("n", "<C-a>", function()
                     dial_map.manipulate("increment", "normal")
-                end)
+                end, { desc = "Increment" })
                 vim.keymap.set("n", "<C-x>", function()
                     dial_map.manipulate("decrement", "normal")
-                end)
+                end, { desc = "Decrement" })
                 vim.keymap.set("n", "g<C-a>", function()
                     dial_map.manipulate("increment", "gnormal")
-                end)
+                end, { desc = "Increment" })
                 vim.keymap.set("n", "g<C-x>", function()
                     dial_map.manipulate("decrement", "gnormal")
-                end)
+                end, { desc = "Decrement" })
                 vim.keymap.set("v", "<C-a>", function()
                     dial_map.manipulate("increment", "visual")
-                end)
+                end, { desc = "Increment" })
                 vim.keymap.set("v", "<C-x>", function()
                     dial_map.manipulate("decrement", "visual")
-                end)
+                end, { desc = "Decrement" })
                 vim.keymap.set("v", "g<C-a>", function()
                     dial_map.manipulate("increment", "gvisual")
-                end)
+                end, { desc = "Increment" })
                 vim.keymap.set("v", "g<C-x>", function()
                     dial_map.manipulate("decrement", "gvisual")
-                end)
+                end, { desc = "Decrement" })
               '';
           }
           {
@@ -536,7 +536,7 @@ in
             type = "lua";
             config = # lua
               ''
-                vim.keymap.set({'n', 'x'}, 'ga', '<Plug>(EasyAlign)', { remap = true })
+                vim.keymap.set({'n', 'x'}, 'ga', '<Plug>(EasyAlign)', { remap = true, desc = "Align" })
               '';
           }
           {
