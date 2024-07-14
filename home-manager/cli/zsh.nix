@@ -7,17 +7,26 @@
 }:
 
 let
-  get-ip = pkgs.writeShellScriptBin "get-ip" ''
-    ${lib.getExe pkgs.curl} -Ss "https://ifconfig.me"
-  '';
-  get-ip' = pkgs.writeShellScriptBin "get-ip!" ''
-    ${lib.getExe pkgs.curl} -Ss "https://ipapi.co/$(${lib.getExe get-ip})/yaml"
-  '';
-  remove-symlink = pkgs.writeShellScriptBin "remove-symlink" ''
-    [[ -L "$1" ]] && \
-      ${lib.getExe' pkgs.coreutils "cp"} --remove-destination \
-      "$(${lib.getExe' pkgs.coreutils "readlink"} "$1")" "$1"
-  '';
+  get-ip = pkgs.writeShellApplication {
+    name = "get-ip";
+    runtimeInputs = with pkgs; [ curl ];
+    text = "curl -Ss --fail https://ipapi.co/yaml";
+  };
+  realise-symlink = pkgs.writeShellApplication {
+    name = "realise-symlink";
+    runtimeInputs = with pkgs; [ coreutils ];
+    text = ''
+      for file in "$@"; do
+        if [[ -L "$file" ]]; then
+          cp --verbose --remove-destination "$(readlink "$file")" "$file"
+          chmod --changes +w "$file"
+        else
+          2>&1 echo "Not a symlink: $file"
+          exit 1
+        fi
+      done
+    '';
+  };
 in
 {
   options.home-manager.cli.zsh.enable = lib.mkEnableOption "ZSH config" // {
@@ -29,8 +38,7 @@ in
       with pkgs;
       [
         get-ip
-        get-ip'
-        remove-symlink
+        realise-symlink
       ]
       ++ lib.optionals (!stdenv.isDarwin) [ (run-bg-alias "open" (lib.getExe' xdg-utils "xdg-open")) ];
 
