@@ -13,10 +13,36 @@
     };
 
     # https://nixos.wiki/wiki/Installing_Nix_on_Crostini
-    xdg.configFile."systemd/user/cros-garcon.service.d/override.conf".text = ''
-      [Service]
-      Environment="PATH=%h/.nix-profile/bin:/usr/local/sbin:/usr/local/bin:/usr/local/games:/usr/sbin:/usr/bin:/usr/games:/sbin:/bin"
-      Environment="XDG_DATA_DIRS=%h/.nix-profile/share:%h/.local/share:%h/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:/usr/local/share:/usr/share"
-    '';
+    xdg.configFile."systemd/user/cros-garcon.service.d/override.conf".text =
+      lib.generators.toINI { listsAsDuplicateKeys = true; }
+        {
+          Service = {
+            Environment = [
+              "PATH=${
+                lib.concatStringsSep ":" [
+                  "${config.home.profileDirectory}/bin"
+                  "/usr/local/sbin"
+                  "/usr/local/bin"
+                  "/usr/local/games"
+                  "/usr/sbin"
+                  "/usr/bin"
+                  "/usr/games"
+                  "/sbin"
+                  "/bin"
+                ]
+              }"
+              "XDG_DATA_DIRS=${
+                lib.concatStringsSep ":" [
+                  "${config.home.profileDirectory}/share"
+                  "%h/.local/share"
+                  "%h/.local/share/flatpak/exports/share"
+                  "/var/lib/flatpak/exports/share"
+                  "/usr/local/share"
+                  "/usr/share"
+                ]
+              }"
+            ];
+          };
+        };
   };
 }
