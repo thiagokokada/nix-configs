@@ -15,14 +15,6 @@ in
     nix = {
       buildMachines = [
         {
-          hostName = "hachune-nixos-br.quokka-char.ts.net";
-          system = "x86_64-linux";
-          protocol = "ssh-ng";
-          maxJobs = 8;
-          # base64 -w0 /etc/ssh/ssh_host_<type>_key.pub
-          publicHostKey = "c3NoLWVkMjU1MTkgQUFBQUMzTnphQzFsWkRJMU5URTVBQUFBSU1EZlRacjhvQWM5MVRiS2dKU3BXckN3SFhZYWU1aE1MMXMveU80b1d2OG4gcm9vdEBoYWNodW5lLW5peG9zCg==";
-        }
-        {
           hostName = "zatsune-nixos-br.quokka-char.ts.net";
           system = "aarch64-linux";
           protocol = "ssh-ng";
