@@ -14,7 +14,6 @@ let
         type = with lib.types; nullOr package;
         description = "Theme package";
       };
-
       name = lib.mkOption {
         type = with lib.types; either (listOf str) str;
         description = "Theme name";
@@ -32,7 +31,14 @@ in
     enable = lib.mkEnableOption "theme config" // {
       default = config.home-manager.desktop.enable;
     };
+
     fonts = {
+      dpi = lib.mkOption {
+        type = lib.types.int;
+        description = "Font dpi";
+        default = 135;
+      };
+
       gui = lib.mkOption {
         type = lib.types.nullOr themeType;
         description = "GUI font";
@@ -63,10 +69,50 @@ in
         };
       };
 
-      dpi = lib.mkOption {
-        type = lib.types.int;
-        description = "Font dpi";
-        default = 135;
+      fontconfig = {
+        enable = lib.mkEnableOption "Fontconfig config" // {
+          default = osConfig.fonts.fontconfig.enable or false;
+        };
+        antialias = lib.mkEnableOption "antialias" // {
+          default = osConfig.fonts.fontconfig.antialias or true;
+        };
+        hinting = {
+          enable = lib.mkEnableOption "hinting" // {
+            default = osConfig.fonts.fontconfig.hinting.enable or true;
+          };
+          style = lib.mkOption {
+            type = lib.types.enum [
+              "none"
+              "slight"
+              "medium"
+              "full"
+            ];
+            default = osConfig.fonts.fontconfig.hinting.style or "slight";
+          };
+        };
+        subpixel = {
+          rgba = lib.mkOption {
+            default = osConfig.fonts.fontconfig.hinting.subpixel.rgba or "none";
+            type = lib.types.enum [
+              "rgb"
+              "bgr"
+              "vrgb"
+              "vbgr"
+              "none"
+            ];
+            description = "Subpixel order";
+          };
+          lcdfilter = lib.mkOption {
+            default = osConfig.fonts.fontconfig.subpixel.lcdfilter or "default";
+            type = lib.types.enum [
+              "none"
+              "default"
+              "light"
+              "legacy"
+            ];
+            description = "LCD filter";
+          };
+        };
       };
     };
 
@@ -128,8 +174,8 @@ in
     };
 
     # https://github.com/GNOME/gsettings-desktop-schemas/blob/8527b47348ce0573694e0e254785e7c0f2150e16/schemas/org.gnome.desktop.interface.gschema.xml.in#L276-L296
-    dconf.settings = lib.mkIf (osConfig ? fonts.fontconfig) {
-      "org/gnome/desktop/interface" = with osConfig.fonts.fontconfig; {
+    dconf.settings = lib.mkIf cfg.fonts.fontconfig.enable {
+      "org/gnome/desktop/interface" = with cfg.fonts.fontconfig; {
         "color-scheme" = "prefer-dark";
         "font-antialiasing" =
           if antialias then if (subpixel.rgba == "none") then "grayscale" else "rgba" else "none";
@@ -138,15 +184,15 @@ in
       };
     };
 
-    services.xsettingsd = lib.mkIf (osConfig ? fonts.fontconfig) {
+    services.xsettingsd = lib.mkIf cfg.fonts.fontconfig.enable {
       enable = true;
       settings = {
         # Applications like Java/Wine doesn't use Fontconfig settings,
         # but uses it from here
-        "Xft/Antialias" = osConfig.fonts.fontconfig.antialias;
-        "Xft/Hinting" = osConfig.fonts.fontconfig.hinting.enable;
-        "Xft/HintStyle" = osConfig.fonts.fontconfig.hinting.style;
-        "Xft/RGBA" = osConfig.fonts.fontconfig.subpixel.rgba;
+        "Xft/Antialias" = cfg.fonts.fontconfig.antialias;
+        "Xft/Hinting" = cfg.fonts.fontconfig.hinting.enable;
+        "Xft/HintStyle" = cfg.fonts.fontconfig.hinting.style;
+        "Xft/RGBA" = cfg.fonts.fontconfig.subpixel.rgba;
       };
     };
   };

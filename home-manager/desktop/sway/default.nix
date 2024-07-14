@@ -106,16 +106,12 @@ in
         };
 
         output = {
-          "*" =
-            with config.home-manager.desktop.theme.wallpaper;
-            {
-              bg = "${path} ${scale}";
-              # DPI
-              scale = toString (config.home-manager.desktop.theme.fonts.dpi / 100.0);
-            }
-            // lib.optionalAttrs (osConfig ? fonts.fontconfig) {
-              subpixel = osConfig.fonts.fontconfig.subpixel.rgba;
-            };
+          "*" = with config.home-manager.desktop.theme.wallpaper; {
+            bg = "${path} ${scale}";
+            # DPI
+            scale = toString (config.home-manager.desktop.theme.fonts.dpi / 100.0);
+            subpixel = config.home-manager.desktop.theme.fonts.fontconfig.subpixel.rgba;
+          };
         };
       };
 

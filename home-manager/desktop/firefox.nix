@@ -1,13 +1,9 @@
-{
-  config,
-  lib,
-  osConfig,
-  ...
-}:
+{ config, lib, ... }:
 
 let
   inherit (config.home) username;
   cfg = config.home-manager.desktop.firefox;
+  cfgFc = config.home-manager.desktop.theme.fonts.fontconfig;
 in
 {
   options.home-manager.desktop.firefox = {
@@ -15,9 +11,7 @@ in
       default = config.home-manager.desktop.enable;
     };
     subpixelRender.enable = lib.mkEnableOption {
-      default =
-        (osConfig.fonts.fontconfig.antialias or false)
-        && (osConfig.fonts.fontconfig.subpixel.rgba != "none");
+      default = cfgFc.antialias && (cfgFc.subpixel.rgba != "none");
     };
   };
 
