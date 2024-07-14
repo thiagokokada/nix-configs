@@ -92,10 +92,6 @@
       url = "github:zsh-users/zsh-completions";
       flake = false;
     };
-    zsh-syntax-highlighting = {
-      url = "github:zsh-users/zsh-syntax-highlighting";
-      flake = false;
-    };
   };
 
   outputs =

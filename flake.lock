@@ -332,8 +332,7 @@
         "zim-ssh": "zim-ssh",
         "zim-utility": "zim-utility",
         "zsh-autopair": "zsh-autopair",
-        "zsh-completions": "zsh-completions",
-        "zsh-syntax-highlighting": "zsh-syntax-highlighting"
+        "zsh-completions": "zsh-completions"
       }
     },
     "systems": {
@@ -460,22 +459,6 @@
       "original": {
         "owner": "zsh-users",
         "repo": "zsh-completions",
-        "type": "github"
-      }
-    },
-    "zsh-syntax-highlighting": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1704566212,
-        "narHash": "sha256-4rW2N+ankAH4sA6Sa5mr9IKsdAg7WTgrmyqJ2V1vygQ=",
-        "owner": "zsh-users",
-        "repo": "zsh-syntax-highlighting",
-        "rev": "e0165eaa730dd0fa321a6a6de74f092fe87630b0",
-        "type": "github"
-      },
-      "original": {
-        "owner": "zsh-users",
-        "repo": "zsh-syntax-highlighting",
         "type": "github"
       }
     }

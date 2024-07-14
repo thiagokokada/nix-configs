@@ -30,7 +30,6 @@ in
       [
         get-ip
         get-ip'
-        nix-zsh-completions
         remove-symlink
       ]
       ++ lib.optionals (!stdenv.isDarwin) [ (run-bg-alias "open" (lib.getExe' xdg-utils "xdg-open")) ];
@@ -39,8 +38,9 @@ in
       enable = true;
       autocd = true;
       defaultKeymap = "viins";
+
       # taken care by zim-completion
-      enableCompletion = false;
+      completionInit = "";
 
       autosuggestion.enable = true;
 
@@ -55,6 +55,15 @@ in
         enable = true;
         searchUpKey = [ "$terminfo[kcuu1]" ];
         searchDownKey = [ "$terminfo[kcud1]" ];
+      };
+
+      syntaxHighlighting = {
+        enable = true;
+        highlighters = [
+          "main"
+          "brackets"
+          "cursor"
+        ];
       };
 
       profileExtra = lib.concatStringsSep "\n" (
@@ -155,7 +164,6 @@ in
           (zshPlugin "pure")
           (zshPlugin "zsh-autopair")
           (zshPlugin "zsh-completions")
-          (zshPlugin "zsh-syntax-highlighting")
           (zimPlugin "zim-completion") # needs to be the last one
         ];
 
@@ -166,13 +174,6 @@ in
         KEYTIMEOUT = 1;
         # Set right prompt to show time
         RPROMPT = "%F{8}%*";
-        # zsh-users config
-        ZSH_AUTOSUGGEST_USE_ASYNC = 1;
-        ZSH_HIGHLIGHT_HIGHLIGHTERS = [
-          "main"
-          "brackets"
-          "cursor"
-        ];
       };
 
       shellAliases = {
