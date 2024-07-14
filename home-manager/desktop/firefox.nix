@@ -58,6 +58,9 @@ in
             "browser.tabs.crashReporting.sendReport" = false;
             # privacy
             "dom.private-attribution.submission.enabled" = false;
+            "browser.contentblocking.category" = "strict";
+            # breaks a few things, like auto dark-mode in websites
+            # "privacy.resistFingerprinting" = true;
           }
           // lib.optionalAttrs cfg.subpixelRender.enable {
             # https://pandasauce.org/get-fonts-done/
