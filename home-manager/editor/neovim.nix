@@ -607,6 +607,7 @@ in
           mkdir-nvim
           vim-advanced-sorters
           vim-fugitive
+          vim-nix # fix auto indentation
           vim-sleuth
         ]
         ++ lib.optionals cfg.markdownPreview.enable [
