@@ -108,11 +108,13 @@ in
         ''
           # zimfw config
           zstyle ':zim:input' double-dot-expand no
-          zstyle ':zim:ssh' ids /dev/null
         '';
 
       initExtra = # bash
         ''
+          # start SSH agent
+          source ${./ssh-agent.zsh}
+
           # open nix-shell inside ZSH
           ${lib.getExe pkgs.any-nix-shell} zsh | source /dev/stdin
 
@@ -167,7 +169,6 @@ in
         in
         lib.flatten [
           (zimPlugin "zim-input")
-          (zimPlugin "zim-ssh")
           (zimPlugin "zim-utility")
           (zshPlugin "pure")
           (zshPlugin "zsh-autopair")

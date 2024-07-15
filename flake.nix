@@ -72,10 +72,6 @@
       url = "github:zimfw/input";
       flake = false;
     };
-    zim-ssh = {
-      url = "github:zimfw/ssh";
-      flake = false;
-    };
     zim-utility = {
       url = "github:zimfw/utility";
       flake = false;
