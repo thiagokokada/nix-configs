@@ -1,4 +1,11 @@
 _start_agent() {
+  # Test if $SSH_AUTH_SOCK is visible, in case we start e.g.: ssh-agent via
+  # systemd service
+  zmodload zsh/net/socket
+  if [[ -S "$SSH_AUTH_SOCK" ]] && zsocket "$SSH_AUTH_SOCK" 2>/dev/null; then
+    return 0
+  fi
+
   # Get the filename to store/lookup the environment from
   local -r ssh_env_cache="$HOME/.ssh-agent"
 
@@ -7,7 +14,6 @@ _start_agent() {
     source "$ssh_env_cache" > /dev/null
 
     # Test if $SSH_AUTH_SOCK is visible
-    zmodload zsh/net/socket
     if [[ -S "$SSH_AUTH_SOCK" ]] && zsocket "$SSH_AUTH_SOCK" 2>/dev/null; then
       return 0
     fi
