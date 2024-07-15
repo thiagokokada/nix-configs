@@ -15,7 +15,7 @@ in
     ./irssi.nix
     ./nixpkgs.nix
     ./nnn.nix
-    ./ssh.nix
+    ./ssh
     ./tmux.nix
     ./zsh
   ];

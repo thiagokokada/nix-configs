@@ -112,9 +112,6 @@ in
 
       initExtra = # bash
         ''
-          # start SSH agent
-          source ${./ssh-agent.zsh}
-
           # open nix-shell inside ZSH
           ${lib.getExe pkgs.any-nix-shell} zsh | source /dev/stdin
 
