@@ -137,9 +137,6 @@ in
           # zsh-fast-syntax-highlighting
           source ${pkgs.zsh-fast-syntax-highlighting}/share/zsh/site-functions/fast-syntax-highlighting.plugin.zsh
 
-          # avoid duplicated entries in PATH
-          typeset -U PATH
-
           # try to correct the spelling of commands
           setopt correct
           # disable C-S/C-Q
