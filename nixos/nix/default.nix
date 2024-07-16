@@ -28,10 +28,7 @@ in
   config = lib.mkIf cfg.enable {
     environment = {
       # Add some Nix related packages
-      systemPackages = with pkgs; [
-        nixos-cleanup
-        nom-rebuild
-      ];
+      systemPackages = with pkgs; [ nixos-cleanup ];
       # Ask for sudo password if needed when running `--use-remote-sudo` flag
       # in nixos-rebuild
       sessionVariables.NIX_SSHOPTS = "-o RequestTTY=force";

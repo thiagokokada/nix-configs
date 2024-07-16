@@ -81,8 +81,6 @@ outputs.lib.recursiveMergeAttrs [
           installManPage ${prev.nixos-option}/share/man/**/*
         '';
 
-    nom-rebuild = prev.callPackage ../packages/nom-rebuild { };
-
     run-bg-alias = name: command: prev.callPackage ../packages/run-bg-alias { inherit name command; };
   }
 ]
