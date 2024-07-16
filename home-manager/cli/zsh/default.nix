@@ -65,15 +65,6 @@ in
         searchDownKey = [ "$terminfo[kcud1]" ];
       };
 
-      syntaxHighlighting = {
-        enable = true;
-        highlighters = [
-          "main"
-          "brackets"
-          "cursor"
-        ];
-      };
-
       profileExtra = lib.concatStringsSep "\n" (
         lib.filter (x: x != "") [
           (lib.optionalString config.home-manager.crostini.enable # bash
@@ -142,6 +133,9 @@ in
               ${lib.getExe config.programs.zoxide.package} init zsh > $out
             ''
           }
+
+          # zsh-fast-syntax-highlighting
+          source ${pkgs.zsh-fast-syntax-highlighting}/share/zsh/site-functions/fast-syntax-highlighting.plugin.zsh
 
           # avoid duplicated entries in PATH
           typeset -U PATH
