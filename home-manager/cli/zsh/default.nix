@@ -112,8 +112,24 @@ in
 
       initExtra = # bash
         ''
-          # open nix-shell inside ZSH
-          ${lib.getExe pkgs.any-nix-shell} zsh | source /dev/stdin
+          # any-nix-shell setup
+          # manually creating the wrappers since this is faster than calling
+          # the `any-nix-shell zsh` helper directly
+
+          # Overwrite the nix-shell command
+          nix-shell() {
+            ${lib.getExe' pkgs.any-nix-shell ".any-nix-shell-wrapper"} zsh "$@"
+          }
+
+          # Overwrite the nix command
+          nix() {
+            if [[ "$1" == shell ]] || [[ "$1" == develop ]]; then
+              shift
+              ${lib.getExe' pkgs.any-nix-shell ".any-nix-shell-wrapper"} zsh "$@"
+            else
+              command nix "$@"
+            fi
+          }
 
           # avoid duplicated entries in PATH
           typeset -U PATH
