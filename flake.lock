@@ -52,22 +52,6 @@
         "type": "github"
       }
     },
-    "fast-syntax-highlighting": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1688591419,
-        "narHash": "sha256-RVX9ZSzjBW3LpFs2W86lKI6vtcvDWP6EPxzeTcRZua4=",
-        "owner": "zdharma-continuum",
-        "repo": "fast-syntax-highlighting",
-        "rev": "cf318e06a9b7c9f2219d78f41b46fa6e06011fd9",
-        "type": "github"
-      },
-      "original": {
-        "owner": "zdharma-continuum",
-        "repo": "fast-syntax-highlighting",
-        "type": "github"
-      }
-    },
     "flake-compat": {
       "locked": {
         "lastModified": 1696426674,
@@ -327,7 +311,6 @@
         "arandr": "arandr",
         "disko": "disko",
         "doomemacs": "doomemacs",
-        "fast-syntax-highlighting": "fast-syntax-highlighting",
         "flake-compat": "flake-compat",
         "flake-parts": "flake-parts",
         "flake-utils": "flake-utils",
