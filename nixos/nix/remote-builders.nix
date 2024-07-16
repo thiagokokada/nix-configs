@@ -21,6 +21,12 @@ in
           maxJobs = 4;
           # base64 -w0 /etc/ssh/ssh_host_<type>_key.pub
           publicHostKey = "c3NoLWVkMjU1MTkgQUFBQUMzTnphQzFsWkRJMU5URTVBQUFBSUZEbENUZlZyQUlIVFI0T1RSMENtL2FUdUhOQmdEcE5RMFBncDEvaWFQaFAgcm9vdEB6YXRzdW5lLW5peG9zCg==";
+          supportedFeatures = [
+            "nixos-test"
+            "benchmark"
+            "big-parallel"
+            "kvm"
+          ];
         }
       ];
 
