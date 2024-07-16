@@ -24,6 +24,21 @@
       shellcheck
     ];
 
-    programs.direnv.enable = true;
+    programs = {
+      direnv = {
+        enable = true;
+        enableZshIntegration = false;
+      };
+      zsh.initExtra = # bash
+        # manually creating integrations since this is faster than calling
+        # the `direnv hook zsh` itself
+        ''
+          source ${
+            pkgs.runCommand "direnv-hook-zsh" { } ''
+              ${lib.getExe config.programs.direnv.package} hook zsh > $out
+            ''
+          }
+        '';
+    };
   };
 }

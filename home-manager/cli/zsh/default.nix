@@ -112,9 +112,10 @@ in
 
       initExtra = # bash
         ''
-          # any-nix-shell setup
-          # manually creating the wrappers since this is faster than calling
-          # the `any-nix-shell zsh` helper directly
+          # manually creating integrations since this is faster than calling
+          # the program themselves (e.g. `any-nix-shell zsh`)
+
+          # any-nix-shell
 
           # Overwrite the nix-shell command
           nix-shell() {
@@ -129,6 +130,17 @@ in
             else
               command nix "$@"
             fi
+          }
+
+          # fzf
+          source ${config.programs.fzf.package}/share/fzf/completion.zsh
+          source ${config.programs.fzf.package}/share/fzf/key-bindings.zsh
+
+          # zoxide
+          source ${
+            pkgs.runCommand "zoxide-init-zsh" { } ''
+              ${lib.getExe config.programs.zoxide.package} init zsh > $out
+            ''
           }
 
           # avoid duplicated entries in PATH
@@ -231,8 +243,12 @@ in
         enable = true;
         fileWidgetOptions = [ "--preview 'head {}'" ];
         historyWidgetOptions = [ "--sort" ];
+        enableZshIntegration = false;
       };
-      zoxide.enable = true;
+      zoxide = {
+        enable = true;
+        enableZshIntegration = false;
+      };
     };
   };
 }
