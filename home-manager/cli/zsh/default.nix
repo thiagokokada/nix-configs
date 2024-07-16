@@ -134,9 +134,6 @@ in
             ''
           }
 
-          # zsh-fast-syntax-highlighting
-          source ${pkgs.zsh-fast-syntax-highlighting}/share/zsh/site-functions/fast-syntax-highlighting.plugin.zsh
-
           # avoid duplicated entries in PATH
           typeset -U PATH
 
@@ -191,6 +188,7 @@ in
           (zimPlugin "zim-utility")
           (zshPlugin "pure")
           (zshPlugin "zsh-autopair")
+          (zshPlugin "fast-syntax-highlighting")
           (zshPlugin "zsh-completions")
           (zimPlugin "zim-completion") # needs to be the last one
         ];

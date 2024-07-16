@@ -60,6 +60,10 @@
     };
 
     # ZSH plugins
+    fast-syntax-highlighting = {
+      url = "github:zdharma-continuum/fast-syntax-highlighting";
+      flake = false;
+    };
     zim-completion = {
       url = "github:zimfw/completion";
       flake = false;
