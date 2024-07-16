@@ -101,28 +101,11 @@ in
           zstyle ':zim:input' double-dot-expand no
         '';
 
-      initExtra = # bash
+      initExtra =
+        # manually creating integrations since this is faster than calling
+        # the program during startup (e.g. `zoxide init zsh`)
+        # bash
         ''
-          # manually creating integrations since this is faster than calling
-          # the program themselves (e.g. `any-nix-shell zsh`)
-
-          # any-nix-shell
-
-          # Overwrite the nix-shell command
-          nix-shell() {
-            ${lib.getExe' pkgs.any-nix-shell ".any-nix-shell-wrapper"} zsh "$@"
-          }
-
-          # Overwrite the nix command
-          nix() {
-            if [[ "$1" == shell ]] || [[ "$1" == develop ]]; then
-              shift
-              ${lib.getExe' pkgs.any-nix-shell ".any-nix-shell-wrapper"} zsh "$@"
-            else
-              command nix "$@"
-            fi
-          }
-
           # fzf
           source ${config.programs.fzf.package}/share/fzf/completion.zsh
           source ${config.programs.fzf.package}/share/fzf/key-bindings.zsh

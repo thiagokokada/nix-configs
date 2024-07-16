@@ -31,7 +31,7 @@
       };
       zsh.initExtra = # bash
         # manually creating integrations since this is faster than calling
-        # the `direnv hook zsh` itself
+        # the `direnv hook zsh` itself during startup
         ''
           source ${
             pkgs.runCommand "direnv-hook-zsh" { } ''
