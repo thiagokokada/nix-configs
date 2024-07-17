@@ -60,12 +60,11 @@ in
       };
     };
 
-    programs.zsh.initExtra =
-      lib.optionalString config.programs.zsh.enable # bash
-        ''
-          # Export NNN_TMPFILE to quit on cd always
-          export NNN_TMPFILE="${config.xdg.configHome}/nnn/.lastd"
-          . ${config.programs.nnn.finalPackage}/share/quitcd/quitcd.bash_sh_zsh
-        '';
+    programs.zsh.initExtra = # bash
+      ''
+        # Export NNN_TMPFILE to quit on cd always
+        export NNN_TMPFILE="${config.xdg.configHome}/nnn/.lastd"
+        source ${config.programs.nnn.finalPackage}/share/quitcd/quitcd.bash_sh_zsh
+      '';
   };
 }
