@@ -40,10 +40,12 @@ in
     home-manager.desktop.mpv.vapoursynth.enable = false;
 
     programs = {
-      mpv.package = libEx.nixGLWrapper pkgs {
-        pkg = pkgs.mpv;
-        nixGL = cfg.package;
-      };
+      mpv.package = lib.mkForce (
+        libEx.nixGLWrapper pkgs {
+          pkg = pkgs.mpv;
+          nixGL = cfg.package;
+        }
+      );
     };
   };
 }
