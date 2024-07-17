@@ -31,7 +31,10 @@ in
       enable = true;
 
       package = pkgs.mpv-unwrapped.wrapper {
-        mpv = pkgs.mpv-unwrapped.override { vapoursynthSupport = cfg.vapoursynth.enable; };
+        mpv = pkgs.mpv-unwrapped.override {
+          swiftSupport = false; # FIXME: swift is currently broken in Darwin
+          vapoursynthSupport = cfg.vapoursynth.enable;
+        };
         extraMakeWrapperArgs = lib.optionals cfg.vapoursynth.enable [
           "--prefix"
           "LD_LIBRARY_PATH"

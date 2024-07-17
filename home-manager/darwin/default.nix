@@ -24,7 +24,7 @@ in
     home-manager = {
       dev.enable = true;
       desktop = {
-        mpv.enable = true;
+        # mpv.enable = true;
         wezterm = {
           enable = true;
           fullscreenOnStartup = false;
