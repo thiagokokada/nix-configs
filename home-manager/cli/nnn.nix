@@ -30,12 +30,13 @@ in
       enable = true;
       package = pkgs.nnn.override { withNerdIcons = cfg.icons.enable; };
       bookmarks = {
+        "/" = "/";
         d = "~/Documents";
         D = "~/Downloads";
+        h = "~";
+        m = "/mnt";
         p = "~/Pictures";
         v = "~/Videos";
-        m = "/mnt";
-        "/" = "/";
       };
       extraPackages =
         with pkgs;
@@ -47,6 +48,8 @@ in
           ffmpegthumbnailer
           sxiv
         ];
+      # Triggered with `;` (e.g.: `; + c`)
+      # You can also use `; + Enter` to search all plugins
       plugins = {
         src = "${inputs.nnn-plugins}/plugins";
         mappings = {
