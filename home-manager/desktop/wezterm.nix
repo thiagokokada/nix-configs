@@ -171,7 +171,7 @@ in
           ''
             # Do not enable those alias in non-wezterm terminal
             if [[ -n "$WEZTERM_EXECUTABLE_DIR" ]]; then
-              alias imgcat="$WEZTERM_EXECUTABLE_DIR/bin/wezterm imgcat"
+              alias imgcat="$WEZTERM_EXECUTABLE_DIR/wezterm imgcat"
             fi
           '';
     };
