@@ -106,6 +106,20 @@ in
         # the program during startup (e.g. `zoxide init zsh`)
         # bash
         ''
+          # any-nix-shell
+          source ${
+            pkgs.runCommand "any-nix-shell-zsh"
+              {
+                nativeBuildInputs = with pkgs; [
+                  any-nix-shell
+                  which
+                ];
+              }
+              ''
+                any-nix-shell zsh > $out
+              ''
+          }
+
           # fzf
           source ${config.programs.fzf.package}/share/fzf/completion.zsh
           source ${config.programs.fzf.package}/share/fzf/key-bindings.zsh

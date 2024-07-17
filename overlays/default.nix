@@ -19,6 +19,26 @@ outputs.lib.recursiveMergeAttrs [
 
     anime4k = prev.callPackage ../packages/anime4k { };
 
+    # https://github.com/NixOS/nixpkgs/pull/327866
+    any-nix-shell = prev.any-nix-shell.overrideAttrs (_: {
+      version = "1.2.1-unstable-2023-11-08";
+
+      src = prev.fetchFromGitHub {
+        owner = "haslersn";
+        repo = "any-nix-shell";
+        rev = "2537e5c6901ef934f8f44d61bcfe938b0fc9fa71";
+        hash = "sha256-j1DE0WTBGLmBLoPmqST9YVj9Jc4Mp8WXQILmPBzRlbM=";
+      };
+
+      patches = [
+        (prev.fetchpatch2 {
+          name = "add_support_for_the_nix_develop_command.patch";
+          url = "https://github.com/haslersn/any-nix-shell/commit/f048649700a047150d3bbc399869c4e003c96125.patch";
+          hash = "sha256-Bl4akNy3Aj7LkHTnKOsIdYbIc8LvFH7rjg89QPoLaYk=";
+        })
+      ];
+    });
+
     inherit (inputs.home-manager.packages.${prev.system}) home-manager;
 
     open-browser = prev.callPackage ../packages/open-browser { };
