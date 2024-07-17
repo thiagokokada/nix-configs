@@ -30,19 +30,18 @@ in
     programs.mpv = {
       enable = true;
 
-      package =
-        if (!cfg.vapoursynth.enable) then
-          lib.mkDefault pkgs.mpv
-        else
-          pkgs.mpv-unwrapped.wrapper {
-            mpv = pkgs.mpv-unwrapped.override { vapoursynthSupport = true; };
-            extraMakeWrapperArgs = [
-              "--prefix"
-              "LD_LIBRARY_PATH"
-              ":"
-              "${pkgs.vapoursynth-mvtools}/lib/vapoursynth"
-            ];
-          };
+      package = pkgs.mpv-unwrapped.wrapper {
+        mpv = pkgs.mpv-unwrapped.override {
+          swiftSupport = false; # FIXME: swift is currently broken in Darwin
+          vapoursynthSupport = cfg.vapoursynth.enable;
+        };
+        extraMakeWrapperArgs = lib.optionals cfg.vapoursynth.enable [
+          "--prefix"
+          "LD_LIBRARY_PATH"
+          ":"
+          "${pkgs.vapoursynth-mvtools}/lib/vapoursynth"
+        ];
+      };
 
       config = {
         osd-font-size = 14;
