@@ -14,12 +14,17 @@ in
     enable = lib.mkEnableOption "x11 config" // {
       default = config.home-manager.desktop.i3.enable;
     };
-    nvidia.prime = {
-      sync.enable = lib.mkEnableOption "enable NVIDIA prime sync" // {
-        default = osConfig.hardware.nvidia.prime.sync.enable or false;
+    nvidia = {
+      enable = lib.mkEnableOption "NVIDIA config" // {
+        default = builtins.elem "nvidia" (osConfig.services.xserver.videoDrivers or [ ]);
       };
-      offload.enable = lib.mkEnableOption "enable NVIDIA prime offload" // {
-        default = osConfig.hardware.nvidia.prime.offload.enable or false;
+      prime = {
+        sync.enable = lib.mkEnableOption "enable NVIDIA prime sync" // {
+          default = osConfig.hardware.nvidia.prime.sync.enable or false;
+        };
+        offload.enable = lib.mkEnableOption "enable NVIDIA prime offload" // {
+          default = osConfig.hardware.nvidia.prime.offload.enable or false;
+        };
       };
     };
   };

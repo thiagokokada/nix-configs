@@ -122,7 +122,9 @@ in
         gtk = true;
       };
 
-      extraOptions = lib.optionals (libEx.isNvidia osConfig) [ "--unsupported-gpu" ];
+      extraOptions = lib.optionals config.home-manager.desktop.i3.x11.nvidia.enable [
+        "--unsupported-gpu"
+      ];
     };
 
     xsession.preferStatusNotifierItems = true;
