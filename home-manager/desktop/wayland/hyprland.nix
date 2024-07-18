@@ -97,8 +97,13 @@ in
             preserve_split = true;
           };
           misc = {
-            force_default_wallpaper = 2;
+            font_family = config.home-manager.desktop.theme.fonts.gui.name;
             disable_hyprland_logo = false;
+            force_default_wallpaper = 2;
+            key_press_enables_dpms = true;
+            mouse_move_enables_dpms = false;
+            vfr = true;
+            vrr = 2;
           };
           gestures = {
             workspace_swipe = false;
