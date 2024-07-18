@@ -10,10 +10,13 @@
   };
 
   config = lib.mkIf config.home-manager.desktop.hyprland.enable {
+    home.packages = with pkgs; [ hyprshot ];
+
     wayland.windowManager.hyprland = {
       enable = true;
       settings =
         let
+          hyprctl = lib.getExe' config.wayland.windowManager.hyprland.package "hyprctl";
           # https://github.com/wez/wezterm/issues/5103
           terminal = lib.getExe config.programs.kitty.package;
           menu = lib.getExe config.programs.fuzzel.package;
@@ -24,16 +27,14 @@
           playerctl = lib.getExe pkgs.playerctl;
           dunstctl = lib.getExe' pkgs.dunst "dunstctl";
           light = "light"; # needs to be installed system wide
+          fullScreenshot = "${lib.getExe pkgs.hyprshot} -m output -o ${config.xdg.userDirs.pictures}";
+          areaScreenshot = "${lib.getExe pkgs.hyprshot} -m region -o ${config.xdg.userDirs.pictures}";
         in
         {
           "$mainMod" = "SUPER";
-          "$superMod" = "SUPER_SHIFT";
+          "$shiftMod" = "SUPER_SHIFT";
           "$altMod" = "ALT";
           "$control" = "CONTROL";
-          "$terminal" = terminal;
-          "$menu" = menu;
-          "$browser" = browser;
-          "$filemanager" = fileManager;
           "exec-once" = bar;
           # monitor = ",preferred,auto,${toString (config.home-manager.desktop.theme.fonts.dpi / 100.0)}";
           monitor = ",preferred,auto,1.6";
@@ -43,7 +44,7 @@
           input = {
             kb_layout = "us";
             kb_variant = "intl";
-            follow_mouse = 1;
+            follow_mouse = 0;
             sensitivity = 0;
             touchpad = {
               natural_scroll = false;
@@ -82,74 +83,76 @@
           # i -> ignore mods, will ignore modifiers.
           # s -> separate, will arbitrarily combine keys between each mod/key.
           # d -> has description, will allow you to write a description for your bind.
-          bind = [
-            "$mainMod, RETURN, exec, $terminal"
-            "$mainMod, Q, killactive,"
-            "$altMod, F4, killactive,"
-            "$mainMod, D, exec, $menu"
-            "$mainMod, N, exec, $browser"
-            "$mainMod, M, exec, $filemanager"
-            "$mainMod, V, togglefloating,"
-            "$mainMod, B, togglesplit,"
-            "$superMod, Q, exit,"
+          bind =
+            [
+              "$mainMod, RETURN, exec, ${terminal}"
+              "$mainMod, Q, killactive,"
+              "$altMod, F4, killactive,"
+              "$mainMod, D, exec, ${menu}"
+              "$mainMod, N, exec, ${browser}"
+              "$mainMod, M, exec, ${fileManager}"
+              "$mainMod, V, togglefloating,"
+              "$mainMod, B, togglesplit,"
+              "$shiftMod, Q, exit,"
+              "$shiftMod, C, exec, ${hyprctl} reload"
 
-            # Move focus with mainMod + arrow keys
-            "$mainMod, left, movefocus, l"
-            "$mainMod, right, movefocus, r"
-            "$mainMod, up, movefocus, u"
-            "$mainMod, down, movefocus, d"
-            # Move focus with mainMod + vi keys
-            "$mainMod, H, movefocus, l"
-            "$mainMod, L, movefocus, r"
-            "$mainMod, K, movefocus, u"
-            "$mainMod, J, movefocus, d"
+              # Move focus with mainMod + arrow keys
+              "$mainMod, left, movefocus, l"
+              "$mainMod, right, movefocus, r"
+              "$mainMod, up, movefocus, u"
+              "$mainMod, down, movefocus, d"
+              # Move focus with mainMod + vi keys
+              "$mainMod, H, movefocus, l"
+              "$mainMod, L, movefocus, r"
+              "$mainMod, K, movefocus, u"
+              "$mainMod, J, movefocus, d"
 
-            # Move window with mainMod + arrow keys
-            "$superMod, left, movewindow, l"
-            "$superMod, right, movewindow, r"
-            "$superMod, up, movewindow, u"
-            "$superMod, down, movewindow, d"
-            # Move window with mainMod + vi keys
-            "$superMod, H, movewindow, l"
-            "$superMod, L, movewindow, r"
-            "$superMod, K, movewindow, u"
-            "$superMod, J, movewindow, d"
+              # Move window with mainMod + arrow keys
+              "$shiftMod, left, movewindow, l"
+              "$shiftMod, right, movewindow, r"
+              "$shiftMod, up, movewindow, u"
+              "$shiftMod, down, movewindow, d"
+              # Move window with mainMod + vi keys
+              "$shiftMod, H, movewindow, l"
+              "$shiftMod, L, movewindow, r"
+              "$shiftMod, K, movewindow, u"
+              "$shiftMod, J, movewindow, d"
 
-            # Switch workspaces with mainMod + [0-9]
-            "$mainMod, 1, workspace, 1"
-            "$mainMod, 2, workspace, 2"
-            "$mainMod, 3, workspace, 3"
-            "$mainMod, 4, workspace, 4"
-            "$mainMod, 5, workspace, 5"
-            "$mainMod, 6, workspace, 6"
-            "$mainMod, 7, workspace, 7"
-            "$mainMod, 8, workspace, 8"
-            "$mainMod, 9, workspace, 9"
-            "$mainMod, 0, workspace, 10"
+              # Example special workspace (scratchpad)
+              "$mainMod, S, togglespecialworkspace, magic"
+              "$mainMod SHIFT, S, movetoworkspace, special:magic"
 
-            # Move active window to a workspace with mainMod + SHIFT + [0-9]
-            "$mainMod SHIFT, 1, movetoworkspace, 1"
-            "$mainMod SHIFT, 2, movetoworkspace, 2"
-            "$mainMod SHIFT, 3, movetoworkspace, 3"
-            "$mainMod SHIFT, 4, movetoworkspace, 4"
-            "$mainMod SHIFT, 5, movetoworkspace, 5"
-            "$mainMod SHIFT, 6, movetoworkspace, 6"
-            "$mainMod SHIFT, 7, movetoworkspace, 7"
-            "$mainMod SHIFT, 8, movetoworkspace, 8"
-            "$mainMod SHIFT, 9, movetoworkspace, 9"
-            "$mainMod SHIFT, 0, movetoworkspace, 10"
+              # Scroll through existing workspaces with mainMod + scroll
+              "$mainMod, mouse_down, workspace, e+1"
+              "$mainMod, mouse_up, workspace, e-1"
 
-            # Example special workspace (scratchpad)
-            "$mainMod, S, togglespecialworkspace, magic"
-            "$mainMod SHIFT, S, movetoworkspace, special:magic"
+              # Notifications
+              "$control, ESCAPE, exec, ${dunstctl} close"
+              "CONTROL_SHIFT, ESCAPE, exec, ${dunstctl} close-all"
 
-            # Scroll through existing workspaces with mainMod + scroll
-            "$mainMod, mouse_down, workspace, e+1"
-            "$mainMod, mouse_up, workspace, e-1"
-
-            "$control, ESCAPE, exec, ${dunstctl} close"
-            "SUPER_CONTROL, ESCAPE, exec, ${dunstctl} close-all"
-          ];
+              # Screenshots
+              ", PRINT, exec, ${fullScreenshot}"
+              "$mainMod, PRINT, exec, ${areaScreenshot}"
+            ]
+            ++
+            # workspaces
+            (
+              # binds $mod + [shift +] {1..9,0} to [move to] workspace {1..10}
+              with builtins;
+              concatLists (
+                genList (
+                  x:
+                  let
+                    # workspace 10 is mapped to 0
+                    ws = toString (if x == 9 then 0 else x + 1);
+                  in
+                  [
+                    "$mainMod, ${ws}, workspace, ${toString (x + 1)}"
+                    "$mainMod SHIFT, ${ws}, movetoworkspace, ${toString (x + 1)}"
+                  ]
+                ) 10
+              )
+            );
 
           bindm = [
             # Move/resize windows with mainMod + LMB/RMB and dragging
