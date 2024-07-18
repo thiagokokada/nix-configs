@@ -11,8 +11,14 @@ let
   notify = pkgs.writeShellScript "notify" ''
     ${lib.getExe' pkgs.dunst "dunstify"} -t 30000 "30 seconds to lock"
   '';
-  displayOn = ''${lib.getExe' pkgs.sway "swaymsg"} "output * power on"'';
-  displayOff = ''${lib.getExe' pkgs.sway "swaymsg"} "output * power off"'';
+  displayOn = pkgs.writeShellScript "display-on" ''
+    ${lib.getExe' pkgs.sway "swaymsg"} "output * power on" || true
+    ${lib.getExe' pkgs.hyprland "hyprctl"} dispatch dpms on || true
+  '';
+  displayOff = pkgs.writeShellScript "display-off" ''
+    ${lib.getExe' pkgs.sway "swaymsg"} "output * power off" || true
+    ${lib.getExe' pkgs.hyprland "hyprctl"} dispatch dpms off || true
+  '';
 in
 {
   options.home-manager.desktop.wayland.swayidle.enable = lib.mkEnableOption "swayidle config" // {
@@ -27,7 +33,7 @@ in
       events = [
         {
           event = "after-resume";
-          command = displayOn;
+          command = toString displayOn;
         }
         {
           event = "before-sleep";
@@ -49,8 +55,8 @@ in
         }
         {
           timeout = 605;
-          command = displayOff;
-          resumeCommand = displayOn;
+          command = toString displayOff;
+          resumeCommand = toString displayOn;
         }
       ];
     };
