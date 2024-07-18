@@ -6,17 +6,18 @@
 }:
 
 let
+  cfg = config.home-manager.desktop.wayland.kanshi;
   hostName = osConfig.networking.hostName or "generic";
   hostConfigFile = ./${hostName}.nix;
 in
 {
   imports = lib.optionals (builtins.pathExists hostConfigFile) [ hostConfigFile ];
 
-  options.home-manager.desktop.sway.kanshi.enable = lib.mkEnableOption "Kanshi config" // {
-    default = config.home-manager.desktop.sway.enable;
+  options.home-manager.desktop.wayland.kanshi.enable = lib.mkEnableOption "Kanshi config" // {
+    default = config.home-manager.desktop.wayland.enable;
   };
 
-  config = lib.mkIf config.home-manager.desktop.sway.kanshi.enable {
+  config = lib.mkIf cfg.enable {
     services.kanshi = {
       enable = true;
       systemdTarget = "graphical-session.target";

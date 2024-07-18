@@ -1,11 +1,14 @@
 { config, lib, ... }:
 
+let
+  cfg = config.home-manager.desktop.wayland.fuzzel;
+in
 {
-  options.home-manager.desktop.sway.fuzzel.enable = lib.mkEnableOption "Fuzzel config" // {
-    default = config.home-manager.desktop.sway.enable;
+  options.home-manager.desktop.wayland.fuzzel.enable = lib.mkEnableOption "Fuzzel config" // {
+    default = config.home-manager.desktop.wayland.enable;
   };
 
-  config = lib.mkIf config.home-manager.desktop.sway.fuzzel.enable {
+  config = lib.mkIf cfg.enable {
     programs.fuzzel = {
       enable = true;
       settings = with config.home-manager.desktop.theme.fonts; {

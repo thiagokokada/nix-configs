@@ -6,7 +6,7 @@
 }:
 
 let
-  cfg = config.home-manager.desktop.hyprland;
+  cfg = config.home-manager.desktop.wayland.hyprland;
   # Modifiers
   alt = "ALT";
   ctrl = "CONTROL";
@@ -14,8 +14,8 @@ let
   shift = key: "${key}_SHIFT";
 in
 {
-  options.home-manager.desktop.hyprland.enable = lib.mkEnableOption "Hyprland config" // {
-    default = config.home-manager.desktop.enable;
+  options.home-manager.desktop.wayland.hyprland.enable = lib.mkEnableOption "Hyprland config" // {
+    default = config.home-manager.desktop.wayland.enable;
   };
 
   config = lib.mkIf cfg.enable {

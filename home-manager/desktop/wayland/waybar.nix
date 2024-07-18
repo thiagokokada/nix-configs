@@ -7,9 +7,9 @@
 }:
 
 let
-  cfg = config.home-manager.desktop.sway.waybar;
-  hyprlandEnabled = config.home-manager.desktop.hyprland.enable;
-  swayEnabled = config.home-manager.desktop.sway.enable;
+  cfg = config.home-manager.desktop.wayland.waybar;
+  hyprlandCfg = config.home-manager.desktop.wayland.hyprland;
+  swayCfg = config.home-manager.desktop.wayland.sway;
 
   dunstctl = lib.getExe' pkgs.dunst "dunstctl";
   hyprctl = lib.getExe' config.wayland.windowManager.hyprland.package "hyprctl";
@@ -19,9 +19,9 @@ let
   shortPathName = path: "disk#${libEx.shortPathWithSep "_" path}";
 in
 {
-  options.home-manager.desktop.sway.waybar = {
+  options.home-manager.desktop.wayland.waybar = {
     enable = lib.mkEnableOption "Waybar config" // {
-      default = hyprlandEnabled || swayEnabled;
+      default = hyprlandCfg.enable || swayCfg.enable;
     };
     interval = lib.mkOption {
       type = lib.types.int;
@@ -57,18 +57,18 @@ in
             height = 24;
             spacing = 3;
             modules-left =
-              lib.optionals hyprlandEnabled [
+              lib.optionals hyprlandCfg.enable [
                 "hyprland/workspaces"
                 "hyprland/submap"
               ]
-              ++ lib.optionals swayEnabled [
+              ++ lib.optionals swayCfg.enable [
                 "sway/workspaces"
                 "sway/mode"
               ]
               ++ [ "wlr/taskbar" ];
             modules-center =
-              lib.optionals hyprlandEnabled [ "hyprland/window" ]
-              ++ lib.optionals swayEnabled [ "sway/window" ];
+              lib.optionals hyprlandCfg.enable [ "hyprland/window" ]
+              ++ lib.optionals swayCfg.enable [ "sway/window" ];
             modules-right =
               lib.pipe
                 [
@@ -98,7 +98,7 @@ in
                   ]))
                   lib.init
                 ];
-            "hyprland/workspaces" = lib.mkIf hyprlandEnabled {
+            "hyprland/workspaces" = lib.mkIf hyprlandCfg.enable {
               format = "{name}: {icon}";
               format-icons = {
                 "1" = " ";
@@ -115,10 +115,10 @@ in
               "on-scroll-up" = "${hyprctl} dispatch workspace e+1";
               "on-scroll-down" = "${hyprctl} dispatch workspace e-1";
             };
-            "hyprland/submap".tooltip = lib.mkIf hyprlandEnabled false;
-            "sway/mode".tooltip = lib.mkIf swayEnabled false;
-            "sway/window".max-length = lib.mkIf swayEnabled 50;
-            "sway/workspaces".disable-scroll-wraparound = lib.mkIf swayEnabled true;
+            "hyprland/submap".tooltip = lib.mkIf hyprlandCfg.enable false;
+            "sway/mode".tooltip = lib.mkIf swayCfg.enable false;
+            "sway/window".max-length = lib.mkIf swayCfg.enable 50;
+            "sway/workspaces".disable-scroll-wraparound = lib.mkIf swayCfg.enable true;
             "wlr/taskbar" = {
               format = "{icon}";
               on-click = "activate";

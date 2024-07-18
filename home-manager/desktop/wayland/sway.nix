@@ -7,6 +7,7 @@
   ...
 }:
 let
+  cfg = config.home-manager.desktop.wayland.sway;
   # Aliases
   alt = "Mod1";
   modifier = "Mod4";
@@ -60,19 +61,11 @@ let
     };
 in
 {
-  imports = [
-    ./kanshi
-    ./fuzzel.nix
-    ./swayidle.nix
-    ./swaylock.nix
-    ./waybar.nix
-  ];
-
-  options.home-manager.desktop.sway.enable = lib.mkEnableOption "Sway config" // {
-    default = config.home-manager.desktop.enable;
+  options.home-manager.desktop.wayland.sway.enable = lib.mkEnableOption "Sway config" // {
+    default = config.home-manager.desktop.wayland.enable;
   };
 
-  config = lib.mkIf config.home-manager.desktop.sway.enable {
+  config = lib.mkIf cfg.enable {
     wayland.windowManager.sway = with commonOptions; {
       enable = true;
 

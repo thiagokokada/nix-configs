@@ -7,7 +7,7 @@
 
 {
   options.home-manager.desktop.dunst.enable = lib.mkEnableOption "dunst config" // {
-    default = config.home-manager.desktop.i3.enable || config.home-manager.desktop.sway.enable;
+    default = config.home-manager.desktop.i3.enable || config.home-manager.desktop.wayland.enable;
   };
 
   config = lib.mkIf config.home-manager.desktop.dunst.enable {

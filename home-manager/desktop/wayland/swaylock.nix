@@ -5,12 +5,15 @@
   ...
 }:
 
+let
+  cfg = config.home-manager.desktop.wayland.swaylock;
+in
 {
-  options.home-manager.desktop.sway.swaylock.enable = lib.mkEnableOption "swaylock config" // {
-    default = config.home-manager.desktop.sway.enable;
+  options.home-manager.desktop.wayland.swaylock.enable = lib.mkEnableOption "swaylock config" // {
+    default = config.home-manager.desktop.wayland.enable;
   };
 
-  config = lib.mkIf config.home-manager.desktop.sway.swaylock.enable {
+  config = lib.mkIf cfg.enable {
     programs.swaylock = {
       enable = true;
       package = pkgs.swaylock;

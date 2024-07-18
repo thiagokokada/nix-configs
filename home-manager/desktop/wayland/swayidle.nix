@@ -6,6 +6,7 @@
 }:
 
 let
+  cfg = config.home-manager.desktop.wayland.swayidle;
   swaylock = "${lib.getExe config.programs.swaylock.package} -f";
   notify = pkgs.writeShellScript "notify" ''
     ${lib.getExe' pkgs.dunst "dunstify"} -t 30000 "30 seconds to lock"
@@ -14,12 +15,11 @@ let
   displayOff = ''${lib.getExe' pkgs.sway "swaymsg"} "output * power off"'';
 in
 {
-
-  options.home-manager.desktop.sway.swayidle.enable = lib.mkEnableOption "swayidle config" // {
-    default = config.home-manager.desktop.sway.enable;
+  options.home-manager.desktop.wayland.swayidle.enable = lib.mkEnableOption "swayidle config" // {
+    default = config.home-manager.desktop.wayland.enable;
   };
 
-  config = lib.mkIf config.home-manager.desktop.sway.swayidle.enable {
+  config = lib.mkIf cfg.enable {
     home.packages = with pkgs; [ swayidle ];
 
     services.swayidle = {
