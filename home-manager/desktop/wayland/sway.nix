@@ -96,19 +96,21 @@ in
         };
       };
 
-      extraSessionCommands = ''
-        # Source home-manager session vars
-        . "${config.home.sessionVariablesPackage}/etc/profile.d/hm-session-vars.sh"
-        # Vulkan renderer
-        export WLR_RENDERER=vulkan,gles2,pixman
-        # Chrome/Chromium/Electron
-        export NIXOS_OZONE_WL=1
-        # SDL
-        export SDL_VIDEODRIVER=wayland
-        # Fix for some Java AWT applications (e.g. Android Studio),
-        # use this if they aren't displayed properly:
-        export _JAVA_AWT_WM_NONREPARENTING=1
-      '';
+      extraSessionCommands =
+        # bash
+        ''
+          # Source home-manager session vars
+          . "${config.home.sessionVariablesPackage}/etc/profile.d/hm-session-vars.sh"
+          # Vulkan renderer
+          export WLR_RENDERER=vulkan,gles2,pixman
+          # Chrome/Chromium/Electron
+          export NIXOS_OZONE_WL=1
+          # SDL
+          export SDL_VIDEODRIVER=wayland
+          # Fix for some Java AWT applications (e.g. Android Studio),
+          # use this if they aren't displayed properly:
+          export _JAVA_AWT_WM_NONREPARENTING=1
+        '';
 
       systemd = {
         enable = true;

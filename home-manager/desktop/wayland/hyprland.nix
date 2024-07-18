@@ -250,6 +250,7 @@ in
           loginctl = "loginctl";
           wdisplays = lib.getExe pkgs.wdisplays;
         in
+        # hyprlang
         ''
           bind = ${mod}, P, submap, ${displayLayoutSubmap}
           submap = ${displayLayoutSubmap}
