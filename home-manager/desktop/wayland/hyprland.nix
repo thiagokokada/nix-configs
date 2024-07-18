@@ -84,6 +84,19 @@ in
               tap-to-click = true;
             };
           };
+          device = [
+            # Sadly it is not possible to set this in input.touchpad
+            # https://github.com/hyprwm/Hyprland/issues/5601
+            # Get name with `hyprctl devices`
+            {
+              name = "synps/2-synaptics-touchpad";
+              accel_profile = "adaptive";
+            }
+            {
+              name = "tpps/2-elan-trackpoint";
+              accel_profile = "adaptive";
+            }
+          ];
           animations = {
             enabled = true;
             animation = [
@@ -286,18 +299,6 @@ in
           bind = , ESCAPE, submap, reset
           bind = , RETURN, submap, reset
           submap = reset
-
-          # Sadly it is not possible to set this in input.touchpad
-          # https://github.com/hyprwm/Hyprland/issues/5601
-          # Get name with `hyprctl devices`
-          device {
-            name = synps/2-synaptics-touchpad
-            accel_profile = adaptive
-          }
-          device {
-            name = tpps/2-elan-trackpoint
-            accel_profile = adaptive
-          }
         '';
     };
   };
