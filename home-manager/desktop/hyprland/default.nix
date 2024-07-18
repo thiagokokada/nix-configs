@@ -49,9 +49,9 @@
             # use this if they aren't displayed properly:
             "_JAVA_AWT_WM_NONREPARENTING,1"
           ];
-          # FIXME: errors out for DELL S3423DWC 10CWNH3
-          # monitor = ",preferred,auto,${toString (config.home-manager.desktop.theme.fonts.dpi / 100.0)}";
-          monitor = ",preferred,auto,1.6";
+          # https://github.com/hyprwm/Hyprland/issues/4337
+          monitor = ",preferred,auto,${toString (config.home-manager.desktop.theme.fonts.dpi / 100.0)}";
+          debug.disable_scale_checks = true;
           general = {
             layout = "dwindle";
             gaps_in = 5;
