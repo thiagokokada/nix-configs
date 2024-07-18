@@ -11,6 +11,7 @@
     ./dunst.nix
     ./firefox.nix
     ./gammastep.nix
+    ./hyprland
     ./i3
     ./kitty.nix
     ./mpv

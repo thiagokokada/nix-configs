@@ -49,6 +49,7 @@ in
             height = 24;
             spacing = 3;
             modules-left = [
+              "hyprland/workspaces"
               "sway/workspaces"
               "sway/mode"
               "wlr/taskbar"
