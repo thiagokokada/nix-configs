@@ -11,13 +11,13 @@
     ./dunst.nix
     ./firefox.nix
     ./gammastep.nix
-    ./i3
     ./kitty.nix
     ./mpv
     ./nixgl.nix
     ./theme
     ./wayland
     ./wezterm.nix
+    ./x11
     ./xterm.nix
   ];
 

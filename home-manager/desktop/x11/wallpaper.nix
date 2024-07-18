@@ -6,11 +6,11 @@
 }:
 
 {
-  options.home-manager.desktop.i3.wallpaper.enable = lib.mkEnableOption "wallpaper config" // {
-    default = config.home-manager.desktop.i3.enable;
+  options.home-manager.desktop.x11.wallpaper.enable = lib.mkEnableOption "wallpaper config" // {
+    default = config.home-manager.desktop.x11.enable;
   };
 
-  config = lib.mkIf config.home-manager.desktop.i3.wallpaper.enable {
+  config = lib.mkIf config.home-manager.desktop.x11.wallpaper.enable {
     systemd.user.services = {
       wallpaper = {
         Unit = {

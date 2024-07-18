@@ -7,7 +7,7 @@
 
 {
   options.home-manager.desktop.gammastep.enable = lib.mkEnableOption "gammastep config" // {
-    default = config.home-manager.desktop.i3.enable || config.home-manager.desktop.wayland.enable;
+    default = config.home-manager.desktop.x11.enable || config.home-manager.desktop.wayland.enable;
   };
 
   config = lib.mkIf config.home-manager.desktop.gammastep.enable {

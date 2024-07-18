@@ -6,13 +6,13 @@
 }:
 
 {
-  options.home-manager.desktop.i3.screen-locker.enable =
+  options.home-manager.desktop.x11.screen-locker.enable =
     lib.mkEnableOption "screen-locker config"
     // {
-      default = config.home-manager.desktop.i3.enable;
+      default = config.home-manager.desktop.x11.enable;
     };
 
-  config = lib.mkIf config.home-manager.desktop.i3.screen-locker.enable {
+  config = lib.mkIf config.home-manager.desktop.x11.screen-locker.enable {
     services.screen-locker = {
       enable = true;
       inactiveInterval = 10;

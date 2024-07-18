@@ -7,12 +7,12 @@
 }:
 
 let
-  cfg = config.home-manager.desktop.i3.i3status-rust;
+  cfg = config.home-manager.desktop.x11.i3status-rust;
 in
 {
-  options.home-manager.desktop.i3.i3status-rust = {
+  options.home-manager.desktop.x11.i3status-rust = {
     enable = lib.mkEnableOption "i3status-rust config" // {
-      default = config.home-manager.desktop.i3.enable;
+      default = config.home-manager.desktop.x11.enable;
     };
     interval = lib.mkOption {
       type = lib.types.int;
@@ -40,7 +40,6 @@ in
   config = lib.mkIf cfg.enable {
     programs.i3status-rust = {
       enable = true;
-      package = pkgs.i3status-rust;
       bars =
         let
           settings = {

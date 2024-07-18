@@ -7,12 +7,22 @@
 }:
 
 let
-  cfg = config.home-manager.desktop.i3.x11;
+  cfg = config.home-manager.desktop.x11;
 in
 {
-  options.home-manager.desktop.i3.x11 = {
+  imports = [
+    ./autorandr
+    ./i3
+    ./i3status-rust.nix
+    ./picom.nix
+    ./rofi.nix
+    ./screen-locker.nix
+    ./wallpaper.nix
+  ];
+
+  options.home-manager.desktop.x11 = {
     enable = lib.mkEnableOption "x11 config" // {
-      default = config.home-manager.desktop.i3.enable;
+      default = config.home-manager.desktop.enable;
     };
     nvidia = {
       enable = lib.mkEnableOption "NVIDIA config" // {

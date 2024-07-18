@@ -9,14 +9,14 @@
 let
   hostName = osConfig.networking.hostName or "generic";
   hostConfigFile = ./${hostName}.nix;
-  cfg = config.home-manager.desktop.i3.autorandr;
+  cfg = config.home-manager.desktop.x11.autorandr;
 in
 {
   imports = lib.optionals (builtins.pathExists hostConfigFile) [ hostConfigFile ];
 
-  options.home-manager.desktop.i3.autorandr = {
+  options.home-manager.desktop.x11.autorandr = {
     enable = lib.mkEnableOption "autorandr config" // {
-      default = config.home-manager.desktop.i3.enable;
+      default = config.home-manager.desktop.x11.enable;
     };
     defaultProfile = lib.mkOption {
       description = "Default autorandr profile";

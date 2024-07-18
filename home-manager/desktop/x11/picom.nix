@@ -1,14 +1,14 @@
 { config, lib, ... }:
 
 {
-  options.home-manager.desktop.i3.picom.enable = lib.mkEnableOption "picom config" // {
-    default = config.home-manager.desktop.i3.enable;
+  options.home-manager.desktop.x11.picom.enable = lib.mkEnableOption "picom config" // {
+    default = config.home-manager.desktop.x11.enable;
   };
 
-  config = lib.mkIf config.home-manager.desktop.i3.picom.enable {
+  config = lib.mkIf config.home-manager.desktop.x11.picom.enable {
     services.picom = {
       enable = true;
-      backend = if config.home-manager.desktop.i3.x11.nvidia.enable then "glx" else "egl";
+      backend = if config.home-manager.desktop.x11.nvidia.enable then "glx" else "egl";
       fade = true;
       fadeDelta = 2;
       vSync = true;

@@ -63,7 +63,7 @@ let
               rightCmd = runMons "-e right";
             })
             // {
-              a = lib.mkIf config.home-manager.desktop.i3.autorandr.enable "mode default, exec ${lib.getExe pkgs.autorandr} --change --default default";
+              a = lib.mkIf config.home-manager.desktop.x11.autorandr.enable "mode default, exec ${lib.getExe pkgs.autorandr} --change --default default";
               d = runMons "-d";
               m = runMons "-m";
               s = runMons "-s";
@@ -90,21 +90,11 @@ let
     };
 in
 {
-  imports = [
-    ./autorandr
-    ./i3status-rust.nix
-    ./picom.nix
-    ./rofi.nix
-    ./screen-locker.nix
-    ./wallpaper.nix
-    ./x11.nix
-  ];
-
-  options.home-manager.desktop.i3.enable = lib.mkEnableOption "i3 config" // {
-    default = config.home-manager.desktop.enable;
+  options.home-manager.desktop.x11.i3.enable = lib.mkEnableOption "i3 config" // {
+    default = config.home-manager.desktop.x11.enable;
   };
 
-  config = lib.mkIf config.home-manager.desktop.i3.enable {
+  config = lib.mkIf config.home-manager.desktop.x11.i3.enable {
     home = {
       packages = with pkgs; [
         arandr

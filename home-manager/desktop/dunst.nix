@@ -7,14 +7,11 @@
 
 {
   options.home-manager.desktop.dunst.enable = lib.mkEnableOption "dunst config" // {
-    default = config.home-manager.desktop.i3.enable || config.home-manager.desktop.wayland.enable;
+    default = config.home-manager.desktop.x11.enable || config.home-manager.desktop.wayland.enable;
   };
 
   config = lib.mkIf config.home-manager.desktop.dunst.enable {
-    home.packages = with pkgs; [
-      dbus # for dbus-send, needed for dunstctl
-      dunst
-    ];
+    home.packages = with pkgs; [ dunst ];
 
     services.dunst = {
       enable = true;

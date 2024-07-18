@@ -6,11 +6,11 @@
 }:
 
 {
-  options.home-manager.desktop.i3.rofi.enable = lib.mkEnableOption "rofi config" // {
-    default = config.home-manager.desktop.i3.enable;
+  options.home-manager.desktop.x11.rofi.enable = lib.mkEnableOption "rofi config" // {
+    default = config.home-manager.desktop.x11.enable;
   };
 
-  config = lib.mkIf config.home-manager.desktop.i3.rofi.enable {
+  config = lib.mkIf config.home-manager.desktop.x11.rofi.enable {
     programs.rofi = {
       enable = true;
       terminal = config.home-manager.desktop.defaultTerminal;

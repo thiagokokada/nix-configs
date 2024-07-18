@@ -1,9 +1,7 @@
 {
   config,
   lib,
-  libEx,
   pkgs,
-  osConfig,
   ...
 }:
 let
@@ -19,7 +17,7 @@ let
         "${pictures}/$(${lib.getExe' pkgs.coreutils "date"} +%Y-%m-%d_%H-%M-%S)-screenshot.png";
       displayLayoutMode = " : [a]uto, [g]ui";
     in
-    import ../i3/common.nix rec {
+    import ../x11/i3/common.nix rec {
       inherit
         config
         lib
@@ -122,9 +120,7 @@ in
         gtk = true;
       };
 
-      extraOptions = lib.optionals config.home-manager.desktop.i3.x11.nvidia.enable [
-        "--unsupported-gpu"
-      ];
+      extraOptions = lib.optionals config.home-manager.desktop.x11.nvidia.enable [ "--unsupported-gpu" ];
     };
 
     xsession.preferStatusNotifierItems = true;
