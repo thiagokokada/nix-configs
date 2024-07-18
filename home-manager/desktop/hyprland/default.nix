@@ -17,6 +17,7 @@
       settings =
         let
           hyprctl = lib.getExe' config.wayland.windowManager.hyprland.package "hyprctl";
+          # FIXME: use wezterm instead
           # https://github.com/wez/wezterm/issues/5103
           terminal = lib.getExe config.programs.kitty.package;
           menu = lib.getExe config.programs.fuzzel.package;
@@ -35,19 +36,42 @@
           "$shiftMod" = "SUPER_SHIFT";
           "$altMod" = "ALT";
           "$control" = "CONTROL";
-          "exec-once" = bar;
+          exec-once = [ bar ];
+          env = [
+            # Cursor
+            "XCURSOR_THEME,${toString config.xsession.pointerCursor.name}"
+            "XCURSOR_SIZE,${toString config.xsession.pointerCursor.size}"
+            # Chrome/Chromium/Electron
+            "NIXOS_OZONE_WL,1"
+            # SDL
+            "SDL_VIDEODRIVER,wayland"
+            # Fix for some Java AWT applications (e.g. Android Studio),
+            # use this if they aren't displayed properly:
+            "_JAVA_AWT_WM_NONREPARENTING,1"
+          ];
+          # FIXME: errors out for DELL S3423DWC 10CWNH3
           # monitor = ",preferred,auto,${toString (config.home-manager.desktop.theme.fonts.dpi / 100.0)}";
           monitor = ",preferred,auto,1.6";
           general = {
             layout = "dwindle";
+            gaps_in = 5;
+            gaps_out = 10;
+            border_size = 2;
+            resize_on_border = false;
+            # Please see https://wiki.hyprland.org/Configuring/Tearing/ before you turn this on
+            allow_tearing = false;
           };
           input = {
             kb_layout = "us";
             kb_variant = "intl";
+            kb_options = "caps:escape,grp:win_space_toggle";
+            accel_profile = "flat";
             follow_mouse = 0;
             sensitivity = 0;
             touchpad = {
-              natural_scroll = false;
+              natural_scroll = true;
+              middle_button_emulation = true;
+              tap-to-click = true;
             };
           };
           animations = {
@@ -55,15 +79,13 @@
             animation = [
               "workspaces,1,2,default"
               "windows,1,1,default,slide"
+              "layers,1,1,default,slide"
               "fade,0"
             ];
           };
           dwindle = {
             pseudotile = true;
             preserve_split = true;
-          };
-          master = {
-            new_status = "master";
           };
           misc = {
             force_default_wallpaper = 2;
@@ -85,16 +107,25 @@
           # d -> has description, will allow you to write a description for your bind.
           bind =
             [
+              # Main bindings
               "$mainMod, RETURN, exec, ${terminal}"
-              "$mainMod, Q, killactive,"
-              "$altMod, F4, killactive,"
               "$mainMod, D, exec, ${menu}"
               "$mainMod, N, exec, ${browser}"
               "$mainMod, M, exec, ${fileManager}"
               "$mainMod, V, togglefloating,"
               "$mainMod, B, togglesplit,"
-              "$shiftMod, Q, exit,"
               "$shiftMod, C, exec, ${hyprctl} reload"
+              "$shiftMod, Q, killactive,"
+              "$altMod, F4, killactive,"
+
+              # Cycle active window
+              "$mainMod, TAB, cyclenext,"
+              "$mainMod, TAB, bringactivetotop"
+
+              # Resize active window
+              "$mainMod, EQUAL, resizeactive, 10 10"
+              "$mainMod, PLUS, resizeactive, 10 10"
+              "$mainMod, MINUS, resizeactive, -10 -10"
 
               # Move focus with mainMod + arrow keys
               "$mainMod, left, movefocus, l"
@@ -118,7 +149,7 @@
               "$shiftMod, K, movewindow, u"
               "$shiftMod, J, movewindow, d"
 
-              # Example special workspace (scratchpad)
+              # Scratchpad
               "$mainMod, S, togglespecialworkspace, magic"
               "$mainMod SHIFT, S, movetoworkspace, special:magic"
 
@@ -154,11 +185,15 @@
               )
             );
 
-          bindm = [
-            # Move/resize windows with mainMod + LMB/RMB and dragging
-            "$mainMod, mouse:272, movewindow"
-            "$mainMod, mouse:273, resizewindow"
-          ];
+          bindm =
+            let
+              leftButton = "272";
+              rightButton = "273";
+            in
+            [
+              "$mainMod, mouse:${leftButton}, movewindow"
+              "$mainMod, mouse:${rightButton}, resizewindow"
+            ];
 
           bindel = [
             # Volume
@@ -180,6 +215,53 @@
             ", XF86AudioPrev, exec, ${playerctl} previous"
           ];
         };
+
+      extraConfig =
+        let
+          displayLayoutSubmap = " : [a]uto, [g]ui";
+          powerManagementSubmap = " : Screen [l]ock, [e]xit, [s]uspend, [h]ibernate, [R]eboot, [S]hutdown";
+          resizeSubmap = " : [h]  , [j]  , [k]  , [l] ";
+
+          systemctl = "systemctl";
+          loginctl = "loginctl";
+          wdisplays = lib.getExe pkgs.wdisplays;
+        in
+        ''
+          bind = $mainMod, P, submap, ${displayLayoutSubmap}
+          submap = ${displayLayoutSubmap}
+          binde = , a, exec, ${systemctl} restart --user kanshi.service
+          binde = , a, submap, reset
+          binde = , g, exec, ${wdisplays}
+          binde = , g, submap, reset
+          bind = , ESCAPE, submap, reset
+          bind = , RETURN, submap, reset
+          submap = reset
+
+          bind = $mainMod, R, submap, ${resizeSubmap}
+          submap = ${resizeSubmap}
+          binde = , right, resizeactive, 10 0
+          binde = , left, resizeactive, -10 0
+          binde = , up, resizeactive, 0 -10
+          binde = , down, resizeactive, 0 10
+          bind = , ESCAPE, submap, reset
+          bind = , RETURN, submap, reset
+          submap = reset
+
+          bind = $mainMod, ESCAPE, submap, ${powerManagementSubmap}
+          submap = ${powerManagementSubmap}
+          bind = , L, exec, ${loginctl} lock-session
+          bind = , L, submap, reset
+          bind = , E, exit
+          bind = , S, exec, ${systemctl} suspend
+          bind = , S, submap, reset
+          bind = , H, exec, ${systemctl} hibernate
+          bind = , H, submap, reset
+          bind = SHIFT, R, exec, ${systemctl} reboot
+          bind = SHIFT, S, exec, ${systemctl} poweroff
+          bind = , ESCAPE, submap, reset
+          bind = , RETURN, submap, reset
+          submap = reset
+        '';
     };
   };
 }
