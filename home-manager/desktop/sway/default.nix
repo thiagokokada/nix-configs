@@ -79,13 +79,6 @@ in
       inherit extraConfig;
 
       config = commonOptions.config // {
-        startup = [
-          {
-            command = "systemctl restart --user kanshi.service";
-            always = true;
-          }
-        ];
-
         input = {
           "type:keyboard" = {
             xkb_layout = "us(intl)";
