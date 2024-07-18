@@ -195,5 +195,14 @@ in
         "Xft/RGBA" = cfg.fonts.fontconfig.subpixel.rgba;
       };
     };
+
+    systemd.user.services.xsettingsd = {
+      Service = {
+        # Exponential restart
+        RestartSteps = 5;
+        RestartMaxDelaySec = 10;
+        Restart = lib.mkForce "on-failure";
+      };
+    };
   };
 }
