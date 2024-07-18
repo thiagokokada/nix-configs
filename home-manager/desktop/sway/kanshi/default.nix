@@ -16,5 +16,14 @@ in
     default = config.home-manager.desktop.sway.enable;
   };
 
-  config = lib.mkIf config.home-manager.desktop.sway.kanshi.enable { services.kanshi.enable = true; };
+  config = lib.mkIf config.home-manager.desktop.sway.kanshi.enable {
+    services.kanshi = {
+      enable = true;
+      systemdTarget = "graphical-session.target";
+    };
+
+    systemd.user.services.kanshi = {
+      Unit.ConditionEnvironment = "WAYLAND_DISPLAY";
+    };
+  };
 }
