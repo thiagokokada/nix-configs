@@ -112,8 +112,10 @@
               "$mainMod, D, exec, ${menu}"
               "$mainMod, N, exec, ${browser}"
               "$mainMod, M, exec, ${fileManager}"
-              "$mainMod, V, togglefloating,"
+              "$mainMod, SEMICOLON, togglefloating,"
+              "$mainMod, V, pseudo,"
               "$mainMod, B, togglesplit,"
+              "$mainMod, F, fullscreen,"
               "$shiftMod, C, exec, ${hyprctl} reload"
               "$shiftMod, Q, killactive,"
               "$altMod, F4, killactive,"
@@ -121,11 +123,6 @@
               # Cycle active window
               "$mainMod, TAB, cyclenext,"
               "$mainMod, TAB, bringactivetotop"
-
-              # Resize active window
-              "$mainMod, EQUAL, resizeactive, 10 10"
-              "$mainMod, PLUS, resizeactive, 10 10"
-              "$mainMod, MINUS, resizeactive, -10 -10"
 
               # Move focus with mainMod + arrow keys
               "$mainMod, left, movefocus, l"
@@ -150,8 +147,8 @@
               "$shiftMod, J, movewindow, d"
 
               # Scratchpad
-              "$mainMod, S, togglespecialworkspace, magic"
-              "$mainMod SHIFT, S, movetoworkspace, special:magic"
+              "$shiftMod, MINUS, movetoworkspace, special:magic"
+              "$mainMod, MINUS, togglespecialworkspace, magic"
 
               # Scroll through existing workspaces with mainMod + scroll
               "$mainMod, mouse_down, workspace, e+1"
@@ -159,7 +156,7 @@
 
               # Notifications
               "$control, ESCAPE, exec, ${dunstctl} close"
-              "CONTROL_SHIFT, ESCAPE, exec, ${dunstctl} close-all"
+              "$control_SHIFT, ESCAPE, exec, ${dunstctl} close-all"
 
               # Screenshots
               ", PRINT, exec, ${fullScreenshot}"
@@ -213,6 +210,11 @@
             ", XF86AudioStop, exec, ${playerctl} stop"
             ", XF86AudioNext, exec, ${playerctl} next"
             ", XF86AudioPrev, exec, ${playerctl} previous"
+          ];
+
+          windowrulev2 = [
+            # Ignore maximize events
+            "suppressevent maximize, class:.*"
           ];
         };
 
