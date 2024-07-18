@@ -8,12 +8,20 @@
 
 let
   cfg = config.home-manager.desktop.sway.waybar;
+  hyprlandEnabled = config.home-manager.desktop.hyprland.enable;
+  swayEnabled = config.home-manager.desktop.sway.enable;
+
+  dunstctl = lib.getExe' pkgs.dunst "dunstctl";
+  hyprctl = lib.getExe' config.wayland.windowManager.hyprland.package "hyprctl";
+  pamixer = lib.getExe pkgs.pamixer;
+  pavucontrol = lib.getExe pkgs.pavucontrol;
+
   shortPathName = path: "disk#${libEx.shortPathWithSep "_" path}";
 in
 {
   options.home-manager.desktop.sway.waybar = {
     enable = lib.mkEnableOption "Waybar config" // {
-      default = config.home-manager.desktop.sway.enable;
+      default = hyprlandEnabled || swayEnabled;
     };
     interval = lib.mkOption {
       type = lib.types.int;
@@ -48,13 +56,16 @@ in
             position = "top";
             height = 24;
             spacing = 3;
-            modules-left = [
-              "hyprland/workspaces"
-              "sway/workspaces"
-              "sway/mode"
-              "wlr/taskbar"
-            ];
-            modules-center = [ "sway/window" ];
+            modules-left =
+              lib.optionals hyprlandEnabled [ "hyprland/workspaces" ]
+              ++ lib.optionals swayEnabled [
+                "sway/workspaces"
+                "sway/mode"
+              ]
+              ++ [ "wlr/taskbar" ];
+            modules-center =
+              lib.optionals hyprlandEnabled [ "hyprland/window" ]
+              ++ lib.optionals swayEnabled [ "sway/window" ];
             modules-right =
               lib.pipe
                 [
@@ -84,9 +95,26 @@ in
                   ]))
                   lib.init
                 ];
-            "sway/mode".tooltip = false;
-            "sway/window".max-length = 50;
-            "sway/workspaces".disable-scroll-wraparound = true;
+            "hyprland/workspaces" = lib.mkIf hyprlandEnabled {
+              format = "{name}: {icon}";
+              format-icons = {
+                "1" = " ";
+                "2" = " ";
+                "3" = " ";
+                "4" = " ";
+                "5" = " ";
+                "6" = " ";
+                "7" = " ";
+                "8" = " ";
+                "9" = " ";
+                "10" = " ";
+              };
+              "on-scroll-up" = "${hyprctl} dispatch workspace e+1";
+              "on-scroll-down" = "${hyprctl} dispatch workspace e-1";
+            };
+            "sway/mode".tooltip = lib.mkIf swayEnabled false;
+            "sway/window".max-length = lib.mkIf swayEnabled 50;
+            "sway/workspaces".disable-scroll-wraparound = lib.mkIf swayEnabled true;
             "wlr/taskbar" = {
               format = "{icon}";
               on-click = "activate";
@@ -214,7 +242,7 @@ in
                   '';
                 }
               );
-              on-click = "${lib.getExe' pkgs.dunst "dunstctl"} set-paused toggle";
+              on-click = "${dunstctl} set-paused toggle";
               restart-interval = 1;
               return-type = "json";
               tooltip = false;
@@ -232,8 +260,8 @@ in
                 ""
                 ""
               ];
-              on-click = lib.getExe pkgs.pavucontrol;
-              on-click-right = "${lib.getExe pkgs.pamixer} --toggle-mute";
+              on-click = pavucontrol;
+              on-click-right = "${pamixer} --toggle-mute";
               scroll-step = 5;
               max-volume = 150;
               ignored-sinks = [ "Easy Effects Sink" ];
@@ -296,6 +324,7 @@ in
               (lib.concatStringsSep ", ")
             ];
         in
+        # css
         ''
           * {
             border: none;
@@ -322,6 +351,14 @@ in
           }
           #workspaces button {
             padding: 0 7px;
+          }
+          ${lib.optionalString hyprlandEnabled # css
+            ''
+              #workspaces button.active {
+                background: ${base0D};
+                color: ${base00};
+              }
+            ''
           }
           #workspaces button.focused {
             background: ${base0D};
