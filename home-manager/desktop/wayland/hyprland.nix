@@ -100,8 +100,8 @@ in
           };
           misc = {
             font_family = config.home-manager.desktop.theme.fonts.gui.name;
-            disable_hyprland_logo = false;
-            force_default_wallpaper = 2; # hypr-chan!
+            disable_hyprland_logo = true;
+            # force_default_wallpaper = 2; # hypr-chan!
             key_press_enables_dpms = true;
             mouse_move_enables_dpms = false;
             vfr = true;
