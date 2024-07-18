@@ -116,9 +116,15 @@ in
               "on-scroll-down" = "${hyprctl} dispatch workspace e-1";
             };
             "hyprland/submap".tooltip = lib.mkIf hyprlandCfg.enable false;
-            "hyprland/window".max-length = lib.mkIf hyprlandCfg.enable 50;
+            "hyprland/window" = {
+              max-length = lib.mkIf hyprlandCfg.enable 50;
+              separate-outputs = true;
+            };
             "sway/mode".tooltip = lib.mkIf swayCfg.enable false;
-            "sway/window".max-length = lib.mkIf swayCfg.enable 50;
+            "sway/window" = {
+              max-length = lib.mkIf swayCfg.enable 50;
+              separate-outputs = true;
+            };
             "sway/workspaces".disable-scroll-wraparound = lib.mkIf swayCfg.enable true;
             "wlr/taskbar" = {
               format = "{icon}";
