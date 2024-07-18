@@ -50,6 +50,6 @@
 
     # Start SSH agent via systemd (Linux-only)
     # Since this is a systemd user service, it stays between sessions
-    services.ssh-agent.enable = true;
+    services.ssh-agent.enable = lib.mkIf pkgs.stdenv.isLinux true;
   };
 }
