@@ -41,10 +41,11 @@ in
           areaScreenshot = "${lib.getExe pkgs.hyprshot} -m region -o ${config.xdg.userDirs.pictures}";
         in
         {
-          exec-once = [
+          exec-once = with config.home-manager.desktop.theme.wallpaper; [
             bar
             # For DPI configuration and other Xresources config
             "${lib.getExe pkgs.xorg.xrdb} -merge ${config.xresources.path}"
+            "${lib.getExe pkgs.swaybg} -i ${path} -m ${scale}"
           ];
           env = [
             # Cursor
@@ -100,7 +101,7 @@ in
           misc = {
             font_family = config.home-manager.desktop.theme.fonts.gui.name;
             disable_hyprland_logo = false;
-            force_default_wallpaper = 2;
+            force_default_wallpaper = 2; # hypr-chan!
             key_press_enables_dpms = true;
             mouse_move_enables_dpms = false;
             vfr = true;
