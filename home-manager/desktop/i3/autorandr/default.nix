@@ -47,6 +47,10 @@ in
       };
     };
 
+    xsession.initExtra = lib.mkAfter ''
+      ${lib.getExe pkgs.autorandr} --change --default default
+    '';
+
     # Configure autorandr globally
     xdg.configFile = {
       # Skip gamma settings since this is controlled by gammastep
