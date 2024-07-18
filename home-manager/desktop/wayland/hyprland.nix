@@ -95,6 +95,7 @@ in
           dwindle = {
             pseudotile = true;
             preserve_split = true;
+            force_split = 2; # always open new split right/bottom, like i3
           };
           misc = {
             font_family = config.home-manager.desktop.theme.fonts.gui.name;
