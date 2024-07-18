@@ -38,11 +38,18 @@
           };
         };
       };
-      zsh.initExtra = # bash
+
+      zsh.initExtra =
+        # Checks if SSH_AUTH_SOCK is set and the socket is working, or start a
+        # new ssh-agent otherwise (works in any OS)
+        # bash
         ''
-          # start SSH agent
           source ${./ssh-agent.zsh}
         '';
     };
+
+    # Start SSH agent via systemd (Linux-only)
+    # Since this is a systemd user service, it stays between sessions
+    services.ssh-agent.enable = true;
   };
 }
