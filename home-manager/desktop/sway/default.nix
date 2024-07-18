@@ -88,13 +88,10 @@ in
             accel_profile = "flat";
           };
           "type:touchpad" = {
-            drag = "enabled";
-            drag_lock = "enabled";
             middle_emulation = "enabled";
             natural_scroll = "enabled";
             scroll_method = "two_finger";
             tap = "enabled";
-            tap_button_map = "lmr";
           };
         };
 
@@ -113,13 +110,8 @@ in
         . "${config.home.sessionVariablesPackage}/etc/profile.d/hm-session-vars.sh"
         # Vulkan renderer
         export WLR_RENDERER=vulkan,gles2,pixman
-        # Firefox
-        export MOZ_ENABLE_WAYLAND=1
         # Chrome/Chromium/Electron
         export NIXOS_OZONE_WL=1
-        # Qt
-        export QT_QPA_PLATFORM=wayland
-        export QT_WAYLAND_DISABLE_WINDOWDECORATION=1
         # SDL
         export SDL_VIDEODRIVER=wayland
         # Fix for some Java AWT applications (e.g. Android Studio),
