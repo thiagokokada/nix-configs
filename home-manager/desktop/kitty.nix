@@ -79,7 +79,7 @@
         touch_scroll_multiplier = "5.0";
 
         # For nnn
-        allow_remote_control = lib.mkIf config.programs.nnn.enable true;
+        allow_remote_control = config.programs.nnn.enable;
         listen_on = "unix:/tmp/kitty";
       };
     };
