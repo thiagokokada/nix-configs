@@ -41,7 +41,11 @@ in
           areaScreenshot = "${lib.getExe pkgs.hyprshot} -m region -o ${config.xdg.userDirs.pictures}";
         in
         {
-          exec-once = [ bar ];
+          exec-once = [
+            bar
+            # For DPI configuration and other Xresources config
+            "${lib.getExe pkgs.xorg.xrdb} -merge ${config.xresources.path}"
+          ];
           env = [
             # Cursor
             "XCURSOR_THEME,${toString config.xsession.pointerCursor.name}"
@@ -221,6 +225,9 @@ in
             # Ignore maximize events
             "suppressevent maximize, class:.*"
           ];
+
+          # Disable Xwayland scaling, we will scale X applications manually
+          xwayland.force_zero_scaling = true;
         };
 
       extraConfig =
