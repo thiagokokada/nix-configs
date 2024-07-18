@@ -26,8 +26,10 @@ in
       Unit.ConditionEnvironment = "WAYLAND_DISPLAY";
       Service = {
         # Use exponential restart
+        # https://enotty.pipebreaker.pl/posts/2024/01/how-systemd-exponential-restart-delay-works/
+        RestartSec = "500ms";
         RestartSteps = 5;
-        RestartMaxDelaySec = 10;
+        RestartMaxDelaySec = 5;
       };
     };
   };
