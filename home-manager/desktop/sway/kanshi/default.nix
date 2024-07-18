@@ -24,6 +24,11 @@ in
 
     systemd.user.services.kanshi = {
       Unit.ConditionEnvironment = "WAYLAND_DISPLAY";
+      Service = {
+        # Use exponential restart
+        RestartSteps = 5;
+        RestartMaxDelaySec = 10;
+      };
     };
   };
 }

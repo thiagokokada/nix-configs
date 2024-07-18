@@ -31,7 +31,9 @@
     # Make nm-applet restart in case of failure
     systemd.user.services.nm-applet = {
       serviceConfig = {
-        RestartSec = 5;
+        # Use exponential restart
+        RestartSteps = 5;
+        RestartMaxDelaySec = 10;
         Restart = "on-failure";
       };
     };
