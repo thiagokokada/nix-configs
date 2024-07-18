@@ -4,12 +4,21 @@
   pkgs,
   ...
 }:
+
+let
+  cfg = config.home-manager.desktop.hyprland;
+  # Modifiers
+  alt = "ALT";
+  ctrl = "CONTROL";
+  mod = "SUPER";
+  shift = key: "${key}_SHIFT";
+in
 {
   options.home-manager.desktop.hyprland.enable = lib.mkEnableOption "Hyprland config" // {
     default = config.home-manager.desktop.enable;
   };
 
-  config = lib.mkIf config.home-manager.desktop.hyprland.enable {
+  config = lib.mkIf cfg.enable {
     home.packages = with pkgs; [ hyprshot ];
 
     wayland.windowManager.hyprland = {
@@ -32,10 +41,6 @@
           areaScreenshot = "${lib.getExe pkgs.hyprshot} -m region -o ${config.xdg.userDirs.pictures}";
         in
         {
-          "$mainMod" = "SUPER";
-          "$shiftMod" = "SUPER_SHIFT";
-          "$altMod" = "ALT";
-          "$control" = "CONTROL";
           exec-once = [ bar ];
           env = [
             # Cursor
@@ -108,59 +113,59 @@
           bind =
             [
               # Main bindings
-              "$mainMod, RETURN, exec, ${terminal}"
-              "$mainMod, D, exec, ${menu}"
-              "$mainMod, N, exec, ${browser}"
-              "$mainMod, M, exec, ${fileManager}"
-              "$mainMod, SEMICOLON, togglefloating,"
-              "$mainMod, V, pseudo,"
-              "$mainMod, B, togglesplit,"
-              "$mainMod, F, fullscreen,"
-              "$shiftMod, C, exec, ${hyprctl} reload"
-              "$shiftMod, Q, killactive,"
-              "$altMod, F4, killactive,"
+              "${mod}, RETURN, exec, ${terminal}"
+              "${mod}, D, exec, ${menu}"
+              "${mod}, N, exec, ${browser}"
+              "${mod}, M, exec, ${fileManager}"
+              "${mod}, SEMICOLON, togglefloating,"
+              "${mod}, V, pseudo,"
+              "${mod}, B, togglesplit,"
+              "${mod}, F, fullscreen,"
+              "${shift mod}, C, exec, ${hyprctl} reload"
+              "${shift mod}, Q, killactive,"
+              "${alt}, F4, killactive,"
 
               # Cycle active window
-              "$mainMod, TAB, cyclenext,"
-              "$mainMod, TAB, bringactivetotop"
+              "${mod}, TAB, cyclenext,"
+              "${mod}, TAB, bringactivetotop"
 
               # Move focus with mainMod + arrow keys
-              "$mainMod, left, movefocus, l"
-              "$mainMod, right, movefocus, r"
-              "$mainMod, up, movefocus, u"
-              "$mainMod, down, movefocus, d"
+              "${mod}, left, movefocus, l"
+              "${mod}, right, movefocus, r"
+              "${mod}, up, movefocus, u"
+              "${mod}, down, movefocus, d"
               # Move focus with mainMod + vi keys
-              "$mainMod, H, movefocus, l"
-              "$mainMod, L, movefocus, r"
-              "$mainMod, K, movefocus, u"
-              "$mainMod, J, movefocus, d"
+              "${mod}, H, movefocus, l"
+              "${mod}, L, movefocus, r"
+              "${mod}, K, movefocus, u"
+              "${mod}, J, movefocus, d"
 
               # Move window with mainMod + arrow keys
-              "$shiftMod, left, movewindow, l"
-              "$shiftMod, right, movewindow, r"
-              "$shiftMod, up, movewindow, u"
-              "$shiftMod, down, movewindow, d"
+              "${shift mod}, left, movewindow, l"
+              "${shift mod}, right, movewindow, r"
+              "${shift mod}, up, movewindow, u"
+              "${shift mod}, down, movewindow, d"
               # Move window with mainMod + vi keys
-              "$shiftMod, H, movewindow, l"
-              "$shiftMod, L, movewindow, r"
-              "$shiftMod, K, movewindow, u"
-              "$shiftMod, J, movewindow, d"
+              "${shift mod}, H, movewindow, l"
+              "${shift mod}, L, movewindow, r"
+              "${shift mod}, K, movewindow, u"
+              "${shift mod}, J, movewindow, d"
 
               # Scratchpad
-              "$shiftMod, MINUS, movetoworkspace, special:magic"
-              "$mainMod, MINUS, togglespecialworkspace, magic"
+              "${shift mod}, MINUS, movetoworkspace, special:magic"
+              "${mod}, MINUS, togglespecialworkspace, magic"
 
               # Scroll through existing workspaces with mainMod + scroll
-              "$mainMod, mouse_down, workspace, e+1"
-              "$mainMod, mouse_up, workspace, e-1"
+              "${mod}, mouse_down, workspace, e+1"
+              "${mod}, mouse_up, workspace, e-1"
 
               # Notifications
-              "$control, ESCAPE, exec, ${dunstctl} close"
-              "$control_SHIFT, ESCAPE, exec, ${dunstctl} close-all"
+              "${ctrl}, ESCAPE, exec, ${dunstctl} close"
+              "${shift ctrl}, ESCAPE, exec, ${dunstctl} close-all"
 
               # Screenshots
               ", PRINT, exec, ${fullScreenshot}"
-              "$mainMod, PRINT, exec, ${areaScreenshot}"
+              "${mod}, PRINT, exec, ${areaScreenshot}"
             ]
             ++
             # workspaces
@@ -175,8 +180,8 @@
                     ws = toString (if x == 9 then 0 else x + 1);
                   in
                   [
-                    "$mainMod, ${ws}, workspace, ${toString (x + 1)}"
-                    "$mainMod SHIFT, ${ws}, movetoworkspace, ${toString (x + 1)}"
+                    "${mod}, ${ws}, workspace, ${toString (x + 1)}"
+                    "${mod} SHIFT, ${ws}, movetoworkspace, ${toString (x + 1)}"
                   ]
                 ) 10
               )
@@ -188,8 +193,8 @@
               rightButton = "273";
             in
             [
-              "$mainMod, mouse:${leftButton}, movewindow"
-              "$mainMod, mouse:${rightButton}, resizewindow"
+              "${mod}, mouse:${leftButton}, movewindow"
+              "${mod}, mouse:${rightButton}, resizewindow"
             ];
 
           bindel = [
@@ -229,7 +234,7 @@
           wdisplays = lib.getExe pkgs.wdisplays;
         in
         ''
-          bind = $mainMod, P, submap, ${displayLayoutSubmap}
+          bind = ${mod}, P, submap, ${displayLayoutSubmap}
           submap = ${displayLayoutSubmap}
           binde = , a, exec, ${systemctl} restart --user kanshi.service
           binde = , a, submap, reset
@@ -239,7 +244,7 @@
           bind = , RETURN, submap, reset
           submap = reset
 
-          bind = $mainMod, R, submap, ${resizeSubmap}
+          bind = ${mod}, R, submap, ${resizeSubmap}
           submap = ${resizeSubmap}
           binde = , right, resizeactive, 10 0
           binde = , left, resizeactive, -10 0
@@ -249,7 +254,7 @@
           bind = , RETURN, submap, reset
           submap = reset
 
-          bind = $mainMod, ESCAPE, submap, ${powerManagementSubmap}
+          bind = ${mod}, ESCAPE, submap, ${powerManagementSubmap}
           submap = ${powerManagementSubmap}
           bind = , L, exec, ${loginctl} lock-session
           bind = , L, submap, reset
