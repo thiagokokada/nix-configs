@@ -107,8 +107,11 @@ in
             vfr = true;
             vrr = 2;
           };
+
+          # https://wiki.hyprland.org/Configuring/Keywords/#per-device-input-configs
           gestures = {
-            workspace_swipe = false;
+            workspace_swipe = true;
+            workspace_swipe_fingers = 4;
           };
 
           # bind flags
