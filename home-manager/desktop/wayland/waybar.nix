@@ -82,7 +82,7 @@ in
                   "idle_inhibitor"
                   (lib.optionalString cfg.backlight.enable "backlight")
                   (lib.optionalString cfg.battery.enable "battery")
-                  "pulseaudio" # wireplumber is causing segfault
+                  "wireplumber"
                   "clock"
                   "tray"
                 ]
@@ -263,7 +263,7 @@ in
               interval = "once";
               tooltip = false;
             };
-            pulseaudio = {
+            wireplumber = {
               format = "{icon} {volume}%";
               format-muted = "";
               format-icons = [
@@ -275,10 +275,8 @@ in
               on-click-right = "${pamixer} --toggle-mute";
               scroll-step = 5;
               max-volume = 150;
-              ignored-sinks = [ "Easy Effects Sink" ];
               states = {
-                normal = 100;
-                high = 150;
+                high = 101;
               };
             };
             backlight = {
@@ -402,10 +400,10 @@ in
           #disk.critical {
             color: ${base08};
           }
-          #pulseaudio.high {
+          #wireplumber.high {
             color: ${base0A};
           }
-          #pulseaudio.muted {
+          #wireplumber.muted {
             color: ${base08};
           }
           #idle_inhibitor.activated {
