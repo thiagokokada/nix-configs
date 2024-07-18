@@ -140,6 +140,8 @@ in
           setopt noflowcontrol
           # disable "no matches found" check
           unsetopt nomatch
+          # disable clock
+          unset RPROMPT
 
           # edit the current command line in $EDITOR
           bindkey -M vicmd v edit-command-line
