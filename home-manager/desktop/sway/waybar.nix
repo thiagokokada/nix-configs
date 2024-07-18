@@ -57,7 +57,10 @@ in
             height = 24;
             spacing = 3;
             modules-left =
-              lib.optionals hyprlandEnabled [ "hyprland/workspaces" ]
+              lib.optionals hyprlandEnabled [
+                "hyprland/workspaces"
+                "hyprland/submap"
+              ]
               ++ lib.optionals swayEnabled [
                 "sway/workspaces"
                 "sway/mode"
@@ -112,6 +115,7 @@ in
               "on-scroll-up" = "${hyprctl} dispatch workspace e+1";
               "on-scroll-down" = "${hyprctl} dispatch workspace e-1";
             };
+            "hyprland/submap".tooltip = lib.mkIf hyprlandEnabled false;
             "sway/mode".tooltip = lib.mkIf swayEnabled false;
             "sway/window".max-length = lib.mkIf swayEnabled 50;
             "sway/workspaces".disable-scroll-wraparound = lib.mkIf swayEnabled true;
@@ -341,7 +345,7 @@ in
             background: ${base00};
             color: ${base05};
           }
-          #mode {
+          #submap, #mode {
             background: ${base0A};
             color: ${base00};
             padding: 0 7px;
@@ -352,14 +356,7 @@ in
           #workspaces button {
             padding: 0 7px;
           }
-          ${lib.optionalString hyprlandEnabled # css
-            ''
-              #workspaces button.active {
-                background: ${base0D};
-                color: ${base00};
-              }
-            ''
-          }
+          #workspaces button.active,
           #workspaces button.focused {
             background: ${base0D};
             color: ${base00};
