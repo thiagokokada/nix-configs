@@ -512,16 +512,7 @@ in
           telescope-undo-nvim
           # END telescope
           {
-            plugin = pkgs.vimUtils.buildVimPlugin {
-              pname = "url-open";
-              version = "1.7.1-unstable-2024-02-03";
-              src = pkgs.fetchFromGitHub {
-                owner = "sontungexpt";
-                repo = "url-open";
-                rev = "9f8f4a56ac709f26aa17d8ef921b272bf2262a30";
-                hash = "sha256-SucKjIWDtLwZSvwncq1+s3S/tbLnKlL6UhT9PTGFVzE=";
-              };
-            };
+            plugin = url-open;
             type = "lua";
             config = # lua
               ''
