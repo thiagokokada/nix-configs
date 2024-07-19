@@ -21,7 +21,7 @@ let
           cp --verbose --remove-destination "$(readlink "$file")" "$file"
           chmod --changes +w "$file"
         else
-          2>&1 echo "Not a symlink: $file"
+          >&2 echo "Not a symlink: $file"
           exit 1
         fi
       done

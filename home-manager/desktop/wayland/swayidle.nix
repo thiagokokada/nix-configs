@@ -8,17 +8,32 @@
 let
   cfg = config.home-manager.desktop.wayland.swayidle;
   swaylock = "${lib.getExe config.programs.swaylock.package} -f";
-  notify = pkgs.writeShellScript "notify" ''
-    ${lib.getExe' pkgs.dunst "dunstify"} -t 30000 "30 seconds to lock"
-  '';
-  displayOn = pkgs.writeShellScript "display-on" ''
-    ${lib.getExe' pkgs.sway "swaymsg"} "output * power on" || true
-    ${lib.getExe' pkgs.hyprland "hyprctl"} dispatch dpms on || true
-  '';
-  displayOff = pkgs.writeShellScript "display-off" ''
-    ${lib.getExe' pkgs.sway "swaymsg"} "output * power off" || true
-    ${lib.getExe' pkgs.hyprland "hyprctl"} dispatch dpms off || true
-  '';
+  swaymsg = lib.getExe' config.wayland.windowManager.sway.package "swaymsg";
+  hyprctl = lib.getExe' config.wayland.windowManager.hyprland.finalPackage "hyprctl";
+  notify = toString (
+    pkgs.writeShellScript "notify" ''
+      ${lib.getExe pkgs.libnotify} -t 30000 "30 seconds to lock"
+    ''
+  );
+  display =
+    switch:
+    toString (
+      pkgs.writeShellScript "display-${switch}"
+        # bash
+        ''
+          case "''${XDG_CURRENT_DESKTOP,,}" in
+            hyprland)
+              ${hyprctl} dispatch dpms ${switch}
+              ;;
+            sway)
+              ${swaymsg} "output * power ${switch}"
+              ;;
+            *)
+              >&2 echo "Unknown desktop environment: $XDG_CURRENT_DESKTOP"
+              ;;
+          esac
+        ''
+    );
 in
 {
   options.home-manager.desktop.wayland.swayidle.enable = lib.mkEnableOption "swayidle config" // {
@@ -33,7 +48,7 @@ in
       events = [
         {
           event = "after-resume";
-          command = toString displayOn;
+          command = display "on";
         }
         {
           event = "before-sleep";
@@ -47,7 +62,7 @@ in
       timeouts = [
         {
           timeout = 570;
-          command = toString notify;
+          command = notify;
         }
         {
           timeout = 600;
@@ -55,8 +70,8 @@ in
         }
         {
           timeout = 605;
-          command = toString displayOff;
-          resumeCommand = toString displayOn;
+          command = display "off";
+          resumeCommand = display "on";
         }
       ];
     };
