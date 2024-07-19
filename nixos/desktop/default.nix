@@ -6,7 +6,6 @@
     ./fonts.nix
     ./greetd.nix
     ./locale.nix
-    ./non-nix.nix
     ./tailscale.nix
     ./wayland.nix
     ./xserver.nix
