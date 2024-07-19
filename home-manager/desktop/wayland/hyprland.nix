@@ -67,19 +67,23 @@ in
             # Please see https://wiki.hyprland.org/Configuring/Tearing/ before you turn this on
             allow_tearing = false;
           };
-          input = {
-            kb_layout = "us";
-            kb_variant = "intl";
-            kb_options = "caps:escape,grp:win_space_toggle";
-            accel_profile = "flat";
-            follow_mouse = 0;
-            sensitivity = 0;
-            touchpad = {
-              natural_scroll = true;
-              middle_button_emulation = true;
-              tap-to-click = true;
+          input =
+            let
+              inherit (config.home.keyboard) layout variant options;
+            in
+            {
+              kb_layout = lib.mkIf (layout != null) layout;
+              kb_variant = lib.mkIf (variant != null) variant;
+              kb_options = lib.mkIf (options != [ ]) (lib.concatStringsSep "," options);
+              accel_profile = "flat";
+              follow_mouse = 0;
+              sensitivity = 0;
+              touchpad = {
+                natural_scroll = true;
+                middle_button_emulation = true;
+                tap-to-click = true;
+              };
             };
-          };
           device = [
             # Sadly it is not possible to set this in input.touchpad
             # https://github.com/hyprwm/Hyprland/issues/5601

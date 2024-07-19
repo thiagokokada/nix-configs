@@ -42,7 +42,12 @@
           layout = lib.mkDefault "us";
           variant = lib.mkDefault "intl";
           # Remap Caps Lock to Esc, and use Super+Space to change layouts
-          options = lib.mkDefault "caps:escape,grp:win_space_toggle";
+          options = lib.mkDefault (
+            lib.concatStringsSep "," [
+              "caps:escape"
+              "grp:win_space_toggle"
+            ]
+          );
         };
       };
     };
