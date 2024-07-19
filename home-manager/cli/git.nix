@@ -25,8 +25,7 @@ in
     home = {
       packages =
         with pkgs;
-        lib.optionals cfg.gh.enable [ github-cli ]
-        ++ lib.optionals cfg.gui.enable [
+        lib.optionals cfg.gui.enable [
           (run-bg-alias "gk" (lib.getExe' config.programs.git.package "gitk"))
         ];
       shellAliases = {
@@ -37,7 +36,7 @@ in
 
     programs = {
       gh = {
-        enable = true;
+        inherit (cfg.gh) enable;
         extensions = with pkgs; [
           gh-dash
           gh-markdown-preview
@@ -54,7 +53,6 @@ in
 
       git = {
         enable = true;
-
         userName = config.mainUser.fullname;
         userEmail = config.mainUser.email;
         package =
