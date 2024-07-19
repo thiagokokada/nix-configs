@@ -99,6 +99,7 @@ in
               target = 'CursorColor',
             }
             config.color_scheme = "Builtin Pastel Dark"
+            config.mux_enable_ssh_agent = false
             config.enable_kitty_keyboard = true
             config.font = wezterm.font("${fonts.symbols.name}")
             config.font_size = ${toString cfg.fontSize}
