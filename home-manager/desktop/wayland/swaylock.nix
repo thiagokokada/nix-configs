@@ -17,7 +17,6 @@ in
   config = lib.mkIf cfg.enable {
     programs.swaylock = {
       enable = true;
-      package = pkgs.swaylock;
       settings = with config.home-manager.desktop.theme.colors; {
         font = config.home-manager.desktop.theme.fonts.gui.name;
         indicator-caps-lock = true;

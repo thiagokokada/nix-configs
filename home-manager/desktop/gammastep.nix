@@ -1,9 +1,4 @@
-{
-  config,
-  lib,
-  pkgs,
-  ...
-}:
+{ config, lib, ... }:
 
 {
   options.home-manager.desktop.gammastep.enable = lib.mkEnableOption "gammastep config" // {
@@ -16,7 +11,6 @@
       tray = true;
       dawnTime = "6:30-7:30";
       duskTime = "18:30-19:30";
-      package = pkgs.gammastep;
       temperature = {
         day = 5700;
         night = 3700;

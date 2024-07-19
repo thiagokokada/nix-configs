@@ -33,7 +33,6 @@ in
         samba = {
           enable = true;
           openFirewall = true;
-          package = pkgs.samba;
           extraConfig = with config.networking; ''
             workgroup = WORKGROUP
             local master = yes
