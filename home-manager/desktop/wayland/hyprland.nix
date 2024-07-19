@@ -127,6 +127,11 @@ in
             workspace_swipe_fingers = 4;
           };
 
+          binds = {
+            # i3's auto_back_and_forth
+            workspace_back_and_forth = true;
+          };
+
           # bind flags
           # l -> locked, will also work when an input inhibitor (e.g. a lockscreen) is active.
           # r -> release, will trigger on release of a key.
