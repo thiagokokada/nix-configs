@@ -26,9 +26,7 @@ in
       settings =
         let
           hyprctl = lib.getExe' config.wayland.windowManager.hyprland.package "hyprctl";
-          # FIXME: use wezterm instead
-          # https://github.com/wez/wezterm/issues/5103
-          terminal = lib.getExe config.programs.kitty.package;
+          terminal = config.home-manager.desktop.defaultTerminal;
           menu = lib.getExe config.programs.fuzzel.package;
           browser = lib.getExe config.programs.firefox.package;
           bar = lib.getExe config.programs.waybar.package;

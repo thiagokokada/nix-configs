@@ -2,6 +2,7 @@
   config,
   lib,
   pkgs,
+  flake,
   ...
 }:
 
@@ -37,6 +38,9 @@ in
     programs = {
       wezterm = {
         enable = true;
+        package = flake.inputs.wezterm.packages.${pkgs.system}.default.overrideAttrs (_: {
+          meta.mainProgram = "wezterm";
+        });
         extraConfig =
           let
             inherit (config.home-manager.desktop.theme) fonts colors;
