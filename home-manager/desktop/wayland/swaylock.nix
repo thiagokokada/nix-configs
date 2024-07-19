@@ -7,6 +7,7 @@
 
 let
   cfg = config.home-manager.desktop.wayland.swaylock;
+  kbLayouts = lib.splitString "," config.home.keyboard.layout;
 in
 {
   options.home-manager.desktop.wayland.swaylock.enable = lib.mkEnableOption "swaylock config" // {
@@ -62,6 +63,10 @@ in
         key-hl-color = base0C;
         separator-color = "#00000000"; # transparent
         layout-bg-color = "#00000050"; # semi-transparent black
+
+        # when we have 0 keyboard layouts, it probably means we are using HM
+        # standalone, so we can't trust the keyboard module
+        hide-keyboard-layout = lib.mkIf ((builtins.length kbLayouts) == 1) true;
 
         indicator-radius = 80;
         indicator-thickness = 10;
