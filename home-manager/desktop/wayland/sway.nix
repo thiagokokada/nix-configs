@@ -25,7 +25,7 @@ let
         modifier
         alt
         ;
-      bars = [ { command = lib.getExe config.programs.waybar.package; } ];
+      bars = [ ];
       menu = lib.getExe config.programs.fuzzel.package;
 
       fullScreenShot = ''

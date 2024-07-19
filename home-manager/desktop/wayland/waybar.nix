@@ -49,6 +49,7 @@ in
 
     programs.waybar = {
       enable = true;
+      systemd.enable = true;
       settings = {
         mainBar =
           {
@@ -416,6 +417,17 @@ in
             color: ${base02};
           }
         '';
+    };
+
+    systemd.user.services.waybar = {
+      Unit.ConditionEnvironment = "WAYLAND_DISPLAY";
+      Service = {
+        # Use exponential restart
+        # https://enotty.pipebreaker.pl/posts/2024/01/how-systemd-exponential-restart-delay-works/
+        RestartSec = "500ms";
+        RestartSteps = 5;
+        RestartMaxDelaySec = 5;
+      };
     };
   };
 }

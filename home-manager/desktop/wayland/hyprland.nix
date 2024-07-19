@@ -28,7 +28,6 @@ in
           inherit (config.home-manager.desktop.default) browser terminal fileManager;
           hyprctl = lib.getExe' config.wayland.windowManager.hyprland.finalPackage "hyprctl";
           menu = lib.getExe config.programs.fuzzel.package;
-          bar = lib.getExe config.programs.waybar.package;
           pamixer = lib.getExe pkgs.pamixer;
           playerctl = lib.getExe pkgs.playerctl;
           dunstctl = lib.getExe' pkgs.dunst "dunstctl";
@@ -38,9 +37,9 @@ in
         in
         {
           exec-once = with config.home-manager.desktop.theme.wallpaper; [
-            bar
             # For DPI configuration and other Xresources config
             "${lib.getExe pkgs.xorg.xrdb} -merge ${config.xresources.path}"
+            # Set wallpaper
             "${lib.getExe pkgs.swaybg} -i ${path} -m ${scale}"
           ];
           env = [
