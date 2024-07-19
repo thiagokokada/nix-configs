@@ -13,10 +13,10 @@ in
     enable = lib.mkEnableOption "mpv config" // {
       default = config.home-manager.desktop.enable;
     };
-    defaultProfiles = lib.mkOption {
+    profile = lib.mkOption {
       type = with lib.types; listOf str;
       default = [ "gpu-hq" ];
-      description = "Default mpv profiles.";
+      description = "Default mpv profile(s).";
     };
     hq.enable = lib.mkEnableOption "high-quality config (needs good CPU/GPU)";
     vapoursynth.enable = lib.mkEnableOption "Vapoursynth config" // {
@@ -44,11 +44,11 @@ in
       };
 
       config = {
+        inherit (cfg) profile;
         osd-font-size = 14;
         osd-level = 3;
         slang = "enUS,enGB,en,eng,ptBR,pt,por";
         alang = "ja,jpn,enUS,enGB,en,eng,ptBR,pt,por";
-        profile = cfg.defaultProfiles;
       };
 
       profiles = {
