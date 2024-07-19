@@ -5,6 +5,9 @@
   ...
 }:
 
+let
+  cfg = config.home-manager.desktop;
+in
 {
   imports = [
     ./chromium.nix
@@ -23,27 +26,35 @@
 
   options.home-manager.desktop = {
     enable = lib.mkEnableOption "desktop config";
-    defaultEditor = lib.mkOption {
-      type = lib.types.str;
-      description = ''
-        Default editor to be used.
+    default = {
+      browser = lib.mkOption {
+        type = lib.types.str;
+        description = "Default web browser to be used.";
+        default = lib.getExe config.programs.firefox.finalPackage;
+      };
+      editor = lib.mkOption {
+        type = lib.types.str;
+        description = "Default editor to be used.";
+        default = lib.getExe config.programs.neovim.finalPackage;
+      };
+      fileManager = lib.mkOption {
+        type = lib.types.str;
+        description = "Default file manager to be used.";
+        default = "${cfg.default.terminal} -- ${lib.getExe config.programs.nnn.finalPackage} -a -P p";
+      };
+      terminal = lib.mkOption {
+        type = lib.types.str;
+        description = ''
+          Default terminal emulator to be used.
 
-        Should allow starting programs as parameter.
-      '';
-      default = lib.getExe config.programs.neovim.finalPackage;
-    };
-    defaultTerminal = lib.mkOption {
-      type = lib.types.str;
-      description = ''
-        Default terminal emulator to be used.
-
-        Should allow starting programs as parameter.
-      '';
-      default = "${lib.getExe config.programs.wezterm.package} start";
+          Should allow starting programs as parameter.
+        '';
+        default = "${lib.getExe config.programs.wezterm.package} start";
+      };
     };
   };
 
-  config = lib.mkIf config.home-manager.desktop.enable {
+  config = lib.mkIf cfg.enable {
     home = {
       # Disable keyboard management via HM
       keyboard = null;

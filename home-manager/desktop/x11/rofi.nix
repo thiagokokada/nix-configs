@@ -12,8 +12,8 @@
 
   config = lib.mkIf config.home-manager.desktop.x11.rofi.enable {
     programs.rofi = {
+      inherit (config.home-manager.desktop.default) terminal;
       enable = true;
-      terminal = config.home-manager.desktop.defaultTerminal;
       package =
         with pkgs;
         rofi.override {

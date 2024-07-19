@@ -25,12 +25,10 @@ in
       enable = true;
       settings =
         let
+          inherit (config.home-manager.desktop.default) browser terminal fileManager;
           hyprctl = lib.getExe' config.wayland.windowManager.hyprland.package "hyprctl";
-          terminal = config.home-manager.desktop.defaultTerminal;
           menu = lib.getExe config.programs.fuzzel.package;
-          browser = lib.getExe config.programs.firefox.package;
           bar = lib.getExe config.programs.waybar.package;
-          fileManager = "${terminal} ${lib.getExe config.programs.nnn.finalPackage} -a -P p";
           pamixer = lib.getExe pkgs.pamixer;
           playerctl = lib.getExe pkgs.playerctl;
           dunstctl = lib.getExe' pkgs.dunst "dunstctl";

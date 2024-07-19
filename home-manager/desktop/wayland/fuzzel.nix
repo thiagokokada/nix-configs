@@ -13,8 +13,8 @@ in
       enable = true;
       settings = with config.home-manager.desktop.theme.fonts; {
         main = {
+          inherit (config.home-manager.desktop.default) terminal;
           font = "${gui.name}:style=regular:size=14";
-          terminal = config.home-manager.desktop.defaultTerminal;
           icon-theme = config.gtk.iconTheme.name;
           lines = 15;
           horizontal-pad = 10;
