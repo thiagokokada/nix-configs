@@ -204,7 +204,7 @@ in
 
               # Screenshots
               ", PRINT, exec, ${fullScreenshot}"
-              "${mod}, PRINT, exec, ${areaScreenshot}"
+              "SHIFT, PRINT, exec, ${areaScreenshot}"
             ]
             ++
             # workspaces
