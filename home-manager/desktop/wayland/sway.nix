@@ -70,24 +70,26 @@ in
       inherit extraConfig;
 
       config = commonOptions.config // {
-        input = let
-          inherit (config.home.keyboard) layout variant options;
-        in {
-          "type:keyboard" = {
-            xkb_layout = lib.mkIf (layout != null) layout;
-            xkb_variant = lib.mkIf (variant != null) variant;
-            xkb_options = lib.mkIf (options != []) (lib.concatStringsSep "," options);
+        input =
+          let
+            inherit (config.home.keyboard) layout variant options;
+          in
+          {
+            "type:keyboard" = {
+              xkb_layout = lib.mkIf (layout != null) layout;
+              xkb_variant = lib.mkIf (variant != null) variant;
+              xkb_options = lib.mkIf (options != [ ]) (lib.concatStringsSep "," options);
+            };
+            "type:pointer" = {
+              accel_profile = "flat";
+            };
+            "type:touchpad" = {
+              middle_emulation = "enabled";
+              natural_scroll = "enabled";
+              scroll_method = "two_finger";
+              tap = "enabled";
+            };
           };
-          "type:pointer" = {
-            accel_profile = "flat";
-          };
-          "type:touchpad" = {
-            middle_emulation = "enabled";
-            natural_scroll = "enabled";
-            scroll_method = "two_finger";
-            tap = "enabled";
-          };
-        };
 
         output = {
           "*" = with config.home-manager.desktop.theme.wallpaper; {
