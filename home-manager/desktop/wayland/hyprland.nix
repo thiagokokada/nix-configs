@@ -152,6 +152,7 @@ in
               "${mod}, V, pseudo,"
               "${mod}, B, togglesplit,"
               "${mod}, F, fullscreen,"
+              "${mod}, E, togglegroup,"
               "${shift mod}, C, exec, ${hyprctl} reload"
               "${shift mod}, Q, killactive,"
               "${alt}, F4, killactive,"
@@ -160,33 +161,40 @@ in
               "${mod}, TAB, cyclenext,"
               "${mod}, TAB, bringactivetotop"
 
-              # Move focus with mainMod + arrow keys
+              # Move focus with mod + arrow keys
               "${mod}, left, movefocus, l"
               "${mod}, right, movefocus, r"
               "${mod}, up, movefocus, u"
               "${mod}, down, movefocus, d"
-              # Move focus with mainMod + vi keys
+              # Move focus with mod + vi keys
               "${mod}, H, movefocus, l"
               "${mod}, L, movefocus, r"
               "${mod}, K, movefocus, u"
               "${mod}, J, movefocus, d"
 
-              # Move window with mainMod + arrow keys
-              "${shift mod}, left, movewindow, l"
-              "${shift mod}, right, movewindow, r"
-              "${shift mod}, up, movewindow, u"
-              "${shift mod}, down, movewindow, d"
-              # Move window with mainMod + vi keys
-              "${shift mod}, H, movewindow, l"
-              "${shift mod}, L, movewindow, r"
-              "${shift mod}, K, movewindow, u"
-              "${shift mod}, J, movewindow, d"
+              # Move inside group (tab) with mod + arrow keys
+              "${mod}, left, changegroupactive, f"
+              "${mod}, right, changegroupactive, b"
+              # Move inside group (tab) with mod + vi keys
+              "${mod}, H, changegroupactive, f"
+              "${mod}, L, changegroupactive, b"
+
+              # Move window with mod + arrow keys
+              "${shift mod}, left, movewindoworgroup, l"
+              "${shift mod}, right, movewindoworgroup, r"
+              "${shift mod}, up, movewindoworgroup, u"
+              "${shift mod}, down, movewindoworgroup, d"
+              # Move window with mod + vi keys
+              "${shift mod}, H, movewindoworgroup, l"
+              "${shift mod}, L, movewindoworgroup, r"
+              "${shift mod}, K, movewindoworgroup, u"
+              "${shift mod}, J, movewindoworgroup, d"
 
               # Scratchpad
               "${shift mod}, MINUS, movetoworkspace, special:magic"
               "${mod}, MINUS, togglespecialworkspace, magic"
 
-              # Scroll through existing workspaces with mainMod + scroll
+              # Scroll through existing workspaces with mod + scroll
               "${mod}, mouse_down, workspace, e+1"
               "${mod}, mouse_up, workspace, e-1"
 
