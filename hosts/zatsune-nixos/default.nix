@@ -30,6 +30,7 @@ in
 
   nixos = {
     dev.enable = true;
+    dev.virtualisation.enable = false;
     # Has tons of memory and slow disk
     nix.tmpOnDisk = false;
     desktop.wayland.enable = true;

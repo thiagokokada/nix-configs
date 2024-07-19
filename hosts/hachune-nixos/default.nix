@@ -28,6 +28,7 @@ in
 
   nixos = {
     dev.enable = true;
+    dev.virtualisation.enable = false;
     laptop.tlp.enable = true;
     server = {
       enable = true;
