@@ -8,12 +8,6 @@ in
     enable = lib.mkEnableOption "TLP config" // {
       default = config.nixos.laptop.enable;
     };
-    cpuFreqGovernor = lib.mkOption {
-      default = config.powerManagement.cpuFreqGovernor;
-      type = lib.types.nullOr lib.types.str;
-      example = "schedutil";
-      description = "CPU frequency governor to be set via TLP.";
-    };
     # Use `tlp fullcharge` while connect though AC to charge it to 100% when
     # this option is set.
     batteryThreshold = {
@@ -33,6 +27,10 @@ in
   };
 
   config = lib.mkIf cfg.enable {
+    # This will set CPU_SCALING_GOVERNOR_ON_{AC,BAT} options in TLP
+    # 1200 is more priority than mkOptionDefault, less than mkDefault
+    powerManagement.cpuFreqGovernor = lib.mkOverride 1200 "ondemand";
+
     # Reduce power consumption
     services.tlp = {
       enable = true;
@@ -44,9 +42,6 @@ in
         PLATFORM_PROFILE_ON_AC = lib.mkDefault "performance";
         # Enable runtime power management
         RUNTIME_PM_ON_AC = lib.mkDefault "auto";
-        # CPU frequency governor
-        CPU_SCALING_GOVERNOR_ON_AC = lib.mkIf (cfg.cpuFreqGovernor != null) cfg.cpuFreqGovernor;
-        CPU_SCALING_GOVERNOR_ON_BAT = lib.mkIf (cfg.cpuFreqGovernor != null) cfg.cpuFreqGovernor;
         # Set battery thresholds
         START_CHARGE_THRESH_BAT0 = lib.mkIf (cfg.batteryThreshold.start != null) cfg.batteryThreshold.start;
         STOP_CHARGE_THRESH_BAT0 = lib.mkIf (cfg.batteryThreshold.stop != null) cfg.batteryThreshold.stop;

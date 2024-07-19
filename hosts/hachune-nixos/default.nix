@@ -28,10 +28,7 @@ in
 
   nixos = {
     dev.enable = true;
-    laptop.tlp = {
-      enable = true;
-      cpuFreqGovernor = "schedutil";
-    };
+    laptop.tlp.enable = true;
     server = {
       enable = true;
       iperf3.enable = true;
@@ -48,6 +45,8 @@ in
       };
     };
   };
+
+  powerManagement.cpuFreqGovernor = "schedutil";
 
   # Use the systemd-boot EFI boot loader
   boot.loader.systemd-boot.enable = true;

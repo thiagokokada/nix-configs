@@ -80,6 +80,8 @@ in
     };
   };
 
+  powerManagement.cpuFreqGovernor = "schedutil";
+
   programs.steam.gamescopeSession.args = [
     "-w 1600"
     "-h 900"
