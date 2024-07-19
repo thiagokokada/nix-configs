@@ -1,5 +1,8 @@
 { config, lib, ... }:
 
+let
+  inherit (config.mainUser) username;
+in
 {
   imports = [
     ./audio.nix
@@ -22,8 +25,11 @@
     # Enable graphical boot
     boot.plymouth.enable = lib.mkDefault true;
 
-    # Gnome Disks needs system-wide permissions to work correctly
-    programs.gnome-disks.enable = true;
+    # Programs that needs system-wide permissions to work correctly
+    programs = {
+      adb.enable = true;
+      gnome-disks.enable = true;
+    };
 
     # Increase file handler limit
     security.pam.loginLimits = [
@@ -37,9 +43,11 @@
 
     services = {
       dbus.implementation = "broker";
-      # Gnome Keyring/Udisks 2 needs system-wide permissions to work correctly
       gnome.gnome-keyring.enable = true;
       udisks2.enable = true;
     };
+
+    # Added user to groups
+    users.users.${username}.extraGroups = [ "adbusers" ];
   };
 }
