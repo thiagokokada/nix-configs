@@ -61,7 +61,7 @@ in
 
   nixos = {
     dev.enable = true;
-    nix.cross-compiling.enable = true;
+    nix.qemu-compile.enable = true;
     games = {
       enable = true;
       gpu = "amd";

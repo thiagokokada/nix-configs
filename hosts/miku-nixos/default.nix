@@ -22,7 +22,6 @@ in
   nixos = {
     dev.enable = true;
     games.enable = true;
-    nix.cross-compiling.enable = true;
     server = {
       plex.enable = true;
       rtorrent.enable = true;

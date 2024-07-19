@@ -4,11 +4,11 @@ let
   cfg = config.nixos.nix.remote-builders;
 in
 {
-  options.nixos.nix.remote-builders = {
-    enable = lib.mkEnableOption "remote-builders config for nixpkgs" // {
+  options.nixos.nix.remote-builders.enable =
+    lib.mkEnableOption "remote-builders config for nixpkgs"
+    // {
       default = config.nixos.desktop.tailscale.enable;
     };
-  };
 
   config = lib.mkIf cfg.enable {
     # Compile via remote builders+Tailscale

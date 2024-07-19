@@ -11,8 +11,8 @@ let
 in
 {
   imports = [
-    ./cross-compiling.nix
     ./diff.nix
+    ./qemu-compile.nix
     ./remote-builders.nix
   ];
 
