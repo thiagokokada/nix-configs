@@ -54,8 +54,11 @@ in
             # use this if they aren't displayed properly:
             "_JAVA_AWT_WM_NONREPARENTING,1"
           ];
-          # https://github.com/hyprwm/Hyprland/issues/4337
           monitor = ",preferred,auto,${toString (config.home-manager.desktop.theme.fonts.dpi / 100.0)}";
+          # https://github.com/hyprwm/Hyprland/issues/4337
+          # Resolution should divide cleanly by scale to not trigger check
+          # e.g: 3440 / 1.6 = 2150.0 and 1440 / 1.6 = 900.0
+          # TODO: add validation
           debug.disable_scale_checks = true;
           general = {
             layout = "dwindle";
