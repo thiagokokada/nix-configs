@@ -26,7 +26,7 @@ in
       settings =
         let
           inherit (config.home-manager.desktop.default) browser terminal fileManager;
-          hyprctl = lib.getExe' config.wayland.windowManager.hyprland.package "hyprctl";
+          hyprctl = lib.getExe' config.wayland.windowManager.hyprland.finalPackage "hyprctl";
           menu = lib.getExe config.programs.fuzzel.package;
           bar = lib.getExe config.programs.waybar.package;
           pamixer = lib.getExe pkgs.pamixer;

@@ -12,7 +12,7 @@ let
   swayCfg = config.home-manager.desktop.wayland.sway;
 
   dunstctl = lib.getExe' pkgs.dunst "dunstctl";
-  hyprctl = lib.getExe' config.wayland.windowManager.hyprland.package "hyprctl";
+  hyprctl = lib.getExe' config.wayland.windowManager.hyprland.finalPackage "hyprctl";
   pamixer = lib.getExe pkgs.pamixer;
   pavucontrol = lib.getExe pkgs.pavucontrol;
 
