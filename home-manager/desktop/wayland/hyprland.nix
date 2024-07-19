@@ -164,6 +164,13 @@ in
               "${mod}, TAB, cyclenext,"
               "${mod}, TAB, bringactivetotop"
 
+              # Move inside group (tab) with mod + arrow keys
+              "${mod}, left, changegroupactive, b"
+              "${mod}, right, changegroupactive, f"
+              # Move inside group (tab) with mod + vi keys
+              "${mod}, H, changegroupactive, b"
+              "${mod}, L, changegroupactive, f"
+
               # Move focus with mod + arrow keys
               "${mod}, left, movefocus, l"
               "${mod}, right, movefocus, r"
@@ -174,13 +181,6 @@ in
               "${mod}, L, movefocus, r"
               "${mod}, K, movefocus, u"
               "${mod}, J, movefocus, d"
-
-              # Move inside group (tab) with mod + arrow keys
-              "${mod}, left, changegroupactive, f"
-              "${mod}, right, changegroupactive, b"
-              # Move inside group (tab) with mod + vi keys
-              "${mod}, H, changegroupactive, f"
-              "${mod}, L, changegroupactive, b"
 
               # Move window with mod + arrow keys
               "${shift mod}, left, movewindoworgroup, l"
