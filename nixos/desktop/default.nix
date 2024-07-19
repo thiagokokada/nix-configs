@@ -7,7 +7,6 @@
     ./greetd.nix
     ./locale.nix
     ./non-nix.nix
-    ./plymouth.nix
     ./tailscale.nix
     ./wayland.nix
     ./xserver.nix
@@ -21,6 +20,10 @@
   };
 
   config = lib.mkIf config.nixos.desktop.enable {
+    # Enable graphical boot
+    boot.plymouth.enable = lib.mkDefault true;
+
+    # Gnome Disks needs system-wide permissions to work correctly
     programs.gnome-disks.enable = true;
 
     # Increase file handler limit
@@ -35,10 +38,8 @@
 
     services = {
       dbus.implementation = "broker";
+      # Gnome Keyring/Udisks 2 needs system-wide permissions to work correctly
       gnome.gnome-keyring.enable = true;
-      # Reduces power consumption on demand
-      # TODO: use it in place of TLP?
-      power-profiles-daemon.enable = !config.nixos.laptop.tlp.enable;
       udisks2.enable = true;
     };
   };
