@@ -13,7 +13,6 @@ let
 in
 {
   imports = [
-    ./corectrl.nix
     ./osu.nix
     ./ratbag.nix
     ./retroarch.nix
