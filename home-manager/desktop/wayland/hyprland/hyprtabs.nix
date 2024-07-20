@@ -29,9 +29,11 @@ writeShellApplication {
         declare -a windows
         address="$(jq -cr '.address' <<< "$activewindow")"
         activeworkspace_id="$(hyprctl activeworkspace -j | jq -cr '.id')"
-
-        mapfile -t windows < <(hyprctl -j clients |
-          jq -cr ".[] | select(.workspace.id == $activeworkspace_id) | .address")
+        # Get all windows
+        mapfile -t windows < <(
+          hyprctl clients -j |
+          jq -cr ".[] | select(.workspace.id == $activeworkspace_id) | .address"
+        )
 
         # Only one window, let's toggle a group
         if [[ "''${#windows[@]}" -eq 1 ]]; then
