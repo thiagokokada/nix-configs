@@ -7,6 +7,24 @@
 
 let
   cfg = config.home-manager.desktop.wayland.hyprland;
+  hyprctl = lib.getExe' config.wayland.windowManager.hyprland.finalPackage "hyprctl";
+  jq = lib.getExe pkgs.jq;
+  # TODO: rewrite this in some decent language
+  changegroupactiveormovefocus = pkgs.writeShellScript "changegroupactiveormovefocus" ''
+    activewindow="$(${hyprctl} activewindow -j)"
+    readonly activewindow
+    if ! ${jq} -e '.grouped[]' <<< "$activewindow" >/dev/null; then
+      ${hyprctl} dispatch movefocus "$1"
+    elif [[ "$1" == l ]] && ${jq} -e '.address == .grouped[0]' <<< "$activewindow" >/dev/null; then
+      ${hyprctl} dispatch movefocus l
+    elif [[ "$1" == l ]]; then
+      ${hyprctl} dispatch changegroupactive b
+    elif [[ "$1" == r ]] && ${jq} -e '.address == .grouped[-1]' <<< "$activewindow" >/dev/null; then
+      ${hyprctl} dispatch movefocus r
+    else
+      ${hyprctl} dispatch changegroupactive f
+    fi
+  '';
   # Modifiers
   alt = "ALT";
   ctrl = "CONTROL";
@@ -26,7 +44,6 @@ in
       settings =
         let
           inherit (config.home-manager.desktop.default) browser terminal fileManager;
-          hyprctl = lib.getExe' config.wayland.windowManager.hyprland.finalPackage "hyprctl";
           menu = lib.getExe config.programs.fuzzel.package;
           pamixer = lib.getExe pkgs.pamixer;
           playerctl = lib.getExe pkgs.playerctl;
@@ -164,21 +181,14 @@ in
               "${mod}, TAB, cyclenext,"
               "${mod}, TAB, bringactivetotop"
 
-              # Move inside group (tab) with mod + arrow keys
-              "${mod}, left, changegroupactive, b"
-              "${mod}, right, changegroupactive, f"
-              # Move inside group (tab) with mod + vi keys
-              "${mod}, H, changegroupactive, b"
-              "${mod}, L, changegroupactive, f"
-
               # Move focus with mod + arrow keys
-              "${mod}, left, movefocus, l"
-              "${mod}, right, movefocus, r"
+              "${mod}, left, exec, ${changegroupactiveormovefocus} l"
+              "${mod}, right, exec, ${changegroupactiveormovefocus} r"
               "${mod}, up, movefocus, u"
               "${mod}, down, movefocus, d"
               # Move focus with mod + vi keys
-              "${mod}, H, movefocus, l"
-              "${mod}, L, movefocus, r"
+              "${mod}, H, exec, ${changegroupactiveormovefocus} l"
+              "${mod}, L, exec, ${changegroupactiveormovefocus} r"
               "${mod}, K, movefocus, u"
               "${mod}, J, movefocus, d"
 
