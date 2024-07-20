@@ -6,9 +6,10 @@
 }:
 
 let
+  inherit (config.wayland.windowManager.hyprland) finalPackage;
   cfg = config.home-manager.desktop.wayland.hyprland;
-  hyprctl = lib.getExe' config.wayland.windowManager.hyprland.finalPackage "hyprctl";
-  changegroupactiveormovefocus = lib.getExe (pkgs.callPackage ./changegroupactiveormovefocus.nix { });
+  hyprctl = lib.getExe' finalPackage "hyprctl";
+  hyprtabs = lib.getExe (pkgs.callPackage ./hyprtabs.nix { hyprland = finalPackage; });
   # Modifiers
   alt = "ALT";
   ctrl = "CONTROL";
@@ -156,7 +157,7 @@ in
               "${mod}, V, pseudo,"
               "${mod}, B, togglesplit,"
               "${mod}, F, fullscreen,"
-              "${mod}, E, togglegroup,"
+              "${mod}, W, exec, ${hyprtabs}"
               "${shift mod}, C, exec, ${hyprctl} reload"
               "${shift mod}, Q, killactive,"
               "${alt}, F4, killactive,"
@@ -165,14 +166,21 @@ in
               "${mod}, TAB, cyclenext,"
               "${mod}, TAB, bringactivetotop"
 
+              # Move inside group (tab) with mod + arrow keys
+              "${mod}, left, changegroupactive, b"
+              "${mod}, right, changegroupactive, f"
+              # Move inside group (tab) with mod + vi keys
+              "${mod}, H, changegroupactive, b"
+              "${mod}, L, changegroupactive, f"
+
               # Move focus with mod + arrow keys
-              "${mod}, left, exec, ${changegroupactiveormovefocus} l"
-              "${mod}, right, exec, ${changegroupactiveormovefocus} r"
+              "${mod}, left, movefocus, l"
+              "${mod}, right, movefocus, r"
               "${mod}, up, movefocus, u"
               "${mod}, down, movefocus, d"
               # Move focus with mod + vi keys
-              "${mod}, H, exec, ${changegroupactiveormovefocus} l"
-              "${mod}, L, exec, ${changegroupactiveormovefocus} r"
+              "${mod}, H, movefocus, l"
+              "${mod}, L, movefocus, r"
               "${mod}, K, movefocus, u"
               "${mod}, J, movefocus, d"
 
