@@ -8,23 +8,7 @@
 let
   cfg = config.home-manager.desktop.wayland.hyprland;
   hyprctl = lib.getExe' config.wayland.windowManager.hyprland.finalPackage "hyprctl";
-  jq = lib.getExe pkgs.jq;
-  # TODO: rewrite this in some decent language
-  changegroupactiveormovefocus = pkgs.writeShellScript "changegroupactiveormovefocus" ''
-    activewindow="$(${hyprctl} activewindow -j)"
-    readonly activewindow
-    if ! ${jq} -e '.grouped[]' <<< "$activewindow" >/dev/null; then
-      ${hyprctl} dispatch movefocus "$1"
-    elif [[ "$1" == l ]] && ${jq} -e '.address == .grouped[0]' <<< "$activewindow" >/dev/null; then
-      ${hyprctl} dispatch movefocus l
-    elif [[ "$1" == l ]]; then
-      ${hyprctl} dispatch changegroupactive b
-    elif [[ "$1" == r ]] && ${jq} -e '.address == .grouped[-1]' <<< "$activewindow" >/dev/null; then
-      ${hyprctl} dispatch movefocus r
-    else
-      ${hyprctl} dispatch changegroupactive f
-    fi
-  '';
+  changegroupactiveormovefocus = lib.getExe (pkgs.callPackage ./changegroupactiveormovefocus.nix { });
   # Modifiers
   alt = "ALT";
   ctrl = "CONTROL";
