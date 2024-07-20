@@ -23,8 +23,8 @@ writeShellApplication {
 
       # We are in a group already
       if jq -cr --exit-status '.grouped | length > 0' <<< "$activewindow"; then
-        # Ungroup current window group
-        hyprctl dispatch togglegroup
+        # Ungroup current window group and swap with master (when using master layout)
+        hyprctl --batch "dispatch togglegroup; dispatch layoutmsg swapwithmaster master;"
       else
         declare -a windows
         address="$(jq -cr '.address' <<< "$activewindow")"

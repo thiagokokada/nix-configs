@@ -63,13 +63,17 @@ in
           # TODO: add validation
           debug.disable_scale_checks = true;
           general = {
-            layout = "dwindle";
+            layout = "master";
             gaps_in = 3;
             gaps_out = 6;
             border_size = 2;
             resize_on_border = false;
             # Please see https://wiki.hyprland.org/Configuring/Tearing/ before you turn this on
             allow_tearing = false;
+          };
+          master = {
+            allow_small_split = true;
+            no_gaps_when_only = 1;
           };
           input =
             let
@@ -109,11 +113,6 @@ in
               "layers,1,1,default,slide"
               "fade,0"
             ];
-          };
-          dwindle = {
-            pseudotile = true;
-            preserve_split = true;
-            force_split = 2; # always open new split right/bottom, like i3
           };
           misc = {
             font_family = config.home-manager.desktop.theme.fonts.gui.name;
