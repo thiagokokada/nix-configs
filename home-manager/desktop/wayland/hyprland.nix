@@ -8,23 +8,38 @@
 let
   cfg = config.home-manager.desktop.wayland.hyprland;
   hyprctl = lib.getExe' config.wayland.windowManager.hyprland.finalPackage "hyprctl";
-  jq = lib.getExe pkgs.jq;
   # TODO: rewrite this in some decent language
-  changegroupactiveormovefocus = pkgs.writeShellScript "changegroupactiveormovefocus" ''
-    activewindow="$(${hyprctl} activewindow -j)"
-    readonly activewindow
-    if ! ${jq} -e '.grouped[]' <<< "$activewindow" >/dev/null; then
-      ${hyprctl} dispatch movefocus "$1"
-    elif [[ "$1" == l ]] && ${jq} -e '.address == .grouped[0]' <<< "$activewindow" >/dev/null; then
-      ${hyprctl} dispatch movefocus l
-    elif [[ "$1" == l ]]; then
-      ${hyprctl} dispatch changegroupactive b
-    elif [[ "$1" == r ]] && ${jq} -e '.address == .grouped[-1]' <<< "$activewindow" >/dev/null; then
-      ${hyprctl} dispatch movefocus r
-    else
-      ${hyprctl} dispatch changegroupactive f
-    fi
-  '';
+  changegroupactiveormovefocus =
+    pkgs.writers.writePython3 "changegroupactiveormovefocus" { flakeIgnore = [ "E501" ]; }
+      # python
+      ''
+        import json
+        import sys
+        from subprocess import run
+
+        assert len(sys.argv) >= 2, "Missing move window argument!"
+        move_window = sys.argv[1]
+        hyprctl = "${hyprctl}"
+
+        r = run(
+            [hyprctl, "activewindow", "-j"],
+            check=True,
+            capture_output=True
+        )
+        j = json.loads(r.stdout)
+        if not j.get("grouped"):
+            run([hyprctl, "dispatch", "movefocus", move_window])
+        elif move_window == "l":
+            if j["address"] == j["grouped"][0]:
+                run([hyprctl, "dispatch", "movefocus", "l"])
+            else:
+                run([hyprctl, "dispatch", "changegroupactive", "b"])
+        else:
+            if j["address"] == j["grouped"][-1]:
+                run([hyprctl, "dispatch", "movefocus", "r"])
+            else:
+                run([hyprctl, "dispatch", "changegroupactive", "f"])
+      '';
   # Modifiers
   alt = "ALT";
   ctrl = "CONTROL";
