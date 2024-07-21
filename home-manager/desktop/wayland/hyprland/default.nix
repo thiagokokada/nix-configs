@@ -22,7 +22,10 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    home.packages = with pkgs; [ hyprshot ];
+    home.packages = with pkgs; [
+      hyprshot
+      hyprpicker
+    ];
 
     wayland.windowManager.hyprland = {
       enable = true;
