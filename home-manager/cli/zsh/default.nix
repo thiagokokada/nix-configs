@@ -102,16 +102,10 @@ in
         '';
 
       initExtra =
-        # tricks to make ZSH startup faster
-        # - manually creating integrations since this is faster than calling
+        # manually creating integrations since this is faster than calling
         # the program during startup (e.g. `zoxide init zsh`)
-        # - avoid calling promptinit since it is slow, call prompt_pure_setup
-        # directly
         # bash
         ''
-          # pure
-          prompt_pure_setup
-
           # any-nix-shell
           source ${
             pkgs.runCommand "any-nix-shell-zsh"
