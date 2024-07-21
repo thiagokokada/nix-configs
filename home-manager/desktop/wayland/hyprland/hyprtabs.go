@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"os"
 
-	client "github.com/thiagokokada/hyprland-ipc-client/v3"
+	client "github.com/labi-le/hyprland-ipc-client/v3"
 )
 
 func must1[T any](v T, err error) T {
@@ -50,7 +50,7 @@ func main() {
 			// will work
 			// For master layouts we also call swapwithmaster, this
 			// makes the switch more reliable
-			for i := 0; i < 1; i++ {
+			for i := 0; i < 2; i++ {
 				batchArgs.Add([]byte(fmt.Sprintf("focuswindow address:%s", w)))
 				batchArgs.Add([]byte("layoutmsg swapwithmaster auto"))
 				batchArgs.Add([]byte("moveintogroup l"))

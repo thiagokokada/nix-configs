@@ -1,2 +1,2 @@
-github.com/thiagokokada/hyprland-ipc-client/v3 v3.0.0-20240721152444-15ec6066a057 h1:gQ5jGxtuRWDTRk/cheIsxiI3yFW6zMvbnAe95xCJ6NE=
-github.com/thiagokokada/hyprland-ipc-client/v3 v3.0.0-20240721152444-15ec6066a057/go.mod h1:NZcM0sxd/eM0AZQlPyGI1fiNTn5RU16G5c8xS+iyNyo=
+github.com/labi-le/hyprland-ipc-client/v3 v3.1.0 h1:CZEcd0N77gbbGGz8kKl0owy7Vw3fXas3PHaQ5JAjm2A=
+github.com/labi-le/hyprland-ipc-client/v3 v3.1.0/go.mod h1:5y18Ty27Br/BQcyhC45CaNofWmwXR8VzswlNnb5CYZA=
