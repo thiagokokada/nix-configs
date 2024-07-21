@@ -29,6 +29,8 @@ in
             "dom.event.clipboardevents.enabled" = false;
             # enable hw video acceleration, if supported
             "media.ffmpeg.vaapi.enabled" = true;
+            # allow switch tabs with mouse scroll
+            "toolkit.tabbox.switchByScrolling" = true;
             # handpicked settings from: https://github.com/arkenfox/user.js/blob/master/user.js
             # ads
             "browser.newtabpage.activity-stream.showSponsored" = false;
