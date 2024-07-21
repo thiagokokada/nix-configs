@@ -2,38 +2,65 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"os"
-
-	client "github.com/thiagokokada/hyprland-ipc-client/v3"
+	"os/exec"
+	"strings"
 )
 
+type activewindow struct {
+	Address string   `json:"address"`
+	Grouped []string `json:"grouped"`
+}
+
+type activeworkspace struct {
+	Id int64 `json:"id"`
+}
+
+type client struct {
+	Address   string    `json:"address"`
+	Workspace workspace `json:"workspace"`
+}
+
+type workspace struct {
+	Id int64 `json:"id"`
+}
+
 func must1[T any](v T, err error) T {
-	must(err)
+	must0(err)
 	return v
 }
 
-func must(err error) {
+func must0(err error) {
 	if err != nil {
 		panic(err)
 	}
 }
 
+func mustCmdAndUnmarshalJson(v any, name string, arg ...string) {
+	cmd := exec.Command(name, arg...)
+	output := must1(cmd.Output())
+	must0(json.Unmarshal(output, v))
+}
+
 func main() {
-	c := client.MustClient(os.Getenv("HYPRLAND_INSTANCE_SIGNATURE"))
-	awindow := must1(c.ActiveWindow())
-	batchArgs := client.NewByteQueue()
-	// https://github.com/labi-le/hyprland-ipc-client/issues/7
-	batchArgs.Add([]byte("noop;"))
+	var awindow activewindow
+	mustCmdAndUnmarshalJson(&awindow, "hyprctl", "activewindow", "-j")
+
+	batchArgs := []string{}
 
 	if len(awindow.Grouped) > 0 {
 		// If we are already in a group, ungroup
-		batchArgs.Add([]byte("dispatch togglegroup;"))
+		batchArgs = append(batchArgs, "dispatch togglegroup")
 		// Make the current window as master (when using master layout)
-		batchArgs.Add([]byte("dispatch layoutmsg swapwithmaster master;"))
+		batchArgs = append(batchArgs, "dispatch layoutmsg swapwithmaster master")
 	} else {
-		aworkspace := must1(c.ActiveWorkspace())
-		clients := must1(c.Clients())
+		var aworkspace activeworkspace
+		mustCmdAndUnmarshalJson(&aworkspace, "hyprctl", "activeworkspace", "-j")
+
+		var clients []client
+		mustCmdAndUnmarshalJson(&clients, "hyprctl", "clients", "-j")
 
 		// Grab all windows in the active workspace
 		var windows []string
@@ -44,7 +71,7 @@ func main() {
 		}
 
 		// Start by creating a new group
-		batchArgs.Add([]byte("dispatch togglegroup;"))
+		batchArgs = append(batchArgs, "dispatch togglegroup")
 		for _, w := range windows {
 			// Move each window inside the group
 			// Once is not enough in case of very "deep" layouts,
@@ -52,20 +79,26 @@ func main() {
 			// will work
 			// For master layouts we also call swapwithmaster, this
 			// makes the switch more reliable
-			for i := 0; i < 1; i++ {
-				batchArgs.Add([]byte(fmt.Sprintf("dispatch focuswindow address:%s;", w)))
-				batchArgs.Add([]byte("dispatch layoutmsg swapwithmaster auto;"))
-				batchArgs.Add([]byte("dispatch moveintogroup l;"))
-				batchArgs.Add([]byte("dispatch moveintogroup r;"))
-				batchArgs.Add([]byte("dispatch moveintogroup u;"))
-				batchArgs.Add([]byte("dispatch moveintogroup d;"))
+			for i := 0; i < 2; i++ {
+				batchArgs = append(batchArgs, "dispatch focuswindow address:"+w)
+				batchArgs = append(batchArgs, "dispatch layoutmsg swapwithmaster auto")
+				batchArgs = append(batchArgs, "dispatch moveintogroup l")
+				batchArgs = append(batchArgs, "dispatch moveintogroup r")
+				batchArgs = append(batchArgs, "dispatch moveintogroup u")
+				batchArgs = append(batchArgs, "dispatch moveintogroup d")
 			}
 		}
 		// Focus in the active window at the end
-		batchArgs.Add([]byte(fmt.Sprintf("dispatch focuswindow address:%s;", awindow.Address)))
+		batchArgs = append(batchArgs, "dispatch focuswindow address:"+awindow.Address)
 	}
-	fmt.Printf("# of Commands: %d\n", batchArgs.Len())
+
+	// Print commands for debugging
+	if os.Getenv("DEBUG") != "" {
+		fmt.Println(strings.Join(batchArgs, "\n"))
+	}
+
 	// Run in batch for performance
-	response := must1(c.Dispatch(batchArgs))
-	fmt.Printf("Response: %s\n", response)
+	cmd := exec.Command("hyprctl", "dispatch", "--batch", strings.Join(batchArgs, ";"))
+	must0(cmd.Start())
+	os.Exit(0)
 }

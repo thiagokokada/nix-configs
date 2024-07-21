@@ -1,4 +1,8 @@
-{ buildGoModule }:
+{
+  lib,
+  buildGoModule,
+  hyprland,
+}:
 
 buildGoModule {
   pname = "hyprtabs";
@@ -6,14 +10,18 @@ buildGoModule {
 
   src = ./.;
 
-  vendorHash = "sha256-vMKHN84/dypVbjyRQBzhWhhqCPenR+FSjvKGeDf+kM4=";
+  postPatch = ''
+    substituteInPlace hyprtabs.go \
+      --replace-fail hyprctl ${lib.getExe' hyprland "hyprctl"}
+  '';
+
+  vendorHash = null;
 
   ldflags = [
     "-s"
     "-w"
   ];
 
-  # No tests
   doCheck = false;
 
   meta.mainProgram = "hyprtabs";

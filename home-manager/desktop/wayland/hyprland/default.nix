@@ -9,7 +9,7 @@ let
   inherit (config.wayland.windowManager.hyprland) finalPackage;
   cfg = config.home-manager.desktop.wayland.hyprland;
   hyprctl = lib.getExe' finalPackage "hyprctl";
-  hyprtabs = lib.getExe (pkgs.callPackage ./hyprtabs.nix { });
+  hyprtabs = lib.getExe (pkgs.callPackage ./hyprtabs.nix { hyprland = finalPackage; });
   # Modifiers
   alt = "ALT";
   ctrl = "CONTROL";
