@@ -82,10 +82,6 @@
       url = "github:zimfw/utility";
       flake = false;
     };
-    pure = {
-      url = "github:sindresorhus/pure";
-      flake = false;
-    };
     zsh-autopair = {
       url = "github:hlissner/zsh-autopair";
       flake = false;

@@ -106,6 +106,11 @@ in
         # the program during startup (e.g. `zoxide init zsh`)
         # bash
         ''
+          # pure
+          fpath+=("${pkgs.pure-prompt}/share/zsh/site-functions")
+          autoload -U promptinit; promptinit
+          prompt pure
+
           # any-nix-shell
           source ${
             pkgs.runCommand "any-nix-shell-zsh"
@@ -185,7 +190,6 @@ in
         lib.flatten [
           (zimPlugin "zim-input")
           (zimPlugin "zim-utility")
-          (zshPlugin "pure")
           (zshPlugin "zsh-autopair")
           (zshPlugin "zsh-completions")
           (zimPlugin "zim-completion") # needs to be the last one
