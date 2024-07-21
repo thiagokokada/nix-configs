@@ -45,7 +45,7 @@ func mustAddOrDispatch(v string) {
 		mustDispatch()
 		q = client.NewByteQueue()
 	}
-	q.Add([]byte(v))
+	q.Add(client.UnsafeBytes(v))
 }
 
 func init() {
