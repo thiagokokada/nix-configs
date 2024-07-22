@@ -108,16 +108,9 @@ in
         ''
           # any-nix-shell
           source ${
-            pkgs.runCommand "any-nix-shell-zsh"
-              {
-                nativeBuildInputs = with pkgs; [
-                  any-nix-shell
-                  which
-                ];
-              }
-              ''
-                any-nix-shell zsh > $out
-              ''
+            pkgs.runCommand "any-nix-shell-zsh" { } ''
+              ${lib.getExe pkgs.any-nix-shell} zsh > $out
+            ''
           }
 
           # fzf
