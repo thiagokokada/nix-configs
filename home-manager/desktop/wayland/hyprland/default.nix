@@ -268,8 +268,12 @@ in
             "suppressevent maximize, class:.*"
           ];
 
-          # Disable Xwayland scaling, we will scale X applications manually
-          xwayland.force_zero_scaling = true;
+          xwayland = {
+            # Disable Xwayland scaling, we will scale X applications manually
+            force_zero_scaling = true;
+            # If not using above, generally blurry is better than ugly
+            use_nearest_neighbor = false;
+          };
         };
 
       extraConfig =
