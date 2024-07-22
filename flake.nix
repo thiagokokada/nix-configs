@@ -59,12 +59,6 @@
       flake = false;
     };
 
-    wezterm = {
-      url = "github:wez/wezterm?dir=nix";
-      inputs.flake-utils.follows = "flake-utils";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     # ZSH plugins
     zim-completion = {
       url = "github:zimfw/completion";

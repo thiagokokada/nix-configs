@@ -50,7 +50,8 @@ in
 
           Should allow starting programs as parameter.
         '';
-        default = "${lib.getExe config.programs.wezterm.package} start";
+        # TODO: switch back to wezterm once a new release is created
+        default = lib.getExe config.programs.kitty.package;
       };
     };
   };

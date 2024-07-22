@@ -102,7 +102,5 @@ outputs.lib.recursiveMergeAttrs [
         '';
 
     run-bg-alias = name: command: prev.callPackage ../packages/run-bg-alias { inherit name command; };
-
-    wezterm = flake.inputs.wezterm.packages.${prev.system}.default;
   }
 ]
