@@ -43,7 +43,7 @@ func main() {
 		}
 
 		// Start by creating a new group
-		must(client.Dispatch("togglegroup"))
+		must1(client.Dispatch("togglegroup"))
 		for _, w := range windows {
 			// Move each window inside the group
 			// Once is not enough in case of very "deep" layouts,
@@ -52,7 +52,7 @@ func main() {
 			// For master layouts we also call swapwithmaster, this
 			// makes the switch more reliable
 			for i := 0; i < 2; i++ {
-				must(client.Dispatch(
+				must1(client.Dispatch(
 					fmt.Sprintf("focuswindow address:%s", w),
 					"layoutmsg swapwithmaster auto",
 					"moveintogroup l",
@@ -63,6 +63,6 @@ func main() {
 			}
 		}
 		// Focus in the active window at the end
-		must(client.Dispatch(fmt.Sprintf("focuswindow address:%s", aWindow.Address)))
+		must1(client.Dispatch(fmt.Sprintf("focuswindow address:%s", aWindow.Address)))
 	}
 }
