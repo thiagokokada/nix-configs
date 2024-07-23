@@ -62,7 +62,12 @@ func main() {
 				))
 			}
 		}
-		// Focus in the active window at the end
-		must1(client.Dispatch(fmt.Sprintf("focuswindow address:%s", aWindow.Address)))
+		must1(client.Dispatch(
+			// Focus in the active window at the end
+			fmt.Sprintf("focuswindow address:%s", aWindow.Address),
+			// Workaround window sometimes being stretch
+			"fullscreen",
+			"fullscreen",
+		))
 	}
 }
