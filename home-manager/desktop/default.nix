@@ -101,13 +101,7 @@ in
       };
     };
 
-    services = {
-      easyeffects.enable = true;
-      udiskie = {
-        enable = true;
-        tray = "always";
-      };
-    };
+    services.udiskie.enable = true;
 
     xdg = {
       # Some applications like to overwrite this file, so let's just force it
