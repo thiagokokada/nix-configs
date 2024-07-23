@@ -246,6 +246,14 @@ in
               '';
           }
           {
+            plugin = guess-indent-nvim;
+            type = "lua";
+            config = # lua
+              ''
+                require("guess-indent").setup {}
+              '';
+          }
+          {
             plugin = leap-nvim;
             type = "lua";
             config = # lua
@@ -516,7 +524,12 @@ in
             type = "lua";
             config = # lua
               ''
-                require("url-open").setup {}
+                require("url-open").setup {
+                  open_only_when_cursor_on_url = false,
+                  highlight_url = {
+                    cursor_move = { enabled = false, }
+                  }
+                }
                 vim.keymap.set("n", "gx", function()
                   vim.cmd("URLOpenUnderCursor")
                 end , { desc = "Open URL under cursor" })
@@ -598,7 +611,6 @@ in
           mkdir-nvim
           vim-advanced-sorters
           vim-fugitive
-          vim-sleuth
         ]
         ++ lib.optionals cfg.markdownPreview.enable [
           {
