@@ -66,6 +66,7 @@ in
         # when we have 0 keyboard layouts, it probably means we are using HM
         # standalone, so we can't trust the keyboard module
         hide-keyboard-layout = lib.mkIf ((builtins.length kbLayouts) == 1) true;
+        ignore-empty-password = true;
 
         indicator-radius = 80;
         indicator-thickness = 10;
