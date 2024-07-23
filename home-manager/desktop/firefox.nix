@@ -1,4 +1,4 @@
-{ config, lib, ... }:
+{ config, lib, pkgs, ... }:
 
 let
   inherit (config.home) username;
@@ -28,7 +28,7 @@ in
             # don't mess up with paste
             "dom.event.clipboardevents.enabled" = false;
             # enable hw video acceleration, if supported
-            "media.ffmpeg.vaapi.enabled" = true;
+            "media.ffmpeg.vaapi.enabled" = lib.mkIf pkgs.stdenv.isLinux true;
             # allow switch tabs with mouse scroll
             "toolkit.tabbox.switchByScrolling" = true;
             # handpicked settings from: https://github.com/arkenfox/user.js/blob/master/user.js
