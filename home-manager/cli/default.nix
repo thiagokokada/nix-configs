@@ -14,7 +14,6 @@ in
     ./htop.nix
     ./irssi.nix
     ./nixpkgs.nix
-    ./nnn.nix
     ./ssh
     ./tmux.nix
     ./yazi.nix

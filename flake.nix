@@ -53,12 +53,6 @@
       flake = false;
     };
 
-    # nnn plugins
-    nnn-plugins = {
-      url = "github:jarun/nnn";
-      flake = false;
-    };
-
     # yazi
     yazi-flavors = {
       url = "github:yazi-rs/flavors";

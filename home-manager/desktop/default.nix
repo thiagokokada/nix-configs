@@ -41,7 +41,7 @@ in
       fileManager = lib.mkOption {
         type = lib.types.str;
         description = "Default file manager to be used.";
-        default = "${cfg.default.terminal} -- ${lib.getExe config.programs.nnn.finalPackage} -a -P p";
+        default = "${cfg.default.terminal} -- ${lib.getExe config.programs.yazi.package}";
       };
       terminal = lib.mkOption {
         type = lib.types.str;
