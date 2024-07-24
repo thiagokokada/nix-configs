@@ -17,6 +17,7 @@ in
     ./nnn.nix
     ./ssh
     ./tmux.nix
+    ./yazi.nix
     ./zsh
   ];
 

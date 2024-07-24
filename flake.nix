@@ -59,6 +59,12 @@
       flake = false;
     };
 
+    # yazi
+    yazi-flavors = {
+      url = "github:yazi-rs/flavors";
+      flake = false;
+    };
+
     # ZSH plugins
     zim-completion = {
       url = "github:zimfw/completion";

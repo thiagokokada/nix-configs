@@ -326,6 +326,7 @@
         "nixpkgs": "nixpkgs_2",
         "nnn-plugins": "nnn-plugins",
         "pure": "pure",
+        "yazi-flavors": "yazi-flavors",
         "zim-completion": "zim-completion",
         "zim-environment": "zim-environment",
         "zim-input": "zim-input",
@@ -346,6 +347,22 @@
       "original": {
         "owner": "nix-systems",
         "repo": "default",
+        "type": "github"
+      }
+    },
+    "yazi-flavors": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1720835548,
+        "narHash": "sha256-566RFL1Wng7yr5OS3UtKEy+ZLrgwfCdX9FAtwRQK2oM=",
+        "owner": "yazi-rs",
+        "repo": "flavors",
+        "rev": "2d7dd2afe253c30943e9cd05158b1560a285eeab",
+        "type": "github"
+      },
+      "original": {
+        "owner": "yazi-rs",
+        "repo": "flavors",
         "type": "github"
       }
     },
