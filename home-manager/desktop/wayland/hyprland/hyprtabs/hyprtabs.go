@@ -20,7 +20,6 @@ func must(err error) {
 
 func main() {
 	client := hyprland.MustClient()
-	client.Validate = false
 
 	aWindow := must1(client.ActiveWindow())
 	if len(aWindow.Grouped) > 0 {
@@ -45,22 +44,25 @@ func main() {
 		// Start by creating a new group
 		must1(client.Dispatch("togglegroup"))
 		for _, w := range windows {
+			var cmdbuf []string
 			// Move each window inside the group
 			// Once is not enough in case of very "deep" layouts,
 			// so we run this multiple times to try to make sure it
 			// will work
 			// For master layouts we also call swapwithmaster, this
 			// makes the switch more reliable
+			// FIXME: this workaround could be fixed if hyprland
+			// supported moving windows based on address and not
+			// only positions
 			for i := 0; i < 2; i++ {
-				must1(client.Dispatch(
-					fmt.Sprintf("focuswindow address:%s", w),
-					"layoutmsg swapwithmaster auto",
-					"moveintogroup l",
-					"moveintogroup r",
-					"moveintogroup u",
-					"moveintogroup d",
-				))
+				cmdbuf = append(cmdbuf, fmt.Sprintf("focuswindow address:%s", w))
+				cmdbuf = append(cmdbuf, "layoutmsg swapwithmaster auto")
+				cmdbuf = append(cmdbuf, "moveintogroup l")
+				cmdbuf = append(cmdbuf, "moveintogroup r")
+				cmdbuf = append(cmdbuf, "moveintogroup u")
+				cmdbuf = append(cmdbuf, "moveintogroup d")
 			}
+			must1(client.Dispatch(cmdbuf...))
 		}
 		must1(client.Dispatch(
 			// Focus in the active window at the end
