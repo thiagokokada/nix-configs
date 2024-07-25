@@ -1,4 +1,9 @@
-// Group all windows in the current workspace, or ungroup
+// Group all windows in the current workspace, or ungroup, basically similar to
+// how i3/sway tabbed container works.
+// This script works better with "master" layouts (since the layout is more
+// predicatable), but it also works in "dwindle" layouts as long the layout
+// is not too "deep" (e.g.: too many windows in the same workspace).
+// See https://github.com/hyprwm/Hyprland/issues/2822 for more details.
 package main
 
 import (
@@ -30,6 +35,7 @@ func main() {
 			"layoutmsg swapwithmaster master",
 		)
 	} else {
+		var cmdbuf []string
 		aWorkspace := must1(client.ActiveWorkspace())
 		clients := must1(client.Clients())
 
@@ -42,9 +48,8 @@ func main() {
 		}
 
 		// Start by creating a new group
-		must1(client.Dispatch("togglegroup"))
+		cmdbuf = append(cmdbuf, "togglegroup")
 		for _, w := range windows {
-			var cmdbuf []string
 			// Move each window inside the group
 			// Once is not enough in case of very "deep" layouts,
 			// so we run this multiple times to try to make sure it
@@ -62,14 +67,13 @@ func main() {
 				cmdbuf = append(cmdbuf, "moveintogroup u")
 				cmdbuf = append(cmdbuf, "moveintogroup d")
 			}
-			must1(client.Dispatch(cmdbuf...))
 		}
-		must1(client.Dispatch(
-			// Focus in the active window at the end
-			fmt.Sprintf("focuswindow address:%s", aWindow.Address),
-			// Workaround window sometimes being stretch
-			"fullscreen",
-			"fullscreen",
-		))
+		// Focus in the active window at the end
+		cmdbuf = append(cmdbuf, fmt.Sprintf("focuswindow address:%s", aWindow.Address))
+
+		// Dispatch buffered commands in one call for performance,
+		// hyprland-go will take care of splitting it in smaller calls
+		// if necessary
+		must1(client.Dispatch(cmdbuf...))
 	}
 }
