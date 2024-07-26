@@ -72,7 +72,6 @@ in
         android-file-transfer
         audacious
         (calibre.override { unrarSupport = true; })
-        (cinnamon.nemo-with-extensions.override { extensions = with cinnamon; [ nemo-fileroller ]; })
         desktop-file-utils
         ffmpeg
         evince
@@ -85,6 +84,7 @@ in
         libreoffice-fresh
         open-browser
         (mcomix.override { unrarSupport = true; })
+        (nemo-with-extensions.override { extensions = [ nemo-fileroller ]; })
         pamixer
         pavucontrol
         playerctl
