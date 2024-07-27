@@ -79,10 +79,6 @@ in
           -- indent wrapped lines to match line start
           vim.opt.breakindent = true
 
-          -- indent blocks automatically
-          -- WARN: disable if using treesitter.indent
-          vim.opt.smartindent = true
-
           -- show line numbers
           vim.opt.number = true
 
