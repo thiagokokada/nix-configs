@@ -113,7 +113,7 @@ in
             animation = [
               "workspaces,1,2,default"
               "windows,1,1,default,slide"
-              "layers,1,1,default,slide"
+              "layers,1,2,default,default"
               "fade,0"
             ];
           };
