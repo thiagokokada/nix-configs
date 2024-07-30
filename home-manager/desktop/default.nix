@@ -43,6 +43,11 @@ in
         description = "Default file manager to be used.";
         default = "${cfg.default.terminal} -- ${lib.getExe config.programs.yazi.package}";
       };
+      volumeControl = lib.mkOption {
+        type = lib.types.str;
+        description = "Default volume control to be used.";
+        default = lib.getExe pkgs.pwvucontrol;
+      };
       terminal = lib.mkOption {
         type = lib.types.str;
         description = ''
@@ -86,7 +91,7 @@ in
         (mcomix.override { unrarSupport = true; })
         (nemo-with-extensions.override { extensions = [ nemo-fileroller ]; })
         pamixer
-        pavucontrol
+        pwvucontrol
         playerctl
         pinta
         qalculate-gtk

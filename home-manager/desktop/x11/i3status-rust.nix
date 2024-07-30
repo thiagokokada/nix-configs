@@ -152,7 +152,7 @@ in
             click = [
               {
                 button = "left";
-                cmd = "pavucontrol";
+                cmd = config.home-manager.desktop.default.volumeControl;
               }
             ];
           };

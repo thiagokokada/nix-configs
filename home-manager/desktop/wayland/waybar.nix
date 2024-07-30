@@ -14,7 +14,6 @@ let
   dunstctl = lib.getExe' pkgs.dunst "dunstctl";
   hyprctl = lib.getExe' config.wayland.windowManager.hyprland.finalPackage "hyprctl";
   pamixer = lib.getExe pkgs.pamixer;
-  pavucontrol = lib.getExe pkgs.pavucontrol;
 
   shortPathName = path: "disk#${libEx.shortPathWithSep "_" path}";
 in
@@ -272,7 +271,7 @@ in
                 ""
                 ""
               ];
-              on-click = pavucontrol;
+              on-click = config.home-manager.desktop.default.volumeControl;
               on-click-right = "${pamixer} --toggle-mute";
               scroll-step = 5;
               max-volume = 150;
