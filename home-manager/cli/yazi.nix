@@ -1,7 +1,6 @@
 {
   config,
   lib,
-  pkgs,
   flake,
   ...
 }:
@@ -39,21 +38,16 @@ in
           catppuccin-macchiato = "${flavors}/catppuccin-macchiato.yazi";
           catppuccin-mocha = "${flavors}/catppuccin-mocha.yazi";
         };
-      settings = {
-        # FIXME: seems to not be working right now
-        # flavor = {
-        #   use = "catppuccin-macchiato";
-        # };
+      theme = {
+        flavor = {
+          use = "catppuccin-macchiato";
+        };
         icon = lib.mkIf (!cfg.icons.enable) { rules = [ ]; };
         status = lib.mkIf (!cfg.icons.enable) {
           separator_open = "";
           separator_close = "";
         };
       };
-    };
-
-    xdg.configFile = {
-      "yazi/theme.toml".source = "${flake.inputs.yazi-flavors}/catppuccin-macchiato.yazi/flavor.toml";
     };
   };
 }
