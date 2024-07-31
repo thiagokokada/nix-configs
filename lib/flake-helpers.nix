@@ -1,9 +1,4 @@
-{
-  self,
-  nixpkgs,
-  flake-utils,
-  ...
-}@inputs:
+{ self, flake-utils, ... }@inputs:
 
 let
   inherit (flake-utils.lib) eachDefaultSystem mkApp;
@@ -14,19 +9,23 @@ in
     eachDefaultSystem (
       system:
       let
-        inherit (nixpkgs) lib;
         pkgs = self.outputs.legacyPackages.${system};
         mkGHActionsYAML =
           name:
-          let
-            file = import (../actions/${name}.nix);
-            json = builtins.toJSON file;
-          in
-          pkgs.runCommand name { } ''
-            mkdir -p $out
-            echo ${lib.escapeShellArg json} | ${lib.getExe pkgs.yj} -jy > $out/${name}.yml
-            ${lib.getExe pkgs.action-validator} -v $out/${name}.yml
-          '';
+          pkgs.runCommand name
+            {
+              buildInputs = with pkgs; [
+                action-validator
+                yj
+              ];
+              json = builtins.toJSON (import ../actions/${name}.nix);
+              passAsFile = [ "json" ];
+            }
+            ''
+              mkdir -p $out
+              yj -jy < "$jsonPath" > $out/${name}.yml
+              action-validator -v $out/${name}.yml
+            '';
         ghActionsYAMLs = map mkGHActionsYAML names;
       in
       {
