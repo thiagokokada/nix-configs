@@ -88,7 +88,10 @@ in
         inkscape
         libreoffice-fresh
         open-browser
-        (mcomix.override { unrarSupport = true; })
+        (mcomix.override {
+          unrarSupport = true;
+          pdfSupport = false;
+        })
         (nemo-with-extensions.override { extensions = [ nemo-fileroller ]; })
         pamixer
         pwvucontrol
