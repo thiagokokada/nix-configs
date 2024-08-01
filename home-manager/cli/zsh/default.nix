@@ -261,6 +261,7 @@ in
               truncate_to_repo = false;
               truncation_length = 0;
             };
+            container.disabled = true;
             git_status.stashed = "";
           })
         ];
