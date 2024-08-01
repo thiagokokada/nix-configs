@@ -117,8 +117,8 @@ in
         ''
           # any-nix-shell
           source ${
-            pkgs.runCommand "any-nix-shell-zsh" { } ''
-              ${lib.getExe pkgs.any-nix-shell} zsh > $out
+            pkgs.runCommand "any-nix-shell-zsh" { buildInputs = [ pkgs.any-nix-shell ]; } ''
+              any-nix-shell zsh > $out
             ''
           }
 
@@ -128,8 +128,8 @@ in
 
           # zoxide
           source ${
-            pkgs.runCommand "zoxide-init-zsh" { } ''
-              ${lib.getExe config.programs.zoxide.package} init zsh > $out
+            pkgs.runCommand "zoxide-init-zsh" { buildInputs = [ config.programs.zoxide.package ]; } ''
+              zoxide init zsh > $out
             ''
           }
 

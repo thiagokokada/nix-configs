@@ -34,8 +34,8 @@
         # the `direnv hook zsh` itself during startup
         ''
           source ${
-            pkgs.runCommand "direnv-hook-zsh" { } ''
-              ${lib.getExe config.programs.direnv.package} hook zsh > $out
+            pkgs.runCommand "direnv-hook-zsh" { buildInputs = [ config.programs.direnv.package ]; } ''
+              direnv hook zsh > $out
             ''
           }
         '';
