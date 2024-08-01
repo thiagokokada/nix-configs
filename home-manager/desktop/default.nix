@@ -98,12 +98,6 @@ in
         vlc
         zoom-us
       ];
-
-      sessionVariables = {
-        # Workaround issues in e.g.: Firefox
-        GTK_IM_MODULE = lib.mkDefault "xim";
-        QT_IM_MODULE = lib.mkDefault "xim";
-      };
     };
 
     services.udiskie.enable = true;
