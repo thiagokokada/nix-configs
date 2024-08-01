@@ -7,6 +7,7 @@
 }:
 
 let
+  cfg = config.home-manager.cli.zsh;
   get-ip = pkgs.writeShellApplication {
     name = "get-ip";
     runtimeInputs = with pkgs; [ curl ];
@@ -38,11 +39,17 @@ let
   };
 in
 {
-  options.home-manager.cli.zsh.enable = lib.mkEnableOption "ZSH config" // {
-    default = config.home-manager.cli.enable;
+  options.home-manager.cli.zsh = {
+    enable = lib.mkEnableOption "ZSH config" // {
+      default = config.home-manager.cli.enable;
+    };
+    # Do not forget to set 'Hack Nerd Mono Font' as the terminal font
+    icons.enable = lib.mkEnableOption "icons" // {
+      default = config.home-manager.desktop.enable || config.home-manager.darwin.enable;
+    };
   };
 
-  config = lib.mkIf config.home-manager.cli.zsh.enable {
+  config = lib.mkIf cfg.enable {
     home.packages =
       with pkgs;
       [
@@ -246,15 +253,17 @@ in
       starship = {
         enable = true;
         enableZshIntegration = false;
-        # https://starship.rs/presets/pure-preset
-        settings = {
-          directory = {
-            style = "blue";
-            truncate_to_repo = false;
-            truncation_length = 0;
-          };
-          git_status.stashed = "";
-        };
+        settings = lib.mkMerge [
+          (lib.optionalAttrs (!cfg.icons.enable) (lib.importTOML ./starship-plain-text-symbols.toml))
+          ({
+            directory = {
+              style = "blue";
+              truncate_to_repo = false;
+              truncation_length = 0;
+            };
+            git_status.stashed = "";
+          })
+        ];
       };
       zoxide = {
         enable = true;
