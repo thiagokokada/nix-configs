@@ -12,7 +12,10 @@
       extraLocaleSettings = {
         LC_CTYPE = lib.mkDefault "pt_BR.UTF-8"; # Fix ç in us-intl.
       };
-      inputMethod.enabled = "ibus";
+      inputMethod = {
+        enable = true;
+        type = "ibus";
+      };
     };
 
     # Set your time zone.
