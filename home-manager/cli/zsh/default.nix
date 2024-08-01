@@ -126,6 +126,13 @@ in
           source ${config.programs.fzf.package}/share/fzf/completion.zsh
           source ${config.programs.fzf.package}/share/fzf/key-bindings.zsh
 
+          # starship
+          source ${
+            pkgs.runCommand "starship-zsh" { buildInputs = [ config.programs.starship.package ]; } ''
+              starship init zsh > $out
+            ''
+          }
+
           # zoxide
           source ${
             pkgs.runCommand "zoxide-init-zsh" { buildInputs = [ config.programs.zoxide.package ]; } ''
@@ -187,7 +194,6 @@ in
         lib.flatten [
           (zimPlugin "zim-input")
           (zimPlugin "zim-utility")
-          (zshPlugin "pure")
           (zshPlugin "zsh-autopair")
           (zshPlugin "zsh-completions")
           (zimPlugin "zim-completion") # needs to be the last one
@@ -236,6 +242,19 @@ in
         fileWidgetOptions = [ "--preview 'head {}'" ];
         historyWidgetOptions = [ "--sort" ];
         enableZshIntegration = false;
+      };
+      starship = {
+        enable = true;
+        enableZshIntegration = false;
+        # https://starship.rs/presets/pure-preset
+        settings = {
+          directory = {
+            style = "blue";
+            truncate_to_repo = false;
+            truncation_length = 0;
+          };
+          git_status.stashed = "";
+        };
       };
       zoxide = {
         enable = true;

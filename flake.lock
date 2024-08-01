@@ -274,22 +274,6 @@
         "type": "github"
       }
     },
-    "pure": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1714417298,
-        "narHash": "sha256-Hdb5wGVkNrmmVWZaKf3xUnNYsTX/8Bb7AhgLNJxNAUc=",
-        "owner": "sindresorhus",
-        "repo": "pure",
-        "rev": "da1a722238febb9a4b97c77628fae753d1817490",
-        "type": "github"
-      },
-      "original": {
-        "owner": "sindresorhus",
-        "repo": "pure",
-        "type": "github"
-      }
-    },
     "root": {
       "inputs": {
         "arandr": "arandr",
@@ -308,7 +292,6 @@
         ],
         "nixgl": "nixgl",
         "nixpkgs": "nixpkgs_2",
-        "pure": "pure",
         "yazi-flavors": "yazi-flavors",
         "zim-completion": "zim-completion",
         "zim-environment": "zim-environment",
