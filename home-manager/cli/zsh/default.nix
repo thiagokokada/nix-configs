@@ -255,7 +255,7 @@ in
         enableZshIntegration = false;
         settings = lib.mkMerge [
           (lib.optionalAttrs (!cfg.icons.enable) (lib.importTOML ./starship-plain-text-symbols.toml))
-          ({
+          {
             directory = {
               style = "blue";
               truncate_to_repo = false;
@@ -263,7 +263,7 @@ in
             };
             container.disabled = true;
             git_status.stashed = "";
-          })
+          }
         ];
       };
       zoxide = {
