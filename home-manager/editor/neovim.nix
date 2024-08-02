@@ -702,6 +702,14 @@ in
                           formatting = {
                             command = { "nixfmt" },
                           },
+                          options = {
+                            -- nixos = {
+                            --   expr = '(builtins.getFlake ("git+file://" + toString ./.)).nixosConfigurations.miku-nixos.options',
+                            -- },
+                            home_manager = {
+                              expr = '(builtins.getFlake ("git+file://" + toString ./.)).homeConfigurations.home-linux.options',
+                            },
+                          },
                           diagnostic = {
                             suppress = {
                               "sema-escaping-with"
