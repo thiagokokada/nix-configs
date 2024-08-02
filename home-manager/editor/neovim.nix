@@ -197,7 +197,7 @@ in
             # FIXME: dummy plugin since there is no way currently to set a config
             # before the plugins are initialized
             # See: https://github.com/nix-community/home-manager/pull/2391
-            plugin = pkgs.writeText "00-init-pre" "";
+            plugin = writeText "00-init-pre" "";
             config = # vim
               ''
                 " remap leader
@@ -692,16 +692,19 @@ in
                 local servers = {
                   { "bashls" },
                   { "marksman" },
-                  { "nil_ls",
+                  { "nixd",
                     opts = {
                       settings = {
-                        ["nil"] = {
+                        ["nixd"] = {
+                          nixpkgs = {
+                            expr = "import <nixpkgs> { }",
+                          },
                           formatting = {
                             command = { "nixfmt" },
                           },
-                          nix = {
-                            flake = {
-                              autoArchive = false,
+                          diagnostic = {
+                            suppress = {
+                              "sema-escaping-with"
                             },
                           },
                         },

@@ -12,8 +12,8 @@
 
   config = lib.mkIf config.home-manager.dev.nix.enable {
     home.packages = with pkgs; [
-      nil
       nix-update
+      nixd
       nixfmt-rfc-style
       nurl
       statix
