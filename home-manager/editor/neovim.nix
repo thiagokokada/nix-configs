@@ -2,6 +2,7 @@
   config,
   pkgs,
   lib,
+  flake,
   ...
 }:
 
@@ -703,11 +704,11 @@ in
                             command = { "nixfmt" },
                           },
                           options = {
-                            -- nixos = {
-                            --   expr = '(builtins.getFlake ("git+file://" + toString ./.)).nixosConfigurations.miku-nixos.options',
-                            -- },
+                            nixos = {
+                              expr = '(let pkgs = import "${flake.inputs.nixpkgs}" { }; in (pkgs.lib.evalModules { modules =  (import "${flake.inputs.nixpkgs}/nixos/modules/module-list.nix") ++ [ ({...}: { nixpkgs.hostPlatform = builtins.currentSystem;} ) ] ; })).options',
+                            },
                             home_manager = {
-                              expr = '(builtins.getFlake ("git+file://" + toString ./.)).homeConfigurations.home-linux.options',
+                              expr = '(let pkgs = import "${flake.inputs.nixpkgs}" { }; lib = import "${flake.inputs.home-manager}/modules/lib/stdlib-extended.nix" pkgs.lib; in (lib.evalModules { modules =  (import "${flake.inputs.home-manager}/modules/modules.nix") { inherit lib pkgs; check = false; }; })).options',
                             },
                           },
                           diagnostic = {
