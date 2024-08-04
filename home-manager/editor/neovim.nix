@@ -698,7 +698,7 @@ in
                       settings = {
                         ["nixd"] = {
                           nixpkgs = {
-                            expr = "import <nixpkgs> { }",
+                            expr = 'import "${flake.inputs.nixpkgs}" { }',
                           },
                           formatting = {
                             command = { "nixfmt" },
