@@ -122,6 +122,10 @@ in
         # the program during startup (e.g. `zoxide init zsh`)
         # bash
         ''
+          # pure
+          fpath+=(${pkgs.pure-prompt}/share/zsh/site-functions)
+          source ${pkgs.pure-prompt}/share/zsh/site-functions/prompt_pure_setup
+
           # any-nix-shell
           source ${
             pkgs.runCommand "any-nix-shell-zsh" { buildInputs = [ pkgs.any-nix-shell ]; } ''
@@ -132,13 +136,6 @@ in
           # fzf
           source ${config.programs.fzf.package}/share/fzf/completion.zsh
           source ${config.programs.fzf.package}/share/fzf/key-bindings.zsh
-
-          # starship
-          source ${
-            pkgs.runCommand "starship-zsh" { buildInputs = [ config.programs.starship.package ]; } ''
-              starship init zsh > $out
-            ''
-          }
 
           # zoxide
           source ${
@@ -249,22 +246,6 @@ in
         fileWidgetOptions = [ "--preview 'head {}'" ];
         historyWidgetOptions = [ "--sort" ];
         enableZshIntegration = false;
-      };
-      starship = {
-        enable = true;
-        enableZshIntegration = false;
-        settings = lib.mkMerge [
-          (lib.optionalAttrs (!cfg.icons.enable) (lib.importTOML ./starship-plain-text-symbols.toml))
-          {
-            directory = {
-              style = "blue";
-              truncate_to_repo = false;
-              truncation_length = 0;
-            };
-            container.disabled = true;
-            git_status.stashed = "";
-          }
-        ];
       };
       zoxide = {
         enable = true;
