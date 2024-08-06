@@ -5,6 +5,7 @@
     ../modules
     ./cli.nix
     ./home.nix
+    ./homebrew.nix
     ./nix.nix
   ];
 
