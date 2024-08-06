@@ -38,7 +38,7 @@ in
       description = "GUI font.";
       default = {
         package = pkgs.roboto;
-        name = "Roboto.";
+        name = "Roboto";
       };
     };
 
