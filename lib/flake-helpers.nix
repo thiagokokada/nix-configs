@@ -133,7 +133,7 @@ in
           drv = pkgs.writeShellScriptBin "activate" ''
             ${
               pkgs.lib.getExe' nix-darwin.packages.${pkgs.system}.darwin-rebuild "darwin-rebuild"
-            } switch --flake .#${hostname}
+            } switch --flake '.#${hostname}'
           '';
         };
       };

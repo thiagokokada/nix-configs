@@ -9,9 +9,7 @@ let
   cfg = config.home-manager.darwin;
 in
 {
-  imports = [
-    ./trampoline-apps.nix
-  ];
+  imports = [ ./trampoline-apps.nix ];
 
   options.home-manager.darwin = {
     enable = lib.mkEnableOption "Darwin (macOS) config" // {
