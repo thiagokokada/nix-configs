@@ -20,7 +20,7 @@ in
     };
     extraModules = lib.mkOption {
       description = "Extra modules to import.";
-      type = lib.types.listOf lib.types.path;
+      type = lib.types.listOf lib.types.attrs;
       default = [ ];
     };
   };

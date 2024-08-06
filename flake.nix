@@ -132,7 +132,12 @@
       (mkNixOSConfig { hostname = "zachune-nixos"; })
 
       # nix-darwin configs
-      (mkNixDarwinConfig { hostname = "Sekai-MacBook-Pro"; })
+      (mkNixDarwinConfig {
+        hostname = "Sekai-MacBook-Pro";
+        extraModules = [
+          { nix-darwin.home.extraModules = [ { home-manager.editor.jetbrains.enable = true; } ]; }
+        ];
+      })
 
       # Home-Manager generic configs
       (mkHomeConfig {
