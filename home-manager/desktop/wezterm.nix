@@ -88,11 +88,6 @@ in
               ''
             }
 
-            ${lib.optionalString pkgs.stdenv.isLinux # lua
-              ''
-                config.mux_enable_ssh_agent = false
-              ''
-            }
             config.audible_bell = "Disabled"
             config.visual_bell = {
               fade_in_duration_ms = 100,
