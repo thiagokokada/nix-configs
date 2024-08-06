@@ -102,6 +102,43 @@ in
       };
     };
 
+  mkNixDarwinConfig =
+    {
+      hostname,
+      nix-darwin ? inputs.nix-darwin,
+      extraModules ? [ ],
+    }:
+    let
+      inherit (self.outputs.darwinConfigurations.${hostname}) pkgs;
+    in
+    {
+      darwinConfigurations.${hostname} = nix-darwin.lib.darwinSystem {
+        modules = [
+          (
+            { lib, ... }:
+            {
+              networking.hostName = lib.mkDefault hostname;
+            }
+          )
+          ../hosts/${hostname}
+        ] ++ extraModules;
+        specialArgs = {
+          flake = self;
+          libEx = self.outputs.lib;
+        };
+      };
+
+      apps.${pkgs.system} = {
+        "darwinActivations/${hostname}" = mkApp {
+          drv = pkgs.writeShellScriptBin "activate" ''
+            ${
+              pkgs.lib.getExe' nix-darwin.packages.${pkgs.system}.darwin-rebuild "darwin-rebuild"
+            } switch --flake .#${hostname}
+          '';
+        };
+      };
+    };
+
   # https://github.com/nix-community/home-manager/issues/1510
   mkHomeConfig =
     {
@@ -113,7 +150,6 @@ in
       deviceType ? "desktop",
       extraModules ? [ ],
       system ? "x86_64-linux",
-      nixpkgs ? inputs.nixpkgs,
       home-manager ? inputs.home-manager,
       # This value determines the Home Manager release that your
       # configuration is compatible with. This helps avoid breakage

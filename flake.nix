@@ -13,6 +13,10 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nix-darwin = {
+      url = "github:LnL7/nix-darwin";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     nixgl = {
       url = "github:nix-community/nixGL";
       inputs.flake-utils.follows = "flake-utils";
@@ -101,6 +105,7 @@
         mkGHActionsYAMLs
         mkRunCmd
         mkNixOSConfig
+        mkNixDarwinConfig
         mkHomeConfig
         ;
     in
@@ -125,6 +130,9 @@
       (mkNixOSConfig { hostname = "sankyuu-nixos"; })
       (mkNixOSConfig { hostname = "zatsune-nixos"; })
       (mkNixOSConfig { hostname = "zachune-nixos"; })
+
+      # nix-darwin configs
+      (mkNixDarwinConfig { hostname = "Sekai-MacBook-Pro"; })
 
       # Home-Manager generic configs
       (mkHomeConfig {
