@@ -154,11 +154,6 @@
           }
         ];
       })
-      (mkHomeConfig {
-        hostname = "home-macos";
-        system = "aarch64-darwin";
-        homePath = "/Users";
-      })
       # Home-Manager specific configs
       (mkHomeConfig {
         hostname = "steamdeck";
@@ -170,7 +165,12 @@
         extraModules = [ { home-manager.crostini.enable = true; } ];
       })
       (mkHomeConfig {
-        hostname = "toasty";
+        hostname = "home-macos";
+        system = "aarch64-darwin";
+        homePath = "/Users";
+      })
+      (mkHomeConfig {
+        hostname = "global";
         username = "thiago.okada";
         system = "aarch64-darwin";
         homePath = "/Users";
@@ -182,9 +182,9 @@
                 "0x700000035" = "0x700000064";
                 "0x700000064" = "0x700000035";
               };
-              editor.jetbrains.enable = true;
               dev = {
                 clojure.enable = false;
+                go.enable = false;
                 node.enable = false;
               };
             };
