@@ -177,28 +177,6 @@
         system = "aarch64-darwin";
         homePath = "/Users";
       })
-      (mkHomeConfig {
-        hostname = "global";
-        username = "thiago.okada";
-        system = "aarch64-darwin";
-        homePath = "/Users";
-        extraModules = [
-          {
-            home-manager = {
-              darwin.remapKeys.mappings = {
-                # '§±' <-> '`~'
-                "0x700000035" = "0x700000064";
-                "0x700000064" = "0x700000035";
-              };
-              dev = {
-                clojure.enable = false;
-                go.enable = false;
-                node.enable = false;
-              };
-            };
-          }
-        ];
-      })
 
       # Commands
       (mkRunCmd {

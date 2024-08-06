@@ -10,7 +10,6 @@ let
 in
 {
   imports = [
-    ./remap-keys.nix
     ./trampoline-apps.nix
   ];
 
