@@ -18,7 +18,7 @@ in
       default = true;
     };
     imports = lib.mkOption {
-      description = "Modules to import";
+      description = "Modules to import.";
       type = lib.types.listOf lib.types.path;
       default = [ ../home-manager/nixos.nix ];
     };

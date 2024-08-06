@@ -12,24 +12,24 @@ in
       downloadPath = lib.mkOption {
         type = lib.types.path;
         default = "${config.device.media.directory}/Other";
-        description = "DCC's download path";
+        description = "DCC's download path.";
       };
     };
     user = {
       nickName = lib.mkOption {
         type = lib.types.str;
         default = "k0kada_t";
-        description = "IRC's nickname";
+        description = "IRC's nickname.";
       };
       realName = lib.mkOption {
         type = lib.types.str;
         default = cfg.user.nickName;
-        description = "IRC's real name";
+        description = "IRC's real name.";
       };
       userName = lib.mkOption {
         type = lib.types.str;
         default = cfg.user.nickName;
-        description = "IRC's username";
+        description = "IRC's username.";
       };
     };
   };

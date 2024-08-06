@@ -10,7 +10,7 @@ in
     };
     vmConfig = lib.mkOption {
       type = lib.types.attrs;
-      description = "Virtualisation options";
+      description = "Virtualisation options.";
       default = {
         memorySize = 4096;
         cores = 4;

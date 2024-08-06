@@ -19,7 +19,7 @@ in
       default = config.home-manager.desktop.x11.enable;
     };
     defaultProfile = lib.mkOption {
-      description = "Default autorandr profile";
+      description = "Default autorandr profile.";
       type = lib.types.str;
       default = "horizontal";
     };

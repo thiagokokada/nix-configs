@@ -53,11 +53,11 @@ in
         "swanstation"
         "yabause"
       ];
-      description = "List of cores to include. Pass `all` to use `retroarchFull` instead";
+      description = "List of cores to include. Pass `all` to use `retroarchFull` instead.";
     };
     package = lib.mkOption {
       type = lib.types.package;
-      description = "Final package";
+      description = "Final package.";
       internal = true;
     };
   };

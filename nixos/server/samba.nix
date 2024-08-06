@@ -15,7 +15,7 @@ in
     enable = lib.mkEnableOption "Samba config";
     shares = lib.mkOption {
       type = with lib.types; attrsOf str;
-      description = "Samba shares";
+      description = "Samba shares.";
       default = {
         inherit (config.users.users.${username}) home;
         media = directory;

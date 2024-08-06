@@ -12,11 +12,11 @@ let
     options = {
       package = lib.mkOption {
         type = with lib.types; nullOr package;
-        description = "Font package";
+        description = "Font package.";
       };
       name = lib.mkOption {
         type = with lib.types; either (listOf str) str;
-        description = "Font name";
+        description = "Font name.";
       };
     };
   };
@@ -29,22 +29,22 @@ in
 
     dpi = lib.mkOption {
       type = lib.types.int;
-      description = "Font dpi";
+      description = "Font dpi.";
       default = 135;
     };
 
     gui = lib.mkOption {
       type = lib.types.nullOr fontType;
-      description = "GUI font";
+      description = "GUI font.";
       default = {
         package = pkgs.roboto;
-        name = "Roboto";
+        name = "Roboto.";
       };
     };
 
     icons = lib.mkOption {
       type = lib.types.nullOr fontType;
-      description = "Icons font";
+      description = "Icons font.";
       default = {
         package = pkgs.font-awesome_6;
         name = [
@@ -56,7 +56,7 @@ in
 
     symbols = lib.mkOption {
       type = lib.types.nullOr fontType;
-      description = "Symbols font";
+      description = "Symbols font.";
       default = {
         package = pkgs.nerdfonts.override { fonts = [ "Hack" ]; };
         name = "Hack Nerd Font";

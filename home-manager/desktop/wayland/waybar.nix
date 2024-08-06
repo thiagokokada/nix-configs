@@ -25,7 +25,7 @@ in
     interval = lib.mkOption {
       type = lib.types.int;
       default = 5;
-      description = "Block update default interval";
+      description = "Block update default interval.";
     };
     backlight.enable = lib.mkEnableOption "backlight block" // {
       default = config.device.type == "laptop";
@@ -35,7 +35,7 @@ in
     };
     mount.points = lib.mkOption {
       type = with lib.types; listOf path;
-      description = "Disks to show in disk block";
+      description = "Disks to show in disk block.";
       default = config.device.mount.points;
     };
   };
