@@ -693,6 +693,22 @@ in
                 local servers = {
                   { "bashls" },
                   { "marksman" },
+                  { "nil_ls",
+                    opts = {
+                      settings = {
+                        ["nil"] = {
+                          formatting = {
+                            command = { "nixfmt" },
+                          },
+                          nix = {
+                            flake = {
+                              autoArchive = false,
+                            },
+                          },
+                        },
+                      },
+                    },
+                  },
                   { "nixd",
                     opts = {
                       settings = {

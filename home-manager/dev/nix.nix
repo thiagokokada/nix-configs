@@ -5,18 +5,34 @@
   ...
 }:
 
+let
+  cfg = config.home-manager.dev.nix;
+in
 {
-  options.home-manager.dev.nix.enable = lib.mkEnableOption "Nix config" // {
-    default = config.home-manager.dev.enable;
+  options.home-manager.dev.nix = {
+    enable = lib.mkEnableOption "Nix config" // {
+      default = config.home-manager.dev.enable;
+    };
+    languageServer = lib.mkOption {
+      type = lib.types.enum [
+        "nixd"
+        "nil"
+      ];
+      description = "Nix language server.";
+      default = "nil";
+    };
   };
 
-  config = lib.mkIf config.home-manager.dev.nix.enable {
-    home.packages = with pkgs; [
-      nix-update
-      nixd
-      nixfmt-rfc-style
-      nurl
-      statix
-    ];
+  config = lib.mkIf cfg.enable {
+    home.packages =
+      with pkgs;
+      [
+        nix-update
+        nixfmt-rfc-style
+        nurl
+        statix
+      ]
+      ++ lib.optionals (cfg.languageServer == "nil") [ nil ]
+      ++ lib.optionals (cfg.languageServer == "nixd") [ nixd ];
   };
 }
