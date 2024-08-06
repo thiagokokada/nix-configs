@@ -2,6 +2,7 @@
   config,
   pkgs,
   lib,
+  osConfig,
   ...
 }:
 
@@ -14,7 +15,9 @@
     ./python.nix
   ];
 
-  options.home-manager.dev.enable = lib.mkEnableOption "dev config";
+  options.home-manager.dev.enable = lib.mkEnableOption "dev config" // {
+    default = osConfig.nixos.dev.enable or false;
+  };
 
   config = lib.mkIf config.home-manager.dev.enable {
     home.packages = with pkgs; [

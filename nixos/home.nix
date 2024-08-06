@@ -17,10 +17,10 @@ in
     enable = lib.mkEnableOption "home config" // {
       default = true;
     };
-    imports = lib.mkOption {
-      description = "Modules to import.";
+    extraModules = lib.mkOption {
+      description = "Extra modules to import.";
       type = lib.types.listOf lib.types.path;
-      default = [ ../home-manager/nixos.nix ];
+      default = [ ];
     };
   };
 
@@ -33,7 +33,10 @@ in
       useUserPackages = true;
       useGlobalPkgs = true;
       users.${config.mainUser.username} = {
-        inherit (config.nixos.home) imports;
+        imports = [
+          ../home-manager
+          { targets.genericLinux.enable = false; }
+        ] ++ cfg.extraModules;
         # As a rule of thumb HM == NixOS version, unless something weird happens
         home.stateVersion = lib.mkDefault config.system.stateVersion;
       };

@@ -26,7 +26,9 @@ in
   ];
 
   options.home-manager.desktop = {
-    enable = lib.mkEnableOption "desktop config";
+    enable = lib.mkEnableOption "desktop config" // {
+      default = osConfig.nixos.desktop.enable or false;
+    };
     default = {
       browser = lib.mkOption {
         type = lib.types.str;

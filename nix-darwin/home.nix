@@ -18,10 +18,10 @@ in
     enable = lib.mkEnableOption "home config" // {
       default = true;
     };
-    imports = lib.mkOption {
-      description = "Modules to import.";
+    extraModules = lib.mkOption {
+      description = "Extra modules to import.";
       type = lib.types.listOf lib.types.path;
-      default = [ ../home-manager ];
+      default = [ ];
     };
   };
 
@@ -34,7 +34,9 @@ in
       useUserPackages = true;
       useGlobalPkgs = true;
       users.${username} = {
-        inherit (config.nix-darwin.home) imports;
+        imports = [ ../home-manager ] ++ cfg.extraModules;
+        # Can't set the same as nix-darwin, since it uses a different state
+        # format
         home.stateVersion = lib.mkDefault "24.05";
       };
       extraSpecialArgs = {
