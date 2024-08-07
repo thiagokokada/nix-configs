@@ -4,9 +4,7 @@ let
   cfg = config.nix-darwin.homebrew;
 in
 {
-  options.nix-darwin.homebrew.enable = lib.mkEnableOption "Homebrew config" // {
-    default = true;
-  };
+  options.nix-darwin.homebrew.enable = lib.mkEnableOption "Homebrew config";
 
   config = lib.mkIf cfg.enable {
     homebrew = {
