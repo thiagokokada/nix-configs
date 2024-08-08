@@ -54,7 +54,7 @@ in
 
   home-manager.users.${config.mainUser.username} = {
     home-manager.desktop.theme = {
-      fonts.dpi = 150;
+      fonts.dpi = 175;
       wallpaper.path = pkgs.wallpapers.hatsune-miku_stylized-ultrawide;
     };
   };
