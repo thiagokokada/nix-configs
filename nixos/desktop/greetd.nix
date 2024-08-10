@@ -26,20 +26,21 @@
         settings = {
           default_session =
             let
-              genSessionsFor =
-                path:
-                lib.concatStringsSep ":" (map (s: "${s}/${path}") config.services.displayManager.sessionPackages);
+              inherit (config.services.displayManager.sessionData) desktops;
             in
             {
-              command = lib.concatStringsSep " " [
+              command = lib.escapeShellArgs [
                 (lib.getExe pkgs.greetd.tuigreet)
                 "--remember"
                 "--remember-session"
                 "--time"
                 "--sessions"
-                # We can't know if the sessions inside sessionPackages are for
-                # X or Wayland, so add both to path
-                "${genSessionsFor "share/xsessions"}:${genSessionsFor "share/wayland-sessions"}"
+                "${lib.concatStringsSep ":" (
+                  builtins.map (path: "${desktops}/${path}") [
+                    "share/xsessions"
+                    "share/wayland-sessions"
+                  ]
+                )}"
               ];
             };
         };

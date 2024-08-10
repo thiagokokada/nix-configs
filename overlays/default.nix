@@ -86,8 +86,7 @@ outputs.lib.recursiveMergeAttrs [
     sx =
       with prev;
       sx.overrideAttrs (oldAttrs: {
-        postInstall = (
-          (oldAttrs.postInstall or "")
+        postInstall = (oldAttrs.postInstall or "")
           +
             #bash
             ''
@@ -99,8 +98,7 @@ outputs.lib.recursiveMergeAttrs [
                   exec = "sx";
                 }
               }/share/applications/sx.desktop
-            ''
-        );
+            '';
 
         passthru = (oldAttrs.passhtru or { }) // {
           providedSessions = [ "sx" ];
