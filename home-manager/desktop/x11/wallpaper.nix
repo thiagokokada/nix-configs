@@ -22,11 +22,11 @@
         Install.WantedBy = [ "graphical-session.target" ];
 
         Service = with config.home-manager.desktop.theme.wallpaper; {
-          ExecStart = lib.concatStringsSep " " [
-            "${lib.getExe pkgs.feh}"
+          ExecStart = lib.escapeShellArgs [
+            (lib.getExe pkgs.feh)
             "--no-fehbg"
             "--bg-${scale}"
-            "${path}"
+            path
           ];
           Type = "oneshot";
         };
