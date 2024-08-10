@@ -1,4 +1,4 @@
-{ config, lib, ... }:
+{ config, lib, pkgs, ... }:
 
 {
   options.nixos.desktop.xserver.enable = lib.mkEnableOption "xserver config" // {
@@ -18,6 +18,11 @@
     services = {
       # Enable autorandr service, i.e.: sleep.target
       autorandr.enable = true;
+
+      # Show sx as an option in display manager
+      displayManager.sessionPackages = with pkgs; [
+        sx
+      ];
 
       # Enable libinput
       libinput = {

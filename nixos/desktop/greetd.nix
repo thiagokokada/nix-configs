@@ -36,7 +36,6 @@
                 "--remember"
                 "--remember-session"
                 "--time"
-                "--cmd sx"
                 "--sessions"
                 # We can't know if the sessions inside sessionPackages are for
                 # X or Wayland, so add both to path

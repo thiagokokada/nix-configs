@@ -82,5 +82,29 @@ outputs.lib.recursiveMergeAttrs [
         '';
 
     run-bg-alias = name: command: prev.callPackage ../packages/run-bg-alias { inherit name command; };
+
+    sx =
+      with prev;
+      sx.overrideAttrs (oldAttrs: {
+        postInstall = (
+          (oldAttrs.postInstall or "")
+          +
+            #bash
+            ''
+              install -Dm755 -t $out/share/xsessions ${
+                makeDesktopItem {
+                  name = "sx";
+                  desktopName = "sx";
+                  comment = "Start a xorg server";
+                  exec = "sx";
+                }
+              }/share/applications/sx.desktop
+            ''
+        );
+
+        passthru = (oldAttrs.passhtru or { }) // {
+          providedSessions = [ "sx" ];
+        };
+      });
   }
 ]
