@@ -942,7 +942,7 @@ in
                     },
                   },
                   indent = {
-                    enable = false,
+                    enable = true,
                   },
                   autotag = {
                     enable = true,
