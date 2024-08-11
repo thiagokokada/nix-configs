@@ -86,7 +86,8 @@ outputs.lib.recursiveMergeAttrs [
     sx =
       with prev;
       sx.overrideAttrs (oldAttrs: {
-        postInstall = (oldAttrs.postInstall or "")
+        postInstall =
+          (oldAttrs.postInstall or "")
           +
             #bash
             ''
