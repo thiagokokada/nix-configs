@@ -126,6 +126,12 @@ in
                   act.SendKey { key = 'L', mods = 'CTRL' },
                 },
               },
+              -- Reload config
+              {
+                key = 'r',
+                mods = 'CMD|SHIFT',
+                action = wezterm.action.ReloadConfiguration,
+              },
             }
             config.mouse_bindings = {
               -- Change the default click behavior so that it only selects
@@ -153,7 +159,6 @@ in
                 mods = 'CTRL',
                 action = act.IncreaseFontSize,
               },
-
               -- Scrolling down while holding CTRL decreases the font size
               {
                 event = { Down = { streak = 1, button = { WheelDown = 1 } } },
@@ -161,6 +166,17 @@ in
                 action = act.DecreaseFontSize,
               },
             }
+
+            -- cross-platform function to get the path from filename
+            function getPath(str)
+                return str:match("(.*[/\\])")
+            end
+
+            -- load local configuration
+            local local_config, error = loadfile(getPath(wezterm.config_file) .. "local.lua")
+            if error == nil then
+              for k, v in pairs(local_config()) do config[k] = v end
+            end
 
             return config
           '';
