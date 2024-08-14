@@ -27,6 +27,7 @@ in
     home.packages =
       with pkgs;
       [
+        nix-tree
         nix-update
         nixfmt-rfc-style
         nurl
