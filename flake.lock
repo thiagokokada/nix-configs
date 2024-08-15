@@ -23,11 +23,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1723426710,
-        "narHash": "sha256-yrS9al6l3fYfFfvovnyBWnyELDQOdfKyai4K/jKgoBw=",
+        "lastModified": 1723685519,
+        "narHash": "sha256-GkXQIoZmW2zCPp1YFtAYGg/xHNyFH/Mgm79lcs81rq0=",
         "owner": "nix-community",
         "repo": "disko",
-        "rev": "0d510fe40b56ed74907a021d7e1ffd0042592914",
+        "rev": "276a0d055a720691912c6a34abb724e395c8e38a",
         "type": "github"
       },
       "original": {
@@ -39,11 +39,11 @@
     "doomemacs": {
       "flake": false,
       "locked": {
-        "lastModified": 1723252886,
-        "narHash": "sha256-wrC3oAnVz22SHR/ujEG8wqaA9vfSNDlCiitW10iUlbM=",
+        "lastModified": 1723672919,
+        "narHash": "sha256-UqlyRORsIc0AgcE4C2HjuiESkQdoKvO7tRyDWF31Wik=",
         "owner": "doomemacs",
         "repo": "doomemacs",
-        "rev": "f5020a4f7f228a84a51039a57fbf67107a0f2d74",
+        "rev": "173842cceaefdb175dd0163ceb11bedd22093bf8",
         "type": "github"
       },
       "original": {
@@ -421,11 +421,11 @@
     "zsh-completions": {
       "flake": false,
       "locked": {
-        "lastModified": 1722755800,
-        "narHash": "sha256-kfqcqBWahKjnzp/N4V4uSmUso9KQDSQgnMlaJIjXjdw=",
+        "lastModified": 1723682876,
+        "narHash": "sha256-BZJ8tsQl7u2KOCQVLHg6R5CZ3Ln4gUTenL0FRGiyg30=",
         "owner": "zsh-users",
         "repo": "zsh-completions",
-        "rev": "e897589c9665750a6a21077c8d96c15dd0efc867",
+        "rev": "f96778edad6386ec020c82a5f593d75becf4f76d",
         "type": "github"
       },
       "original": {
