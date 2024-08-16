@@ -11,6 +11,7 @@ in
       enable = true;
       casks = [
         "betterdisplay"
+        "domzilla-caffeine"
         "firefox"
         "google-chrome"
         "linearmouse"
