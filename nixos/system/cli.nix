@@ -37,14 +37,7 @@
 
     # Enable programs that need special configuration.
     programs = {
-      git = {
-        # Without git we may be unable to build this config
-        enable = true;
-        config = {
-          # Avoid git log spam while building this config
-          init.defaultBranch = "master";
-        };
-      };
+      git.enable = true;
       iftop.enable = true;
       mtr.enable = true;
       neovim = {

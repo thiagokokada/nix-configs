@@ -118,7 +118,7 @@ in
 
         extraConfig = {
           init = {
-            defaultBranch = "master";
+            defaultBranch = "main";
           };
           branch = {
             sort = "-committerdate";
