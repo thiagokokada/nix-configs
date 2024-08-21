@@ -24,11 +24,12 @@ in
       podman = {
         enable = true;
         dockerCompat = true;
+        dockerSocket.enable = true;
       };
       libvirtd.enable = true;
     };
 
     # Added user to groups
-    users.users.${username}.extraGroups = [ "docker" ];
+    users.users.${username}.extraGroups = [ "podman" ];
   };
 }
