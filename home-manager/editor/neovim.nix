@@ -148,8 +148,7 @@ in
           vim.keymap.set({'i', 'c'}, '<C-k>', function()
             return vim.fn.pumvisible() ~= 0 and '<C-p>' or '<C-k>'
           end, { expr = true })
-          -- the insert mode mapping for this one is done in vim-endwise
-          vim.keymap.set('c', '<CR>', function()
+          vim.keymap.set({'i', 'c'}, '<CR>', function()
             return vim.fn.pumvisible() ~= 0 and '<C-y>' or '<CR>'
           end, { expr = true })
           ${lib.optionalString (!cfg.cmp.enable) # lua
@@ -362,18 +361,6 @@ in
               '';
           }
           {
-            plugin = nvim-autopairs;
-            type = "lua";
-            config = # lua
-              ''
-                local enable_ts = ${toLua cfg.treeSitter.enable}
-
-                require("nvim-autopairs").setup {
-                  check_ts = enable_ts
-                }
-              '';
-          }
-          {
             plugin = nvim-surround;
             type = "lua";
             config = # lua
@@ -545,20 +532,6 @@ in
               '';
           }
           {
-            plugin = vim-endwise;
-            type = "lua";
-            config = # lua
-              ''
-                vim.g.endwise_no_mappings = 1
-
-                vim.keymap.set('i', '<CR>', function()
-                  return vim.fn.pumvisible() ~= 0 and '<C-y>' or vim.fn.EndwiseAppend(
-                    vim.api.nvim_replace_termcodes('<CR>', true, true, true)
-                  )
-                end, { expr = true })
-              '';
-          }
-          {
             plugin = vim-test;
             type = "lua";
             config = # lua
@@ -609,6 +582,7 @@ in
                 vim.keymap.set('n', '<Leader>w', whitespace.trim, { desc = "Trim whitespace" })
               '';
           }
+          lexima-vim
           mkdir-nvim
           vim-advanced-sorters
           vim-fugitive
