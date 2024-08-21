@@ -110,6 +110,12 @@ in
       };
     };
 
+    system.switch = {
+      # enable switch-to-configuration-ng
+      enable = lib.mkDefault false;
+      enableNg = lib.mkDefault true;
+    };
+
     # nixos/modules/misc/version.nix
     users.motd = lib.mkIf cfg.motd.enable ''Welcome to '${config.networking.hostName}' running NixOS ${config.system.nixos.version}!'';
 
