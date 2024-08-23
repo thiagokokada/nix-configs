@@ -9,11 +9,12 @@
 let
   cfg = config.home-manager.editor.neovim;
   toLua = lib.generators.toLua { };
-  # Custom associations for filetypes
-  # { "<pattern>" = "<filetype>"; }
-  # E.g.: { "*.json" = "json"; }
-  customAssociations = {
-    "flake.lock" = "json";
+  # Custom autocmds for filetypes
+  # { "<pattern>" = "<command>"; }
+  # E.g.: { "*.json" = "set filetype=json"; }
+  customAutocmds = {
+    "flake.lock" = "set filetype=json";
+    "*.md" = "setlocal spell spelllang=en";
   };
 in
 {
@@ -157,13 +158,13 @@ in
             ''
           }
 
-          ${lib.pipe customAssociations [
+          ${lib.pipe customAutocmds [
             (lib.mapAttrsToList (
-              pattern: filetype: # lua
+              pattern: command: # lua
               ''
                 vim.api.nvim_create_autocmd({ "BufNewFile", "BufRead" }, {
                   pattern = { "${pattern}" },
-                  command = "set filetype=${filetype}",
+                  command = "${command}",
                 })
               ''
             ))
