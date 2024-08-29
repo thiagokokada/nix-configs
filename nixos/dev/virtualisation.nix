@@ -16,7 +16,7 @@ in
   config = lib.mkIf config.nixos.dev.virtualisation.enable {
     environment.systemPackages = with pkgs; [
       distrobox
-      gnome.gnome-boxes
+      gnome-boxes
       podman-compose
     ];
 
