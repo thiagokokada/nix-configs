@@ -6,7 +6,7 @@
     ./cli.nix
     ./home.nix
     ./homebrew.nix
-    ./nix.nix
+    ./nix
     ./system.nix
   ];
 

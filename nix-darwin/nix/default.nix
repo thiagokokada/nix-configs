@@ -9,6 +9,8 @@ let
   cfg = config.nix-darwin.nix;
 in
 {
+  imports = [ ./linux-builder.nix ];
+
   options.nix-darwin.nix.enable = lib.mkEnableOption "nix/nixpkgs config" // {
     default = true;
   };
@@ -27,10 +29,10 @@ in
 
       settings =
         let
-          substituters = import ../shared/substituters.nix;
+          substituters = import ../../shared/substituters.nix;
         in
         lib.mkMerge [
-          (import ../shared/nix-conf.nix)
+          (import ../../shared/nix-conf.nix)
           {
             trusted-users = [
               "root"
