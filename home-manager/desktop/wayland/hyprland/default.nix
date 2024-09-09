@@ -9,12 +9,13 @@ let
   inherit (config.wayland.windowManager.hyprland) finalPackage;
   cfg = config.home-manager.desktop.wayland.hyprland;
   hyprctl = lib.getExe' finalPackage "hyprctl";
-  hyprtabs = lib.getExe (pkgs.callPackage ./hyprtabs { });
   # Modifiers
   alt = "ALT";
   ctrl = "CONTROL";
   mod = "SUPER";
   shift = key: "${key}_SHIFT";
+  # Helpers
+  hyColor = color: alpha: "0x${alpha}${builtins.replaceStrings [ "#" ] [ "" ] color}";
 in
 {
   options.home-manager.desktop.wayland.hyprland.enable = lib.mkEnableOption "Hyprland config" // {
@@ -29,6 +30,7 @@ in
 
     wayland.windowManager.hyprland = {
       enable = true;
+      plugins = with pkgs.hyprlandPlugins; [ hy3 ];
       settings =
         let
           inherit (config.home-manager.desktop.default) browser terminal fileManager;
@@ -66,17 +68,13 @@ in
           # TODO: add validation
           debug.disable_scale_checks = true;
           general = {
-            layout = "master";
+            layout = "hy3";
             gaps_in = 3;
             gaps_out = 6;
             border_size = 2;
             resize_on_border = false;
             # Please see https://wiki.hyprland.org/Configuring/Tearing/ before you turn this on
             allow_tearing = false;
-          };
-          master = {
-            allow_small_split = true;
-            no_gaps_when_only = 1;
           };
           input =
             let
@@ -116,6 +114,21 @@ in
               "layers,1,2,default,default"
               "fade,0"
             ];
+          };
+          plugin.hy3 = {
+            no_gaps_when_only = 1;
+            autotile.enable = true;
+            tabs = with config.home-manager.desktop.theme.colors; {
+              "col.active" = hyColor base0D "f0";
+              "col.urgent" = hyColor base08 "f0";
+              "col.inactive" = hyColor base00 "50";
+              "col.text.active" = hyColor base00 "ff";
+              "col.text.urgent" = hyColor base00 "ff";
+              "col.text.inactive" = hyColor base05 "ff";
+              rounding = 0;
+              text_center = true;
+              text_font = config.home-manager.desktop.theme.fonts.gui.name;
+            };
           };
           misc = {
             font_family = config.home-manager.desktop.theme.fonts.gui.name;
@@ -157,9 +170,10 @@ in
               "${mod}, M, exec, ${fileManager}"
               "${mod}, SEMICOLON, togglefloating,"
               "${mod}, V, pseudo,"
-              "${mod}, B, togglesplit,"
               "${mod}, F, fullscreen,"
-              "${mod}, W, exec, ${hyprtabs}"
+              "${mod}, W, hy3:changegroup, toggletab"
+              "${mod}, V, hy3:makegroup, v"
+              "${mod}, B, hy3:makegroup, h"
               "${shift mod}, C, exec, ${hyprctl} reload"
               "${shift mod}, Q, killactive,"
               "${alt}, F4, killactive,"
@@ -167,35 +181,29 @@ in
               # Cycle active window
               "${mod}, TAB, cyclenext,"
               "${mod}, TAB, bringactivetotop"
-
-              # Move inside group (tab) with mod + arrow keys
-              "${mod}, left, changegroupactive, b"
-              "${mod}, right, changegroupactive, f"
-              # Move inside group (tab) with mod + vi keys
-              "${mod}, H, changegroupactive, b"
-              "${mod}, L, changegroupactive, f"
+              "${mod}, TAB, hy3:focustab, r, wrap"
 
               # Move focus with mod + arrow keys
-              "${mod}, left, movefocus, l"
-              "${mod}, right, movefocus, r"
-              "${mod}, up, movefocus, u"
-              "${mod}, down, movefocus, d"
+              "${mod}, left, hy3:movefocus, l"
+              "${mod}, right, hy3:movefocus, r"
+              "${mod}, up, hy3:movefocus, u"
+              "${mod}, down, hy3:movefocus, d"
               # Move focus with mod + vi keys
-              "${mod}, H, movefocus, l"
-              "${mod}, L, movefocus, r"
-              "${mod}, K, movefocus, u"
-              "${mod}, J, movefocus, d"
+              "${mod}, H, hy3:movefocus, l"
+              "${mod}, L, hy3:movefocus, r"
+              "${mod}, K, hy3:movefocus, u"
+              "${mod}, J, hy3:movefocus, d"
 
               # Move window with mod + arrow keys
-              "${shift mod}, left, movewindoworgroup, l"
-              "${shift mod}, right, movewindoworgroup, r"
-              "${shift mod}, up, movewindoworgroup, u"
-              "${shift mod}, down, movewindoworgroup, d"
+              "${shift mod}, left, hy3:movewindow, l"
+              "${shift mod}, right, hy3:movewindow, r"
+              "${shift mod}, up, hy3:movewindow, u"
+              "${shift mod}, down, hy3:movewindow, d"
               # Move window with mod + vi keys
-              "${shift mod}, H, movewindoworgroup, l"
-              "${shift mod}, L, movewindoworgroup, r"
-              "${shift mod}, K, movewindoworgroup, u"
-              "${shift mod}, J, movewindoworgroup, d"
+              "${shift mod}, H, hy3:movewindow, l"
+              "${shift mod}, L, hy3:movewindow, r"
+              "${shift mod}, K, hy3:movewindow, u"
+              "${shift mod}, J, hy3:movewindow, d"
 
               # Scratchpad
               "${shift mod}, MINUS, movetoworkspace, special:magic"
