@@ -9,6 +9,9 @@ let
   inherit (config.wayland.windowManager.hyprland) finalPackage;
   cfg = config.home-manager.desktop.wayland.hyprland;
   hyprctl = lib.getExe' finalPackage "hyprctl";
+  # Mouse
+  leftButton = "272";
+  rightButton = "273";
   # Modifiers
   alt = "ALT";
   ctrl = "CONTROL";
@@ -241,15 +244,16 @@ in
               )
             );
 
-          bindm =
-            let
-              leftButton = "272";
-              rightButton = "273";
-            in
-            [
-              "${mod}, mouse:${leftButton}, movewindow"
-              "${mod}, mouse:${rightButton}, resizewindow"
-            ];
+          bindm = [
+            "${mod}, mouse:${leftButton}, movewindow"
+            "${mod}, mouse:${rightButton}, resizewindow"
+          ];
+
+          bindn = [
+            ", mouse:${leftButton}, hy3:focustab, mouse"
+            ", mouse_down, hy3:focustab, left, require_hovered"
+            ", mouse_up, hy3:focustab, right, require_hovered"
+          ];
 
           bindel = [
             # Volume
