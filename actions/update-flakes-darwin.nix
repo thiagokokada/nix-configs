@@ -21,6 +21,7 @@ with constants;
         (installNixActionStep { })
         cachixActionStep
         (buildHomeManagerConfigurations { inherit (home-manager.darwin) hostnames; })
+        (buildNixDarwinConfigurations { inherit (nix-darwin) hostnames; })
       ];
     };
   };

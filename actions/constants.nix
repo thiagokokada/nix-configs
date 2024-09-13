@@ -20,6 +20,7 @@
     ];
     darwin.hostnames = [ "home-macos" ];
   };
+  nix-darwin.hostnames = [ "Sekai-MacBook-Pro" ];
   nixos.hostnames = [
     "hachune-nixos"
     "miku-nixos"

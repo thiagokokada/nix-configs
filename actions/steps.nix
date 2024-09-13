@@ -45,6 +45,22 @@ with constants;
     name = "Validate Flakes";
     run = "nix flake check --all-systems ${toString nixFlags}";
   };
+  buildNixDarwinConfigurations =
+    {
+      hostnames ? [ ],
+      extraNixFlags ? [ ],
+    }:
+    {
+      name = "Build nix-darwin configs for: ${builtins.concatStringsSep ", " hostnames}";
+      run = builtins.concatStringsSep "\n" (
+        map (
+          hostname:
+          "nix build ${
+            toString (nixFlags ++ extraNixFlags)
+          } '.#darwinConfigurations.${hostname}.system.activationScript'"
+        ) hostnames
+      );
+    };
   buildHomeManagerConfigurations =
     {
       hostnames ? [ ],
