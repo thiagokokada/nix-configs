@@ -17,9 +17,9 @@ in
   config = lib.mkIf cfg.enable {
     # Install MacOS applications to the user Applications folder. Also update Docked applications
     home.extraActivationPath = with pkgs; [
-      rsync
-      # dockutil # FIXME: swift is currently broken
+      dockutil
       gawk
+      rsync
     ];
 
     home.activation.trampolineApps = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
