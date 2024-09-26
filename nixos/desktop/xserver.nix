@@ -24,9 +24,6 @@
       # Enable autorandr service, i.e.: sleep.target
       autorandr.enable = true;
 
-      # Show sx as an option in display manager
-      displayManager.sessionPackages = with pkgs; [ sx ];
-
       # Enable libinput
       libinput = {
         enable = true;
@@ -43,7 +40,10 @@
         enable = true;
 
         # Enable sx, a lightweight startx alternative
-        displayManager.sx.enable = true;
+        displayManager.sx = {
+          enable = true;
+          addAsSession = true;
+        };
 
         xkb = {
           # X11 keyboard layout
