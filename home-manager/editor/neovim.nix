@@ -158,18 +158,16 @@ in
             ''
           }
 
-          ${lib.pipe customAutocmds [
-            (lib.mapAttrsToList (
+          ${lib.concatStringsSep "\n" (
+            lib.mapAttrsToList (
               pattern: command: # lua
               ''
                 vim.api.nvim_create_autocmd({ "BufNewFile", "BufRead" }, {
                   pattern = { "${pattern}" },
                   command = "${command}",
                 })
-              ''
-            ))
-            (lib.concatStringsSep "\n")
-          ]}
+              '') customAutocmds
+          )}
 
           -- reload file if changed
           vim.opt.autoread = true
