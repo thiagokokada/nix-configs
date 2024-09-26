@@ -75,7 +75,7 @@ in
             gaps_in = 3;
             gaps_out = 6;
             border_size = 2;
-            resize_on_border = false;
+            resize_on_border = true;
             # Please see https://wiki.hyprland.org/Configuring/Tearing/ before you turn this on
             allow_tearing = false;
           };
@@ -278,6 +278,10 @@ in
           windowrulev2 = [
             # Ignore maximize events
             "suppressevent maximize, class:.*"
+            # Fix download/save image windows in Firefox
+            "float, class:^(firefox)$, title:.*Save(file|As|Image).*"
+            "size 800 450, class:^(firefox)$, title:.*Save(file|As|Image).*"
+            "pin, class:^(firefox)$,title:.*Save(file|As|Image).*"
           ];
 
           xwayland = {
