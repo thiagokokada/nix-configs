@@ -32,6 +32,7 @@ in
 
       package = pkgs.mpv-unwrapped.wrapper {
         mpv = pkgs.mpv-unwrapped.override {
+          swiftSupport = false; # FIXME: swift is currently broken in Darwin
           vapoursynthSupport = cfg.vapoursynth.enable;
         };
         extraMakeWrapperArgs = lib.optionals cfg.vapoursynth.enable [
