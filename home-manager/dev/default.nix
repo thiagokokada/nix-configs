@@ -8,6 +8,7 @@
 
 {
   imports = [
+    ./asdf.nix
     ./clojure.nix
     ./go.nix
     ./nix.nix
