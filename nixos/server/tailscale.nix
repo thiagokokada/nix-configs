@@ -62,9 +62,5 @@ in
         ];
       };
     };
-
-    # Disable wait online for all interfaces as it's causing trouble at rebuild
-    # See: https://github.com/NixOS/nixpkgs/issues/180175
-    systemd.network.wait-online.anyInterface = true;
   };
 }
