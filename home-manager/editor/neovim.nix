@@ -915,7 +915,7 @@ in
                     },
                   },
                   indent = {
-                    enable = true,
+                    enable = false,
                   },
                   autotag = {
                     enable = true,
