@@ -113,6 +113,14 @@ in
 
       initExtraBeforeCompInit = # bash
         ''
+          # allow ad-hoc scripts to be add to PATH locally
+          export PATH="$HOME/.local/bin:$PATH"
+
+          # source contents from ~/.zshrc.d/*.zsh
+          for file in "$HOME/.zshrc.d/"*.zsh; do
+            [[ -f "$file" ]] && source "$file"
+          done
+
           # zimfw config
           zstyle ':zim:input' double-dot-expand no
         '';
@@ -164,14 +172,6 @@ in
           # vicmd, this is why we have this here
           bindkey -M vicmd 'k' history-substring-search-up
           bindkey -M vicmd 'j' history-substring-search-down
-
-          # allow ad-hoc scripts to be add to PATH locally
-          export PATH="$HOME/.local/bin:$PATH"
-
-          # source contents from ~/.zshrc.d/*.zsh
-          for file in "$HOME/.zshrc.d/"*.zsh; do
-            [[ -f "$file" ]] && source "$file"
-          done
         '';
 
       plugins =
