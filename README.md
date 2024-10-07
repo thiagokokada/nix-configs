@@ -82,6 +82,20 @@ this case, you can just run:
 $ nix run github:numtide/nixos-anywhere -- --flake '.#hostname' root@hostname
 ```
 
+### nix-darwin
+
+Start by installing Nix:
+
+```console
+$ sh <(curl -L https://nixos.org/nix/install) --daemon
+```
+
+To build the Home Manager standalone and activate its configuration, run:
+
+```console
+$ nix run '.#darwinActivations/<hostname>'
+```
+
 ### Home Manager (standalone)
 
 Start by installing Nix:
