@@ -55,9 +55,7 @@ with constants;
       run = builtins.concatStringsSep "\n" (
         map (
           hostname:
-          "nix build ${
-            toString (nixFlags ++ extraNixFlags)
-          } '.#darwinConfigurations.${hostname}.system'"
+          "nix build ${toString (nixFlags ++ extraNixFlags)} '.#darwinConfigurations.${hostname}.system'"
         ) hostnames
       );
     };
