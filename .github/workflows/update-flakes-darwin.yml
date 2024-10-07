@@ -18,7 +18,7 @@ jobs:
       - name: 'Build Home-Manager configs for: home-macos'
         run: nix build --print-build-logs '.#homeConfigurations.home-macos.activationPackage'
       - name: 'Build nix-darwin configs for: Sekai-MacBook-Pro'
-        run: nix build --print-build-logs '.#darwinConfigurations.Sekai-MacBook-Pro.system.activationScript'
+        run: nix build --print-build-logs '.#darwinConfigurations.Sekai-MacBook-Pro.system'
 name: update-flakes-darwin
 "on":
   workflow_dispatch: null

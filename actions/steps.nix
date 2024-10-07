@@ -57,7 +57,7 @@ with constants;
           hostname:
           "nix build ${
             toString (nixFlags ++ extraNixFlags)
-          } '.#darwinConfigurations.${hostname}.system.activationScript'"
+          } '.#darwinConfigurations.${hostname}.system'"
         ) hostnames
       );
     };
