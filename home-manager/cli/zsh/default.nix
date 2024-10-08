@@ -113,6 +113,16 @@ in
 
       initExtraBeforeCompInit = # bash
         ''
+          # zimfw config
+          zstyle ':zim:input' double-dot-expand no
+
+          # try to correct the spelling of commands
+          setopt correct
+          # disable C-S/C-Q
+          setopt noflowcontrol
+          # disable "no matches found" check
+          unsetopt nomatch
+
           # allow ad-hoc scripts to be add to PATH locally
           export PATH="$HOME/.local/bin:$PATH"
 
@@ -120,9 +130,6 @@ in
           for file in "$HOME/.zshrc.d/"*.zsh; do
             [[ -f "$file" ]] && source "$file"
           done
-
-          # zimfw config
-          zstyle ':zim:input' double-dot-expand no
         '';
 
       initExtra =
@@ -155,12 +162,6 @@ in
           # zsh-fast-syntax-highlighting
           source ${pkgs.zsh-fast-syntax-highlighting}/share/zsh/site-functions/fast-syntax-highlighting.plugin.zsh
 
-          # try to correct the spelling of commands
-          setopt correct
-          # disable C-S/C-Q
-          setopt noflowcontrol
-          # disable "no matches found" check
-          unsetopt nomatch
           # disable clock
           unset RPROMPT
 
