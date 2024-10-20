@@ -280,8 +280,10 @@ in
             "suppressevent maximize, class:.*"
             # Fix download/save image windows in Firefox
             "float, class:^(firefox)$, title:.*Save(file|As|Image).*"
-            "size 800 450, class:^(firefox)$, title:.*Save(file|As|Image).*"
+            "size 800 600, class:^(firefox)$, title:.*Save(file|As|Image).*"
             "pin, class:^(firefox)$,title:.*Save(file|As|Image).*"
+            # PIP in Firefox
+            "float, class:^(firefox)$, title:.*Picture-in-Picture.*"
           ];
 
           xwayland = {
