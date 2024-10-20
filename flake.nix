@@ -65,10 +65,16 @@
     };
 
     # wezterm
+    rust-overlay = {
+      url = "github:oxalica/rust-overlay";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     wezterm = {
       url = "github:wez/wezterm?dir=nix";
       inputs.flake-utils.follows = "flake-utils";
       inputs.nixpkgs.follows = "nixpkgs";
+      # TODO: remove once wezterm updates this overlay
+      inputs.rust-overlay.follows = "rust-overlay";
     };
 
     # ZSH plugins

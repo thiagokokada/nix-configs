@@ -349,6 +349,7 @@
         ],
         "nixgl": "nixgl",
         "nixpkgs": "nixpkgs",
+        "rust-overlay": "rust-overlay",
         "wezterm": "wezterm",
         "yazi-flavors": "yazi-flavors",
         "zim-completion": "zim-completion",
@@ -362,16 +363,15 @@
     "rust-overlay": {
       "inputs": {
         "nixpkgs": [
-          "wezterm",
           "nixpkgs"
         ]
       },
       "locked": {
-        "lastModified": 1726280639,
-        "narHash": "sha256-YfLRPlFZWrT2oRLNAoqf7G3+NnUTDdlIJk6tmBU7kXM=",
+        "lastModified": 1729391507,
+        "narHash": "sha256-as0I9xieJUHf7kiK2a9znDsVZQTFWhM1pLivII43Gi0=",
         "owner": "oxalica",
         "repo": "rust-overlay",
-        "rev": "e9f8641c92f26fd1e076e705edb12147c384171d",
+        "rev": "784981a9feeba406de38c1c9a3decf966d853cca",
         "type": "github"
       },
       "original": {
@@ -406,7 +406,9 @@
         "nixpkgs": [
           "nixpkgs"
         ],
-        "rust-overlay": "rust-overlay",
+        "rust-overlay": [
+          "rust-overlay"
+        ],
         "zlib": "zlib"
       },
       "locked": {
