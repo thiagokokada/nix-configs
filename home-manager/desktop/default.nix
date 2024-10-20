@@ -78,7 +78,6 @@ in
       packages = with pkgs; [
         android-file-transfer
         audacious
-        (calibre.override { unrarSupport = true; })
         desktop-file-utils
         ffmpeg
         evince
