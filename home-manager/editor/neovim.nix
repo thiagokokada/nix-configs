@@ -71,6 +71,8 @@ in
       extraLuaConfig = # lua
         ''
           -- general config
+          vim.g.mapleader = ' '
+          vim.g.maplocalleader = ','
 
           -- bytecompile lua modules
           vim.loader.enable()
@@ -192,18 +194,6 @@ in
         with pkgs;
         with vimPlugins;
         [
-          {
-            # FIXME: dummy plugin since there is no way currently to set a config
-            # before the plugins are initialized
-            # See: https://github.com/nix-community/home-manager/pull/2391
-            plugin = writeText "00-init-pre" "";
-            config = # vim
-              ''
-                " remap leader
-                let g:mapleader = "\<Space>"
-                let g:maplocalleader = ','
-              '';
-          }
           {
             plugin = dial-nvim;
             type = "lua";
