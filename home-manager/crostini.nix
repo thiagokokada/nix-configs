@@ -5,12 +5,14 @@
 
   config = lib.mkIf config.home-manager.crostini.enable {
     home-manager = {
-      desktop = {
-        mpv.enable = true;
-        nixgl.enable = true;
-      };
+      desktop.mpv.enable = true;
       dev.enable = true;
       cli.git.gui.enable = true;
+    };
+
+    nixGL = {
+      defaultWrapper = "mesa";
+      installScripts = [ "mesa" ];
     };
 
     # https://nixos.wiki/wiki/Installing_Nix_on_Crostini
