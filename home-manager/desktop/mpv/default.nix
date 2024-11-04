@@ -33,13 +33,8 @@ in
       package = pkgs.mpv-unwrapped.wrapper {
         mpv = pkgs.mpv-unwrapped.override {
           vapoursynthSupport = cfg.vapoursynth.enable;
+          vapoursynth = pkgs.vapoursynth.withPlugins [ pkgs.vapoursynth-mvtools ];
         };
-        extraMakeWrapperArgs = lib.optionals cfg.vapoursynth.enable [
-          "--prefix"
-          "LD_LIBRARY_PATH"
-          ":"
-          "${pkgs.vapoursynth-mvtools}/lib/vapoursynth"
-        ];
       };
 
       config = {
