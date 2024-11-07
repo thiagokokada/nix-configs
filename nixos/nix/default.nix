@@ -35,7 +35,6 @@ in
     };
 
     nix = {
-      package = pkgs.lix;
       gc = {
         automatic = true;
         persistent = true;

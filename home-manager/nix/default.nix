@@ -30,7 +30,7 @@ in
     # Another option is to add a group by prefixing it by @, e.g.:
     # sudo echo "trusted-users = @wheel" >> /etc/nix/nix.conf
     nix = {
-      package = lib.mkDefault pkgs.lix;
+      package = lib.mkDefault pkgs.nix;
       settings = lib.mkMerge [
         (import ../../shared/nix-conf.nix)
         (import ../../shared/substituters.nix)
