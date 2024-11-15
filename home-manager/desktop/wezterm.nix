@@ -91,6 +91,7 @@ in
             }
 
             config.audible_bell = "Disabled"
+            config.mux_enable_ssh_agent = false
             config.visual_bell = {
               fade_in_duration_ms = 100,
               fade_out_duration_ms = 100,
