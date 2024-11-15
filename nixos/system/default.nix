@@ -31,7 +31,7 @@ in
       algorithm = lib.mkOption {
         description = "Page compression algorithm.";
         type = lib.types.str;
-        default = "lz4";
+        default = "zstd";
       };
       memoryPercent = lib.mkOption {
         description = "Maximum amount of memory (in percentage) that can be used.";
