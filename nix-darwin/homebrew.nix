@@ -24,6 +24,7 @@ in
         "domzilla-caffeine"
         "firefox"
         "google-chrome"
+        "iterm2"
         "linearmouse"
         "rectangle"
         "stats"
