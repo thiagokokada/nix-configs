@@ -43,7 +43,5 @@ in
 
     # More reliable user service restart
     systemd.user.startServices = lib.mkIf cfg.sdSwitch.enable "sd-switch";
-
-    manual.html.enable = true;
   };
 }
