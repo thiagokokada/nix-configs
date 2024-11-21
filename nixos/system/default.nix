@@ -1,4 +1,4 @@
-{ config, lib, ... }:
+{ config, lib, pkgs, ... }:
 
 let
   cfg = config.nixos.system;
@@ -115,6 +115,8 @@ in
       enable = lib.mkDefault false;
       enableNg = lib.mkDefault true;
     };
+
+    environment.systemPackages = with pkgs; [ nixos-rebuild-ng ];
 
     # nixos/modules/misc/version.nix
     users.motd = lib.mkIf cfg.motd.enable ''Welcome to '${config.networking.hostName}' running NixOS ${config.system.nixos.version}!'';
