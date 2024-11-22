@@ -33,6 +33,18 @@
         enable = true;
         enableZshIntegration = false;
       };
+      tealdeer = {
+        enable = true;
+        settings = {
+          display = {
+            compact = false;
+            use_pager = true;
+          };
+          updates = {
+            auto_update = false;
+          };
+        };
+      };
       zsh.initExtra = # bash
         # manually creating integrations since this is faster than calling
         # the `direnv hook zsh` itself during startup

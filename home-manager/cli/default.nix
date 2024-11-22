@@ -56,10 +56,8 @@ in
         page
         procps
         pv
-        python3
         ripgrep
         rlwrap
-        tealdeer
         tokei
         wget
       ];
