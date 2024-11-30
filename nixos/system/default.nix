@@ -115,12 +115,6 @@ in
       };
     };
 
-    system.switch = {
-      # enable switch-to-configuration-ng
-      enable = lib.mkDefault false;
-      enableNg = lib.mkDefault true;
-    };
-
     environment.systemPackages = with pkgs; [ nixos-rebuild-ng ];
 
     # nixos/modules/misc/version.nix
