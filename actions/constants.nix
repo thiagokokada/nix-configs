@@ -7,7 +7,7 @@
     # https://github.com/marketplace/actions/create-pull-request
     create-pull-request = "peter-evans/create-pull-request@v6";
     # https://github.com/marketplace/actions/free-disk-space-ubuntu
-    free-disk-space = "jlumbroso/free-disk-space@v1.3.1";
+    free-disk-space = "thiagokokada/free-disk-space@main";
     # https://github.com/marketplace/actions/install-nix
     install-nix-action = "cachix/install-nix-action@v27";
   };
