@@ -8,7 +8,7 @@ jobs:
           DEBIAN_FRONTEND=noninteractive
           sudo apt-get update -q -y
           sudo apt-get install -q -y binfmt-support qemu-user-static
-      - uses: cachix/install-nix-action@v27
+      - uses: cachix/install-nix-action@v30
         with:
           extra_nix_config: |-
             accept-flake-config = true
