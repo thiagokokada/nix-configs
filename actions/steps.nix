@@ -9,6 +9,8 @@ with constants;
     "with" = {
       swap-storage = false;
       tool-cache = true;
+      opt = true;
+      usrlocal = true;
     };
   };
   checkoutStep = {
