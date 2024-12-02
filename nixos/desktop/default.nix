@@ -44,6 +44,7 @@ in
     services = {
       dbus.implementation = "broker";
       gnome.gnome-keyring.enable = true;
+      graphical-desktop.enable = true;
       udisks2.enable = true;
     };
 

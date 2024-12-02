@@ -32,12 +32,7 @@ in
 
     services = {
       pipewire = {
-        enable = true;
-        alsa = {
-          enable = true;
-          support32Bit = true;
-        };
-        pulse.enable = true;
+        alsa.support32Bit = config.nixos.games.enable;
         extraConfig = lib.mkIf cfg.lowLatency.enable {
           pipewire."92-low-latency" = {
             context.properties = {

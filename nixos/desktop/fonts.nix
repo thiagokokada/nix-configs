@@ -12,7 +12,6 @@
 
   config = lib.mkIf config.nixos.desktop.fonts.enable {
     fonts = {
-      enableDefaultPackages = true;
       fontDir.enable = true;
 
       packages = with pkgs; [
