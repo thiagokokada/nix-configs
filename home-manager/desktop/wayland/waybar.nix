@@ -43,7 +43,7 @@ in
   config = lib.mkIf cfg.enable {
     home.packages = with pkgs; [
       font-awesome_6
-      (nerdfonts.override { fonts = [ "NerdFontsSymbolsOnly" ]; })
+      nerd-fonts.symbols-only
     ];
 
     programs.waybar = {

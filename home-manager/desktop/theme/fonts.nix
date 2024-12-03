@@ -58,7 +58,7 @@ in
       type = lib.types.nullOr fontType;
       description = "Symbols font.";
       default = {
-        package = pkgs.nerdfonts.override { fonts = [ "Hack" ]; };
+        package = pkgs.nerd-fonts.hack;
         name = "Hack Nerd Font";
       };
     };
