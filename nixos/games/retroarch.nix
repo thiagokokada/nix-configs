@@ -9,14 +9,15 @@ let
   cfg = config.nixos.games.retroarch;
   finalPkg =
     if (cfg.cores == "all") then
-      pkgs.retroarchFull
+      pkgs.retroarch-full
     else
-      pkgs.retroarch.override {
-        cores = lib.pipe pkgs.libretro [
+      pkgs.retroarch.withCores (
+        cores:
+        lib.pipe cores [
           (lib.getAttrs cfg.cores)
           lib.attrValues
-        ];
-      };
+        ]
+      );
 in
 {
   options.nixos.games.retroarch = {
