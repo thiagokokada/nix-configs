@@ -340,8 +340,8 @@ in
 
                 require("lualine").setup {
                   sections = {
-                    lualine_y = { mixed_indent },
-                    lualine_z = { trailing_whitespace },
+                    lualine_y = { "progress", mixed_indent },
+                    lualine_z = { "location", trailing_whitespace },
                   },
                   options = {
                     icons_enabled = enable_icons,
