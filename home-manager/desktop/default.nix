@@ -78,14 +78,11 @@ in
         android-file-transfer
         audacious
         desktop-file-utils
-        ffmpeg
         evince
         file-roller
         gammastep
-        gimp
         gnome-disk-utility
         gthumb
-        inkscape
         libreoffice-fresh
         open-browser
         (mcomix.override {
@@ -96,10 +93,7 @@ in
         pamixer
         pwvucontrol
         playerctl
-        pinta
         qalculate-gtk
-        vlc
-        zoom-us
       ];
     };
 
