@@ -57,7 +57,9 @@ in
 
           Should allow starting programs as parameter.
         '';
-        default = lib.getExe config.programs.wezterm.package;
+        # TODO: go back to wezterm once this bug is fixed
+        # https://github.com/wez/wezterm/issues/2445
+        default = lib.getExe config.programs.kitty.package;
       };
     };
   };
