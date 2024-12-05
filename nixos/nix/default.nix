@@ -42,10 +42,10 @@ in
       # Optimise nix-store via service
       optimise.automatic = true;
       # Reduce disk usage
-      daemonIOSchedClass = if config.nixos.desktop.enable then "idle" else "best-effort";
-      daemonIOSchedPriority = 6;
+      daemonIOSchedClass = "best-effort";
+      daemonIOSchedPriority = 7;
       # Leave nix builds as a background task
-      daemonCPUSchedPolicy = if config.nixos.desktop.enable then "idle" else "batch";
+      daemonCPUSchedPolicy = "batch";
 
       # Customized nixpkgs, e.g.: `nix shell nixpkgs_#snes9x`
       registry.nixpkgs_.flake = flake;
