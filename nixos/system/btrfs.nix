@@ -17,9 +17,7 @@
   };
 
   config = lib.mkIf config.nixos.system.btrfs.enable {
-    environment.systemPackages = with pkgs; [
-      # compsize
-    ];
+    environment.systemPackages = with pkgs; [ compsize ];
     services.btrfs.autoScrub = {
       enable = true;
       interval = "weekly";
