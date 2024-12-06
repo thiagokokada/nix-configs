@@ -79,6 +79,7 @@ in
               xkb_layout = lib.mkIf (layout != null) layout;
               xkb_variant = lib.mkIf (variant != null) variant;
               xkb_options = lib.mkIf (options != [ ]) (lib.concatStringsSep "," options);
+              repeat_delay = "300";
             };
             "type:pointer" = {
               accel_profile = "flat";
