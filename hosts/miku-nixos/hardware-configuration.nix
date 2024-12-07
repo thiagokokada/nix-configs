@@ -49,7 +49,8 @@
     ];
   };
 
-  boot.initrd.luks.devices."enc-archive".device = "/dev/disk/by-uuid/3b236ccb-ec53-4280-8040-00c42feceba8";
+  boot.initrd.luks.devices."enc-archive".device =
+    "/dev/disk/by-uuid/3b236ccb-ec53-4280-8040-00c42feceba8";
 
   fileSystems."/mnt/data" = {
     device = "/dev/disk/by-uuid/f71560b7-b662-4814-8f26-4e8ca8ae7da4";
@@ -63,7 +64,8 @@
     ];
   };
 
-  boot.initrd.luks.devices."enc-data".device = "/dev/disk/by-uuid/303be66c-74df-41ec-9b5c-c7312bdc582b";
+  boot.initrd.luks.devices."enc-data".device =
+    "/dev/disk/by-uuid/303be66c-74df-41ec-9b5c-c7312bdc582b";
 
   swapDevices = [ { device = "/dev/disk/by-uuid/b14d5664-18e4-429a-a8ef-a98c61275347"; } ];
 
