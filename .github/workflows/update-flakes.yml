@@ -5,9 +5,9 @@ jobs:
       - uses: thiagokokada/free-disk-space@main
         with:
           opt: true
-          swap-storage: false
           tool-cache: true
           usrlocal: true
+          usrmisc: true
       - uses: actions/checkout@v4
       - uses: cachix/install-nix-action@v30
         with:

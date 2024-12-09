@@ -7,10 +7,10 @@ with constants;
   freeDiskSpaceStep = {
     uses = actions.free-disk-space;
     "with" = {
-      swap-storage = false;
-      tool-cache = true;
       opt = true;
+      tool-cache = true;
       usrlocal = true;
+      usrmisc = true;
     };
   };
   checkoutStep = {
