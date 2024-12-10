@@ -82,8 +82,6 @@ in
       };
     };
 
-    environment.systemPackages = with pkgs; [ nixos-rebuild-ng ];
-
     # Enable firmware-linux-nonfree
     hardware.enableRedistributableFirmware = lib.mkDefault true;
 
@@ -119,6 +117,7 @@ in
     };
 
     system.configurationRevision = flake.rev or "dirty";
+    system.rebuild.enableNg = true;
 
     # nixos/modules/misc/version.nix
     users.motd = lib.mkIf cfg.motd.enable ''Welcome to '${config.networking.hostName}' running NixOS ${config.system.nixos.version}!'';
