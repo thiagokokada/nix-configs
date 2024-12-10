@@ -135,7 +135,10 @@
       (mkNixOSConfig { hostname = "miku-nixos"; })
       (mkNixOSConfig { hostname = "mirai-nixos"; })
       (mkNixOSConfig { hostname = "sankyuu-nixos"; })
-      (mkNixOSConfig { hostname = "zatsune-nixos"; })
+      (mkNixOSConfig {
+        hostname = "zatsune-nixos";
+        system = "aarch64-linux";
+      })
       (mkNixOSConfig { hostname = "zachune-nixos"; })
 
       # nix-darwin configs

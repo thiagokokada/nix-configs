@@ -64,15 +64,32 @@ in
   mkNixOSConfig =
     {
       hostname,
-      system ? null, # get from hardware-configuration.nix by default
+      system ? "x86_64-linux",
       nixpkgs ? inputs.nixpkgs,
       extraModules ? [ ],
     }:
     let
       inherit (self.outputs.nixosConfigurations.${hostname}) config pkgs;
+      inherit (nixpkgs.legacyPackages.${system}) applyPatches fetchpatch;
+
+      patches = [ ];
+
+      nixosSystem =
+        args:
+        if patches != [ ] then
+          let
+            nixpkgs' = applyPatches {
+              inherit patches;
+              name = "nixpkgs-patched";
+              src = nixpkgs;
+            };
+          in
+          import (nixpkgs' + "/nixos/lib/eval-config.nix") args
+        else
+          nixpkgs.lib.nixosSystem args;
     in
     {
-      nixosConfigurations.${hostname} = nixpkgs.lib.nixosSystem {
+      nixosConfigurations.${hostname} = nixosSystem {
         inherit system;
         modules = [
           (
