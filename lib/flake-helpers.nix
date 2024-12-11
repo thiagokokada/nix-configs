@@ -116,6 +116,7 @@ in
       extraModules ? [ ],
     }:
     let
+      # TODO: use self.outputs.legacyPackages instead to allow for patching
       inherit (self.outputs.darwinConfigurations.${hostname}) pkgs;
     in
     {
