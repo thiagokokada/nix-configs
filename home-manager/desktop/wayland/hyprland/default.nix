@@ -2,17 +2,22 @@
   config,
   lib,
   pkgs,
+  flake,
   ...
 }:
 
 let
   inherit (config.wayland.windowManager.hyprland) finalPackage;
+  inherit (flake.inputs.hyprland-go.packages.${pkgs.system}) hyprland-go;
+
   cfg = config.home-manager.desktop.wayland.hyprland;
   hyprctl = lib.getExe' finalPackage "hyprctl";
-  hyprtabs = lib.getExe (pkgs.callPackage ./hyprtabs { });
+  hyprtabs = lib.getExe' hyprland-go "hyprtabs";
+
   # Mouse
   leftButton = "272";
   rightButton = "273";
+
   # Modifiers
   alt = "ALT";
   ctrl = "CONTROL";
