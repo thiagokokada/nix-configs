@@ -1,7 +1,6 @@
 {
   config,
   lib,
-  pkgs,
   flake,
   ...
 }:
@@ -11,8 +10,9 @@ let
 in
 {
   imports = [
-    ./cli.nix
+    ./binfmt.nix
     ./btrfs.nix
+    ./cli.nix
     ./smart.nix
     ./vm.nix
   ];

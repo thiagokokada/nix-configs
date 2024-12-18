@@ -6,10 +6,10 @@
 }:
 
 let
-  cfg = config.nixos.nix.qemu-compile;
+  cfg = config.nixos.system.binfmt;
 in
 {
-  options.nixos.nix.qemu-compile.enable = lib.mkEnableOption "compile other archs via QEMU";
+  options.nixos.system.binfmt.enable = lib.mkEnableOption "binfmt configuration";
 
   config = lib.mkIf cfg.enable {
     # Allow compilation of packages for other architectures (e.g.: ARM64) via

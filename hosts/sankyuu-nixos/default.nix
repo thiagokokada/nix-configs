@@ -61,7 +61,6 @@ in
 
   nixos = {
     dev.enable = true;
-    nix.qemu-compile.enable = true;
     games = {
       enable = true;
       gpu = "amd";
@@ -74,9 +73,12 @@ in
       ssh.enable = true;
       tailscale.enable = true;
     };
-    system.pageCompression = {
-      enable = "zswap";
-      memoryPercent = 30;
+    system = {
+      binfmt.enable = true;
+      pageCompression = {
+        enable = "zswap";
+        memoryPercent = 30;
+      };
     };
   };
 
