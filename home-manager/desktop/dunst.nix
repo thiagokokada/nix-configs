@@ -37,8 +37,8 @@
             show_age_threshold = 60;
             word_wrap = true;
             ignore_newline = false;
-            width = 250;
-            height = 200;
+            width = "(0,250)";
+            height = "(0,200)";
             origin = "top-right";
             notification_limit = 5;
             transparency = 0;
