@@ -9,14 +9,11 @@
   ...
 }:
 
-let
-  inherit (flake) inputs;
-in
 {
   imports = [
     ./hardware-configuration.nix
-    ../../modules/nixos
-    inputs.hardware.nixosModules.common-cpu-intel
+    flake.inputs.hardware.nixosModules.common-cpu-intel
+    flake.outputs.nixosModules.default
   ];
 
   nixos = {

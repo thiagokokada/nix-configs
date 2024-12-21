@@ -8,8 +8,8 @@
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
-    ../../modules/nixos
     flake.inputs.disko.nixosModules.disko
+    flake.outputs.nixosModules.default
   ];
 
   disko.devices = import ./disk-config.nix;

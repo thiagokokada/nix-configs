@@ -154,7 +154,7 @@ in
       username ? "thiagoko",
       homePath ? "/home",
       homeDirectory ? "${homePath}/${username}",
-      configuration ? ../modules/home-manager,
+      configuration ? self.outputs.homeModules.default,
       deviceType ? "desktop",
       extraModules ? [ ],
       system ? "x86_64-linux",

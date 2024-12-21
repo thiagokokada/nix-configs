@@ -9,15 +9,12 @@
   ...
 }:
 
-let
-  inherit (flake) inputs;
-in
 {
   imports = [
     ./hardware-configuration.nix
-    ../../modules/nixos
-    inputs.hardware.nixosModules.common-cpu-amd
-    inputs.hardware.nixosModules.common-gpu-amd
+    flake.inputs.hardware.nixosModules.common-cpu-amd
+    flake.inputs.hardware.nixosModules.common-gpu-amd
+    flake.outputs.nixosModules.default
   ];
 
   device = {

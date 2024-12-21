@@ -1,7 +1,7 @@
-{ ... }:
+{ flake, ... }:
 
 {
-  imports = [ ../../modules/nix-darwin ];
+  imports = [ flake.outputs.darwinModules.default ];
 
   mainUser.username = "thiago.okada";
 

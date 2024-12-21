@@ -9,14 +9,11 @@
   ...
 }:
 
-let
-  inherit (flake) inputs;
-in
 {
   imports = [
     ./hardware-configuration.nix
-    ../../modules/nixos
-    inputs.hardware.nixosModules.lenovo-thinkpad-t14-amd-gen1
+    flake.inputs.hardware.nixosModules.lenovo-thinkpad-t14-amd-gen1
+    flake.outputs.nixosModules.default
   ];
 
   device = {

@@ -123,7 +123,6 @@
         ;
     in
     recursiveMergeAttrs [
-      # Templates
       {
         inherit lib;
         templates = {
@@ -134,6 +133,9 @@
           };
         };
         overlays.default = import ./overlays { flake = self; };
+        darwinModules.default = import ./modules/nix-darwin;
+        homeModules.default = import ./modules/home-manager;
+        nixosModules.default = import ./modules/nixos;
       }
 
       # NixOS configs
