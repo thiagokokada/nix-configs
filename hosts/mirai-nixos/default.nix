@@ -8,7 +8,7 @@
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
-    ../../nixos
+    ../../modules/nixos
     flake.inputs.disko.nixosModules.disko
   ];
 

@@ -7,7 +7,7 @@
 
 {
   imports = [
-    ../modules
+    ../shared
     ./cli
     ./crostini.nix
     ./darwin

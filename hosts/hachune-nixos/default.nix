@@ -15,7 +15,7 @@ in
 {
   imports = [
     ./hardware-configuration.nix
-    ../../nixos
+    ../../modules/nixos
     inputs.hardware.nixosModules.common-cpu-amd
     inputs.hardware.nixosModules.common-gpu-amd
   ];

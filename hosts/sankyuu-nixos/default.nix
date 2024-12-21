@@ -15,7 +15,7 @@ in
 {
   imports = [
     ./hardware-configuration.nix
-    ../../nixos
+    ../../modules/nixos
     inputs.hardware.nixosModules.lenovo-thinkpad-t14-amd-gen1
   ];
 

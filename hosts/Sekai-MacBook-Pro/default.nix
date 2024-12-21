@@ -1,7 +1,7 @@
 { ... }:
 
 {
-  imports = [ ../../nix-darwin ];
+  imports = [ ../../modules/nix-darwin ];
 
   mainUser.username = "thiago.okada";
 

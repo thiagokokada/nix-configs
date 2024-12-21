@@ -2,7 +2,7 @@
 
 {
   imports = [
-    ../modules
+    ../shared
     ./desktop
     ./dev
     ./games
@@ -13,5 +13,5 @@
     ./system
   ];
 
-  nixpkgs.overlays = [ (import ../overlays { inherit flake; }) ];
+  nixpkgs.overlays = [ (import ../../overlays { inherit flake; }) ];
 }

@@ -2,7 +2,7 @@
 
 {
   imports = [
-    ../modules
+    ../shared
     ./cli.nix
     ./home.nix
     ./homebrew.nix
@@ -10,5 +10,5 @@
     ./system.nix
   ];
 
-  nixpkgs.overlays = [ (import ../overlays { inherit flake; }) ];
+  nixpkgs.overlays = [ (import ../../overlays { inherit flake; }) ];
 }
