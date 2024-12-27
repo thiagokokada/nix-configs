@@ -1,4 +1,9 @@
-{ config, lib, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   inherit (config.mainUser) username;
@@ -42,6 +47,11 @@ in
     ];
 
     services = {
+      ananicy = {
+        enable = true;
+        package = pkgs.ananicy-cpp;
+        rulesProvider = pkgs.ananicy-rules-cachyos;
+      };
       dbus.implementation = "broker";
       gnome.gnome-keyring.enable = true;
       graphical-desktop.enable = true;
