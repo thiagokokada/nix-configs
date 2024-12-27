@@ -113,16 +113,8 @@
     }@inputs:
     let
       lib = import ./lib inputs;
-      inherit (lib)
-        recursiveMergeAttrs
-        mkGHActionsYAMLs
-        mkRunCmd
-        mkNixOSConfig
-        mkNixDarwinConfig
-        mkHomeConfig
-        ;
     in
-    recursiveMergeAttrs [
+    lib.recursiveMergeAttrs [
       {
         inherit lib;
         templates = {
@@ -137,84 +129,6 @@
         homeModules.default = import ./modules/home-manager;
         nixosModules.default = import ./modules/nixos;
       }
-
-      # NixOS configs
-      (mkNixOSConfig { hostname = "hachune-nixos"; })
-      (mkNixOSConfig { hostname = "miku-nixos"; })
-      (mkNixOSConfig { hostname = "mirai-nixos"; })
-      (mkNixOSConfig { hostname = "sankyuu-nixos"; })
-      (mkNixOSConfig {
-        hostname = "zatsune-nixos";
-        system = "aarch64-linux";
-      })
-      (mkNixOSConfig { hostname = "zachune-nixos"; })
-
-      # nix-darwin configs
-      (mkNixDarwinConfig {
-        hostname = "Sekai-MacBook-Pro";
-        extraModules = [
-          { nix-darwin.home.extraModules = [ { home-manager.editor.jetbrains.enable = true; } ]; }
-        ];
-      })
-
-      # Home-Manager generic configs
-      (mkHomeConfig {
-        hostname = "home-linux-desktop";
-        extraModules = [
-          {
-            home-manager = {
-              desktop.enable = true;
-              dev.enable = true;
-            };
-          }
-        ];
-      })
-      (mkHomeConfig {
-        hostname = "home-linux";
-        extraModules = [ { home-manager.dev.enable = true; } ];
-      })
-      (mkHomeConfig {
-        hostname = "home-linux-wsl";
-        extraModules = [
-          {
-            home-manager = {
-              dev.enable = true;
-              # https://github.com/nix-community/home-manager/issues/5025
-              meta.sdSwitch.enable = false;
-            };
-          }
-        ];
-      })
-      # Home-Manager specific configs
-      (mkHomeConfig {
-        hostname = "steamdeck";
-        username = "deck";
-      })
-      (mkHomeConfig {
-        hostname = "penguin";
-        system = "aarch64-linux";
-        extraModules = [ { home-manager.crostini.enable = true; } ];
-      })
-      (mkHomeConfig {
-        hostname = "home-macos";
-        system = "aarch64-darwin";
-        homePath = "/Users";
-      })
-
-      # Commands
-      (mkRunCmd {
-        name = "linter";
-        deps = pkgs: with pkgs; [ statix ];
-        text = "statix fix -i hardware-configuration.nix";
-      })
-
-      # GitHub Actions
-      (mkGHActionsYAMLs [
-        "build-and-cache"
-        "update-flakes"
-        "update-flakes-darwin"
-        "validate-flakes"
-      ])
 
       (flake-utils.lib.eachDefaultSystem (
         system:
@@ -237,6 +151,84 @@
           legacyPackages = pkgs;
         }
       ))
+
+      # NixOS configs
+      (lib.mkNixOSConfig { hostname = "hachune-nixos"; })
+      (lib.mkNixOSConfig { hostname = "miku-nixos"; })
+      (lib.mkNixOSConfig { hostname = "mirai-nixos"; })
+      (lib.mkNixOSConfig { hostname = "sankyuu-nixos"; })
+      (lib.mkNixOSConfig {
+        hostname = "zatsune-nixos";
+        system = "aarch64-linux";
+      })
+      (lib.mkNixOSConfig { hostname = "zachune-nixos"; })
+
+      # nix-darwin configs
+      (lib.mkNixDarwinConfig {
+        hostname = "Sekai-MacBook-Pro";
+        extraModules = [
+          { nix-darwin.home.extraModules = [ { home-manager.editor.jetbrains.enable = true; } ]; }
+        ];
+      })
+
+      # Home-Manager configs
+      (lib.mkHomeConfig {
+        hostname = "home-linux-desktop";
+        extraModules = [
+          {
+            home-manager = {
+              desktop.enable = true;
+              dev.enable = true;
+            };
+          }
+        ];
+      })
+      (lib.mkHomeConfig {
+        hostname = "home-linux";
+        extraModules = [ { home-manager.dev.enable = true; } ];
+      })
+      (lib.mkHomeConfig {
+        hostname = "home-linux-wsl";
+        extraModules = [
+          {
+            home-manager = {
+              dev.enable = true;
+              # https://github.com/nix-community/home-manager/issues/5025
+              meta.sdSwitch.enable = false;
+            };
+          }
+        ];
+      })
+      (lib.mkHomeConfig {
+        hostname = "steamdeck";
+        username = "deck";
+      })
+      (lib.mkHomeConfig {
+        hostname = "penguin";
+        system = "aarch64-linux";
+        extraModules = [ { home-manager.crostini.enable = true; } ];
+      })
+      (lib.mkHomeConfig {
+        hostname = "home-macos";
+        system = "aarch64-darwin";
+        homePath = "/Users";
+      })
+
+      # Commands
+      (lib.mkRunCmd {
+        name = "linter";
+        deps = pkgs: with pkgs; [ statix ];
+        text = "statix fix -i hardware-configuration.nix";
+      })
+
+      # GitHub Actions
+      (lib.mkGHActionsYAMLs [
+        "build-and-cache"
+        "update-flakes"
+        "update-flakes-darwin"
+        "validate-flakes"
+      ])
+
     ]; # END recursiveMergeAttrs
 
   nixConfig = {
