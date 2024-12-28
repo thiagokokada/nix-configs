@@ -97,6 +97,7 @@ in
               follow_mouse = 0;
               sensitivity = 0;
               touchpad = {
+                scroll_factor = 0.675;
                 natural_scroll = true;
                 middle_button_emulation = true;
                 tap-to-click = true;
