@@ -429,8 +429,6 @@ in
         RestartSec = "250ms";
         RestartSteps = 5;
         RestartMaxDelaySec = 5;
-        # https://github.com/nix-community/home-manager/issues/4099
-        Environment = [ "PATH=${config.home.profileDirectory}/bin:/run/current-system/sw/bin" ];
       };
     };
   };

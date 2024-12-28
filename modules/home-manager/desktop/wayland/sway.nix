@@ -123,10 +123,7 @@ in
         xdgAutostart = true;
       };
 
-      wrapperFeatures = {
-        base = true;
-        gtk = true;
-      };
+      wrapperFeatures.gtk = true;
 
       extraOptions = lib.optionals config.home-manager.desktop.x11.nvidia.enable [ "--unsupported-gpu" ];
     };

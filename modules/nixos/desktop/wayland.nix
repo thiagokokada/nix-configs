@@ -22,6 +22,14 @@
         # Remove unnecessary packages from system-wide install (e.g.: foot)
         extraPackages = [ ];
       };
+      uwsm = {
+        enable = true;
+        waylandCompositors.sway = {
+          prettyName = "Sway";
+          comment = "Sway compositor managed by UWSM";
+          binPath = "/etc/profiles/per-user/${config.mainUser.username}/bin/sway";
+        };
+      };
     };
 
     # https://github.com/NixOS/nixpkgs/pull/207842#issuecomment-1374906499
