@@ -301,14 +301,24 @@ in
             rightCmd = "resize grow width 10px or 10ppt";
           })
           // exitMode;
-        ${powerManagementMode} = {
-          l = "mode default, exec loginctl lock-session";
-          e = "mode default, exec loginctl terminate-session $XDG_SESSION_ID";
-          s = "mode default, exec systemctl suspend";
-          h = "mode default, exec systemctl hibernate";
-          "Shift+r" = "mode default, exec systemctl reboot";
-          "Shift+s" = "mode default, exec systemctl poweroff";
-        } // exitMode;
+        ${powerManagementMode} =
+          let
+            # FIXME: https://github.com/systemd/systemd/issues/6032
+            # $ swaymsg exec "loginctl lock-session &>/tmp/out"
+            # $ cat /tmp/out
+            # Failed to issue method call: Unknown object '/org/freedesktop/login1/session/auto'.
+            systemctl = "systemd-run --user systemctl";
+            loginctl = "systemd-run --user loginctl";
+          in
+          {
+            l = "mode default, exec ${loginctl} lock-session";
+            e = "mode default, exec ${loginctl} terminate-session $XDG_SESSION_ID";
+            s = "mode default, exec ${systemctl} suspend";
+            h = "mode default, exec ${systemctl} hibernate";
+            "Shift+r" = "mode default, exec ${systemctl} reboot";
+            "Shift+s" = "mode default, exec ${systemctl} poweroff";
+          }
+          // exitMode;
       }
       // extraModes;
 

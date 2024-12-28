@@ -307,8 +307,12 @@ in
           powerManagementSubmap = " : Screen [l]ock, [e]xit, [s]uspend, [h]ibernate, [R]eboot, [S]hutdown";
           resizeSubmap = " : [h]  , [j]  , [k]  , [l] ";
 
-          systemctl = "systemctl";
-          loginctl = "loginctl";
+          # FIXME: https://github.com/systemd/systemd/issues/6032
+          # $ hyprctl dispatch exec "loginctl lock-session &>/tmp/out"
+          # $ cat /tmp/out
+          # Failed to issue method call: Unknown object '/org/freedesktop/login1/session/auto'.
+          systemctl = "systemd-run --user systemctl";
+          loginctl = "systemd-run --user loginctl";
           wdisplays = lib.getExe pkgs.wdisplays;
         in
         # hyprlang
