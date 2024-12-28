@@ -9,8 +9,6 @@ outputs.lib.recursiveMergeAttrs [
     # namespaces
     libEx = outputs.lib;
 
-    wallpapers = prev.callPackage ../packages/wallpapers { };
-
     # custom packages
     arandr = prev.arandr.overrideAttrs (_: {
       src = inputs.arandr;
@@ -80,6 +78,15 @@ outputs.lib.recursiveMergeAttrs [
           installManPage ${prev.nixos-option}/share/man/**/*
         '';
 
+    # https://github.com/NixOS/nixpkgs/pull/368792
+    pamtester = prev.pamtester.overrideAttrs (old: {
+      nativeBuildInputs = (old.nativeBuildInputs or [ ]) ++ [
+        prev.autoreconfHook
+      ];
+    });
+
     run-bg-alias = name: command: prev.callPackage ../packages/run-bg-alias { inherit name command; };
+
+    wallpapers = prev.callPackage ../packages/wallpapers { };
   }
 ]
