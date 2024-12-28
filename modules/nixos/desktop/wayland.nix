@@ -12,7 +12,10 @@
 
   config = lib.mkIf config.nixos.desktop.wayland.enable {
     programs = {
-      hyprland.enable = true;
+      hyprland = {
+        enable = true;
+        withUWSM = true;
+      };
       sway = {
         # Make Sway available for display managers and make things like swaylock work
         enable = true;

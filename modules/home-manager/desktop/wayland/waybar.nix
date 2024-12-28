@@ -419,7 +419,10 @@ in
     };
 
     systemd.user.services.waybar = {
-      Unit.ConditionEnvironment = "WAYLAND_DISPLAY";
+      Unit = {
+        After = lib.mkForce [ "graphical-session.target" ];
+        ConditionEnvironment = "WAYLAND_DISPLAY";
+      };
       Service = {
         # Use exponential restart
         # https://enotty.pipebreaker.pl/posts/2024/01/how-systemd-exponential-restart-delay-works/
@@ -427,7 +430,7 @@ in
         RestartSteps = 5;
         RestartMaxDelaySec = 5;
         # https://github.com/nix-community/home-manager/issues/4099
-        Environment = "PATH=${config.home.profileDirectory}/bin";
+        Environment = [ "PATH=${config.home.profileDirectory}/bin:/run/current-system/sw/bin" ];
       };
     };
   };

@@ -37,6 +37,8 @@ in
 
     wayland.windowManager.hyprland = {
       enable = true;
+      # Conflicts with programs.hyprland.withUWSM
+      systemd.enable = false;
       settings =
         let
           inherit (config.home-manager.desktop.default) browser terminal fileManager;
