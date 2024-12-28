@@ -14,7 +14,8 @@
       };
       inputMethod = {
         enable = true;
-        type = "ibus";
+        type = "fcitx5";
+        fcitx5.waylandFrontend = config.nixos.desktop.wayland.enable;
       };
     };
 
