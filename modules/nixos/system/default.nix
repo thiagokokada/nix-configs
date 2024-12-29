@@ -24,51 +24,25 @@ in
     motd.enable = lib.mkEnableOption "show message of the day" // {
       default = true;
     };
-    pageCompression = {
-      enable = lib.mkOption {
-        description = "Page compression strategy.";
-        type = lib.types.enum [
-          "none"
-          "zram"
-          "zswap"
-        ];
-        default = "zram";
-      };
-      algorithm = lib.mkOption {
-        description = "Page compression algorithm.";
-        type = lib.types.str;
-        default = "zstd";
-      };
-      memoryPercent = lib.mkOption {
-        description = "Maximum amount of memory (in percentage) that can be used.";
-        type = lib.types.int;
-        default = 50;
-      };
+    zram.enable = lib.mkEnableOption "page compression" // {
+      default = true;
     };
   };
 
   config = lib.mkIf cfg.enable {
     boot = {
-      initrd = {
-        systemd.enable = lib.mkDefault true;
-        kernelModules = lib.mkIf (cfg.pageCompression.enable == "zswap") [ "z3fold" ];
-      };
+      initrd.systemd.enable = lib.mkDefault true;
 
-      kernelParams = lib.mkIf (cfg.pageCompression.enable == "zswap") [
-        "zswap.compressor=${cfg.pageCompression.algorithm}"
-        "zswap.enabled=1"
-        "zswap.max_pool_percent=${toString cfg.pageCompression.memoryPercent}"
-        "zswap.zpool=z3fold"
-      ];
+      kernelParams = [ "zswap.enabled=0" ];
 
       kernel.sysctl = {
         # Enable Magic keys
         "kernel.sysrq" = 1;
         # https://wiki.archlinux.org/title/Zram#Optimizing_swap_on_zram
-        "vm.swappiness" = lib.mkIf (cfg.pageCompression != "none") 180;
-        "vm.watermark_boost_factor" = lib.mkIf (cfg.pageCompression != "none") 0;
-        "vm.watermark_scale_factor" = lib.mkIf (cfg.pageCompression != "none") 125;
-        "vm.page-cluster" = lib.mkIf (cfg.pageCompression != "none") 0;
+        "vm.swappiness" = lib.mkIf cfg.zram.enable 180;
+        "vm.watermark_boost_factor" = lib.mkIf cfg.zram.enable 0;
+        "vm.watermark_scale_factor" = lib.mkIf cfg.zram.enable 125;
+        "vm.page-cluster" = lib.mkIf cfg.zram.enable 0;
       };
 
       # Enable NTFS support
@@ -101,6 +75,13 @@ in
       journald.extraConfig = ''
         SystemMaxUse=500M
       '';
+
+      zram-generator = {
+        inherit (cfg.zram) enable;
+        settings.zram0 = {
+          zram-size = "min(ram, 8192)";
+        };
+      };
     };
 
     systemd = {
@@ -120,12 +101,8 @@ in
     system.rebuild.enableNg = true;
 
     # nixos/modules/misc/version.nix
-    users.motd = lib.mkIf cfg.motd.enable ''Welcome to '${config.networking.hostName}' running NixOS ${config.system.nixos.version}!'';
-
-    # Enable zram to have better memory management
-    zramSwap = lib.mkIf (cfg.pageCompression.enable == "zram") {
-      enable = true;
-      inherit (cfg.pageCompression) algorithm memoryPercent;
-    };
+    users.motd = lib.mkIf cfg.motd.enable ''
+      Welcome to '${config.networking.hostName}' running NixOS ${config.system.nixos.version}!
+    '';
   };
 }
