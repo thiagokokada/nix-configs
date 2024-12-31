@@ -177,10 +177,10 @@ in
             fpath+=(${pkgs.pure-prompt}/share/zsh/site-functions)
             source ${pkgs.pure-prompt}/share/zsh/site-functions/prompt_pure_setup
 
-            # any-nix-shell
+            # nix-your-shell
             source ${
-              pkgs.runCommand "any-nix-shell-zsh" { buildInputs = [ pkgs.any-nix-shell ]; } ''
-                any-nix-shell zsh > $out
+              pkgs.runCommand "any-nix-shell-zsh" { buildInputs = [ pkgs.nix-your-shell ]; } ''
+                nix-your-shell --absolute zsh > $out
               ''
             }
 
