@@ -157,9 +157,7 @@ in
 
     systemd.user.services.xsettingsd = {
       Service = {
-        # Exponential restart
-        RestartSteps = 5;
-        RestartMaxDelaySec = 10;
+        inherit (config.home-manager.desktop.systemd.service) RestartSec RestartSteps RestartMaxDelaySec;
         Restart = lib.mkForce "on-failure";
       };
     };

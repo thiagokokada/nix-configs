@@ -76,13 +76,9 @@ in
       ];
     };
 
-    # Add some time before restart, to avoid the following error:
-    # swayidle.service: Start request repeated too quickly.
     systemd.user.services.swayidle = {
       Service = {
-        # Use exponential restart
-        RestartSteps = 5;
-        RestartMaxDelaySec = 10;
+        inherit (config.home-manager.desktop.systemd.service) RestartSec RestartSteps RestartMaxDelaySec;
       };
     };
   };

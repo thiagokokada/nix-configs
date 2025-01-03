@@ -22,11 +22,7 @@ in
 
     systemd.user.services.kanshi = {
       Service = {
-        # Use exponential restart
-        # https://enotty.pipebreaker.pl/posts/2024/01/how-systemd-exponential-restart-delay-works/
-        RestartSec = "250ms";
-        RestartSteps = 5;
-        RestartMaxDelaySec = 5;
+        inherit (config.home-manager.desktop.systemd.service) RestartSec RestartSteps RestartMaxDelaySec;
       };
     };
   };
