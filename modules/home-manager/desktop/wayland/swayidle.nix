@@ -79,7 +79,6 @@ in
     # Add some time before restart, to avoid the following error:
     # swayidle.service: Start request repeated too quickly.
     systemd.user.services.swayidle = {
-      Unit.After = [ "graphical-session.target" ];
       Service = {
         # Use exponential restart
         RestartSteps = 5;

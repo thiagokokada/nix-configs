@@ -419,10 +419,6 @@ in
     };
 
     systemd.user.services.waybar = {
-      Unit = {
-        After = lib.mkForce [ "graphical-session.target" ];
-        ConditionEnvironment = "WAYLAND_DISPLAY";
-      };
       Service = {
         # Use exponential restart
         # https://enotty.pipebreaker.pl/posts/2024/01/how-systemd-exponential-restart-delay-works/
