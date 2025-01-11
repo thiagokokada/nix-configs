@@ -50,23 +50,13 @@ in
       enable = true;
       systemd.enable = true;
       settings = {
-        mainBar =
+        top-bar =
           {
             layer = "top";
             position = "top";
             height = 24;
             spacing = 3;
             modules-left =
-              lib.optionals hyprlandCfg.enable [
-                "hyprland/workspaces"
-                "hyprland/submap"
-              ]
-              ++ lib.optionals swayCfg.enable [
-                "sway/workspaces"
-                "sway/mode"
-              ]
-              ++ [ "wlr/taskbar" ];
-            modules-center =
               lib.optionals hyprlandCfg.enable [ "hyprland/window" ]
               ++ lib.optionals swayCfg.enable [ "sway/window" ];
             modules-right =
@@ -84,7 +74,6 @@ in
                   (lib.optionalString cfg.battery.enable "battery")
                   "wireplumber"
                   "clock"
-                  "tray"
                 ]
                 [
                   # Flatten lists
@@ -98,38 +87,15 @@ in
                   ]))
                   lib.init
                 ];
-            "hyprland/workspaces" = lib.mkIf hyprlandCfg.enable {
-              format = "{name}: {icon}";
-              format-icons = {
-                "1" = " ";
-                "2" = " ";
-                "3" = " ";
-                "4" = " ";
-                "5" = " ";
-                "6" = " ";
-                "7" = " ";
-                "8" = " ";
-                "9" = " ";
-                "10" = " ";
-              };
-              "on-scroll-up" = "${hyprctl} dispatch workspace e+1";
-              "on-scroll-down" = "${hyprctl} dispatch workspace e-1";
-            };
-            "hyprland/submap".tooltip = lib.mkIf hyprlandCfg.enable false;
             "hyprland/window" = {
-              max-length = lib.mkIf hyprlandCfg.enable 50;
               separate-outputs = true;
+              icon = true;
+              icon-size = 16;
             };
-            "sway/mode".tooltip = lib.mkIf swayCfg.enable false;
             "sway/window" = {
-              max-length = lib.mkIf swayCfg.enable 50;
               separate-outputs = true;
-            };
-            "sway/workspaces".disable-scroll-wraparound = lib.mkIf swayCfg.enable true;
-            "wlr/taskbar" = {
-              format = "{icon}";
-              on-click = "activate";
-              on-click-middle = "close";
+              icon = true;
+              icon-size = 16;
             };
             idle_inhibitor = {
               format = "{icon}";
@@ -320,6 +286,49 @@ in
               };
             };
           };
+
+        bottom-bar = {
+          layer = "bottom";
+          position = "bottom";
+          height = 24;
+          spacing = 3;
+          modules-left =
+            lib.optionals hyprlandCfg.enable [
+              "hyprland/workspaces"
+              "hyprland/submap"
+            ]
+            ++ lib.optionals swayCfg.enable [
+              "sway/workspaces"
+              "sway/mode"
+            ];
+          modules-center = [ "wlr/taskbar" ];
+          modules-right = [ "tray" ];
+          "wlr/taskbar" = {
+            format = "{icon}";
+            on-click = "activate";
+            on-click-middle = "close";
+          };
+          "hyprland/workspaces" = {
+            format = "{name}: {icon}";
+            format-icons = {
+              "1" = " ";
+              "2" = " ";
+              "3" = " ";
+              "4" = " ";
+              "5" = " ";
+              "6" = " ";
+              "7" = " ";
+              "8" = " ";
+              "9" = " ";
+              "10" = " ";
+            };
+            "on-scroll-up" = "${hyprctl} dispatch workspace e+1";
+            "on-scroll-down" = "${hyprctl} dispatch workspace e-1";
+          };
+          "hyprland/submap".tooltip = false;
+          "sway/mode".tooltip = false;
+          "sway/workspaces".disable-scroll-wraparound = true;
+        };
       };
       style =
         with config.home-manager.desktop.theme.colors;
