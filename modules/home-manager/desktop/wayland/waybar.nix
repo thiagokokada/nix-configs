@@ -275,7 +275,7 @@ in
               };
               clock = {
                 inherit (cfg) interval;
-                format = " {:%H:%M, %a %d}";
+                format = " {:%H:%M, %a %d} ";
                 tooltip-format = "<tt><small>{calendar}</small></tt>";
                 calendar = {
                   mode = "year";
