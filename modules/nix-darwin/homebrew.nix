@@ -6,9 +6,7 @@ let
 in
 {
   options.nix-darwin.homebrew = {
-    enable = lib.mkEnableOption "Homebrew config" // {
-      default = true;
-    };
+    enable = lib.mkEnableOption "Homebrew config";
     prefix = lib.mkOption {
       type = lib.types.path;
       description = "Homebrew's prefix";
