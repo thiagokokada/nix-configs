@@ -27,9 +27,6 @@ in
   };
 
   config = lib.mkIf config.nixos.desktop.enable {
-    # Enable graphical boot
-    boot.plymouth.enable = lib.mkDefault true;
-
     # Programs that needs system-wide permissions to work correctly
     programs = {
       adb.enable = true;
