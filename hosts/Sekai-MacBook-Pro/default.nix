@@ -7,10 +7,17 @@
 
   nixpkgs.hostPlatform = "aarch64-darwin";
 
-  system.keyboard = {
-    enableKeyMapping = true;
-    nonUS.remapTilde = true;
-  };
+  nix-darwin.home.extraModules = [
+    {
+      home-manager = {
+        darwin.remapKeys.mappings = {
+          # '§±' <-> '`~'
+          "0x700000035" = "0x700000064";
+          "0x700000064" = "0x700000035";
+        };
+      };
+    }
+  ];
 
   # This value determines the nix-darwin release with which your system is to
   # be compatible, in order to avoid breaking some software such as database
