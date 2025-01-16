@@ -76,7 +76,7 @@ in
           }"
           "EMACSDIR=${EMACSDIR}"
         ];
-        ExecStart = "${EMACSDIR}/bin/doom sync -u --no-color";
+        ExecStart = "${EMACSDIR}/bin/doom sync -u --no-color --rebuild --aot --gc";
         ExecStartPre = "${lib.getExe libnotify} 'Starting sync' 'Doom Emacs config is syncing...'";
         ExecStartPost = "${lib.getExe libnotify} 'Finished sync' 'Doom Emacs is ready!'";
         Type = "oneshot";
