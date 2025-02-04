@@ -32,7 +32,8 @@ in
       in
       {
         autorandrCreateDefaultProfile = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-          cd "${configHome}/autorandr"
+          run mkdir -p "${configHome}/autorandr"
+          run cd "${configHome}/autorandr"
           run ln -sf $VERBOSE_ARG ${cfg.defaultProfile} default
         '';
       };
