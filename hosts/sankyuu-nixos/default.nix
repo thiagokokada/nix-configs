@@ -11,7 +11,9 @@
 
 {
   imports = [
+    ./disk-config.nix
     ./hardware-configuration.nix
+    flake.inputs.disko.nixosModules.disko
     flake.inputs.hardware.nixosModules.lenovo-thinkpad-t14-amd-gen1
     flake.outputs.nixosModules.default
   ];
@@ -32,22 +34,6 @@
   # Use the systemd-boot EFI boot loader
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-
-  boot.initrd.luks.devices = {
-    root = {
-      device = "/dev/disk/by-uuid/6e4e7379-5faf-494e-9cc4-c1e379741306";
-      preLVM = true;
-      allowDiscards = true;
-      bypassWorkqueues = true;
-    };
-  };
-
-  fileSystems."/".options = [ "compress=zstd" ];
-  fileSystems."/home".options = [ "compress=zstd" ];
-  fileSystems."/nix".options = [
-    "compress=zstd"
-    "noatime"
-  ];
 
   home-manager.users.${config.mainUser.username} = {
     home-manager.desktop.theme = {
