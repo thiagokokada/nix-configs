@@ -52,39 +52,6 @@ outputs.lib.recursiveMergeAttrs [
 
     nix-whereis = prev.callPackage ../packages/nix-whereis { };
 
-    # https://github.com/NixOS/nixpkgs/issues/97855#issuecomment-1075818028
-    nixos-option =
-      let
-        prefix = ''
-          (import ${inputs.flake-compat} {
-            src = ${flake};
-          }).defaultNix.nixosConfigurations.\$(hostname)
-        '';
-      in
-      prev.runCommand "nixos-option"
-        {
-          buildInputs = with prev; [
-            makeWrapper
-            installShellFiles
-          ];
-        }
-        ''
-          makeWrapper ${prev.nixos-option}/bin/nixos-option $out/bin/nixos-option \
-          --add-flags --config_expr \
-          --add-flags "\"${prefix}.config\"" \
-          --add-flags --options_expr \
-          --add-flags "\"${prefix}.options\""
-
-          installManPage ${prev.nixos-option}/share/man/**/*
-        '';
-
-    # https://github.com/NixOS/nixpkgs/pull/368792
-    pamtester = prev.pamtester.overrideAttrs (old: {
-      nativeBuildInputs = (old.nativeBuildInputs or [ ]) ++ [
-        prev.autoreconfHook
-      ];
-    });
-
     run-bg-alias = name: command: prev.callPackage ../packages/run-bg-alias { inherit name command; };
 
     wallpapers = prev.callPackage ../packages/wallpapers { };
