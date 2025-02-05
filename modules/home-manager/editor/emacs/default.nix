@@ -10,6 +10,7 @@ let
   inherit (config.home) homeDirectory;
   inherit (config.home.sessionVariables) EMACSDIR;
   inherit (config.programs.emacs) finalPackage;
+  inherit (config.mainUser) username;
 in
 {
   options.home-manager.editor.emacs.enable = lib.mkEnableOption "Emacs config" // {
@@ -90,7 +91,7 @@ in
       '';
       runDoomSync = lib.mkIf pkgs.stdenv.isLinux (
         lib.hm.dag.entryAfter [ "installDoom" ] ''
-          run ${config.systemd.user.systemctlPath} start --user doom-sync.service --no-block
+          run ${config.systemd.user.systemctlPath} start --user doom-sync.service --no-block --machine=${username}@.host
         ''
       );
     };
