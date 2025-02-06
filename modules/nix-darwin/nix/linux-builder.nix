@@ -24,6 +24,7 @@ in
       enable = true;
       ephemeral = true;
       maxJobs = 4;
+      systems = [ "aarch64-linux" ];
       config = {
         # https://github.com/LnL7/nix-darwin/issues/913
         services.openssh.enable = true;
