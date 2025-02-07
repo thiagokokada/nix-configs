@@ -227,27 +227,11 @@ in
               '';
           }
           {
-            plugin = gitsigns-nvim;
-            type = "lua";
-            config = # lua
-              ''
-                require("gitsigns").setup {}
-              '';
-          }
-          {
             plugin = guess-indent-nvim;
             type = "lua";
             config = # lua
               ''
                 require("guess-indent").setup {}
-              '';
-          }
-          {
-            plugin = leap-nvim;
-            type = "lua";
-            config = # lua
-              ''
-                require("leap").create_default_mappings()
               '';
           }
           {
@@ -350,11 +334,79 @@ in
               '';
           }
           {
-            plugin = nvim-surround;
+            plugin = mini-nvim;
             type = "lua";
             config = # lua
               ''
-                require("nvim-surround").setup {}
+                require('mini.ai').setup {}
+                require('mini.align').setup {}
+                require('mini.diff').setup {}
+                require('mini.git').setup {}
+                require('mini.jump2d').setup {}
+                require('mini.pairs').setup {}
+                require('mini.surround').setup {
+                  mappings = {
+                    add = 'ys',
+                    delete = 'ds',
+                    replace = 'cs',
+                  },
+                  n_lines = 50,
+                }
+
+                local miniclue = require('mini.clue')
+                miniclue.setup {
+                  triggers = {
+                    -- Leader triggers
+                    { mode = 'n', keys = '<Leader>' },
+                    { mode = 'x', keys = '<Leader>' },
+
+                    -- Built-in completion
+                    { mode = 'i', keys = '<C-x>' },
+
+                    -- `g` key
+                    { mode = 'n', keys = 'g' },
+                    { mode = 'x', keys = 'g' },
+
+                    -- Marks
+                    { mode = 'n', keys = "'" },
+                    { mode = 'n', keys = '`' },
+                    { mode = 'x', keys = "'" },
+                    { mode = 'x', keys = '`' },
+
+                    -- Registers
+                    { mode = 'n', keys = '"' },
+                    { mode = 'x', keys = '"' },
+                    { mode = 'i', keys = '<C-r>' },
+                    { mode = 'c', keys = '<C-r>' },
+
+                    -- Window commands
+                    { mode = 'n', keys = '<C-w>' },
+
+                    -- `z` key
+                    { mode = 'n', keys = 'z' },
+                    { mode = 'x', keys = 'z' },
+                  },
+
+                  clues = {
+                    -- Enhance this by adding descriptions for <Leader> mapping groups
+                    miniclue.gen_clues.builtin_completion(),
+                    miniclue.gen_clues.g(),
+                    miniclue.gen_clues.marks(),
+                    miniclue.gen_clues.registers(),
+                    miniclue.gen_clues.windows(),
+                    miniclue.gen_clues.z(),
+                  },
+
+                  window = {
+                    config = {},
+                    delay = 300,
+                  },
+                }
+
+                local trailspace = require('mini.trailspace')
+                trailspace.setup {}
+                vim.keymap.set('n', '<Leader>ww', trailspace.trim, { desc = "Trim whitespace" })
+                vim.keymap.set('n', '<Leader>wl', trailspace.trim_last_lines, { desc = "Trim last lines" })
               '';
           }
           {
@@ -513,14 +565,6 @@ in
               '';
           }
           {
-            plugin = vim-easy-align;
-            type = "lua";
-            config = # lua
-              ''
-                vim.keymap.set({'n', 'x'}, 'ga', '<Plug>(EasyAlign)', { remap = true, desc = "Align" })
-              '';
-          }
-          {
             plugin = vim-test;
             type = "lua";
             config = # lua
@@ -536,45 +580,8 @@ in
                 vim.keymap.set('n', '<Leader>tv', ':TestVisit<CR>', { desc = "Test visit" })
               '';
           }
-          {
-            plugin = which-key-nvim;
-            type = "lua";
-            config = # lua
-              ''
-                vim.o.timeout = true
-                vim.o.timeoutlen = 300
-                require("which-key").setup {}
-              '';
-          }
-          {
-            plugin = whitespace-nvim;
-            type = "lua";
-            config = # lua
-              ''
-                local whitespace = require("whitespace-nvim")
-                whitespace.setup {
-                  -- configuration options and their defaults
-
-                  -- `highlight` configures which highlight is used to display
-                  -- trailing whitespace
-                  highlight = 'DiffDelete',
-
-                  -- `ignored_filetypes` configures which filetypes to ignore when
-                  -- displaying trailing whitespace
-                  ignored_filetypes = { 'TelescopePrompt', 'Trouble', 'help' },
-
-                  -- `ignore_terminal` configures whether to ignore terminal buffers
-                  ignore_terminal = true,
-                }
-
-                -- remove trailing whitespace with a keybinding
-                vim.keymap.set('n', '<Leader>w', whitespace.trim, { desc = "Trim whitespace" })
-              '';
-          }
-          lexima-vim
           mkdir-nvim
           vim-advanced-sorters
-          vim-fugitive
         ]
         ++ lib.optionals cfg.markdownPreview.enable [
           {
