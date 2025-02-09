@@ -35,8 +35,11 @@ in
             selection-match = fixColor base08;
           };
         key-bindings = {
-          delete-line = "none";
-          delete-prev-word = "Mod1+BackSpace Control+BackSpace Control+w";
+          # Unmap delete-line-forward since its Control+k mapping conflicts
+          # with custom prev mapping, and also unmap delete-line-backward for
+          # consistency
+          delete-line-backward = "none";
+          delete-line-forward = "none";
           prev = "Up Control+p Control+k";
           next = "Down Control+n Control+j";
         };
