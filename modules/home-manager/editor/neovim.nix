@@ -80,24 +80,11 @@ in
           -- load .exrc, .nvimrc and .nvim.lua local files
           vim.opt.exrc = true
 
-          -- indent wrapped lines to match line start
-          vim.opt.breakindent = true
-
-          -- show line numbers
-          vim.opt.number = true
-
-          -- ignore case in search, except if using case
-          vim.opt.ignorecase = true
-          vim.opt.smartcase = true
-
-          -- show search results while typing
-          vim.opt.incsearch = true
+          -- highlight current line (enabled by mini.basics)
+          vim.opt.cursorline = false
 
           -- turn on omnicomplete
           vim.opt.omnifunc = "syntaxcomplete#Complete"
-
-          -- live substitutions as you type
-          vim.opt.inccommand = "nosplit"
 
           -- copy and paste use the system clipboard
           vim.opt.clipboard:append { "unnamedplus" }
@@ -108,32 +95,9 @@ in
           -- avoid swapfile warning
           vim.opt.shortmess:append { A = true }
 
-          -- persistent undo
-          local undodir = vim.fn.expand("~/.config/nvim/undo")
-          vim.opt.undofile = true
-          vim.opt.undodir = undodir
-
-          if vim.fn.isdirectory(undodir) ~= 0 then
-            vim.fn.mkdir(undodir, "p", 0755)
-          end
-
           -- disable "How to disable mouse" menu
           vim.cmd.aunmenu { [[PopUp.How-to\ disable\ mouse]] }
           vim.cmd.aunmenu { [[PopUp.-1-]] }
-
-          -- window movement mappings
-          vim.keymap.set('t', '<C-h>', [[<C-\><C-n><C-w>h]])
-          vim.keymap.set('t', '<C-j>', [[<C-\><C-n><C-w>j]])
-          vim.keymap.set('t', '<C-k>', [[<C-\><C-n><C-w>k]])
-          vim.keymap.set('t', '<C-l>', [[<C-\><C-n><C-w>l]])
-          vim.keymap.set('n', '<C-h>', '<C-w>h')
-          vim.keymap.set('n', '<C-j>', '<C-w>j')
-          vim.keymap.set('n', '<C-k>', '<C-w>k')
-          vim.keymap.set('n', '<C-l>', '<C-w>l')
-          vim.keymap.set({'i', 'v'}, '<C-h>', '<Esc><C-w>h')
-          vim.keymap.set({'i', 'v'}, '<C-j>', '<Esc><C-w>j')
-          vim.keymap.set({'i', 'v'}, '<C-k>', '<Esc><C-w>k')
-          vim.keymap.set({'i', 'v'}, '<C-l>', '<Esc><C-w>l')
 
           -- make Esc enter Normal mode in Term
           vim.keymap.set('t', '<Esc>', [[<C-\><C-n>]])
@@ -144,7 +108,6 @@ in
           vim.keymap.set('n', '<C-g>', '<cmd>:noh<CR><CR>')
 
           -- completion
-          vim.opt.completeopt = 'menu,menuone,noinsert,noselect'
           vim.keymap.set({'i', 'c'}, '<C-j>', function()
             return vim.fn.pumvisible() ~= 0 and '<C-n>' or '<C-j>'
           end, { expr = true })
@@ -154,11 +117,7 @@ in
           vim.keymap.set({'i', 'c'}, '<CR>', function()
             return vim.fn.pumvisible() ~= 0 and '<C-y>' or '<CR>'
           end, { expr = true })
-          ${lib.optionalString (!cfg.cmp.enable) # lua
-            ''
-              vim.keymap.set('i', '<C-Space>', '<C-x><C-o>')
-            ''
-          }
+          vim.keymap.set('i', '<C-Space>', '<C-x><C-o>')
 
           ${lib.concatStringsSep "\n" (
             lib.mapAttrsToList (
@@ -340,6 +299,12 @@ in
               ''
                 require('mini.ai').setup {}
                 require('mini.align').setup {}
+                require('mini.basics').setup {
+                  mappings = {
+                    windows = true,
+                    move_with_alt = true,
+                  },
+                }
                 require('mini.diff').setup {}
                 require('mini.git').setup {}
                 require('mini.jump2d').setup {}
@@ -350,7 +315,7 @@ in
                     delete = 'ds',
                     replace = 'cs',
                   },
-                  n_lines = 50,
+                  n_lines = 100,
                 }
 
                 local miniclue = require('mini.clue')
@@ -398,7 +363,9 @@ in
                   },
 
                   window = {
-                    config = {},
+                    config = {
+                      width = 'auto',
+                    },
                     delay = 300,
                   },
                 }
