@@ -119,16 +119,11 @@ in
           end, { expr = true })
           vim.keymap.set('i', '<C-Space>', '<C-x><C-o>')
 
-          ${lib.concatStringsSep "\n" (
-            lib.mapAttrsToList (
-              pattern: command: # lua
-              ''
-                vim.api.nvim_create_autocmd({ "BufNewFile", "BufRead" }, {
-                  pattern = { "${pattern}" },
-                  command = "${command}",
-                })
-              '') customAutocmds
-          )}
+          -- enable syntaxcomplete if omnifunc is unavailable
+          vim.api.nvim_create_autocmd({ "FileType" }, {
+            command = 'if &omnifunc == "" | setlocal omnifunc=syntaxcomplete#Complete | endif',
+            pattern = { "*" },
+          })
 
           -- reload file if changed
           vim.opt.autoread = true
@@ -145,6 +140,18 @@ in
             pattern = { "*" },
             command = "set formatoptions+=oj",
           })
+
+          -- custom autocmds for filetypes
+          ${lib.concatStringsSep "\n" (
+            lib.mapAttrsToList (
+              pattern: command: # lua
+              ''
+                vim.api.nvim_create_autocmd({ "BufNewFile", "BufRead" }, {
+                  pattern = { "${pattern}" },
+                  command = "${command}",
+                })
+              '') customAutocmds
+          )}
         '';
 
       # To install non-packaged plugins, use
