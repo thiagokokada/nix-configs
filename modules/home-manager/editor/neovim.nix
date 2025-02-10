@@ -556,6 +556,7 @@ in
           }
           mkdir-nvim
           vim-advanced-sorters
+          vim-nix
         ]
         ++ lib.optionals cfg.markdownPreview.enable [
           {
@@ -930,7 +931,7 @@ in
                     },
                   },
                   indent = {
-                    enable = true,
+                    enable = false,
                   },
                   autotag = {
                     enable = true,
