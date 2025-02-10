@@ -215,6 +215,8 @@ in
                 }
                 require('mini.diff').setup {}
                 require('mini.git').setup {}
+                require('mini.jump').setup {}
+                require('mini.operators').setup {}
                 require('mini.pairs').setup {}
                 require('mini.statusline').setup {
                   set_vim_settings = false,
@@ -222,12 +224,6 @@ in
                 require('mini.tabline').setup {
                   set_vim_settings = false,
                 }
-
-                -- lazy load mini.jump since it is not working otherwise
-                vim.api.nvim_create_autocmd({"BufEnter"}, {
-                  pattern = "*",
-                  callback = require('mini.jump').setup,
-                })
 
                 local icons = require('mini.icons')
                 icons.setup {}
@@ -497,7 +493,7 @@ in
                     cursor_move = { enabled = false, }
                   }
                 }
-                vim.keymap.set("n", "gx", function()
+                vim.keymap.set("n", "<Leader>u", function()
                   vim.cmd("URLOpenUnderCursor")
                 end , { desc = "Open URL under cursor" })
               '';
@@ -539,7 +535,7 @@ in
             config = # lua
               ''
                 -- Setup language servers.
-                -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
+                -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/configs.md
                 local lspconfig = require("lspconfig")
                 local servers = {
                   { "bashls" },
@@ -719,91 +715,6 @@ in
               '';
           }
           {
-            plugin = nvim-treesitter-textobjects;
-            type = "lua";
-            config = # lua
-              ''
-                local ts_repeat_move = require("nvim-treesitter.textobjects.repeatable_move")
-
-                -- vim way: ; goes to the direction you were moving.
-                vim.keymap.set({"n", "x", "o"}, ";", ts_repeat_move.repeat_last_move)
-                vim.keymap.set({"n", "x", "o"}, ",", ts_repeat_move.repeat_last_move_opposite)
-
-                -- Optionally, make builtin f, F, t, T also repeatable with ; and ,
-                vim.keymap.set({"n", "x", "o"}, "f", ts_repeat_move.builtin_f_expr, { expr = true })
-                vim.keymap.set({"n", "x", "o"}, "F", ts_repeat_move.builtin_F_expr, { expr = true })
-                vim.keymap.set({"n", "x", "o"}, "t", ts_repeat_move.builtin_t_expr, { expr = true })
-                vim.keymap.set({"n", "x", "o"}, "T", ts_repeat_move.builtin_T_expr, { expr = true })
-
-                -- will be set nvim-treesitter itself
-                local textobjects_setup = {
-                  select = {
-                    enable = true,
-
-                    -- Automatically jump forward to textobj, similar to targets.vim
-                    lookahead = true,
-
-                    keymaps = {
-                      ["af"] = { query = "@function.outer", desc = "Select outer part of a function region" },
-                      ["if"] = { query = "@function.inner", desc = "Select inner part of a function region" },
-                      ["ac"] = { query = "@class.outer", desc = "Select outer part of a class region" },
-                      ["ic"] = { query = "@class.inner", desc = "Select inner part of a class region" },
-                      ["as"] = { query = "@scope", query_group = "locals", desc = "Select language scope" },
-                    },
-
-                    -- You can choose the select mode (default is charwise 'v')
-                    selection_modes = {
-                      ['@parameter.outer'] = 'v', -- charwise
-                      ['@function.outer'] = 'V', -- linewise
-                      ['@class.outer'] = '<c-v>', -- blockwise
-                    },
-
-                    -- If you set this to `true` (default is `false`) then any textobject is
-                    -- extended to include preceding or succeeding whitespace. Succeeding
-                    -- whitespace has priority in order to act similarly to eg the built-in
-                    -- `ap`.
-                    include_surrounding_whitespace = false,
-                  },
-                  swap = {
-                    enable = true,
-                    swap_next = {
-                      ["<leader>a"] = { query = "@parameter.inner", desc = "Swap parameter with next" },
-                    },
-                    swap_previous = {
-                      ["<leader>A"] = { query = "@parameter.inner", desc = "Swap parameter with previous" },
-                    },
-                  },
-                  move = {
-                    enable = true,
-                    set_jumps = true, -- whether to set jumps in the jumplist
-                    goto_next_start = {
-                      ["]m"] = { query = "@function.outer", desc = "Next function start" },
-                      ["]]"] = { query = "@class.outer", desc = "Next class start" },
-                    },
-                    goto_next_end = {
-                      ["]M"] = { query = "@function.outer", desc = "Next function end" },
-                      ["]["] = { query = "@class.outer", desc = "Next class end" },
-                    },
-                    goto_previous_start = {
-                      ["[m"] = { query = "@function.outer", desc = "Previous function start" },
-                      ["[["] = { query = "@class.outer", desc = "Previous class start" },
-                    },
-                    goto_previous_end = {
-                      ["[M"] = { query = "@function.outer", desc = "Previous function end" },
-                      ["[]"] = { query = "@class.outer", desc = "Previous class end" },
-                    },
-                    -- Below will go to either the start or the end, whichever is closer.
-                    goto_next = {
-                      ["]d"] = "@conditional.outer",
-                    },
-                    goto_previous = {
-                      ["[d"] = "@conditional.outer",
-                    }
-                  },
-                }
-              '';
-          }
-          {
             plugin = nvim-treesitter.withAllGrammars;
             type = "lua";
             config = # lua
@@ -811,7 +722,6 @@ in
                 require("nvim-treesitter.configs").setup {
                   highlight = {
                     enable = true,
-                    additional_vim_regex_highlighting = false,
                     -- disable slow treesitter highlight for large files
                     disable = function(lang, buf)
                         local max_filesize = 100 * 1024 -- 100 KB
@@ -824,7 +734,7 @@ in
                   incremental_selection = {
                     enable = true,
                     keymaps = {
-                      init_selection = "gnn", -- set to `false` to disable one of the mappings
+                      init_selection = "gnn",
                       node_incremental = "grn",
                       scope_incremental = "grc",
                       node_decremental = "grm",
@@ -836,7 +746,6 @@ in
                   autotag = {
                     enable = true,
                   },
-                  textobjects = textobjects_setup,
                 }
               '';
           }
