@@ -8,7 +8,6 @@
 
 let
   cfg = config.home-manager.editor.neovim;
-  toLua = lib.generators.toLua { };
   # Custom autocmds for filetypes
   # { "<pattern>" = "<command>"; }
   # E.g.: { "*.json" = "set filetype=json"; }
@@ -195,51 +194,6 @@ in
               '';
           }
           {
-            plugin = lualine-nvim;
-            type = "lua";
-            config = # lua
-              ''
-                local enable_icons = ${toLua cfg.icons.enable}
-                local function mixed_indent()
-                  local space_pat = [[\v^ +]]
-                  local tab_pat = [[\v^\t+]]
-                  local space_indent = vim.fn.search(space_pat, 'nwc')
-                  local tab_indent = vim.fn.search(tab_pat, 'nwc')
-                  local mixed = (space_indent > 0 and tab_indent > 0)
-                  local mixed_same_line
-                  if not mixed then
-                    mixed_same_line = vim.fn.search([[\v^(\t+ | +\t)]], 'nwc')
-                    mixed = mixed_same_line > 0
-                  end
-                  if not mixed then return "" end
-                  if mixed_same_line ~= nil and mixed_same_line > 0 then
-                     return "mixed[".. mixed_same_line .. "]"
-                  end
-                  local space_indent_cnt = vim.fn.searchcount({pattern=space_pat, max_count=1e3}).total
-                  local tab_indent_cnt =  vim.fn.searchcount({pattern=tab_pat, max_count=1e3}).total
-                  if space_indent_cnt > tab_indent_cnt then
-                    return "mixed[" .. tab_indent .. "]"
-                  else
-                    return "mixed[" .. space_indent .. "]"
-                  end
-                end
-                local function trailing_whitespace()
-                  local space = vim.fn.search([[\s\+$]], 'nwc')
-                  return space ~= 0 and "trailing[" .. space .. "]" or ""
-                end
-
-                require("lualine").setup {
-                  sections = {
-                    lualine_y = { "progress", mixed_indent },
-                    lualine_z = { "location", trailing_whitespace },
-                  },
-                  options = {
-                    icons_enabled = enable_icons,
-                  },
-                }
-              '';
-          }
-          {
             plugin = mini-nvim;
             type = "lua";
             config = # lua
@@ -260,6 +214,12 @@ in
                 require('mini.git').setup {}
                 require('mini.jump2d').setup {}
                 require('mini.pairs').setup {}
+                require('mini.statusline').setup {
+                  set_vim_settings = false,
+                }
+                require('mini.tabline').setup {
+                  set_vim_settings = false,
+                }
 
                 local icons = require('mini.icons')
                 icons.setup {}
