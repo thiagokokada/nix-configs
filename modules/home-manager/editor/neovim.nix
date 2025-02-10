@@ -258,9 +258,12 @@ in
                 }
                 require('mini.diff').setup {}
                 require('mini.git').setup {}
-                require('mini.icons').setup {}
                 require('mini.jump2d').setup {}
                 require('mini.pairs').setup {}
+
+                local icons = require('mini.icons')
+                icons.setup {}
+                icons.mock_nvim_web_devicons()
 
                 require('mini.surround').setup {
                   mappings = {
@@ -825,8 +828,7 @@ in
               '';
           }
           nvim-ts-autotag
-        ]
-        ++ lib.optionals cfg.icons.enable [ nvim-web-devicons ];
+        ];
     };
 
     xdg.desktopEntries.nvim = lib.mkIf config.home-manager.desktop.enable {
