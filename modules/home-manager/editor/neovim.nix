@@ -315,6 +315,7 @@ in
                 require('mini.icons').setup {}
                 require('mini.jump2d').setup {}
                 require('mini.pairs').setup {}
+
                 require('mini.surround').setup {
                   mappings = {
                     add = "ys",
@@ -332,13 +333,26 @@ in
                   n_lines = 100,
                   search_method = "cover_or_next",
                 }
-
                 -- Remap adding surrounding to Visual mode selection
                 vim.keymap.del('x', 'ys')
                 vim.keymap.set('x', 'S', [[:<C-u>lua MiniSurround.add('visual')<CR>]], { silent = true })
-
                 -- Make special mapping for "add surrounding for line"
                 vim.keymap.set('n', 'yss', 'ys_', { remap = true })
+
+                local hipatterns = require('mini.hipatterns')
+                local hi_words = require('mini.extra').gen_highlighter.words
+                hipatterns.setup({
+                  highlighters = {
+                    fixme = hi_words({ 'FIXME' }, 'MiniHipatternsFixme'),
+                    hack = hi_words({ 'HACK' }, 'MiniHipatternsHack'),
+                    todo = hi_words({ 'TODO' }, 'MiniHipatternsTodo'),
+                    note = hi_words({ 'NOTE' }, 'MiniHipatternsNote'),
+                    xxx = hi_words({ 'XXX' }, 'MiniHipatternsFixme'),
+
+                    -- Highlight hex color strings (`#rrggbb`) using that color
+                    hex_color = hipatterns.gen_highlighter.hex_color(),
+                  },
+                })
 
                 local miniclue = require('mini.clue')
                 miniclue.setup {
