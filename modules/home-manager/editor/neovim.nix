@@ -195,60 +195,6 @@ in
               '';
           }
           {
-            plugin = lir-nvim;
-            type = "lua";
-            config = # lua
-              ''
-                -- disable netrw
-                vim.g.loaded_netrw = 1
-                vim.g.loaded_netrwPlugin = 1
-
-                local actions = require('lir.actions')
-                local mark_actions = require('lir.mark.actions')
-                local clipboard_actions = require('lir.clipboard.actions')
-                local enable_icons = ${toLua cfg.icons.enable}
-
-                require('lir').setup {
-                  show_hidden_files = false,
-                  ignore = {},
-                  devicons = {
-                    enable = enable_icons,
-                    highlight_dirname = false,
-                  },
-                  mappings = {
-                    ['<Enter>'] = actions.edit,
-                    ['<C-s>'] = actions.split,
-                    ['<C-v>'] = actions.vsplit,
-                    ['<C-t>'] = actions.tabedit,
-
-                    ['-'] = actions.up,
-                    ['q'] = actions.quit,
-
-                    ['K'] = actions.mkdir,
-                    ['N'] = actions.newfile,
-                    ['R'] = actions.rename,
-                    ['@'] = actions.cd,
-                    ['Y'] = actions.yank_path,
-                    ['.'] = actions.toggle_show_hidden,
-                    ['D'] = actions.delete,
-
-                    ['J'] = function()
-                      mark_actions.toggle_mark()
-                      vim.cmd('normal! j')
-                    end,
-                    ['C'] = clipboard_actions.copy,
-                    ['X'] = clipboard_actions.cut,
-                    ['P'] = clipboard_actions.paste,
-                  },
-                }
-
-                -- vinegar
-                vim.keymap.set('n', '-', function()
-                  vim.cmd.edit(vim.fn.expand('%:p:h'))
-                end, { desc = "Files" })
-              '';
-          }
-          {
             plugin = lualine-nvim;
             type = "lua";
             config = # lua
@@ -410,6 +356,24 @@ in
                 trailspace.setup {}
                 vim.keymap.set('n', '<Leader>ww', trailspace.trim, { desc = "Trim whitespace" })
                 vim.keymap.set('n', '<Leader>wl', trailspace.trim_last_lines, { desc = "Trim last lines" })
+              '';
+          }
+          {
+            plugin = oil-nvim;
+            type = "lua";
+            config = # lua
+              ''
+                local oil = require("oil")
+                oil.setup {
+                  skip_confirm_for_simple_edits = true,
+                  constrain_cursor = "name",
+                  watch_for_changes = true,
+                  lsp_file_methods = {
+                    autosave_changes = true,
+                  },
+                }
+
+                vim.keymap.set("n", "-", oil.open, { desc = "Open parent directory" })
               '';
           }
           {
