@@ -83,9 +83,6 @@ in
           -- highlight current line (enabled by mini.basics)
           vim.opt.cursorline = false
 
-          -- turn on omnicomplete
-          vim.opt.omnifunc = "syntaxcomplete#Complete"
-
           -- copy and paste use the system clipboard
           vim.opt.clipboard:append { "unnamedplus" }
 
