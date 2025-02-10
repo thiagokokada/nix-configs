@@ -26,9 +26,6 @@ in
     icons.enable = lib.mkEnableOption "icons" // {
       default = config.home-manager.desktop.enable || config.home-manager.darwin.enable;
     };
-    cmp.enable = lib.mkEnableOption "nvim-cmp and nvim-snippy" // {
-      default = config.home-manager.dev.enable;
-    };
     markdownPreview.enable = lib.mkEnableOption "markdown-preview.nvim" // {
       default = config.home-manager.desktop.enable || config.home-manager.darwin.enable;
     };
@@ -309,8 +306,13 @@ in
                     move_with_alt = true,
                   },
                 }
+                require('mini.completion').setup {
+                  delay = { completion = 10^7, info = 10^7, signature = 10^7 },
+                  lsp_completion = { source_func = 'omnifunc' }
+                }
                 require('mini.diff').setup {}
                 require('mini.git').setup {}
+                require('mini.icons').setup {}
                 require('mini.jump2d').setup {}
                 require('mini.pairs').setup {}
                 require('mini.surround').setup {
@@ -581,58 +583,6 @@ in
               '';
           }
         ]
-        ++ lib.optionals cfg.cmp.enable [
-          cmp-nvim-lsp
-          cmp-path
-          cmp-snippy
-          {
-            plugin = nvim-cmp;
-            type = "lua";
-            config = # lua
-              ''
-                local cmp = require("cmp")
-                cmp.setup {
-                  completion = {
-                    autocomplete = false,
-                    completeopt = vim.opt.completeopt._value,
-                  },
-                  mapping = {
-                    ['<C-b>'] = cmp.mapping.scroll_docs(-4),
-                    ['<C-f>'] = cmp.mapping.scroll_docs(4),
-                    ['<C-k>'] = cmp.mapping.select_prev_item(),
-                    ['<C-j>'] = cmp.mapping.select_next_item(),
-                    ['<C-Space>'] = cmp.mapping.complete(),
-                    ['<C-e>'] = cmp.mapping.abort(),
-                    ['<CR>'] = cmp.mapping.confirm({ select = true }),
-                  },
-                  snippet = {
-                    expand = function(args)
-                      require("snippy").expand_snippet(args.body)
-                    end,
-                  },
-                  sources = {
-                    { name = 'nvim_lsp' },
-                    { name = 'path' },
-                    { name = 'snippy' },
-                  },
-                }
-              '';
-          }
-          {
-            plugin = nvim-snippy;
-            type = "lua";
-            config = # lua
-              ''
-                require("snippy").setup {}
-                local mappings = require("snippy.mapping")
-
-                vim.keymap.set('i', '<Tab>', mappings.expand_or_advance('<Tab>'), { desc = "Snippy expand or advance" })
-                vim.keymap.set('s', '<Tab>', mappings.next('<Tab>'), { desc = "Snippy next" })
-                vim.keymap.set({'i', 's'}, '<S-Tab>', mappings.previous('<S-Tab>'), { desc = "Snippy previous" })
-                vim.keymap.set({'n', 'x'}, '<Leader>x', mappings.cut_text, { remap = true, desc = "Snippy delete" })
-              '';
-          }
-        ]
         ++ lib.optionals cfg.lsp.enable [
           {
             plugin = nvim-lspconfig;
@@ -642,12 +592,6 @@ in
                 -- Setup language servers.
                 -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
                 local lspconfig = require("lspconfig")
-                local capabilities = {}
-                ${lib.optionalString cfg.cmp.enable # lua
-                  ''
-                    capabilities = require("cmp_nvim_lsp").default_capabilities()
-                  ''
-                }
                 local servers = {
                   { "bashls" },
                   { "marksman" },
@@ -722,9 +666,7 @@ in
                   local config = lspconfig[server[1]]
 
                   if vim.fn.executable(config.document_config.default_config.cmd[1]) ~= 0 then
-                    local shared_config = { capabilities = capabilities }
-
-                    config.setup(vim.tbl_deep_extend("force", shared_config, server["opts"] or {}))
+                    config.setup(server["opts"] or {})
                   end
                 end
 
