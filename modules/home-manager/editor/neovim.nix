@@ -217,7 +217,6 @@ in
                 require('mini.git').setup {}
                 require('mini.jump').setup {}
                 require('mini.operators').setup {}
-                require('mini.pairs').setup {}
                 require('mini.statusline').setup {
                   set_vim_settings = false,
                 }
@@ -514,6 +513,7 @@ in
                 vim.keymap.set('n', '<Leader>tv', ':TestVisit<CR>', { desc = "Test visit" })
               '';
           }
+          lexima-vim
           mkdir-nvim
           vim-advanced-sorters
           vim-nix
@@ -743,13 +743,9 @@ in
                   indent = {
                     enable = false,
                   },
-                  autotag = {
-                    enable = true,
-                  },
                 }
               '';
           }
-          nvim-ts-autotag
         ];
     };
 
