@@ -76,6 +76,9 @@ in
           -- load .exrc, .nvimrc and .nvim.lua local files
           vim.opt.exrc = true
 
+          -- reduce key timeout
+          vim.o.timeoutlen = 300
+
           -- highlight current line (enabled by mini.basics)
           vim.opt.cursorline = false
 
@@ -212,7 +215,6 @@ in
                 }
                 require('mini.diff').setup {}
                 require('mini.git').setup {}
-                require('mini.jump2d').setup {}
                 require('mini.pairs').setup {}
                 require('mini.statusline').setup {
                   set_vim_settings = false,
@@ -220,6 +222,12 @@ in
                 require('mini.tabline').setup {
                   set_vim_settings = false,
                 }
+
+                -- lazy load mini.jump since it is not working otherwise
+                vim.api.nvim_create_autocmd({"BufEnter"}, {
+                  pattern = "*",
+                  callback = require('mini.jump').setup,
+                })
 
                 local icons = require('mini.icons')
                 icons.setup {}
