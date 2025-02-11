@@ -210,7 +210,9 @@ in
                 }
                 local enable_icons = ${toLua cfg.icons.enable}
 
-                require('mini.ai').setup {}
+                require('mini.ai').setup {
+                  n_lines = 10^7,
+                }
                 require('mini.align').setup {}
                 require('mini.basics').setup {
                   mappings = {
@@ -249,7 +251,7 @@ in
                     suffix_last = "",
                     suffix_next = "",
                   },
-                  n_lines = 100,
+                  n_lines = 10^7,
                   search_method = "cover_or_next",
                 }
                 -- Remap adding surrounding to Visual mode selection
