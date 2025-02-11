@@ -7,6 +7,7 @@
 }:
 
 let
+  toLua = lib.generators.toLua { };
   cfg = config.home-manager.editor.neovim;
   # Custom autocmds for filetypes
   # { "<pattern>" = "<command>"; }
@@ -200,6 +201,15 @@ in
             type = "lua";
             config = # lua
               ''
+                ${lib.optionalString cfg.icons.enable # lua
+                  ''
+                    local icons = require('mini.icons')
+                    icons.setup {}
+                    icons.mock_nvim_web_devicons()
+                  ''
+                }
+                local enable_icons = ${toLua cfg.icons.enable}
+
                 require('mini.ai').setup {}
                 require('mini.align').setup {}
                 require('mini.basics').setup {
@@ -217,15 +227,13 @@ in
                 require('mini.jump').setup {}
                 require('mini.operators').setup {}
                 require('mini.statusline').setup {
+                  use_icons = enable_icons,
                   set_vim_settings = false,
                 }
                 require('mini.tabline').setup {
+                  show_icons = enable_icons,
                   set_vim_settings = false,
                 }
-
-                local icons = require('mini.icons')
-                icons.setup {}
-                icons.mock_nvim_web_devicons()
 
                 require('mini.surround').setup {
                   mappings = {
