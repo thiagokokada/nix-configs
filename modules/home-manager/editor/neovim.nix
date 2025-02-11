@@ -211,6 +211,7 @@ in
                 local enable_icons = ${toLua cfg.icons.enable}
 
                 require('mini.ai').setup {
+                  -- HACK: not recommended in docs so not sure if safe or not
                   n_lines = 10^7,
                 }
                 require('mini.align').setup {}
@@ -251,8 +252,9 @@ in
                     suffix_last = "",
                     suffix_next = "",
                   },
-                  n_lines = 10^7,
                   search_method = "cover_or_next",
+                  -- HACK: not recommended in docs so not sure if safe or not
+                  n_lines = 10^7,
                 }
                 -- Remap adding surrounding to Visual mode selection
                 vim.keymap.del('x', 'ys')
