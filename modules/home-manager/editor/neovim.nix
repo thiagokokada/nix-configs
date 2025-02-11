@@ -248,15 +248,8 @@ in
                 vim.keymap.set('n', 'yss', 'ys_', { remap = true })
 
                 local hipatterns = require('mini.hipatterns')
-                local hi_words = require('mini.extra').gen_highlighter.words
                 hipatterns.setup({
                   highlighters = {
-                    fixme = hi_words({ 'FIXME' }, 'MiniHipatternsFixme'),
-                    hack = hi_words({ 'HACK' }, 'MiniHipatternsHack'),
-                    todo = hi_words({ 'TODO' }, 'MiniHipatternsTodo'),
-                    note = hi_words({ 'NOTE' }, 'MiniHipatternsNote'),
-                    xxx = hi_words({ 'XXX' }, 'MiniHipatternsFixme'),
-
                     -- Highlight hex color strings (`#rrggbb`) using that color
                     hex_color = hipatterns.gen_highlighter.hex_color(),
                   },
@@ -525,7 +518,7 @@ in
                 -- Setup language servers.
                 -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/configs.md
                 local lspconfig = require("lspconfig")
-                local servers = {
+                local servers_configs = {
                   { "bashls" },
                   { "marksman" },
                   { "nil_ls",
@@ -595,11 +588,17 @@ in
                   { "html" },
                   { "jsonls" },
                 }
-                for _, server in pairs(servers) do
+                local shared_config = {
+                  on_attach = function(client, bufnr)
+                    -- semantic tokens conflicts with treesitter
+                    client.server_capabilities.semanticTokensProvider = nil
+                  end
+                }
+                for _, server in pairs(servers_configs) do
                   local config = lspconfig[server[1]]
 
                   if vim.fn.executable(config.document_config.default_config.cmd[1]) ~= 0 then
-                    config.setup(server["opts"] or {})
+                    config.setup(vim.tbl_deep_extend("force", shared_config, server["opts"] or {}))
                   end
                 end
 
