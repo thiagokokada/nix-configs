@@ -9,13 +9,6 @@
 let
   toLua = lib.generators.toLua { };
   cfg = config.home-manager.editor.neovim;
-  # Custom autocmds for filetypes
-  # { "<pattern>" = "<command>"; }
-  # E.g.: { "*.json" = "set filetype=json"; }
-  customAutocmds = {
-    "flake.lock" = "set filetype=json";
-    "*.md" = "setlocal spell spelllang=en";
-  };
 in
 {
   options.home-manager.editor.neovim = {
@@ -138,17 +131,14 @@ in
             command = "set formatoptions+=oj",
           })
 
-          -- custom autocmds for filetypes
-          ${lib.concatStringsSep "\n" (
-            lib.mapAttrsToList (
-              pattern: command: # lua
-              ''
-                vim.api.nvim_create_autocmd({ "BufNewFile", "BufRead" }, {
-                  pattern = { "${pattern}" },
-                  command = "${command}",
-                })
-              '') customAutocmds
-          )}
+          -- create an autocommand to enable spellcheck for specified file types
+          vim.api.nvim_create_autocmd({ "FileType" }, {
+            pattern = { "text", "plaintex", "typst", "gitcommit", "markdown" },
+            callback = function()
+              vim.opt_local.spell = true
+            end,
+            desc = "Enable spellcheck for defined filetypes",
+          })
         '';
 
       # To install non-packaged plugins, use
@@ -513,6 +503,7 @@ in
                 vim.keymap.set({'n', 'v'}, '<Leader>*', builtin.grep_string, { desc = "Grep string" })
                 vim.keymap.set('n', '<Leader>u', telescope.extensions.undo.undo, { desc = "Undo" })
                 vim.keymap.set('n', '<Leader>p', telescope.extensions.projects.projects, { desc = "Projects" })
+                vim.keymap.set('n', 'z=', builtin.spell_suggest, { desc = "Spell suggest" })
               '';
           }
           project-nvim

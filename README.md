@@ -54,8 +54,8 @@ $ nix flake new --template '.#new-host' # if this is a new hardware
 $ sudo nixos-install --flake /mnt/etc/nixos#hostname
 ```
 
-After installing it succesfully and rebooting, you can uncomment everything and
-trigger a rebuild.
+After installing it successfully and rebooting, you can uncomment everything
+and trigger a rebuild.
 
 #### Remote installations
 
