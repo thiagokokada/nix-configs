@@ -426,6 +426,7 @@ in
               ''
                 local actions = require("telescope.actions")
                 local builtin = require("telescope.builtin")
+                local themes = require("telescope.themes")
                 local telescope = require("telescope")
                 local undo_actions = require("telescope-undo.actions")
                 -- Exclude some patterns from search
@@ -444,23 +445,16 @@ in
                 }
 
                 telescope.setup {
-                  defaults = {
+                  defaults = themes.get_ivy {
+                    preview = {
+                      -- set timeout low enough that it never feels too slow
+                      timeout = 50,
+                    },
                     mappings = {
                       i = {
                         ["<C-j>"] = actions.move_selection_next,
                         ["<C-k>"] = actions.move_selection_previous,
                       },
-                    },
-                    -- ivy-like theme
-                    layout_strategy = 'bottom_pane',
-                    layout_config = {
-                      height = 0.4,
-                    },
-                    border = true,
-                    sorting_strategy = "ascending",
-                    preview = {
-                      -- set timeout low enough that it never feels too slow
-                      timeout = 50,
                     },
                     -- configure to use ripgrep
                     vimgrep_arguments = {
