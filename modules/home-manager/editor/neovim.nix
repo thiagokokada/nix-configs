@@ -93,6 +93,12 @@ in
           vim.keymap.set('t', '<Esc>', [[<C-\><C-n>]])
           vim.keymap.set('t', '<M-[>', [[<C-\><C-n>]])
           vim.keymap.set('t', '<C-v><Esc>', [[<C-\><C-n>]])
+          vim.keymap.set({'i', 'n'}, '<Leader>T', '<cmd>:terminal<CR>')
+          -- disable line numbers in terminal
+          vim.api.nvim_create_autocmd({ "TermOpen" }, {
+            command = "setlocal nonumber",
+            pattern = { "*" },
+          })
 
           -- unsets the 'last search pattern'
           vim.keymap.set('n', '<C-g>', '<cmd>:noh<CR><CR>')
