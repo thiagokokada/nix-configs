@@ -153,8 +153,7 @@ in
       # To install non-packaged plugins, use
       # pkgs.vimUtils.buildVimPlugin { }
       plugins =
-        with pkgs;
-        with vimPlugins;
+        with pkgs.vimPlugins;
         [
           {
             plugin = dial-nvim;
@@ -371,7 +370,45 @@ in
                 vim.cmd.colorscheme("tokyonight-moon")
               '';
           }
-          # telescope
+          {
+            plugin = url-open;
+            type = "lua";
+            config = # lua
+              ''
+                require("url-open").setup {
+                  open_only_when_cursor_on_url = false,
+                  highlight_url = {
+                    cursor_move = { enabled = false, }
+                  }
+                }
+                vim.keymap.set("n", "<Leader>o", function()
+                  vim.cmd("URLOpenUnderCursor")
+                end , { desc = "Open URL under cursor" })
+              '';
+          }
+          {
+            plugin = vim-test;
+            type = "lua";
+            config = # lua
+              ''
+                vim.g["test#strategy"] = "neovim"
+                vim.g["test#neovim#start_normal"] = 1
+                vim.g["test#neovim#term_position"] = "vert botright"
+
+                vim.keymap.set('n', '<Leader>tt', ':TestNearest<CR>', { desc = "Test nearest" })
+                vim.keymap.set('n', '<Leader>tT', ':TestFile<CR>', { desc = "Test file" })
+                vim.keymap.set('n', '<Leader>ts', ':TestSuite<CR>', { desc = "Test suite" })
+                vim.keymap.set('n', '<Leader>tl', ':TestLast<CR>', { desc = "Test last" })
+                vim.keymap.set('n', '<Leader>tv', ':TestVisit<CR>', { desc = "Test visit" })
+              '';
+          }
+          lexima-vim
+          mkdir-nvim
+          vim-advanced-sorters
+          vim-nix
+        ]
+        # telescope
+        ++ [
           {
             plugin = telescope-nvim;
             type = "lua";
@@ -383,6 +420,8 @@ in
                 local undo_actions = require("telescope-undo.actions")
                 -- Exclude some patterns from search
                 local rg_common_args = {
+                  "--hidden", -- Search for hidden files
+
                   "--glob=!**/.git/*",
                   "--glob=!**/.hg/*",
                   "--glob=!**/.svn/*",
@@ -417,7 +456,6 @@ in
                     vimgrep_arguments = {
                       "${lib.getExe pkgs.ripgrep}",
                       "--follow",        -- Follow symbolic links
-                      "--hidden",        -- Search for hidden files
                       "--no-heading",    -- Don't group matches by each file
                       "--with-filename", -- Print the file path with the matched lines
                       "--line-number",   -- Show line numbers
@@ -433,7 +471,6 @@ in
                       find_command = {
                         "${lib.getExe pkgs.ripgrep}",
                         "--files",
-                        "--hidden",
                         unpack(rg_common_args)
                       },
                     },
@@ -457,6 +494,9 @@ in
                     },
                   },
                 }
+
+                require("project_nvim").setup {}
+
                 telescope.load_extension('fzf')
                 telescope.load_extension('projects')
                 telescope.load_extension('ui-select')
@@ -466,57 +506,13 @@ in
                 vim.keymap.set('n', '<Leader>/', builtin.live_grep, { desc = "Live grep" })
                 vim.keymap.set({'n', 'v'}, '<Leader>*', builtin.grep_string, { desc = "Grep string" })
                 vim.keymap.set('n', '<Leader>u', telescope.extensions.undo.undo, { desc = "Undo" })
-              '';
-          }
-          {
-            plugin = project-nvim;
-            type = "lua";
-            config = # lua
-              ''
-                require("project_nvim").setup {}
                 vim.keymap.set('n', '<Leader>p', telescope.extensions.projects.projects, { desc = "Projects" })
               '';
           }
+          project-nvim
           telescope-fzf-native-nvim
           telescope-ui-select-nvim
           telescope-undo-nvim
-          # END telescope
-          {
-            plugin = url-open;
-            type = "lua";
-            config = # lua
-              ''
-                require("url-open").setup {
-                  open_only_when_cursor_on_url = false,
-                  highlight_url = {
-                    cursor_move = { enabled = false, }
-                  }
-                }
-                vim.keymap.set("n", "<Leader>u", function()
-                  vim.cmd("URLOpenUnderCursor")
-                end , { desc = "Open URL under cursor" })
-              '';
-          }
-          {
-            plugin = vim-test;
-            type = "lua";
-            config = # lua
-              ''
-                vim.g["test#strategy"] = "neovim"
-                vim.g["test#neovim#start_normal"] = 1
-                vim.g["test#neovim#term_position"] = "vert botright"
-
-                vim.keymap.set('n', '<Leader>tt', ':TestNearest<CR>', { desc = "Test nearest" })
-                vim.keymap.set('n', '<Leader>tT', ':TestFile<CR>', { desc = "Test file" })
-                vim.keymap.set('n', '<Leader>ts', ':TestSuite<CR>', { desc = "Test suite" })
-                vim.keymap.set('n', '<Leader>tl', ':TestLast<CR>', { desc = "Test last" })
-                vim.keymap.set('n', '<Leader>tv', ':TestVisit<CR>', { desc = "Test visit" })
-              '';
-          }
-          lexima-vim
-          mkdir-nvim
-          vim-advanced-sorters
-          vim-nix
         ]
         ++ lib.optionals cfg.markdownPreview.enable [
           {
