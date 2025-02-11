@@ -124,12 +124,7 @@ in
 
           -- autoindent when starting a new line with 'o' or 'O'
           vim.opt.autoindent = true
-          -- keep comment leader when 'o' or 'O' is used in Normal mode
-          -- remove comment character when joining commented lines
-          vim.api.nvim_create_autocmd({ "FileType" }, {
-            pattern = { "*" },
-            command = "set formatoptions+=oj",
-          })
+          vim.opt.formatoptions:append { o = true, j = true }
 
           -- create an autocommand to enable spellcheck for specified file types
           vim.api.nvim_create_autocmd({ "FileType" }, {
