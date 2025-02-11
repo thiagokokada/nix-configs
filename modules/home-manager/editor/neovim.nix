@@ -621,12 +621,6 @@ in
                   end
                 end
 
-                local builtin = require("telescope.builtin")
-
-                -- Global mappings.
-                -- See `:help vim.diagnostic.*` for documentation on any of the below functions
-                vim.keymap.set('n', '<space>ld', builtin.diagnostics, { desc = "LSP diagnostics" })
-
                 -- https://gist.github.com/RaafatTurki/64d89abf326e9fce6eb717f7c1f8a97e
                 function LspRename()
                   local curr_name = vim.fn.expand("<cword>")
@@ -671,6 +665,7 @@ in
                   end)
                 end
 
+                local builtin = require("telescope.builtin")
                 -- Use LspAttach autocommand to only map the following keys
                 -- after the language server attaches to the current buffer
                 vim.api.nvim_create_autocmd('LspAttach', {
@@ -678,21 +673,16 @@ in
                   callback = function(ev)
                     -- Buffer local mappings.
                     -- See `:help vim.lsp.*` for documentation on any of the below functions
+                    -- or telescope documentation
                     vim.keymap.set('n', 'gD', builtin.lsp_references, { buffer = ev.buf, desc = "LSP references" })
                     vim.keymap.set('n', 'gd', builtin.lsp_definitions, { buffer = ev.buf, desc = "LSP definitions" })
                     vim.keymap.set('n', 'gi', builtin.lsp_implementations, { buffer = ev.buf, desc = "LSP implementations" })
-                    vim.keymap.set('n', '<Leader>ls', vim.lsp.buf.signature_help, { buffer = ev.buf, desc = "LSP signature help" })
-                    vim.keymap.set('n', '<Leader>lwa', vim.lsp.buf.add_workspace_folder, { buffer = ev.buf, desc = "LSP add workspace" })
-                    vim.keymap.set('n', '<Leader>lwr', vim.lsp.buf.remove_workspace_folder, { buffer = ev.buf, desc = "LSP remove workspace" })
-                    vim.keymap.set('n', '<Leader>lwl', function()
-                      print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-                    end, { buffer = ev.buf, desc = "LSP list workspaces" })
+                    vim.keymap.set('n', '<Leader>ld', builtin.diagnostics, { buffer = ev.buf, desc = "LSP diagnostics" })
+                    vim.keymap.set('n', '<Leader>ls', builtin.lsp_document_symbols, { buffer = ev.buf, desc = "LSP document symbols" })
                     vim.keymap.set('n', '<Leader>lt', builtin.lsp_type_definitions, { buffer = ev.buf, desc = "LSP type definitions" })
                     vim.keymap.set('n', '<Leader>lr', LspRename, { buffer = ev.buf, desc = "LSP rename" })
+                    vim.keymap.set('n', '<Leader>lf', function() vim.lsp.buf.format { async = true } end, { buffer = ev.buf, desc = "LSP format" })
                     vim.keymap.set({'n', 'v'}, '<Leader>la', vim.lsp.buf.code_action, { buffer = ev.buf, desc = "LSP code action" })
-                    vim.keymap.set('n', '<Leader>f', function()
-                      vim.lsp.buf.format { async = true }
-                    end, { buffer = ev.buf, desc = "LSP format" })
                   end,
                 })
               '';
