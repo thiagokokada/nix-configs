@@ -750,6 +750,14 @@ in
                 }
               '';
           }
+          {
+            plugin = nvim-ts-autotag;
+            type = "lua";
+            config = # lua
+              ''
+                require("nvim-ts-autotag").setup {}
+              '';
+          }
         ];
     };
 
