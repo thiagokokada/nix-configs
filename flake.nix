@@ -36,7 +36,6 @@
     nix-alien = {
       url = "github:thiagokokada/nix-alien";
       inputs.flake-compat.follows = "flake-compat";
-      inputs.flake-utils.follows = "flake-utils";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
