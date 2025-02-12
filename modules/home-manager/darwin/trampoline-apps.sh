@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 # Utilities not in nixpkgs.
 plutil="/usr/bin/plutil"
 killall="/usr/bin/killall"
@@ -40,12 +42,13 @@ function copy_paths() {
   local paths=("${@:3}")
 
   keys=$(jq -n '$ARGS.positional' --args "${paths[@]}")
-  jqfilter="to_entries |[.[]| select(.key as \$item| \$keys | index(\$item) >= 0) ] | from_entries"
+  # shellcheck disable=SC2016
+  jqfilter='to_entries |[.[]| select(.key as $item| $keys | index($item) >= 0) ] | from_entries'
 
   temp_dir=$(mktemp -d)
   trap 'rm -rf "$temp_dir"' EXIT
 
-  pushd "$temp_dir" >/dev/null
+  pushd "$temp_dir" >/dev/null || return
 
   cp "$from" "orig"
   chmod u+w "orig"
@@ -60,7 +63,7 @@ function copy_paths() {
   $plutil -convert xml1 -- "final"
 
   cp "final" "$to"
-  popd >/dev/null
+  popd >/dev/null || return
 }
 
 function sync_dock() {
@@ -114,9 +117,9 @@ function mktrampoline() {
 }
 
 function sync_trampolines() {
-  [[ ! -d "$1" ]] && echo "Source directory does not exist" && return 1
+  [[ ! -d $1 ]] && echo "Source directory does not exist" && return 1
 
-  if [[ -d "$2" ]]; then
+  if [[ -d $2 ]]; then
     rm -rf "$2"
   fi
   mkdir -p "$2"

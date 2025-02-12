@@ -25,11 +25,11 @@
 
     # helpers
     flake-compat.url = "github:edolstra/flake-compat";
-    flake-parts = {
-      url = "github:hercules-ci/flake-parts";
-      inputs.nixpkgs-lib.follows = "nixpkgs";
-    };
     flake-utils.url = "github:numtide/flake-utils";
+    treefmt-nix = {
+      url = "github:numtide/treefmt-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     # nix-alien
     nix-index-database.follows = "nix-alien/nix-index-database";
@@ -101,6 +101,7 @@
       self,
       nixpkgs,
       flake-utils,
+      treefmt-nix,
       ...
     }@inputs:
     let
@@ -126,6 +127,7 @@
         system:
         let
           inherit (import ./patches { inherit self nixpkgs system; }) pkgs;
+          treefmtEval = treefmt-nix.lib.evalModule pkgs ./treefmt.nix;
         in
         {
           devShells.default = pkgs.mkShell {
@@ -138,8 +140,8 @@
               statix
             ];
           };
-          checks = import ./checks.nix { inherit pkgs; };
-          formatter = pkgs.nixfmt-rfc-style;
+          checks.formatting = treefmtEval.config.build.check self;
+          formatter = treefmtEval.config.build.wrapper;
           legacyPackages = pkgs;
         }
       ))
