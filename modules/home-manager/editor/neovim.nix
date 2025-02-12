@@ -93,7 +93,7 @@ in
           vim.keymap.set('t', '<Esc>', [[<C-\><C-n>]])
           vim.keymap.set('t', '<M-[>', [[<C-\><C-n>]])
           vim.keymap.set('t', '<C-v><Esc>', [[<C-\><C-n>]])
-          vim.keymap.set({'i', 'n'}, '<Leader>T', '<cmd>:terminal<CR>')
+          vim.keymap.set({'i', 'n'}, '<Leader>T', '<cmd>:terminal<CR>', { desc = "Terminal" })
           -- disable line numbers in terminal
           vim.api.nvim_create_autocmd({ "TermOpen" }, {
             command = "setlocal nonumber",
@@ -101,7 +101,7 @@ in
           })
 
           -- unsets the 'last search pattern'
-          vim.keymap.set('n', '<C-g>', '<cmd>:noh<CR><CR>')
+          vim.keymap.set('n', '<C-g>', '<cmd>:noh<CR><CR>', { desc = "Clear highlight" })
 
           -- completion
           vim.keymap.set({'i', 'c'}, '<C-j>', function()
@@ -296,13 +296,16 @@ in
                   },
 
                   clues = {
-                    -- Enhance this by adding descriptions for <Leader> mapping groups
                     miniclue.gen_clues.builtin_completion(),
                     miniclue.gen_clues.g(),
                     miniclue.gen_clues.marks(),
                     miniclue.gen_clues.registers(),
                     miniclue.gen_clues.windows(),
                     miniclue.gen_clues.z(),
+                    { mode = 'n', keys = '<Leader>g', desc = '+Git' },
+                    { mode = 'n', keys = '<Leader>l', desc = '+LSP' },
+                    { mode = 'n', keys = '<Leader>t', desc = '+Test' },
+                    { mode = 'n', keys = '<Leader>w', desc = '+Whitespace' },
                   },
 
                   window = {
@@ -379,7 +382,7 @@ in
                 }
                 vim.keymap.set("n", "<Leader>o", function()
                   vim.cmd("URLOpenUnderCursor")
-                end , { desc = "Open URL under cursor" })
+                end , { desc = "Open URL" })
               '';
           }
           {
@@ -502,7 +505,7 @@ in
                 vim.keymap.set('n', '<Leader>gb', builtin.git_branches, { desc = "Git branches" })
                 vim.keymap.set('n', '<Leader>gs', builtin.git_status, { desc = "Git status" })
                 vim.keymap.set('n', '<Leader>gS', builtin.git_stash, { desc = "Git stash" })
-                vim.keymap.set('n', '<Leader>u', telescope.extensions.undo.undo, { desc = "Undo" })
+                vim.keymap.set('n', '<Leader>u', telescope.extensions.undo.undo, { desc = "Undo history" })
                 vim.keymap.set('n', '<Leader>p', telescope.extensions.projects.projects, { desc = "Projects" })
                 vim.keymap.set('n', 'z=', builtin.spell_suggest, { desc = "Spell suggest" })
               '';
@@ -695,8 +698,8 @@ in
                 vim.o.foldlevelstart = 99
                 vim.o.foldenable = true
 
-                vim.keymap.set('n', 'zR', ufo.openAllFolds)
-                vim.keymap.set('n', 'zM', ufo.closeAllFolds)
+                vim.keymap.set('n', 'zR', ufo.openAllFolds, { desc = "Open all folds" })
+                vim.keymap.set('n', 'zM', ufo.closeAllFolds, { desc = "Close all folds" })
                 ufo.setup {
                   provider_selector = function(bufnr, filetype, buftype)
                     return {'treesitter', 'indent'}
