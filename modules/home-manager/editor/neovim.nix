@@ -595,18 +595,31 @@ in
                     opts = {
                       settings = {
                         ["nixd"] = {
-                          nixpkgs = {
-                            expr = 'import "${flake.inputs.nixpkgs}" { }',
-                          },
                           formatting = {
                             command = { "nixfmt" },
                           },
                           options = {
                             nixos = {
-                              expr = '(let pkgs = import "${flake.inputs.nixpkgs}" { }; in (pkgs.lib.evalModules { modules =  (import "${flake.inputs.nixpkgs}/nixos/modules/module-list.nix") ++ [ ({...}: { nixpkgs.hostPlatform = builtins.currentSystem;} ) ] ; })).options',
+                              expr = [[
+                                (let pkgs = import "${flake.inputs.nixpkgs}" { }; in
+                                  (pkgs.lib.evalModules {
+                                    modules = (import "${flake.inputs.nixpkgs}/nixos/modules/module-list.nix")
+                                      ++ [ ({...}: { nixpkgs.hostPlatform = builtins.currentSystem; }) ];
+                                  })).options
+                              ]],
                             },
                             home_manager = {
-                              expr = '(let pkgs = import "${flake.inputs.nixpkgs}" { }; lib = import "${flake.inputs.home-manager}/modules/lib/stdlib-extended.nix" pkgs.lib; in (lib.evalModules { modules =  (import "${flake.inputs.home-manager}/modules/modules.nix") { inherit lib pkgs; check = false; }; })).options',
+                              expr = [[
+                                (let
+                                  pkgs = import "${flake.inputs.nixpkgs}" { };
+                                  lib = import "${flake.inputs.home-manager}/modules/lib/stdlib-extended.nix" pkgs.lib;
+                                in (lib.evalModules {
+                                  modules =  (import "${flake.inputs.home-manager}/modules/modules.nix") {
+                                    inherit lib pkgs;
+                                    check = false;
+                                  };
+                                })).options
+                              ]],
                             },
                           },
                           diagnostic = {
