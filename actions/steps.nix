@@ -118,7 +118,7 @@ with constants;
   installUbuntuPackages = packages: {
     name = "Install Ubuntu packages: ${builtins.concatStringsSep ", " packages}";
     run = ''
-      DEBIAN_FRONTEND=noninteractive
+      export DEBIAN_FRONTEND=noninteractive
       sudo apt-get update -q -y
       sudo apt-get install -q -y ${toString packages}
     '';

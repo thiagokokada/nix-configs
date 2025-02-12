@@ -15,7 +15,7 @@ in
           pkgs.runCommand name
             {
               buildInputs = with pkgs; [
-                action-validator
+                actionlint
                 yj
               ];
               json = builtins.toJSON (import ../actions/${name}.nix);
@@ -24,7 +24,7 @@ in
             ''
               mkdir -p $out
               yj -jy < "$jsonPath" > $out/${name}.yml
-              action-validator -v $out/${name}.yml
+              actionlint -verbose $out/${name}.yml
             '';
         ghActionsYAMLs = map mkGHActionsYAML names;
       in
