@@ -203,7 +203,7 @@ in
 
                 require('mini.ai').setup {
                   -- HACK: not recommended in docs so not sure if safe or not
-                  n_lines = 10^7,
+                  n_lines = 10^3,
                 }
                 require('mini.align').setup {}
                 require('mini.basics').setup {
@@ -245,7 +245,7 @@ in
                   },
                   search_method = "cover_or_next",
                   -- HACK: not recommended in docs so not sure if safe or not
-                  n_lines = 10^7,
+                  n_lines = 10^3,
                 }
                 -- Remap adding surrounding to Visual mode selection
                 vim.keymap.del('x', 'ys')
