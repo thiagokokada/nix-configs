@@ -27,7 +27,7 @@
         waylandCompositors.sway = {
           prettyName = "Sway";
           comment = "Sway compositor managed by UWSM";
-          binPath = "/etc/profiles/per-user/${config.mainUser.username}/bin/sway";
+          binPath = "/etc/profiles/per-user/${config.meta.username}/bin/sway";
         };
       };
     };

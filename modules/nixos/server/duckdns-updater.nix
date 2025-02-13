@@ -6,7 +6,7 @@
 }:
 
 let
-  inherit (config.mainUser) username;
+  inherit (config.meta) username;
   inherit (config.users.users.${username}) group;
   cfg = config.nixos.server.duckdns-updater;
   httpPort = 80;
@@ -133,7 +133,7 @@ in
       acceptTerms = true;
       certs.${cfg.domain} = {
         inherit group;
-        inherit (config.mainUser) email;
+        inherit (config.meta) email;
         dnsProvider = lib.mkIf (!cfg.certs.useHttpServer) "duckdns";
         credentialsFile = lib.mkIf (!cfg.certs.useHttpServer) cfg.environmentFile;
         listenHTTP = lib.mkIf cfg.certs.useHttpServer ":${toString httpPort}"; # any other port needs to be proxied

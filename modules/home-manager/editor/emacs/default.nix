@@ -10,7 +10,7 @@ let
   inherit (config.home) homeDirectory;
   inherit (config.home.sessionVariables) EMACSDIR;
   inherit (config.programs.emacs) finalPackage;
-  inherit (config.mainUser) username;
+  inherit (config.meta) username;
 in
 {
   options.home-manager.editor.emacs.enable = lib.mkEnableOption "Emacs config" // {

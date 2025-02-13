@@ -20,7 +20,7 @@
   device = {
     type = "desktop";
     net.ifaces = [ "enp2s0f1" ];
-    media.directory = "/mnt/media/${config.mainUser.username}";
+    media.directory = "/mnt/media/${config.meta.username}";
   };
 
   nixos = {
@@ -49,7 +49,7 @@
   boot.loader.efi.canTouchEfiVariables = true;
 
   # Use ultrawide wallpaper
-  home-manager.users.${config.mainUser.username}.home-manager.desktop.theme.wallpaper.path =
+  home-manager.users.${config.meta.username}.home-manager.desktop.theme.wallpaper.path =
     pkgs.wallpapers.hatsune-miku_stylized-ultrawide;
 
   # This value determines the NixOS release with which your system is to be

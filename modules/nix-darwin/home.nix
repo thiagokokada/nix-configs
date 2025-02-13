@@ -9,7 +9,7 @@
 
 let
   cfg = config.nix-darwin.home;
-  inherit (config.mainUser) username;
+  inherit (config.meta) username;
 in
 {
   imports = [ flake.inputs.home-manager.darwinModules.home-manager ];

@@ -6,7 +6,7 @@
 }:
 
 let
-  inherit (config.mainUser) username;
+  inherit (config.meta) username;
 in
 {
   options.nixos.dev.virtualisation.enable = lib.mkEnableOption "virtualisation config" // {

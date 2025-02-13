@@ -2,7 +2,7 @@
 
 let
   cfg = config.nix-darwin.homebrew;
-  inherit (config.mainUser) username;
+  inherit (config.meta) username;
 in
 {
   options.nix-darwin.homebrew = {

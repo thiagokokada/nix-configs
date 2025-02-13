@@ -53,8 +53,8 @@ in
 
       git = {
         enable = true;
-        userName = config.mainUser.fullname;
-        userEmail = config.mainUser.email;
+        userName = config.meta.fullname;
+        userEmail = config.meta.email;
         package =
           with pkgs;
           if cfg.gui.enable then

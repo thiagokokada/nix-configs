@@ -32,7 +32,7 @@ in
     home-manager = {
       useUserPackages = true;
       useGlobalPkgs = true;
-      users.${config.mainUser.username} = {
+      users.${config.meta.username} = {
         imports = [
           ../home-manager
           { targets.genericLinux.enable = false; }
@@ -46,7 +46,7 @@ in
     };
 
     # Define a user account. Don't forget to set a password with ‘passwd’
-    users.users.${config.mainUser.username} = {
+    users.users.${config.meta.username} = {
       isNormalUser = true;
       uid = 1000;
       extraGroups = [

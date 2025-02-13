@@ -189,7 +189,7 @@ in
           libEx = self.outputs.lib;
           osConfig = {
             device.type = deviceType;
-            mainUser.username = username;
+            meta.username = username;
           };
         };
       };
