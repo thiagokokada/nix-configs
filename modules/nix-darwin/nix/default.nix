@@ -27,10 +27,10 @@ in
 
       settings =
         let
-          substituters = import ../../shared/substituters.nix;
+          substituters = import ../../shared/config/substituters.nix;
         in
         lib.mkMerge [
-          (import ../../shared/nix-conf.nix)
+          (import ../../shared/config/nix-conf.nix)
           {
             trusted-users = [
               "root"

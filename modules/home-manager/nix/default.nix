@@ -32,8 +32,8 @@ in
     nix = {
       package = lib.mkDefault pkgs.nix;
       settings = lib.mkMerge [
-        (import ../../shared/nix-conf.nix)
-        (import ../../shared/substituters.nix)
+        (import ../../shared/config/nix-conf.nix)
+        (import ../../shared/config/substituters.nix)
       ];
     };
 
