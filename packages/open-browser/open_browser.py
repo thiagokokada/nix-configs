@@ -48,7 +48,7 @@ def get_url_map(config_path):
         return {}
 
 
-def main(argv = sys.argv):
+def main(argv=sys.argv):
     url = argv[-1]
     url_map = get_url_map(CONFIG_PATH)
     browser = get_browser_for_url(url, url_map)
