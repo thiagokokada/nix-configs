@@ -220,7 +220,6 @@ in
                 require('mini.git').setup {}
                 require('mini.jump').setup {}
                 require('mini.operators').setup {}
-                require('mini.starter').setup {}
                 require('mini.statusline').setup {
                   use_icons = enable_icons,
                   set_vim_settings = false,
