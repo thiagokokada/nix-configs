@@ -601,11 +601,13 @@ in
                           options = {
                             nixos = {
                               expr = [[
-                                (let pkgs = import "${flake.inputs.nixpkgs}" { }; in
-                                  (pkgs.lib.evalModules {
-                                    modules = (import "${flake.inputs.nixpkgs}/nixos/modules/module-list.nix")
-                                      ++ [ ({...}: { nixpkgs.hostPlatform = builtins.currentSystem; }) ];
-                                  })).options
+                                (let
+                                  pkgs = import "${flake.inputs.nixpkgs}" { };
+                                  inherit (pkgs) lib;
+                                in (lib.evalModules {
+                                  modules = (import "${flake.inputs.nixpkgs}/nixos/modules/module-list.nix");
+                                  check = false;
+                                })).options
                               ]],
                             },
                             home_manager = {
