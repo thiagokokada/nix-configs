@@ -29,25 +29,6 @@ in
     enable = lib.mkEnableOption "desktop config" // {
       default = osConfig.nixos.desktop.enable or false;
     };
-    systemd.service = {
-      # Use exponential restart
-      # https://enotty.pipebreaker.pl/posts/2024/01/how-systemd-exponential-restart-delay-works/
-      RestartSec = lib.mkOption {
-        type = lib.types.str;
-        description = "How long to wait between restarts.";
-        default = "250ms";
-      };
-      RestartSteps = lib.mkOption {
-        type = lib.types.int;
-        description = "Number of steps to take to increase the interval of auto-restarts.";
-        default = 5;
-      };
-      RestartMaxDelaySec = lib.mkOption {
-        type = lib.types.str;
-        description = "Longest time to sleep before restarting a service as the interval goes up.";
-        default = "5s";
-      };
-    };
     default = {
       browser = lib.mkOption {
         type = lib.types.str;
@@ -76,9 +57,26 @@ in
 
           Should allow starting programs as parameter.
         '';
-        # TODO: go back to wezterm once this bug is fixed
-        # https://github.com/wez/wezterm/issues/2445
-        default = lib.getExe config.programs.kitty.package;
+        default = lib.getExe config.programs.wezterm.package;
+      };
+    };
+    systemd.service = {
+      # Use exponential restart
+      # https://enotty.pipebreaker.pl/posts/2024/01/how-systemd-exponential-restart-delay-works/
+      RestartSec = lib.mkOption {
+        type = lib.types.str;
+        description = "How long to wait between restarts.";
+        default = "250ms";
+      };
+      RestartSteps = lib.mkOption {
+        type = lib.types.int;
+        description = "Number of steps to take to increase the interval of auto-restarts.";
+        default = 5;
+      };
+      RestartMaxDelaySec = lib.mkOption {
+        type = lib.types.str;
+        description = "Longest time to sleep before restarting a service as the interval goes up.";
+        default = "5s";
       };
     };
   };
