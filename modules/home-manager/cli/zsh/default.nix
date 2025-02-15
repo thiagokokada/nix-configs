@@ -108,9 +108,11 @@ in
         autosuggestion.enable = true;
 
         history = {
+          append = true;
+          expireDuplicatesFirst = true;
+          extended = true;
           ignoreDups = true;
           ignoreSpace = true;
-          expireDuplicatesFirst = true;
           share = true;
         };
 
