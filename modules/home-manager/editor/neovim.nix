@@ -220,6 +220,7 @@ in
                 require('mini.git').setup {}
                 require('mini.jump').setup {}
                 require('mini.operators').setup {}
+                require('mini.starter').setup {}
                 require('mini.statusline').setup {
                   use_icons = enable_icons,
                   set_vim_settings = false,
@@ -252,14 +253,6 @@ in
                 vim.keymap.set('x', 'S', [[:<C-u>lua MiniSurround.add('visual')<CR>]], { silent = true })
                 -- Make special mapping for "add surrounding for line"
                 vim.keymap.set('n', 'yss', 'ys_', { remap = true })
-
-                local hipatterns = require('mini.hipatterns')
-                hipatterns.setup {
-                  highlighters = {
-                    -- Highlight hex color strings (`#rrggbb`) using that color
-                    hex_color = hipatterns.gen_highlighter.hex_color(),
-                  },
-                }
 
                 local miniclue = require('mini.clue')
                 miniclue.setup {
@@ -313,6 +306,14 @@ in
                       width = 'auto',
                     },
                     delay = 300,
+                  },
+                }
+
+                local hipatterns = require('mini.hipatterns')
+                hipatterns.setup {
+                  highlighters = {
+                    -- Highlight hex color strings (`#rrggbb`) using that color
+                    hex_color = hipatterns.gen_highlighter.hex_color(),
                   },
                 }
 
