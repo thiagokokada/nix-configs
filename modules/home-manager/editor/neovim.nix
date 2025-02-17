@@ -70,9 +70,6 @@ in
           -- load .exrc, .nvimrc and .nvim.lua local files
           vim.opt.exrc = true
 
-          -- reduce key timeout
-          vim.o.timeoutlen = 300
-
           -- highlight current line (enabled by mini.basics)
           vim.opt.cursorline = false
 
