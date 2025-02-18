@@ -57,6 +57,7 @@ in
               -- Create a temporary file to pass to vim
               local name = os.tmpname()
               local f = io.open(name, 'w+')
+              if f == nil then return end
               f:write(viewport_text)
               f:flush()
               f:close()
@@ -169,13 +170,13 @@ in
             }
 
             -- cross-platform function to get the path from filename
-            function getPath(str)
+            local function get_path(str)
                 return str:match("(.*[/\\])")
             end
 
             -- load local configuration
-            local local_config, error = loadfile(getPath(wezterm.config_file) .. "local.lua")
-            if error == nil then
+            local local_config, error = loadfile(get_path(wezterm.config_file) .. "local.lua")
+            if local_config and error == nil then
               for k, v in pairs(local_config()) do config[k] = v end
             end
 
