@@ -1,1 +1,1 @@
-{ allowUnfreePredicate = _: true; }
+{ allowUnfree = true; }
