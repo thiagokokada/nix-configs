@@ -141,6 +141,10 @@ in
           ''
             # disable clock
             unset RPROMPT
+
+            # prezto default matching does annoying partial matching
+            # e.g.: something-|.json
+            zstyle ':completion:*' matcher-list 'm:{[:lower:]}={[:upper:]}' 'm:{[:upper:]}={[:lower:]}' 'r:|=* r:|=*'
           '';
 
         prezto = {
