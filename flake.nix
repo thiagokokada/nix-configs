@@ -68,32 +68,6 @@
       url = "github:yazi-rs/flavors";
       flake = false;
     };
-
-    # ZSH plugins
-    zim-completion = {
-      url = "github:zimfw/completion";
-      flake = false;
-    };
-    zim-environment = {
-      url = "github:zimfw/environment";
-      flake = false;
-    };
-    zim-input = {
-      url = "github:zimfw/input";
-      flake = false;
-    };
-    zim-utility = {
-      url = "github:zimfw/utility";
-      flake = false;
-    };
-    zsh-autopair = {
-      url = "github:hlissner/zsh-autopair";
-      flake = false;
-    };
-    zsh-completions = {
-      url = "github:zsh-users/zsh-completions";
-      flake = false;
-    };
   };
 
   outputs =

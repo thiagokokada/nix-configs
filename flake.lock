@@ -280,13 +280,7 @@
         "nixgl": "nixgl",
         "nixpkgs": "nixpkgs",
         "treefmt-nix": "treefmt-nix",
-        "yazi-flavors": "yazi-flavors",
-        "zim-completion": "zim-completion",
-        "zim-environment": "zim-environment",
-        "zim-input": "zim-input",
-        "zim-utility": "zim-utility",
-        "zsh-autopair": "zsh-autopair",
-        "zsh-completions": "zsh-completions"
+        "yazi-flavors": "yazi-flavors"
       }
     },
     "systems": {
@@ -337,102 +331,6 @@
       "original": {
         "owner": "yazi-rs",
         "repo": "flavors",
-        "type": "github"
-      }
-    },
-    "zim-completion": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1729548897,
-        "narHash": "sha256-/UC+tLYInJD+RfTtasWNnOPXES1ucAPhWgY8Zej5NWk=",
-        "owner": "zimfw",
-        "repo": "completion",
-        "rev": "8a73f55e7ab0077ed34bfc3cb4db4e71afb7d952",
-        "type": "github"
-      },
-      "original": {
-        "owner": "zimfw",
-        "repo": "completion",
-        "type": "github"
-      }
-    },
-    "zim-environment": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1638276188,
-        "narHash": "sha256-B8Cki4uCcSce0xewZ91P9wCpA5+x/AlT1IwC+HVs6OI=",
-        "owner": "zimfw",
-        "repo": "environment",
-        "rev": "d4bceaa3da89cd819843334dba1a5bf7dc137e14",
-        "type": "github"
-      },
-      "original": {
-        "owner": "zimfw",
-        "repo": "environment",
-        "type": "github"
-      }
-    },
-    "zim-input": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1691680655,
-        "narHash": "sha256-alS02tiio5hfNviAdJ/uOhoNs4ESr7+dxLaJIY4Os3A=",
-        "owner": "zimfw",
-        "repo": "input",
-        "rev": "b2a8a80071dc781dd1b075a5161d2a0225140916",
-        "type": "github"
-      },
-      "original": {
-        "owner": "zimfw",
-        "repo": "input",
-        "type": "github"
-      }
-    },
-    "zim-utility": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1727793502,
-        "narHash": "sha256-XLuEEviudKNhAA9V0oqVlxvXdtXknoCXQlU2lF9mr1Q=",
-        "owner": "zimfw",
-        "repo": "utility",
-        "rev": "fec84342585d61dff448c786ad4eeb082c450c54",
-        "type": "github"
-      },
-      "original": {
-        "owner": "zimfw",
-        "repo": "utility",
-        "type": "github"
-      }
-    },
-    "zsh-autopair": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1720984677,
-        "narHash": "sha256-3zvOgIi+q7+sTXrT+r/4v98qjeiEL4Wh64rxBYnwJvQ=",
-        "owner": "hlissner",
-        "repo": "zsh-autopair",
-        "rev": "449a7c3d095bc8f3d78cf37b9549f8bb4c383f3d",
-        "type": "github"
-      },
-      "original": {
-        "owner": "hlissner",
-        "repo": "zsh-autopair",
-        "type": "github"
-      }
-    },
-    "zsh-completions": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1739502512,
-        "narHash": "sha256-tl5WWIwWP5DrWy5TtPCoCmZmhfuMneFNdD3d7h6vleg=",
-        "owner": "zsh-users",
-        "repo": "zsh-completions",
-        "rev": "0adf2f053ece56262ad8a173678add97c8ca4042",
-        "type": "github"
-      },
-      "original": {
-        "owner": "zsh-users",
-        "repo": "zsh-completions",
         "type": "github"
       }
     }

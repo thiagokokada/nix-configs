@@ -2,7 +2,6 @@
   config,
   pkgs,
   lib,
-  flake,
   ...
 }:
 
@@ -61,27 +60,6 @@ in
           (run-bg-alias "open" (lib.getExe' xdg-utils "xdg-open"))
         ];
 
-      file =
-        let
-          compileZshConfig =
-            filename:
-            pkgs.runCommand filename
-              {
-                name = "${filename}-zwc";
-                nativeBuildInputs = [ pkgs.zsh ];
-              }
-              ''
-                cp "${config.home.file.${filename}.source}" "${filename}"
-                zsh -c 'zcompile "${filename}"'
-                cp "${filename}.zwc" "$out"
-              '';
-        in
-        {
-          ".zprofile.zwc".source = compileZshConfig ".zprofile";
-          ".zshenv.zwc".source = compileZshConfig ".zshenv";
-          ".zshrc.zwc".source = compileZshConfig ".zshrc";
-        };
-
       sessionPath = [ "$HOME/.local/bin" ];
     };
 
@@ -102,11 +80,6 @@ in
         autocd = true;
         defaultKeymap = "viins";
 
-        # taken care by zim-completion
-        completionInit = "";
-
-        autosuggestion.enable = true;
-
         history = {
           append = true;
           expireDuplicatesFirst = true;
@@ -114,12 +87,6 @@ in
           ignoreDups = true;
           ignoreSpace = true;
           share = true;
-        };
-
-        historySubstringSearch = {
-          enable = true;
-          searchUpKey = [ "$terminfo[kcuu1]" ];
-          searchDownKey = [ "$terminfo[kcud1]" ];
         };
 
         profileExtra = lib.concatStringsSep "\n" (
@@ -154,9 +121,6 @@ in
 
         initExtraBeforeCompInit = # bash
           ''
-            # zimfw config
-            zstyle ':zim:input' double-dot-expand no
-
             # try to correct the spelling of commands
             setopt correct
             # disable C-S/C-Q
@@ -175,72 +139,66 @@ in
           # the program during startup (e.g. `zoxide init zsh`)
           # bash
           ''
-            # pure
-            fpath+=(${pkgs.pure-prompt}/share/zsh/site-functions)
-            source ${pkgs.pure-prompt}/share/zsh/site-functions/prompt_pure_setup
-
-            # nix-your-shell
-            source ${
-              pkgs.runCommand "any-nix-shell-zsh" { buildInputs = [ pkgs.nix-your-shell ]; } ''
-                nix-your-shell --absolute zsh > $out
-              ''
-            }
-
-            # fzf
-            source ${config.programs.fzf.package}/share/fzf/completion.zsh
-            source ${config.programs.fzf.package}/share/fzf/key-bindings.zsh
-
-            # zoxide
-            source ${
-              pkgs.runCommand "zoxide-init-zsh" { buildInputs = [ config.programs.zoxide.package ]; } ''
-                zoxide init zsh > $out
-              ''
-            }
-
-            # zsh-fast-syntax-highlighting
-            source ${pkgs.zsh-fast-syntax-highlighting}/share/zsh/site-functions/fast-syntax-highlighting.plugin.zsh
-
             # disable clock
             unset RPROMPT
-
-            # edit the current command line in $EDITOR
-            bindkey -M vicmd v edit-command-line
-
-            # zsh-history-substring-search
-            # historySubstringSearch.{searchUpKey,searchDownKey} does not work with
-            # vicmd, this is why we have this here
-            bindkey -M vicmd 'k' history-substring-search-up
-            bindkey -M vicmd 'j' history-substring-search-down
           '';
 
-        plugins =
-          let
-            zshCompilePlugin =
-              name: src:
-              pkgs.runCommand name
-                {
-                  name = "${name}-zwc";
-                  nativeBuildInputs = [ pkgs.zsh ];
-                }
-                ''
-                  mkdir $out
-                  cp -rT ${src} $out
-                  cd $out
-                  find -name '*.zsh' -execdir zsh -c 'zcompile {}' \;
-                '';
-            zshPlugin = name: {
-              inherit name;
-              src = zshCompilePlugin name (builtins.getAttr name flake.inputs);
-            };
-            zimPlugin = name: zshPlugin name // { file = "init.zsh"; };
-          in
-          lib.flatten [
-            (zimPlugin "zim-input")
-            (zimPlugin "zim-utility")
-            (zshPlugin "zsh-autopair")
-            (zshPlugin "zsh-completions")
-            (zimPlugin "zim-completion") # needs to be the last one
+        prezto = {
+          enable = true;
+          prompt.theme = "pure";
+          editor.keymap = "vi";
+          pmodules = [
+            "environment"
+            "terminal"
+            "editor"
+            "history-substring-search"
+            "directory"
+            "spectrum"
+            "utility"
+            "completion"
+            "prompt"
+            "autosuggestions"
           ];
+        };
+
+        plugins = with pkgs; [
+          # manually creating integrations since this is faster than calling
+          # the program during startup (e.g. `zoxide init zsh`)
+          {
+            name = "any-nix-shell";
+            src = pkgs.runCommand "any-nix-shell-zsh" { buildInputs = [ pkgs.nix-your-shell ]; } ''
+              mkdir -p $out
+              nix-your-shell --absolute zsh > $out/any-nix-shell.plugin.zsh
+            '';
+          }
+          {
+            name = "fzf";
+            file = "share/fzf/completion.zsh";
+            src = config.programs.fzf.package;
+          }
+          {
+            name = "fzf";
+            file = "share/fzf/key-bindings.zsh";
+            src = config.programs.fzf.package;
+          }
+          {
+            name = "zoxide";
+            src = pkgs.runCommand "zoxide-init-zsh" { buildInputs = [ config.programs.zoxide.package ]; } ''
+              mkdir -p $out
+              zoxide init zsh > $out/zoxide.plugin.zsh
+            '';
+          }
+          {
+            name = "zsh-fast-syntax-highlighting";
+            file = "share/zsh/site-functions/fast-syntax-highlighting.plugin.zsh";
+            src = zsh-fast-syntax-highlighting;
+          }
+          {
+            name = "zsh-autopair";
+            file = "share/zsh/zsh-autopair/autopair.zsh";
+            src = zsh-autopair;
+          }
+        ];
 
         sessionVariables = {
           # Enable scroll support
