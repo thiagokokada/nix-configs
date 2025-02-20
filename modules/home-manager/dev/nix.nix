@@ -19,7 +19,7 @@ in
         "nil"
       ];
       description = "Nix language server.";
-      default = if pkgs.stdenv.isLinux then "nixd" else "nil";
+      default = "nil";
     };
   };
 
