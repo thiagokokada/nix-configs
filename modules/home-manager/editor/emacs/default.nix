@@ -61,7 +61,11 @@ in
 
     systemd.user.services.doom-sync = {
       Unit = {
-        After = [ "network.target" ];
+        After = [
+          "network-online.target"
+          "graphical-session.target"
+        ];
+        PartOf = [ "graphical-session.target" ];
         Description = "Sync doomemacs config";
       };
       Service = with pkgs; {
@@ -91,7 +95,7 @@ in
       '';
       runDoomSync = lib.mkIf pkgs.stdenv.isLinux (
         lib.hm.dag.entryAfter [ "installDoom" ] ''
-          run ${config.systemd.user.systemctlPath} start --user doom-sync.service --no-block --machine=${username}@.host || true
+          run ${config.systemd.user.systemctlPath} start --user doom-sync.service --no-block --machine=${username}@.host
         ''
       );
     };
