@@ -306,9 +306,15 @@ in
                   },
                 }
 
+                local hi_words = require('mini.extra').gen_highlighter.words
                 local hipatterns = require('mini.hipatterns')
                 hipatterns.setup {
                   highlighters = {
+                    fixme = hi_words({ 'FIXME' }, 'MiniHipatternsFixme'),
+                    hack = hi_words({ 'HACK' }, 'MiniHipatternsHack'),
+                    todo = hi_words({ 'TODO' }, 'MiniHipatternsTodo'),
+                    note = hi_words({ 'TODO' }, 'MiniHipatternsNote'),
+                    xxx = hi_words({ 'XXX' }, 'MiniHipatternsFixme'),
                     -- Highlight hex color strings (`#rrggbb`) using that color
                     hex_color = hipatterns.gen_highlighter.hex_color(),
                   },
@@ -629,12 +635,9 @@ in
                   },
                   { "ruff" },
                 }
-                lspconfig.util.default_config = {
-                  on_init = function(client, _bufnr)
-                    -- semantic tokens conflicts with treesitter
-                    client.server_capabilities.semanticTokensProvider = nil
-                  end
-                }
+
+                -- for future use
+                -- lspconfig.util.default_config = {}
                 for _, server in pairs(servers_configs) do
                   local config = lspconfig[server[1]]
 
@@ -642,6 +645,9 @@ in
                     config.setup(server["opts"] or {})
                   end
                 end
+
+                -- conflicts with mini-hipatterns
+                vim.api.nvim_set_hl(0, "@comment.todo", { link = "None" })
 
                 -- https://gist.github.com/RaafatTurki/64d89abf326e9fce6eb717f7c1f8a97e
                 function LspRename()
