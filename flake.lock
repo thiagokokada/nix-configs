@@ -107,11 +107,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1740199282,
-        "narHash": "sha256-QfTSMWQ8Hw1DLGtzkItAteRJmQpGwkseUVyVGhfwGTk=",
+        "lastModified": 1740283128,
+        "narHash": "sha256-R61wtNknWWejnl+K0l4sxu/wnLNFbNe44tNM2zbj5yE=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "e495cd8c805a050d404abcb658cfe8cdaf589990",
+        "rev": "ed030a787938cae01d693ebaad52bbb672a4a69d",
         "type": "github"
       },
       "original": {
@@ -321,11 +321,11 @@
     "yazi-flavors": {
       "flake": false,
       "locked": {
-        "lastModified": 1739610860,
-        "narHash": "sha256-h12BKKmHFfuMOpGx6F7obgofw/NnWBSeKsWY6tIxUUA=",
+        "lastModified": 1740249719,
+        "narHash": "sha256-zE/GT9fYi9H6c7iCtcfk5bpnLkv1u6tn/HcofNYtc0c=",
         "owner": "yazi-rs",
         "repo": "flavors",
-        "rev": "1a419b2e20436155da464e1cd6cd127723938f78",
+        "rev": "df959305aedc6919658ab7c8406a5372760863e5",
         "type": "github"
       },
       "original": {
