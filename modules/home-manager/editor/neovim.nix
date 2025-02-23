@@ -629,8 +629,8 @@ in
                   },
                   { "ruff" },
                 }
-                local shared_config = {
-                  on_attach = function(client, bufnr)
+                lspconfig.util.default_config = {
+                  on_init = function(client, _bufnr)
                     -- semantic tokens conflicts with treesitter
                     client.server_capabilities.semanticTokensProvider = nil
                   end
@@ -639,7 +639,7 @@ in
                   local config = lspconfig[server[1]]
 
                   if vim.fn.executable(config.document_config.default_config.cmd[1]) ~= 0 then
-                    config.setup(vim.tbl_deep_extend("force", shared_config, server["opts"] or {}))
+                    config.setup(server["opts"] or {})
                   end
                 end
 
