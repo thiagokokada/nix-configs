@@ -8,5 +8,11 @@ in
     default = true;
   };
 
-  config = lib.mkIf cfg.enable { security.pam.enableSudoTouchIdAuth = true; };
+  config = lib.mkIf cfg.enable {
+    # To get zsh completion for system packages
+    environment.pathsToLink = [ "/share/zsh" ];
+
+    # Enable sudo via TouchID
+    security.pam.enableSudoTouchIdAuth = true;
+  };
 }
