@@ -10,7 +10,7 @@ let
 in
 {
   imports = [
-    ./fonts.nix
+    ./fonts
     ./gtk.nix
     ./qt.nix
   ];
