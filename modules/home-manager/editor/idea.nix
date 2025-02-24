@@ -7,7 +7,6 @@
 }:
 
 let
-  inherit (flake.inputs) intellimacs;
   cfg = config.home-manager.editor.idea;
 in
 {
@@ -16,26 +15,24 @@ in
   config = lib.mkIf cfg.enable {
     home = {
       file = {
+        ".intellimacs".source = flake.inputs.intellimacs;
         ".ideavimrc".source =
           pkgs.writeText "ideavimrc" # vim
             ''
               " Enable Intellimacs
-              source ${intellimacs}/spacemacs.vim
+              source ~/.intellimacs/spacemacs.vim
 
               " Enable other Intellimacs modules
-              source ${intellimacs}/extra.vim
-              source ${intellimacs}/major.vim
-              source ${intellimacs}/hybrid.vim
-
-              " Enable which-key plugin
-              source ${intellimacs}/which-key.vim
+              source ~/.intellimacs/extra.vim
+              source ~/.intellimacs/major.vim
+              source ~/.intellimacs/hybrid.vim
+              source ~/.intellimacs/which-key.vim
 
               " Comma for major mode
               nmap , <leader>m
               vmap , <leader>m
 
               " Plugins
-              Plug 'justinmk/vim-sneak'
               set commentary
               set easymotion
               set highlightedyank
