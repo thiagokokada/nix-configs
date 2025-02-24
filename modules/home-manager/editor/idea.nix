@@ -46,14 +46,15 @@ in
               let g:highlightedyank_highlight_duration = "300"
 
               " Vinegar-like
-              nmap - :NERDTreeToggle<CR>
+              nnoremap - :NERDTreeToggle<CR>
 
               " Unsets the 'last search pattern'
-              nmap <C-g> :noh<CR>
+              nnoremap <C-g> :noh<CR>
 
-              " Workaround IDEA "eating" the character under cursor
-              map vi" :normal! vi"<CR>
-              map va" :normal! va"<CR>
+              " HACK: Workaround IDEA "eating" the character under cursor
+              " For some reason it is only happening in "
+              nnoremap vi" :normal! vi"<CR>
+              nnoremap va" :normal! va"<CR>
             '';
       };
 
