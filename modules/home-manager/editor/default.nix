@@ -4,7 +4,7 @@
   imports = [
     ./emacs
     ./helix.nix
-    ./jetbrains.nix
+    ./idea.nix
     ./neovim.nix
   ];
 

@@ -98,7 +98,7 @@ in
           })
 
           -- unsets the 'last search pattern'
-          vim.keymap.set('n', '<C-g>', '<cmd>:noh<CR><CR>', { desc = "Clear highlight" })
+          vim.keymap.set('n', '<C-g>', '<cmd>:noh<CR>', { desc = "Clear highlight" })
 
           -- completion
           vim.keymap.set({'i', 'c'}, '<C-j>', function()

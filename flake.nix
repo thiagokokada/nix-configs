@@ -135,7 +135,7 @@
       (lib.mkNixDarwinConfig {
         hostname = "Sekai-MacBook-Pro";
         extraModules = [
-          { nix-darwin.home.extraModules = [ { home-manager.editor.jetbrains.enable = true; } ]; }
+          { nix-darwin.home.extraModules = [ { home-manager.editor.idea.enable = true; } ]; }
         ];
       })
 
