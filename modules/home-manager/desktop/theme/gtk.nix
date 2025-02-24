@@ -11,6 +11,13 @@
   };
 
   config = lib.mkIf config.home-manager.desktop.theme.gtk.enable {
+    home = {
+      packages = with pkgs; [
+        gnome-themes-extra
+        hicolor-icon-theme
+      ];
+    };
+
     gtk = {
       enable = true;
       font = {

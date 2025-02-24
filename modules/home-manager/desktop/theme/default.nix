@@ -46,14 +46,12 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    home = {
-      pointerCursor = {
-        package = pkgs.nordzy-cursor-theme;
-        name = "Nordzy-cursors";
-        size = 24;
-        x11.enable = true;
-        gtk.enable = true;
-      };
+    home.pointerCursor = {
+      package = pkgs.nordzy-cursor-theme;
+      name = "Nordzy-cursors";
+      size = 24;
+      x11.enable = true;
+      gtk.enable = true;
     };
   };
 }

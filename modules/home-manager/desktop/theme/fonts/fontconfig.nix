@@ -60,6 +60,17 @@ in
   };
 
   config = lib.mkIf cfg.enable {
+    # Enable fonts in home.packages to be available to applications
+    fonts.fontconfig = {
+      enable = true;
+      defaultFonts = {
+        monospace = [ "Noto Sans Mono" ];
+        serif = [ "Noto Serif" ];
+        sansSerif = [ "Noto Sans" ];
+        emoji = [ "Noto Color Emoji" ];
+      };
+    };
+
     # https://github.com/GNOME/gsettings-desktop-schemas/blob/8527b47348ce0573694e0e254785e7c0f2150e16/schemas/org.gnome.desktop.interface.gschema.xml.in#L276-L296
     dconf.settings = {
       "org/gnome/desktop/interface" = with cfg; {

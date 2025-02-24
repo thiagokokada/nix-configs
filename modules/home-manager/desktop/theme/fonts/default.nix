@@ -66,25 +66,18 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    # Enable fonts in home.packages to be available to applications
-    fonts.fontconfig.enable = true;
-
     home.packages =
       with pkgs;
       with cfg;
       [
-        dejavu_fonts
-        gnome-themes-extra
         gui.package
-        hack-font
-        hicolor-icon-theme
         icons.package
-        liberation_ttf
+        symbols.package
+        # Noto fonts is a good fallback font
         noto-fonts
         noto-fonts-cjk-sans
         noto-fonts-cjk-serif
         noto-fonts-color-emoji
-        symbols.package
       ];
   };
 }
