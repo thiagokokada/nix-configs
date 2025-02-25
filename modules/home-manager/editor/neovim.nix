@@ -327,6 +327,28 @@ in
               '';
           }
           {
+            plugin = neotest;
+            type = "lua";
+            config = # lua
+              ''
+                local neotest = require("neotest")
+
+                neotest.setup {
+                  adapters = {
+                    require("neotest-go") {},
+                    require("neotest-python") {},
+                  },
+                }
+
+                vim.keymap.set("n", "<Leader>tt", neotest.run.run, { desc = "Test nearest" })
+                vim.keymap.set("n", "<Leader>ta", neotest.run.attach, { desc = "Attach nearest" })
+                vim.keymap.set("n", "<Leader>ts", neotest.run.stop, { desc = "Stop test" })
+                vim.keymap.set("n", "<Leader>tT", function() neotest.run.run(vim.fn.expand("%")) end, { desc = "Test file" })
+              '';
+          }
+          neotest-python
+          neotest-go
+          {
             plugin = oil-nvim;
             type = "lua";
             config = # lua
@@ -387,22 +409,6 @@ in
                 vim.keymap.set("n", "<Leader>o", function()
                   vim.cmd("URLOpenUnderCursor")
                 end , { desc = "Open URL" })
-              '';
-          }
-          {
-            plugin = vim-test;
-            type = "lua";
-            config = # lua
-              ''
-                vim.g["test#strategy"] = "neovim"
-                vim.g["test#neovim#start_normal"] = 1
-                vim.g["test#neovim#term_position"] = "vert botright"
-
-                vim.keymap.set('n', '<Leader>tt', ':TestNearest<CR>', { desc = "Test nearest" })
-                vim.keymap.set('n', '<Leader>tT', ':TestFile<CR>', { desc = "Test file" })
-                vim.keymap.set('n', '<Leader>ts', ':TestSuite<CR>', { desc = "Test suite" })
-                vim.keymap.set('n', '<Leader>tl', ':TestLast<CR>', { desc = "Test last" })
-                vim.keymap.set('n', '<Leader>tv', ':TestVisit<CR>', { desc = "Test visit" })
               '';
           }
           lexima-vim
