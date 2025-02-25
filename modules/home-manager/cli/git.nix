@@ -119,25 +119,31 @@ in
 
         includes = [ { path = "~/.config/git/local"; } ];
 
+        # https://blog.gitbutler.com/how-git-core-devs-configure-git/
         extraConfig = {
-          init = {
-            defaultBranch = "main";
-          };
-          branch = {
-            sort = "-committerdate";
-          };
-          color = {
-            ui = true;
-          };
-          commit = {
-            verbose = true;
-          };
+          init.defaultBranch = "main";
+          branch.sort = "-committerdate";
+          color.ui = true;
+          column.ui = "auto";
+          commit.verbose = true;
           core = {
             editor = "nvim";
+            fsmonitor = true;
+            untrackedCache = true;
             whitespace = "trailing-space,space-before-tab,indent-with-non-tab";
           };
           checkout = {
             defaultRemote = "origin";
+          };
+          diff = {
+            algorithm = "histogram";
+            colorMoved = "plain";
+            mnemonicPrefix = true;
+            renames = true;
+          };
+          fetch = {
+            prune = true;
+            pruneTags = true;
           };
           github = {
             user = "thiagokokada";
@@ -146,15 +152,20 @@ in
             conflictstyle = "zdiff3";
             tool = "nvim -d";
           };
-          pull = {
-            rebase = true;
-          };
+          pull.rebase = true;
           push = {
             autoSetupRemote = true;
+            followTags = true;
             default = "simple";
           };
           rebase = {
+            autoSquash = true;
             autoStash = true;
+            updateRefs = true;
+          };
+          rerere = {
+            enabled = true;
+            autoupdate = true;
           };
           tag.sort = "-version:refname";
         };
