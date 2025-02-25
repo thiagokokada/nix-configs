@@ -14,8 +14,6 @@ outputs.lib.recursiveMergeAttrs [
       src = inputs.arandr;
     });
 
-    anime4k = prev.callPackage ../packages/anime4k { };
-
     inherit (inputs.home-manager.packages.${prev.system}) home-manager;
 
     open-browser = prev.callPackage ../packages/open-browser { };
