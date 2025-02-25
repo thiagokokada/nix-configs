@@ -58,7 +58,14 @@ in
             '';
       };
 
-      packages = with pkgs; [ jetbrains.idea-community ];
+      packages = with pkgs.jetbrains; [
+        idea-community-bin
+        # TODO: https://github.com/NixOS/nixpkgs/pull/384811
+        # (plugins.addPlugins idea-community-bin [
+        #   "ideavim"
+        #   "nixidea"
+        # ])
+      ];
     };
   };
 }
