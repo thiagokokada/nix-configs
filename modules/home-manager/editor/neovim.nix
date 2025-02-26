@@ -19,9 +19,6 @@ in
     icons.enable = lib.mkEnableOption "icons" // {
       default = config.home-manager.desktop.enable || config.home-manager.darwin.enable;
     };
-    markdownPreview.enable = lib.mkEnableOption "markdown-preview.nvim" // {
-      default = config.home-manager.desktop.enable || config.home-manager.darwin.enable;
-    };
     lsp.enable = lib.mkEnableOption "LSP" // {
       default = config.home-manager.dev.enable;
     };
@@ -51,7 +48,7 @@ in
       defaultEditor = true;
 
       withRuby = false;
-      withNodeJs = cfg.markdownPreview.enable;
+      withNodeJs = false;
       withPython3 = false;
 
       viAlias = true;
@@ -136,6 +133,35 @@ in
               vim.opt_local.spell = true
             end,
             desc = "Enable spellcheck for defined filetypes",
+          })
+
+          local function preview_markdown()
+            local file = vim.fn.expand("%")
+            local on_exit_cb = function(out)
+              print("Process gh-markdown-preview exited with code:", out.code)
+            end
+            local process = vim.system(
+              {"${lib.getExe pkgs.gh-markdown-preview}", file},
+              on_exit_cb
+            )
+
+            vim.api.nvim_create_autocmd({ "BufUnload", "BufDelete" }, {
+              buffer = vim.api.nvim_get_current_buf(),
+              callback = function()
+                process:kill("sigterm")
+                -- timeout (in ms), will call KILL upon timeout
+                process:wait(500)
+              end,
+            })
+          end
+
+          vim.api.nvim_create_autocmd({ "FileType" }, {
+            pattern = { "markdown" },
+            callback = function()
+              vim.keymap.set("n", "<Leader>P", preview_markdown, {
+                desc = "Markdown preview", buffer = true
+              })
+            end,
           })
         '';
 
@@ -446,16 +472,6 @@ in
           mkdir-nvim
           vim-advanced-sorters
           vim-nix
-        ]
-        ++ lib.optionals cfg.markdownPreview.enable [
-          {
-            plugin = markdown-preview-nvim;
-            type = "lua";
-            config = # lua
-              ''
-                vim.keymap.set("n", "<Leader>P", "<Plug>MarkdownPreviewToggle", { desc = "Markdown Preview toggle" })
-              '';
-          }
         ]
         ++ lib.optionals cfg.lsp.enable [
           {
