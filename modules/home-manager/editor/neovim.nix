@@ -207,9 +207,14 @@ in
             type = "lua";
             config = # lua
               ''
+                local enable_icons = ${toLua cfg.icons.enable}
                 local fzf = require("fzf-lua")
                 fzf.setup {
                   "telescope",
+                  defaults = {
+                    file_icons = enable_icons,
+                    git_icons = enable_icons,
+                  },
                   winopts = {
                     height = 0.4,
                     width = 1.0,
