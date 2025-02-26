@@ -177,6 +177,37 @@ in
               '';
           }
           {
+            plugin = fzf-lua;
+            type = "lua";
+            config = # lua
+              ''
+                local fzf = require("fzf-lua")
+                fzf.setup {
+                  "telescope",
+                  winopts = {
+                    height = 0.4,
+                    width = 1.0,
+                    row = 1.0,
+                  },
+                  fzf_opts = {
+                    ["--layout"] = "reverse",
+                  },
+                }
+
+                vim.keymap.set("n", "<Leader><Leader>", fzf.files, { desc = "Find files" })
+                vim.keymap.set("n", "<Leader>/", fzf.live_grep, { desc = "Live grep" })
+                vim.keymap.set("n", "<Leader>*", fzf.grep_cword, { desc = "Grep word under cursor" })
+                vim.keymap.set("n", "<Leader>b", fzf.buffers, { desc = "Buffers" })
+                vim.keymap.set("n", "<Leader>c", fzf.commands, { desc = "Commands" })
+                vim.keymap.set("n", "<Leader>gc", fzf.git_commits, { desc = "Git commits" })
+                vim.keymap.set("n", "<Leader>gC", fzf.git_bcommits, { desc = "Git buffer commits" })
+                vim.keymap.set("n", "<Leader>gb", fzf.git_branches, { desc = "Git branches" })
+                vim.keymap.set("n", "<Leader>gs", fzf.git_status, { desc = "Git status" })
+                vim.keymap.set("n", "<Leader>gS", fzf.git_stash, { desc = "Git stash" })
+                vim.keymap.set("n", "z=", fzf.spell_suggest, { desc = "Spell suggest" })
+              '';
+          }
+          {
             plugin = guess-indent-nvim;
             type = "lua";
             config = # lua
@@ -416,115 +447,6 @@ in
           vim-advanced-sorters
           vim-nix
         ]
-        # telescope
-        ++ [
-          {
-            plugin = telescope-nvim;
-            type = "lua";
-            config = # lua
-              ''
-                local actions = require("telescope.actions")
-                local builtin = require("telescope.builtin")
-                local themes = require("telescope.themes")
-                local telescope = require("telescope")
-                local undo_actions = require("telescope-undo.actions")
-                -- Exclude some patterns from search
-                local rg_common_args = {
-                  "--hidden", -- Search for hidden files
-
-                  "--glob=!**/.git/*",
-                  "--glob=!**/.hg/*",
-                  "--glob=!**/.svn/*",
-                  "--glob=!**/.bzr/*",
-
-                  "--glob=!**/.DS_Store/*",
-                  "--glob=!**/node_modules/*",
-                  "--glob=!**/.idea/*",
-                  "--glob=!**/.vscode/*",
-                }
-
-                telescope.setup {
-                  defaults = themes.get_ivy {
-                    preview = {
-                      -- set timeout low enough that it never feels too slow
-                      timeout = 50,
-                    },
-                    mappings = {
-                      i = {
-                        ["<C-j>"] = actions.move_selection_next,
-                        ["<C-k>"] = actions.move_selection_previous,
-                      },
-                    },
-                    -- configure to use ripgrep
-                    vimgrep_arguments = {
-                      "${lib.getExe pkgs.ripgrep}",
-                      "--follow",        -- Follow symbolic links
-                      "--no-heading",    -- Don't group matches by each file
-                      "--with-filename", -- Print the file path with the matched lines
-                      "--line-number",   -- Show line numbers
-                      "--column",        -- Show column numbers
-                      "--smart-case",    -- Smart case search
-                      unpack(rg_common_args)
-                    },
-                  },
-                  pickers = {
-                    find_files = {
-                      -- needed to exclude some files & dirs from general search
-                      -- when not included or specified in .gitignore
-                      find_command = {
-                        "${lib.getExe pkgs.ripgrep}",
-                        "--files",
-                        unpack(rg_common_args)
-                      },
-                    },
-                  },
-                  extensions = {
-                    undo = {
-                      mappings = {
-                        i = {
-                          ["<cr>"] = undo_actions.restore,
-                          ["<S-cr>"] = undo_actions.yank_deletions,
-                          ["<C-cr>"] = undo_actions.yank_additions,
-                          ["<C-y>"] = undo_actions.yank_deletions,
-                          ["<C-r>"] = undo_actions.restore,
-                        },
-                        n = {
-                          ["u"] = undo_actions.restore,
-                          ["y"] = undo_actions.yank_additions,
-                          ["Y"] = undo_actions.yank_deletions,
-                        },
-                      },
-                    },
-                  },
-                }
-
-                require("project_nvim").setup {}
-
-                telescope.load_extension('fzf')
-                telescope.load_extension('projects')
-                telescope.load_extension('ui-select')
-                telescope.load_extension('undo')
-
-                vim.keymap.set('n', '<Leader><Leader>', builtin.find_files, { desc = "Find files" })
-                vim.keymap.set('n', '<Leader>/', builtin.live_grep, { desc = "Live grep" })
-                vim.keymap.set({'n', 'v'}, '<Leader>*', builtin.grep_string, { desc = "Grep string" })
-                vim.keymap.set('n', '<Leader>b', builtin.buffers, { desc = "Buffers" })
-                vim.keymap.set('n', '<Leader>c', builtin.commands, { desc = "Commands" })
-                vim.keymap.set('n', '<Leader>gc', builtin.git_commits, { desc = "Git commits" })
-                vim.keymap.set('n', '<Leader>gC', builtin.git_bcommits, { desc = "Git buffer commits" })
-                vim.keymap.set('n', '<Leader>gb', builtin.git_branches, { desc = "Git branches" })
-                vim.keymap.set('n', '<Leader>gs', builtin.git_status, { desc = "Git status" })
-                vim.keymap.set('n', '<Leader>gS', builtin.git_stash, { desc = "Git stash" })
-                vim.keymap.set('n', '<Leader>u', telescope.extensions.undo.undo, { desc = "Undo history" })
-                vim.keymap.set('n', '<Leader>p', telescope.extensions.projects.projects, { desc = "Projects" })
-                vim.keymap.set('n', 'z=', builtin.spell_suggest, { desc = "Spell suggest" })
-              '';
-          }
-          project-nvim
-          telescope-fzf-native-nvim
-          telescope-ui-select-nvim
-          telescope-undo-nvim
-        ]
         ++ lib.optionals cfg.markdownPreview.enable [
           {
             plugin = markdown-preview-nvim;
@@ -699,24 +621,24 @@ in
                   end)
                 end
 
-                local builtin = require("telescope.builtin")
+                local fzf = require("fzf-lua")
                 -- Use LspAttach autocommand to only map the following keys
                 -- after the language server attaches to the current buffer
-                vim.api.nvim_create_autocmd('LspAttach', {
-                  group = vim.api.nvim_create_augroup('UserLspConfig', {}),
+                vim.api.nvim_create_autocmd("LspAttach", {
+                  group = vim.api.nvim_create_augroup("UserLspConfig", {}),
                   callback = function(ev)
                     -- Buffer local mappings.
                     -- See `:help vim.lsp.*` for documentation on any of the below functions
-                    -- or telescope documentation
-                    vim.keymap.set('n', 'gD', builtin.lsp_references, { buffer = ev.buf, desc = "LSP references" })
-                    vim.keymap.set('n', 'gd', builtin.lsp_definitions, { buffer = ev.buf, desc = "LSP definitions" })
-                    vim.keymap.set('n', 'gi', builtin.lsp_implementations, { buffer = ev.buf, desc = "LSP implementations" })
-                    vim.keymap.set('n', '<Leader>ld', builtin.diagnostics, { buffer = ev.buf, desc = "LSP diagnostics" })
-                    vim.keymap.set('n', '<Leader>ls', builtin.lsp_document_symbols, { buffer = ev.buf, desc = "LSP document symbols" })
-                    vim.keymap.set('n', '<Leader>lt', builtin.lsp_type_definitions, { buffer = ev.buf, desc = "LSP type definitions" })
-                    vim.keymap.set('n', '<Leader>lr', LspRename, { buffer = ev.buf, desc = "LSP rename" })
-                    vim.keymap.set('n', '<Leader>lf', function() vim.lsp.buf.format { async = true } end, { buffer = ev.buf, desc = "LSP format" })
-                    vim.keymap.set({'n', 'v'}, '<Leader>la', vim.lsp.buf.code_action, { buffer = ev.buf, desc = "LSP code action" })
+                    -- or fzf-lua documentation
+                    vim.keymap.set("n", "gD", fzf.lsp_references, { desc = "LSP references" })
+                    vim.keymap.set("n", "gd", fzf.lsp_definitions, { desc = "LSP definitions" })
+                    vim.keymap.set("n", "gi", fzf.lsp_implementations, { desc = "LSP implementations" })
+                    vim.keymap.set("n", "<Leader>ld", fzf.diagnostics_document, { desc = "LSP document diagnostics" })
+                    vim.keymap.set("n", "<Leader>ls", fzf.lsp_document_symbols, { desc = "LSP document symbols" })
+                    vim.keymap.set("n", "<Leader>lt", fzf.lsp_typedefs, { desc = "LSP type definitions" })
+                    vim.keymap.set("n", "<Leader>lr", LspRename, { desc = "LSP rename" })
+                    vim.keymap.set("n", "<Leader>lf", function() vim.lsp.buf.format { async = true } end, { desc = "LSP format" })
+                    vim.keymap.set("n", "<Leader>la", fzf.lsp_code_actions, { desc = "LSP code action" })
                   end,
                 })
               '';
