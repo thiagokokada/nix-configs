@@ -57,7 +57,7 @@ in
 
           Should allow starting programs as parameter.
         '';
-        default = lib.getExe config.programs.wezterm.package;
+        default = "${lib.getExe config.programs.wezterm.package} start";
       };
     };
     systemd.service = {
