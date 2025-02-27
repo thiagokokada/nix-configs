@@ -16,6 +16,8 @@ outputs.lib.recursiveMergeAttrs [
 
     inherit (inputs.home-manager.packages.${prev.system}) home-manager;
 
+    inherit (inputs.gh-gfm-preview.packages.${prev.system}) gh-gfm-preview;
+
     open-browser = prev.callPackage ../packages/open-browser { };
 
     neovim-standalone =

@@ -85,6 +85,29 @@
         "type": "github"
       }
     },
+    "gh-gfm-preview": {
+      "inputs": {
+        "flake-compat": [
+          "flake-compat"
+        ],
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1740657918,
+        "narHash": "sha256-YkLeESrI457tzDESWIA7Xu6BLyClMoqm71JummOexGo=",
+        "owner": "thiagokokada",
+        "repo": "gh-gfm-preview",
+        "rev": "71ef31cb785bc20a257e841770076335407f81f8",
+        "type": "github"
+      },
+      "original": {
+        "owner": "thiagokokada",
+        "repo": "gh-gfm-preview",
+        "type": "github"
+      }
+    },
     "hardware": {
       "locked": {
         "lastModified": 1740089251,
@@ -267,6 +290,7 @@
         "doomemacs": "doomemacs",
         "flake-compat": "flake-compat",
         "flake-utils": "flake-utils",
+        "gh-gfm-preview": "gh-gfm-preview",
         "hardware": "hardware",
         "home-manager": "home-manager",
         "hyprland-go": "hyprland-go",

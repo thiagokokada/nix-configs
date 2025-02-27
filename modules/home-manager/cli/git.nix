@@ -39,7 +39,7 @@ in
         inherit (cfg.gh) enable;
         extensions = with pkgs; [
           gh-dash
-          gh-markdown-preview
+          gh-gfm-preview
         ];
         settings = {
           git_protocol = "ssh";

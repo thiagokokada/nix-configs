@@ -141,7 +141,7 @@ in
               print("Process gh-markdown-preview exited with code:", out.code)
             end
             local process = vim.system(
-              {"${lib.getExe pkgs.gh-markdown-preview}", file},
+              {"${lib.getExe pkgs.gh-gfm-preview}", file},
               on_exit_cb
             )
 

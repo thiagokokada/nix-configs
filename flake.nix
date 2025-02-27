@@ -39,6 +39,13 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # gh
+    gh-gfm-preview = {
+      url = "github:thiagokokada/gh-gfm-preview";
+      inputs.flake-compat.follows = "flake-compat";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     # emacs
     doomemacs = {
       url = "github:doomemacs/doomemacs";
