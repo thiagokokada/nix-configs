@@ -158,7 +158,6 @@ in
             "history-substring-search"
             "directory"
             "spectrum"
-            "utility"
             "completion"
             "prompt"
             "autosuggestions"
