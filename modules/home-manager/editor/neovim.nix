@@ -138,7 +138,7 @@ in
           local function preview_markdown()
             local file = vim.fn.expand("%")
             local on_exit_cb = function(out)
-              print("Process gh-markdown-preview exited with code:", out.code)
+              print("Markdown preview process exited with code:", out.code)
             end
             local process = vim.system(
               {"${lib.getExe pkgs.gh-gfm-preview}", file},
