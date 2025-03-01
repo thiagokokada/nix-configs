@@ -129,7 +129,6 @@ in
           commit.verbose = true;
           core = {
             editor = "nvim";
-            fsmonitor = true;
             untrackedCache = true;
             whitespace = "trailing-space,space-before-tab,indent-with-non-tab";
           };
