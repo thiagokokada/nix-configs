@@ -13,6 +13,6 @@ in
     environment.pathsToLink = [ "/share/zsh" ];
 
     # Enable sudo via TouchID
-    security.pam.enableSudoTouchIdAuth = true;
+    security.pam.services.sudo_local.touchIdAuth = true;
   };
 }
