@@ -168,6 +168,7 @@ in
             autoupdate = true;
           };
           tag.sort = "-version:refname";
+          safe.bareRepository = "explicit";
         };
       };
 
