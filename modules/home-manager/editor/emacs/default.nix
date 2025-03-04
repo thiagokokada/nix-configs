@@ -45,9 +45,9 @@ in
       package =
         with pkgs;
         if stdenv.isDarwin then
-          emacs29
+          emacs
         else
-          emacs29-pgtk.overrideAttrs (old: {
+          emacs-pgtk.overrideAttrs (old: {
             patches = (old.patches or [ ]) ++ [ ./disable_pgtk_display_x_warning.patch ];
           });
       extraPackages =
