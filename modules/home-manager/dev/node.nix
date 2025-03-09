@@ -22,11 +22,15 @@ in
       ];
 
       sessionPath = [ "${homeDirectory}/.npm-packages/bin" ];
-      sessionVariables = rec {
-        NPM_PACKAGES = "${homeDirectory}/.npm-packages";
-        NODE_PATH = "${NPM_PACKAGES}/lib/node_modules:$NODE_PATH";
-        MANPATH = "${NPM_PACKAGES}/share/man:$MANPATH";
-      };
+      sessionVariables.NPM_PACKAGES = "${homeDirectory}/.npm-packages";
+      sessionSearchVariables =
+        let
+          inherit (config.home.sessionVariables) NPM_PACKAGES;
+        in
+        {
+          NODE_PATH = [ "${NPM_PACKAGES}/lib/node_modules" ];
+          MANPATH = [ "${NPM_PACKAGES}/share/man" ];
+        };
     };
   };
 }

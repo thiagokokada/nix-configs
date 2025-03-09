@@ -61,6 +61,7 @@ in
         ];
 
       sessionPath = [ "$HOME/.local/bin" ];
+      sessionSearchVariables.MANPATH = lib.mkAfter [ ":" ];
     };
 
     programs = {
