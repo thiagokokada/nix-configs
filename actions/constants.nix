@@ -24,7 +24,6 @@
   nixos.hostnames = [
     "hachune-nixos"
     "miku-nixos"
-    "mirai-nixos"
     "sankyuu-nixos"
   ];
 }
