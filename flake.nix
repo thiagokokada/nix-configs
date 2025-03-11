@@ -148,17 +148,6 @@
 
       # Home-Manager configs
       (lib.mkHomeConfig {
-        hostname = "home-linux-desktop";
-        extraModules = [
-          {
-            home-manager = {
-              desktop.enable = true;
-              dev.enable = true;
-            };
-          }
-        ];
-      })
-      (lib.mkHomeConfig {
         hostname = "home-linux";
         extraModules = [ { home-manager.dev.enable = true; } ];
       })
@@ -177,6 +166,10 @@
       (lib.mkHomeConfig {
         hostname = "steamdeck";
         username = "deck";
+      })
+      (lib.mkHomeConfig {
+        hostname = "droid";
+        system = "aarch64-linux";
       })
       (lib.mkHomeConfig {
         hostname = "penguin";
