@@ -17,7 +17,6 @@
   ];
 
   nixos = {
-    dev.enable = true;
     games.enable = true;
     server = {
       plex.enable = true;

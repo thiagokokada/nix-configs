@@ -43,7 +43,6 @@
   };
 
   nixos = {
-    dev.enable = true;
     games = {
       enable = true;
       gpu = "amd";

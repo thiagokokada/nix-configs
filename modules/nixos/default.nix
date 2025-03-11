@@ -4,7 +4,6 @@
   imports = [
     ../shared
     ./desktop
-    ./dev
     ./games
     ./home.nix
     ./laptop

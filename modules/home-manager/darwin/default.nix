@@ -23,7 +23,6 @@ in
 
   config = lib.mkIf cfg.enable {
     home-manager = {
-      dev.enable = true;
       desktop = {
         # mpv.enable = true;
         wezterm = {

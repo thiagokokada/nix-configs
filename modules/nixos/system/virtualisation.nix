@@ -7,13 +7,14 @@
 
 let
   inherit (config.meta) username;
+  cfg = config.nixos.system.virtualisation;
 in
 {
-  options.nixos.dev.virtualisation.enable = lib.mkEnableOption "virtualisation config" // {
-    default = config.nixos.dev.enable;
+  options.nixos.system.virtualisation.enable = lib.mkEnableOption "virtualisation config" // {
+    default = config.nixos.system.enable;
   };
 
-  config = lib.mkIf config.nixos.dev.virtualisation.enable {
+  config = lib.mkIf cfg.enable {
     environment.systemPackages = with pkgs; [
       distrobox
       gnome-boxes

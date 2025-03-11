@@ -15,6 +15,7 @@ in
     ./cli.nix
     ./smart.nix
     ./vm.nix
+    ./virtualisation.nix
   ];
 
   options.nixos.system = {

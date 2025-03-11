@@ -24,9 +24,8 @@
   };
 
   nixos = {
-    dev.enable = true;
-    dev.virtualisation.enable = false;
     laptop.tlp.enable = true;
+    system.virtualisation.enable = false;
     server = {
       enable = true;
       iperf3.enable = true;
