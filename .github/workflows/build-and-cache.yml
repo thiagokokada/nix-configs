@@ -24,11 +24,11 @@ jobs:
         run: |-
           nix build --print-build-logs '.#homeConfigurations.home-linux.activationPackage'
           nix build --print-build-logs '.#homeConfigurations.steamdeck.activationPackage'
-      - name: 'Build NixOS configs for: hachune-nixos, miku-nixos, sankyuu-nixos'
+      - name: 'Build NixOS configs for: hachune-nixos, sankyuu-nixos, zachune-nixos'
         run: |-
           nix build --print-build-logs '.#nixosConfigurations.hachune-nixos.config.system.build.toplevel'
-          nix build --print-build-logs '.#nixosConfigurations.miku-nixos.config.system.build.toplevel'
           nix build --print-build-logs '.#nixosConfigurations.sankyuu-nixos.config.system.build.toplevel'
+          nix build --print-build-logs '.#nixosConfigurations.zachune-nixos.config.system.build.toplevel'
   build-macos:
     runs-on: macos-latest
     steps:

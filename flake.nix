@@ -129,7 +129,6 @@
 
       # NixOS configs
       (lib.mkNixOSConfig { hostname = "hachune-nixos"; })
-      (lib.mkNixOSConfig { hostname = "miku-nixos"; })
       (lib.mkNixOSConfig { hostname = "sankyuu-nixos"; })
       (lib.mkNixOSConfig {
         hostname = "zatsune-nixos";
