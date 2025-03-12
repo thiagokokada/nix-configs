@@ -16,6 +16,7 @@
     programs = {
       ssh = {
         enable = true;
+        package = with pkgs; lib.mkIf stdenv.isLinux openssh;
         addKeysToAgent = "yes";
         compression = true;
         forwardAgent = true;
