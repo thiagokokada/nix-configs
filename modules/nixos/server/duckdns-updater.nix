@@ -9,7 +9,7 @@ let
   inherit (config.meta) username;
   inherit (config.users.users.${username}) group;
   cfg = config.nixos.server.duckdns-updater;
-  httpPort = 80;
+  httpPort = 80; # any other port needs to be proxied
 in
 {
   options.nixos.server.duckdns-updater = {
@@ -63,29 +63,33 @@ in
         iproute2
       ];
       script =
-        lib.optionalString cfg.ipv6.enable ''
-          readonly ipv6addr="$(ip addr show dev '${cfg.ipv6.iface}' | \
-          sed -e's/^.*inet6 \([^ ]*\)\/.*$/\1/;t;d' | \
-          grep -v '^fd' | \
-          grep -v '^fe80' | \
-          head -1)"
+        lib.optionalString cfg.ipv6.enable
+          # bash
+          ''
+            readonly ipv6addr="$(ip addr show dev '${cfg.ipv6.iface}' | \
+            sed -e's/^.*inet6 \([^ ]*\)\/.*$/\1/;t;d' | \
+            grep -v '^fd' | \
+            grep -v '^fe80' | \
+            head -1)"
 
-          echo "Got IPv6: $ipv6addr"
-        ''
-        + ''
-          readonly curl_out="$(printf \
-          'url="https://www.duckdns.org/update?domains=%s&token=%s&ip=&ipv6=%s"' \
-          '${cfg.domain}' "$DUCKDNS_TOKEN" "''${ipv6addr:-}" \
-          | curl --silent --config -)"
+            echo "Got IPv6: $ipv6addr"
+          ''
+        +
+          # bash
+          ''
+            readonly curl_out="$(printf \
+            'url="https://www.duckdns.org/update?domains=%s&token=%s&ip=&ipv6=%s"' \
+            '${cfg.domain}' "$DUCKDNS_TOKEN" "''${ipv6addr:-}" \
+            | curl --silent --config -)"
 
-          echo "DuckDNS response: $curl_out"
-          if [ "$curl_out" == "OK" ]; then
-            >&2 echo "Domain updated successfully: ${cfg.domain}"
-          else
-            >&2 echo "Error while updating domain: ${cfg.domain}"
-            exit 1
-          fi
-        '';
+            echo "DuckDNS response: $curl_out"
+            if [ "$curl_out" == "OK" ]; then
+              >&2 echo "Domain updated successfully: ${cfg.domain}"
+            else
+              >&2 echo "Error while updating domain: ${cfg.domain}"
+              exit 1
+            fi
+          '';
 
       serviceConfig = {
         CapabilityBoundingSet = "";
@@ -104,11 +108,15 @@ in
         ProtectKernelTunables = true;
         ProtectProc = "invisible";
         ProtectSystem = "strict";
-        RestrictAddressFamilies = [
-          "AF_UNIX"
-          "AF_INET"
-          "AF_INET6"
-        ] ++ lib.optionals cfg.ipv6.enable [ "AF_NETLINK" ];
+        RestrictAddressFamilies =
+          [
+            "AF_UNIX"
+            "AF_INET"
+          ]
+          ++ lib.optionals cfg.ipv6.enable [
+            "AF_INET6"
+            "AF_NETLINK"
+          ];
         RestrictNamespaces = true;
         RestrictRealtime = true;
         SystemCallArchitectures = "native";
@@ -136,7 +144,7 @@ in
         inherit (config.meta) email;
         dnsProvider = lib.mkIf (!cfg.certs.useHttpServer) "duckdns";
         credentialsFile = lib.mkIf (!cfg.certs.useHttpServer) cfg.environmentFile;
-        listenHTTP = lib.mkIf cfg.certs.useHttpServer ":${toString httpPort}"; # any other port needs to be proxied
+        listenHTTP = lib.mkIf cfg.certs.useHttpServer ":${toString httpPort}";
         postRun = ''
           ${lib.getBin pkgs.openssl}/bin/openssl pkcs12 -export -out bundle.pfx -inkey key.pem -in cert.pem -passout pass:
           chown 'acme:${group}' bundle.pfx
