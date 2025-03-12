@@ -163,6 +163,7 @@
       })
       (lib.mkHomeConfig {
         hostname = "droid";
+        username = "droid";
         system = "aarch64-linux";
       })
       (lib.mkHomeConfig {
