@@ -29,7 +29,6 @@
     server = {
       enable = true;
       iperf3.enable = true;
-      jellyfin.enable = true;
       networkd.enable = true;
       plex.enable = true;
       rtorrent.enable = true;
