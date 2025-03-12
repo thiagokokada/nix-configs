@@ -32,6 +32,7 @@
       networkd.enable = true;
       plex.enable = true;
       rtorrent.enable = true;
+      samba.enable = true;
       ssh.enable = true;
       tailscale.enable = true;
       duckdns-updater = {
