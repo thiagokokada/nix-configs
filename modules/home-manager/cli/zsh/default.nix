@@ -136,8 +136,6 @@ in
           '';
 
         initExtra =
-          # manually creating integrations since this is faster than calling
-          # the program during startup (e.g. `zoxide init zsh`)
           # bash
           ''
             # disable clock
@@ -170,10 +168,10 @@ in
           # manually creating integrations since this is faster than calling
           # the program during startup (e.g. `zoxide init zsh`)
           {
-            name = "any-nix-shell";
-            src = pkgs.runCommand "any-nix-shell-zsh" { buildInputs = [ pkgs.nix-your-shell ]; } ''
+            name = "nix-your-shell";
+            src = pkgs.runCommand "nix-your-shell" { buildInputs = [ pkgs.nix-your-shell ]; } ''
               mkdir -p $out
-              nix-your-shell --absolute zsh > $out/any-nix-shell.plugin.zsh
+              nix-your-shell --absolute zsh > $out/nix-your-shell.plugin.zsh
             '';
           }
           {
