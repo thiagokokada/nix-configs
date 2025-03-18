@@ -389,6 +389,16 @@ in
               '';
           }
           {
+            plugin = neogit;
+            type = "lua";
+            config = # lua
+              ''
+                local neogit = require('neogit')
+                neogit.setup {}
+                vim.keymap.set("n", "<Leader>gg", neogit.open, { desc = "Neogit" })
+              '';
+          }
+          {
             plugin = neotest;
             type = "lua";
             config = # lua
