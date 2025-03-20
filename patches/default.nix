@@ -1,16 +1,16 @@
 {
   self,
-  nixpkgs,
   system,
   ...
 }:
 let
+  inherit (self.inputs) nixpkgs;
   args = {
     inherit system;
     config.allowUnfree = true;
     overlays = [ self.overlays.default ];
   };
-  pkgs = import nixpkgs args;
+  pkgs = nixpkgs.legacyPackages.${system};
   patches = pkgs.callPackage ./patches.nix { };
 in
 if patches != [ ] then
@@ -29,5 +29,6 @@ if patches != [ ] then
 else
   {
     patched = false;
-    inherit nixpkgs pkgs;
+    pkgs = import nixpkgs args;
+    inherit nixpkgs;
   }

@@ -107,7 +107,7 @@
       (flake-utils.lib.eachDefaultSystem (
         system:
         let
-          inherit (import ./patches { inherit self nixpkgs system; }) pkgs;
+          inherit (import ./patches { inherit self system; }) pkgs;
           treefmtEval = treefmt-nix.lib.evalModule pkgs ./treefmt.nix;
         in
         {
