@@ -119,6 +119,7 @@ in
         tab_bar_edge = "top";
         tab_bar_style = "powerline";
         tab_powerline_style = "slanted";
+        tab_title_template = "{fmt.fg.red}{bell_symbol}{activity_symbol}{fmt.fg.tab}{tab.last_focused_progress_percent}{index}:{title[:30]}";
 
         # Misc
         inherit (config.home-manager.desktop.default) editor;
