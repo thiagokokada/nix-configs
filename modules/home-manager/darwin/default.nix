@@ -25,6 +25,11 @@ in
     home-manager = {
       desktop = {
         # mpv.enable = true;
+        kitty = {
+          enable = true;
+          fontSize = 14.0;
+          opacity = 1.0;
+        };
         wezterm = {
           enable = true;
           fullscreenOnStartup = false;

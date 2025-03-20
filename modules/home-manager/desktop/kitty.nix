@@ -5,24 +5,38 @@
   ...
 }:
 
+let
+  inherit (config.home-manager.desktop.theme) colors fonts;
+  cfg = config.home-manager.desktop.kitty;
+in
 {
-  options.home-manager.desktop.kitty.enable = lib.mkEnableOption "Kitty config" // {
-    default = config.home-manager.desktop.enable;
+  options.home-manager.desktop.kitty = {
+    enable = lib.mkEnableOption "Kitty config" // {
+      default = config.home-manager.desktop.enable;
+    };
+    fontSize = lib.mkOption {
+      type = lib.types.float;
+      description = "Font size.";
+      default = 12.0;
+    };
+    opacity = lib.mkOption {
+      type = lib.types.float;
+      description = "Background opacity.";
+      default = 0.95;
+    };
   };
 
-  config = lib.mkIf config.home-manager.desktop.kitty.enable {
+  config = lib.mkIf cfg.enable {
     programs.kitty = {
       enable = true;
       keybindings = {
         "ctrl+shift+0" = "change_font_size all 0";
       };
       font = {
-        inherit (config.home-manager.desktop.theme.fonts.symbols) package name;
+        inherit (fonts.symbols) package name;
+        size = cfg.fontSize;
       };
-      settings = with config.home-manager.desktop.theme.colors; {
-        # Font
-        font_size = "12.0";
-
+      settings = with colors; {
         # Colors
         foreground = base05;
         background = base00;
@@ -69,15 +83,28 @@
         window_alert_on_bell = true;
         bell_on_tab = true;
 
+        # Tabs
+        tab_bar_edge = "top";
+        tab_bar_style = "powerline";
+        tab_powerline_style = "slanted";
+
         # Misc
         inherit (config.home-manager.desktop.default) editor;
         strip_trailing_spaces = "smart";
         clipboard_control = "write-clipboard write-primary read-clipboard read-primary";
-        background_opacity = "0.9";
+        background_opacity = toString cfg.opacity;
+        window_padding_width = 5;
 
         # Fix for Wayland slow scrolling
         touch_scroll_multiplier = "5.0";
       };
+
+      darwinLaunchOptions = [
+        "--single-instance"
+        (lib.getExe config.programs.zsh.package)
+      ];
+
+      shellIntegration.mode = "enabled";
     };
 
     programs.zsh.initExtra =
