@@ -20,7 +20,6 @@ in
     ./nixgl.nix
     ./theme
     ./wayland
-    ./wezterm.nix
     ./x11
     ./xterm.nix
   ];
@@ -57,7 +56,7 @@ in
 
           Should allow starting programs as parameter.
         '';
-        default = "${lib.getExe config.programs.wezterm.package} start";
+        default = lib.getExe config.programs.kitty.package;
       };
     };
     systemd.service = {

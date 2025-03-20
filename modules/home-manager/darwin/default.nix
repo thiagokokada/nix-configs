@@ -30,12 +30,6 @@ in
           fontSize = 14.0;
           opacity = 1.0;
         };
-        wezterm = {
-          enable = true;
-          fullscreenOnStartup = false;
-          fontSize = 14.0;
-          opacity = 1.0;
-        };
       };
     };
 
