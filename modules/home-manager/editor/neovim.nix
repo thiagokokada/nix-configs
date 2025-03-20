@@ -497,7 +497,12 @@ in
             type = "lua";
             config = # lua
               ''
-                require("kitty-scrollback").setup {}
+                require("kitty-scrollback").setup {
+                  status_window = {
+                    autoclose = true,
+                    show_timer = true,
+                  },
+                }
               '';
           }
         ]
