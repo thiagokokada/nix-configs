@@ -32,6 +32,9 @@ in
   config = lib.mkIf cfg.enable {
     programs.kitty = {
       enable = true;
+      actionAliases = {
+        "kitty_scrollback_nvim" = "kitten ${pkgs.kitty-scrollback-nvim}/python/kitty_scrollback_nvim.py";
+      };
       keybindings =
         {
           "kitty_mod+t" = "new_tab_with_cwd";
@@ -46,6 +49,8 @@ in
           "kitty_mod+7" = "goto_tab 7";
           "kitty_mod+8" = "goto_tab 8";
           "kitty_mod+9" = "goto_tab 9";
+          "kitty_mod+h" = "kitty_scrollback_nvim";
+          "kitty_mode+g" = "kitty_scrollback_nvim --config ksb_builtin_last_cmd_output";
         }
         // lib.optionalAttrs cfg.useSuperKeybindings {
           "super+t" = "new_tab_with_cwd";
@@ -121,6 +126,8 @@ in
         clipboard_control = "write-clipboard write-primary read-clipboard read-primary";
         background_opacity = toString cfg.opacity;
         window_padding_width = 5;
+        allow_remote_control = "socket-only";
+        listen_on = "unix:/tmp/kitty";
 
         # Fix for Wayland slow scrolling
         touch_scroll_multiplier = "5.0";

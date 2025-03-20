@@ -491,6 +491,16 @@ in
           vim-advanced-sorters
           vim-nix
         ]
+        ++ lib.optionals config.home-manager.desktop.kitty.enable [
+          {
+            plugin = pkgs.kitty-scrollback-nvim;
+            type = "lua";
+            config = # lua
+              ''
+                require("kitty-scrollback").setup {}
+              '';
+          }
+        ]
         ++ lib.optionals cfg.lsp.enable [
           {
             plugin = nvim-lspconfig;
