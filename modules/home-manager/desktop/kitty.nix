@@ -139,7 +139,7 @@ in
         listen_on = "unix:/tmp/kitty";
 
         # Fix for Wayland slow scrolling
-        touch_scroll_multiplier = "5.0";
+        touch_scroll_multiplier = lib.optionalString pkgs.stdenv.isLinux "5.0";
       };
 
       darwinLaunchOptions = [
