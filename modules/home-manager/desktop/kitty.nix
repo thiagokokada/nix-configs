@@ -14,6 +14,9 @@ in
     enable = lib.mkEnableOption "Kitty config" // {
       default = config.home-manager.desktop.enable;
     };
+    useSuperKeybindings = lib.mkEnableOption "keybindings with Super/Command" // {
+      default = pkgs.stdenv.isDarwin;
+    };
     fontSize = lib.mkOption {
       type = lib.types.float;
       description = "Font size.";
@@ -29,20 +32,34 @@ in
   config = lib.mkIf cfg.enable {
     programs.kitty = {
       enable = true;
-      keybindings = {
-        "ctrl+shift+t" = "new_tab_with_cwd";
-        "ctrl+shift+enter" = "new_window_with_cwd";
-        "ctrl+shift+0" = "change_font_size all 0";
-        "ctrl+shift+1" = "goto_tab 1";
-        "ctrl+shift+2" = "goto_tab 2";
-        "ctrl+shift+3" = "goto_tab 3";
-        "ctrl+shift+4" = "goto_tab 4";
-        "ctrl+shift+5" = "goto_tab 5";
-        "ctrl+shift+6" = "goto_tab 6";
-        "ctrl+shift+7" = "goto_tab 7";
-        "ctrl+shift+8" = "goto_tab 8";
-        "ctrl+shift+9" = "goto_tab 9";
-      };
+      keybindings =
+        {
+          "kitty_mod+t" = "new_tab_with_cwd";
+          "kitty_mod+enter" = "new_window_with_cwd";
+          "kitty_mod+0" = "change_font_size all 0";
+          "kitty_mod+1" = "goto_tab 1";
+          "kitty_mod+2" = "goto_tab 2";
+          "kitty_mod+3" = "goto_tab 3";
+          "kitty_mod+4" = "goto_tab 4";
+          "kitty_mod+5" = "goto_tab 5";
+          "kitty_mod+6" = "goto_tab 6";
+          "kitty_mod+7" = "goto_tab 7";
+          "kitty_mod+8" = "goto_tab 8";
+          "kitty_mod+9" = "goto_tab 9";
+        }
+        // lib.optionalAttrs cfg.useSuperKeybindings {
+          "super+t" = "new_tab_with_cwd";
+          "super+enter" = "new_window_with_cwd";
+          "super+1" = "goto_tab 1";
+          "super+2" = "goto_tab 2";
+          "super+3" = "goto_tab 3";
+          "super+4" = "goto_tab 4";
+          "super+5" = "goto_tab 5";
+          "super+6" = "goto_tab 6";
+          "super+7" = "goto_tab 7";
+          "super+8" = "goto_tab 8";
+          "super+9" = "goto_tab 9";
+        };
       font = {
         inherit (fonts.symbols) package name;
         size = cfg.fontSize;
@@ -81,7 +98,6 @@ in
 
         # Scrollback
         scrollback_lines = 10000;
-        scrollback_pager = "${lib.getExe pkgs.page} -f";
 
         # Reduce lag
         sync_to_monitor = false;
