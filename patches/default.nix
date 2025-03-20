@@ -7,7 +7,7 @@ let
   inherit (self.inputs) nixpkgs;
   args = {
     inherit system;
-    config.allowUnfree = true;
+    config = import ../modules/shared/config/nixpkgs.nix;
     overlays = [ self.overlays.default ];
   };
   pkgs = nixpkgs.legacyPackages.${system};

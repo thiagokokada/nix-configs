@@ -32,7 +32,7 @@ in
     nix = {
       package = lib.mkDefault pkgs.nix;
       settings = lib.mkMerge [
-        (import ../../shared/config/nix-conf.nix)
+        (import ../../shared/config/nix.nix)
         (import ../../shared/config/substituters.nix)
       ];
     };

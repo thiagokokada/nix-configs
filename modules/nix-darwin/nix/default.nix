@@ -30,7 +30,7 @@ in
           substituters = import ../../shared/config/substituters.nix;
         in
         lib.mkMerge [
-          (import ../../shared/config/nix-conf.nix)
+          (import ../../shared/config/nix.nix)
           {
             trusted-users = [
               "root"
@@ -45,7 +45,6 @@ in
         ];
     };
 
-    # Enable unfree packages
-    nixpkgs.config.allowUnfree = true;
+    nixpkgs.config = import ../../shared/config/nixpkgs.nix;
   };
 }
