@@ -50,6 +50,8 @@ in
 
   config = lib.mkIf cfg.enable {
     home = {
+      # disable login banner
+      file.".hushlogin".text = "";
       packages =
         with pkgs;
         [
