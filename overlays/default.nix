@@ -4,7 +4,7 @@ final: prev:
 let
   inherit (flake) outputs inputs;
 in
-outputs.lib.recursiveMergeAttrs [
+outputs.lib.recursiveMergeAttrsList [
   {
     # namespaces
     libEx = outputs.lib;

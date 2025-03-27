@@ -88,7 +88,7 @@
     let
       lib = import ./lib inputs;
     in
-    lib.recursiveMergeAttrs [
+    lib.recursiveMergeAttrsList [
       {
         inherit lib;
         templates = {
@@ -192,7 +192,7 @@
         "validate-flakes"
       ])
 
-    ]; # END recursiveMergeAttrs
+    ]; # END recursiveMergeAttrsList
 
   nixConfig = {
     extra-substituters = [
