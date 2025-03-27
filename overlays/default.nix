@@ -20,18 +20,6 @@ outputs.lib.recursiveMergeAttrs [
 
     open-browser = prev.callPackage ../packages/open-browser { };
 
-    kitty-scrollback-nvim = prev.vimUtils.buildVimPlugin rec {
-      pname = "kitty-scrollback.nvim";
-      version = "6.2.2";
-
-      src = prev.fetchFromGitHub {
-        owner = "mikesmithgh";
-        repo = "kitty-scrollback.nvim";
-        rev = "v${version}";
-        hash = "sha256-0OPNHWR/qCbMKDQE6Pbt0Ew9QCm2ZSeZq4s9OL2rj04=";
-      };
-    };
-
     neovim-standalone =
       let
         hostname = "neovim";

@@ -37,7 +37,7 @@ in
       enable = true;
       actionAliases = {
         "kitty_scrollback_nvim" =
-          lib.optionalString cfg.scrollback-nvim.enable "kitten ${pkgs.kitty-scrollback-nvim}/python/kitty_scrollback_nvim.py";
+          lib.optionalString cfg.scrollback-nvim.enable "kitten ${pkgs.vimPlugins.kitty-scrollback-nvim}/python/kitty_scrollback_nvim.py";
       };
       keybindings =
         {

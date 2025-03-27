@@ -493,7 +493,7 @@ in
         ]
         ++ lib.optionals config.home-manager.desktop.kitty.enable [
           {
-            plugin = pkgs.kitty-scrollback-nvim;
+            plugin = kitty-scrollback-nvim;
             type = "lua";
             config = # lua
               ''
