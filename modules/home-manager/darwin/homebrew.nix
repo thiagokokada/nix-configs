@@ -29,8 +29,10 @@ in
               export HOMEBREW_PREFIX="${cfg.prefix}"
               export HOMEBREW_CELLAR="${cfg.prefix}/Cellar"
               export HOMEBREW_REPOSITORY="${cfg.prefix}"
-              fpath+=("${cfg.prefix}/share/zsh/site-functions")
+              fpath[1,0]="${cfg.prefix}/share/zsh/site-functions"
               export PATH="${cfg.prefix}/bin:${cfg.prefix}/sbin:$PATH"
+              [ -z "''${MANPATH-}" ] || export MANPATH=":''${MANPATH#:}";
+              export INFOPATH="${cfg.prefix}/share/info:''${INFOPATH:-}"
             fi
           '';
     };
