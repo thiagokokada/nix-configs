@@ -63,9 +63,7 @@ in
                   "sway/mode"
                 ]
                 ++ [ "wlr/taskbar" ];
-              modules-center =
-                lib.optionals hyprlandCfg.enable [ "hyprland/window" ]
-                ++ lib.optionals swayCfg.enable [ "sway/window" ];
+              modules-center = [ "clock" ];
               modules-right =
                 lib.pipe
                   [
@@ -73,12 +71,11 @@ in
                     "memory"
                     "cpu#load"
                     "temperature"
-                    "custom/dunst"
-                    "idle_inhibitor"
                     (lib.optionalString cfg.backlight.enable "backlight")
                     (lib.optionalString cfg.battery.enable "battery")
                     "wireplumber"
-                    "clock"
+                    "custom/dunst"
+                    "idle_inhibitor"
                     "tray"
                   ]
                   [
@@ -111,19 +108,7 @@ in
                 "on-scroll-down" = "${hyprctl} dispatch workspace e-1";
               };
               "hyprland/submap".tooltip = lib.mkIf hyprlandCfg.enable false;
-              "hyprland/window" = lib.mkIf hyprlandCfg.enable {
-                inherit icon-size;
-                max-length = 50;
-                separate-outputs = true;
-                icon = true;
-              };
               "sway/mode".tooltip = lib.mkIf swayCfg.enable false;
-              "sway/window" = lib.mkIf swayCfg.enable {
-                inherit icon-size;
-                max-length = 50;
-                separate-outputs = true;
-                icon = true;
-              };
               "sway/workspaces".disable-scroll-wraparound = lib.mkIf swayCfg.enable true;
               "wlr/taskbar" = {
                 inherit icon-size;
@@ -140,24 +125,21 @@ in
                 };
                 tooltip = false;
               };
-              network =
-                let
-                  bandwidthFormat = " {bandwidthUpBytes}  {bandwidthDownBytes}";
-                in
-                {
-                  inherit (cfg) interval;
-                  format = "󰈀";
-                  format-wifi = "{icon} ${bandwidthFormat}";
-                  format-ethernet = "󰈀 ${bandwidthFormat}";
-                  format-disconnected = "󰤮";
-                  format-icons = [
-                    "󰤯"
-                    "󰤟"
-                    "󰤢"
-                    "󰤥"
-                    "󰤨"
-                  ];
-                };
+              network = {
+                inherit (cfg) interval;
+                format = "󰈀";
+                format-wifi = "{icon} {bandwidthDownBytes}";
+                format-ethernet = "󰈀 {bandwidthDownBytes}";
+                format-disconnected = "󰤮";
+                format-icons = [
+                  "󰤯"
+                  "󰤟"
+                  "󰤢"
+                  "󰤥"
+                  "󰤨"
+                ];
+                tooltip-format = "Download: {bandwidthDownBytes}\nUpload: {bandwidthUpBytes}";
+              };
             }
             // {
               memory = {
@@ -277,7 +259,7 @@ in
               };
               clock = {
                 inherit (cfg) interval;
-                format = " {:%H:%M, %a %d} ";
+                format = "{:%H:%M, %a %d}";
                 tooltip-format = "<tt><small>{calendar}</small></tt>";
                 calendar = {
                   mode = "year";
