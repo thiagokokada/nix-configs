@@ -118,7 +118,8 @@ in
                 deactivated = "";
                 activated = "";
               };
-              tooltip = false;
+              tooltip-format-activated = "Caffeine enabled";
+              tooltip-format-deactivated = "Caffeine disabled";
             };
             network = {
               inherit (cfg) interval;
@@ -207,16 +208,18 @@ in
                         fi
                         if [ "$PAUSED" == 'false' ]; then
                           CLASS="enabled"
+                          TOOLTIP="Dunst enabled"
                           TEXT="$ENABLED"
                         else
                           CLASS="disabled"
+                          TOOLTIP="Dunst disabled"
                           TEXT="$DISABLED"
                           COUNT="$(dunstctl count waiting)"
                           if [ "$COUNT" != '0' ]; then
                             TEXT="$DISABLED ($COUNT)"
                           fi
                         fi
-                        printf '{"text": "%s", "class": "%s"}\n' "$TEXT" "$CLASS"
+                        printf '{"text": "%s", "class": "%s", "tooltip": "%s"}\n' "$TEXT" "$CLASS" "$TOOLTIP"
                       done
                   '';
                 }
@@ -224,7 +227,6 @@ in
               on-click = "${dunstctl} set-paused toggle";
               restart-interval = 1;
               return-type = "json";
-              tooltip = false;
             };
             "custom/separator" = {
               format = "|";
