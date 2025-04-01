@@ -127,9 +127,9 @@ in
               };
               network = {
                 inherit (cfg) interval;
-                format = "󰈀";
-                format-wifi = "{icon} {bandwidthDownBytes}";
-                format-ethernet = "󰈀 {bandwidthDownBytes}";
+                format = "󰈀 {bandwidthTotalBytes}";
+                format-wifi = "{icon} {bandwidthTotalBytes}";
+                format-ethernet = "󰈀 {bandwidthTotalBytes}";
                 format-disconnected = "󰤮";
                 format-icons = [
                   "󰤯"
@@ -138,7 +138,25 @@ in
                   "󰤥"
                   "󰤨"
                 ];
-                tooltip-format = "Download: {bandwidthDownBytes}\nUpload: {bandwidthUpBytes}";
+                tooltip-format = lib.concatStringsSep "\n" [
+                  "Interface: {ifname}"
+                  "IP: {ipaddr}"
+                  "Gateway: {gwaddr}"
+                  "Netmask: {netmask}"
+                  "Download: {bandwidthDownBytes}"
+                  "Upload: {bandwidthUpBytes}"
+                ];
+                tooltip-format-wifi = lib.concatStringsSep "\n" [
+                  "Interface: {ifname}"
+                  "IP: {ipaddr}"
+                  "Gateway: {gwaddr}"
+                  "Netmask: {netmask}"
+                  "SSID: {essid}"
+                  "Signal: {signaldBm} dBm"
+                  "Frequency: {frequency} GHz"
+                  "Download: {bandwidthDownBytes}"
+                  "Upload: {bandwidthUpBytes}"
+                ];
               };
             }
             // {
