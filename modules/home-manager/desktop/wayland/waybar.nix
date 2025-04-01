@@ -1,7 +1,6 @@
 {
   pkgs,
   lib,
-  libEx,
   config,
   ...
 }:
@@ -14,8 +13,6 @@ let
   dunstctl = lib.getExe' pkgs.dunst "dunstctl";
   hyprctl = lib.getExe' config.wayland.windowManager.hyprland.finalPackage "hyprctl";
   pamixer = lib.getExe pkgs.pamixer;
-
-  shortPathName = path: "disk#${libEx.shortPathWithSep "_" path}";
 in
 {
   options.home-manager.desktop.wayland.waybar = {
@@ -32,11 +29,6 @@ in
     };
     battery.enable = lib.mkEnableOption "battery block" // {
       default = config.device.type == "laptop";
-    };
-    mount.points = lib.mkOption {
-      type = with lib.types; listOf path;
-      description = "Disks to show in disk block.";
-      default = config.device.mount.points;
     };
   };
 
@@ -55,30 +47,39 @@ in
           height = 28;
         in
         {
-          top-bar =
+          top =
             {
               inherit height;
               layer = "top";
               position = "top";
               spacing = 3;
               modules-left =
+                lib.optionals hyprlandCfg.enable [
+                  "hyprland/workspaces"
+                  "hyprland/submap"
+                ]
+                ++ lib.optionals swayCfg.enable [
+                  "sway/workspaces"
+                  "sway/mode"
+                ]
+                ++ [ "wlr/taskbar" ];
+              modules-center =
                 lib.optionals hyprlandCfg.enable [ "hyprland/window" ]
                 ++ lib.optionals swayCfg.enable [ "sway/window" ];
               modules-right =
                 lib.pipe
                   [
                     "network"
-                    (map shortPathName cfg.mount.points)
                     "memory"
-                    "cpu#usage"
-                    "temperature"
                     "cpu#load"
+                    "temperature"
                     "custom/dunst"
                     "idle_inhibitor"
                     (lib.optionalString cfg.backlight.enable "backlight")
                     (lib.optionalString cfg.battery.enable "battery")
                     "wireplumber"
                     "clock"
+                    "tray"
                   ]
                   [
                     # Flatten lists
@@ -92,14 +93,43 @@ in
                     ]))
                     lib.init
                   ];
-              "hyprland/window" = {
+              "hyprland/workspaces" = lib.mkIf hyprlandCfg.enable {
+                format = "{name}: {icon}";
+                format-icons = {
+                  "1" = " ";
+                  "2" = " ";
+                  "3" = " ";
+                  "4" = " ";
+                  "5" = " ";
+                  "6" = " ";
+                  "7" = " ";
+                  "8" = " ";
+                  "9" = " ";
+                  "10" = " ";
+                };
+                "on-scroll-up" = "${hyprctl} dispatch workspace e+1";
+                "on-scroll-down" = "${hyprctl} dispatch workspace e-1";
+              };
+              "hyprland/submap".tooltip = lib.mkIf hyprlandCfg.enable false;
+              "hyprland/window" = lib.mkIf hyprlandCfg.enable {
                 inherit icon-size;
+                max-length = 50;
                 separate-outputs = true;
                 icon = true;
               };
-              "sway/window" = {
+              "sway/mode".tooltip = lib.mkIf swayCfg.enable false;
+              "sway/window" = lib.mkIf swayCfg.enable {
                 inherit icon-size;
+                max-length = 50;
                 separate-outputs = true;
+                icon = true;
+              };
+              "sway/workspaces".disable-scroll-wraparound = lib.mkIf swayCfg.enable true;
+              "wlr/taskbar" = {
+                inherit icon-size;
+                format = "{icon}";
+                on-click = "activate";
+                on-click-middle = "close";
                 icon = true;
               };
               idle_inhibitor = {
@@ -117,7 +147,7 @@ in
                 {
                   inherit (cfg) interval;
                   format = "󰈀";
-                  format-wifi = "{icon} {essid} ${bandwidthFormat}";
+                  format-wifi = "{icon} ${bandwidthFormat}";
                   format-ethernet = "󰈀 ${bandwidthFormat}";
                   format-disconnected = "󰤮";
                   format-icons = [
@@ -129,19 +159,6 @@ in
                   ];
                 };
             }
-            // (lib.mergeAttrsList (
-              map (m: {
-                "${shortPathName m}" = {
-                  inherit (cfg) interval;
-                  format = " ${libEx.shortPath m}: {free}";
-                  path = m;
-                  states = {
-                    warning = 75;
-                    critical = 95;
-                  };
-                };
-              }) cfg.mount.points
-            ))
             // {
               memory = {
                 inherit (cfg) interval;
@@ -152,24 +169,9 @@ in
                   critical = 95;
                 };
               };
-              "cpu#usage" = {
-                inherit (cfg) interval;
-                format = "{icon} {max_frequency}GHz";
-                format-icons = [
-                  "󰡳"
-                  "󰡵"
-                  "󰊚"
-                  "󰡴"
-                ];
-                states = {
-                  warning = 75;
-                  critical = 95;
-                };
-              };
               "cpu#load" = {
                 inherit (cfg) interval;
                 format = " {load:0.1f}";
-                tooltip = false;
               };
               temperature = {
                 format = "{icon} {temperatureC}°C";
@@ -291,51 +293,6 @@ in
                 };
               };
             };
-
-          bottom-bar = {
-            inherit height;
-            layer = "bottom";
-            position = "bottom";
-            spacing = 3;
-            modules-left =
-              lib.optionals hyprlandCfg.enable [
-                "hyprland/workspaces"
-                "hyprland/submap"
-              ]
-              ++ lib.optionals swayCfg.enable [
-                "sway/workspaces"
-                "sway/mode"
-              ];
-            modules-center = [ "wlr/taskbar" ];
-            modules-right = [ "tray" ];
-            "wlr/taskbar" = {
-              inherit icon-size;
-              format = "{icon}";
-              active-first = true;
-              on-click = "activate";
-              on-click-middle = "close";
-            };
-            "hyprland/workspaces" = {
-              format = "{name}: {icon}";
-              format-icons = {
-                "1" = " ";
-                "2" = " ";
-                "3" = " ";
-                "4" = " ";
-                "5" = " ";
-                "6" = " ";
-                "7" = " ";
-                "8" = " ";
-                "9" = " ";
-                "10" = " ";
-              };
-              "on-scroll-up" = "${hyprctl} dispatch workspace e+1";
-              "on-scroll-down" = "${hyprctl} dispatch workspace e-1";
-            };
-            "hyprland/submap".tooltip = false;
-            "sway/mode".tooltip = false;
-            "sway/workspaces".disable-scroll-wraparound = true;
-          };
         };
       style =
         with config.home-manager.desktop.theme.colors;
