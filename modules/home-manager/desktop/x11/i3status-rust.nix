@@ -25,11 +25,6 @@ in
     battery.enable = lib.mkEnableOption "battery block" // {
       default = config.device.type == "laptop";
     };
-    mount.points = lib.mkOption {
-      type = with lib.types; listOf path;
-      description = "Mount points to show in disk block.";
-      default = config.device.mount.points;
-    };
     net.ifaces = lib.mkOption {
       type = with lib.types; listOf str;
       description = "Net interfaces to show in net block.";
@@ -73,11 +68,6 @@ in
             };
           };
 
-          windowBlock = {
-            block = "focused_window";
-            format = " $title.str(max_w:26) |";
-          };
-
           netBlocks = map (d: {
             inherit (cfg) interval;
             block = "net";
@@ -93,14 +83,6 @@ in
             inactive_format = "";
             missing_format = "";
           }) cfg.net.ifaces;
-
-          disksBlocks = map (m: {
-            inherit (cfg) interval;
-            block = "disk_space";
-            path = m;
-            info_type = "available";
-            format = " $icon ${libEx.shortPath m} $available ";
-          }) cfg.mount.points;
 
           memoryBlock = {
             inherit (cfg) interval;
@@ -193,9 +175,7 @@ in
             blocks =
               lib.pipe
                 [
-                  windowBlock
                   netBlocks
-                  disksBlocks
                   memoryBlock
                   cpuBlock
                   temperatureBlock
