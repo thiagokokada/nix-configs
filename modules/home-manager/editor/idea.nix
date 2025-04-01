@@ -59,17 +59,7 @@ in
       };
 
       packages = with pkgs.jetbrains; [
-        (plugins.addPlugins idea-community [
-          "catppuccin-theme"
-          "csv-editor"
-          "docker"
-          "graphql"
-          "hocon"
-          "ideavim"
-          "nixidea"
-          "scala"
-          "which-key"
-        ])
+        idea-community
       ];
     };
   };
