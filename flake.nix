@@ -147,17 +147,6 @@
       # Home-Manager configs
       (lib.mkHomeConfig { hostname = "home-linux"; })
       (lib.mkHomeConfig {
-        hostname = "home-linux-wsl";
-        extraModules = [
-          {
-            home-manager = {
-              # https://github.com/nix-community/home-manager/issues/5025
-              meta.sdSwitch.enable = false;
-            };
-          }
-        ];
-      })
-      (lib.mkHomeConfig {
         hostname = "steamdeck";
         username = "deck";
       })
