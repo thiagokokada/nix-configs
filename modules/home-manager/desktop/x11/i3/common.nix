@@ -322,6 +322,7 @@ in
       }
       // extraModes;
 
+    defaultWorkspace = (builtins.head workspaces).name;
     workspaceAutoBackAndForth = true;
     workspaceLayout = "tabbed";
 
