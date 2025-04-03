@@ -319,7 +319,7 @@ in
           window#waybar {
             background: ${base00};
             color: ${base05};
-            font-size: 12px;
+            font-size: 14px;
           }
           #submap, #mode {
             background: ${base0A};

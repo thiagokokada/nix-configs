@@ -59,7 +59,7 @@
       icons.name
     ];
     style = "Regular";
-    size = 12.0;
+    size = 10.0;
   },
   extraBindings ? { },
   extraWindowOptions ? { },
