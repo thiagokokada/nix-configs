@@ -71,14 +71,7 @@ in
             inherit (cfg) interval;
             block = "net";
             device = d;
-            format =
-              " {$icon $ssid ($signal_strength) |^icon_ethernet } "
-              + "^icon_net_up $speed_up.eng(prefix:K) "
-              + "^icon_net_down $speed_down.eng(prefix:K) ";
-            format_alt =
-              " {$icon $ssid ($signal_strength) |^icon_ethernet } "
-              + "^icon_net_up $graph_up.str(max_w:3) "
-              + "^icon_net_down$graph_down.str(max_w:3) ";
+            format = " {$icon|^icon_ethernet} $speed_down.eng(prefix:K) ";
             inactive_format = "";
             missing_format = "";
           }) cfg.net.ifaces;
@@ -88,13 +81,6 @@ in
             block = "memory";
             format = " $icon $mem_avail ";
             format_alt = " $icon_swap $swap_free ";
-          };
-
-          cpuBlock = {
-            inherit (cfg) interval;
-            block = "cpu";
-            format = " $icon " + "{$max_frequency.eng(prefix:G,w:3)} ";
-            format_alt = " ^icon_microchip $barchart.str(max_w:3) $utilization ";
           };
 
           loadBlock = {
@@ -164,6 +150,7 @@ in
           timeBlock = {
             inherit (cfg) interval;
             block = "time";
+            format = " $icon $timestamp.datetime(f:'%H:%M, %a %d') ";
           };
 
         in
@@ -176,7 +163,6 @@ in
                 [
                   netBlocks
                   memoryBlock
-                  cpuBlock
                   temperatureBlock
                   loadBlock
                   notificationBlock
