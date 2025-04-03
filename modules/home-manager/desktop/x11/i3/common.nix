@@ -5,6 +5,7 @@
   areaScreenShot,
   fullScreenShot,
   menu,
+  msg,
   browser ? config.home-manager.desktop.default.browser,
   dunstctl ? (lib.getExe' pkgs.dunst "dunstctl"),
   fileManager ? config.home-manager.desktop.default.fileManager,
@@ -303,7 +304,6 @@ in
           // exitMode;
         ${powerManagementMode} =
           let
-            # FIXME: https://github.com/systemd/systemd/issues/6032
             # $ swaymsg exec "loginctl lock-session &>/tmp/out"
             # $ cat /tmp/out
             # Failed to issue method call: Unknown object '/org/freedesktop/login1/session/auto'.
@@ -312,7 +312,7 @@ in
           in
           {
             l = "mode default, exec ${loginctl} lock-session";
-            e = "mode default, exec ${loginctl} terminate-session $XDG_SESSION_ID";
+            e = "mode default, exec ${msg} exit";
             s = "mode default, exec ${systemctl} suspend";
             h = "mode default, exec ${systemctl} hibernate";
             "Shift+r" = "mode default, exec ${systemctl} reboot";

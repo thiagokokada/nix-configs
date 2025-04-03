@@ -28,6 +28,8 @@ let
       bars = [ ];
       menu = lib.getExe config.programs.fuzzel.package;
 
+      msg = lib.getExe' pkgs.sway "swaymsg";
+
       fullScreenShot = ''
         ${lib.getExe pkgs.grim} "${screenShotName}" && \
         ${lib.getExe pkgs.libnotify} -u normal -t 5000 'Full screenshot taken'

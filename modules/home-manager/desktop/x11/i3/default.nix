@@ -32,6 +32,8 @@ let
         "${lib.getExe programs.i3status-rust.package} ${xdg.configHome}/i3status-rust/config-i3.toml";
       menu = "${rofi} -show drun";
 
+      msg = lib.getExe' pkgs.i3 "i3-msg";
+
       # Screenshots
       fullScreenShot = ''
         ${lib.getExe pkgs.maim} -u "${screenShotName}" && \
