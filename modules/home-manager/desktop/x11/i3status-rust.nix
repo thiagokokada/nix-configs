@@ -126,10 +126,7 @@ in
 
           notificationBlock = {
             block = "notify";
-            format =
-              " ^icon_notification "
-              + "{$paused{^icon_toggle_off}|^icon_toggle_on} "
-              + "{($notification_count.eng(w:1)) |}";
+            format = " ^icon_notification {$paused{^icon_toggle_off}|^icon_toggle_on} ";
           };
 
           dpmsBlock =
@@ -152,7 +149,6 @@ in
             block = "time";
             format = " $icon $timestamp.datetime(f:'%H:%M, %a %d') ";
           };
-
         in
         {
           i3 = {
@@ -165,11 +161,11 @@ in
                   memoryBlock
                   temperatureBlock
                   loadBlock
-                  notificationBlock
-                  dpmsBlock
                   backlightBlock
                   batteryBlock
                   soundBlock
+                  notificationBlock
+                  dpmsBlock
                   timeBlock
                 ]
                 [
