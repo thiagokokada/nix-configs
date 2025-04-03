@@ -19,6 +19,8 @@
       sway = {
         # Make Sway available for display managers and make things like swaylock work
         enable = true;
+        # Do not add this to display managers (we will add via UWSM)
+        package = null;
         # Remove unnecessary packages from system-wide install (e.g.: foot)
         extraPackages = [ ];
       };
