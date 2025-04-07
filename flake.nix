@@ -166,13 +166,6 @@
         homePath = "/Users";
       })
 
-      # Commands
-      (lib.mkRunCmd {
-        name = "linter";
-        deps = pkgs: with pkgs; [ statix ];
-        text = "statix fix -i hardware-configuration.nix";
-      })
-
       # GitHub Actions
       (lib.mkGHActionsYAMLs [
         "build-and-cache"
@@ -180,7 +173,6 @@
         "update-flakes-darwin"
         "validate-flakes"
       ])
-
     ]; # END recursiveMergeAttrs
 
   nixConfig = {
