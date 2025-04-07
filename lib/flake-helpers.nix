@@ -1,7 +1,8 @@
-{ self, flake-utils, ... }@inputs:
+{ self, nixpkgs, ... }@inputs:
 
 let
-  inherit (flake-utils.lib) eachDefaultSystem mkApp;
+  attrsets = import ./attrsets.nix { inherit (nixpkgs) lib; };
+  inherit (attrsets) eachDefaultSystem;
 in
 {
   mkGHActionsYAMLs =
@@ -29,34 +30,16 @@ in
         ghActionsYAMLs = map mkGHActionsYAML names;
       in
       {
-        apps.githubActions = mkApp {
-          drv = pkgs.writeShellScriptBin "generate-gh-actions" ''
-            for dir in ${builtins.toString ghActionsYAMLs}; do
-              cp -f $dir/*.yml .github/workflows/
-            done
-            echo Done!
-          '';
-        };
-      }
-    );
-
-  mkRunCmd =
-    {
-      name,
-      text,
-      deps ? pkgs: [ ],
-    }:
-    eachDefaultSystem (
-      system:
-      let
-        pkgs = self.outputs.legacyPackages.${system};
-      in
-      {
-        apps.${name} = mkApp {
-          drv = pkgs.writeShellApplication {
-            inherit name text;
-            runtimeInputs = deps pkgs;
-          };
+        apps.githubActions = {
+          type = "app";
+          program = nixpkgs.lib.getExe (
+            pkgs.writeShellScriptBin "generate-gh-actions" ''
+              for dir in ${builtins.toString ghActionsYAMLs}; do
+                cp -f $dir/*.yml .github/workflows/
+              done
+              echo Done!
+            ''
+          );
         };
       }
     );
@@ -97,14 +80,14 @@ in
       };
 
       apps.${system} = {
-        "nixosActivations/${hostname}" = mkApp {
-          drv = config.system.build.toplevel;
-          exePath = "/activate";
+        "nixosActivations/${hostname}" = {
+          type = "app";
+          program = "${config.system.build.toplevel}/activate";
         };
 
-        "nixosVMs/${hostname}" = mkApp {
-          drv = config.system.build.vm;
-          exePath = "/bin/run-${hostname}-vm";
+        "nixosVMs/${hostname}" = {
+          type = "app";
+          program = nixpkgs.lib.getExe config.system.build.vm;
         };
       };
     };
@@ -137,12 +120,15 @@ in
       };
 
       apps.${pkgs.system} = {
-        "darwinActivations/${hostname}" = mkApp {
-          drv = pkgs.writeShellScriptBin "activate" ''
-            ${
-              pkgs.lib.getExe' nix-darwin.packages.${pkgs.system}.darwin-rebuild "darwin-rebuild"
-            } switch --flake '.#${hostname}'
-          '';
+        "darwinActivations/${hostname}" = {
+          type = "app";
+          program = nixpkgs.lib.getExe (
+            pkgs.writeShellScriptBin "activate" ''
+              ${
+                pkgs.lib.getExe' nix-darwin.packages.${pkgs.system}.darwin-rebuild "darwin-rebuild"
+              } switch --flake '.#${hostname}'
+            ''
+          );
         };
       };
     };
@@ -194,9 +180,9 @@ in
         };
       };
 
-      apps.${system}."homeActivations/${hostname}" = mkApp {
-        drv = self.outputs.homeConfigurations.${hostname}.activationPackage;
-        exePath = "/activate";
+      apps.${system}."homeActivations/${hostname}" = {
+        type = "app";
+        program = "${self.outputs.homeConfigurations.${hostname}.activationPackage}/activate";
       };
     };
 }

@@ -246,9 +246,7 @@
     },
     "nixgl": {
       "inputs": {
-        "flake-utils": [
-          "flake-utils"
-        ],
+        "flake-utils": "flake-utils",
         "nixpkgs": [
           "nixpkgs"
         ]
@@ -289,7 +287,6 @@
         "disko": "disko",
         "doomemacs": "doomemacs",
         "flake-compat": "flake-compat",
-        "flake-utils": "flake-utils",
         "gh-gfm-preview": "gh-gfm-preview",
         "hardware": "hardware",
         "home-manager": "home-manager",
