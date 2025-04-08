@@ -62,7 +62,7 @@ in
               networking.hostName = lib.mkDefault hostname;
             }
           )
-          ../hosts/${hostname}
+          ../hosts/nixos/${hostname}
         ] ++ extraModules;
         specialArgs = {
           flake = self;
@@ -102,7 +102,7 @@ in
               networking.hostName = lib.mkDefault hostname;
             }
           )
-          ../hosts/${hostname}
+          ../hosts/nix-darwin/${hostname}
         ] ++ extraModules;
         specialArgs = {
           flake = self;

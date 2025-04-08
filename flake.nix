@@ -83,90 +83,94 @@
       ...
     }@inputs:
     let
-      lib = import ./lib inputs;
+      inherit (nixpkgs) lib;
+      libEx = import ./lib inputs;
     in
-    lib.recursiveMergeAttrs [
-      {
-        inherit lib;
-        templates = {
-          default = self.outputs.templates.new-host;
-          new-host = {
-            path = ./templates/new-host;
-            description = "Create a new host";
-          };
-        };
-        overlays.default = import ./overlays { flake = self; };
-        darwinModules.default = import ./modules/nix-darwin;
-        homeModules.default = import ./modules/home-manager;
-        nixosModules.default = import ./modules/nixos;
-      }
-
-      (lib.eachDefaultSystem (
-        system:
-        let
-          pkgs = import nixpkgs {
-            inherit system;
-            config = import ./modules/shared/config/nixpkgs.nix;
-            overlays = [ self.overlays.default ];
-          };
-          treefmtEval = treefmt-nix.lib.evalModule pkgs ./treefmt.nix;
-        in
+    libEx.recursiveMergeAttrs (
+      [
         {
-          devShells.default = pkgs.mkShell {
-            packages = with pkgs; [
-              fd
-              neovim-standalone
-              nil
-              nixfmt-rfc-style
-              ripgrep
-              statix
-            ];
+          lib = libEx;
+          templates = {
+            default = self.outputs.templates.new-host;
+            new-host = {
+              path = ./templates/new-host;
+              description = "Create a new host";
+            };
           };
-          checks.formatting = treefmtEval.config.build.check self;
-          formatter = treefmtEval.config.build.wrapper;
-          legacyPackages = pkgs;
+          overlays.default = import ./overlays { flake = self; };
+          darwinModules.default = import ./modules/nix-darwin;
+          homeModules.default = import ./modules/home-manager;
+          nixosModules.default = import ./modules/nixos;
         }
-      ))
 
-      # NixOS configs
-      (lib.mkNixOSConfig { hostname = "hachune-nixos"; })
-      (lib.mkNixOSConfig { hostname = "sankyuu-nixos"; })
-      (lib.mkNixOSConfig { hostname = "zatsune-nixos"; })
-      (lib.mkNixOSConfig { hostname = "zachune-nixos"; })
+        (libEx.eachDefaultSystem (
+          system:
+          let
+            pkgs = import nixpkgs {
+              inherit system;
+              config = import ./modules/shared/config/nixpkgs.nix;
+              overlays = [ self.overlays.default ];
+            };
+            treefmtEval = treefmt-nix.lib.evalModule pkgs ./treefmt.nix;
+          in
+          {
+            devShells.default = pkgs.mkShell {
+              packages = with pkgs; [
+                fd
+                neovim-standalone
+                nil
+                nixfmt-rfc-style
+                ripgrep
+                statix
+              ];
+            };
+            checks.formatting = treefmtEval.config.build.check self;
+            formatter = treefmtEval.config.build.wrapper;
+            legacyPackages = pkgs;
+          }
+        ))
 
-      # nix-darwin configs
-      (lib.mkNixDarwinConfig { hostname = "Sekai-MacBook-Pro"; })
+        # Home-Manager configs
+        (libEx.mkHomeConfig { hostname = "home-linux"; })
+        (libEx.mkHomeConfig {
+          hostname = "steamdeck";
+          username = "deck";
+        })
+        (libEx.mkHomeConfig {
+          hostname = "droid";
+          username = "droid";
+          system = "aarch64-linux";
+        })
+        (libEx.mkHomeConfig {
+          hostname = "penguin";
+          system = "aarch64-linux";
+          extraModules = [ { home-manager.crostini.enable = true; } ];
+        })
+        (libEx.mkHomeConfig {
+          hostname = "home-macos";
+          system = "aarch64-darwin";
+          homePath = "/Users";
+        })
 
-      # Home-Manager configs
-      (lib.mkHomeConfig { hostname = "home-linux"; })
-      (lib.mkHomeConfig {
-        hostname = "steamdeck";
-        username = "deck";
-      })
-      (lib.mkHomeConfig {
-        hostname = "droid";
-        username = "droid";
-        system = "aarch64-linux";
-      })
-      (lib.mkHomeConfig {
-        hostname = "penguin";
-        system = "aarch64-linux";
-        extraModules = [ { home-manager.crostini.enable = true; } ];
-      })
-      (lib.mkHomeConfig {
-        hostname = "home-macos";
-        system = "aarch64-darwin";
-        homePath = "/Users";
-      })
-
-      # GitHub Actions
-      (lib.mkGHActionsYAMLs [
-        "build-and-cache"
-        "update-flakes"
-        "update-flakes-darwin"
-        "validate-flakes"
-      ])
-    ]; # END recursiveMergeAttrs
+        # GitHub Actions
+        (libEx.mkGHActionsYAMLs [
+          "build-and-cache"
+          "update-flakes"
+          "update-flakes-darwin"
+          "validate-flakes"
+        ])
+      ]
+      ++
+        # NixOS configs
+        (lib.mapAttrsToList (
+          n: v: lib.optionalAttrs (v == "directory") (libEx.mkNixOSConfig { hostname = n; })
+        ) (builtins.readDir ./hosts/nixos))
+      ++
+        # nix-darwin configs
+        (lib.mapAttrsToList (
+          n: v: lib.optionalAttrs (v == "directory") (libEx.mkNixDarwinConfig { hostname = n; })
+        ) (builtins.readDir ./hosts/nix-darwin))
+    );
 
   nixConfig = {
     extra-substituters = [
