@@ -83,7 +83,6 @@
       ...
     }@inputs:
     let
-      inherit (nixpkgs) lib;
       libEx = import ./lib inputs;
     in
     libEx.recursiveMergeAttrs (
@@ -130,28 +129,6 @@
           }
         ))
 
-        # Home-Manager configs
-        (libEx.mkHomeConfig { hostname = "home-linux"; })
-        (libEx.mkHomeConfig {
-          hostname = "steamdeck";
-          username = "deck";
-        })
-        (libEx.mkHomeConfig {
-          hostname = "droid";
-          username = "droid";
-          system = "aarch64-linux";
-        })
-        (libEx.mkHomeConfig {
-          hostname = "penguin";
-          system = "aarch64-linux";
-          extraModules = [ { home-manager.crostini.enable = true; } ];
-        })
-        (libEx.mkHomeConfig {
-          hostname = "home-macos";
-          system = "aarch64-darwin";
-          homePath = "/Users";
-        })
-
         # GitHub Actions
         (libEx.mkGHActionsYAMLs [
           "build-and-cache"
@@ -162,14 +139,13 @@
       ]
       ++
         # NixOS configs
-        (lib.mapAttrsToList (
-          n: v: lib.optionalAttrs (v == "directory") (libEx.mkNixOSConfig { hostname = n; })
-        ) (builtins.readDir ./hosts/nixos))
+        (libEx.mapDir (hostname: libEx.mkNixOSConfig { inherit hostname; }) ./hosts/nixos)
       ++
         # nix-darwin configs
-        (lib.mapAttrsToList (
-          n: v: lib.optionalAttrs (v == "directory") (libEx.mkNixDarwinConfig { hostname = n; })
-        ) (builtins.readDir ./hosts/nix-darwin))
+        (libEx.mapDir (hostname: libEx.mkNixDarwinConfig { inherit hostname; }) ./hosts/nix-darwin)
+      ++
+        # Home-Manager configs
+        (libEx.mapDir (hostname: libEx.mkHomeConfig { inherit hostname; }) ./hosts/home-manager)
     );
 
   nixConfig = {

@@ -20,4 +20,13 @@ rec {
     "x86_64-darwin"
     "x86_64-linux"
   ];
+
+  # Call function to each directory inside a dir.
+  #
+  # Will return a list of attrs.
+  mapDir =
+    f: dir:
+    (lib.mapAttrsToList (curDir: type: lib.optionalAttrs (type == "directory") (f curDir)) (
+      builtins.readDir dir
+    ));
 }

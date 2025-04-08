@@ -33,9 +33,9 @@ in
       useUserPackages = true;
       useGlobalPkgs = true;
       users.${config.meta.username} = {
+        inherit (config) meta device;
         imports = [
           ../home-manager
-          { targets.genericLinux.enable = false; }
         ] ++ cfg.extraModules;
         # As a rule of thumb HM == NixOS version, unless something weird happens
         home.stateVersion = lib.mkDefault config.system.stateVersion;

@@ -21,23 +21,11 @@ in
 
   neovim-standalone =
     let
-      hostname = "neovim";
+      hostname = "neovim-standalone";
       hm =
         (outputs.lib.mkHomeConfig {
           inherit hostname;
           inherit (prev) system;
-          extraModules = [
-            {
-              home-manager = {
-                dev.nix.enable = true;
-                editor.neovim = {
-                  icons.enable = false;
-                  lsp.enable = true;
-                  treeSitter.enable = true;
-                };
-              };
-            }
-          ];
         }).homeConfigurations.${hostname};
     in
     hm.config.programs.neovim.finalPackage.override {
