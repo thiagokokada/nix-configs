@@ -47,6 +47,7 @@ in
   mkNixOSConfig =
     {
       hostname,
+      configuration ? ../hosts/nixos/${hostname},
       nixpkgs ? inputs.nixpkgs,
     }:
     let
@@ -61,7 +62,7 @@ in
               networking.hostName = lib.mkDefault hostname;
             }
           )
-          ../hosts/nixos/${hostname}
+          configuration
         ];
         specialArgs = {
           flake = self;
@@ -85,6 +86,7 @@ in
   mkNixDarwinConfig =
     {
       hostname,
+      configuration ? ../hosts/nix-darwin/${hostname},
       nix-darwin ? inputs.nix-darwin,
     }:
     let
@@ -99,7 +101,7 @@ in
               networking.hostName = lib.mkDefault hostname;
             }
           )
-          ../hosts/nix-darwin/${hostname}
+          configuration
         ];
         specialArgs = {
           flake = self;
@@ -126,6 +128,7 @@ in
     {
       hostname,
       username ? "thiagoko",
+      configuration ? ../hosts/home-manager/${hostname},
       system ? import ../hosts/home-manager/${hostname}/system.nix,
       nixpkgs ? inputs.nixpkgs,
       home-manager ? inputs.home-manager,
@@ -135,7 +138,7 @@ in
         pkgs = self.outputs.legacyPackages.${system};
         modules = [
           self.outputs.homeModules.default
-          ../hosts/home-manager/${hostname}
+          configuration
         ];
         extraSpecialArgs = {
           flake = self;
