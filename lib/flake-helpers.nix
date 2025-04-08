@@ -47,23 +47,14 @@ in
   mkNixOSConfig =
     {
       hostname,
-      system ? "x86_64-linux",
       nixpkgs ? inputs.nixpkgs,
       extraModules ? [ ],
     }:
     let
-      inherit (self.outputs.nixosConfigurations.${hostname}) config;
-      n = import ../patches { inherit self nixpkgs system; };
-
-      nixosSystem =
-        if n.patched then
-          (import (n.nixpkgs + "/nixos/lib/eval-config.nix"))
-        else
-          n.nixpkgs.lib.nixosSystem;
+      inherit (self.outputs.nixosConfigurations.${hostname}) config pkgs;
     in
     {
-      nixosConfigurations.${hostname} = nixosSystem {
-        inherit system;
+      nixosConfigurations.${hostname} = nixpkgs.lib.nixosSystem {
         modules = [
           (
             { lib, ... }:
@@ -79,7 +70,7 @@ in
         };
       };
 
-      apps.${system} = {
+      apps.${pkgs.system} = {
         "nixosActivations/${hostname}" = {
           type = "app";
           program = "${config.system.build.toplevel}/activate";

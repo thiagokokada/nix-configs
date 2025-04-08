@@ -104,7 +104,11 @@
       (lib.eachDefaultSystem (
         system:
         let
-          inherit (import ./patches { inherit self system; }) pkgs;
+          pkgs = import nixpkgs {
+            inherit system;
+            config = import ./modules/shared/config/nixpkgs.nix;
+            overlays = [ self.overlays.default ];
+          };
           treefmtEval = treefmt-nix.lib.evalModule pkgs ./treefmt.nix;
         in
         {
@@ -127,10 +131,7 @@
       # NixOS configs
       (lib.mkNixOSConfig { hostname = "hachune-nixos"; })
       (lib.mkNixOSConfig { hostname = "sankyuu-nixos"; })
-      (lib.mkNixOSConfig {
-        hostname = "zatsune-nixos";
-        system = "aarch64-linux";
-      })
+      (lib.mkNixOSConfig { hostname = "zatsune-nixos"; })
       (lib.mkNixOSConfig { hostname = "zachune-nixos"; })
 
       # nix-darwin configs
