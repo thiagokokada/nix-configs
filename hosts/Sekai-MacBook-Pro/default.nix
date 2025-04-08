@@ -10,6 +10,7 @@
   nix-darwin.home.extraModules = [
     {
       home-manager = {
+        editor.idea.enable = true;
         darwin.remapKeys.mappings = {
           # '§±' <-> '`~'
           "0x700000035" = "0x700000064";
