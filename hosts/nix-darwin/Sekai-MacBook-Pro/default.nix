@@ -1,8 +1,4 @@
-{ flake, ... }:
-
 {
-  imports = [ flake.outputs.darwinModules.default ];
-
   meta.username = "thiago.okada";
 
   nixpkgs.hostPlatform = "aarch64-darwin";

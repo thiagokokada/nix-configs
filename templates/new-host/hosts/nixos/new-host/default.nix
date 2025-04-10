@@ -8,7 +8,6 @@
   imports = [
     # Use `nixos-generate-config` to generate `hardware-configuration.nix` file
     ./hardware-configuration.nix
-    ../../nixos
     # inputs.hardware.nixosModules.common-cpu-intel
   ];
 

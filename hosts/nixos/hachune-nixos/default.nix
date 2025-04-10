@@ -14,7 +14,6 @@
     ./hardware-configuration.nix
     flake.inputs.hardware.nixosModules.common-cpu-amd
     flake.inputs.hardware.nixosModules.common-gpu-amd
-    flake.outputs.nixosModules.default
   ];
 
   device = {

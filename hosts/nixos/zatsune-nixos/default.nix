@@ -14,7 +14,6 @@ in
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
     flake.inputs.disko.nixosModules.disko
-    flake.outputs.nixosModules.default
   ] ++ oci-common.imports;
 
   boot = {

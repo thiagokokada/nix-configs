@@ -15,7 +15,6 @@
     ./hardware-configuration.nix
     flake.inputs.disko.nixosModules.disko
     flake.inputs.hardware.nixosModules.lenovo-thinkpad-t14-amd-gen1
-    flake.outputs.nixosModules.default
   ];
 
   device = {
