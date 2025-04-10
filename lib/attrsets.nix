@@ -29,4 +29,7 @@ rec {
     (lib.mapAttrsToList (curDir: type: lib.optionalAttrs (type == "directory") (f curDir)) (
       builtins.readDir dir
     ));
+
+  # Translate the keys from a attrset.
+  translateKeys = trans: attrset: lib.mapAttrs' (n: v: lib.nameValuePair (trans.${n} or n) v) attrset;
 }

@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  libEx,
   pkgs,
   flake,
   ...
@@ -31,7 +32,12 @@ in
     # sudo echo "trusted-users = @wheel" >> /etc/nix/nix.conf
     nix = {
       package = lib.mkDefault pkgs.nix;
-      settings = flake.outputs.configs.nix;
+      # Needs to use extra-substituters/extra-trusted-public-keys to avoid
+      # overwriting the base one (cache.nixos.org)
+      settings = libEx.translateKeys {
+        "substituters" = "extra-substituters";
+        "trusted-public-keys" = "extra-trusted-public-keys";
+      } flake.outputs.configs.nix;
     };
 
     # Config for ad-hoc nix commands invocation
