@@ -1,9 +1,6 @@
-{ flake }:
+{ inputs, outputs }:
 final: prev:
 
-let
-  inherit (flake) outputs inputs;
-in
 {
   # namespaces
   libEx = outputs.lib;

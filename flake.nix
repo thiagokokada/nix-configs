@@ -96,7 +96,7 @@
               description = "Create a new host";
             };
           };
-          overlays.default = import ./overlays { flake = self; };
+          overlays.default = import ./overlays { inherit (self) inputs outputs; };
           darwinModules.default = import ./modules/nix-darwin;
           homeModules.default = import ./modules/home-manager;
           nixosModules.default = import ./modules/nixos;

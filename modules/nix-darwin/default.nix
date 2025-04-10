@@ -10,5 +10,5 @@
     ./system.nix
   ];
 
-  nixpkgs.overlays = [ (import ../../overlays { inherit flake; }) ];
+  nixpkgs.overlays = [ flake.outputs.overlays.default ];
 }
