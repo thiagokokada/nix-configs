@@ -1,11 +1,11 @@
-{ lib, ... }:
+{ config, lib, ... }:
 
 {
   options.meta = {
     username = lib.mkOption {
       description = "Main username.";
       type = lib.types.str;
-      default = "thiagoko";
+      default = config.home.username or "thiagoko";
     };
     fullname = lib.mkOption {
       description = "Main user full name.";
