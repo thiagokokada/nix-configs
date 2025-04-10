@@ -9,6 +9,4 @@
     ./nix
     ./system.nix
   ];
-
-  nixpkgs.overlays = [ flake.outputs.overlays.default ];
 }

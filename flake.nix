@@ -96,10 +96,11 @@
               description = "Create a new host";
             };
           };
-          overlays.default = import ./overlays { inherit (self) inputs outputs; };
+          configs = import ./configs;
           darwinModules.default = import ./modules/nix-darwin;
           homeModules.default = import ./modules/home-manager;
           nixosModules.default = import ./modules/nixos;
+          overlays.default = import ./overlays { inherit (self) inputs outputs; };
         }
 
         (libEx.eachDefaultSystem (
@@ -107,7 +108,7 @@
           let
             pkgs = import nixpkgs {
               inherit system;
-              config = import ./modules/shared/config/nixpkgs.nix;
+              config = self.outputs.configs.nixpkgs;
               overlays = [ self.overlays.default ];
             };
             treefmtEval = treefmt-nix.lib.evalModule pkgs ./treefmt.nix;

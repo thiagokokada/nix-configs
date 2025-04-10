@@ -31,10 +31,7 @@ in
     # sudo echo "trusted-users = @wheel" >> /etc/nix/nix.conf
     nix = {
       package = lib.mkDefault pkgs.nix;
-      settings = lib.mkMerge [
-        (import ../../shared/config/nix.nix)
-        (import ../../shared/config/substituters.nix)
-      ];
+      settings = flake.outputs.configs.nix;
     };
 
     # Config for ad-hoc nix commands invocation

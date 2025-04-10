@@ -25,26 +25,20 @@ in
       # Customized nixpkgs, e.g.: `nix shell nixpkgs_#snes9x`
       registry.nixpkgs_.flake = flake;
 
-      settings =
-        let
-          substituters = import ../../shared/config/substituters.nix;
-        in
-        lib.mkMerge [
-          (import ../../shared/config/nix.nix)
-          {
-            trusted-users = [
-              "root"
-              "@admin"
-            ];
-            max-jobs = "auto";
-            # For some reason when nix is running as daemon,
-            # extra-{substituters,trusted-public-keys} doesn't work
-            substituters = substituters.extra-substituters;
-            trusted-public-keys = substituters.extra-trusted-public-keys;
-          }
-        ];
+      settings = lib.mkMerge [
+        flake.outputs.configs.nix
+        {
+          trusted-users = [
+            "root"
+            "@admin"
+          ];
+        }
+      ];
     };
 
-    nixpkgs.config = import ../../shared/config/nixpkgs.nix;
+    nixpkgs = {
+      config = flake.outputs.configs.nixpkgs;
+      overlays = [ flake.outputs.overlays.default ];
+    };
   };
 }

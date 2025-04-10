@@ -1,4 +1,4 @@
-{ flake, ... }:
+{ ... }:
 
 {
   imports = [
@@ -11,6 +11,4 @@
     ./server
     ./system
   ];
-
-  nixpkgs.overlays = [ flake.outputs.overlays.default ];
 }
