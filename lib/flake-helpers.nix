@@ -3,6 +3,14 @@
 let
   attrsets = import ./attrsets.nix { inherit (nixpkgs) lib; };
   inherit (attrsets) eachDefaultSystem;
+  setHostname =
+    hostname:
+    (
+      { lib, ... }:
+      {
+        networking.hostName = lib.mkDefault hostname;
+      }
+    );
 in
 {
   mkGHActionsYAMLs =
@@ -56,12 +64,7 @@ in
     {
       nixosConfigurations.${hostname} = nixpkgs.lib.nixosSystem {
         modules = [
-          (
-            { lib, ... }:
-            {
-              networking.hostName = lib.mkDefault hostname;
-            }
-          )
+          (setHostname hostname)
           self.outputs.nixosModules.default
           configuration
         ];
@@ -96,12 +99,7 @@ in
     {
       darwinConfigurations.${hostname} = nix-darwin.lib.darwinSystem {
         modules = [
-          (
-            { lib, ... }:
-            {
-              networking.hostName = lib.mkDefault hostname;
-            }
-          )
+          (setHostname hostname)
           self.outputs.darwinModules.default
           configuration
         ];
