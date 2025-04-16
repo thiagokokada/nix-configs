@@ -295,12 +295,13 @@ in
                 require('mini.starter').setup {}
                 require('mini.statusline').setup {
                   use_icons = enable_icons,
-                  set_vim_settings = false,
                 }
                 require('mini.tabline').setup {
                   show_icons = enable_icons,
-                  set_vim_settings = false,
                 }
+                -- mini.tabline sets showtabline = 2, always showing tabline
+                -- I prefer to only have it if we have more than one tab
+                vim.opt.showtabline = 1
 
                 require('mini.surround').setup {
                   mappings = {
