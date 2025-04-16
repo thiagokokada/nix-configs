@@ -76,6 +76,13 @@ in
             missing_format = "";
           }) cfg.net.ifaces;
 
+          diskBlock = {
+            inherit (cfg) interval;
+            block = "disk_space";
+            info_type = "available";
+            format = " $icon $percentage ";
+          };
+
           memoryBlock = {
             inherit (cfg) interval;
             block = "memory";
@@ -158,6 +165,7 @@ in
               lib.pipe
                 [
                   netBlocks
+                  diskBlock
                   memoryBlock
                   temperatureBlock
                   loadBlock
