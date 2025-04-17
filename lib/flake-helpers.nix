@@ -54,6 +54,7 @@ in
               echo Done!
             ''
           );
+          meta.description = "Generate GitHub Actions YAML files from Nix";
         };
       }
     );
@@ -83,11 +84,13 @@ in
         "nixosActivations/${hostname}" = {
           type = "app";
           program = "${config.system.build.toplevel}/activate";
+          meta.description = "NixOS activation script for ${hostname}";
         };
 
         "nixosVMs/${hostname}" = {
           type = "app";
           program = nixpkgs.lib.getExe config.system.build.vm;
+          meta.description = "NixOS VM test for ${hostname}";
         };
       };
     };
@@ -123,6 +126,7 @@ in
               } switch --flake '.#${hostname}'
             ''
           );
+          meta.description = "nix-darwin activation script for ${hostname}";
         };
       };
     };
@@ -152,6 +156,7 @@ in
       apps.${system}."homeActivations/${hostname}" = {
         type = "app";
         program = "${self.outputs.homeConfigurations.${hostname}.activationPackage}/activate";
+        meta.description = "Home activation script for ${hostname}";
       };
     };
 }
