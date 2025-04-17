@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  libEx,
   pkgs,
   flake,
   ...
@@ -50,7 +51,12 @@ in
       registry.nixpkgs_.flake = flake;
 
       settings = lib.mkMerge [
-        flake.outputs.configs.nix
+        # Needs to use substituters/trusted-public-keys otherwise it doesn't
+        # work in nix-daemon
+        (libEx.translateKeys {
+          "extra-substituters" = "substituters";
+          "extra-trusted-public-keys" = "trusted-public-keys";
+        } flake.outputs.internal.configs.nix)
         {
           trusted-users = [
             "root"
@@ -62,7 +68,7 @@ in
     };
 
     nixpkgs = {
-      config = flake.outputs.configs.nixpkgs;
+      config = flake.outputs.internal.configs.nixpkgs;
       overlays = [ flake.outputs.overlays.default ];
     };
 

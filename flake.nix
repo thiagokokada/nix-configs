@@ -96,7 +96,7 @@
               description = "Create a new host";
             };
           };
-          configs = import ./configs;
+          internal.configs = import ./configs;
           darwinModules.default = import ./modules/nix-darwin;
           homeModules.default = import ./modules/home-manager;
           nixosModules.default = import ./modules/nixos;
@@ -108,7 +108,7 @@
           let
             pkgs = import nixpkgs {
               inherit system;
-              config = self.outputs.configs.nixpkgs;
+              config = self.outputs.internal.configs.nixpkgs;
               overlays = [ self.overlays.default ];
             };
             treefmtEval = treefmt-nix.lib.evalModule pkgs ./treefmt.nix;
