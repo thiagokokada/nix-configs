@@ -1,8 +1,8 @@
-{ lib, ... }:
+{ flake, lib, ... }:
 
 {
   imports = [
-    ../shared
+    flake.outputs.internal.sharedModules.default
     ./cli
     ./crostini.nix
     ./darwin

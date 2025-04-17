@@ -96,7 +96,10 @@
               description = "Create a new host";
             };
           };
-          internal.configs = import ./configs;
+          internal = {
+            configs = import ./configs;
+            sharedModules.default = import ./modules/shared;
+          };
           darwinModules.default = import ./modules/nix-darwin;
           homeModules.default = import ./modules/home-manager;
           nixosModules.default = import ./modules/nixos;
