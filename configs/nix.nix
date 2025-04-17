@@ -1,9 +1,5 @@
-let
-  flake = import ../flake.nix;
-in
-{
-  inherit (flake.nixConfig) extra-substituters extra-trusted-public-keys;
-
+(import ../flake.nix).nixConfig
+// {
   experimental-features = [
     "nix-command"
     "flakes"
