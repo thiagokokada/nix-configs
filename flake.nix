@@ -132,14 +132,6 @@
             legacyPackages = pkgs;
           }
         ))
-
-        # GitHub Actions
-        (libEx.mkGHActionsYAMLs [
-          "build-and-cache"
-          "update-flakes"
-          "update-flakes-darwin"
-          "validate-flakes"
-        ])
       ]
       ++
         # NixOS configs

@@ -1,14 +1,14 @@
-{ ... }:
+{ pkgs, lib, ... }:
 {
   projectRootFile = "flake.nix";
 
   programs = {
-    nixfmt.enable = true;
-    ruff-format.enable = true;
-    ruff-check.enable = true;
     jsonfmt.enable = true;
-    shfmt.enable = true;
+    nixfmt.enable = true;
+    ruff-check.enable = true;
+    ruff-format.enable = true;
     shellcheck.enable = true;
+    shfmt.enable = true;
     statix = {
       enable = true;
       disabled-lints = [
@@ -30,6 +30,11 @@
       ".github/workflows/*.yml"
     ];
     formatter = {
+      github-actions = {
+        command = lib.getExe pkgs.generate-gh-actions;
+        includes = [ "actions/*.nix" ];
+        priority = 1;
+      };
       ruff-format.includes = [
         "*.py"
         "*.pyi"

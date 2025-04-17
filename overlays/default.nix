@@ -14,6 +14,38 @@ final: prev:
 
   inherit (inputs.gh-gfm-preview.packages.${prev.system}) gh-gfm-preview;
 
+  generate-gh-actions =
+    let
+      mkGHActionsYAML =
+        name:
+        prev.runCommand name
+          {
+            buildInputs = with prev; [
+              actionlint
+              yj
+            ];
+            json = builtins.toJSON (import ../actions/${name}.nix);
+            passAsFile = [ "json" ];
+          }
+          ''
+            mkdir -p $out
+            yj -jy < "$jsonPath" > $out/${name}.yml
+            actionlint -verbose $out/${name}.yml
+          '';
+      ghActionsYAMLs = map mkGHActionsYAML [
+        "build-and-cache"
+        "update-flakes"
+        "update-flakes-darwin"
+        "validate-flakes"
+      ];
+    in
+    prev.writeShellScriptBin "generate-gh-actions" ''
+      for dir in ${builtins.toString ghActionsYAMLs}; do
+        cp -f $dir/*.yml .github/workflows/
+      done
+      echo Done!
+    '';
+
   open-browser = prev.callPackage ../packages/open-browser { };
 
   neovim-standalone =
