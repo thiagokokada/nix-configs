@@ -35,6 +35,8 @@ in
     };
 
     # Config for ad-hoc nix commands invocation
-    xdg.configFile."nixpkgs/config.nix".source = ./nixpkgs-config.nix;
+    xdg.configFile."nixpkgs/config.nix".text =
+      lib.generators.toPretty { }
+        flake.outputs.internal.configs.nixpkgs;
   };
 }
