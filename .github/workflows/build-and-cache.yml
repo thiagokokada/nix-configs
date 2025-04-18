@@ -1,5 +1,47 @@
 jobs:
-  build-linux:
+  build-aarch64-darwin:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: cachix/install-nix-action@v31
+        with:
+          extra_nix_config: |-
+            accept-flake-config = true
+            access-tokens = github.com=${{ secrets.GITHUB_TOKEN }}
+          nix_path: nixpkgs=channel:nixos-unstable
+      - uses: cachix/cachix-action@v16
+        with:
+          authToken: ${{ secrets.CACHIX_TOKEN }}
+          extraPullNames: nix-community
+          name: thiagokokada-nix-configs
+      - name: 'Build Home-Manager configs for: home-macos'
+        run: nix build --print-build-logs '.#homeConfigurations.home-macos.activationPackage'
+      - name: 'Build nix-darwin configs for: Sekai-MacBook-Pro'
+        run: nix build --print-build-logs '.#darwinConfigurations.Sekai-MacBook-Pro.system'
+  build-aarch64-linux:
+    runs-on: ubuntu-24.04-arm
+    steps:
+      - uses: thiagokokada/free-disk-space@main
+        with:
+          opt: true
+          tool-cache: true
+          usrlocal: true
+          usrmisc: true
+      - uses: actions/checkout@v4
+      - uses: cachix/install-nix-action@v31
+        with:
+          extra_nix_config: |-
+            accept-flake-config = true
+            access-tokens = github.com=${{ secrets.GITHUB_TOKEN }}
+          nix_path: nixpkgs=channel:nixos-unstable
+      - uses: cachix/cachix-action@v16
+        with:
+          authToken: ${{ secrets.CACHIX_TOKEN }}
+          extraPullNames: nix-community
+          name: thiagokokada-nix-configs
+      - name: 'Build Home-Manager configs for: penguin'
+        run: nix build --print-build-logs '.#homeConfigurations.penguin.activationPackage'
+  build-x86_64-linux:
     runs-on: ubuntu-latest
     steps:
       - uses: thiagokokada/free-disk-space@main
@@ -9,13 +51,13 @@ jobs:
           usrlocal: true
           usrmisc: true
       - uses: actions/checkout@v4
-      - uses: cachix/install-nix-action@v30
+      - uses: cachix/install-nix-action@v31
         with:
           extra_nix_config: |-
             accept-flake-config = true
             access-tokens = github.com=${{ secrets.GITHUB_TOKEN }}
           nix_path: nixpkgs=channel:nixos-unstable
-      - uses: cachix/cachix-action@v15
+      - uses: cachix/cachix-action@v16
         with:
           authToken: ${{ secrets.CACHIX_TOKEN }}
           extraPullNames: nix-community
@@ -29,23 +71,6 @@ jobs:
           nix build --print-build-logs '.#nixosConfigurations.hachune-nixos.config.system.build.toplevel'
           nix build --print-build-logs '.#nixosConfigurations.sankyuu-nixos.config.system.build.toplevel'
           nix build --print-build-logs '.#nixosConfigurations.zachune-nixos.config.system.build.toplevel'
-  build-macos:
-    runs-on: macos-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: cachix/install-nix-action@v30
-        with:
-          extra_nix_config: |-
-            accept-flake-config = true
-            access-tokens = github.com=${{ secrets.GITHUB_TOKEN }}
-          nix_path: nixpkgs=channel:nixos-unstable
-      - uses: cachix/cachix-action@v15
-        with:
-          authToken: ${{ secrets.CACHIX_TOKEN }}
-          extraPullNames: nix-community
-          name: thiagokokada-nix-configs
-      - name: 'Build Home-Manager configs for: home-macos'
-        run: nix build --print-build-logs '.#homeConfigurations.home-macos.activationPackage'
 name: build-and-cache
 "on":
   - push

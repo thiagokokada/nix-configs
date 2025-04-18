@@ -18,8 +18,8 @@ with constants;
         (installNixActionStep { })
         cachixActionStep
         updateFlakeLockStep
-        (buildHomeManagerConfigurations { inherit (home-manager.linux) hostnames; })
-        (buildNixOSConfigurations { inherit (nixos) hostnames; })
+        (buildHomeManagerConfigurations { inherit (home-manager.x86_64-linux) hostnames; })
+        (buildNixOSConfigurations { inherit (nixos.x86_64-linux) hostnames; })
         createPullRequestStep
       ];
     };

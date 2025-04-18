@@ -20,8 +20,8 @@ with constants;
         checkoutStep
         (installNixActionStep { })
         cachixActionStep
-        (buildHomeManagerConfigurations { inherit (home-manager.darwin) hostnames; })
-        (buildNixDarwinConfigurations { inherit (nix-darwin) hostnames; })
+        (buildHomeManagerConfigurations { inherit (home-manager.aarch64-darwin) hostnames; })
+        (buildNixDarwinConfigurations { inherit (nix-darwin.aarch64-darwin) hostnames; })
       ];
     };
   };
