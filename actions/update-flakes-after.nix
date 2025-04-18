@@ -33,10 +33,8 @@ with constants;
         checkoutStep
         (installNixActionStep { })
         cachixActionStep
-        updateFlakeLockStep
         (buildHomeManagerConfigurations { inherit (home-manager.aarch64-linux) hostnames; })
         (buildNixOSConfigurations { inherit (nixos.aarch64-linux) hostnames; })
-        createPullRequestStep
       ];
     };
   };

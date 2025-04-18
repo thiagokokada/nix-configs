@@ -10,7 +10,7 @@ with constants;
     workflow_dispatch = null;
   };
   jobs = {
-    update-flakes = {
+    update-flakes-x86_64-linux = {
       inherit (ubuntu) runs-on;
       steps = with steps; [
         freeDiskSpaceStep

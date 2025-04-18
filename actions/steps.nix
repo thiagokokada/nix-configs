@@ -13,9 +13,11 @@ with constants;
       usrmisc = true;
     };
   };
+
   checkoutStep = {
     uses = actions.checkout;
   };
+
   installNixActionStep =
     {
       extraNixConfig ? [ ],
@@ -35,6 +37,7 @@ with constants;
         );
       };
     };
+
   cachixActionStep = {
     uses = actions.cachix-action;
     "with" = {
@@ -43,10 +46,12 @@ with constants;
       authToken = "\${{ secrets.CACHIX_TOKEN }}";
     };
   };
+
   validateFlakesStep = {
     name = "Validate Flakes";
     run = "nix flake check --all-systems ${toString nixFlags}";
   };
+
   buildNixDarwinConfigurations =
     {
       hostnames ? [ ],
@@ -61,6 +66,7 @@ with constants;
         ) hostnames
       );
     };
+
   buildHomeManagerConfigurations =
     {
       hostnames ? [ ],
@@ -77,6 +83,7 @@ with constants;
         ) hostnames
       );
     };
+
   buildNixOSConfigurations =
     {
       hostnames ? [ ],
@@ -93,6 +100,7 @@ with constants;
         ) hostnames
       );
     };
+
   updateFlakeLockStep = {
     name = "Update flake.lock";
     run = ''
@@ -101,6 +109,7 @@ with constants;
       nix flake update --commit-lock-file
     '';
   };
+
   createPullRequestStep = {
     name = "Create Pull Request";
     uses = actions.create-pull-request;
@@ -115,6 +124,7 @@ with constants;
       '';
     };
   };
+
   installUbuntuPackages = packages: {
     name = "Install Ubuntu packages: ${builtins.concatStringsSep ", " packages}";
     run = ''

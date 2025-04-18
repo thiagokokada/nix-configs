@@ -21,6 +21,7 @@ with constants;
         (buildNixOSConfigurations { inherit (nixos.x86_64-linux) hostnames; })
       ];
     };
+
     build-aarch64-linux = {
       inherit (ubuntu-arm) runs-on;
       steps = with steps; [
@@ -32,6 +33,7 @@ with constants;
         (buildNixOSConfigurations { inherit (nixos.aarch64-linux) hostnames; })
       ];
     };
+
     build-aarch64-darwin = {
       inherit (macos) runs-on;
       steps = with steps; [

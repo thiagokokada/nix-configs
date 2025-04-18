@@ -35,7 +35,7 @@ final: prev:
       ghActionsYAMLs = map mkGHActionsYAML [
         "build-and-cache"
         "update-flakes"
-        "update-flakes-darwin"
+        "update-flakes-after"
         "validate-flakes"
       ];
       resultDir = ".github/workflows";
