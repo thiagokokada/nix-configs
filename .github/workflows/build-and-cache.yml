@@ -41,6 +41,8 @@ jobs:
           name: thiagokokada-nix-configs
       - name: 'Build Home-Manager configs for: penguin'
         run: nix build --print-build-logs '.#homeConfigurations.penguin.activationPackage'
+      - name: 'Build NixOS configs for: zatsune-nixos'
+        run: nix build --print-build-logs '.#nixosConfigurations.zatsune-nixos.config.system.build.toplevel'
   build-x86_64-linux:
     runs-on: ubuntu-latest
     steps:

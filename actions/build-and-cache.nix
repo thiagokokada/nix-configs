@@ -29,6 +29,7 @@ with constants;
         (installNixActionStep { })
         cachixActionStep
         (buildHomeManagerConfigurations { inherit (home-manager.aarch64-linux) hostnames; })
+        (buildNixOSConfigurations { inherit (nixos.aarch64-linux) hostnames; })
       ];
     };
     build-aarch64-darwin = {
