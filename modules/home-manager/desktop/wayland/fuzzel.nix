@@ -29,10 +29,13 @@ in
           {
             background = fixColor base00;
             border = fixColor base00;
-            text = fixColor base05;
+            input = fixColor base05;
+            placeholder = fixColor base05;
+            prompt = fixColor base05;
             selection = fixColor base0D;
-            selection-text = fixColor base00;
             selection-match = fixColor base08;
+            selection-text = fixColor base00;
+            text = fixColor base05;
           };
         key-bindings = {
           # Unmap delete-line-forward since its Control+k mapping conflicts
