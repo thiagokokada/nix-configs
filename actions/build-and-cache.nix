@@ -10,24 +10,35 @@ with constants;
     "workflow_dispatch"
   ];
   jobs = {
-    build-linux = {
+    build-x86_64-linux = {
       inherit (ubuntu) runs-on;
       steps = with steps; [
         freeDiskSpaceStep
         checkoutStep
         (installNixActionStep { })
         cachixActionStep
-        (buildHomeManagerConfigurations { inherit (home-manager.linux) hostnames; })
-        (buildNixOSConfigurations { inherit (nixos) hostnames; })
+        (buildHomeManagerConfigurations { inherit (home-manager.x86_64-linux) hostnames; })
+        (buildNixOSConfigurations { inherit (nixos.x86_64-linux) hostnames; })
       ];
     };
-    build-macos = {
-      inherit (constants.macos) runs-on;
+    build-aarch64-linux = {
+      inherit (ubuntu-arm) runs-on;
+      steps = with steps; [
+        freeDiskSpaceStep
+        checkoutStep
+        (installNixActionStep { })
+        cachixActionStep
+        (buildHomeManagerConfigurations { inherit (home-manager.aarch64-linux) hostnames; })
+      ];
+    };
+    build-aarch64-darwin = {
+      inherit (macos) runs-on;
       steps = with steps; [
         checkoutStep
         (installNixActionStep { })
         cachixActionStep
-        (buildHomeManagerConfigurations { inherit (home-manager.darwin) hostnames; })
+        (buildHomeManagerConfigurations { inherit (home-manager.aarch64-darwin) hostnames; })
+        (buildNixDarwinConfigurations { inherit (nix-darwin.aarch64-darwin) hostnames; })
       ];
     };
   };
