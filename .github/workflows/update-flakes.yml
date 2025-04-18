@@ -2,12 +2,6 @@ jobs:
   update-flakes-x86_64-linux:
     runs-on: ubuntu-latest
     steps:
-      - uses: thiagokokada/free-disk-space@main
-        with:
-          opt: true
-          tool-cache: true
-          usrlocal: true
-          usrmisc: true
       - uses: actions/checkout@v4
       - uses: cachix/install-nix-action@v31
         with:
@@ -20,6 +14,12 @@ jobs:
           authToken: ${{ secrets.CACHIX_TOKEN }}
           extraPullNames: nix-community
           name: thiagokokada-nix-configs
+      - uses: thiagokokada/free-disk-space@main
+        with:
+          opt: true
+          tool-cache: true
+          usrlocal: true
+          usrmisc: true
       - name: Update flake.lock
         run: |
           git config user.name "${{ github.actor }}"

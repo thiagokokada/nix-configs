@@ -3,7 +3,7 @@ let
   nixFlags = [ "--print-build-logs" ];
 in
 with constants;
-{
+rec {
   freeDiskSpaceStep = {
     uses = actions.free-disk-space;
     "with" = {
@@ -46,6 +46,15 @@ with constants;
       authToken = "\${{ secrets.CACHIX_TOKEN }}";
     };
   };
+
+  withSharedSteps =
+    steps:
+    [
+      checkoutStep
+      (installNixActionStep { })
+      cachixActionStep
+    ]
+    ++ steps;
 
   validateFlakesStep = {
     name = "Validate Flakes";

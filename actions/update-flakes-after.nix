@@ -16,26 +16,24 @@ with constants;
     update-flakes-aarch64-darwin = {
       inherit (macos) runs-on;
       "if" = "\${{ github.event.workflow_run.conclusion == 'success' }}";
-      steps = with steps; [
-        checkoutStep
-        (installNixActionStep { })
-        cachixActionStep
-        (buildHomeManagerConfigurations { inherit (home-manager.aarch64-darwin) hostnames; })
-        (buildNixDarwinConfigurations { inherit (nix-darwin.aarch64-darwin) hostnames; })
-      ];
+      steps =
+        with steps;
+        withSharedSteps [
+          (buildHomeManagerConfigurations { inherit (home-manager.aarch64-darwin) hostnames; })
+          (buildNixDarwinConfigurations { inherit (nix-darwin.aarch64-darwin) hostnames; })
+        ];
     };
 
     update-flakes-aarch64-linux = {
       inherit (ubuntu-arm) runs-on;
       "if" = "\${{ github.event.workflow_run.conclusion == 'success' }}";
-      steps = with steps; [
-        freeDiskSpaceStep
-        checkoutStep
-        (installNixActionStep { })
-        cachixActionStep
-        (buildHomeManagerConfigurations { inherit (home-manager.aarch64-linux) hostnames; })
-        (buildNixOSConfigurations { inherit (nixos.aarch64-linux) hostnames; })
-      ];
+      steps =
+        with steps;
+        withSharedSteps [
+          freeDiskSpaceStep
+          (buildHomeManagerConfigurations { inherit (home-manager.aarch64-linux) hostnames; })
+          (buildNixOSConfigurations { inherit (nixos.aarch64-linux) hostnames; })
+        ];
     };
   };
 }
