@@ -1,8 +1,10 @@
 let
   constants = import ./constants.nix;
-  nixFlags = [ "--print-build-logs" ];
+  utils = import ./utils.nix;
+  sharedNixFlags = [ "--print-build-logs" ];
 in
 with constants;
+with utils;
 rec {
   freeDiskSpaceStep = {
     uses = actions.free-disk-space;
@@ -26,7 +28,7 @@ rec {
       extra_nix_config = builtins.concatStringsSep "\n" [
         "accept-flake-config = true"
         # Should avoid GitHub API rate limit
-        "access-tokens = github.com=\${{ secrets.GITHUB_TOKEN }}"
+        "access-tokens = github.com=${escapeGhVar "secrets.GITHUB_TOKEN"}"
       ];
     };
   };
@@ -36,7 +38,7 @@ rec {
     "with" = {
       name = "thiagokokada-nix-configs";
       extraPullNames = "nix-community";
-      authToken = "\${{ secrets.CACHIX_TOKEN }}";
+      authToken = escapeGhVar "secrets.CACHIX_TOKEN";
     };
   };
 
@@ -51,7 +53,7 @@ rec {
 
   validateFlakesStep = {
     name = "Validate Flakes";
-    run = "nix flake check --all-systems ${toString nixFlags}";
+    run = "nix flake check --all-systems ${toString sharedNixFlags}";
   };
 
   buildNixDarwinConfigurations =
@@ -64,7 +66,9 @@ rec {
       run = builtins.concatStringsSep "\n" (
         map (
           hostname:
-          "nix build ${toString (nixFlags ++ extraNixFlags)} '.#darwinConfigurations.${hostname}.system'"
+          "nix build ${
+            toString (sharedNixFlags ++ extraNixFlags)
+          } '.#darwinConfigurations.${hostname}.system'"
         ) hostnames
       );
     };
@@ -80,7 +84,7 @@ rec {
         map (
           hostname:
           "nix build ${
-            toString (nixFlags ++ extraNixFlags)
+            toString (sharedNixFlags ++ extraNixFlags)
           } '.#homeConfigurations.${hostname}.activationPackage'"
         ) hostnames
       );
@@ -97,7 +101,7 @@ rec {
         map (
           hostname:
           "nix build ${
-            toString (nixFlags ++ extraNixFlags)
+            toString (sharedNixFlags ++ extraNixFlags)
           } '.#nixosConfigurations.${hostname}.config.system.build.toplevel'"
         ) hostnames
       );
@@ -106,8 +110,8 @@ rec {
   updateFlakeLockStep = {
     name = "Update flake.lock";
     run = ''
-      git config user.name "''${{ github.actor }}"
-      git config user.email "''${{ github.actor }}@users.noreply.github.com"
+      git config user.name "${escapeGhVar "github.actor"}"
+      git config user.email "${escapeGhVar "github.actor"}@users.noreply.github.com"
       nix flake update --commit-lock-file
     '';
   };
@@ -122,7 +126,7 @@ rec {
       body = ''
         ## Run report
 
-        https://github.com/''${{ github.repository }}/actions/runs/''${{ github.run_id }}
+        https://github.com/${escapeGhVar "github.repository"}/actions/runs/${escapeGhVar "github.run_id"}
       '';
     };
   };

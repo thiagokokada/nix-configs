@@ -1,8 +1,10 @@
 let
   steps = import ./steps.nix;
   constants = import ./constants.nix;
+  utils = import ./utils.nix;
 in
 with constants;
+with utils;
 {
   name = "update-flakes-after";
   on = {
@@ -15,7 +17,7 @@ with constants;
   jobs = {
     update-flakes-aarch64-darwin = {
       inherit (macos) runs-on;
-      "if" = "\${{ github.event.workflow_run.conclusion == 'success' }}";
+      "if" = escapeGhVar "github.event.workflow_run.conclusion == 'success'";
       steps =
         with steps;
         withSharedSteps [
@@ -26,7 +28,7 @@ with constants;
 
     update-flakes-aarch64-linux = {
       inherit (ubuntu-arm) runs-on;
-      "if" = "\${{ github.event.workflow_run.conclusion == 'success' }}";
+      "if" = escapeGhVar "github.event.workflow_run.conclusion == 'success'";
       steps =
         with steps;
         withSharedSteps [

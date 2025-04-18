@@ -1,0 +1,3 @@
+{
+  escapeGhVar = var: "\${{ ${var} }}";
+}
