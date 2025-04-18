@@ -10,17 +10,6 @@ with constants;
     "workflow_dispatch"
   ];
   jobs = {
-    build-x86_64-linux = {
-      inherit (ubuntu) runs-on;
-      steps =
-        with steps;
-        withSharedSteps [
-          freeDiskSpaceStep
-          (buildHomeManagerConfigurations { inherit (home-manager.x86_64-linux) hostnames; })
-          (buildNixOSConfigurations { inherit (nixos.x86_64-linux) hostnames; })
-        ];
-    };
-
     build-aarch64-linux = {
       inherit (ubuntu-arm) runs-on;
       steps =
@@ -29,6 +18,17 @@ with constants;
           freeDiskSpaceStep
           (buildHomeManagerConfigurations { inherit (home-manager.aarch64-linux) hostnames; })
           (buildNixOSConfigurations { inherit (nixos.aarch64-linux) hostnames; })
+        ];
+    };
+
+    build-x86_64-linux = {
+      inherit (ubuntu) runs-on;
+      steps =
+        with steps;
+        withSharedSteps [
+          freeDiskSpaceStep
+          (buildHomeManagerConfigurations { inherit (home-manager.x86_64-linux) hostnames; })
+          (buildNixOSConfigurations { inherit (nixos.x86_64-linux) hostnames; })
         ];
     };
 

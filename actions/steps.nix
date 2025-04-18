@@ -18,25 +18,18 @@ rec {
     uses = actions.checkout;
   };
 
-  installNixActionStep =
-    {
-      extraNixConfig ? [ ],
-    }:
-    {
-      uses = actions.install-nix-action;
-      "with" = {
-        # Need to define a channel, otherwise it will use bash from environment
-        nix_path = "nixpkgs=channel:nixos-unstable";
-        extra_nix_config = builtins.concatStringsSep "\n" (
-          [
-            "accept-flake-config = true"
-            # Should avoid GitHub API rate limit
-            "access-tokens = github.com=\${{ secrets.GITHUB_TOKEN }}"
-          ]
-          ++ extraNixConfig
-        );
-      };
+  installNixActionStep = {
+    uses = actions.install-nix-action;
+    "with" = {
+      # Need to define a channel, otherwise it will use bash from environment
+      nix_path = "nixpkgs=channel:nixos-unstable";
+      extra_nix_config = builtins.concatStringsSep "\n" [
+        "accept-flake-config = true"
+        # Should avoid GitHub API rate limit
+        "access-tokens = github.com=\${{ secrets.GITHUB_TOKEN }}"
+      ];
     };
+  };
 
   cachixActionStep = {
     uses = actions.cachix-action;
@@ -51,7 +44,7 @@ rec {
     steps:
     [
       checkoutStep
-      (installNixActionStep { })
+      installNixActionStep
       cachixActionStep
     ]
     ++ steps;
@@ -132,14 +125,5 @@ rec {
         https://github.com/''${{ github.repository }}/actions/runs/''${{ github.run_id }}
       '';
     };
-  };
-
-  installUbuntuPackages = packages: {
-    name = "Install Ubuntu packages: ${builtins.concatStringsSep ", " packages}";
-    run = ''
-      export DEBIAN_FRONTEND=noninteractive
-      sudo apt-get update -q -y
-      sudo apt-get install -q -y ${toString packages}
-    '';
   };
 }

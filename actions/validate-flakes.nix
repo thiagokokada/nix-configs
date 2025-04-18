@@ -10,18 +10,22 @@ with constants;
     "workflow_dispatch"
   ];
   jobs = {
-    build-linux = {
+    build-aarch64-linux = {
+      inherit (ubuntu-arm) runs-on;
+      steps =
+        with steps;
+        withSharedSteps [
+          validateFlakesStep
+        ];
+    };
+
+    build-x86_64-linux = {
       inherit (ubuntu) runs-on;
-      steps = with steps; [
-        checkoutStep
-        (installUbuntuPackages [
-          "binfmt-support"
-          "qemu-user-static"
-        ])
-        (installNixActionStep { extraNixConfig = [ "extra-platforms = aarch64-linux" ]; })
-        cachixActionStep
-        validateFlakesStep
-      ];
+      steps =
+        with steps;
+        withSharedSteps [
+          validateFlakesStep
+        ];
     };
   };
 }
