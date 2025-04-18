@@ -99,9 +99,9 @@ in
   config = lib.mkIf config.home-manager.desktop.x11.i3.enable {
     home = {
       packages = with pkgs; [
-        arandr
         dex
         feh
+        lxde.lxrandr
         maim
         mons
         wmctrl

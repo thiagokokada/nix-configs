@@ -56,12 +56,6 @@
       flake = false;
     };
 
-    # custom packages
-    arandr = {
-      url = "gitlab:thiagokokada/arandr";
-      flake = false;
-    };
-
     # hyprland
     hyprland-go = {
       url = "github:thiagokokada/hyprland-go";

@@ -6,10 +6,6 @@ final: prev:
   libEx = outputs.lib;
 
   # custom packages
-  arandr = prev.arandr.overrideAttrs (_: {
-    src = inputs.arandr;
-  });
-
   inherit (inputs.home-manager.packages.${prev.system}) home-manager;
 
   inherit (inputs.gh-gfm-preview.packages.${prev.system}) gh-gfm-preview;
