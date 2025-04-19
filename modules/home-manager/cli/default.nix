@@ -48,7 +48,6 @@ in
         gnumake
         gnused
         hyperfine
-        ix
         jq
         less
         lsof

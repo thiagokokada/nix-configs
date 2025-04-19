@@ -155,10 +155,6 @@
      (prettify insert)
      slurp/barf-cp)))
 
-;; ix
-(use-package! ix
-  :defer t)
-
 ;; lsp
 (use-package! lsp-mode
   ; https://emacs-lsp.github.io/lsp-mode/tutorials/how-to-turn-off/

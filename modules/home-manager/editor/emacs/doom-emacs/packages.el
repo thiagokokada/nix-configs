@@ -7,7 +7,6 @@
 ;; (package! builtin-package :disable t)
 (package! evil-escape :disable t)
 (package! flycheck-clj-kondo :disable t)
-(package! ix)
 (package! lispyville)
 (package! lsp-ui :disable t)
 (package! sort-words)
