@@ -9,6 +9,8 @@ with constants;
     schedule = [ { cron = "40 4 * * 0,2,4,6"; } ];
     workflow_dispatch = null;
   };
+  inherit (steps) concurrency;
+
   jobs = {
     update-flakes-x86_64-linux = {
       inherit (ubuntu) runs-on;

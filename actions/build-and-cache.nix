@@ -9,6 +9,8 @@ with constants;
     "push"
     "workflow_dispatch"
   ];
+  inherit (steps) concurrency;
+
   jobs = {
     build-aarch64-linux = {
       inherit (ubuntu-arm) runs-on;

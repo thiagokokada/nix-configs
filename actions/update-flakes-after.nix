@@ -14,6 +14,8 @@ with utils;
     };
     workflow_dispatch = null;
   };
+  inherit (steps) concurrency;
+
   jobs = {
     update-flakes-aarch64-darwin = {
       inherit (macos) runs-on;

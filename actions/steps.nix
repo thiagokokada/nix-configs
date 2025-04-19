@@ -130,4 +130,9 @@ rec {
       '';
     };
   };
+
+  concurrency = {
+    group = "${escapeGhVar "github.workflow"}-${escapeGhVar "github.event.pull_request.number || github.ref"}";
+    cancel-in-progress = true;
+  };
 }
