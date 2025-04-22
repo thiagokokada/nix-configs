@@ -14,8 +14,8 @@
   ];
 
   home = {
-    username = lib.mkDefault "thiagoko";
-    homeDirectory = lib.mkDefault "/home/thiagoko";
-    stateVersion = lib.mkDefault "25.05";
+    username = lib.mkOptionDefault "thiagoko";
+    homeDirectory = lib.mkOptionDefault "/home/thiagoko";
+    stateVersion = lib.mkOptionDefault "25.05";
   };
 }

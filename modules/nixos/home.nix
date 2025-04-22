@@ -38,7 +38,7 @@ in
           ../home-manager
         ] ++ cfg.extraModules;
         # As a rule of thumb HM == NixOS version, unless something weird happens
-        home.stateVersion = config.system.stateVersion;
+        home.stateVersion = lib.mkDefault config.system.stateVersion;
       };
       extraSpecialArgs = {
         inherit flake libEx;

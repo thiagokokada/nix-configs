@@ -5,6 +5,7 @@
 
   nix-darwin.home.extraModules = [
     {
+      home.stateVersion = "24.05";
       home-manager = {
         editor.idea.enable = true;
         darwin.remapKeys.mappings = {
