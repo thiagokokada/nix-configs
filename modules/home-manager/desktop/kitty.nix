@@ -57,7 +57,7 @@ in
         }
         // lib.optionalAttrs cfg.scrollback-nvim.enable {
           "kitty_mod+h" = "kitty_scrollback_nvim";
-          "kitty_mode+g" = "kitty_scrollback_nvim --config ksb_builtin_last_cmd_output";
+          "kitty_mod+g" = "kitty_scrollback_nvim --config ksb_builtin_last_cmd_output";
         }
         // lib.optionalAttrs cfg.useSuperKeybindings {
           "super+t" = "new_tab_with_cwd";
@@ -74,7 +74,8 @@ in
           "super+0" = "goto_tab 10";
         };
       font = {
-        inherit (fonts.symbols) package name;
+        inherit (fonts.symbols) package;
+        name = "${fonts.symbols.name} Mono";
         size = cfg.fontSize;
       };
       settings = with colors; {
@@ -139,12 +140,13 @@ in
         listen_on = "unix:/tmp/kitty";
 
         # Fix for Wayland slow scrolling
-        touch_scroll_multiplier = lib.optionalString pkgs.stdenv.isLinux "5.0";
+        touch_scroll_multiplier = lib.mkIf pkgs.stdenv.isLinux "5.0";
       };
 
       darwinLaunchOptions = [
         "--single-instance"
-        (lib.getExe config.programs.zsh.package)
+        # It seems macOS sometimes start a non-login shell, force it here
+        "${lib.getExe config.programs.zsh.package} --login"
       ];
 
       shellIntegration.mode = "enabled";
