@@ -1,4 +1,9 @@
-{ config, lib, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   cfg = config.nixos.nix.diff;
@@ -9,13 +14,14 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    system.activationScripts.diff = ''
-      if [[ -e /run/current-system ]]; then
-        echo "showing changes compared to /run/current-system..."
-        ${lib.getExe config.nix.package} \
-          --extra-experimental-features 'nix-command' \
-          store diff-closures /run/current-system "$systemConfig" || true
-      fi
-    '';
+    system.activationScripts.diff =
+      # bash
+      ''
+        export PATH="${lib.makeBinPath [ config.nix.package ]}:$PATH"
+        if [[ -e '/run/current-system' ]]; then
+          echo "showing changes compared to /run/current-system..."
+          ${lib.getExe pkgs.nvd} diff '/run/current-system' "$systemConfig" || true
+        fi
+      '';
   };
 }

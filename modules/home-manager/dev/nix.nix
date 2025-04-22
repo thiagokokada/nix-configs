@@ -31,6 +31,7 @@ in
         nix-update
         nixfmt-rfc-style
         nurl
+        nvd
         statix
       ]
       ++ lib.optionals (cfg.languageServer == "nil") [ nil ]
