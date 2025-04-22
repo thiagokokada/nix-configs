@@ -60,7 +60,7 @@ in
       description = "Symbols font.";
       default = {
         package = pkgs.nerd-fonts.hack;
-        name = "Hack Nerd Font";
+        name = "Hack Nerd Font Mono";
       };
     };
   };

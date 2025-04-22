@@ -74,8 +74,7 @@ in
           "super+0" = "goto_tab 10";
         };
       font = {
-        inherit (fonts.symbols) package;
-        name = "${fonts.symbols.name} Mono";
+        inherit (fonts.symbols) package name;
         size = cfg.fontSize;
       };
       settings = with colors; {
