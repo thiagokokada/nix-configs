@@ -111,14 +111,6 @@ in
               ulimit -Sn 524288
             ''
           )
-          (lib.optionalString config.home-manager.crostini.enable # bash
-            ''
-              # Force truecolor support in Crostini
-              export COLORTERM=truecolor
-              # https://github.com/nix-community/home-manager/issues/3711
-              export LC_CTYPE=C.UTF-8
-            ''
-          )
           # bash
           ''
             # Source .profile
