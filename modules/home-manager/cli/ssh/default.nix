@@ -40,7 +40,7 @@
         };
       };
 
-      zsh.initExtra =
+      zsh.initContent =
         # Checks if SSH_AUTH_SOCK is set and the socket is working, or start a
         # new ssh-agent otherwise (works in any OS)
         # bash

@@ -20,11 +20,13 @@
     };
 
     programs.zsh = {
-      initExtra = ''
-        export ASDF_NODEJS_LEGACY_FILE_DYNAMIC_STRATEGY=latest_installed
-        fpath+=(${pkgs.asdf-vm}/share/zsh/site-functions)
-        source "${pkgs.asdf-vm}/share/asdf-vm/asdf.sh"
-      '';
+      initContent =
+        # bash
+        ''
+          export ASDF_NODEJS_LEGACY_FILE_DYNAMIC_STRATEGY=latest_installed
+          fpath+=(${pkgs.asdf-vm}/share/zsh/site-functions)
+          source "${pkgs.asdf-vm}/share/asdf-vm/asdf.sh"
+        '';
     };
   };
 }

@@ -20,8 +20,8 @@ in
 
   config = lib.mkIf cfg.enable {
     programs.zsh = {
-      initExtraBeforeCompInit =
-        lib.mkBefore # bash
+      initContent =
+        lib.mkOrder 550 # bash
           ''
             if [[ -f "${cfg.prefix}/bin/brew" ]]; then
               export HOMEBREW_NO_ENV_HINTS=1

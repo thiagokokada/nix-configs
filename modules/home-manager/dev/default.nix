@@ -45,9 +45,10 @@
           };
         };
       };
-      zsh.initExtra = # bash
+      zsh.initContent =
         # manually creating integrations since this is faster than calling
         # the `direnv hook zsh` itself during startup
+        # bash
         ''
           source ${
             pkgs.runCommand "direnv-hook-zsh" { buildInputs = [ config.programs.direnv.package ]; } ''

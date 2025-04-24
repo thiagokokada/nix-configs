@@ -151,7 +151,7 @@ in
       shellIntegration.mode = "enabled";
     };
 
-    programs.zsh.initExtra =
+    programs.zsh.initContent =
       lib.mkIf config.programs.zsh.enable # bash
         ''
           # Do not enable those alias in non-kitty terminal
