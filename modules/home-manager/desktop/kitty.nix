@@ -138,6 +138,11 @@ in
         allow_remote_control = "socket-only";
         listen_on = "unix:/tmp/kitty";
 
+        # Simulate middle-click copy-and-paste, but instead of copying to
+        # clipboard it copies to a private buffer
+        copy_on_select = "select_buffer";
+        "mouse_map middle release ungrabbed paste_from_buffer" = "select_buffer";
+
         # Fix for Wayland slow scrolling
         touch_scroll_multiplier = lib.mkIf pkgs.stdenv.isLinux "5.0";
       };
