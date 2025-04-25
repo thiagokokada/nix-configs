@@ -58,26 +58,14 @@ in
         // lib.optionalAttrs cfg.scrollback-nvim.enable {
           "kitty_mod+h" = "kitty_scrollback_nvim";
           "kitty_mod+g" = "kitty_scrollback_nvim --config ksb_builtin_last_cmd_output";
-        }
-        // lib.optionalAttrs cfg.useSuperKeybindings {
-          "super+t" = "new_tab_with_cwd";
-          "super+enter" = "new_window_with_cwd";
-          "super+1" = "goto_tab 1";
-          "super+2" = "goto_tab 2";
-          "super+3" = "goto_tab 3";
-          "super+4" = "goto_tab 4";
-          "super+5" = "goto_tab 5";
-          "super+6" = "goto_tab 6";
-          "super+7" = "goto_tab 7";
-          "super+8" = "goto_tab 8";
-          "super+9" = "goto_tab 9";
-          "super+0" = "goto_tab 10";
         };
       font = {
         inherit (fonts.symbols) package name;
         size = cfg.fontSize;
       };
       settings = with colors; {
+        kitty_mod = lib.mkIf cfg.useSuperKeybindings "super";
+
         # Colors
         foreground = base05;
         background = base00;
