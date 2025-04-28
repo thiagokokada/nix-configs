@@ -119,29 +119,18 @@ in
         ];
 
         initContent = lib.mkMerge [
-          (lib.mkOrder 900
-            # bash
-            ''
-              # try to correct the spelling of commands
-              setopt correct
-              # disable C-S/C-Q
-              setopt noflowcontrol
-              # disable "no matches found" check
-              unsetopt nomatch
-
-              # disable clock
-              unset RPROMPT
-            ''
-          )
           (lib.mkOrder 1000
             # bash
             ''
+              # disable clock
+              unset RPROMPT
+
               # prezto default matching does annoying partial matching
               # e.g.: something-|.json
               zstyle ':completion:*' matcher-list 'm:{[:lower:]}={[:upper:]}' 'm:{[:upper:]}={[:lower:]}' 'r:|=* r:|=*'
             ''
           )
-          (lib.mkOrder 1200
+          (lib.mkOrder 1300
             # bash
             ''
               # source contents from ~/.zshrc.d/*.zsh
