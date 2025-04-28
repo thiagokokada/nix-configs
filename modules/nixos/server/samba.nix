@@ -42,7 +42,7 @@ in
                 "preferred master" = true;
                 "server string" = hostName;
                 "netbios name" = hostName;
-                "use sendfile" = "yes";
+                "use sendfile" = true;
                 "hosts allow" = lib.concatStringsSep " " [
                   "192.168.0.0/16"
                   "172.16.0.0/12"
@@ -62,9 +62,9 @@ in
             }
             // (lib.mapAttrs (_: path: {
               inherit path;
-              "browseable" = "yes";
-              "read only" = "no";
-              "guest ok" = "no";
+              "browseable" = true;
+              "read only" = false;
+              "guest ok" = false;
               "create mask" = "0644";
               "directory mask" = "0755";
               "force user" = username;
