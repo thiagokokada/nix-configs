@@ -40,9 +40,8 @@ in
       lib.hm.dag.entryAfter [ "writeBoundary" ] # bash
         ''
           source="${
-            pkgs.substituteAll {
+            pkgs.replaceVars ./remap-keys.plist {
               inherit (cfg) productID vendorID;
-              src = ./remap-keys.plist;
               remappings = lib.pipe cfg.mappings [
                 (lib.mapAttrsToList (
                   src: dst: # json
