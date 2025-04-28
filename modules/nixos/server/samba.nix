@@ -43,8 +43,15 @@ in
                 "server string" = hostName;
                 "netbios name" = hostName;
                 "use sendfile" = "yes";
-                "hosts allow" = "192.168.0.0/16 172.16.0.0/12 10.0.0.0/8 localhost";
+                "hosts allow" = lib.concatStringsSep " " [
+                  "192.168.0.0/16"
+                  "172.16.0.0/12"
+                  "10.0.0.0/8"
+                  (lib.optionalString config.nixos.server.tailscale.enable "100.64.0.0/10")
+                  "localhost"
+                ];
                 "hosts deny" = "0.0.0.0/0";
+                "bind interfaces only" = lib.mkIf config.nixos.server.tailscale.enable false;
                 "guest account" = "nobody";
                 "map to guest" = "bad user";
                 "mangled names" = false;
