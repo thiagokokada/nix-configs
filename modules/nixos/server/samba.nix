@@ -52,7 +52,7 @@ in
                 ];
                 "hosts deny" = "0.0.0.0/0";
                 "bind interfaces only" = lib.mkIf config.nixos.server.tailscale.enable false;
-                "guest account" = username;
+                "guest account" = "nobody";
                 "map to guest" = "bad user";
                 "mangled names" = false;
                 "vfs objects" = "catia";
