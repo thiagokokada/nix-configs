@@ -131,7 +131,11 @@ in
 
               # disable clock
               unset RPROMPT
-
+            ''
+          )
+          (lib.mkOrder 1000
+            # bash
+            ''
               # prezto default matching does annoying partial matching
               # e.g.: something-|.json
               zstyle ':completion:*' matcher-list 'm:{[:lower:]}={[:upper:]}' 'm:{[:upper:]}={[:lower:]}' 'r:|=* r:|=*'
