@@ -65,6 +65,8 @@ in
               "guest ok" = false;
               "create mask" = "0644";
               "directory mask" = "0755";
+              # Needs to manually add the password for a new user using:
+              # smbpasswd -a <username>
               "force user" = username;
               "force group" = group;
             }) cfg.shares);
