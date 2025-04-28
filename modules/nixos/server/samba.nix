@@ -54,7 +54,8 @@ in
               };
             }
             // (lib.mapAttrs (_: path: {
-              browseable = "yes";
+              inherit path;
+              "browseable" = "yes";
               "read only" = "no";
               "guest ok" = "no";
               "create mask" = "0644";
@@ -62,6 +63,12 @@ in
               "force user" = username;
               "force group" = group;
             }) cfg.shares);
+        };
+
+        # advertise to Windows hosts
+        samba-wsdd = {
+          enable = true;
+          openFirewall = true;
         };
       };
     };
