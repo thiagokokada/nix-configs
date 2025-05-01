@@ -122,6 +122,8 @@ in
           (lib.mkOrder 1000
             # bash
             ''
+              # fix "no matches found" when using glob characters
+              setopt no_nomatch
               # disable clock
               unset RPROMPT
 
