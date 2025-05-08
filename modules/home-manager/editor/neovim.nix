@@ -621,9 +621,6 @@ in
                   end
                 end
 
-                -- conflicts with mini-hipatterns
-                vim.api.nvim_set_hl(0, "@comment.todo", { link = "None" })
-
                 -- https://gist.github.com/RaafatTurki/64d89abf326e9fce6eb717f7c1f8a97e
                 function LspRename()
                   local curr_name = vim.fn.expand("<cword>")
