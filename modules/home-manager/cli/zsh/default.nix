@@ -92,33 +92,24 @@ in
           share = true;
         };
 
-        envExtra = lib.mkBefore (
-          lib.optionalString pkgs.stdenv.isDarwin # bash
-            ''
-              # Source nix-daemon profile since macOS updates can remove it from /etc/zshrc
-              # https://github.com/NixOS/nix/issues/3616
-              if [ -e '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh' ]; then
-                . '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh'
-              fi
-            ''
-        );
-
-        profileExtra = lib.concatStringsSep "\n" [
-          (lib.optionalString pkgs.stdenv.isDarwin # bash
-            ''
-              # Set the soft ulimit to something sensible
-              # https://developer.apple.com/forums/thread/735798
-              ulimit -Sn 524288
-            ''
-          )
-          # bash
-          ''
-            # Source .profile
-            [[ -e ~/.profile ]] && emulate sh -c '. ~/.profile'
-          ''
-        ];
-
         initContent = lib.mkMerge [
+          (lib.mkOrder 100 (
+            lib.optionalString pkgs.stdenv.isDarwin # bash
+              ''
+                # Source nix-daemon profile since macOS updates can remove it from /etc/zshrc
+                # https://github.com/NixOS/nix/issues/3616
+                if [ -e '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh' ]; then
+                  . '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh'
+                fi
+                # Set the soft ulimit to something sensible
+                # https://developer.apple.com/forums/thread/735798
+                ulimit -Sn 524288
+
+                # For some reason the sessionPath is not working in macOS
+                export PATH="$HOME/.local/bin:$PATH"
+                export MANPATH="$MANPATH:"
+              ''
+          ))
           (lib.mkOrder 1000
             # bash
             ''
