@@ -88,19 +88,12 @@ in
         };
 
       packages = with pkgs; [
-        android-file-transfer
-        audacious
         desktop-file-utils
         evince
         file-roller
         gnome-disk-utility
         gthumb
-        libreoffice-fresh
         open-browser
-        (mcomix.override {
-          unrarSupport = true;
-          pdfSupport = false;
-        })
         (nemo-with-extensions.override { extensions = [ nemo-fileroller ]; })
         pamixer
         pwvucontrol
