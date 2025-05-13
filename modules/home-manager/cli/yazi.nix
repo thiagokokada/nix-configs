@@ -6,6 +6,7 @@
 }:
 
 let
+  enableIcons = config.home-manager.cli.icons.enable;
   cfg = config.home-manager.cli.yazi;
 in
 {
@@ -13,14 +14,10 @@ in
     enable = lib.mkEnableOption "yazi config" // {
       default = config.home-manager.cli.enable;
     };
-    # Do not forget to set 'Hack Nerd Mono Font' as the terminal font
-    icons.enable = lib.mkEnableOption "icons" // {
-      default = config.home-manager.desktop.enable || config.home-manager.darwin.enable;
-    };
   };
 
   config = lib.mkIf cfg.enable {
-    home.packages = lib.optionals cfg.icons.enable [
+    home.packages = lib.optionals enableIcons [
       config.theme.fonts.symbols.package
     ];
 
@@ -42,8 +39,8 @@ in
         flavor = {
           use = "catppuccin-macchiato";
         };
-        icon = lib.mkIf (!cfg.icons.enable) { rules = [ ]; };
-        status = lib.mkIf (!cfg.icons.enable) {
+        icon = lib.mkIf (!enableIcons) { rules = [ ]; };
+        status = lib.mkIf (!enableIcons) {
           separator_open = "";
           separator_close = "";
         };

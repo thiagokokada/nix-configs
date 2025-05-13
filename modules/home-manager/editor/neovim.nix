@@ -7,6 +7,7 @@
 }:
 
 let
+  enableIcons = config.home-manager.cli.icons.enable;
   toLua = lib.generators.toLua { };
   cfg = config.home-manager.editor.neovim;
 in
@@ -14,10 +15,6 @@ in
   options.home-manager.editor.neovim = {
     enable = lib.mkEnableOption "Neovim config" // {
       default = config.home-manager.editor.enable;
-    };
-    # Do not forget to set 'Hack Nerd Mono Font' as the terminal font
-    icons.enable = lib.mkEnableOption "icons" // {
-      default = config.home-manager.desktop.enable || config.home-manager.darwin.enable;
     };
     lsp.enable = lib.mkEnableOption "LSP" // {
       default = config.home-manager.dev.enable;
@@ -40,7 +37,7 @@ in
         wl-clipboard
         xclip
       ]
-      ++ lib.optionals cfg.icons.enable [
+      ++ lib.optionals enableIcons [
         config.theme.fonts.symbols.package
       ];
 
@@ -209,7 +206,7 @@ in
             type = "lua";
             config = # lua
               ''
-                local enable_icons = ${toLua cfg.icons.enable}
+                local enable_icons = ${toLua enableIcons}
                 local fzf = require("fzf-lua")
                 fzf.setup {
                   "telescope",
@@ -267,14 +264,14 @@ in
             type = "lua";
             config = # lua
               ''
-                ${lib.optionalString cfg.icons.enable # lua
+                ${lib.optionalString enableIcons # lua
                   ''
                     local icons = require('mini.icons')
                     icons.setup {}
                     icons.mock_nvim_web_devicons()
                   ''
                 }
-                local enable_icons = ${toLua cfg.icons.enable}
+                local enable_icons = ${toLua enableIcons}
 
                 require('mini.ai').setup {
                   -- HACK: not recommended in docs so not sure if safe or not
@@ -444,7 +441,7 @@ in
                 local oil = require("oil")
                 oil.setup {
                   columns = {
-                    ${lib.optionalString cfg.icons.enable (toLua "icons")}
+                    ${lib.optionalString enableIcons (toLua "icons")}
                   },
                   skip_confirm_for_simple_edits = true,
                   constrain_cursor = "name",

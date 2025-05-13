@@ -42,10 +42,6 @@ in
     enable = lib.mkEnableOption "ZSH config" // {
       default = config.home-manager.cli.enable;
     };
-    # Do not forget to set 'Hack Nerd Mono Font' as the terminal font
-    icons.enable = lib.mkEnableOption "icons" // {
-      default = config.home-manager.desktop.enable || config.home-manager.darwin.enable;
-    };
   };
 
   config = lib.mkIf cfg.enable {

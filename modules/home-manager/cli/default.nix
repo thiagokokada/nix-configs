@@ -24,6 +24,10 @@ in
     enable = lib.mkEnableOption "CLI config" // {
       default = true;
     };
+    # Do not forget to set 'Hack Nerd Mono Font' as the terminal font
+    icons.enable = lib.mkEnableOption "terminal icons" // {
+      default = config.home-manager.desktop.enable || config.home-manager.darwin.enable;
+    };
   };
 
   config = lib.mkIf cfg.enable {

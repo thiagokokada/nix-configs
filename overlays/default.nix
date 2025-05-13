@@ -63,9 +63,9 @@ final: prev:
           inherit (prev) system;
           configuration = {
             home-manager = {
+              cli.icons.enable = false;
               dev.nix.enable = true;
               editor.neovim = {
-                icons.enable = false;
                 lsp.enable = true;
                 treeSitter.enable = true;
               };
