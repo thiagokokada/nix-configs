@@ -46,10 +46,6 @@
       enable = true;
       gpu = "amd";
     };
-    laptop.tlp.batteryThreshold = {
-      start = 75;
-      stop = 80;
-    };
     server = {
       ssh.enable = true;
       tailscale.enable = true;
@@ -64,8 +60,15 @@
     "-h 900"
   ];
 
-  # Used for firmware updates
-  services.fwupd.enable = true;
+  services = {
+    # Used for firmware updates
+    fwupd.enable = true;
+    tlp.settings = {
+      # Set battery thresholds
+      START_CHARGE_THRESH_BAT0 = 75;
+      STOP_CHARGE_THRESH_BAT0 = 80;
+    };
+  };
 
   # https://gitlab.freedesktop.org/pipewire/pipewire/-/issues/1849
   systemd.services.fix-mic-light = {

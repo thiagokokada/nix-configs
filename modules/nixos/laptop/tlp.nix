@@ -6,23 +6,7 @@ in
 {
   options.nixos.laptop.tlp = {
     enable = lib.mkEnableOption "TLP config" // {
-      default = config.nixos.laptop.enable;
-    };
-    # Use `tlp fullcharge` while connect though AC to charge it to 100% when
-    # this option is set.
-    batteryThreshold = {
-      start = lib.mkOption {
-        default = null;
-        example = 75;
-        type = with lib.types; nullOr int;
-        description = "Start of battery charging threshold.";
-      };
-      stop = lib.mkOption {
-        default = null;
-        example = 80;
-        type = with lib.types; nullOr int;
-        description = "Stop of battery charging threshold.";
-      };
+      default = !config.services.power-profiles-daemon.enable && config.nixos.laptop.enable;
     };
   };
 
@@ -42,9 +26,6 @@ in
         PLATFORM_PROFILE_ON_AC = lib.mkDefault "performance";
         # Enable runtime power management
         RUNTIME_PM_ON_AC = lib.mkDefault "auto";
-        # Set battery thresholds
-        START_CHARGE_THRESH_BAT0 = lib.mkIf (cfg.batteryThreshold.start != null) cfg.batteryThreshold.start;
-        STOP_CHARGE_THRESH_BAT0 = lib.mkIf (cfg.batteryThreshold.stop != null) cfg.batteryThreshold.stop;
       };
     };
   };
