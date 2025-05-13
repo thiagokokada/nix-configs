@@ -40,7 +40,9 @@ in
         wl-clipboard
         xclip
       ]
-      ++ lib.optionals cfg.icons.enable [ config.home-manager.desktop.theme.fonts.symbols.package ];
+      ++ lib.optionals cfg.icons.enable [
+        config.home-manager.window-manager.theme.fonts.symbols.package
+      ];
 
     programs.neovim = {
       enable = true;

@@ -6,7 +6,7 @@
 }:
 
 let
-  inherit (config.home-manager.desktop.theme) colors fonts;
+  inherit (config.home-manager.window-manager.theme) colors fonts;
   cfg = config.home-manager.desktop.kitty;
 in
 {
@@ -118,7 +118,7 @@ in
         tab_title_template = "{fmt.fg.red}{bell_symbol}{activity_symbol}{fmt.fg.tab}{tab.last_focused_progress_percent}{index}:{title[:30]}";
 
         # Misc
-        inherit (config.home-manager.desktop.default) editor;
+        inherit (config.home-manager.window-manager.default) editor;
         strip_trailing_spaces = "smart";
         clipboard_control = "write-clipboard write-primary read-clipboard read-primary";
         background_opacity = toString cfg.opacity;
