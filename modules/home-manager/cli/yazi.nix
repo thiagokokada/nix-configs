@@ -39,10 +39,23 @@ in
         flavor = {
           use = "catppuccin-macchiato";
         };
-        icon = lib.mkIf (!enableIcons) { rules = [ ]; };
+        # https://yazi-rs.github.io/docs/faq/#dont-like-nerd-fonts
+        icon = lib.mkIf (!enableIcons) {
+          globs = [ ];
+          dirs = [ ];
+          files = [ ];
+          exts = [ ];
+          conds = [ ];
+        };
         status = lib.mkIf (!enableIcons) {
-          separator_open = "";
-          separator_close = "";
+          sep_left = {
+            open = "";
+            close = "";
+          };
+          sep_right = {
+            open = "";
+            close = "";
+          };
         };
       };
     };
