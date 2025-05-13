@@ -89,7 +89,16 @@ in
         };
 
         initContent = lib.mkMerge [
-          (lib.mkOrder 100 (
+          # Prezto module overrides .zshenv, so we need to manually load here
+          # This is safe to do before anything since there are only environment
+          # variables here
+          (lib.mkOrder 100 # bash
+            ''
+              # Environment variables
+              . "${config.home.profileDirectory}/etc/profile.d/hm-session-vars.sh"
+            ''
+          )
+          (lib.mkOrder 150 (
             lib.optionalString pkgs.stdenv.isDarwin # bash
               ''
                 # Source nix-daemon profile since macOS updates can remove it from /etc/zshrc
@@ -100,10 +109,6 @@ in
                 # Set the soft ulimit to something sensible
                 # https://developer.apple.com/forums/thread/735798
                 ulimit -Sn 524288
-
-                # For some reason the sessionPath is not working in macOS
-                export PATH="$HOME/.local/bin:$PATH"
-                export MANPATH="$MANPATH:"
               ''
           ))
           (lib.mkOrder 1000
