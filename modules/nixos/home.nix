@@ -33,7 +33,7 @@ in
       useUserPackages = true;
       useGlobalPkgs = true;
       users.${config.meta.username} = {
-        inherit (config) meta device;
+        inherit (config) meta device theme;
         imports = [
           ../home-manager
         ] ++ cfg.extraModules;

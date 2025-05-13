@@ -34,11 +34,9 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  home-manager.users.${config.meta.username} = {
-    home-manager.window-manager.theme = {
-      fonts.dpi = 175;
-      wallpaper.path = pkgs.wallpapers.hatsune-miku_stylized-ultrawide;
-    };
+  theme = {
+    fonts.dpi = 175;
+    wallpaper.path = pkgs.wallpapers.hatsune-miku_stylized-ultrawide;
   };
 
   nixos = {

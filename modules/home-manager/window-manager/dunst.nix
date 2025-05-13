@@ -19,7 +19,7 @@
         inherit name package;
       };
       settings =
-        with config.home-manager.window-manager.theme.colors;
+        with config.theme.colors;
         let
           theme = {
             background = base00;
@@ -27,8 +27,8 @@
           };
         in
         {
-          global = with config.home-manager.window-manager.theme.fonts; {
-            font = "${gui.name} 8";
+          global = {
+            font = "${config.theme.fonts.gui.name} 8";
             markup = true;
             format = "<b>%s</b>\\n%b";
             sort = true;

@@ -53,7 +53,7 @@ in
           areaScreenshot = "${lib.getExe pkgs.hyprshot} -m region -o ${config.xdg.userDirs.pictures}";
         in
         {
-          exec-once = with config.home-manager.window-manager.theme.wallpaper; [
+          exec-once = with config.theme.wallpaper; [
             # For DPI configuration and other Xresources config
             "${lib.getExe pkgs.xorg.xrdb} -merge ${config.xresources.path}"
             # Set wallpaper
@@ -71,9 +71,7 @@ in
             # use this if they aren't displayed properly:
             "_JAVA_AWT_WM_NONREPARENTING,1"
           ];
-          monitor = ",preferred,auto,${
-            toString (config.home-manager.window-manager.theme.fonts.dpi / 100.0)
-          }";
+          monitor = ",preferred,auto,${toString (config.theme.fonts.dpi / 100.0)}";
           # https://github.com/hyprwm/Hyprland/issues/4337
           # Resolution should divide cleanly by scale to not trigger check
           # e.g: 3440 / 1.6 = 2150.0 and 1440 / 1.6 = 900.0
@@ -132,7 +130,7 @@ in
             ];
           };
           misc = {
-            font_family = config.home-manager.window-manager.theme.fonts.gui.name;
+            font_family = config.theme.fonts.gui.name;
             disable_hyprland_logo = true;
             # force_default_wallpaper = 2; # hypr-chan!
             key_press_enables_dpms = true;

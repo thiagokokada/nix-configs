@@ -21,7 +21,7 @@ in
 
   config = lib.mkIf cfg.enable {
     home.packages = lib.optionals cfg.icons.enable [
-      config.home-manager.window-manager.theme.fonts.symbols.package
+      config.theme.fonts.symbols.package
     ];
 
     programs.yazi = {

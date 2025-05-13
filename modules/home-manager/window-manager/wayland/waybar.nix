@@ -301,8 +301,8 @@ in
           };
       };
       style =
-        with config.home-manager.window-manager.theme.colors;
-        with config.home-manager.window-manager.theme.fonts;
+        with config.theme.colors;
+        with config.theme.fonts;
         let
           concatFonts =
             fonts:

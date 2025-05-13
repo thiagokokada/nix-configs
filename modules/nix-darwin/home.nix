@@ -34,7 +34,7 @@ in
       useUserPackages = true;
       useGlobalPkgs = true;
       users.${username} = {
-        inherit (config) meta device;
+        inherit (config) meta device theme;
         imports = [ ../home-manager ] ++ cfg.extraModules;
         # Can't set the same as nix-darwin, since it uses a different state
         # format

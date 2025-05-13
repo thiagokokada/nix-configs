@@ -11,7 +11,7 @@ in
   config = lib.mkIf cfg.enable {
     programs.fuzzel = {
       enable = true;
-      settings = with config.home-manager.window-manager.theme.fonts; {
+      settings = with config.theme.fonts; {
         main = {
           inherit (config.home-manager.window-manager.default) terminal;
           font = "${gui.name}:style=regular:size=14";
@@ -22,7 +22,7 @@ in
           line-height = 28;
         };
         colors =
-          with config.home-manager.window-manager.theme.colors;
+          with config.theme.colors;
           let
             fixColor = color: "${lib.removePrefix "#" color}ff";
           in

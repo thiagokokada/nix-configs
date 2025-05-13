@@ -95,11 +95,11 @@ in
           };
 
         output = {
-          "*" = with config.home-manager.window-manager.theme.wallpaper; {
+          "*" = with config.theme.wallpaper; {
             bg = "${path} ${scale}";
             # DPI
-            scale = toString (config.home-manager.window-manager.theme.fonts.dpi / 100.0);
-            subpixel = config.home-manager.window-manager.theme.fonts.fontconfig.subpixel.rgba;
+            scale = toString (config.theme.fonts.dpi / 100.0);
+            subpixel = config.home-manager.window-manager.fonts.fontconfig.subpixel.rgba;
           };
         };
       };

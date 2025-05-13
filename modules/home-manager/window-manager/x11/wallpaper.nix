@@ -23,7 +23,7 @@
 
         Install.WantedBy = [ "graphical-session.target" ];
 
-        Service = with config.home-manager.window-manager.theme.wallpaper; {
+        Service = with config.theme.wallpaper; {
           ExecStart = lib.escapeShellArgs [
             (lib.getExe pkgs.feh)
             "--no-fehbg"

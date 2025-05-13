@@ -22,12 +22,12 @@
             rofi-emoji
           ];
         };
-      font = with config.home-manager.window-manager.theme.fonts; "${gui.package} 14";
+      font = with config.theme.fonts; "${gui.package} 14";
       theme =
         let
           l = config.lib.formats.rasi.mkLiteral;
         in
-        with config.home-manager.window-manager.theme.colors;
+        with config.theme.colors;
         {
           "*" = {
             background-color = l base00;

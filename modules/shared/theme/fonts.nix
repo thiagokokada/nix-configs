@@ -1,12 +1,6 @@
-{
-  config,
-  pkgs,
-  lib,
-  ...
-}:
+{ pkgs, lib, ... }:
 
 let
-  cfg = config.home-manager.window-manager.theme.fonts;
   fontType = lib.types.submodule {
     options = {
       package = lib.mkOption {
@@ -21,13 +15,7 @@ let
   };
 in
 {
-  imports = [ ./fontconfig.nix ];
-
-  options.home-manager.window-manager.theme.fonts = {
-    enable = lib.mkEnableOption "font config" // {
-      default = config.home-manager.window-manager.theme.enable || config.home-manager.darwin.enable;
-    };
-
+  options.theme.fonts = {
     dpi = lib.mkOption {
       type = lib.types.int;
       description = "Font dpi.";
@@ -63,21 +51,5 @@ in
         name = "Hack Nerd Font Mono";
       };
     };
-  };
-
-  config = lib.mkIf cfg.enable {
-    home.packages =
-      with pkgs;
-      with cfg;
-      [
-        gui.package
-        icons.package
-        symbols.package
-        # Noto fonts is a good fallback font
-        noto-fonts
-        noto-fonts-cjk-sans
-        noto-fonts-cjk-serif
-        noto-fonts-color-emoji
-      ];
   };
 }

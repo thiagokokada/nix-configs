@@ -6,10 +6,10 @@
 }:
 
 let
-  cfg = config.home-manager.window-manager.theme.fonts.fontconfig;
+  cfg = config.home-manager.window-manager.fonts.fontconfig;
 in
 {
-  options.home-manager.window-manager.theme.fonts.fontconfig = {
+  options.home-manager.window-manager.fonts.fontconfig = {
     enable = lib.mkEnableOption "Fontconfig config" // {
       default = osConfig.fonts.fontconfig.enable or false;
     };

@@ -17,7 +17,7 @@
       enable = true;
       inactiveInterval = 10;
       lockCmd =
-        with config.home-manager.window-manager.theme.fonts;
+        with config.theme.fonts;
         toString (
           pkgs.writeShellScript "lock-screen" ''
             export XSECURELOCK_FORCE_GRAB=1

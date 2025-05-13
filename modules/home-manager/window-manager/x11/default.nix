@@ -59,8 +59,8 @@ in
       inherit (config.home.file.".xsession") executable text;
     };
 
-    xresources.properties = with config.home-manager.window-manager.theme.fonts; {
-      "Xft.dpi" = toString dpi;
+    xresources.properties = {
+      "Xft.dpi" = toString config.theme.fonts.dpi;
     };
 
     xsession = {

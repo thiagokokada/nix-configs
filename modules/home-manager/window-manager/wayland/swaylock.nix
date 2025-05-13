@@ -19,8 +19,8 @@ in
   config = lib.mkIf cfg.enable {
     programs.swaylock = {
       enable = true;
-      settings = with config.home-manager.window-manager.theme.colors; {
-        font = config.home-manager.window-manager.theme.fonts.gui.name;
+      settings = with config.theme.colors; {
+        font = config.theme.fonts.gui.name;
         indicator-caps-lock = true;
         show-keyboard-layout = true;
         # https://stackoverflow.com/a/506662
@@ -28,10 +28,10 @@ in
           with pkgs;
           toString (
             runCommand "wallpaper-pixelated" { buildInputs = [ imagemagick ]; } ''
-              convert -scale 1% -scale 10000% ${config.home-manager.window-manager.theme.wallpaper.path} $out
+              convert -scale 1% -scale 10000% ${config.theme.wallpaper.path} $out
             ''
           );
-        scaling = config.home-manager.window-manager.theme.wallpaper.scale;
+        scaling = config.theme.wallpaper.scale;
 
         inside-color = base01;
         line-color = base01;

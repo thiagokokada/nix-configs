@@ -16,7 +16,7 @@
   statusCommand ? null,
   alt ? "Mod1",
   modifier ? "Mod4",
-  bars ? with config.home-manager.window-manager.theme.colors; [
+  bars ? with config.theme.colors; [
     {
       inherit fonts statusCommand;
 
@@ -53,7 +53,7 @@
       };
     }
   ],
-  fonts ? with config.home-manager.window-manager.theme.fonts; {
+  fonts ? with config.theme.fonts; {
     names = lib.flatten [
       gui.name
       icons.name
@@ -181,7 +181,7 @@ in
       terminal
       ;
 
-    colors = with config.home-manager.window-manager.theme.colors; {
+    colors = with config.theme.colors; {
       background = base07;
       focused = {
         background = base0D;

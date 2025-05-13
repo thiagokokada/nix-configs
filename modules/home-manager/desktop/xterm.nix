@@ -16,7 +16,7 @@
       xterm
     ];
 
-    xresources.extraConfig = with config.home-manager.window-manager.theme.colors; ''
+    xresources.extraConfig = with config.theme.colors; ''
       #define base00 ${base00}
       #define base01 ${base01}
       #define base02 ${base02}
