@@ -27,18 +27,10 @@ writeShellApplication {
       HM_PROFILE=0
 
       usage() {
-      if [[ "$NIXOS" == 1 ]]; then
-          echo "Clean-up NixOS's /nix/store."
-      else
-          echo "Clean-up nix's /nix/store."
-      fi
+          echo "Clean-up /nix/store."
           echo
           echo "Usage:"
-      if [[ "$NIXOS" == 1 ]]; then
-          echo "nixos-cleanup [--auto] [--optimize]"
-      else
-          echo "nix-cleanup [--auto] [--optimize]"
-      fi
+          echo "$(basename "$0") [--hm-profiles] [--auto] [--optimize]"
           echo
           echo "Arguments:"
           echo "  --hm-profiles  Remove home-manager profiles."
