@@ -7,8 +7,6 @@
 }:
 
 let
-  attrsets = import ./attrsets.nix { inherit (nixpkgs) lib; };
-  inherit (attrsets) eachDefaultSystem;
   setHostname =
     hostname:
     (
@@ -81,7 +79,7 @@ in
           type = "app";
           program = nixpkgs.lib.getExe (
             pkgs.writeShellScriptBin "activate" ''
-              ${
+              sudo ${
                 pkgs.lib.getExe' nix-darwin.packages.${pkgs.system}.darwin-rebuild "darwin-rebuild"
               } switch --flake '.#${hostname}'
             ''

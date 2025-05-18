@@ -1,4 +1,4 @@
-{ flake, ... }:
+{ config, flake, ... }:
 
 {
   imports = [
@@ -9,4 +9,6 @@
     ./nix
     ./system.nix
   ];
+
+  system.primaryUser = config.meta.username;
 }
