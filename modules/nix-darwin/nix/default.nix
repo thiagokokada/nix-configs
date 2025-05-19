@@ -2,6 +2,7 @@
   config,
   lib,
   libEx,
+  pkgs,
   flake,
   ...
 }:
@@ -17,6 +18,8 @@ in
   };
 
   config = lib.mkIf cfg.enable {
+    environment.systemPackages = with pkgs; [ darwin-cleanup ];
+
     nix = {
       gc = {
         automatic = true;

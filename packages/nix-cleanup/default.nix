@@ -1,16 +1,25 @@
 {
-  writeShellApplication,
+  lib,
   coreutils,
-  gawk,
   findutils,
+  gawk,
   gnugrep,
   home-manager,
   nix,
+  writeShellApplication,
   isNixOS ? false,
+  isNixDarwin ? false,
 }:
 
 writeShellApplication {
-  name = if isNixOS then "nixos-cleanup" else "nix-cleanup";
+  name =
+    if isNixOS then
+      "nixos-cleanup"
+    else if isNixDarwin then
+      "darwin-cleanup"
+    else
+      "nix-cleanup";
+
   runtimeInputs = [
     coreutils
     findutils
@@ -21,7 +30,6 @@ writeShellApplication {
   ];
   text = # bash
     ''
-      readonly NIXOS=${if isNixOS then "1" else "0"}
       AUTO=0
       OPTIMIZE=0
       HM_PROFILE=0
@@ -74,8 +82,7 @@ writeShellApplication {
 
       cleanup() {
           local -r auto="$1"
-          local -r nixos="$2"
-          local -r optimize="$3"
+          local -r optimize="$2"
 
           if [[ "$auto" == 1 ]]; then
               echo "[INFO] Removing auto created GC roots..."
@@ -90,14 +97,17 @@ writeShellApplication {
 
           echo "[INFO] Running GC..."
           nix-collect-garbage -d
-          if [[ "$nixos" == 1 ]]; then
+          ${lib.optionalString isNixOS
+            # bash
+            ''
               echo "[INFO] Rebuilding NixOS to remove old boot entries..."
               if [[ -f /etc/nixos/flake.nix ]]; then
                   nixos-rebuild boot
               else
                   nixos-rebuild boot --flake github:thiagokokada/nix-configs
               fi
-          fi
+            ''
+          }
           if [[ "$optimize" == 1 ]]; then
               echo "[INFO] Optimizing nix store..."
               nix-store --optimize
@@ -105,10 +115,17 @@ writeShellApplication {
       }
 
       cleanup_hm "$HM_PROFILE"
-      if [[ "$NIXOS" == 1 ]]; then
-          sudo bash -c "$(declare -f cleanup); cleanup $AUTO $NIXOS $OPTIMIZE"
-      else
-          cleanup "$AUTO" "$NIXOS" "$OPTIMIZE"
-      fi
+      ${
+        if isNixOS || isNixDarwin then
+          # bash
+          ''
+            sudo bash -lc "$(declare -f cleanup); cleanup $AUTO $OPTIMIZE"
+          ''
+        else
+          # bash
+          ''
+            cleanup "$AUTO" "$OPTIMIZE"
+          ''
+      }
     '';
 }

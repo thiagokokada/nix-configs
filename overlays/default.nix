@@ -80,7 +80,9 @@ final: prev:
 
   nix-cleanup = prev.callPackage ../packages/nix-cleanup { };
 
-  nixos-cleanup = prev.callPackage ../packages/nix-cleanup { isNixOS = true; };
+  nixos-cleanup = final.nix-cleanup.override { isNixOS = true; };
+
+  darwin-cleanup = final.nix-cleanup.override { isNixDarwin = true; };
 
   nix-whereis = prev.callPackage ../packages/nix-whereis { };
 

@@ -26,10 +26,7 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    environment = {
-      # Add some Nix related packages
-      systemPackages = with pkgs; [ nixos-cleanup ];
-    };
+    environment.systemPackages = with pkgs; [ nixos-cleanup ];
 
     nix = {
       gc = {
