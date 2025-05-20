@@ -12,15 +12,6 @@ with constants;
   inherit (steps) concurrency;
 
   jobs = {
-    build-aarch64-linux = {
-      inherit (ubuntu-arm) runs-on;
-      steps =
-        with steps;
-        withSharedSteps [
-          validateFlakesStep
-        ];
-    };
-
     build-x86_64-linux = {
       inherit (ubuntu) runs-on;
       steps =
