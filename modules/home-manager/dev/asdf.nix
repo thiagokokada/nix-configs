@@ -12,6 +12,10 @@
 
   config = lib.mkIf config.home-manager.dev.asdf.enable {
     home = {
+      activation.reshimAsdf = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+        run ${lib.getExe pkgs.asdf-vm} reshim
+      '';
+
       file.".asdfrc".text = lib.generators.toKeyValue { } {
         legacy_version_file = "yes";
       };
