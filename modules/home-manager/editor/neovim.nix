@@ -213,6 +213,7 @@ in
                   defaults = {
                     file_icons = enable_icons,
                     git_icons = enable_icons,
+                    silent = true,
                   },
                   winopts = {
                     height = 0.4,
