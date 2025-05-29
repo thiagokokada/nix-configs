@@ -13,6 +13,7 @@
     ./lua.nix
     ./nix.nix
     ./node.nix
+    ./ollama.nix
     ./python.nix
   ];
 
