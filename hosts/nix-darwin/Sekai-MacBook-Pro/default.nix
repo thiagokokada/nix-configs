@@ -8,14 +8,14 @@
       home.stateVersion = "24.05";
       home-manager = {
         editor.idea.enable = true;
-        darwin.remapKeys.mappings = {
-          # '§±' <-> '`~'
-          "0x700000035" = "0x700000064";
-          "0x700000064" = "0x700000035";
-        };
       };
     }
   ];
+
+  system.keyboard = {
+    enableKeyMapping = true;
+    nonUS.remapTilde = true;
+  };
 
   # This value determines the nix-darwin release with which your system is to
   # be compatible, in order to avoid breaking some software such as database
