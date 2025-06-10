@@ -34,7 +34,6 @@ in
     home = {
       packages = with pkgs; [
         _7zz
-        aria2
         bc
         bind.dnsutils
         curl
@@ -52,15 +51,12 @@ in
         gnumake
         gnused
         hyperfine
-        jq
-        less
         lsof
         mediainfo
         ouch
         page
         procps
         pv
-        ripgrep
         rlwrap
         tokei
         wget
@@ -75,6 +71,13 @@ in
         ncdu = "${lib.getExe pkgs.dua} interactive";
         sloccount = lib.getExe pkgs.tokei;
       };
+    };
+
+    programs = {
+      aria2.enable = true;
+      jq.enable = true;
+      less.enable = true;
+      ripgrep.enable = true;
     };
   };
 }
