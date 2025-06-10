@@ -9,8 +9,17 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    # To get zsh completion for system packages
-    environment.pathsToLink = [ "/share/zsh" ];
+    environment = {
+      # https://github.com/nix-darwin/nix-darwin/issues/1507
+      etc."zshenv".text =
+        lib.mkBefore
+          # bash
+          ''
+            export USER=$(whoami)
+          '';
+      # To get zsh completion for system packages
+      pathsToLink = [ "/share/zsh" ];
+    };
 
     # Enable sudo via TouchID
     security.pam.services.sudo_local.touchIdAuth = true;
