@@ -84,6 +84,9 @@ writeShellApplication {
           local -r auto="$1"
           local -r optimize="$2"
 
+          echo "[INFO] Verifying nix store..."
+          nix-store --verify
+
           if [[ "$auto" == 1 ]]; then
               echo "[INFO] Removing auto created GC roots..."
               nix-store --gc --print-roots | \
@@ -92,20 +95,13 @@ writeShellApplication {
                   xargs -L1 rm -rf || true
           fi
 
-          echo "[INFO] Verifying nix store..."
-          nix-store --verify
-
           echo "[INFO] Running GC..."
           nix-collect-garbage -d
           ${lib.optionalString isNixOS
             # bash
             ''
               echo "[INFO] Rebuilding NixOS to remove old boot entries..."
-              if [[ -f /etc/nixos/flake.nix ]]; then
-                  nixos-rebuild boot
-              else
-                  nixos-rebuild boot --flake github:thiagokokada/nix-configs
-              fi
+              /run/current-system/bin/switch-to-configuration boot
             ''
           }
           if [[ "$optimize" == 1 ]]; then
