@@ -191,8 +191,18 @@ in
         ];
 
         sessionVariables = {
-          # Enable scroll support
-          PAGER = "less -R";
+          PAGER = "less";
+          LESS = lib.concatStringsSep " " [
+            "--hilite-search"
+            "--ignore-case"
+            "--long-prompt"
+            "--raw-control-chars"
+            "--chop-long-lines"
+            "--hilite-unread"
+            "--no-init"
+            "--window=4"
+            "--mouse"
+          ];
           # Reduce time to wait for multi-key sequences
           KEYTIMEOUT = 1;
           # Set right prompt to show time
