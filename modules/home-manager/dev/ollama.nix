@@ -13,6 +13,11 @@ in
     enable = lib.mkEnableOption "Ollama config" // {
       default = config.home-manager.dev.enable;
     };
+    defaultModel = lib.mkOption {
+      type = lib.types.str;
+      default = "deepseek-r1";
+      description = "Default model.";
+    };
   };
 
   config = lib.mkIf cfg.enable {
@@ -31,7 +36,7 @@ in
         enable = true;
         enableZshIntegration = false;
         settings = {
-          default-model = "deepseek-r1";
+          default-model = cfg.defaultModel;
           apis = {
             ollama = {
               base-url = "http://localhost:11434/api";

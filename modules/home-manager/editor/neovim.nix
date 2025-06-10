@@ -753,7 +753,7 @@ in
             config = # lua
               ''
                 require("gen").setup {
-                  model = "deepseek-r1",
+                  model = "${config.home-manager.dev.ollama.defaultModel}",
                 }
               '';
           }
