@@ -15,7 +15,7 @@ in
         lib.mkBefore
           # bash
           ''
-            export USER=$(whoami)
+            export USER="$(whoami)"
           '';
       # To get zsh completion for system packages
       pathsToLink = [ "/share/zsh" ];
