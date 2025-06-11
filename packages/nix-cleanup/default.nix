@@ -84,9 +84,6 @@ writeShellApplication {
           local -r auto="$1"
           local -r optimize="$2"
 
-          echo "[INFO] Verifying nix store..."
-          nix-store --verify
-
           if [[ "$auto" == 1 ]]; then
               echo "[INFO] Removing auto created GC roots..."
               nix-store --gc --print-roots | \
@@ -97,6 +94,15 @@ writeShellApplication {
 
           echo "[INFO] Running GC..."
           nix-collect-garbage -d
+
+          echo "[INFO] Verifying nix store..."
+          nix-store --verify
+
+          if [[ "$optimize" == 1 ]]; then
+              echo "[INFO] Optimizing nix store..."
+              nix-store --optimize
+          fi
+
           ${lib.optionalString isNixOS
             # bash
             ''
@@ -104,10 +110,6 @@ writeShellApplication {
               /run/current-system/bin/switch-to-configuration boot
             ''
           }
-          if [[ "$optimize" == 1 ]]; then
-              echo "[INFO] Optimizing nix store..."
-              nix-store --optimize
-          fi
       }
 
       cleanup_hm "$HM_PROFILE"
