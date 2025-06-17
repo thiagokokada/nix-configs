@@ -199,9 +199,7 @@ in
             "--raw-control-chars"
             "--chop-long-lines"
             "--hilite-unread"
-            "--no-init"
             "--window=4"
-            "--mouse"
           ];
           # Reduce time to wait for multi-key sequences
           KEYTIMEOUT = 1;
