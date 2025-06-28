@@ -17,6 +17,7 @@ in
     ./ssh
     ./tmux.nix
     ./yazi.nix
+    ./zellij.nix
     ./zsh
   ];
 
