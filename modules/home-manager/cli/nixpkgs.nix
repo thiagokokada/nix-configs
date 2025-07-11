@@ -29,16 +29,12 @@ in
         enable = true;
         symlinkToCacheHome = true;
       };
-      # Until https://github.com/nix-community/comma/pull/101 and a new release
-      # is made
-      # nix-index-database.comma.enable = true;
+      nix-index-database.comma.enable = true;
     };
 
     home.packages =
       with pkgs;
       [
-        # https://github.com/nix-community/comma/pull/101
-        flake.inputs.comma.packages.${pkgs.system}.comma
         nix-output-monitor
         nixpkgs-review
       ]

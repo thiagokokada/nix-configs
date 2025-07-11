@@ -30,11 +30,6 @@
     };
 
     # nix-alien
-    comma = {
-      url = "github:thiagokokada/comma/implement-eval-cache";
-      inputs.flake-compat.follows = "flake-compat";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     nix-index-database.follows = "nix-alien/nix-index-database";
     nix-alien = {
       url = "github:thiagokokada/nix-alien";
