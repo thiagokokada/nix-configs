@@ -79,22 +79,6 @@ in
         inactive_tab_background = base00;
         inactive_tab_foreground = base05;
         tab_bar_background = base00;
-        color0 = base00;
-        color1 = base08;
-        color2 = base0B;
-        color3 = base0A;
-        color4 = base0D;
-        color5 = base0E;
-        color6 = base0C;
-        color7 = base05;
-        color8 = base02;
-        color9 = base09;
-        color10 = base01;
-        color11 = base03;
-        color12 = base04;
-        color13 = base06;
-        color14 = base0F;
-        color15 = base07;
 
         # Scrollback
         scrollback_lines = 10000;
@@ -141,6 +125,8 @@ in
       ];
 
       shellIntegration.mode = "enabled";
+
+      themeFile = "Catppuccin-Mocha";
     };
 
     programs.zsh.initContent =
