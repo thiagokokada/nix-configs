@@ -98,10 +98,12 @@ in
         tab_bar_edge = "top";
         tab_bar_style = "powerline";
         tab_powerline_style = "round";
-        tab_title_template = "{fmt.fg.red}{bell_symbol}{activity_symbol}{fmt.fg.tab}{tab.last_focused_progress_percent}{index}:{title[:30]}";
+        tab_title_template = "{fmt.fg.red}{bell_symbol}{activity_symbol}{fmt.fg.tab}{tab.last_focused_progress_percent}{index} [{layout_name}]: {title[:25]}";
+        tab_bar_min_tabs = lib.mkIf pkgs.stdenv.isDarwin 1; # always show tabs in macOS
 
         # Misc
         editor = lib.mkIf config.home-manager.window-manager.enable config.home-manager.window-manager.default.editor;
+        enabled_layouts = "tall,fat,grid,horizontal,vertical,stack";
         strip_trailing_spaces = "smart";
         clipboard_control = "write-clipboard write-primary read-clipboard read-primary";
         background_opacity = toString cfg.opacity;
