@@ -98,7 +98,7 @@ in
         tab_bar_edge = "top";
         tab_bar_style = "powerline";
         tab_powerline_style = "round";
-        tab_title_template = "{fmt.fg.red}{bell_symbol}{activity_symbol}{fmt.fg.tab}{tab.last_focused_progress_percent}{index} [{layout_name}]: {title[:25]}";
+        tab_title_template = "{fmt.fg.red}{bell_symbol}{activity_symbol}{fmt.fg.tab}{tab.last_focused_progress_percent}[{layout_name[:1]}] {index}:{title[:25]}";
         tab_bar_min_tabs = lib.mkIf pkgs.stdenv.isDarwin 1; # always show tabs in macOS
 
         # Misc
