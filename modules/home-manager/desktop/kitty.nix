@@ -98,8 +98,9 @@ in
         tab_bar_edge = "top";
         tab_bar_style = "powerline";
         tab_powerline_style = "round";
-        tab_title_template = "{fmt.fg.red}{bell_symbol}{activity_symbol}{fmt.fg.tab}{tab.last_focused_progress_percent}[{layout_name[:1]}] {index}:{title[:25]}";
+        tab_title_template = "{fmt.fg.red}{bell_symbol}{activity_symbol}{fmt.fg.tab}{tab.last_focused_progress_percent}[{layout_name[:1]}] {index}:{title}";
         tab_bar_min_tabs = lib.mkIf pkgs.stdenv.isDarwin 1; # always show tabs in macOS
+        tab_title_max_length = 30;
 
         # Misc
         editor = lib.mkIf config.home-manager.window-manager.enable config.home-manager.window-manager.default.editor;
@@ -110,6 +111,7 @@ in
         window_padding_width = 5;
         allow_remote_control = "socket-only";
         listen_on = "unix:/tmp/kitty";
+        macos_menubar_title_max_length = 50;
 
         # Simulate middle-click copy-and-paste, but instead of copying to
         # clipboard it copies to a private buffer
