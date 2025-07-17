@@ -20,7 +20,7 @@ in
   ];
 
   options.home-manager.window-manager = {
-    enable = lib.mkEnableOption "desktop config" // {
+    enable = lib.mkEnableOption "window manager config" // {
       default = osConfig.nixos.desktop.enable or false;
     };
     default = {

@@ -20,21 +20,17 @@ let
       sway
     ];
 
-    text =
-      let
-        # TODO: make this derived from the configuration
-        terminal = "kitty";
-      in
-      # bash
-      ''
-        set +o errexit
-        pid="$(swaymsg -t get_tree | jq -e '.. | select(.type? and .focused? and .app_id=="${terminal}") | .pid')"
-        if [[ -n "$pid" ]]; then
-          ppid="$(pgrep --newest --parent "$pid")"
-          exec ${terminal} "$(readlink "/proc/$ppid/cwd" || echo "$HOME")"
-        fi
-        exec ${terminal}
-      '';
+    text = ''
+      set +o errexit
+      terminal='${config.home-manager.window-manager.default.terminal}'
+      terminal_name="''${terminal##*/}"
+      pid="$(swaymsg -t get_tree | jq -e ".. | select(.type? and .focused? and .app_id==\"$terminal_name\") | .pid")"
+      if [[ -n "$pid" ]]; then
+        ppid="$(pgrep --newest --parent "$pid")"
+        exec "$terminal" "$(readlink "/proc/$ppid/cwd" || echo "$HOME")"
+      fi
+      exec "$terminal"
+    '';
   };
 
   commonOptions =
