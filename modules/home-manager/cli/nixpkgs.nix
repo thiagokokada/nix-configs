@@ -6,18 +6,8 @@
   ...
 }:
 
-let
-  nixpkgs-review =
-    if pkgs.stdenv.isLinux then
-      pkgs.nixpkgs-review.override {
-        withSandboxSupport = true;
-        withNom = true;
-      }
-    else
-      pkgs.nixpkgs-review.override { withNom = true; };
-in
 {
-  imports = [ flake.inputs.nix-index-database.hmModules.nix-index ];
+  imports = [ flake.inputs.nix-index-database.homeModules.nix-index ];
 
   options.home-manager.cli.nixpkgs.enable = lib.mkEnableOption "nixpkgs tools config" // {
     default = config.home-manager.cli.enable;
@@ -36,7 +26,10 @@ in
       with pkgs;
       [
         nix-output-monitor
-        nixpkgs-review
+        (nixpkgs-review.override {
+          withNom = true;
+          withSandboxSupport = pkgs.stdenv.isLinux;
+        })
       ]
       ++ lib.optionals stdenv.isLinux [ flake.inputs.nix-alien.packages.${pkgs.system}.nix-alien ];
   };
