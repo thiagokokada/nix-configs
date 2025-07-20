@@ -24,6 +24,9 @@ in
       default = 5;
       description = "Block update default interval.";
     };
+    smallScreen.enable = lib.mkEnableOption "disable some blocks for smaller screens" // {
+      default = config.device.type == "laptop";
+    };
     backlight.enable = lib.mkEnableOption "backlight block" // {
       default = config.device.type == "laptop";
     };
@@ -57,16 +60,16 @@ in
                 "sway/workspaces"
                 "sway/mode"
               ]
-              ++ [ "wlr/taskbar" ];
+              ++ lib.optionals (!cfg.smallScreen.enable) [ "wlr/taskbar" ];
             modules-center = [ "clock" ];
             modules-right =
               lib.pipe
                 [
-                  "network"
+                  (lib.optionalString (!cfg.smallScreen.enable) "network")
                   "disk"
                   "memory"
                   "cpu#load"
-                  "temperature"
+                  (lib.optionalString (!cfg.smallScreen.enable) "temperature")
                   (lib.optionalString cfg.backlight.enable "backlight")
                   (lib.optionalString cfg.battery.enable "battery")
                   "wireplumber"
@@ -79,11 +82,12 @@ in
                   lib.flatten
                   # Filter optional modules
                   (lib.filter (m: m != ""))
-                  # Add a separator between each module, except the last one
+                  # Add a separator between each module
                   (builtins.concatMap (m: [
                     m
                     "custom/separator"
                   ]))
+                  # Except the last one
                   lib.init
                 ];
             "hyprland/workspaces" = lib.mkIf hyprlandCfg.enable {
