@@ -35,7 +35,7 @@
   boot.loader.efi.canTouchEfiVariables = true;
 
   theme = {
-    fonts.dpi = 175;
+    fonts.dpi = 150;
     wallpaper.path = pkgs.wallpapers.hatsune-miku_stylized-ultrawide;
   };
 
