@@ -104,7 +104,6 @@ in
           commit.verbose = true;
           core = {
             editor = "nvim";
-            untrackedCache = true;
             whitespace = "trailing-space,space-before-tab,indent-with-non-tab";
           };
           checkout = {
