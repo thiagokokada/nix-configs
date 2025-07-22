@@ -13,6 +13,7 @@ in
     ./git.nix
     ./htop.nix
     ./irssi.nix
+    ./jujutsu.nix
     ./nixpkgs.nix
     ./ssh
     ./tmux.nix
