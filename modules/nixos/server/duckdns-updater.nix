@@ -75,21 +75,21 @@ in
             echo "Got IPv6: $ipv6addr"
           ''
         +
-          # bash
-          ''
-            readonly curl_out="$(printf \
-            'url="https://www.duckdns.org/update?domains=%s&token=%s&ip=&ipv6=%s"' \
-            '${cfg.domain}' "$DUCKDNS_TOKEN" "''${ipv6addr:-}" \
-            | curl --silent --config -)"
+        # bash
+        ''
+          readonly curl_out="$(printf \
+          'url="https://www.duckdns.org/update?domains=%s&token=%s&ip=&ipv6=%s"' \
+          '${cfg.domain}' "$DUCKDNS_TOKEN" "''${ipv6addr:-}" \
+          | curl --silent --config -)"
 
-            echo "DuckDNS response: $curl_out"
-            if [ "$curl_out" == "OK" ]; then
-              >&2 echo "Domain updated successfully: ${cfg.domain}"
-            else
-              >&2 echo "Error while updating domain: ${cfg.domain}"
-              exit 1
-            fi
-          '';
+          echo "DuckDNS response: $curl_out"
+          if [ "$curl_out" == "OK" ]; then
+            >&2 echo "Domain updated successfully: ${cfg.domain}"
+          else
+            >&2 echo "Error while updating domain: ${cfg.domain}"
+            exit 1
+          fi
+        '';
 
       serviceConfig = {
         CapabilityBoundingSet = "";
@@ -108,15 +108,14 @@ in
         ProtectKernelTunables = true;
         ProtectProc = "invisible";
         ProtectSystem = "strict";
-        RestrictAddressFamilies =
-          [
-            "AF_UNIX"
-            "AF_INET"
-          ]
-          ++ lib.optionals cfg.ipv6.enable [
-            "AF_INET6"
-            "AF_NETLINK"
-          ];
+        RestrictAddressFamilies = [
+          "AF_UNIX"
+          "AF_INET"
+        ]
+        ++ lib.optionals cfg.ipv6.enable [
+          "AF_INET6"
+          "AF_NETLINK"
+        ];
         RestrictNamespaces = true;
         RestrictRealtime = true;
         SystemCallArchitectures = "native";

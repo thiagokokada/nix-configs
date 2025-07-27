@@ -14,7 +14,8 @@ in
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
     flake.inputs.disko.nixosModules.disko
-  ] ++ oci-common.imports;
+  ]
+  ++ oci-common.imports;
 
   boot = {
     inherit (oci-common.boot) kernelParams;

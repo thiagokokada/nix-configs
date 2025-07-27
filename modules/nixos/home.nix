@@ -36,7 +36,8 @@ in
         inherit (config) meta device theme;
         imports = [
           ../home-manager
-        ] ++ cfg.extraModules;
+        ]
+        ++ cfg.extraModules;
         # As a rule of thumb HM == NixOS version, unless something weird happens
         home.stateVersion = lib.mkDefault config.system.stateVersion;
       };

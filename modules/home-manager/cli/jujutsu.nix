@@ -17,7 +17,7 @@ in
         ui.editor = "nvim";
         user = {
           name = config.meta.fullname;
-          email = config.meta.email;
+          inherit (config.meta) email;
         };
       };
     };

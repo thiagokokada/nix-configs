@@ -58,13 +58,16 @@
           };
           urgency_low = {
             timeout = 5;
-          } // theme;
+          }
+          // theme;
           urgency_normal = {
             timeout = 10;
-          } // theme;
+          }
+          // theme;
           urgency_high = {
             timeout = 20;
-          } // theme;
+          }
+          // theme;
         };
     };
   };

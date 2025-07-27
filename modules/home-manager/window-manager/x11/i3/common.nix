@@ -220,71 +220,70 @@ in
       };
     };
 
-    keybindings =
-      {
-        "${modifier}+Return" = "exec ${terminal}";
-        "${modifier}+Shift+q" = "kill";
-        "${alt}+F4" = "kill";
+    keybindings = {
+      "${modifier}+Return" = "exec ${terminal}";
+      "${modifier}+Shift+q" = "kill";
+      "${alt}+F4" = "kill";
 
-        "${modifier}+n" = "exec ${browser}";
-        "${modifier}+m" = "exec ${fileManager}";
+      "${modifier}+n" = "exec ${browser}";
+      "${modifier}+m" = "exec ${fileManager}";
 
-        "${modifier}+d" = "exec ${menu}";
+      "${modifier}+d" = "exec ${menu}";
 
-        "${modifier}+f" = "fullscreen toggle";
-        "${modifier}+v" = "split v";
-        "${modifier}+b" = "split h";
+      "${modifier}+f" = "fullscreen toggle";
+      "${modifier}+v" = "split v";
+      "${modifier}+b" = "split h";
 
-        "${modifier}+s" = "layout stacking";
-        "${modifier}+w" = "layout tabbed";
-        "${modifier}+e" = "layout toggle split";
+      "${modifier}+s" = "layout stacking";
+      "${modifier}+w" = "layout tabbed";
+      "${modifier}+e" = "layout toggle split";
 
-        "${modifier}+semicolon" = "focus mode_toggle";
-        "${modifier}+Shift+semicolon" = "floating toggle";
+      "${modifier}+semicolon" = "focus mode_toggle";
+      "${modifier}+Shift+semicolon" = "floating toggle";
 
-        "${modifier}+a" = "focus parent";
+      "${modifier}+a" = "focus parent";
 
-        "${modifier}+Shift+minus" = "move scratchpad";
-        "${modifier}+minus" = "scratchpad show";
+      "${modifier}+Shift+minus" = "move scratchpad";
+      "${modifier}+minus" = "scratchpad show";
 
-        "${modifier}+r" = ''mode "${resizeMode}"'';
-        "${modifier}+Escape" = ''mode "${powerManagementMode}"'';
+      "${modifier}+r" = ''mode "${resizeMode}"'';
+      "${modifier}+Escape" = ''mode "${powerManagementMode}"'';
 
-        "${modifier}+Shift+c" = "reload";
-        "${modifier}+Shift+r" = "restart";
+      "${modifier}+Shift+c" = "reload";
+      "${modifier}+Shift+r" = "restart";
 
-        "XF86AudioRaiseVolume" = "exec --no-startup-id ${pamixer} --set-limit 150 --allow-boost -i 5";
-        "XF86AudioLowerVolume" = "exec --no-startup-id ${pamixer} --set-limit 150 --allow-boost -d 5";
-        "XF86AudioMute" = "exec --no-startup-id ${pamixer} --toggle-mute";
-        "XF86AudioMicMute" = "exec --no-startup-id ${pamixer} --toggle-mute --default-source";
+      "XF86AudioRaiseVolume" = "exec --no-startup-id ${pamixer} --set-limit 150 --allow-boost -i 5";
+      "XF86AudioLowerVolume" = "exec --no-startup-id ${pamixer} --set-limit 150 --allow-boost -d 5";
+      "XF86AudioMute" = "exec --no-startup-id ${pamixer} --toggle-mute";
+      "XF86AudioMicMute" = "exec --no-startup-id ${pamixer} --toggle-mute --default-source";
 
-        "XF86MonBrightnessUp" = "exec --no-startup-id ${light} -A 5%";
-        "XF86MonBrightnessDown" = "exec --no-startup-id ${light} -U 5%";
+      "XF86MonBrightnessUp" = "exec --no-startup-id ${light} -A 5%";
+      "XF86MonBrightnessDown" = "exec --no-startup-id ${light} -U 5%";
 
-        "XF86AudioPlay" = "exec --no-startup-id ${playerctl} play-pause";
-        "XF86AudioStop" = "exec --no-startup-id ${playerctl} stop";
-        "XF86AudioNext" = "exec --no-startup-id ${playerctl} next";
-        "XF86AudioPrev" = "exec --no-startup-id ${playerctl} previous";
+      "XF86AudioPlay" = "exec --no-startup-id ${playerctl} play-pause";
+      "XF86AudioStop" = "exec --no-startup-id ${playerctl} stop";
+      "XF86AudioNext" = "exec --no-startup-id ${playerctl} next";
+      "XF86AudioPrev" = "exec --no-startup-id ${playerctl} previous";
 
-        "Print" = "exec --no-startup-id ${fullScreenShot}";
-        "Shift+Print" = "exec --no-startup-id ${areaScreenShot}";
+      "Print" = "exec --no-startup-id ${fullScreenShot}";
+      "Shift+Print" = "exec --no-startup-id ${areaScreenShot}";
 
-        "Ctrl+escape" = "exec ${dunstctl} close";
-        "Ctrl+Shift+escape" = "exec ${dunstctl} close-all";
-      }
-      // (mapDirectionDefault {
-        prefixKey = modifier;
-        prefixCmd = "focus";
-      })
-      // (mapDirectionDefault {
-        prefixKey = "${modifier}+Shift";
-        prefixCmd = "move";
-      })
-      // (mapDirectionDefault {
-        prefixKey = "Ctrl+${alt}";
-        prefixCmd = "move workspace to output";
-      })
-      // extraBindings;
+      "Ctrl+escape" = "exec ${dunstctl} close";
+      "Ctrl+Shift+escape" = "exec ${dunstctl} close-all";
+    }
+    // (mapDirectionDefault {
+      prefixKey = modifier;
+      prefixCmd = "focus";
+    })
+    // (mapDirectionDefault {
+      prefixKey = "${modifier}+Shift";
+      prefixCmd = "move";
+    })
+    // (mapDirectionDefault {
+      prefixKey = "Ctrl+${alt}";
+      prefixCmd = "move workspace to output";
+    })
+    // extraBindings;
 
     modes =
       let
@@ -330,11 +329,13 @@ in
       border = 1;
       hideEdgeBorders = "smart";
       titlebar = false;
-    } // extraWindowOptions;
+    }
+    // extraWindowOptions;
 
     focus = {
       followMouse = false;
-    } // extraFocusOptions;
+    }
+    // extraFocusOptions;
   };
 
   # Until this issue is fixed we need to map workspaces directly to config file

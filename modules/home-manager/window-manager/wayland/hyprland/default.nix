@@ -160,72 +160,71 @@ in
           # i -> ignore mods, will ignore modifiers.
           # s -> separate, will arbitrarily combine keys between each mod/key.
           # d -> has description, will allow you to write a description for your bind.
-          bind =
-            [
-              # Main bindings
-              "${mod}, RETURN, exec, ${terminal}"
-              "${mod}, D, exec, ${menu}"
-              "${mod}, N, exec, ${browser}"
-              "${mod}, M, exec, ${fileManager}"
-              "${mod}, SEMICOLON, togglefloating,"
-              "${mod}, V, pseudo,"
-              "${mod}, B, togglesplit,"
-              "${mod}, F, fullscreen,"
-              "${mod}, W, exec, ${hyprtabs}"
-              "${shift mod}, C, exec, ${hyprctl} reload"
-              "${shift mod}, Q, killactive,"
-              "${alt}, F4, killactive,"
+          bind = [
+            # Main bindings
+            "${mod}, RETURN, exec, ${terminal}"
+            "${mod}, D, exec, ${menu}"
+            "${mod}, N, exec, ${browser}"
+            "${mod}, M, exec, ${fileManager}"
+            "${mod}, SEMICOLON, togglefloating,"
+            "${mod}, V, pseudo,"
+            "${mod}, B, togglesplit,"
+            "${mod}, F, fullscreen,"
+            "${mod}, W, exec, ${hyprtabs}"
+            "${shift mod}, C, exec, ${hyprctl} reload"
+            "${shift mod}, Q, killactive,"
+            "${alt}, F4, killactive,"
 
-              # Cycle active window
-              "${mod}, TAB, cyclenext,"
-              "${mod}, TAB, bringactivetotop"
+            # Cycle active window
+            "${mod}, TAB, cyclenext,"
+            "${mod}, TAB, bringactivetotop"
 
-              # Move inside group (tab) with mod + arrow keys
-              "${mod}, left, changegroupactive, b"
-              "${mod}, right, changegroupactive, f"
-              # Move inside group (tab) with mod + vi keys
-              "${mod}, H, changegroupactive, b"
-              "${mod}, L, changegroupactive, f"
+            # Move inside group (tab) with mod + arrow keys
+            "${mod}, left, changegroupactive, b"
+            "${mod}, right, changegroupactive, f"
+            # Move inside group (tab) with mod + vi keys
+            "${mod}, H, changegroupactive, b"
+            "${mod}, L, changegroupactive, f"
 
-              # Move focus with mod + arrow keys
-              "${mod}, left, movefocus, l"
-              "${mod}, right, movefocus, r"
-              "${mod}, up, movefocus, u"
-              "${mod}, down, movefocus, d"
-              # Move focus with mod + vi keys
-              "${mod}, H, movefocus, l"
-              "${mod}, L, movefocus, r"
-              "${mod}, K, movefocus, u"
-              "${mod}, J, movefocus, d"
+            # Move focus with mod + arrow keys
+            "${mod}, left, movefocus, l"
+            "${mod}, right, movefocus, r"
+            "${mod}, up, movefocus, u"
+            "${mod}, down, movefocus, d"
+            # Move focus with mod + vi keys
+            "${mod}, H, movefocus, l"
+            "${mod}, L, movefocus, r"
+            "${mod}, K, movefocus, u"
+            "${mod}, J, movefocus, d"
 
-              # Move window with mod + arrow keys
-              "${shift mod}, left, movewindoworgroup, l"
-              "${shift mod}, right, movewindoworgroup, r"
-              "${shift mod}, up, movewindoworgroup, u"
-              "${shift mod}, down, movewindoworgroup, d"
-              # Move window with mod + vi keys
-              "${shift mod}, H, movewindoworgroup, l"
-              "${shift mod}, L, movewindoworgroup, r"
-              "${shift mod}, K, movewindoworgroup, u"
-              "${shift mod}, J, movewindoworgroup, d"
+            # Move window with mod + arrow keys
+            "${shift mod}, left, movewindoworgroup, l"
+            "${shift mod}, right, movewindoworgroup, r"
+            "${shift mod}, up, movewindoworgroup, u"
+            "${shift mod}, down, movewindoworgroup, d"
+            # Move window with mod + vi keys
+            "${shift mod}, H, movewindoworgroup, l"
+            "${shift mod}, L, movewindoworgroup, r"
+            "${shift mod}, K, movewindoworgroup, u"
+            "${shift mod}, J, movewindoworgroup, d"
 
-              # Scratchpad
-              "${shift mod}, MINUS, movetoworkspace, special:magic"
-              "${mod}, MINUS, togglespecialworkspace, magic"
+            # Scratchpad
+            "${shift mod}, MINUS, movetoworkspace, special:magic"
+            "${mod}, MINUS, togglespecialworkspace, magic"
 
-              # Scroll through existing workspaces with mod + scroll
-              "${mod}, mouse_down, workspace, e+1"
-              "${mod}, mouse_up, workspace, e-1"
+            # Scroll through existing workspaces with mod + scroll
+            "${mod}, mouse_down, workspace, e+1"
+            "${mod}, mouse_up, workspace, e-1"
 
-              # Notifications
-              "${ctrl}, ESCAPE, exec, ${dunstctl} close"
-              "${shift ctrl}, ESCAPE, exec, ${dunstctl} close-all"
+            # Notifications
+            "${ctrl}, ESCAPE, exec, ${dunstctl} close"
+            "${shift ctrl}, ESCAPE, exec, ${dunstctl} close-all"
 
-              # Screenshots
-              ", PRINT, exec, ${fullScreenshot}"
-              "SHIFT, PRINT, exec, ${areaScreenshot}"
-            ]
-            ++
+            # Screenshots
+            ", PRINT, exec, ${fullScreenshot}"
+            "SHIFT, PRINT, exec, ${areaScreenshot}"
+          ]
+          ++
             # workspaces
             (
               # binds $mod + [shift +] {1..9,0} to [move to] workspace {1..10}

@@ -45,264 +45,263 @@ in
       enable = true;
       systemd.enable = true;
       settings = {
-        top =
-          {
-            height = 28;
-            layer = "top";
-            position = "top";
-            spacing = 3;
-            modules-left =
-              lib.optionals hyprlandCfg.enable [
-                "hyprland/workspaces"
-                "hyprland/submap"
+        top = {
+          height = 28;
+          layer = "top";
+          position = "top";
+          spacing = 3;
+          modules-left =
+            lib.optionals hyprlandCfg.enable [
+              "hyprland/workspaces"
+              "hyprland/submap"
+            ]
+            ++ lib.optionals swayCfg.enable [
+              "sway/workspaces"
+              "sway/mode"
+            ]
+            ++ lib.optionals (!cfg.smallScreen.enable) [ "wlr/taskbar" ];
+          modules-center = [ "clock" ];
+          modules-right =
+            lib.pipe
+              [
+                (lib.optionalString (!cfg.smallScreen.enable) "network")
+                "disk"
+                "memory"
+                "cpu#load"
+                (lib.optionalString (!cfg.smallScreen.enable) "temperature")
+                (lib.optionalString cfg.backlight.enable "backlight")
+                (lib.optionalString cfg.battery.enable "battery")
+                "wireplumber"
+                "custom/dunst"
+                "idle_inhibitor"
+                "tray"
               ]
-              ++ lib.optionals swayCfg.enable [
-                "sway/workspaces"
-                "sway/mode"
-              ]
-              ++ lib.optionals (!cfg.smallScreen.enable) [ "wlr/taskbar" ];
-            modules-center = [ "clock" ];
-            modules-right =
-              lib.pipe
-                [
-                  (lib.optionalString (!cfg.smallScreen.enable) "network")
-                  "disk"
-                  "memory"
-                  "cpu#load"
-                  (lib.optionalString (!cfg.smallScreen.enable) "temperature")
-                  (lib.optionalString cfg.backlight.enable "backlight")
-                  (lib.optionalString cfg.battery.enable "battery")
-                  "wireplumber"
-                  "custom/dunst"
-                  "idle_inhibitor"
-                  "tray"
-                ]
-                [
-                  # Flatten lists
-                  lib.flatten
-                  # Filter optional modules
-                  (lib.filter (m: m != ""))
-                  # Add a separator between each module
-                  (builtins.concatMap (m: [
-                    m
-                    "custom/separator"
-                  ]))
-                  # Except the last one
-                  lib.init
+              [
+                # Flatten lists
+                lib.flatten
+                # Filter optional modules
+                (lib.filter (m: m != ""))
+                # Add a separator between each module
+                (builtins.concatMap (m: [
+                  m
+                  "custom/separator"
+                ]))
+                # Except the last one
+                lib.init
+              ];
+          "hyprland/workspaces" = lib.mkIf hyprlandCfg.enable {
+            format = "{name}: {icon}";
+            format-icons = {
+              "1" = " ";
+              "2" = " ";
+              "3" = " ";
+              "4" = " ";
+              "5" = " ";
+              "6" = " ";
+              "7" = " ";
+              "8" = " ";
+              "9" = " ";
+              "10" = " ";
+            };
+            "on-scroll-up" = "${hyprctl} dispatch workspace e+1";
+            "on-scroll-down" = "${hyprctl} dispatch workspace e-1";
+          };
+          "hyprland/submap".tooltip = lib.mkIf hyprlandCfg.enable false;
+          "sway/mode".tooltip = lib.mkIf swayCfg.enable false;
+          "sway/workspaces".disable-scroll-wraparound = lib.mkIf swayCfg.enable true;
+          "wlr/taskbar" = {
+            icon-size = 24;
+            format = "{icon}";
+            on-click = "activate";
+            on-click-middle = "close";
+            icon = true;
+          };
+          idle_inhibitor = {
+            format = "{icon}";
+            format-icons = {
+              deactivated = "";
+              activated = "";
+            };
+            tooltip-format-activated = "Caffeine enabled";
+            tooltip-format-deactivated = "Caffeine disabled";
+          };
+          network = {
+            inherit (cfg) interval;
+            format = "󰈀 {bandwidthTotalBytes}";
+            format-wifi = "{icon} {bandwidthTotalBytes}";
+            format-ethernet = "󰈀 {bandwidthTotalBytes}";
+            format-disconnected = "󰤮";
+            format-icons = [
+              "󰤯"
+              "󰤟"
+              "󰤢"
+              "󰤥"
+              "󰤨"
+            ];
+            tooltip-format = lib.concatStringsSep "\n" [
+              "Interface: {ifname}"
+              "IP: {ipaddr}"
+              "Gateway: {gwaddr}"
+              "Netmask: {netmask}"
+              "Download: {bandwidthDownBytes}"
+              "Upload: {bandwidthUpBytes}"
+            ];
+            tooltip-format-wifi = lib.concatStringsSep "\n" [
+              "Interface: {ifname}"
+              "IP: {ipaddr}"
+              "Gateway: {gwaddr}"
+              "Netmask: {netmask}"
+              "SSID: {essid}"
+              "Signal: {signaldBm} dBm"
+              "Frequency: {frequency} GHz"
+              "Download: {bandwidthDownBytes}"
+              "Upload: {bandwidthUpBytes}"
+            ];
+          };
+        }
+        // {
+          disk = {
+            inherit (cfg) interval;
+            format = "  {percentage_free}%";
+            states = {
+              warning = 75;
+              critical = 95;
+            };
+          };
+          memory = {
+            inherit (cfg) interval;
+            format = " {avail:0.0f}G";
+            format-alt = " {swapAvail:0.0f}G";
+            states = {
+              warning = 75;
+              critical = 95;
+            };
+          };
+          "cpu#load" = {
+            inherit (cfg) interval;
+            format = " {load:0.1f}";
+          };
+          temperature = {
+            format = "{icon} {temperatureC}°C";
+            format-icons = [
+              ""
+              ""
+              ""
+              ""
+              ""
+            ];
+            critical-threshold = 75;
+          };
+          "custom/dunst" = {
+            exec = lib.getExe (
+              pkgs.writeShellApplication {
+                name = "dunst-status";
+                runtimeInputs = with pkgs; [
+                  coreutils
+                  dbus
+                  dunst
+                  procps
                 ];
-            "hyprland/workspaces" = lib.mkIf hyprlandCfg.enable {
-              format = "{name}: {icon}";
-              format-icons = {
-                "1" = " ";
-                "2" = " ";
-                "3" = " ";
-                "4" = " ";
-                "5" = " ";
-                "6" = " ";
-                "7" = " ";
-                "8" = " ";
-                "9" = " ";
-                "10" = " ";
-              };
-              "on-scroll-up" = "${hyprctl} dispatch workspace e+1";
-              "on-scroll-down" = "${hyprctl} dispatch workspace e-1";
-            };
-            "hyprland/submap".tooltip = lib.mkIf hyprlandCfg.enable false;
-            "sway/mode".tooltip = lib.mkIf swayCfg.enable false;
-            "sway/workspaces".disable-scroll-wraparound = lib.mkIf swayCfg.enable true;
-            "wlr/taskbar" = {
-              icon-size = 24;
-              format = "{icon}";
-              on-click = "activate";
-              on-click-middle = "close";
-              icon = true;
-            };
-            idle_inhibitor = {
-              format = "{icon}";
-              format-icons = {
-                deactivated = "";
-                activated = "";
-              };
-              tooltip-format-activated = "Caffeine enabled";
-              tooltip-format-deactivated = "Caffeine disabled";
-            };
-            network = {
-              inherit (cfg) interval;
-              format = "󰈀 {bandwidthTotalBytes}";
-              format-wifi = "{icon} {bandwidthTotalBytes}";
-              format-ethernet = "󰈀 {bandwidthTotalBytes}";
-              format-disconnected = "󰤮";
-              format-icons = [
-                "󰤯"
-                "󰤟"
-                "󰤢"
-                "󰤥"
-                "󰤨"
-              ];
-              tooltip-format = lib.concatStringsSep "\n" [
-                "Interface: {ifname}"
-                "IP: {ipaddr}"
-                "Gateway: {gwaddr}"
-                "Netmask: {netmask}"
-                "Download: {bandwidthDownBytes}"
-                "Upload: {bandwidthUpBytes}"
-              ];
-              tooltip-format-wifi = lib.concatStringsSep "\n" [
-                "Interface: {ifname}"
-                "IP: {ipaddr}"
-                "Gateway: {gwaddr}"
-                "Netmask: {netmask}"
-                "SSID: {essid}"
-                "Signal: {signaldBm} dBm"
-                "Frequency: {frequency} GHz"
-                "Download: {bandwidthDownBytes}"
-                "Upload: {bandwidthUpBytes}"
-              ];
-            };
-          }
-          // {
-            disk = {
-              inherit (cfg) interval;
-              format = "  {percentage_free}%";
-              states = {
-                warning = 75;
-                critical = 95;
-              };
-            };
-            memory = {
-              inherit (cfg) interval;
-              format = " {avail:0.0f}G";
-              format-alt = " {swapAvail:0.0f}G";
-              states = {
-                warning = 75;
-                critical = 95;
-              };
-            };
-            "cpu#load" = {
-              inherit (cfg) interval;
-              format = " {load:0.1f}";
-            };
-            temperature = {
-              format = "{icon} {temperatureC}°C";
-              format-icons = [
-                ""
-                ""
-                ""
-                ""
-                ""
-              ];
-              critical-threshold = 75;
-            };
-            "custom/dunst" = {
-              exec = lib.getExe (
-                pkgs.writeShellApplication {
-                  name = "dunst-status";
-                  runtimeInputs = with pkgs; [
-                    coreutils
-                    dbus
-                    dunst
-                    procps
-                  ];
-                  text = ''
-                    # sending SIGKILL here since HUP/TERM are not killing dbus-monitor for some reason
-                    cleanup() { kill -SIGKILL 0; }
+                text = ''
+                  # sending SIGKILL here since HUP/TERM are not killing dbus-monitor for some reason
+                  cleanup() { kill -SIGKILL 0; }
 
-                    trap "cleanup" EXIT
+                  trap "cleanup" EXIT
 
-                    readonly ENABLED=''
-                    readonly DISABLED=''
-                    # --profile outputs a single line per message
-                    dbus-monitor path='/org/freedesktop/Notifications',interface='org.freedesktop.DBus.Properties',member='PropertiesChanged' --profile |
-                      while read -r _; do
-                        PAUSED="$(dunstctl is-paused)"
-                        # exit if parent process exit
-                        if ! ps -p "$PPID" >/dev/null; then
-                          cleanup
+                  readonly ENABLED=''
+                  readonly DISABLED=''
+                  # --profile outputs a single line per message
+                  dbus-monitor path='/org/freedesktop/Notifications',interface='org.freedesktop.DBus.Properties',member='PropertiesChanged' --profile |
+                    while read -r _; do
+                      PAUSED="$(dunstctl is-paused)"
+                      # exit if parent process exit
+                      if ! ps -p "$PPID" >/dev/null; then
+                        cleanup
+                      fi
+                      if [ "$PAUSED" == 'false' ]; then
+                        CLASS="enabled"
+                        TOOLTIP="Dunst enabled"
+                        TEXT="$ENABLED"
+                      else
+                        CLASS="disabled"
+                        TOOLTIP="Dunst disabled"
+                        TEXT="$DISABLED"
+                        COUNT="$(dunstctl count waiting)"
+                        if [ "$COUNT" != '0' ]; then
+                          TEXT="$DISABLED ($COUNT)"
                         fi
-                        if [ "$PAUSED" == 'false' ]; then
-                          CLASS="enabled"
-                          TOOLTIP="Dunst enabled"
-                          TEXT="$ENABLED"
-                        else
-                          CLASS="disabled"
-                          TOOLTIP="Dunst disabled"
-                          TEXT="$DISABLED"
-                          COUNT="$(dunstctl count waiting)"
-                          if [ "$COUNT" != '0' ]; then
-                            TEXT="$DISABLED ($COUNT)"
-                          fi
-                        fi
-                        printf '{"text": "%s", "class": "%s", "tooltip": "%s"}\n' "$TEXT" "$CLASS" "$TOOLTIP"
-                      done
-                  '';
-                }
-              );
-              on-click = "${dunstctl} set-paused toggle";
-              restart-interval = 1;
-              return-type = "json";
+                      fi
+                      printf '{"text": "%s", "class": "%s", "tooltip": "%s"}\n' "$TEXT" "$CLASS" "$TOOLTIP"
+                    done
+                '';
+              }
+            );
+            on-click = "${dunstctl} set-paused toggle";
+            restart-interval = 1;
+            return-type = "json";
+          };
+          "custom/separator" = {
+            format = "|";
+            interval = "once";
+            tooltip = false;
+          };
+          wireplumber = {
+            format = "{icon} {volume}%";
+            format-muted = "";
+            format-icons = [
+              ""
+              ""
+              ""
+            ];
+            on-click = config.home-manager.window-manager.default.volumeControl;
+            on-click-right = "${pamixer} --toggle-mute";
+            scroll-step = 5;
+            max-volume = 150;
+            states = {
+              high = 101;
             };
-            "custom/separator" = {
-              format = "|";
-              interval = "once";
-              tooltip = false;
-            };
-            wireplumber = {
-              format = "{icon} {volume}%";
-              format-muted = "";
-              format-icons = [
-                ""
-                ""
-                ""
+          };
+          backlight = {
+            format = " {percent}%";
+            on-scroll-up = "light -A 5%";
+            on-scroll-down = "light -U 5%";
+          };
+          battery = {
+            inherit (cfg) interval;
+            format = "{icon} {capacity}%";
+            format-icons = {
+              default = [
+                ""
+                ""
+                ""
+                ""
+                ""
               ];
-              on-click = config.home-manager.window-manager.default.volumeControl;
-              on-click-right = "${pamixer} --toggle-mute";
-              scroll-step = 5;
-              max-volume = 150;
-              states = {
-                high = 101;
-              };
+              plugged = "";
             };
-            backlight = {
-              format = " {percent}%";
-              on-scroll-up = "light -A 5%";
-              on-scroll-down = "light -U 5%";
+            states = {
+              warning = 20;
+              critical = 10;
             };
-            battery = {
-              inherit (cfg) interval;
-              format = "{icon} {capacity}%";
-              format-icons = {
-                default = [
-                  ""
-                  ""
-                  ""
-                  ""
-                  ""
-                ];
-                plugged = "";
-              };
-              states = {
-                warning = 20;
-                critical = 10;
-              };
-            };
-            clock = {
-              inherit (cfg) interval;
-              format = "{:%H:%M, %a %d}";
-              tooltip-format = "<tt><small>{calendar}</small></tt>";
-              calendar = {
-                mode = "year";
-                mode-mon-col = 3;
-                on-scroll = 1;
-                on-click-right = "mode";
-                format = {
-                  months = "<span color='#ffead3'><b>{}</b></span>";
-                  days = "<span color='#ecc6d9'><b>{}</b></span>";
-                  weekdays = "<span color='#ffcc66'><b>{}</b></span>";
-                  today = "<span color='#ff6699'><b><u>{}</u></b></span>";
-                };
+          };
+          clock = {
+            inherit (cfg) interval;
+            format = "{:%H:%M, %a %d}";
+            tooltip-format = "<tt><small>{calendar}</small></tt>";
+            calendar = {
+              mode = "year";
+              mode-mon-col = 3;
+              on-scroll = 1;
+              on-click-right = "mode";
+              format = {
+                months = "<span color='#ffead3'><b>{}</b></span>";
+                days = "<span color='#ecc6d9'><b>{}</b></span>";
+                weekdays = "<span color='#ffcc66'><b>{}</b></span>";
+                today = "<span color='#ff6699'><b><u>{}</u></b></span>";
               };
             };
           };
+        };
       };
       style =
         with config.theme.colors;
