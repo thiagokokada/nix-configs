@@ -11,13 +11,7 @@
   };
 
   config = lib.mkIf config.nixos.desktop.greetd.enable {
-    boot = {
-      consoleLogLevel = lib.mkDefault 3;
-      kernelParams = [
-        # Force kernel log in tty1, otherwise it will override greetd
-        "console=tty1"
-      ];
-    };
+    boot.consoleLogLevel = lib.mkDefault 3;
 
     services = {
       # Configure greetd, a lightweight session manager
@@ -44,7 +38,6 @@
               ];
             };
         };
-        vt = 7;
       };
     };
   };
