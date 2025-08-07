@@ -93,15 +93,15 @@ in
     };
 
     systemd = {
-      # Reduce default service stop timeouts for faster shutdown
-      extraConfig = ''
-        DefaultTimeoutStopSec=15s
-        DefaultTimeoutAbortSec=5s
-      '';
       # systemd's out-of-memory daemon
       oomd = {
         enableRootSlice = true;
         enableUserSlices = true;
+      };
+      settings.Manager = {
+        # Reduce default service stop timeouts for faster shutdown
+        DefaultTimeoutStopSec = lib.mkDefault "15s";
+        DefaultTimeoutAbortSec = lib.mkDefault "5s";
       };
     };
 
