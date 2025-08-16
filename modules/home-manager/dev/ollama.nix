@@ -11,7 +11,7 @@ in
 {
   options.home-manager.dev.ollama = {
     enable = lib.mkEnableOption "Ollama config" // {
-      default = config.home-manager.dev.enable && !pkgs.stdenv.hostPlatform.isDarwin;
+      default = config.home-manager.dev.enable;
     };
     defaultModel = lib.mkOption {
       type = lib.types.str;
