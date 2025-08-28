@@ -16,18 +16,25 @@
     programs = {
       ssh = {
         enable = true;
+        enableDefaultConfig = false;
         package = with pkgs; lib.mkIf stdenv.isLinux openssh;
-        addKeysToAgent = "yes";
-        compression = true;
-        forwardAgent = true;
-        serverAliveCountMax = 2;
-        serverAliveInterval = 300;
+
         includes = [ "local.d/*" ];
+
+        # We want to use the macOS keychain if available
         extraConfig = lib.optionalString pkgs.stdenv.isDarwin ''
           IgnoreUnknown UseKeychain
           UseKeychain yes
         '';
+
         matchBlocks = {
+          "*" = {
+            addKeysToAgent = "yes";
+            compression = true;
+            forwardAgent = true;
+            serverAliveCountMax = 2;
+            serverAliveInterval = 300;
+          };
           "github.com" = {
             identityFile = with config.home; "${homeDirectory}/.ssh/github";
           };
