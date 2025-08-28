@@ -25,11 +25,13 @@
       upower.enable = true;
 
       logind = {
-        powerKey = "suspend-then-hibernate";
-        lidSwitch = "suspend-then-hibernate";
-        # Only suspend on lid closed when laptop is disconnected
-        lidSwitchDocked = lib.mkDefault "ignore";
-        lidSwitchExternalPower = lib.mkDefault "lock";
+        settings.Login = {
+          HandlePowerKey = "suspend-then-hibernate";
+          HandleLidSwitch = "suspend-then-hibernate";
+          # Only suspend on lid closed when laptop is disconnected
+          HandleLidSwitchDocked = lib.mkDefault "ignore";
+          HandleLidSwitchExternalPower = lib.mkDefault "lock";
+        };
       };
     };
   };
