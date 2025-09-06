@@ -3,7 +3,7 @@
     # https://github.com/marketplace/actions/cachix
     cachix-action = "cachix/cachix-action@v16";
     # https://github.com/marketplace/actions/checkout
-    checkout = "actions/checkout@v4";
+    checkout = "actions/checkout@v5";
     # https://github.com/marketplace/actions/create-pull-request
     create-pull-request = "peter-evans/create-pull-request@v7";
     # https://github.com/marketplace/actions/free-disk-space-ubuntu
