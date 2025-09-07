@@ -11,6 +11,7 @@ in
     ./locale.nix
     ./tailscale.nix
     ./wayland.nix
+    ./wireless.nix
     ./xserver.nix
   ];
 

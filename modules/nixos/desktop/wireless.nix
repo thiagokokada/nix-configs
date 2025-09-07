@@ -6,11 +6,11 @@
 }:
 
 {
-  options.nixos.laptop.wireless.enable = lib.mkEnableOption "Wi-Fi/Bluetooth config" // {
-    default = config.nixos.laptop.enable;
+  options.nixos.desktop.wireless.enable = lib.mkEnableOption "Wi-Fi/Bluetooth config" // {
+    default = config.nixos.desktop.enable;
   };
 
-  config = lib.mkIf config.nixos.laptop.enable {
+  config = lib.mkIf config.nixos.desktop.enable {
     networking = {
       # Use Network Manager
       networkmanager = {
@@ -38,17 +38,7 @@
       };
     };
 
-    # Wireless related config
-    services = {
-      # Enable Blueman to manage Bluetooth
-      blueman.enable = true;
-
-      # Use systemd-resolved for DNS
-      resolved = {
-        enable = true;
-        # Can make DNS lookups really slow
-        dnssec = "false";
-      };
-    };
+    # Enable Blueman to manage Bluetooth
+    services.blueman.enable = true;
   };
 }

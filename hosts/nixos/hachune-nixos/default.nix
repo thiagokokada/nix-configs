@@ -23,6 +23,7 @@
   };
 
   nixos = {
+    desktop.wireless.enable = false;
     laptop.tlp.enable = true;
     system.virtualisation.enable = false;
     server = {

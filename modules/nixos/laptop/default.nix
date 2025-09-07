@@ -2,7 +2,6 @@
 
 {
   imports = [
-    ./wireless.nix
     ./tlp.nix
   ];
 

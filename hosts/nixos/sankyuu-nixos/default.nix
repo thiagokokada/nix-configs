@@ -3,7 +3,6 @@
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
 {
-  config,
   pkgs,
   flake,
   ...
@@ -24,8 +23,6 @@
       "enp5s0"
       "wlan0"
     ];
-    # This system is using btrfs subvolumes, so there is only root
-    mount.points = [ "/" ];
   };
 
   boot.kernelPackages = pkgs.linuxPackages_lqx;
