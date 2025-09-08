@@ -1,5 +1,6 @@
 {
   lib,
+  pkgs,
   config,
   osConfig,
   ...
@@ -9,16 +10,20 @@ let
   cfg = config.home-manager.window-manager.wayland.kanshi;
   hostName = osConfig.networking.hostName or "generic";
   hostConfigFile = ./${hostName}.nix;
+  hostConfigFileExists = builtins.pathExists hostConfigFile;
 in
 {
-  imports = lib.optionals (builtins.pathExists hostConfigFile) [ hostConfigFile ];
+  imports = lib.optionals hostConfigFileExists [ hostConfigFile ];
 
   options.home-manager.window-manager.wayland.kanshi.enable = lib.mkEnableOption "Kanshi config" // {
     default = config.home-manager.window-manager.wayland.enable;
   };
 
   config = lib.mkIf cfg.enable {
-    services.kanshi.enable = true;
+    # Useful to get the list of monitors
+    home.packages = with pkgs; [ wlr-randr ];
+
+    services.kanshi.enable = hostConfigFileExists;
 
     systemd.user.services.kanshi = {
       Service = {
