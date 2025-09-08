@@ -30,14 +30,7 @@ in
       steam = {
         enable = true;
         remotePlay.openFirewall = true;
-        gamescopeSession = {
-          enable = true;
-          args = [
-            "--fsr-sharpness 10"
-            "-U"
-            "--adaptive-sync"
-          ];
-        };
+        gamescopeSession.enable = true;
       };
     };
   };
