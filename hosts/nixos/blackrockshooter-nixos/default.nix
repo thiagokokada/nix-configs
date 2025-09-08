@@ -24,8 +24,18 @@
   };
 
   # Use the systemd-boot EFI boot loader
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
+  boot.loader = {
+    efi.canTouchEfiVariables = true;
+    systemd-boot = {
+      enable = true;
+      windows = {
+        "windows-11" = {
+          title = "Windows 11";
+          efiDeviceHandle = "HD0b";
+        };
+      };
+    };
+  };
 
   theme = {
     fonts.dpi = 150;
@@ -45,11 +55,6 @@
       binfmt.enable = true;
     };
   };
-
-  programs.steam.gamescopeSession.args = [
-    "-w 1600"
-    "-h 900"
-  ];
 
   time.timeZone = "Europe/Dublin";
 

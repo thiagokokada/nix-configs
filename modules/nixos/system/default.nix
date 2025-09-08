@@ -46,6 +46,9 @@ in
         "vm.page-cluster" = lib.mkIf cfg.zram.enable 0;
       };
 
+      # Disable boot editor for security
+      loader.systemd-boot.editor = false;
+
       # Enable NTFS support
       supportedFilesystems = [ "ntfs" ];
 
