@@ -2,12 +2,16 @@
 
 {
   imports = [
+    ./greetd.nix
     ./wayland.nix
     ./xserver.nix
   ];
 
   options.nixos.desktop.window-manager.enable = lib.mkEnableOption "window-manager config" // {
-    default = config.nixos.desktop.enable;
+    default = builtins.any (x: config.device.type == x) [
+      "desktop"
+      "laptop"
+    ];
   };
 
   config = lib.mkIf config.nixos.desktop.enable {

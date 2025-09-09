@@ -4,7 +4,6 @@
   imports = [
     ./audio.nix
     ./fonts.nix
-    ./greetd.nix
     ./locale.nix
     ./tailscale.nix
     ./window-manager
