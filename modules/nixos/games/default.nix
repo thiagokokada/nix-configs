@@ -1,11 +1,12 @@
 {
-  pkgs,
-  lib,
   config,
+  lib,
+  pkgs,
   ...
 }:
 
 let
+  inherit (config.meta) username;
   cfg = config.nixos.games;
   nvidia-offload = lib.findFirst (
     p: lib.isDerivation p && p.name == "nvidia-offload"
@@ -59,10 +60,17 @@ in
           start = "${lib.getExe pkgs.libnotify} 'GameMode started'";
           end = "${lib.getExe pkgs.libnotify} 'GameMode ended'";
         };
+        gpu = lib.mkIf (cfg.gpu == "amd") {
+          apply_gpu_optimisations = "accept-responsibility"; # For systems with AMD GPUs
+          gpu_device = 0;
+          amd_performance_level = "high";
+        };
       };
     };
 
+    users.users.${username}.extraGroups = [ "gamemode" ];
+
     # Alternative driver for Xbox One/Series S/Series X controllers
-    # hardware.xone.enable = true;
+    hardware.xone.enable = true;
   };
 }

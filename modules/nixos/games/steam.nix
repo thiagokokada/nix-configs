@@ -29,8 +29,9 @@ in
 
       steam = {
         enable = true;
-        remotePlay.openFirewall = true;
         gamescopeSession.enable = true;
+        remotePlay.openFirewall = true;
+        localNetworkGameTransfers.openFirewall = true;
       };
     };
   };
