@@ -29,7 +29,7 @@ in
 
       steam = {
         enable = true;
-        gamescopeSession.enable = true;
+        gamescopeSession.enable = !config.nixos.games.jovian.enable;
         remotePlay.openFirewall = true;
         localNetworkGameTransfers.openFirewall = true;
       };

@@ -16,7 +16,7 @@
   ];
 
   device = {
-    type = "desktop";
+    type = "steam-machine";
     net.ifaces = [
       "enp8s0"
       "wlp7s0"
@@ -26,15 +26,7 @@
   # Use the systemd-boot EFI boot loader
   boot.loader = {
     efi.canTouchEfiVariables = true;
-    systemd-boot = {
-      enable = true;
-      windows = {
-        "windows-11" = {
-          title = "Windows 11";
-          efiDeviceHandle = "HD0b";
-        };
-      };
-    };
+    systemd-boot.enable = true;
   };
 
   theme = {
