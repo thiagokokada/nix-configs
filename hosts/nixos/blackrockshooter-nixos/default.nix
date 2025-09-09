@@ -13,10 +13,12 @@
     ./disk-config.nix
     ./hardware-configuration.nix
     flake.inputs.disko.nixosModules.disko
+    flake.inputs.hardware.nixosModules.common-cpu-amd
+    flake.inputs.hardware.nixosModules.common-gpu-amd
   ];
 
   device = {
-    type = "steam-machine";
+    type = "desktop";
     net.ifaces = [
       "enp8s0"
       "wlp7s0"
