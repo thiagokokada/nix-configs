@@ -37,7 +37,6 @@ in
       };
       tailscale.enable = true;
     };
-    system.smart.enable = false;
   };
 
   # Use the systemd-boot EFI boot loader.

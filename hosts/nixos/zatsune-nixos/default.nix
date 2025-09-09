@@ -47,7 +47,6 @@ in
         };
       };
     };
-    system.smart.enable = false;
   };
 
   # Use the systemd-boot EFI boot loader.

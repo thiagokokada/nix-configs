@@ -12,7 +12,6 @@ in
   imports = [
     ./binfmt.nix
     ./cli.nix
-    ./smart.nix
     ./vm.nix
   ];
 
