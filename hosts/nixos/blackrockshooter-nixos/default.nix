@@ -18,12 +18,14 @@
   ];
 
   device = {
-    type = "desktop";
+    type = "steam-machine";
     net.ifaces = [
       "enp8s0"
       "wlp7s0"
     ];
   };
+
+  boot.kernelPackages = pkgs.linuxPackages_latest;
 
   # Use the systemd-boot EFI boot loader
   boot.loader = {
