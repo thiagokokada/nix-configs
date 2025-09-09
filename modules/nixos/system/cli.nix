@@ -28,10 +28,6 @@
           powertop
           psmisc
           usbutils
-        ]
-        ++ lib.optionals stdenv.isx86_64 [
-          ryzenadj
-          turbostat
         ];
     };
 
@@ -49,11 +45,7 @@
         withNodeJs = false;
       };
       traceroute.enable = true;
-      zsh = {
-        enable = true;
-        # Will be set by zim-completion
-        enableCompletion = false;
-      };
+      zsh.enable = true;
     };
   };
 }

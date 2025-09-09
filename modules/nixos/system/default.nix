@@ -11,7 +11,6 @@ in
 {
   imports = [
     ./binfmt.nix
-    ./btrfs.nix
     ./cli.nix
     ./smart.nix
     ./vm.nix
@@ -32,8 +31,6 @@ in
   config = lib.mkIf cfg.enable {
     boot = {
       initrd.systemd.enable = lib.mkDefault true;
-
-      kernelParams = [ "zswap.enabled=0" ];
 
       kernel.sysctl = {
         # Enable Magic keys
@@ -64,13 +61,6 @@ in
 
     # Enable nftables-based firewall
     networking.nftables.enable = lib.mkDefault true;
-
-    # Workaround run0 issue
-    # https://github.com/NixOS/nixpkgs/issues/361592
-    security.pam.services.systemd-run0 = {
-      setEnvironment = true;
-      pamMount = false;
-    };
 
     services = {
       cron.enable = true;
@@ -108,7 +98,6 @@ in
     };
 
     system.configurationRevision = flake.rev or "dirty";
-    system.rebuild.enableNg = true;
 
     # nixos/modules/misc/version.nix
     users.motd = lib.mkIf cfg.motd.enable ''
