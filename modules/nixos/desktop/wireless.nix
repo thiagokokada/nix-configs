@@ -11,6 +11,9 @@
   };
 
   config = lib.mkIf config.nixos.desktop.enable {
+    # Install Wireless related packages
+    environment.systemPackages = with pkgs; [ iw ];
+
     networking = {
       # Use Network Manager
       networkmanager = {
@@ -19,26 +22,7 @@
       };
     };
 
-    # Install Wireless related packages
-    environment.systemPackages = with pkgs; [ iw ];
-
     # Enable bluetooth
     hardware.bluetooth.enable = true;
-
-    # Enable NetworkManager applet
-    programs.nm-applet.enable = true;
-
-    # Make nm-applet restart in case of failure
-    systemd.user.services.nm-applet = {
-      serviceConfig = {
-        # Use exponential restart
-        RestartSteps = 5;
-        RestartMaxDelaySec = 10;
-        Restart = "on-failure";
-      };
-    };
-
-    # Enable Blueman to manage Bluetooth
-    services.blueman.enable = true;
   };
 }

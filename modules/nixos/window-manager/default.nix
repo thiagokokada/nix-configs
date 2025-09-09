@@ -18,12 +18,25 @@
     # Programs that needs system-wide permissions to work correctly
     programs = {
       gnome-disks.enable = true;
+      nm-applet.enable = config.nixos.desktop.wireless.enable;
     };
 
     services = {
+      # Enable Blueman to manage Bluetooth
+      blueman.enable = config.nixos.desktop.wireless.enable;
       gnome.gnome-keyring.enable = true;
       graphical-desktop.enable = true;
       udisks2.enable = true;
+    };
+
+    # Make nm-applet restart in case of failure
+    systemd.user.services.nm-applet = {
+      serviceConfig = {
+        # Use exponential restart
+        RestartSteps = 5;
+        RestartMaxDelaySec = 10;
+        Restart = "on-failure";
+      };
     };
   };
 }
