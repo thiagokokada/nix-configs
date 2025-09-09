@@ -12,11 +12,6 @@
       extraLocaleSettings = {
         LC_CTYPE = lib.mkDefault "pt_BR.UTF-8"; # Fix ç in us-intl.
       };
-      inputMethod = {
-        enable = true;
-        type = "fcitx5";
-        fcitx5.waylandFrontend = config.nixos.desktop.wayland.enable;
-      };
     };
 
     # Set your time zone.

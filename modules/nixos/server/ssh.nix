@@ -1,9 +1,4 @@
-{
-  config,
-  lib,
-  pkgs,
-  ...
-}:
+{ config, lib, ... }:
 
 let
   inherit (config.meta) username;
@@ -20,14 +15,9 @@ in
       ];
     };
     root.enableLogin = lib.mkEnableOption "root login via SSH";
-    waypipe.enable = lib.mkEnableOption "waypipe" // {
-      default = config.nixos.desktop.wayland.enable;
-    };
   };
 
   config = lib.mkIf cfg.enable {
-    environment.systemPackages = with pkgs; lib.mkIf cfg.waypipe.enable [ waypipe ];
-
     # Enable OpenSSH
     services.openssh = {
       enable = true;

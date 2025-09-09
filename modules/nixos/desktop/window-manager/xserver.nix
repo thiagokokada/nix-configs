@@ -1,16 +1,15 @@
 {
   config,
   lib,
-  pkgs,
   ...
 }:
 
 {
-  options.nixos.desktop.xserver.enable = lib.mkEnableOption "xserver config" // {
-    default = config.nixos.desktop.enable;
+  options.nixos.desktop.window-manager.xserver.enable = lib.mkEnableOption "xserver config" // {
+    default = config.nixos.desktop.window-manager.enable;
   };
 
-  config = lib.mkIf config.nixos.desktop.xserver.enable {
+  config = lib.mkIf config.nixos.desktop.window-manager.xserver.enable {
     # Configure the virtual console keymap from the xserver keyboard settings
     console.useXkbConfig = true;
 

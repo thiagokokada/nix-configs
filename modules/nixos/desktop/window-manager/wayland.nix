@@ -6,11 +6,19 @@
 }:
 
 {
-  options.nixos.desktop.wayland.enable = lib.mkEnableOption "wayland config" // {
-    default = config.nixos.desktop.enable;
+  options.nixos.desktop.window-manager.wayland.enable = lib.mkEnableOption "wayland config" // {
+    default = config.nixos.desktop.window-manager.enable;
   };
 
-  config = lib.mkIf config.nixos.desktop.wayland.enable {
+  config = lib.mkIf config.nixos.desktop.window-manager.wayland.enable {
+    environment.systemPackages = with pkgs; [ waypipe ];
+
+    i18n.inputMethod = {
+      enable = true;
+      type = "fcitx5";
+      fcitx5.waylandFrontend = true;
+    };
+
     programs = {
       hyprland = {
         enable = true;
