@@ -6,7 +6,6 @@
     ./fonts.nix
     ./locale.nix
     ./tailscale.nix
-    ./window-manager
     ./wireless.nix
   ];
 

@@ -6,11 +6,11 @@
 }:
 
 {
-  options.nixos.desktop.window-manager.greetd.enable = lib.mkEnableOption "greetd config" // {
-    default = config.nixos.desktop.enable;
+  options.nixos.window-manager.greetd.enable = lib.mkEnableOption "greetd config" // {
+    default = config.nixos.window-manager.enable;
   };
 
-  config = lib.mkIf config.nixos.desktop.window-manager.greetd.enable {
+  config = lib.mkIf config.nixos.window-manager.greetd.enable {
     boot.consoleLogLevel = lib.mkDefault 3;
 
     services = {

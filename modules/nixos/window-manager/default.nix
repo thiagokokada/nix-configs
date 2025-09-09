@@ -7,14 +7,14 @@
     ./xserver.nix
   ];
 
-  options.nixos.desktop.window-manager.enable = lib.mkEnableOption "window-manager config" // {
+  options.nixos.window-manager.enable = lib.mkEnableOption "window-manager config" // {
     default = builtins.any (x: config.device.type == x) [
       "desktop"
       "laptop"
     ];
   };
 
-  config = lib.mkIf config.nixos.desktop.enable {
+  config = lib.mkIf config.nixos.window-manager.enable {
     # Programs that needs system-wide permissions to work correctly
     programs = {
       gnome-disks.enable = true;

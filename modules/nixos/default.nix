@@ -11,5 +11,6 @@
     ./nix
     ./server
     ./system
+    ./window-manager
   ];
 }

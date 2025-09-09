@@ -6,11 +6,11 @@
 }:
 
 {
-  options.nixos.desktop.window-manager.wayland.enable = lib.mkEnableOption "wayland config" // {
-    default = config.nixos.desktop.window-manager.enable;
+  options.nixos.window-manager.wayland.enable = lib.mkEnableOption "wayland config" // {
+    default = config.nixos.window-manager.enable;
   };
 
-  config = lib.mkIf config.nixos.desktop.window-manager.wayland.enable {
+  config = lib.mkIf config.nixos.window-manager.wayland.enable {
     environment.systemPackages = with pkgs; [ waypipe ];
 
     i18n.inputMethod = {
