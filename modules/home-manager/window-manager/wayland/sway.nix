@@ -158,10 +158,5 @@ in
     };
 
     xsession.preferStatusNotifierItems = true;
-
-    home.packages = with pkgs; [
-      wdisplays
-      wl-clipboard
-    ];
   };
 }
