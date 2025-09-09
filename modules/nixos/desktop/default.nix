@@ -13,6 +13,7 @@
     default = builtins.any (x: config.device.type == x) [
       "desktop"
       "laptop"
+      "steam-machine"
     ];
   };
 
