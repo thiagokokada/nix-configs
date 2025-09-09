@@ -32,7 +32,6 @@ in
     # Has tons of memory and slow disk
     nix.tmpOnDisk = false;
     desktop.wayland.enable = true;
-    system.virtualisation.enable = false;
     server = {
       iperf3.enable = true;
       ssh.enable = true;
