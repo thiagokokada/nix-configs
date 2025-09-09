@@ -89,7 +89,7 @@ in
       zram-generator = {
         inherit (cfg.zram) enable;
         settings.zram0 = {
-          zram-size = "min(ram, 8192)";
+          zram-size = lib.mkDefault "min(ram, 8192)";
         };
       };
     };

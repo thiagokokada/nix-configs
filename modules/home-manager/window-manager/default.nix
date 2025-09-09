@@ -21,7 +21,7 @@ in
 
   options.home-manager.window-manager = {
     enable = lib.mkEnableOption "window manager config" // {
-      default = osConfig.nixos.desktop.enable or false;
+      default = osConfig.nixos.window-manager.enable or false;
     };
     default = {
       browser = lib.mkOption {
