@@ -5,9 +5,6 @@
   ...
 }:
 
-let
-  inherit (config.meta) username;
-in
 {
   imports = [
     ./asdf.nix
@@ -33,7 +30,6 @@ in
     ];
 
     programs = {
-      adb.enable = true;
       direnv = {
         enable = true;
         enableZshIntegration = false;
@@ -62,8 +58,5 @@ in
           }
         '';
     };
-
-    # Added user to groups
-    users.users.${username}.extraGroups = [ "adbusers" ];
   };
 }

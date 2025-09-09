@@ -7,11 +7,11 @@
 
 let
   inherit (config.meta) username;
-  cfg = config.nixos.system.virtualisation;
+  cfg = config.nixos.dev.virtualisation;
 in
 {
-  options.nixos.system.virtualisation.enable = lib.mkEnableOption "virtualisation config" // {
-    default = config.nixos.system.enable;
+  options.nixos.dev.virtualisation.enable = lib.mkEnableOption "virtualisation config" // {
+    default = config.nixos.dev.enable;
   };
 
   config = lib.mkIf cfg.enable {
