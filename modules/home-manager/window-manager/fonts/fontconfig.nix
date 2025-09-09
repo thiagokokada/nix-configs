@@ -11,16 +11,16 @@ in
 {
   options.home-manager.window-manager.fonts.fontconfig = {
     enable = lib.mkEnableOption "Fontconfig config" // {
-      default = osConfig.fonts.fontconfig.enable or false;
+      default = config.home-manager.window-manager.enable;
     };
 
     antialias = lib.mkEnableOption "antialias" // {
-      default = osConfig.fonts.fontconfig.antialias or true;
+      default = osConfig.fonts.fontconfig.antialias or false;
     };
 
     hinting = {
       enable = lib.mkEnableOption "hinting" // {
-        default = osConfig.fonts.fontconfig.hinting.enable or true;
+        default = osConfig.fonts.fontconfig.hinting.enable or false;
       };
       style = lib.mkOption {
         type = lib.types.enum [
