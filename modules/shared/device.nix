@@ -7,7 +7,6 @@
         "desktop"
         "laptop"
         "server"
-        "steam-machine"
         "vm"
       ];
       description = "Type of device.";

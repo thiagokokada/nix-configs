@@ -14,7 +14,6 @@ let
 in
 {
   imports = [
-    ./jovian.nix
     ./osu.nix
     ./ratbag.nix
     ./retroarch.nix
@@ -22,9 +21,7 @@ in
   ];
 
   options.nixos.games = {
-    enable = lib.mkEnableOption "games config" // {
-      default = config.device.type == "steam-machine";
-    };
+    enable = lib.mkEnableOption "games config";
     gpu = lib.mkOption {
       type = lib.types.nullOr (
         lib.types.enum [

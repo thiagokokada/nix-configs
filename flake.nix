@@ -21,10 +21,6 @@
       url = "github:nix-community/nixGL";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    jovian-nixos = {
-      url = "github:Jovian-Experiments/Jovian-NixOS";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
 
     # helpers
     flake-compat.url = "github:edolstra/flake-compat";
