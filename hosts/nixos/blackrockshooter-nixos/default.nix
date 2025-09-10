@@ -25,12 +25,15 @@
     ];
   };
 
-  boot.kernelPackages = pkgs.linuxPackages_latest;
-
-  # Use the systemd-boot EFI boot loader
-  boot.loader = {
-    efi.canTouchEfiVariables = true;
-    systemd-boot.enable = true;
+  boot = {
+    # https://bbs.archlinux.org/viewtopic.php?id=306366
+    kernelParams = [ "mt7925e.disable_aspm=1" ];
+    kernelPackages = pkgs.linuxPackages_latest;
+    # Use the systemd-boot EFI boot loader
+    loader = {
+      efi.canTouchEfiVariables = true;
+      systemd-boot.enable = true;
+    };
   };
 
   theme = {
