@@ -33,7 +33,7 @@ in
         user = username;
         desktopSession = "plasma";
       };
-      hardware.has.amd.gpu = config.nixos.games.gpu == "amd";
+      hardware.has.amd.gpu = config.nixos.system.gpu == "amd";
     };
 
     services.desktopManager.plasma6.enable = true;

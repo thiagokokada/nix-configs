@@ -44,13 +44,13 @@
   nixos = {
     games = {
       enable = true;
-      gpu = "amd";
     };
     server = {
       ssh.enable = true;
       tailscale.enable = true;
     };
     system = {
+      gpu = "amd";
       binfmt.enable = true;
     };
   };

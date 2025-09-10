@@ -12,6 +12,7 @@ in
   imports = [
     ./binfmt.nix
     ./cli.nix
+    ./gpu.nix
     ./vm.nix
   ];
 
