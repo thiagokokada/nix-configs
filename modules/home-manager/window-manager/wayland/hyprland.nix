@@ -1,5 +1,6 @@
 {
   config,
+  osConfig,
   lib,
   pkgs,
   flake,
@@ -28,7 +29,9 @@ in
   options.home-manager.window-manager.wayland.hyprland.enable =
     lib.mkEnableOption "Hyprland config"
     // {
-      default = config.home-manager.window-manager.wayland.enable;
+      default =
+        config.home-manager.window-manager.wayland.enable
+        && (osConfig.nixos.window-manager.wayland.sway.enable or true);
     };
 
   config = lib.mkIf cfg.enable {
