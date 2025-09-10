@@ -73,7 +73,26 @@ in
 
     users.users.${username}.extraGroups = [ "gamemode" ];
 
-    # Alternative driver for Xbox One/Series S/Series X controllers
-    hardware.xone.enable = true;
+    hardware = {
+      # Alternative driver for Xbox One/Series S/Series X controllers
+      xone.enable = true;
+      # OpenCL for AMD GPUs
+      graphics.extraPackages = with pkgs; lib.optionals (cfg.gpu == "amd") [ rocmPackages.clr.icd ];
+    };
+
+    # ROCm packages
+    # TODO: move this somewhere else
+    systemd.tmpfiles.rules =
+      let
+        rocmEnv = pkgs.symlinkJoin {
+          name = "rocm-combined";
+          paths = with pkgs.rocmPackages; [
+            rocblas
+            hipblas
+            clr
+          ];
+        };
+      in
+      lib.optionals (cfg.gpu == "amd") [ "L+ /opt/rocm - - - - ${rocmEnv}" ];
   };
 }
