@@ -19,6 +19,7 @@ in
     enable = lib.mkEnableOption "Jovian-NixOS config" // {
       default = config.device.type == "steam-machine";
     };
+    bootInDesktopMode = lib.mkEnableOption "boot in desktop mode by default";
   };
 
   config = lib.mkIf cfg.enable {
@@ -37,5 +38,10 @@ in
     };
 
     services.desktopManager.plasma6.enable = true;
+
+    # https://github.com/Jovian-Experiments/Jovian-NixOS/discussions/488
+    home-manager.users.${username} = lib.mkIf cfg.bootInDesktopMode {
+      xdg.stateFile."steamos-session-select".text = config.jovian.steam.desktopSession;
+    };
   };
 }

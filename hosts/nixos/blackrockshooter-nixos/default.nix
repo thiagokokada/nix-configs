@@ -44,6 +44,7 @@
   nixos = {
     games = {
       enable = true;
+      jovian.bootInDesktopMode = true;
     };
     server = {
       ssh.enable = true;
