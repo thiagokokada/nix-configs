@@ -16,6 +16,29 @@
         "type": "gitlab"
       }
     },
+    "chaotic-nyx": {
+      "inputs": {
+        "flake-schemas": "flake-schemas",
+        "home-manager": "home-manager",
+        "jovian": "jovian",
+        "nixpkgs": "nixpkgs",
+        "rust-overlay": "rust-overlay"
+      },
+      "locked": {
+        "lastModified": 1757505806,
+        "narHash": "sha256-n9/XRT0g6ucBpq2r1NUGDVwI6CTqg45sdljjAJdvWwc=",
+        "owner": "chaotic-cx",
+        "repo": "nyx",
+        "rev": "0e34b767650b5b71a9c2b2caf4270f50a66a9305",
+        "type": "github"
+      },
+      "original": {
+        "owner": "chaotic-cx",
+        "ref": "nyxpkgs-unstable",
+        "repo": "nyx",
+        "type": "github"
+      }
+    },
     "disko": {
       "inputs": {
         "nixpkgs": [
@@ -65,6 +88,20 @@
         "owner": "edolstra",
         "repo": "flake-compat",
         "type": "github"
+      }
+    },
+    "flake-schemas": {
+      "locked": {
+        "lastModified": 1721999734,
+        "narHash": "sha256-G5CxYeJVm4lcEtaO87LKzOsVnWeTcHGKbKxNamNWgOw=",
+        "rev": "0a5c42297d870156d9c57d8f99e476b738dcd982",
+        "revCount": 75,
+        "type": "tarball",
+        "url": "https://api.flakehub.com/f/pinned/DeterminateSystems/flake-schemas/0.1.5/0190ef2f-61e0-794b-ba14-e82f225e55e6/source.tar.gz"
+      },
+      "original": {
+        "type": "tarball",
+        "url": "https://flakehub.com/f/DeterminateSystems/flake-schemas/%3D0.1.5.tar.gz"
       }
     },
     "flake-utils": {
@@ -126,6 +163,27 @@
     "home-manager": {
       "inputs": {
         "nixpkgs": [
+          "chaotic-nyx",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1757503661,
+        "narHash": "sha256-bBh9sAJn0x/EdCVA6NYj/hXpcW1YBLCRMgn8A2T1l2E=",
+        "owner": "nix-community",
+        "repo": "home-manager",
+        "rev": "3c97248d6f896232355735e34bb518ae9f130c5d",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "home-manager",
+        "type": "github"
+      }
+    },
+    "home-manager_2": {
+      "inputs": {
+        "nixpkgs": [
           "nixpkgs"
         ]
       },
@@ -179,10 +237,11 @@
         "type": "github"
       }
     },
-    "jovian-nixos": {
+    "jovian": {
       "inputs": {
         "nix-github-actions": "nix-github-actions",
         "nixpkgs": [
+          "chaotic-nyx",
           "nixpkgs"
         ]
       },
@@ -247,7 +306,8 @@
     "nix-github-actions": {
       "inputs": {
         "nixpkgs": [
-          "jovian-nixos",
+          "chaotic-nyx",
+          "jovian",
           "nixpkgs"
         ]
       },
@@ -310,6 +370,22 @@
     },
     "nixpkgs": {
       "locked": {
+        "lastModified": 1757420003,
+        "narHash": "sha256-SPaZFFDt7CzE+BdNyh3HGfUKmttle/yN+ELIl6ZhEeE=",
+        "owner": "PedroHLC",
+        "repo": "nixpkgs",
+        "rev": "b4fc8b5dcc7c1a4dab87d6dc35048cb188e49289",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixos-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs_2": {
+      "locked": {
         "lastModified": 1757068644,
         "narHash": "sha256-NOrUtIhTkIIumj1E/Rsv1J37Yi3xGStISEo8tZm3KW4=",
         "owner": "NixOS",
@@ -327,15 +403,19 @@
     "root": {
       "inputs": {
         "arandr": "arandr",
+        "chaotic-nyx": "chaotic-nyx",
         "disko": "disko",
         "doomemacs": "doomemacs",
         "flake-compat": "flake-compat",
         "gh-gfm-preview": "gh-gfm-preview",
         "hardware": "hardware",
-        "home-manager": "home-manager",
+        "home-manager": "home-manager_2",
         "hyprland-go": "hyprland-go",
         "intellimacs": "intellimacs",
-        "jovian-nixos": "jovian-nixos",
+        "jovian-nixos": [
+          "chaotic-nyx",
+          "jovian"
+        ],
         "nix-alien": "nix-alien",
         "nix-darwin": "nix-darwin",
         "nix-index-database": [
@@ -343,9 +423,30 @@
           "nix-index-database"
         ],
         "nixgl": "nixgl",
-        "nixpkgs": "nixpkgs",
+        "nixpkgs": "nixpkgs_2",
         "treefmt-nix": "treefmt-nix",
         "yazi-flavors": "yazi-flavors"
+      }
+    },
+    "rust-overlay": {
+      "inputs": {
+        "nixpkgs": [
+          "chaotic-nyx",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1757471515,
+        "narHash": "sha256-0+rSzNsYindDWjO9VVULKGjXlPsQV6IDjRU5G3SwI9U=",
+        "owner": "oxalica",
+        "repo": "rust-overlay",
+        "rev": "aecf31120156fe47a7d1992aa814052910178fca",
+        "type": "github"
+      },
+      "original": {
+        "owner": "oxalica",
+        "repo": "rust-overlay",
+        "type": "github"
       }
     },
     "systems": {

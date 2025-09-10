@@ -10,7 +10,10 @@ let
   cfg = config.nixos.games.jovian;
 in
 {
-  imports = [ flake.inputs.jovian-nixos.nixosModules.default ];
+  imports = [
+    flake.inputs.chaotic-nyx.nixosModules.default
+    flake.inputs.jovian-nixos.nixosModules.default
+  ];
 
   options.nixos.games.jovian = {
     enable = lib.mkEnableOption "Jovian-NixOS config" // {
@@ -19,7 +22,9 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    services.desktopManager.plasma6.enable = true;
+    chaotic = {
+      mesa-git.enable = true;
+    };
 
     jovian = {
       steam = {
@@ -30,5 +35,7 @@ in
       };
       hardware.has.amd.gpu = config.nixos.games.gpu == "amd";
     };
+
+    services.desktopManager.plasma6.enable = true;
   };
 }

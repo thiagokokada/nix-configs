@@ -28,7 +28,7 @@
   boot = {
     # https://bbs.archlinux.org/viewtopic.php?id=306366
     kernelParams = [ "mt7925e.disable_aspm=1" ];
-    kernelPackages = pkgs.linuxPackages_latest;
+    kernelPackages = pkgs.linuxPackages_cachyos;
     # Use the systemd-boot EFI boot loader
     loader = {
       efi.canTouchEfiVariables = true;
