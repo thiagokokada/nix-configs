@@ -22,9 +22,6 @@ in
     treeSitter.enable = lib.mkEnableOption "TreeSitter" // {
       default = config.home-manager.dev.enable;
     };
-    gen.enable = lib.mkEnableOption "gen-nvim" // {
-      default = config.home-manager.dev.ollama.enable;
-    };
   };
 
   config = lib.mkIf cfg.enable {
@@ -744,18 +741,6 @@ in
             config = # lua
               ''
                 require("nvim-ts-autotag").setup {}
-              '';
-          }
-        ]
-        ++ lib.optionals cfg.gen.enable [
-          {
-            plugin = gen-nvim;
-            type = "lua";
-            config = # lua
-              ''
-                require("gen").setup {
-                  model = "${config.home-manager.dev.ollama.defaultModel}",
-                }
               '';
           }
         ];

@@ -8,7 +8,10 @@ let
   inherit (config.meta) username;
 in
 {
-  imports = [ ./virtualisation.nix ];
+  imports = [
+    ./ollama.nix
+    ./virtualisation.nix
+  ];
 
   options.nixos.dev.enable = lib.mkEnableOption "developer config" // {
     default = builtins.any (x: config.device.type == x) [
