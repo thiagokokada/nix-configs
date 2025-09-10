@@ -32,6 +32,7 @@
       "zatsune-nixos"
     ];
     x86_64-linux.hostnames = [
+      "blackrockshooter-nixos"
       "hachune-nixos"
       "sankyuu-nixos"
       "zachune-nixos"

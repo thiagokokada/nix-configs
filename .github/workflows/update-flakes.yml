@@ -32,8 +32,9 @@ jobs:
         run: |-
           nix build --print-build-logs '.#homeConfigurations.home-linux.activationPackage'
           nix build --print-build-logs '.#homeConfigurations.steamdeck.activationPackage'
-      - name: 'Build NixOS configs for: hachune-nixos, sankyuu-nixos, zachune-nixos'
+      - name: 'Build NixOS configs for: blackrockshooter-nixos, hachune-nixos, sankyuu-nixos, zachune-nixos'
         run: |-
+          nix build --print-build-logs '.#nixosConfigurations.blackrockshooter-nixos.config.system.build.toplevel'
           nix build --print-build-logs '.#nixosConfigurations.hachune-nixos.config.system.build.toplevel'
           nix build --print-build-logs '.#nixosConfigurations.sankyuu-nixos.config.system.build.toplevel'
           nix build --print-build-logs '.#nixosConfigurations.zachune-nixos.config.system.build.toplevel'
