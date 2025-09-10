@@ -74,11 +74,15 @@ in
     users.users.${username}.extraGroups = [ "gamemode" ];
 
     hardware = {
+      # Needed for lact
+      amdgpu.overdrive.enable = lib.mkIf (cfg.gpu == "amd") true;
       # Alternative driver for Xbox One/Series S/Series X controllers
       xone.enable = true;
       # OpenCL for AMD GPUs
       graphics.extraPackages = with pkgs; lib.optionals (cfg.gpu == "amd") [ rocmPackages.clr.icd ];
     };
+
+    services.lact.enable = true;
 
     # ROCm packages
     # TODO: move this somewhere else
