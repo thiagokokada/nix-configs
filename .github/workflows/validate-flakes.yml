@@ -15,7 +15,7 @@ jobs:
       - uses: cachix/cachix-action@v16
         with:
           authToken: ${{ secrets.CACHIX_TOKEN }}
-          extraPullNames: nix-community
+          extraPullNames: nix-community,chaotic-nyx
           name: thiagokokada-nix-configs
       - name: Validate Flakes
         run: nix flake check --all-systems --print-build-logs

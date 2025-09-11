@@ -37,7 +37,10 @@ rec {
     uses = actions.cachix-action;
     "with" = {
       name = "thiagokokada-nix-configs";
-      extraPullNames = "nix-community";
+      extraPullNames = builtins.concatStringsSep "," [
+        "nix-community"
+        "chaotic-nyx"
+      ];
       authToken = escapeGhVar "secrets.CACHIX_TOKEN";
     };
   };

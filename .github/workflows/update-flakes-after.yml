@@ -16,7 +16,7 @@ jobs:
       - uses: cachix/cachix-action@v16
         with:
           authToken: ${{ secrets.CACHIX_TOKEN }}
-          extraPullNames: nix-community
+          extraPullNames: nix-community,chaotic-nyx
           name: thiagokokada-nix-configs
       - name: 'Build Home-Manager configs for: home-macos'
         run: nix build --print-build-logs '.#homeConfigurations.home-macos.activationPackage'
@@ -34,7 +34,7 @@ jobs:
       - uses: cachix/cachix-action@v16
         with:
           authToken: ${{ secrets.CACHIX_TOKEN }}
-          extraPullNames: nix-community
+          extraPullNames: nix-community,chaotic-nyx
           name: thiagokokada-nix-configs
       - uses: thiagokokada/free-disk-space@main
         with:
