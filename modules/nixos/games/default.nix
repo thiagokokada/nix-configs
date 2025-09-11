@@ -29,7 +29,11 @@ in
     # https://pagure.io/fesco/issue/2993#comment-859763
     boot.kernel.sysctl."vm.max_map_count" = 1048576;
 
-    environment.systemPackages = with pkgs; [ lutris ];
+    environment.systemPackages = with pkgs; [
+      goverlay
+      lutris
+      mangohud
+    ];
 
     programs.gamemode = {
       enable = true;

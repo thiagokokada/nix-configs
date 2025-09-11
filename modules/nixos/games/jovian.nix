@@ -1,6 +1,7 @@
 {
-  lib,
   config,
+  lib,
+  pkgs,
   flake,
   ...
 }:
@@ -39,6 +40,11 @@ in
       };
       hardware.has.amd.gpu = config.nixos.system.gpu == "amd";
     };
+
+    programs.steam.extraCompatPackages = with pkgs; [
+      proton-cachyos
+      proton-ge-custom
+    ];
 
     services.desktopManager.plasma6.enable = true;
 
