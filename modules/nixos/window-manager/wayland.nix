@@ -10,9 +10,6 @@ let
 in
 {
   options.nixos.window-manager.wayland = {
-    enable = lib.mkEnableOption "Wayland config" // {
-      default = config.nixos.window-manager.enable;
-    };
     hyprland.enable = lib.mkEnableOption "Hyprland config" // {
       default = config.nixos.window-manager.enable;
     };
@@ -21,47 +18,51 @@ in
     };
   };
 
-  config = lib.mkIf config.nixos.window-manager.wayland.enable {
-    programs = {
-      hyprland = {
-        inherit (cfg.hyprland) enable;
+  config = lib.mkMerge [
+    (lib.mkIf cfg.hyprland.enable {
+      programs.hyprland = {
+        enable = true;
         withUWSM = true;
       };
-      sway = {
-        # Make Sway available for display managers and make things like swaylock work
-        inherit (cfg.sway) enable;
-        # Do not add this to display managers (we will add via UWSM)
-        package = null;
-        # Remove unnecessary packages from system-wide install (e.g.: foot)
-        extraPackages = [ ];
-      };
-      uwsm = {
-        enable = true;
-        waylandCompositors.sway = lib.mkIf cfg.sway.enable {
-          prettyName = "Sway";
-          comment = "Sway compositor managed by UWSM";
-          binPath = "/etc/profiles/per-user/${config.meta.username}/bin/sway";
+    })
+    (lib.mkIf cfg.sway.enable {
+      programs = {
+        sway = {
+          # Make Sway available for display managers and make things like swaylock work
+          inherit (cfg.sway) enable;
+          # Do not add this to display managers (we will add via UWSM)
+          package = null;
+          # Remove unnecessary packages from system-wide install (e.g.: foot)
+          extraPackages = [ ];
+        };
+        uwsm = {
+          enable = true;
+          waylandCompositors.sway = lib.mkIf cfg.sway.enable {
+            prettyName = "Sway";
+            comment = "Sway compositor managed by UWSM";
+            binPath = "/etc/profiles/per-user/${config.meta.username}/bin/sway";
+          };
         };
       };
-    };
 
-    # https://github.com/NixOS/nixpkgs/pull/207842#issuecomment-1374906499
-    security.pam.loginLimits = [
-      {
-        domain = "@users";
-        item = "rtprio";
-        type = "-";
-        value = 1;
-      }
-    ];
+      # https://github.com/NixOS/nixpkgs/pull/207842#issuecomment-1374906499
+      security.pam.loginLimits = [
+        {
+          domain = "@users";
+          item = "rtprio";
+          type = "-";
+          value = 1;
+        }
+      ];
 
-    # For sway screensharing
-    # https://nixos.wiki/wiki/Firefox
-    xdg.portal = lib.mkIf cfg.sway.enable {
-      enable = true;
-      extraPortals = with pkgs; [ xdg-desktop-portal-gtk ];
-      # Allow for screensharing in wlroots-based desktop
-      wlr.enable = true;
-    };
-  };
+      # For sway screensharing
+      # https://nixos.wiki/wiki/Firefox
+      xdg.portal = lib.mkIf cfg.sway.enable {
+        enable = true;
+        extraPortals = with pkgs; [ xdg-desktop-portal-gtk ];
+        # Allow for screensharing in wlroots-based desktop
+        wlr.enable = true;
+      };
+    })
+  ];
 }
