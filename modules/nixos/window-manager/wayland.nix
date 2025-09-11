@@ -22,12 +22,6 @@ in
   };
 
   config = lib.mkIf config.nixos.window-manager.wayland.enable {
-    i18n.inputMethod = {
-      enable = true;
-      type = "fcitx5";
-      fcitx5.waylandFrontend = true;
-    };
-
     programs = {
       hyprland = {
         inherit (cfg.hyprland) enable;
