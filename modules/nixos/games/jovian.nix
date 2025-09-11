@@ -36,7 +36,7 @@ in
         enable = true;
         autoStart = true;
         user = username;
-        desktopSession = "plasma";
+        desktopSession = config.services.displayManager.defaultSession;
       };
       hardware.has.amd.gpu = config.nixos.system.gpu == "amd";
     };
@@ -45,8 +45,6 @@ in
       proton-cachyos
       proton-ge-custom
     ];
-
-    services.desktopManager.plasma6.enable = true;
 
     # https://github.com/Jovian-Experiments/Jovian-NixOS/discussions/488
     home-manager.users.${username} = lib.mkIf cfg.bootInDesktopMode {

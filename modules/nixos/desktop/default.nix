@@ -4,6 +4,7 @@
   imports = [
     ./audio.nix
     ./fonts.nix
+    ./kde.nix
     ./locale.nix
     ./tailscale.nix
     ./wireless.nix
@@ -31,6 +32,9 @@
       }
     ];
 
-    services.dbus.implementation = "broker";
+    services = {
+      dbus.implementation = "broker";
+      flatpak.enable = true;
+    };
   };
 }
