@@ -33,9 +33,12 @@ in
       bottles
       goverlay
       mangohud
-      (lutris.override {
-        extraPkgs = pkgs: [ ];
-        extraLibraries = pkgs: [ ];
+      (heroic.override {
+        extraPkgs =
+          heroicPkgs: with heroicPkgs; [
+            gamescope
+            gamemode
+          ];
       })
     ];
 

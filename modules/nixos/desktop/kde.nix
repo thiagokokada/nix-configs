@@ -41,7 +41,7 @@ in
       displayManager = {
         defaultSession = "plasma";
         sddm = {
-          enable = cfg.sddm.enable;
+          inherit (cfg.sddm) enable;
           wayland.enable = cfg.sddm.enable;
         };
       };
