@@ -24,7 +24,10 @@ in
 
   config = lib.mkIf cfg.enable {
     chaotic = {
-      mesa-git.enable = true;
+      # This will break NVIDIA Optimus, and doesn't make lots of sense if using
+      # proprietary drivers anyway
+      # TODO: add Intel?
+      mesa-git.enable = config.nixos.system.gpu == "amd";
     };
 
     jovian = {
