@@ -58,9 +58,13 @@
 
   time.timeZone = "Europe/Dublin";
 
-  services.ollama.loadModels = [
-    "deepseek-r1:14b"
-  ];
+  services = {
+    # Used for firmware updates
+    fwupd.enable = true;
+    ollama.loadModels = [
+      "deepseek-r1:14b"
+    ];
+  };
 
   # This value determines the NixOS release with which your system is to be
   # compatible, in order to avoid breaking some software such as database
