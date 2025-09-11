@@ -30,9 +30,13 @@ in
     boot.kernel.sysctl."vm.max_map_count" = 1048576;
 
     environment.systemPackages = with pkgs; [
+      bottles
       goverlay
-      lutris
       mangohud
+      (lutris.override {
+        extraPkgs = pkgs: [ ];
+        extraLibraries = pkgs: [ ];
+      })
     ];
 
     programs.gamemode = {
@@ -51,7 +55,10 @@ in
 
     users.users.${username}.extraGroups = [ "gamemode" ];
 
-    # Alternative driver for Xbox One/Series S/Series X controllers
-    hardware.xone.enable = true;
+    hardware = {
+      graphics.enable32Bit = true;
+      # Alternative driver for Xbox One/Series S/Series X controllers
+      xone.enable = true;
+    };
   };
 }
