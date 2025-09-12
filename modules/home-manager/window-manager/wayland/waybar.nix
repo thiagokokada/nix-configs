@@ -7,11 +7,8 @@
 
 let
   cfg = config.home-manager.window-manager.wayland.waybar;
-  hyprlandCfg = config.home-manager.window-manager.wayland.hyprland;
   swayCfg = config.home-manager.window-manager.wayland.sway;
-
   dunstctl = lib.getExe' pkgs.dunst "dunstctl";
-  hyprctl = lib.getExe' config.wayland.windowManager.hyprland.finalPackage "hyprctl";
   pamixer = lib.getExe pkgs.pamixer;
 in
 {
@@ -51,11 +48,7 @@ in
           position = "top";
           spacing = 3;
           modules-left =
-            lib.optionals hyprlandCfg.enable [
-              "hyprland/workspaces"
-              "hyprland/submap"
-            ]
-            ++ lib.optionals swayCfg.enable [
+            lib.optionals swayCfg.enable [
               "sway/workspaces"
               "sway/mode"
             ]
@@ -89,24 +82,6 @@ in
                 # Except the last one
                 lib.init
               ];
-          "hyprland/workspaces" = lib.mkIf hyprlandCfg.enable {
-            format = "{name}: {icon}";
-            format-icons = {
-              "1" = " ";
-              "2" = " ";
-              "3" = " ";
-              "4" = " ";
-              "5" = " ";
-              "6" = " ";
-              "7" = " ";
-              "8" = " ";
-              "9" = " ";
-              "10" = " ";
-            };
-            "on-scroll-up" = "${hyprctl} dispatch workspace e+1";
-            "on-scroll-down" = "${hyprctl} dispatch workspace e-1";
-          };
-          "hyprland/submap".tooltip = lib.mkIf hyprlandCfg.enable false;
           "sway/mode".tooltip = lib.mkIf swayCfg.enable false;
           "sway/workspaces".disable-scroll-wraparound = lib.mkIf swayCfg.enable true;
           "wlr/taskbar" = {

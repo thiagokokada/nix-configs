@@ -10,21 +10,12 @@ let
 in
 {
   options.nixos.window-manager.wayland = {
-    hyprland.enable = lib.mkEnableOption "Hyprland config" // {
-      default = config.nixos.window-manager.enable;
-    };
     sway.enable = lib.mkEnableOption "Sway config" // {
       default = config.nixos.window-manager.enable;
     };
   };
 
   config = lib.mkMerge [
-    (lib.mkIf cfg.hyprland.enable {
-      programs.hyprland = {
-        enable = true;
-        withUWSM = true;
-      };
-    })
     (lib.mkIf cfg.sway.enable {
       programs = {
         sway = {

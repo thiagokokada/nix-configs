@@ -201,26 +201,6 @@
         "type": "github"
       }
     },
-    "hyprland-go": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1752259925,
-        "narHash": "sha256-f5dVirqDzgt9Gwcmp3wUEn1P7tPoI7W/19TVVPOnAbc=",
-        "owner": "thiagokokada",
-        "repo": "hyprland-go",
-        "rev": "d507179d079068b4454d38be549ea1a9f22dded9",
-        "type": "github"
-      },
-      "original": {
-        "owner": "thiagokokada",
-        "repo": "hyprland-go",
-        "type": "github"
-      }
-    },
     "intellimacs": {
       "flake": false,
       "locked": {
@@ -410,7 +390,6 @@
         "gh-gfm-preview": "gh-gfm-preview",
         "hardware": "hardware",
         "home-manager": "home-manager_2",
-        "hyprland-go": "hyprland-go",
         "intellimacs": "intellimacs",
         "jovian-nixos": [
           "chaotic-nyx",

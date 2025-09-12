@@ -64,12 +64,6 @@
       flake = false;
     };
 
-    # hyprland
-    hyprland-go = {
-      url = "github:thiagokokada/hyprland-go";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     # yazi
     yazi-flavors = {
       url = "github:yazi-rs/flavors";

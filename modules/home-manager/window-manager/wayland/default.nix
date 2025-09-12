@@ -8,7 +8,6 @@
 {
   imports = [
     ./fuzzel.nix
-    ./hyprland.nix
     ./kanshi
     ./sway.nix
     ./swayidle.nix
