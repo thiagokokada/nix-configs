@@ -30,9 +30,11 @@ in
     boot.kernel.sysctl."vm.max_map_count" = 1048576;
 
     environment.systemPackages = with pkgs; [
-      bottles
       goverlay
       mangohud
+      (bottles.override {
+        removeWarningPopup = true;
+      })
       (heroic.override {
         extraPkgs =
           heroicPkgs: with heroicPkgs; [
