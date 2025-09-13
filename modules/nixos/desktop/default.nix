@@ -6,6 +6,7 @@
     ./fonts.nix
     ./kde.nix
     ./locale.nix
+    ./plymouth.nix
     ./tailscale.nix
     ./wireless.nix
   ];
