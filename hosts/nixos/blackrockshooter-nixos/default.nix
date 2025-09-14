@@ -48,6 +48,11 @@
       jovian.bootInDesktopMode = true;
     };
     server = {
+      plex.enable = true;
+      rtorrent = {
+        enable = true;
+        ratio.enable = true;
+      };
       ssh.enable = true;
       tailscale.enable = true;
     };
