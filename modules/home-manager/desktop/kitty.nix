@@ -102,15 +102,16 @@ in
         tab_title_max_length = 30;
 
         # Misc
+        allow_remote_control = "socket-only";
+        background_opacity = toString cfg.opacity;
+        clipboard_control = "write-clipboard write-primary read-clipboard read-primary";
         editor = lib.mkIf config.home-manager.window-manager.enable config.home-manager.window-manager.default.editor;
         enabled_layouts = "tall,fat,grid,horizontal,vertical,stack";
-        strip_trailing_spaces = "smart";
-        clipboard_control = "write-clipboard write-primary read-clipboard read-primary";
-        background_opacity = toString cfg.opacity;
-        window_padding_width = 5;
-        allow_remote_control = "socket-only";
         listen_on = "unix:/tmp/kitty";
         macos_menubar_title_max_length = 50;
+        strip_trailing_spaces = "smart";
+        window_padding_width = 5;
+        confirm_os_window_close = 0;
 
         # Simulate middle-click copy-and-paste, but instead of copying to
         # clipboard it copies to a private buffer
