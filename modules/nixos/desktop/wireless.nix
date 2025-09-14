@@ -18,7 +18,7 @@
       # Use Network Manager
       networkmanager = {
         enable = true;
-        wifi.backend = "iwd";
+        wifi.backend = lib.mkDefault "iwd";
       };
     };
 

@@ -72,6 +72,11 @@
     ];
   };
 
+  # iwd doesn't allow for pinning a specific BSSID (i.e., router by MAC),
+  # but since mt7925e is kinda buggy right now we need this support to
+  # pin 2.4GHz, so go back to wpa_supplicant
+  networking.networkmanager.wifi.backend = "wpa_supplicant";
+
   # This value determines the NixOS release with which your system is to be
   # compatible, in order to avoid breaking some software such as database
   # servers. You should change this only after NixOS release notes say you
