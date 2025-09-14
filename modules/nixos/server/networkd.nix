@@ -4,9 +4,7 @@ let
 in
 {
   options.nixos.server.networkd = {
-    enable = lib.mkEnableOption "systemd-networkd config" // {
-      default = config.nixos.server.enable;
-    };
+    enable = lib.mkEnableOption "systemd-networkd config";
   };
 
   config = lib.mkIf cfg.enable {

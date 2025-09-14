@@ -13,9 +13,7 @@ let
 in
 {
   options.nixos.server.watchdogd = {
-    enable = lib.mkEnableOption "watchdogd config" // {
-      default = config.nixos.server.enable;
-    };
+    enable = lib.mkEnableOption "watchdogd config";
   };
 
   config = lib.mkIf cfg.enable {
