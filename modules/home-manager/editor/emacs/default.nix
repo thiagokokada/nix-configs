@@ -13,9 +13,7 @@ in
   imports = [ flake.inputs.nix-doom-emacs-unstraightened.homeModule ];
 
   options.home-manager.editor.emacs.enable = lib.mkEnableOption "Emacs config" // {
-    default =
-      config.home-manager.editor.enable
-      && (config.home-manager.desktop.enable || config.home-manager.darwin.enable);
+    default = config.home-manager.editor.enable && config.home-manager.desktop.enable;
   };
 
   config = lib.mkIf config.home-manager.editor.emacs.enable {
