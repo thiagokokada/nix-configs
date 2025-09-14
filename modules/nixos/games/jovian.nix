@@ -51,9 +51,22 @@ in
       proton-ge-custom
     ];
 
-    # https://github.com/Jovian-Experiments/Jovian-NixOS/discussions/488
-    home-manager.users.${username} = lib.mkIf cfg.bootInDesktopMode {
-      xdg.stateFile."steamos-session-select".text = config.jovian.steam.desktopSession;
+    home-manager.users.${username} = {
+      home.file."Desktop/Return-to-Gaming-Mode.desktop".source =
+        (pkgs.makeDesktopItem {
+          desktopName = "Return to Gaming Mode";
+          exec = "qdbus org.kde.Shutdown /Shutdown org.kde.Shutdown.logout";
+          icon = "steam";
+          name = "Return-to-Gaming-Mode";
+          startupNotify = false;
+          terminal = false;
+          type = "Application";
+        })
+        + "/share/applications/Return-to-Gaming-Mode.desktop";
+      # https://github.com/Jovian-Experiments/Jovian-NixOS/discussions/488
+      xdg.stateFile."steamos-session-select" = lib.mkIf cfg.bootInDesktopMode {
+        text = config.jovian.steam.desktopSession;
+      };
     };
   };
 }
