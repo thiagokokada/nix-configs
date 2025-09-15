@@ -33,6 +33,17 @@
       }
     ];
 
+    systemd = {
+      settings.Manager = {
+        # Reduce default service stop timeouts for faster shutdown
+        DefaultTimeoutStopSec = lib.mkDefault "15s";
+      };
+      services."user@".serviceConfig = {
+        # Reduce default service stop for User services
+        TimeoutStopSec = lib.mkDefault "15s";
+      };
+    };
+
     services = {
       dbus.implementation = "broker";
       flatpak.enable = true;

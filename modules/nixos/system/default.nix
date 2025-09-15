@@ -90,14 +90,6 @@ in
         enableRootSlice = true;
         enableUserSlices = true;
       };
-      settings.Manager = {
-        # Reduce default service stop timeouts for faster shutdown
-        DefaultTimeoutStopSec = lib.mkDefault "15s";
-      };
-      services."user@".serviceConfig = {
-        # Reduce default service stop for User services
-        TimeoutStopSec = lib.mkDefault "15s";
-      };
     };
 
     system.configurationRevision = flake.rev or "dirty";
