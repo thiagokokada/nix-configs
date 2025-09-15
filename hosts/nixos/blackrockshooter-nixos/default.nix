@@ -37,11 +37,6 @@
     };
   };
 
-  theme = {
-    fonts.dpi = 150;
-    wallpaper.path = pkgs.wallpapers.hatsune-miku_stylized-ultrawide;
-  };
-
   nixos = {
     games = {
       enable = true;
