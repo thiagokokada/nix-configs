@@ -71,11 +71,6 @@ in
         interval = "weekly";
       };
 
-      # Decrease journal size
-      journald.extraConfig = ''
-        SystemMaxUse=500M
-      '';
-
       zram-generator = {
         inherit (cfg.zram) enable;
         settings.zram0 = {
