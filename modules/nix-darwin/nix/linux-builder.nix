@@ -8,9 +8,7 @@ let
   cfg = config.nix-darwin.nix.linux-builder;
 in
 {
-  options.nix-darwin.nix.linux-builder.enable = lib.mkEnableOption "Linux builder config" // {
-    default = config.nix-darwin.nix.enable;
-  };
+  options.nix-darwin.nix.linux-builder.enable = lib.mkEnableOption "Linux builder config";
 
   config = lib.mkIf cfg.enable {
     launchd.daemons.linux-builder = {
