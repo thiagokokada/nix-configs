@@ -10,10 +10,7 @@ let
 in
 {
   options.nixos.games.ratbag.enable =
-    lib.mkEnableOption "Ratbag/Piper (e.g. Logitech devices) config"
-    // {
-      default = config.nixos.games.enable;
-    };
+    lib.mkEnableOption "Ratbag/Piper (e.g. Logitech devices) config";
 
   config = lib.mkIf cfg.enable {
     environment.systemPackages = with pkgs; [ piper ];

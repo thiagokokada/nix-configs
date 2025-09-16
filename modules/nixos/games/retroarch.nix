@@ -21,9 +21,7 @@ let
 in
 {
   options.nixos.games.retroarch = {
-    enable = lib.mkEnableOption "RetroArch config" // {
-      default = config.nixos.games.enable;
-    };
+    enable = lib.mkEnableOption "RetroArch config";
     cores = lib.mkOption {
       type = with lib.types; either (enum [ "all" ]) (listOf str);
       default = [
