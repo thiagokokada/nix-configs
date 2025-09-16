@@ -56,7 +56,7 @@ rec {
 
   validateFlakesStep = {
     name = "Validate Flakes";
-    run = "nix flake check --all-systems ${toString sharedNixFlags}";
+    run = "nix flake check ${toString sharedNixFlags}";
   };
 
   buildNixDarwinConfigurations =

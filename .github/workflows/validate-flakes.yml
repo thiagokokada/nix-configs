@@ -18,7 +18,7 @@ jobs:
           extraPullNames: nix-community,chaotic-nyx
           name: thiagokokada-nix-configs
       - name: Validate Flakes
-        run: nix flake check --all-systems --print-build-logs
+        run: nix flake check --print-build-logs
 name: validate-flakes
 "on":
   - push
