@@ -10,6 +10,7 @@ let
 in
 {
   imports = [
+    ./btop.nix
     ./git.nix
     ./htop.nix
     ./irssi.nix
