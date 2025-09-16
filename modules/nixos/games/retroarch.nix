@@ -27,16 +27,13 @@ in
     cores = lib.mkOption {
       type = with lib.types; either (enum [ "all" ]) (listOf str);
       default = [
-        "atari800"
         "beetle-lynx"
         "beetle-ngp"
         "beetle-pce-fast"
         "beetle-pcfx"
         "beetle-supergrafx"
         "beetle-wswan"
-        "blastem"
         "bsnes-hd"
-        "desmume"
         "fbneo"
         "flycast"
         "gambatte"
@@ -48,7 +45,6 @@ in
         "nestopia"
         "pcsx2"
         "ppsspp"
-        "prosystem"
         "snes9x"
         "stella"
         "swanstation"
@@ -59,6 +55,7 @@ in
     package = lib.mkOption {
       type = lib.types.package;
       description = "Final package.";
+      readOnly = true;
       internal = true;
     };
   };
@@ -69,8 +66,8 @@ in
     environment.systemPackages = [ finalPkg ];
 
     services.xserver.desktopManager.retroarch = {
+      inherit (config.nixos.games.retroarch) package;
       enable = true;
-      package = finalPkg;
     };
   };
 }
