@@ -19,6 +19,8 @@
         theme = "tokyonight";
 
         editor = {
+          # Force true-color for e.g., crostini's terminal
+          true-color = true;
           soft-wrap.enable = true;
           statusline = {
             left = [
