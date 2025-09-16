@@ -26,10 +26,5 @@
         openFirewall = true;
       };
     };
-
-    systemd.services.ollama-model-loader = {
-      wants = [ "network-online.target" ];
-      after = [ "network-online.target" ];
-    };
   };
 }
