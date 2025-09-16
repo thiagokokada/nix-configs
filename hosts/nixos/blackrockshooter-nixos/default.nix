@@ -38,10 +38,7 @@
   };
 
   nixos = {
-    games = {
-      enable = true;
-      jovian.bootInDesktopMode = true;
-    };
+    games.enable = true;
     server = {
       plex.enable = true;
       rtorrent = {
