@@ -23,6 +23,9 @@ in
 
   config = lib.mkMerge [
     (lib.mkIf (gpu == "amd") {
+      # Enable support for ROCm in nixpkgs
+      nixpkgs.config.rocmSupport = true;
+
       hardware = {
         # Needed for lact
         amdgpu.overdrive.enable = true;
@@ -59,6 +62,9 @@ in
           config.hardware.nvidia.prime.offload.enable || config.hardware.nvidia.prime.reverseSync.enable;
       in
       lib.mkIf (gpu == "nvidia") {
+        # Enable support for CUDA in nixpkgs
+        nixpkgs.config.cudaSupport = true;
+
         # Use nvidia-offload script in gamemode
         environment.variables.GAMEMODERUNEXEC = lib.mkIf primeEnabled "/run/current-system/sw/bin/${config.hardware.nvidia.prime.offload.offloadCmdMainProgram}";
 
