@@ -9,6 +9,9 @@
       home-manager = {
         editor.idea.enable = true;
       };
+      programs.go.env = {
+        GOPRIVATE = "github.com/flowcommerce/*";
+      };
     }
   ];
 
