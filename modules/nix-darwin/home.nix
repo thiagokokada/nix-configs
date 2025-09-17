@@ -39,11 +39,26 @@ in
         # Can't set the same as nix-darwin, since it uses a different state
         # format
         home.stateVersion = lib.mkDefault "unset";
+        # Disable copying applications to ~/Applications
+        home-manager.darwin.copyApps.enable = false;
+        targets.darwin.linkApps.enable = false;
       };
       extraSpecialArgs = {
         inherit flake libEx;
       };
     };
+
+    # Copy graphical applications to /Applications using nix-darwin
+    # https://github.com/nix-community/home-manager/issues/1341#issuecomment-3256894180
+    system.build.applications = lib.mkForce (
+      pkgs.buildEnv {
+        name = "system-applications";
+        pathsToLink = "/Applications";
+        paths =
+          config.environment.systemPackages
+          ++ (lib.concatMap (x: x.home.packages) (lib.attrsets.attrValues config.home-manager.users));
+      }
+    );
 
     users.users.${username}.home = lib.mkDefault "/Users/${username}";
   };
