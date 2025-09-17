@@ -27,7 +27,7 @@ in
       # This will break NVIDIA Optimus, and doesn't make lots of sense if using
       # proprietary drivers anyway
       # TODO: add Intel?
-      mesa-git.enable = config.nixos.system.gpu == "amd";
+      mesa-git.enable = config.nixos.system.gpu.maker == "amd";
     };
 
     jovian = {
@@ -42,7 +42,7 @@ in
               config.programs.steam.extraCompatPackages;
         };
       };
-      hardware.has.amd.gpu = config.nixos.system.gpu == "amd";
+      hardware.has.amd.gpu = config.nixos.system.gpu.maker == "amd";
     };
 
     programs.steam.extraCompatPackages = with pkgs; [

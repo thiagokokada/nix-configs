@@ -6,31 +6,39 @@
 }:
 
 let
-  inherit (config.nixos.system) gpu;
+  cfg = config.nixos.system.gpu;
+  inherit (cfg) maker;
 in
 {
-  options.nixos.system.gpu = lib.mkOption {
-    type = lib.types.nullOr (
-      lib.types.enum [
-        "amd"
-        "intel"
-        "nvidia"
-      ]
-    );
-    default = null;
-    description = "GPU maker.";
+  options.nixos.system.gpu = {
+    maker = lib.mkOption {
+      type = lib.types.nullOr (
+        lib.types.enum [
+          "amd"
+          "intel"
+          "nvidia"
+        ]
+      );
+      default = null;
+      description = "GPU maker.";
+    };
+    acceleration.enable = lib.mkEnableOption "CUDA/ROCm support";
   };
 
   config = lib.mkMerge [
-    (lib.mkIf (gpu == "amd") {
+    (lib.mkIf (maker == "amd") {
       # Enable support for ROCm in nixpkgs
-      nixpkgs.config.rocmSupport = true;
+      nixpkgs.config.rocmSupport = lib.mkIf cfg.acceleration.enable true;
 
       hardware = {
         # Needed for lact
         amdgpu.overdrive.enable = true;
         # OpenCL for AMD GPUs
-        graphics.extraPackages = with pkgs; [ rocmPackages.clr.icd ];
+        graphics.extraPackages =
+          with pkgs;
+          lib.mkIf cfg.acceleration.enable [
+            rocmPackages.clr.icd
+          ];
       };
 
       programs.gamemode = {
@@ -54,16 +62,16 @@ in
             ];
           };
         in
-        [ "L+ /opt/rocm - - - - ${rocmEnv}" ];
+        lib.mkIf cfg.acceleration.enable [ "L+ /opt/rocm - - - - ${rocmEnv}" ];
     })
     (
       let
         primeEnabled =
           config.hardware.nvidia.prime.offload.enable || config.hardware.nvidia.prime.reverseSync.enable;
       in
-      lib.mkIf (gpu == "nvidia") {
+      lib.mkIf (maker == "nvidia") {
         # Enable support for CUDA in nixpkgs
-        nixpkgs.config.cudaSupport = true;
+        nixpkgs.config.cudaSupport = lib.mkIf cfg.acceleration.enable true;
 
         # Use nvidia-offload script in gamemode
         environment.variables.GAMEMODERUNEXEC = lib.mkIf primeEnabled "/run/current-system/sw/bin/${config.hardware.nvidia.prime.offload.offloadCmdMainProgram}";
@@ -71,7 +79,7 @@ in
         hardware.nvidia.prime.offload.enableOffloadCmd = primeEnabled;
       }
     )
-    (lib.mkIf (gpu != null) {
+    (lib.mkIf (maker != null) {
       # GPU control application
       services.lact.enable = config.nixos.desktop.enable;
     })

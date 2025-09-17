@@ -13,7 +13,6 @@
     services = {
       ollama = {
         enable = true;
-        acceleration = lib.mkIf (config.nixos.system.gpu == "amd") "rocm";
         # Define additional models in hosts, since depending on the host vRAM
         # we can run bigger or smaller models
         # https://ollama.com/library
