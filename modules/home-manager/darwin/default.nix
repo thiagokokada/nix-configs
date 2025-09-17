@@ -10,8 +10,8 @@ let
 in
 {
   imports = [
+    ./copy-apps.nix
     ./homebrew.nix
-    ./trampoline-apps.nix
   ];
 
   options.home-manager.darwin = {
