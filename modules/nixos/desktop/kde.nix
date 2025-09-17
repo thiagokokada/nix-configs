@@ -34,6 +34,9 @@ in
       ]
       ++ lib.optionals config.services.flatpak.enable [
         kdePackages.discover
+      ]
+      ++ lib.optionals config.services.smartd.enable [
+        kdePackages.plasma-disks
       ];
 
     services = {

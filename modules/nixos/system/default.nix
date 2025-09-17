@@ -13,6 +13,7 @@ in
     ./binfmt.nix
     ./cli.nix
     ./gpu.nix
+    ./smart.nix
     ./vm.nix
   ];
 
