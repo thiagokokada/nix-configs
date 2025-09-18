@@ -21,6 +21,11 @@ in
       packages = with pkgs; [
         (run-bg-alias "em" "${lib.getExe emacs}")
         (writeShellScriptBin "et" "${lib.getExe emacs} -nw $@")
+        # fonts used in the config
+        emacs-all-the-icons-fonts
+        fira-code
+        hack-font
+        noto-fonts
       ];
     };
 
@@ -44,16 +49,9 @@ in
         ];
 
       extraBinPackages = with pkgs; [
-        # doom-emacs main deps
-        emacs-all-the-icons-fonts
         fd
         findutils
         ripgrep
-
-        # font for my config
-        fira-code
-        hack-font
-        noto-fonts
       ];
     };
   };
