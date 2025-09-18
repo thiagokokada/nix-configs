@@ -37,6 +37,8 @@
     };
   };
 
+  fonts.fontconfig.subpixel.rgba = "rgb";
+
   nixos = {
     games.enable = true;
     server = {

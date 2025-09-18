@@ -35,7 +35,7 @@ in
 
     subpixel = {
       rgba = lib.mkOption {
-        default = osConfig.fonts.fontconfig.hinting.subpixel.rgba or "none";
+        default = osConfig.fonts.fontconfig.subpixel.rgba or "none";
         type = lib.types.enum [
           "rgb"
           "bgr"

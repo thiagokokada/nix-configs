@@ -127,7 +127,7 @@ in
             bg = "${path} ${scale}";
             # DPI
             scale = toString (config.theme.fonts.dpi / 100.0);
-            subpixel = config.home-manager.window-manager.fonts.fontconfig.subpixel.rgba;
+            subpixel = config.home-manager.desktop.fonts.fontconfig.subpixel.rgba;
           };
         };
       };

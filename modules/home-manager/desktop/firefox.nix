@@ -8,14 +8,14 @@
 let
   inherit (config.home) username;
   cfg = config.home-manager.desktop.firefox;
-  cfgFc = config.home-manager.desktop.theme.fonts.fontconfig;
+  cfgFc = config.home-manager.desktop.fonts.fontconfig;
 in
 {
   options.home-manager.desktop.firefox = {
     enable = lib.mkEnableOption "Firefox config" // {
       default = config.home-manager.desktop.enable;
     };
-    subpixelRender.enable = lib.mkEnableOption {
+    subpixelRender.enable = lib.mkEnableOption "subpixel render" // {
       default = cfgFc.antialias && (cfgFc.subpixel.rgba != "none");
     };
   };
