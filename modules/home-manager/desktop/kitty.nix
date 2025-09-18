@@ -22,12 +22,12 @@ in
     fontSize = lib.mkOption {
       type = lib.types.float;
       description = "Font size.";
-      default = 14.0;
+      default = if pkgs.stdenv.isDarwin then 14.0 else 12.0;
     };
     opacity = lib.mkOption {
       type = lib.types.float;
       description = "Background opacity.";
-      default = 1.0;
+      default = if pkgs.stdenv.isDarwin then 1.0 else 0.95;
     };
   };
 
