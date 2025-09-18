@@ -17,7 +17,6 @@ in
     ./kitty.nix
     ./mpv
     ./nixgl.nix
-    ./xterm.nix
   ];
 
   options.home-manager.desktop = {
