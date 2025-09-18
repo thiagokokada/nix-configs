@@ -11,7 +11,7 @@ in
 {
   options.home-manager.desktop.kitty = {
     enable = lib.mkEnableOption "Kitty config" // {
-      default = config.home-manager.desktop.enable;
+      default = config.home-manager.desktop.enable || config.home-manager.desktop.enable;
     };
     scrollback-nvim.enable = lib.mkEnableOption "kitty-scrollback.nvim" // {
       default = config.home-manager.editor.neovim.enable;
@@ -22,12 +22,12 @@ in
     fontSize = lib.mkOption {
       type = lib.types.float;
       description = "Font size.";
-      default = 12.0;
+      default = 14.0;
     };
     opacity = lib.mkOption {
       type = lib.types.float;
       description = "Background opacity.";
-      default = 0.95;
+      default = 1.0;
     };
   };
 

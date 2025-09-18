@@ -21,18 +21,6 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    home-manager = {
-      dev.enable = true;
-      desktop = {
-        # mpv.enable = true;
-        kitty = {
-          enable = true;
-          fontSize = 14.0;
-          opacity = 1.0;
-        };
-      };
-    };
-
     targets.darwin.defaults = {
       NSGlobalDomain = {
         ApplePressAndHoldEnabled = false;
