@@ -12,7 +12,6 @@ in
 {
   imports = [
     ./dunst.nix
-    ./fonts
     ./gammastep.nix
     ./theme
     ./wayland

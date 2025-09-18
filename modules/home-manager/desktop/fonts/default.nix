@@ -6,14 +6,14 @@
 }:
 
 let
-  cfg = config.home-manager.window-manager.fonts;
+  cfg = config.home-manager.desktop.fonts;
 in
 {
   imports = [ ./fontconfig.nix ];
 
-  options.home-manager.window-manager.fonts = {
+  options.home-manager.desktop.fonts = {
     enable = lib.mkEnableOption "font config" // {
-      default = config.home-manager.window-manager.enable || config.home-manager.darwin.enable;
+      default = config.home-manager.desktop.enable || config.home-manager.darwin.enable;
     };
   };
 

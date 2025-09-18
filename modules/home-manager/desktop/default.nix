@@ -13,6 +13,7 @@ in
   imports = [
     ./chromium.nix
     ./firefox.nix
+    ./fonts
     ./kitty.nix
     ./mpv
     ./nixgl.nix
