@@ -29,10 +29,7 @@
     ];
 
     programs = {
-      direnv = {
-        enable = true;
-        enableZshIntegration = false;
-      };
+      direnv.enable = true;
       tealdeer = {
         enable = true;
         settings = {
@@ -45,17 +42,6 @@
           };
         };
       };
-      zsh.initContent =
-        # manually creating integrations since this is faster than calling
-        # the `direnv hook zsh` itself during startup
-        # bash
-        ''
-          source ${
-            pkgs.runCommand "direnv-hook-zsh" { buildInputs = [ config.programs.direnv.package ]; } ''
-              direnv hook zsh > $out
-            ''
-          }
-        '';
     };
   };
 }

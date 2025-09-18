@@ -68,12 +68,8 @@ in
         enable = true;
         fileWidgetOptions = [ "--preview 'head {}'" ];
         historyWidgetOptions = [ "--sort" ];
-        enableZshIntegration = false;
       };
-      zoxide = {
-        enable = true;
-        enableZshIntegration = false;
-      };
+      zoxide.enable = true;
       zsh = {
         enable = true;
         autocd = true;
@@ -152,30 +148,13 @@ in
         };
 
         plugins = with pkgs; [
-          # manually creating integrations since this is faster than calling
-          # the program during startup (e.g. `zoxide init zsh`)
+          # manually creating some integrations since this is faster than calling
+          # the program during startup
           {
             name = "nix-your-shell";
             src = pkgs.runCommand "nix-your-shell" { buildInputs = [ pkgs.nix-your-shell ]; } ''
               mkdir -p $out
               nix-your-shell --absolute zsh > $out/nix-your-shell.plugin.zsh
-            '';
-          }
-          {
-            name = "fzf";
-            file = "share/fzf/completion.zsh";
-            src = config.programs.fzf.package;
-          }
-          {
-            name = "fzf";
-            file = "share/fzf/key-bindings.zsh";
-            src = config.programs.fzf.package;
-          }
-          {
-            name = "zoxide";
-            src = pkgs.runCommand "zoxide-init-zsh" { buildInputs = [ config.programs.zoxide.package ]; } ''
-              mkdir -p $out
-              zoxide init zsh > $out/zoxide.plugin.zsh
             '';
           }
           {
