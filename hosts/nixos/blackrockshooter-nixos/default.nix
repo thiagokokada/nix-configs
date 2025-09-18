@@ -53,7 +53,10 @@
         maker = "amd";
         acceleration.enable = true;
       };
-      binfmt.enable = true;
+      binfmt = {
+        enable = true;
+        windows.enable = true;
+      };
     };
   };
 
