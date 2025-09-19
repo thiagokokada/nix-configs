@@ -114,7 +114,7 @@ in
             # bash
             ''
               # source contents from ~/.zshrc.d/*.zsh
-              for file in "$HOME/.zshrc.d/"*.zsh; do
+              for file in "$HOME/.zshrc.d/"*.zsh(N); do
                 [[ -f "$file" ]] && source "$file"
               done
             ''
