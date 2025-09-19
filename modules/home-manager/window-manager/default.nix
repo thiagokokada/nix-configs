@@ -20,7 +20,7 @@ in
 
   options.home-manager.window-manager = {
     enable = lib.mkEnableOption "window manager config" // {
-      default = osConfig.nixos.window-manager.enable;
+      default = osConfig.nixos.window-manager.enable or false;
     };
     default = {
       browser = lib.mkOption {
@@ -76,11 +76,15 @@ in
 
   config = lib.mkIf cfg.enable {
     home = {
-      keyboard = {
-        layout = lib.mkDefault osConfig.services.xserver.xkb.layout;
-        variant = lib.mkDefault osConfig.services.xserver.xkb.variant;
-        options = lib.mkDefault (lib.splitString "," osConfig.services.xserver.xkb.options);
-      };
+      keyboard =
+        let
+          osKeyboard = osConfig.services.xserver.xkb or { };
+        in
+        {
+          layout = lib.mkDefault (osKeyboard.layout or null);
+          variant = lib.mkDefault (osKeyboard.variant or null);
+          options = lib.mkDefault (lib.splitString "," (osKeyboard.options or ""));
+        };
 
       packages = with pkgs; [
         desktop-file-utils

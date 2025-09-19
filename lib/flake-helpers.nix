@@ -107,7 +107,7 @@ in
         extraSpecialArgs = {
           flake = self;
           libEx = self.outputs.lib;
-          osConfig = import ./osconfig-mock.nix;
+          osConfig = { };
         };
       };
 

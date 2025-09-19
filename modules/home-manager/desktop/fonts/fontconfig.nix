@@ -15,12 +15,12 @@ in
     };
 
     antialias = lib.mkEnableOption "antialias" // {
-      default = osConfig.fonts.fontconfig.antialias;
+      default = osConfig.fonts.fontconfig.antialias or false;
     };
 
     hinting = {
       enable = lib.mkEnableOption "hinting" // {
-        default = osConfig.fonts.fontconfig.hinting.enable;
+        default = osConfig.fonts.fontconfig.hinting.enable or false;
       };
       style = lib.mkOption {
         type = lib.types.enum [
@@ -29,13 +29,13 @@ in
           "medium"
           "full"
         ];
-        default = osConfig.fonts.fontconfig.hinting.style;
+        default = osConfig.fonts.fontconfig.hinting.style or "slight";
       };
     };
 
     subpixel = {
       rgba = lib.mkOption {
-        default = osConfig.fonts.fontconfig.subpixel.rgba;
+        default = osConfig.fonts.fontconfig.subpixel.rgba or "none";
         type = lib.types.enum [
           "rgb"
           "bgr"
@@ -47,7 +47,7 @@ in
       };
 
       lcdfilter = lib.mkOption {
-        default = osConfig.fonts.fontconfig.subpixel.lcdfilter;
+        default = osConfig.fonts.fontconfig.subpixel.lcdfilter or "default";
         type = lib.types.enum [
           "none"
           "default"

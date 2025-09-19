@@ -7,7 +7,7 @@
 }:
 
 let
-  inherit (osConfig.networking) hostName;
+  hostName = osConfig.networking.hostName or "generic";
   hostConfigFile = ./${hostName}.nix;
   cfg = config.home-manager.window-manager.x11.autorandr;
 in

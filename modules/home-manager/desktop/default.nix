@@ -21,7 +21,7 @@ in
 
   options.home-manager.desktop = {
     enable = lib.mkEnableOption "desktop config" // {
-      default = osConfig.nixos.desktop.enable;
+      default = osConfig.nixos.desktop.enable or false;
     };
   };
 

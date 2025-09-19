@@ -8,7 +8,7 @@
 
 let
   cfg = config.home-manager.window-manager.wayland.kanshi;
-  inherit (osConfig.networking) hostName;
+  hostName = osConfig.networking.hostName or "generic";
   hostConfigFile = ./${hostName}.nix;
   hostConfigFileExists = builtins.pathExists hostConfigFile;
 in

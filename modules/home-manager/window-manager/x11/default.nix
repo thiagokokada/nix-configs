@@ -26,14 +26,14 @@ in
     };
     nvidia = {
       enable = lib.mkEnableOption "NVIDIA config" // {
-        default = osConfig.nixos.system.gpu.maker == "nvidia";
+        default = builtins.elem "nvidia" (osConfig.services.xserver.videoDrivers or [ ]);
       };
       prime = {
         sync.enable = lib.mkEnableOption "enable NVIDIA prime sync" // {
-          default = osConfig.hardware.nvidia.prime.sync.enable;
+          default = osConfig.hardware.nvidia.prime.sync.enable or false;
         };
         offload.enable = lib.mkEnableOption "enable NVIDIA prime offload" // {
-          default = osConfig.hardware.nvidia.prime.offload.enable;
+          default = osConfig.hardware.nvidia.prime.offload.enable or false;
         };
       };
     };
