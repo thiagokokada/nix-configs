@@ -11,7 +11,7 @@ in
 {
   options.home-manager.desktop.kitty = {
     enable = lib.mkEnableOption "Kitty config" // {
-      default = config.home-manager.desktop.enable || config.home-manager.desktop.enable;
+      default = config.home-manager.desktop.enable || config.home-manager.darwin.enable;
     };
     scrollback-nvim.enable = lib.mkEnableOption "kitty-scrollback.nvim" // {
       default = config.home-manager.editor.neovim.enable;

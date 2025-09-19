@@ -11,7 +11,7 @@ in
 {
   options.home-manager.desktop.mpv = {
     enable = lib.mkEnableOption "mpv config" // {
-      default = config.home-manager.desktop.enable;
+      default = config.home-manager.desktop.enable || config.home-manager.darwin.enable;
     };
     profile = lib.mkOption {
       type = with lib.types; listOf str;
