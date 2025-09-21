@@ -7,7 +7,7 @@
 }:
 
 let
-  cfg = config.home-manager.window-manager;
+  cfg = config.home-manager.desktop;
 in
 {
   imports = [
@@ -29,11 +29,9 @@ in
     home.packages = with pkgs; [
       android-file-transfer
       audacious
-      libreoffice-fresh
-      (mcomix.override {
-        unrarSupport = true;
-        pdfSupport = false;
-      })
+      corefonts # needed for onlyoffice
+      onlyoffice-bin
+      (mcomix.override { unrarSupport = true; })
     ];
   };
 }
