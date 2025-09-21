@@ -31,14 +31,15 @@ in
           "browser.quitShortcut.disabled" = true;
           # don't mess up with paste
           "dom.event.clipboardevents.enabled" = false;
-          # enable hw video acceleration, if supported
-          "media.ffmpeg.vaapi.enabled" = lib.mkIf pkgs.stdenv.isLinux true;
           # handpicked settings from: https://github.com/arkenfox/user.js/blob/master/user.js
           # ads
           "browser.newtabpage.activity-stream.showSponsored" = false;
           "browser.newtabpage.activity-stream.showSponsoredTopSites" = false;
-          "extensions.htmlaboutaddons.recommendations.enabled" = false;
+          "browser.newtabpage.activity-stream.showSponsoredCheckboxes" = false;
           "browser.urlbar.suggest.quicksuggest.sponsored" = false;
+          # clear default topsites, does not block you from adding your own
+          "browser.newtabpage.activity-stream.default.sites" = "";
+          "extensions.htmlaboutaddons.recommendations.enabled" = false;
           # data reporting
           "datareporting.policy.dataSubmissionEnable" = false;
           "datareporting.healthreport.uploadEnabled" = false;
@@ -60,9 +61,6 @@ in
           "app.normandy.enabled" = false;
           # crash report
           "browser.tabs.crashReporting.sendReport" = false;
-          # privacy
-          "dom.private-attribution.submission.enabled" = false;
-          "browser.contentblocking.category" = "strict";
           # breaks a few things, like auto dark-mode in websites
           # "privacy.resistFingerprinting" = true;
         }
