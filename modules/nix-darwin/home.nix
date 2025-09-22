@@ -36,11 +36,12 @@ in
       users.${username} = {
         inherit (config) meta device theme;
         imports = [ ../home-manager ] ++ cfg.extraModules;
-        # Can't set the same as nix-darwin, since it uses a different state
-        # format
-        home.stateVersion = lib.mkDefault "unset";
-        # Disable copying applications to ~/Applications
-        home-manager.darwin.copyApps.enable = false;
+        home-manager = {
+          inherit (config.networking) hostName;
+          # Disable copying applications to ~/Applications
+          darwin.copyApps.enable = false;
+        };
+        # Disable linking applications to ~/Applications
         targets.darwin.linkApps.enable = false;
       };
       extraSpecialArgs = {
