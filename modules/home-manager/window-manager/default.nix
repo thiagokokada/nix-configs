@@ -2,7 +2,6 @@
   config,
   pkgs,
   lib,
-  osConfig,
   ...
 }:
 
@@ -19,9 +18,7 @@ in
   ];
 
   options.home-manager.window-manager = {
-    enable = lib.mkEnableOption "window manager config" // {
-      default = osConfig.nixos.window-manager.enable or false;
-    };
+    enable = lib.mkEnableOption "window manager config";
     default = {
       browser = lib.mkOption {
         type = lib.types.str;
@@ -75,31 +72,19 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    home = {
-      keyboard =
-        let
-          osKeyboard = osConfig.services.xserver.xkb or { };
-        in
-        {
-          layout = lib.mkDefault (osKeyboard.layout or null);
-          variant = lib.mkDefault (osKeyboard.variant or null);
-          options = lib.mkDefault (lib.splitString "," (osKeyboard.options or ""));
-        };
-
-      packages = with pkgs; [
-        desktop-file-utils
-        evince
-        file-roller
-        gnome-disk-utility
-        gthumb
-        open-browser
-        (nemo-with-extensions.override { extensions = [ nemo-fileroller ]; })
-        pamixer
-        pwvucontrol
-        playerctl
-        qalculate-gtk
-      ];
-    };
+    home.packages = with pkgs; [
+      desktop-file-utils
+      evince
+      file-roller
+      gnome-disk-utility
+      gthumb
+      open-browser
+      (nemo-with-extensions.override { extensions = [ nemo-fileroller ]; })
+      pamixer
+      pwvucontrol
+      playerctl
+      qalculate-gtk
+    ];
 
     services.udiskie.enable = true;
 

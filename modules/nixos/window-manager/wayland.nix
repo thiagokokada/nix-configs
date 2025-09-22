@@ -17,6 +17,12 @@ in
 
   config = lib.mkMerge [
     (lib.mkIf cfg.sway.enable {
+      nixos.home.extraModules = [
+        {
+          home-manager.window-manager.wayland.sway.enable = true;
+        }
+      ];
+
       programs = {
         sway = {
           # Make Sway available for display managers and make things like swaylock work

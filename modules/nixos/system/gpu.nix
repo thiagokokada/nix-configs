@@ -70,6 +70,18 @@ in
           config.hardware.nvidia.prime.offload.enable || config.hardware.nvidia.prime.reverseSync.enable;
       in
       lib.mkIf (maker == "nvidia") {
+        nixos.home.extraModules = [
+          {
+            home-manager.window-manager.x11.nvidia = {
+              enable = true;
+              prime = {
+                sync = { inherit (config.hardware.nvidia.prime.sync) enable; };
+                offload = { inherit (config.hardware.nvidia.prime.offload) enable; };
+              };
+            };
+          }
+        ];
+
         # Enable support for CUDA in nixpkgs
         nixpkgs.config.cudaSupport = lib.mkIf cfg.acceleration.enable true;
 

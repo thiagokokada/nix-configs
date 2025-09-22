@@ -1,6 +1,5 @@
 {
   config,
-  osConfig,
   lib,
   pkgs,
   ...
@@ -88,9 +87,7 @@ let
 in
 {
   options.home-manager.window-manager.wayland.sway.enable = lib.mkEnableOption "Sway config" // {
-    default =
-      config.home-manager.window-manager.wayland.enable
-      && (osConfig.nixos.window-manager.wayland.sway.enable or true);
+    default = config.home-manager.window-manager.wayland.enable;
   };
 
   config = lib.mkIf cfg.enable {

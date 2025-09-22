@@ -1,9 +1,4 @@
-{
-  config,
-  lib,
-  osConfig,
-  ...
-}:
+{ config, lib, ... }:
 
 let
   cfg = config.home-manager.desktop.fonts.fontconfig;
@@ -14,14 +9,11 @@ in
       default = config.home-manager.desktop.fonts.enable;
     };
 
-    antialias = lib.mkEnableOption "antialias" // {
-      default = osConfig.fonts.fontconfig.antialias or false;
-    };
+    antialias = lib.mkEnableOption "antialias";
 
     hinting = {
-      enable = lib.mkEnableOption "hinting" // {
-        default = osConfig.fonts.fontconfig.hinting.enable or false;
-      };
+      enable = lib.mkEnableOption "hinting";
+      autohint = lib.mkEnableOption "autohint";
       style = lib.mkOption {
         type = lib.types.enum [
           "none"
@@ -29,13 +21,13 @@ in
           "medium"
           "full"
         ];
-        default = osConfig.fonts.fontconfig.hinting.style or "slight";
+        default = "none";
       };
     };
 
     subpixel = {
       rgba = lib.mkOption {
-        default = osConfig.fonts.fontconfig.subpixel.rgba or "none";
+        default = "none";
         type = lib.types.enum [
           "rgb"
           "bgr"
@@ -47,7 +39,7 @@ in
       };
 
       lcdfilter = lib.mkOption {
-        default = osConfig.fonts.fontconfig.subpixel.lcdfilter or "default";
+        default = "default";
         type = lib.types.enum [
           "none"
           "default"
