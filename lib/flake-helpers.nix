@@ -107,7 +107,6 @@ in
         extraSpecialArgs = {
           flake = self;
           libEx = self.outputs.lib;
-          osConfig = { };
         };
       };
 

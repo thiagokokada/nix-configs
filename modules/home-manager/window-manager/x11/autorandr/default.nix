@@ -2,18 +2,13 @@
   config,
   lib,
   pkgs,
-  osConfig,
   ...
 }:
 
 let
-  hostName = osConfig.networking.hostName or "generic";
-  hostConfigFile = ./${hostName}.nix;
   cfg = config.home-manager.window-manager.x11.autorandr;
 in
 {
-  imports = lib.optionals (builtins.pathExists hostConfigFile) [ hostConfigFile ];
-
   options.home-manager.window-manager.x11.autorandr = {
     enable = lib.mkEnableOption "autorandr config" // {
       default = config.home-manager.window-manager.x11.enable;
@@ -22,6 +17,16 @@ in
       description = "Default autorandr profile.";
       type = lib.types.str;
       default = "horizontal";
+    };
+    extraHooks = lib.mkOption {
+      description = "Additional hooks.";
+      type = lib.types.attrs;
+      default =
+        let
+          hostName = config.home-manager.hostName or "generic";
+          hostConfigFile = ./${hostName}.nix;
+        in
+        lib.optionalAttrs (builtins.pathExists hostConfigFile) (import hostConfigFile);
     };
   };
 
@@ -40,12 +45,15 @@ in
 
     programs.autorandr = {
       enable = true;
-      hooks = {
-        postswitch = {
-          notify-i3 = "${lib.getExe' pkgs.i3 "i3-msg"} restart";
-          reset-wallpaper = "systemctl restart --user wallpaper.service";
-        };
-      };
+      hooks = lib.mkMerge [
+        {
+          postswitch = {
+            notify-i3 = "${lib.getExe' pkgs.i3 "i3-msg"} restart";
+            reset-wallpaper = "systemctl restart --user wallpaper.service";
+          };
+        }
+        cfg.extraHooks
+      ];
     };
 
     xsession.initExtra = lib.mkAfter ''

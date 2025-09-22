@@ -38,6 +38,7 @@ in
           ../home-manager
         ]
         ++ cfg.extraModules;
+        home-manager = { inherit (config.networking) hostName; };
         # As a rule of thumb HM == NixOS version, unless something weird happens
         home.stateVersion = lib.mkDefault config.system.stateVersion;
       };

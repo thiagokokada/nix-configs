@@ -2,28 +2,37 @@
   lib,
   pkgs,
   config,
-  osConfig,
   ...
 }:
 
 let
   cfg = config.home-manager.window-manager.wayland.kanshi;
-  hostName = osConfig.networking.hostName or "generic";
-  hostConfigFile = ./${hostName}.nix;
-  hostConfigFileExists = builtins.pathExists hostConfigFile;
 in
 {
-  imports = lib.optionals hostConfigFileExists [ hostConfigFile ];
-
-  options.home-manager.window-manager.wayland.kanshi.enable = lib.mkEnableOption "Kanshi config" // {
-    default = config.home-manager.window-manager.wayland.enable;
+  options.home-manager.window-manager.wayland.kanshi = {
+    enable = lib.mkEnableOption "Kanshi config" // {
+      default = config.home-manager.window-manager.wayland.enable;
+    };
+    extraSettings = lib.mkOption {
+      description = "Additional hooks.";
+      type = lib.types.listOf lib.types.attrs;
+      default =
+        let
+          hostName = config.home-manager.hostName or "generic";
+          hostConfigFile = ./${hostName}.nix;
+        in
+        lib.optionals (builtins.pathExists hostConfigFile) (import hostConfigFile);
+    };
   };
 
   config = lib.mkIf cfg.enable {
     # Useful to get the list of monitors
     home.packages = with pkgs; [ wlr-randr ];
 
-    services.kanshi.enable = hostConfigFileExists;
+    services.kanshi = {
+      enable = true;
+      settings = cfg.extraSettings;
+    };
 
     systemd.user.services.kanshi = {
       Service = {
