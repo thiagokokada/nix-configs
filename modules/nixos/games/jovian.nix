@@ -63,6 +63,16 @@ in
             type = "Application";
           })
           + "/share/applications/Return-to-Gaming-Mode.desktop";
+
+        # Automatically mount disks in Gamescope session
+        services.udiskie = {
+          enable = lib.mkDefault true;
+          # Assuming KDE here, we will already have notifications from it
+          notify = lib.mkDefault false;
+          # Disable tray otherwise this service depends on tray.target (that
+          # Gamescope session does not start)
+          tray = "never";
+        };
       }
     ];
 
