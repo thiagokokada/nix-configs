@@ -24,7 +24,7 @@ with utils;
         with steps;
         withSharedSteps [
           (buildHomeManagerConfigurations { inherit (home-manager.aarch64-darwin) hostnames; })
-          # (buildNixDarwinConfigurations { inherit (nix-darwin.aarch64-darwin) hostnames; })
+          (buildNixDarwinConfigurations { inherit (nix-darwin.aarch64-darwin) hostnames; })
         ];
     };
 

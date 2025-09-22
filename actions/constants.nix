@@ -25,7 +25,7 @@
     aarch64-darwin.hostnames = [ "home-macos" ];
   };
 
-  # nix-darwin.aarch64-darwin.hostnames = [ "Sekai-MacBook-Pro" ];
+  nix-darwin.aarch64-darwin.hostnames = [ "Sekai-MacBook-Pro" ];
 
   nixos = {
     aarch64-linux.hostnames = [

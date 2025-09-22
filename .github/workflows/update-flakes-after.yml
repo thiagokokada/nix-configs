@@ -20,6 +20,8 @@ jobs:
           name: thiagokokada-nix-configs
       - name: 'Build Home-Manager configs for: home-macos'
         run: nix build --print-build-logs '.#homeConfigurations.home-macos.activationPackage'
+      - name: 'Build nix-darwin configs for: Sekai-MacBook-Pro'
+        run: nix build --print-build-logs '.#darwinConfigurations.Sekai-MacBook-Pro.system'
   update-flakes-aarch64-linux:
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-24.04-arm
