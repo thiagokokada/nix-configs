@@ -17,9 +17,6 @@
 
     # Enable laptop specific services
     services = {
-      # Enable Blueman to manage Bluetooth
-      blueman.enable = true;
-
       # For battery status reporting
       upower.enable = true;
 

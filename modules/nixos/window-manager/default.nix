@@ -22,8 +22,6 @@
     };
 
     services = {
-      # Enable Blueman to manage Bluetooth
-      blueman.enable = config.nixos.desktop.wireless.enable;
       gnome.gnome-keyring.enable = true;
       graphical-desktop.enable = true;
       udisks2.enable = true;

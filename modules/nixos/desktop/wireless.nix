@@ -24,5 +24,8 @@
 
     # Enable bluetooth
     hardware.bluetooth.enable = true;
+
+    # Enable Blueman to manage Bluetooth
+    services.blueman.enable = config.nixos.window-manager.enable;
   };
 }
