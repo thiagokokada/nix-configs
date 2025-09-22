@@ -16,9 +16,9 @@
 
   options.home-manager = {
     hostName = lib.mkOption {
-      description = "Hostname";
-      type = lib.types.nullOr lib.types.str;
-      default = null;
+      description = "The hostname of the machine.";
+      type = lib.types.str;
+      default = "generic";
     };
   };
 

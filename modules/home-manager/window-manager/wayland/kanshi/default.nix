@@ -18,10 +18,10 @@ in
       type = lib.types.listOf lib.types.attrs;
       default =
         let
-          hostName = config.home-manager.hostName or "generic";
-          hostConfigFile = ./${hostName}.nix;
+          inherit (config.home-manager) hostName;
+          configFile = ./${hostName}.nix;
         in
-        lib.optionals (builtins.pathExists hostConfigFile) (import hostConfigFile);
+        lib.optionals (builtins.pathExists configFile) (import configFile);
     };
   };
 
