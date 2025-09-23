@@ -17,11 +17,9 @@ in
 
   config = lib.mkMerge [
     (lib.mkIf cfg.sway.enable {
-      nixos.home.extraModules = [
-        {
-          home-manager.window-manager.wayland.sway.enable = true;
-        }
-      ];
+      nixos.home.extraModules = {
+        home-manager.window-manager.wayland.sway.enable = true;
+      };
 
       programs = {
         sway = {

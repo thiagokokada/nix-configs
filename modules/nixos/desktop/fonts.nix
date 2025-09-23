@@ -11,17 +11,15 @@
   };
 
   config = lib.mkIf config.nixos.desktop.fonts.enable {
-    nixos.home.extraModules = [
-      {
-        home-manager.desktop.fonts.fontconfig = {
-          enable = true;
-          inherit (config.fonts.fontconfig) antialias hinting;
-          subpixel = {
-            inherit (config.fonts.fontconfig.subpixel) rgba lcdfilter;
-          };
+    nixos.home.extraModules = {
+      home-manager.desktop.fonts.fontconfig = {
+        enable = true;
+        inherit (config.fonts.fontconfig) antialias hinting;
+        subpixel = {
+          inherit (config.fonts.fontconfig.subpixel) rgba lcdfilter;
         };
-      }
-    ];
+      };
+    };
 
     fonts = {
       fontDir.enable = true;

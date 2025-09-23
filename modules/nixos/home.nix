@@ -19,7 +19,7 @@ in
     };
     extraModules = lib.mkOption {
       description = "Extra modules to import.";
-      type = lib.types.listOf lib.types.attrs;
+      type = with lib.types; coercedTo attrs (x: [ x ]) (listOf attrs);
       default = [ ];
     };
   };
@@ -34,17 +34,12 @@ in
       useGlobalPkgs = true;
       users.${config.meta.username} = {
         inherit (config) meta device theme;
-        imports = [
-          ../home-manager
-        ]
-        ++ cfg.extraModules;
+        imports = [ ../home-manager ] ++ cfg.extraModules;
         home-manager = { inherit (config.networking) hostName; };
         # As a rule of thumb HM == NixOS version, unless something weird happens
         home.stateVersion = lib.mkDefault config.system.stateVersion;
       };
-      extraSpecialArgs = {
-        inherit flake libEx;
-      };
+      extraSpecialArgs = { inherit flake libEx; };
     };
 
     # Define a user account. Don't forget to set a password with ‘passwd’

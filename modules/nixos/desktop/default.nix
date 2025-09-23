@@ -20,11 +20,9 @@
   };
 
   config = lib.mkIf config.nixos.desktop.enable {
-    nixos.home.extraModules = [
-      {
-        home-manager.desktop.enable = true;
-      }
-    ];
+    nixos.home.extraModules = {
+      home-manager.desktop.enable = true;
+    };
 
     # Enable graphical boot
     boot.plymouth.enable = lib.mkDefault true;

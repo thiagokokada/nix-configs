@@ -20,7 +20,7 @@ in
     };
     extraModules = lib.mkOption {
       description = "Extra modules to import.";
-      type = lib.types.listOf lib.types.attrs;
+      type = with lib.types; coercedTo attrs (x: [ x ]) (listOf attrs);
       default = [ ];
     };
   };
@@ -38,9 +38,7 @@ in
         imports = [ ../home-manager ] ++ cfg.extraModules;
         home-manager = { inherit (config.networking) hostName; };
       };
-      extraSpecialArgs = {
-        inherit flake libEx;
-      };
+      extraSpecialArgs = { inherit flake libEx; };
     };
 
     users.users.${username}.home = lib.mkDefault "/Users/${username}";
