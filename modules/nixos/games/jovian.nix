@@ -50,39 +50,35 @@ in
       proton-ge-custom
     ];
 
-    nixos.home.extraModules = [
-      {
-        home.file."Desktop/Return-to-Gaming-Mode.desktop".source =
-          (pkgs.makeDesktopItem {
-            desktopName = "Return to Gaming Mode";
-            exec = "qdbus org.kde.Shutdown /Shutdown org.kde.Shutdown.logout";
-            icon = "steam";
-            name = "Return-to-Gaming-Mode";
-            startupNotify = false;
-            terminal = false;
-            type = "Application";
-          })
-          + "/share/applications/Return-to-Gaming-Mode.desktop";
+    nixos.home.extraModules = {
+      home.file."Desktop/Return-to-Gaming-Mode.desktop".source =
+        (pkgs.makeDesktopItem {
+          desktopName = "Return to Gaming Mode";
+          exec = "qdbus org.kde.Shutdown /Shutdown org.kde.Shutdown.logout";
+          icon = "steam";
+          name = "Return-to-Gaming-Mode";
+          startupNotify = false;
+          terminal = false;
+          type = "Application";
+        })
+        + "/share/applications/Return-to-Gaming-Mode.desktop";
 
-        # Automatically mount disks in Gamescope session
-        services.udiskie = {
-          enable = lib.mkDefault true;
-          # Assuming KDE here, we will already have notifications from it
-          notify = lib.mkDefault false;
-          # Disable tray otherwise this service depends on tray.target (that
-          # Gamescope session does not start)
-          tray = "never";
-        };
-      }
-    ];
+      # Automatically mount disks in Gamescope session
+      services.udiskie = {
+        enable = lib.mkDefault true;
+        # Assuming KDE here, we will already have notifications from it
+        notify = lib.mkDefault false;
+        # Disable tray otherwise this service depends on tray.target (that
+        # Gamescope session does not start)
+        tray = "never";
+      };
+    };
 
     specialisation.desktop-mode.configuration = {
       # https://github.com/Jovian-Experiments/Jovian-NixOS/discussions/488
-      nixos.home.extraModules = [
-        {
-          xdg.stateFile."steamos-session-select".text = config.jovian.steam.desktopSession;
-        }
-      ];
+      nixos.home.extraModules = {
+        xdg.stateFile."steamos-session-select".text = config.jovian.steam.desktopSession;
+      };
     };
   };
 }

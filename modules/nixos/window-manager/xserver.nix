@@ -10,14 +10,12 @@
   };
 
   config = lib.mkIf config.nixos.window-manager.xserver.enable {
-    nixos.home.extraModules = [
-      {
-        home.keyboard = {
-          inherit (config.services.xserver.xkb) layout variant;
-          options = lib.splitString "," config.services.xserver.xkb.options;
-        };
-      }
-    ];
+    nixos.home.extraModules = {
+      home.keyboard = {
+        inherit (config.services.xserver.xkb) layout variant;
+        options = lib.splitString "," config.services.xserver.xkb.options;
+      };
+    };
 
     # Configure the virtual console keymap from the xserver keyboard settings
     console.useXkbConfig = true;

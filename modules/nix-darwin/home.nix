@@ -20,7 +20,8 @@ in
     };
     extraModules = lib.mkOption {
       description = "Extra modules to import.";
-      type = lib.types.listOf lib.types.attrs;
+      type = with lib.types; either attrs (listOf attrs);
+      apply = lib.toList;
       default = [ ];
     };
   };
@@ -44,9 +45,7 @@ in
         # Disable linking applications to ~/Applications
         targets.darwin.linkApps.enable = false;
       };
-      extraSpecialArgs = {
-        inherit flake libEx;
-      };
+      extraSpecialArgs = { inherit flake libEx; };
     };
 
     # Copy graphical applications to /Applications using nix-darwin
