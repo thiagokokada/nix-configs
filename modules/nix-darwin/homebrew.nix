@@ -14,6 +14,7 @@ in
   config = lib.mkIf cfg.enable {
     homebrew = {
       enable = true;
+      user = config.nix-darwin.home.username;
       casks = [
         "betterdisplay"
         "domzilla-caffeine"
