@@ -48,7 +48,6 @@ in
       uid = 1000;
       extraGroups = [
         "wheel"
-        "networkmanager"
         "video"
       ];
       shell = pkgs.zsh;
