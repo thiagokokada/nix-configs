@@ -3,15 +3,17 @@
 
   nixpkgs.hostPlatform = "aarch64-darwin";
 
-  nix-darwin.home.extraModules = {
-    home.stateVersion = "24.05";
-    home-manager = {
-      editor.idea.enable = true;
-    };
-    programs.go.env = {
-      GOPRIVATE = "github.com/flowcommerce/*";
-    };
-  };
+  nix-darwin.home.extraModules = [
+    {
+      home.stateVersion = "24.05";
+      home-manager = {
+        editor.idea.enable = true;
+      };
+      programs.go.env = {
+        GOPRIVATE = "github.com/flowcommerce/*";
+      };
+    }
+  ];
 
   system.keyboard = {
     enableKeyMapping = true;

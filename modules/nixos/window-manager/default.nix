@@ -15,9 +15,11 @@
   };
 
   config = lib.mkIf config.nixos.window-manager.enable {
-    nixos.home.extraModules = {
-      home-manager.window-manager.enable = true;
-    };
+    nixos.home.extraModules = [
+      {
+        home-manager.window-manager.enable = true;
+      }
+    ];
 
     # Programs that needs system-wide permissions to work correctly
     programs = {
