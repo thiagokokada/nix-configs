@@ -70,6 +70,7 @@ final: prev:
                 treeSitter.enable = true;
               };
             };
+            home.stateVersion = "25.11";
           };
         }).homeConfigurations.${hostname};
     in
