@@ -89,11 +89,9 @@ in
       };
     };
 
-  # https://github.com/nix-community/home-manager/issues/1510
   mkHomeConfig =
     {
       hostname,
-      username ? "thiagoko",
       configuration ? ../hosts/home-manager/${hostname},
       system ? import ../hosts/home-manager/${hostname}/system.nix,
     }:

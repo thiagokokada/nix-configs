@@ -1,4 +1,6 @@
 { nixpkgs, ... }@inputs:
 
-# lib should avoid depending on pkgs
-import ./attrsets.nix { inherit (nixpkgs) lib; } // import ./flake-helpers.nix inputs
+nixpkgs.lib.mergeAttrsList [
+  (import ./attrsets.nix inputs)
+  (import ./flake-helpers.nix inputs)
+]

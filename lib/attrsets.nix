@@ -1,5 +1,8 @@
-{ lib, ... }:
+{ nixpkgs, ... }:
 
+let
+  inherit (nixpkgs) lib;
+in
 rec {
   # Recursively merge a list of attrsets into a single attrset.
   #
