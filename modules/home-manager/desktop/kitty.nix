@@ -35,18 +35,6 @@ in
   config = lib.mkIf cfg.enable {
     programs.kitty = {
       enable = true;
-      package =
-        # Workaround the following issue in darwin
-        # The application cannot be opened for an unexpected reason,
-        # error=Error Domain=RBSRequestErrorDomain Code=5 "Launch failed."
-        # UserInfo={NSLocalizedFailureReason=Launch failed.,
-        # NSUnderlyingError=0x9670146f0 {Error Domain=NSPOSIXErrorDomain
-        # Code=162 "Unknown error: 162"
-        # UserInfo={NSLocalizedDescription=Launchd job spawn failed}}}
-        if pkgs.stdenv.isDarwin then
-          flake.inputs.nixpkgsForKitty.legacyPackages.${pkgs.system}.kitty
-        else
-          pkgs.kitty;
       actionAliases = {
         "kitty_scrollback_nvim" =
           lib.optionalString cfg.scrollback-nvim.enable "kitten ${pkgs.vimPlugins.kitty-scrollback-nvim}/python/kitty_scrollback_nvim.py";

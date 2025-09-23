@@ -37,28 +37,10 @@ in
       users.${username} = {
         inherit (config) meta device theme;
         imports = [ ../home-manager ] ++ cfg.extraModules;
-        home-manager = {
-          inherit (config.networking) hostName;
-          # Disable copying applications to ~/Applications
-          darwin.copyApps.enable = false;
-        };
-        # Disable linking applications to ~/Applications
-        targets.darwin.linkApps.enable = false;
+        home-manager = { inherit (config.networking) hostName; };
       };
       extraSpecialArgs = { inherit flake libEx; };
     };
-
-    # Copy graphical applications to /Applications using nix-darwin
-    # https://github.com/nix-community/home-manager/issues/1341#issuecomment-3256894180
-    system.build.applications = lib.mkForce (
-      pkgs.buildEnv {
-        name = "system-applications";
-        pathsToLink = "/Applications";
-        paths =
-          config.environment.systemPackages
-          ++ (lib.concatMap (x: x.home.packages) (lib.attrsets.attrValues config.home-manager.users));
-      }
-    );
 
     users.users.${username}.home = lib.mkDefault "/Users/${username}";
   };

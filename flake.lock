@@ -410,22 +410,6 @@
         "type": "github"
       }
     },
-    "nixpkgsForKitty": {
-      "locked": {
-        "lastModified": 1757745802,
-        "narHash": "sha256-hLEO2TPj55KcUFUU1vgtHE9UEIOjRcH/4QbmfHNF820=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "c23193b943c6c689d70ee98ce3128239ed9e32d1",
-        "type": "github"
-      },
-      "original": {
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "c23193b943c6c689d70ee98ce3128239ed9e32d1",
-        "type": "github"
-      }
-    },
     "nixpkgs_2": {
       "locked": {
         "lastModified": 1758277210,
@@ -465,7 +449,6 @@
         ],
         "nixgl": "nixgl",
         "nixpkgs": "nixpkgs_2",
-        "nixpkgsForKitty": "nixpkgsForKitty",
         "treefmt-nix": "treefmt-nix",
         "yazi-flavors": "yazi-flavors"
       }
