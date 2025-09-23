@@ -47,5 +47,7 @@ in
     };
 
     users.users.${username}.home = lib.mkDefault "/Users/${username}";
+
+    system.primaryUser = lib.mkDefault config.nix-darwin.meta.username;
   };
 }
