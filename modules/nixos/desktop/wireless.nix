@@ -28,6 +28,6 @@
     # Enable Blueman to manage Bluetooth
     services.blueman.enable = config.nixos.window-manager.enable;
 
-    users.users.${config.meta.username}.extraGroups = [ "networkmanager" ];
+    users.users.${config.nixos.home.username}.extraGroups = [ "networkmanager" ];
   };
 }

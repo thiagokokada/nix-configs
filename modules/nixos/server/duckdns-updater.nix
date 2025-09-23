@@ -6,7 +6,7 @@
 }:
 
 let
-  inherit (config.meta) username;
+  inherit (config.nixos.home) username;
   inherit (config.users.users.${username}) group;
   cfg = config.nixos.server.duckdns-updater;
   httpPort = 80; # any other port needs to be proxied

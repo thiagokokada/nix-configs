@@ -1,15 +1,16 @@
 {
-  meta.username = "thiago.okada";
-
   nixpkgs.hostPlatform = "aarch64-darwin";
 
-  nix-darwin.home.extraModules = {
-    home.stateVersion = "24.05";
-    home-manager = {
-      editor.idea.enable = true;
-    };
-    programs.go.env = {
-      GOPRIVATE = "github.com/flowcommerce/*";
+  nix-darwin.home = {
+    username = "thiago.okada";
+    extraModules = {
+      home.stateVersion = "24.05";
+      home-manager = {
+        editor.idea.enable = true;
+      };
+      programs.go.env = {
+        GOPRIVATE = "github.com/flowcommerce/*";
+      };
     };
   };
 

@@ -35,7 +35,7 @@ in
           waylandCompositors.sway = lib.mkIf cfg.sway.enable {
             prettyName = "Sway";
             comment = "Sway compositor managed by UWSM";
-            binPath = "/etc/profiles/per-user/${config.meta.username}/bin/sway";
+            binPath = "/etc/profiles/per-user/${config.nixos.home.username}/bin/sway";
           };
         };
       };

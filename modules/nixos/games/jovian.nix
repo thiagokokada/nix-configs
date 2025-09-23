@@ -7,7 +7,7 @@
 }:
 
 let
-  inherit (config.meta) username;
+  inherit (config.nixos.home) username;
   cfg = config.nixos.games.jovian;
 in
 {

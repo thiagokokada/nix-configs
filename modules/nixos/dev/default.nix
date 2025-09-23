@@ -5,7 +5,7 @@
 }:
 
 let
-  inherit (config.meta) username;
+  inherit (config.nixos.home) username;
 in
 {
   imports = [

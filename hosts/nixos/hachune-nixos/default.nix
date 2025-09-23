@@ -19,7 +19,7 @@
   device = {
     type = "desktop";
     net.ifaces = [ "enp2s0f1" ];
-    media.directory = "/mnt/media/${config.meta.username}";
+    media.directory = "/mnt/media/${config.nixos.home.username}";
   };
 
   nixos = {

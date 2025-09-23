@@ -6,7 +6,7 @@
 }:
 
 let
-  inherit (config.meta) username;
+  inherit (config.nixos.home) username;
   cfg = config.nixos.server.tailscale;
   serviceCfg = config.services.tailscale;
 in

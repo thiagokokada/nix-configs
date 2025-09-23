@@ -1,7 +1,7 @@
 { config, lib, ... }:
 
 let
-  inherit (config.meta) username;
+  inherit (config.nixos.home) username;
   inherit (config.device.media) directory;
 in
 with config.users.users.${username};

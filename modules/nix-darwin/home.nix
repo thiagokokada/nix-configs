@@ -9,7 +9,7 @@
 
 let
   cfg = config.nix-darwin.home;
-  inherit (config.meta) username;
+  inherit (config.nix-darwin.home) username;
 in
 {
   imports = [ flake.inputs.home-manager.darwinModules.home-manager ];
@@ -17,6 +17,11 @@ in
   options.nix-darwin.home = {
     enable = lib.mkEnableOption "home config" // {
       default = true;
+    };
+    username = lib.mkOption {
+      description = "Main username.";
+      type = lib.types.str;
+      default = "thiagoko";
     };
     extraModules = lib.mkOption {
       description = "Extra modules to import.";
@@ -33,7 +38,7 @@ in
     home-manager = {
       useUserPackages = true;
       useGlobalPkgs = true;
-      users.${username} = {
+      users.${cfg.username} = {
         inherit (config) meta device theme;
         imports = [ ../home-manager ] ++ cfg.extraModules;
         home-manager = { inherit (config.networking) hostName; };
