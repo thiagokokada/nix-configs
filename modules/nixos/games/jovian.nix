@@ -20,6 +20,7 @@ in
     enable = lib.mkEnableOption "Jovian-NixOS config" // {
       default = config.device.type == "steam-machine";
     };
+    bootInDesktopMode = lib.mkEnableOption "boot in desktop mode";
   };
 
   config = lib.mkIf cfg.enable {
@@ -75,12 +76,22 @@ in
         # Gamescope session does not start)
         tray = "never";
       };
+
+      xdg.stateFile."steamos-session-select" = lib.mkIf cfg.bootInDesktopMode {
+        text = config.jovian.steam.desktopSession;
+      };
     };
 
-    specialisation.desktop-mode.configuration = {
-      # https://github.com/Jovian-Experiments/Jovian-NixOS/discussions/488
-      nixos.home.extraModules = {
-        xdg.stateFile."steamos-session-select".text = config.jovian.steam.desktopSession;
+    specialisation = {
+      game-mode = lib.mkIf cfg.bootInDesktopMode {
+        configuration = {
+          nixos.games.jovian.bootInDesktopMode = false;
+        };
+      };
+      desktop-mode = lib.mkIf (!cfg.bootInDesktopMode) {
+        configuration = {
+          nixos.games.jovian.bootInDesktopMode = true;
+        };
       };
     };
   };
