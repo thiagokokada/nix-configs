@@ -23,8 +23,8 @@ with utils;
       steps =
         with steps;
         withSharedSteps [
-          (buildHomeManagerConfigurations { inherit (home-manager.aarch64-darwin) hostnames; })
-          (buildNixDarwinConfigurations { inherit (nix-darwin.aarch64-darwin) hostnames; })
+          (buildHomeManagerConfigurations { inherit (home-manager.aarch64-darwin) hostNames; })
+          (buildNixDarwinConfigurations { inherit (nix-darwin.aarch64-darwin) hostNames; })
         ];
     };
 
@@ -35,8 +35,8 @@ with utils;
         with steps;
         withSharedSteps [
           freeDiskSpaceStep
-          (buildHomeManagerConfigurations { inherit (home-manager.aarch64-linux) hostnames; })
-          (buildNixOSConfigurations { inherit (nixos.aarch64-linux) hostnames; })
+          (buildHomeManagerConfigurations { inherit (home-manager.aarch64-linux) hostNames; })
+          (buildNixOSConfigurations { inherit (nixos.aarch64-linux) hostNames; })
         ];
     };
   };

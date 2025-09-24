@@ -61,52 +61,52 @@ rec {
 
   buildNixDarwinConfigurations =
     {
-      hostnames ? [ ],
+      hostNames ? [ ],
       extraNixFlags ? [ ],
     }:
     {
-      name = "Build nix-darwin configs for: ${builtins.concatStringsSep ", " hostnames}";
+      name = "Build nix-darwin configs for: ${builtins.concatStringsSep ", " hostNames}";
       run = builtins.concatStringsSep "\n" (
         map (
-          hostname:
+          hostName:
           "nix build ${
             toString (sharedNixFlags ++ extraNixFlags)
-          } '.#darwinConfigurations.${hostname}.system'"
-        ) hostnames
+          } '.#darwinConfigurations.${hostName}.system'"
+        ) hostNames
       );
     };
 
   buildHomeManagerConfigurations =
     {
-      hostnames ? [ ],
+      hostNames ? [ ],
       extraNixFlags ? [ ],
     }:
     {
-      name = "Build Home-Manager configs for: ${builtins.concatStringsSep ", " hostnames}";
+      name = "Build Home-Manager configs for: ${builtins.concatStringsSep ", " hostNames}";
       run = builtins.concatStringsSep "\n" (
         map (
-          hostname:
+          hostName:
           "nix build ${
             toString (sharedNixFlags ++ extraNixFlags)
-          } '.#homeConfigurations.${hostname}.activationPackage'"
-        ) hostnames
+          } '.#homeConfigurations.${hostName}.activationPackage'"
+        ) hostNames
       );
     };
 
   buildNixOSConfigurations =
     {
-      hostnames ? [ ],
+      hostNames ? [ ],
       extraNixFlags ? [ ],
     }:
     {
-      name = "Build NixOS configs for: ${builtins.concatStringsSep ", " hostnames}";
+      name = "Build NixOS configs for: ${builtins.concatStringsSep ", " hostNames}";
       run = builtins.concatStringsSep "\n" (
         map (
-          hostname:
+          hostName:
           "nix build ${
             toString (sharedNixFlags ++ extraNixFlags)
-          } '.#nixosConfigurations.${hostname}.config.system.build.toplevel'"
-        ) hostnames
+          } '.#nixosConfigurations.${hostName}.config.system.build.toplevel'"
+        ) hostNames
       );
     };
 

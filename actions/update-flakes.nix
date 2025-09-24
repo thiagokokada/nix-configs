@@ -19,8 +19,8 @@ with constants;
         withSharedSteps [
           freeDiskSpaceStep
           updateFlakeLockStep
-          (buildHomeManagerConfigurations { inherit (home-manager.x86_64-linux) hostnames; })
-          (buildNixOSConfigurations { inherit (nixos.x86_64-linux) hostnames; })
+          (buildHomeManagerConfigurations { inherit (home-manager.x86_64-linux) hostNames; })
+          (buildNixOSConfigurations { inherit (nixos.x86_64-linux) hostNames; })
           createPullRequestStep
         ];
     };

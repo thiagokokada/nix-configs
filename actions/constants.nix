@@ -17,21 +17,21 @@
   macos.runs-on = "macos-latest";
 
   home-manager = {
-    x86_64-linux.hostnames = [
+    x86_64-linux.hostNames = [
       "home-linux"
       "steamdeck"
     ];
-    aarch64-linux.hostnames = [ "penguin" ];
-    aarch64-darwin.hostnames = [ "home-macos" ];
+    aarch64-linux.hostNames = [ "penguin" ];
+    aarch64-darwin.hostNames = [ "home-macos" ];
   };
 
-  nix-darwin.aarch64-darwin.hostnames = [ "Sekai-MacBook-Pro" ];
+  nix-darwin.aarch64-darwin.hostNames = [ "Sekai-MacBook-Pro" ];
 
   nixos = {
-    aarch64-linux.hostnames = [
+    aarch64-linux.hostNames = [
       "zatsune-nixos"
     ];
-    x86_64-linux.hostnames = [
+    x86_64-linux.hostNames = [
       "blackrockshooter-nixos"
       "hachune-nixos"
       "sankyuu-nixos"
