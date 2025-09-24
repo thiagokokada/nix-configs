@@ -18,10 +18,10 @@ final: prev:
 
   neovim-standalone =
     let
-      hostname = "neovim-standalone";
+      hostName = "neovim-standalone";
       hm =
         (outputs.lib.mkHomeConfig {
-          inherit hostname;
+          inherit hostName;
           inherit (prev) system;
           configuration = {
             home-manager = {
@@ -34,7 +34,7 @@ final: prev:
             };
             home.stateVersion = "25.11";
           };
-        }).homeConfigurations.${hostname};
+        }).homeConfigurations.${hostName};
     in
     hm.config.programs.neovim.finalPackage.override {
       luaRcContent = hm.config.xdg.configFile."nvim/init.lua".text;
