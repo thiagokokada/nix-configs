@@ -24,9 +24,6 @@
       home-manager.desktop.enable = true;
     };
 
-    # Enable graphical boot
-    boot.plymouth.enable = lib.mkDefault true;
-
     # Increase file handler limit
     security.pam.loginLimits = [
       {
