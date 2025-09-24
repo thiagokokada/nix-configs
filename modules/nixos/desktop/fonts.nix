@@ -12,12 +12,11 @@
 
   config = lib.mkIf config.nixos.desktop.fonts.enable {
     nixos.home.extraModules = {
-      home-manager.desktop.fonts.fontconfig = {
+      fonts.fontconfig = with config.fonts.fontconfig; {
         enable = true;
-        inherit (config.fonts.fontconfig) antialias hinting;
-        subpixel = {
-          inherit (config.fonts.fontconfig.subpixel) rgba lcdfilter;
-        };
+        antialiasing = antialias;
+        hinting = lib.mkIf hinting.enable hinting.style;
+        subpixelRendering = subpixel.rgba;
       };
     };
 

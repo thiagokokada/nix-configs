@@ -8,7 +8,7 @@
 let
   inherit (config.home) username;
   cfg = config.home-manager.desktop.firefox;
-  cfgFc = config.home-manager.desktop.fonts.fontconfig;
+  cfgFc = config.fonts.fontconfig;
 in
 {
   options.home-manager.desktop.firefox = {
@@ -16,7 +16,7 @@ in
       default = config.home-manager.desktop.enable;
     };
     subpixelRender.enable = lib.mkEnableOption "subpixel render" // {
-      default = cfgFc.antialias && (cfgFc.subpixel.rgba != "none");
+      default = cfgFc.antialiasing && (cfgFc.subpixelRendering != "none");
     };
   };
 
