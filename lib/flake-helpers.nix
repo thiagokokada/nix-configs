@@ -7,111 +7,105 @@
 }:
 
 let
-  setHostname =
-    hostname:
+  setDefaultHostName =
+    hostName:
     (
       { lib, ... }:
       {
-        networking.hostName = lib.mkDefault hostname;
+        networking.hostName = lib.mkDefault hostName;
       }
     );
+  specialArgs = {
+    flake = self;
+    libEx = self.outputs.lib;
+  };
 in
 {
   mkNixOSConfig =
     {
-      hostname,
-      configuration ? ../hosts/nixos/${hostname},
+      hostName,
+      configuration,
     }:
     let
-      inherit (self.outputs.nixosConfigurations.${hostname}) config pkgs;
+      inherit (self.outputs.nixosConfigurations.${hostName}) config pkgs;
     in
     {
-      nixosConfigurations.${hostname} = nixpkgs.lib.nixosSystem {
+      nixosConfigurations.${hostName} = nixpkgs.lib.nixosSystem {
+        inherit specialArgs;
         modules = [
-          (setHostname hostname)
+          (setDefaultHostName hostName)
           self.outputs.nixosModules.default
           configuration
         ];
-        specialArgs = {
-          flake = self;
-          libEx = self.outputs.lib;
-        };
       };
 
       apps.${pkgs.system} = {
-        "nixosActivations/${hostname}" = {
+        "nixosActivations/${hostName}" = {
           type = "app";
           program = "${config.system.build.toplevel}/activate";
-          meta.description = "NixOS activation script for ${hostname}";
+          meta.description = "NixOS activation script for ${hostName}";
         };
 
-        "nixosVMs/${hostname}" = {
+        "nixosVMs/${hostName}" = {
           type = "app";
           program = nixpkgs.lib.getExe config.system.build.vm;
-          meta.description = "NixOS VM test for ${hostname}";
+          meta.description = "NixOS VM test for ${hostName}";
         };
       };
     };
 
   mkNixDarwinConfig =
     {
-      hostname,
-      configuration ? ../hosts/nix-darwin/${hostname},
+      hostName,
+      configuration,
     }:
     let
-      inherit (self.outputs.darwinConfigurations.${hostname}) pkgs;
+      inherit (self.outputs.darwinConfigurations.${hostName}) pkgs config;
+      inherit (config.system.build) darwin-rebuild;
     in
     {
-      darwinConfigurations.${hostname} = nix-darwin.lib.darwinSystem {
+      darwinConfigurations.${hostName} = nix-darwin.lib.darwinSystem {
+        inherit specialArgs;
         modules = [
-          (setHostname hostname)
+          (setDefaultHostName hostName)
           self.outputs.darwinModules.default
           configuration
         ];
-        specialArgs = {
-          flake = self;
-          libEx = self.outputs.lib;
-        };
       };
 
       apps.${pkgs.system} = {
-        "darwinActivations/${hostname}" = {
+        "darwinActivations/${hostName}" = {
           type = "app";
           program = nixpkgs.lib.getExe (
             pkgs.writeShellScriptBin "activate" ''
-              sudo ${
-                pkgs.lib.getExe' nix-darwin.packages.${pkgs.system}.darwin-rebuild "darwin-rebuild"
-              } switch --flake '.#${hostname}'
+              sudo ${pkgs.lib.getExe darwin-rebuild} switch --flake '.#${hostName}'
             ''
           );
-          meta.description = "nix-darwin activation script for ${hostname}";
+          meta.description = "nix-darwin activation script for ${hostName}";
         };
       };
     };
 
   mkHomeConfig =
     {
-      hostname,
-      configuration ? ../hosts/home-manager/${hostname},
-      system ? import ../hosts/home-manager/${hostname}/system.nix,
+      hostName,
+      configuration,
+      system,
     }:
     {
-      homeConfigurations.${hostname} = home-manager.lib.homeManagerConfiguration {
+      homeConfigurations.${hostName} = home-manager.lib.homeManagerConfiguration {
         pkgs = self.outputs.legacyPackages.${system};
         modules = [
           self.outputs.homeModules.default
           configuration
         ];
-        extraSpecialArgs = {
-          flake = self;
-          libEx = self.outputs.lib;
-        };
+        extraSpecialArgs = specialArgs;
       };
 
-      apps.${system}."homeActivations/${hostname}" = {
+      apps.${system}."homeActivations/${hostName}" = {
         type = "app";
-        program = "${self.outputs.homeConfigurations.${hostname}.activationPackage}/activate";
-        meta.description = "Home activation script for ${hostname}";
+        program = "${self.outputs.homeConfigurations.${hostName}.activationPackage}/activate";
+        meta.description = "Home activation script for ${hostName}";
       };
     };
 }

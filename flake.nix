@@ -131,13 +131,32 @@
       ]
       ++
         # NixOS configs
-        (libEx.mapDir (hostname: libEx.mkNixOSConfig { inherit hostname; }) ./hosts/nixos)
+        (libEx.mapDir (
+          hostName:
+          libEx.mkNixOSConfig {
+            inherit hostName;
+            configuration = ./hosts/nixos/${hostName};
+          }
+        ) ./hosts/nixos)
       ++
         # nix-darwin configs
-        (libEx.mapDir (hostname: libEx.mkNixDarwinConfig { inherit hostname; }) ./hosts/nix-darwin)
+        (libEx.mapDir (
+          hostName:
+          libEx.mkNixDarwinConfig {
+            inherit hostName;
+            configuration = ./hosts/nix-darwin/${hostName};
+          }
+        ) ./hosts/nix-darwin)
       ++
         # Home-Manager configs
-        (libEx.mapDir (hostname: libEx.mkHomeConfig { inherit hostname; }) ./hosts/home-manager)
+        (libEx.mapDir (
+          hostName:
+          libEx.mkHomeConfig {
+            inherit hostName;
+            configuration = ./hosts/home-manager/${hostName};
+            system = import ./hosts/home-manager/${hostName}/system.nix;
+          }
+        ) ./hosts/home-manager)
     );
 
   nixConfig = {
