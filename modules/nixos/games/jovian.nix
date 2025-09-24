@@ -42,6 +42,9 @@ in
               config.programs.steam.extraCompatPackages;
         };
       };
+      # Upstream disables amd_iommu, this is annoying so we are setting
+      # our own settings (see nixos.system.gpu == "amd")
+      steamos.enableDefaultCmdlineConfig = false;
       hardware.has.amd.gpu = config.nixos.system.gpu.maker == "amd";
     };
 

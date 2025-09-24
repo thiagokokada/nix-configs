@@ -27,6 +27,13 @@ in
 
   config = lib.mkMerge [
     (lib.mkIf (maker == "amd") {
+      # https://github.com/Jovian-Experiments/Jovian-NixOS/blob/fc3960e6c32c9d4f95fff2ef84444284d24d3bea/modules/steamos/boot.nix#L45-L50
+      boot.kernelParams = [
+        "amdgpu.lockup_timeout=5000,10000,10000,5000"
+        "ttm.pages_min=2097152"
+        "amdgpu.sched_hw_submission=4"
+      ];
+
       # Enable support for ROCm in nixpkgs
       nixpkgs.config.rocmSupport = lib.mkIf cfg.acceleration.enable true;
 
