@@ -45,7 +45,7 @@ in
       };
       # Upstream disables amd_iommu, this is annoying so we are setting
       # our own settings (see nixos.system.gpu == "amd")
-      steamos.enableDefaultCmdlineConfig = false;
+      steamos.enableDefaultCmdlineConfig = !config.nixos.dev.virtualisation.libvirt.enable;
       hardware.has.amd.gpu = config.nixos.system.gpu.maker == "amd";
     };
 

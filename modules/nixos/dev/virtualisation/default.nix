@@ -10,14 +10,17 @@ let
   cfg = config.nixos.dev.virtualisation;
 in
 {
-  options.nixos.dev.virtualisation.enable = lib.mkEnableOption "virtualisation config" // {
-    default = config.nixos.dev.enable;
+  imports = [ ./libvirt.nix ];
+
+  options.nixos.dev.virtualisation = {
+    enable = lib.mkEnableOption "virtualisation config" // {
+      default = config.nixos.dev.enable;
+    };
   };
 
   config = lib.mkIf cfg.enable {
     environment.systemPackages = with pkgs; [
       distrobox
-      gnome-boxes
       podman-compose
     ];
 
@@ -27,10 +30,8 @@ in
         dockerCompat = true;
         dockerSocket.enable = true;
       };
-      libvirtd.enable = true;
     };
 
-    # Added user to groups
     users.users.${username}.extraGroups = [ "podman" ];
   };
 }

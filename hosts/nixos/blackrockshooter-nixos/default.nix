@@ -41,6 +41,13 @@
 
   nixos = {
     games.enable = true;
+    dev.virtualisation.libvirt = {
+      enable = true;
+      vfioPci.ids = [
+        "1002:7550"
+        "1002:ab40"
+      ];
+    };
     server = {
       plex.enable = true;
       rtorrent = {

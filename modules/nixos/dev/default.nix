@@ -10,7 +10,7 @@ in
 {
   imports = [
     ./ollama.nix
-    ./virtualisation.nix
+    ./virtualisation
   ];
 
   options.nixos.dev.enable = lib.mkEnableOption "developer config" // {
