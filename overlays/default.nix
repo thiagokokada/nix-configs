@@ -1,4 +1,4 @@
-{ inputs, outputs }:
+{ inputs, outputs, ... }:
 final: prev:
 
 {
@@ -47,9 +47,11 @@ final: prev:
 
   darwin-cleanup = final.nix-cleanup.override { isNixDarwin = true; };
 
+  mkWallpaperImgur = prev.callPackage ../packages/wallpapers/mkWallpaperImgur.nix { };
+
   nix-whereis = prev.callPackage ../packages/nix-whereis { };
 
   run-bg-alias = name: command: prev.callPackage ../packages/run-bg-alias { inherit name command; };
 
-  wallpapers = prev.callPackage ../packages/wallpapers { };
+  wallpapers = final.callPackage ../packages/wallpapers { };
 }

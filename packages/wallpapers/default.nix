@@ -1,12 +1,7 @@
 {
-  callPackage,
-  fetchurl,
-  lib,
+  mkWallpaperImgur,
 }:
 
-let
-  mkWallpaperImgur = callPackage (import ./mkWallpaperImgur.nix) { };
-in
 {
   hatsune-miku_stylized-ultrawide = mkWallpaperImgur {
     name = "hatsune-miku_stylized-ultrawide";
