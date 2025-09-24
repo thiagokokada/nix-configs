@@ -42,7 +42,7 @@
   nixos = {
     games.enable = true;
     dev.virtualisation.libvirt = {
-      enable = true;
+      # enable = true;
       vfioPci.ids = [
         "1002:7550"
         "1002:ab40"
