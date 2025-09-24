@@ -30,11 +30,52 @@
       ".github/workflows/*.yml"
     ];
     formatter = {
-      github-actions = {
-        command = lib.getExe pkgs.generate-gh-actions;
-        includes = [ "actions/*.nix" ];
-        priority = 1;
-      };
+      github-actions =
+        let
+          mkGHActionsYAML =
+            name:
+            pkgs.runCommand "make-${name}-yaml"
+              {
+                buildInputs = with pkgs; [
+                  actionlint
+                  yj
+                ];
+                json = builtins.toJSON (import ./actions/${name}.nix);
+                passAsFile = [ "json" ];
+              }
+              ''
+                mkdir -p $out
+                yj -jy < "$jsonPath" > $out/${name}.yml
+                actionlint -verbose $out/${name}.yml
+              '';
+          generateGhActions =
+            let
+              ghActionsYAMLs = map mkGHActionsYAML [
+                "build-and-cache"
+                "update-flakes"
+                "update-flakes-after"
+                "validate-flakes"
+              ];
+              resultDir = ".github/workflows";
+            in
+            pkgs.writeShellApplication {
+              name = "generate-gh-actions";
+              text = ''
+                rm -rf "${resultDir}"
+                mkdir -p "${resultDir}"
+                for dir in ${builtins.toString ghActionsYAMLs}; do
+                  cp -f $dir/*.yml "${resultDir}"
+                done
+                echo Done!
+              '';
+            };
+
+        in
+        {
+          command = lib.getExe generateGhActions;
+          includes = [ "actions/*.nix" ];
+          priority = 1;
+        };
       ruff-format.includes = [
         "*.py"
         "*.pyi"
