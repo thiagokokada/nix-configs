@@ -2,6 +2,7 @@
 
 {
   imports = [
+    ./emacs
     ./helix.nix
     ./idea.nix
     ./neovim.nix
