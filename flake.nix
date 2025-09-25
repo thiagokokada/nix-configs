@@ -94,7 +94,10 @@
           };
           internal = {
             configs = import ./configs;
-            sharedModules.default = import ./modules/shared;
+            sharedModules = {
+              default = import ./modules/shared;
+              helpers = import ./modules/shared/helpers;
+            };
           };
           darwinModules.default = import ./modules/nix-darwin;
           homeModules.default = import ./modules/home-manager;
