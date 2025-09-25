@@ -17,9 +17,9 @@ in
       lib.hm.dag.entryBefore [ "checkLinkTargets" ]
         # bash
         ''
-          echo "Running .${cfg.backupFileExtension} cleanup…"
+          echo "Running .${cfg.backupFileExtension} restore..."
 
-          find "$HOME" -type f -name "*.${cfg.backupFileExtension}" 2>/dev/null | while IFS= read -r file; do
+          (find "$HOME" -type f -name "*.${cfg.backupFileExtension}" 2>/dev/null || true) | while IFS= read -r file; do
             base="''${file%.${cfg.backupFileExtension}}"
             if [[ ! -e "$base" ]]; then
               echo "Renaming: $file -> $base"
