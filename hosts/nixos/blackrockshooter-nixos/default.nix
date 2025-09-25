@@ -74,18 +74,6 @@
     ];
   };
 
-  specialisation.vfio.configuration = {
-    boot.loader.systemd-boot.sortKey = "v_nixos";
-    nixos.dev.virtualisation.libvirt = {
-      enable = true;
-      vfioPci.ids = [
-        "1002:7550"
-        "1002:ab40"
-      ];
-    };
-    system.nixos.tags = [ "with-vfio" ];
-  };
-
   specialisation.sway.configuration = {
     boot.loader.systemd-boot.sortKey = "s_nixos";
     device.type = lib.mkForce "desktop";
