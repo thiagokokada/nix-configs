@@ -4,6 +4,7 @@
 
 {
   pkgs,
+  lib,
   flake,
   ...
 }:
@@ -41,13 +42,6 @@
 
   nixos = {
     games.enable = true;
-    dev.virtualisation.libvirt = {
-      # enable = true;
-      vfioPci.ids = [
-        "1002:7550"
-        "1002:ab40"
-      ];
-    };
     server = {
       plex.enable = true;
       rtorrent = {
@@ -78,6 +72,8 @@
       "deepseek-r1:14b"
     ];
   };
+
+  specialisation.sway.configuration.device.type = lib.mkForce "desktop";
 
   # iwd doesn't allow for pinning a specific BSSID (i.e., router by MAC),
   # but since mt7925e is kinda buggy right now we need this support to
