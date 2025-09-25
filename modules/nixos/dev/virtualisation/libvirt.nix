@@ -35,9 +35,28 @@ in
     # Very likely we want the desktop session if we are using libvirt
     nixos.games.jovian.bootInDesktopMode = true;
 
-    boot.kernelParams = lib.optionals (cfg.vfioPci != [ ]) [
-      "vfio-pci.ids=${lib.concatStringsSep "," cfg.vfioPci.ids}"
-    ];
+    # Disable early KMS
+    # TODO: make this works for other GPU makers
+    jovian.hardware.amd.gpu.enableEarlyModesetting = false;
+    hardware.amdgpu.initrd.enable = false;
+
+    # Not completely sure if this is needed but should fix some NAT issues
+    networking.firewall.checkReversePath = "loose";
+
+    boot = {
+      initrd.kernelModules = [
+        "vfio_pci"
+        "vfio"
+        "vfio_iommu_type1"
+        "vfio_virqfd"
+      ];
+      kernelParams = [
+        "rd.driver.pre=vfio-pci"
+      ]
+      ++ lib.optionals (cfg.vfioPci != [ ]) [
+        "vfio-pci.ids=${lib.concatStringsSep "," cfg.vfioPci.ids}"
+      ];
+    };
 
     environment.systemPackages = with pkgs; [
       # https://wiki.nixos.org/wiki/Libvirt#Default_networking
