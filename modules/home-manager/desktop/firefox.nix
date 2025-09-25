@@ -1,9 +1,4 @@
-{
-  config,
-  lib,
-  pkgs,
-  ...
-}:
+{ config, lib, ... }:
 
 let
   inherit (config.home) username;
@@ -13,10 +8,11 @@ in
 {
   options.home-manager.desktop.firefox = {
     enable = lib.mkEnableOption "Firefox config" // {
-      default = config.home-manager.desktop.enable;
+      default = config.home-manager.desktop.enable || config.home-manager.darwin.enable;
     };
     subpixelRender.enable = lib.mkEnableOption "subpixel render" // {
-      default = cfgFc.antialiasing && (cfgFc.subpixelRendering != "none");
+      default =
+        (!config.home-manager.darwin.enable) && cfgFc.antialiasing && cfgFc.subpixelRendering != "none";
     };
   };
 
@@ -29,16 +25,20 @@ in
           "browser.aboutConfig.showWarning" = false;
           # disable annoying Ctrl+Q shortcut
           "browser.quitShortcut.disabled" = true;
+          # skip welcome page for new profiles
+          "browser.startup.firstrunSkipsHomepage" = true;
           # don't mess up with paste
           "dom.event.clipboardevents.enabled" = false;
           # handpicked settings from: https://github.com/arkenfox/user.js/blob/master/user.js
           # ads
+          "browser.newtabpage.activity-stream.feeds.section.topstories" = false;
           "browser.newtabpage.activity-stream.showSponsored" = false;
           "browser.newtabpage.activity-stream.showSponsoredTopSites" = false;
           "browser.newtabpage.activity-stream.showSponsoredCheckboxes" = false;
           "browser.urlbar.suggest.quicksuggest.sponsored" = false;
           # clear default topsites, does not block you from adding your own
           "browser.newtabpage.activity-stream.default.sites" = "";
+          "browser.newtabpage.activity-stream.trendingSearch.defaultSearchEngine" = "DuckDuckGo";
           "extensions.htmlaboutaddons.recommendations.enabled" = false;
           # data reporting
           "datareporting.policy.dataSubmissionEnable" = false;
@@ -61,6 +61,10 @@ in
           "app.normandy.enabled" = false;
           # crash report
           "browser.tabs.crashReporting.sendReport" = false;
+          # sidebar
+          "sidebar.verticalTabs" = true;
+          "sidebar.verticalTabs.dragToPinPromo.dismissed" = true;
+          "sidebar.position_start" = false; # true => left, false => right
           # breaks a few things, like auto dark-mode in websites
           # "privacy.resistFingerprinting" = true;
         }
