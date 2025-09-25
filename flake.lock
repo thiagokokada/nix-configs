@@ -59,45 +59,6 @@
         "type": "github"
       }
     },
-    "doomemacs": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1758695010,
-        "narHash": "sha256-8rvxQT/B41Nn7RS6kQ1rxvMl/NeVG8VVMz/fl9PZBCk=",
-        "owner": "doomemacs",
-        "repo": "doomemacs",
-        "rev": "fbdde6b5f4ef27401f32c070b54c7080095a9f0b",
-        "type": "github"
-      },
-      "original": {
-        "owner": "doomemacs",
-        "repo": "doomemacs",
-        "type": "github"
-      }
-    },
-    "emacs-overlay": {
-      "inputs": {
-        "nixpkgs": [
-          "nix-doom-emacs-unstraightened"
-        ],
-        "nixpkgs-stable": [
-          "nix-doom-emacs-unstraightened"
-        ]
-      },
-      "locked": {
-        "lastModified": 1758681245,
-        "narHash": "sha256-cv+9jc090EX4TMGBgVI/MfZpevfm5F428oPr+pw8/kg=",
-        "owner": "nix-community",
-        "repo": "emacs-overlay",
-        "rev": "cf579e6aea7aa153c4bacfb0b75869f4194447fd",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nix-community",
-        "repo": "emacs-overlay",
-        "type": "github"
-      }
-    },
     "flake-compat": {
       "locked": {
         "lastModified": 1747046372,
@@ -129,7 +90,7 @@
     },
     "flake-utils": {
       "inputs": {
-        "systems": "systems_2"
+        "systems": "systems"
       },
       "locked": {
         "lastModified": 1731533236,
@@ -306,29 +267,6 @@
         "type": "github"
       }
     },
-    "nix-doom-emacs-unstraightened": {
-      "inputs": {
-        "doomemacs": "doomemacs",
-        "emacs-overlay": "emacs-overlay",
-        "nixpkgs": [
-          "nixpkgs"
-        ],
-        "systems": "systems"
-      },
-      "locked": {
-        "lastModified": 1758703338,
-        "narHash": "sha256-Tic1l0wXurcnQIhNzUn5HNkDLPNsJ3hFNcYid2YO4Io=",
-        "owner": "marienz",
-        "repo": "nix-doom-emacs-unstraightened",
-        "rev": "b618a6462028707ee6a39baa4fd464f7a373b355",
-        "type": "github"
-      },
-      "original": {
-        "owner": "marienz",
-        "repo": "nix-doom-emacs-unstraightened",
-        "type": "github"
-      }
-    },
     "nix-github-actions": {
       "inputs": {
         "nixpkgs": [
@@ -442,7 +380,6 @@
         ],
         "nix-alien": "nix-alien",
         "nix-darwin": "nix-darwin",
-        "nix-doom-emacs-unstraightened": "nix-doom-emacs-unstraightened",
         "nix-index-database": [
           "nix-alien",
           "nix-index-database"
@@ -475,21 +412,6 @@
       }
     },
     "systems": {
-      "locked": {
-        "lastModified": 1681028828,
-        "narHash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",
-        "owner": "nix-systems",
-        "repo": "default",
-        "rev": "da67096a3b9bf56a91d16901293e51ba5b49a27e",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nix-systems",
-        "repo": "default",
-        "type": "github"
-      }
-    },
-    "systems_2": {
       "locked": {
         "lastModified": 1681028828,
         "narHash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",
