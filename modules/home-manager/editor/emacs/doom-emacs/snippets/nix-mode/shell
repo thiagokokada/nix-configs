@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# name: shell.nix boilerplate
+# key: mkShell
+# uuid: mkShell
+# condition: (eq 1 (line-number-at-pos))
+# --
+{ pkgs ? import <nixpkgs> {}, ... }:
+
+pkgs.mkShell {
+  buildInputs = with pkgs; [ ${1:pkgs} ];
+}
