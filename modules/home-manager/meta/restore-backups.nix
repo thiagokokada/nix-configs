@@ -14,11 +14,9 @@ in
 
   config = lib.mkIf (cfg.backupFileExtension != null) {
     home.activation.restoreBackups =
-      lib.hm.dag.entryBefore [ "checkLinkTargets" ]
+      lib.hm.dag.entryAfter [ "linkGeneration" ]
         # bash
         ''
-          echo "Running .${cfg.backupFileExtension} restore..."
-
           (find "$HOME" -type f -name "*.${cfg.backupFileExtension}" 2>/dev/null || true) | while IFS= read -r file; do
             base="''${file%.${cfg.backupFileExtension}}"
             if [[ ! -e "$base" ]]; then
