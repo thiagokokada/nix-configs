@@ -45,12 +45,6 @@ in
           program = "${config.system.build.toplevel}/activate";
           meta.description = "NixOS activation script for ${hostName}";
         };
-
-        "nixosVMs/${hostName}" = {
-          type = "app";
-          program = nixpkgs.lib.getExe config.system.build.vm;
-          meta.description = "NixOS VM test for ${hostName}";
-        };
       };
     };
 
