@@ -42,6 +42,7 @@
 
   nixos = {
     games.enable = true;
+    home.restoreBackups = true;
     server = {
       plex.enable = true;
       rtorrent = {

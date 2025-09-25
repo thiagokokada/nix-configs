@@ -11,6 +11,7 @@ in
 {
   imports = [
     ./diff.nix
+    ./restore-backups.nix
   ];
 
   options.home-manager.meta = {

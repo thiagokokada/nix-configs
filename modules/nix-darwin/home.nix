@@ -18,6 +18,7 @@ in
     enable = lib.mkEnableOption "home config" // {
       default = true;
     };
+    restoreBackups = lib.mkEnableOption "restore backup files before activation";
     username = lib.mkOption {
       description = "Main username.";
       type = lib.types.str;
@@ -35,14 +36,17 @@ in
     # are adding here only for nix-darwin
     environment.systemPackages = with pkgs; [ home-manager ];
 
-    home-manager = {
+    home-manager = rec {
       backupFileExtension = "hm-backup";
       useUserPackages = true;
       useGlobalPkgs = true;
       users.${cfg.username} = {
         inherit (config) meta device theme;
         imports = [ ../home-manager ] ++ cfg.extraModules;
-        home-manager = { inherit (config.networking) hostName; };
+        home-manager = {
+          inherit (config.networking) hostName;
+          meta.restoreBackups = lib.mkIf cfg.restoreBackups { inherit backupFileExtension; };
+        };
       };
       extraSpecialArgs = { inherit flake libEx; };
     };

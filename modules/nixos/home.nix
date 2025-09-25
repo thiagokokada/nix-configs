@@ -17,6 +17,7 @@ in
     enable = lib.mkEnableOption "home config" // {
       default = true;
     };
+    restoreBackups = lib.mkEnableOption "restore backup files before activation";
     username = lib.mkOption {
       description = "Main username.";
       type = lib.types.str;
@@ -34,14 +35,17 @@ in
     # are adding here only for NixOS
     environment.systemPackages = with pkgs; [ home-manager ];
 
-    home-manager = {
+    home-manager = rec {
       backupFileExtension = "hm-backup";
       useUserPackages = true;
       useGlobalPkgs = true;
       users.${cfg.username} = {
         inherit (config) meta device theme;
         imports = [ ../home-manager ] ++ cfg.extraModules;
-        home-manager = { inherit (config.networking) hostName; };
+        home-manager = {
+          inherit (config.networking) hostName;
+          meta.restoreBackups = lib.mkIf cfg.restoreBackups { inherit backupFileExtension; };
+        };
         # As a rule of thumb HM == NixOS version, unless something weird happens
         home.stateVersion = lib.mkDefault config.system.stateVersion;
       };
