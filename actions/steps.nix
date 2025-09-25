@@ -22,15 +22,6 @@ rec {
 
   installNixActionStep = {
     uses = actions.install-nix-action;
-    "with" = {
-      # Need to define a channel, otherwise it will use bash from environment
-      nix_path = "nixpkgs=channel:nixos-unstable";
-      extra_nix_config = builtins.concatStringsSep "\n" [
-        "accept-flake-config = true"
-        # Should avoid GitHub API rate limit
-        "access-tokens = github.com=${escapeGhVar "secrets.GITHUB_TOKEN"}"
-      ];
-    };
   };
 
   cachixActionStep = {

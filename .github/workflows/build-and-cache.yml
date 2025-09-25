@@ -6,12 +6,7 @@ jobs:
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v5
-      - uses: cachix/install-nix-action@v31
-        with:
-          extra_nix_config: |-
-            accept-flake-config = true
-            access-tokens = github.com=${{ secrets.GITHUB_TOKEN }}
-          nix_path: nixpkgs=channel:nixos-unstable
+      - uses: DeterminateSystems/nix-installer-action@v20
       - uses: cachix/cachix-action@v16
         with:
           authToken: ${{ secrets.CACHIX_TOKEN }}
@@ -25,12 +20,7 @@ jobs:
     runs-on: ubuntu-24.04-arm
     steps:
       - uses: actions/checkout@v5
-      - uses: cachix/install-nix-action@v31
-        with:
-          extra_nix_config: |-
-            accept-flake-config = true
-            access-tokens = github.com=${{ secrets.GITHUB_TOKEN }}
-          nix_path: nixpkgs=channel:nixos-unstable
+      - uses: DeterminateSystems/nix-installer-action@v20
       - uses: cachix/cachix-action@v16
         with:
           authToken: ${{ secrets.CACHIX_TOKEN }}
@@ -50,12 +40,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
-      - uses: cachix/install-nix-action@v31
-        with:
-          extra_nix_config: |-
-            accept-flake-config = true
-            access-tokens = github.com=${{ secrets.GITHUB_TOKEN }}
-          nix_path: nixpkgs=channel:nixos-unstable
+      - uses: DeterminateSystems/nix-installer-action@v20
       - uses: cachix/cachix-action@v16
         with:
           authToken: ${{ secrets.CACHIX_TOKEN }}

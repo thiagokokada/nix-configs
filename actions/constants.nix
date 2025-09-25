@@ -8,8 +8,8 @@
     create-pull-request = "peter-evans/create-pull-request@v7";
     # https://github.com/marketplace/actions/free-disk-space-ubuntu
     free-disk-space = "thiagokokada/free-disk-space@main";
-    # https://github.com/marketplace/actions/install-nix
-    install-nix-action = "cachix/install-nix-action@v31";
+    # https://github.com/marketplace/actions/the-determinate-nix-installer
+    install-nix-action = "DeterminateSystems/nix-installer-action@v20";
   };
 
   ubuntu.runs-on = "ubuntu-latest";
