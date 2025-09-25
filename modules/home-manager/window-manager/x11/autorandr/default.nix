@@ -36,11 +36,14 @@ in
         inherit (config.xdg) configHome;
       in
       {
-        autorandrCreateDefaultProfile = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-          run mkdir -p "${configHome}/autorandr"
-          run cd "${configHome}/autorandr"
-          run ln -sf $VERBOSE_ARG ${cfg.defaultProfile} default
-        '';
+        autorandrCreateDefaultProfile =
+          lib.hm.dag.entryAfter [ "writeBoundary" ]
+            # bash
+            ''
+              run mkdir -p "${configHome}/autorandr"
+              run cd "${configHome}/autorandr"
+              run ln -sf $VERBOSE_ARG ${cfg.defaultProfile} default
+            '';
       };
 
     programs.autorandr = {

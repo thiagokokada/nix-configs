@@ -42,10 +42,10 @@ in
           }
 
           if [ -e "$targetFolder" ] && ourLink "$targetFolder"; then
-            rm "$targetFolder"
+            run rm "$targetFolder"
           fi
 
-          mkdir -p "$targetFolder"
+          run mkdir -p "$targetFolder"
 
           rsyncFlags=(
             --archive
@@ -59,12 +59,11 @@ in
             # symlinks to relative ones.
             --copy-unsafe-links
             --delete
-            --exclude=$'Icon\r'
             --no-group
             --no-owner
           )
 
-          ${lib.getExe pkgs.rsync} "''${rsyncFlags[@]}" ${applications}/Applications/ "$targetFolder"
+          run ${lib.getExe pkgs.rsync} "''${rsyncFlags[@]}" $VERBOSE_ARG ${applications}/Applications/ "$targetFolder"
         '';
 
     # Disable old style linking of applications in home-manager
