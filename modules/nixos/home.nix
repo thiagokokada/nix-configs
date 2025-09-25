@@ -35,6 +35,7 @@ in
     environment.systemPackages = with pkgs; [ home-manager ];
 
     home-manager = {
+      backupFileExtension = "hm-backup";
       useUserPackages = true;
       useGlobalPkgs = true;
       users.${cfg.username} = {
