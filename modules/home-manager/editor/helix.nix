@@ -16,7 +16,7 @@
       package = pkgs.evil-helix;
 
       settings = {
-        theme = "tokyonight";
+        theme = "catppuccin_mocha";
 
         editor = {
           # Force true-color for e.g., crostini's terminal
@@ -50,15 +50,6 @@
             C-j = "shrink_selection";
             C-k = "expand_selection";
             C-l = "select_next_sibling";
-          };
-
-          select = {
-            # Escape the madness! No more fighting with the cursor! Or with multiple cursors!
-            esc = [
-              "collapse_selection"
-              "keep_primary_selection"
-              "normal_mode"
-            ];
           };
         };
       };
