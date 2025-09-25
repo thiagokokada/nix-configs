@@ -27,6 +27,8 @@ in
           "browser.quitShortcut.disabled" = true;
           # skip welcome page for new profiles
           "browser.startup.firstrunSkipsHomepage" = true;
+          # disable AI chatbox
+          "browser.ml.chat.enabled" = false;
           # don't mess up with paste
           "dom.event.clipboardevents.enabled" = false;
           # handpicked settings from: https://github.com/arkenfox/user.js/blob/master/user.js
