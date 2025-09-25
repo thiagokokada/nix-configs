@@ -85,11 +85,13 @@ in
       game-mode = lib.mkIf cfg.bootInDesktopMode {
         configuration = {
           nixos.games.jovian.bootInDesktopMode = false;
+          system.nixos.tags = [ "with-jovian-in-game-mode" ];
         };
       };
       desktop-mode = lib.mkIf (!cfg.bootInDesktopMode) {
         configuration = {
           nixos.games.jovian.bootInDesktopMode = true;
+          system.nixos.tags = [ "with-jovian-in-desktop-mode" ];
         };
       };
     };

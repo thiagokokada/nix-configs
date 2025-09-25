@@ -74,7 +74,11 @@
     ];
   };
 
-  specialisation.sway.configuration.device.type = lib.mkForce "desktop";
+  specialisation.sway.configuration = {
+    boot.loader.systemd-boot.sortKey = "s_nixos";
+    device.type = lib.mkForce "desktop";
+    system.nixos.tags = [ "with-sway" ];
+  };
 
   # iwd doesn't allow for pinning a specific BSSID (i.e., router by MAC),
   # but since mt7925e is kinda buggy right now we need this support to
