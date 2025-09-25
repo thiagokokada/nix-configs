@@ -28,6 +28,7 @@ in
     }:
     let
       inherit (self.outputs.nixosConfigurations.${hostName}) config pkgs;
+      inherit (config.system.build) nixos-rebuild;
     in
     {
       nixosConfigurations.${hostName} = nixpkgs.lib.nixosSystem {
@@ -42,7 +43,11 @@ in
       apps.${pkgs.system} = {
         "nixosActivations/${hostName}" = {
           type = "app";
-          program = "${config.system.build.toplevel}/activate";
+          program = nixpkgs.lib.getExe (
+            pkgs.writeShellScriptBin "activate" ''
+              sudo ${pkgs.lib.getExe nixos-rebuild} switch --flake '${self}#${hostName}'
+            ''
+          );
           meta.description = "NixOS activation script for ${hostName}";
         };
       };
@@ -72,7 +77,7 @@ in
           type = "app";
           program = nixpkgs.lib.getExe (
             pkgs.writeShellScriptBin "activate" ''
-              sudo ${pkgs.lib.getExe darwin-rebuild} switch --flake '.#${hostName}'
+              sudo ${pkgs.lib.getExe darwin-rebuild} switch --flake '${self}#${hostName}'
             ''
           );
           meta.description = "nix-darwin activation script for ${hostName}";
