@@ -111,15 +111,6 @@ To build the Home Manager standalone and activate its configuration, run:
 nix run '.#homeActivations/<hostname>'
 ```
 
-## Testing
-
-You can build a VM to test NixOS configurations with safety running the
-command below:
-
-```shell
-nix run '.#nixosVMs/<hostname>'
-```
-
 ## Explore
 
 You can explore all outputs from this configuration by using:
