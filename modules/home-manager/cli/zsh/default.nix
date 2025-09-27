@@ -85,7 +85,7 @@ in
         };
 
         envExtra = lib.mkBefore (
-          lib.optionalString config.home-manager.darwin.enable
+          lib.optionalString pkgs.stdenv.isDarwin
             # bash
             ''
               # Source nix-daemon profile since macOS updates can remove it from /etc/zshrc
