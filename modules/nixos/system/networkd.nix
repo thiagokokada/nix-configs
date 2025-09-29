@@ -1,9 +1,9 @@
 { config, lib, ... }:
 let
-  cfg = config.nixos.server.networkd;
+  cfg = config.nixos.system.networkd;
 in
 {
-  options.nixos.server.networkd = {
+  options.nixos.system.networkd = {
     enable = lib.mkEnableOption "systemd-networkd config";
   };
 
