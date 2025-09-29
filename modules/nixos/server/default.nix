@@ -16,11 +16,13 @@
   ];
 
   config = lib.mkIf config.nixos.server.enable {
-    # Enable NixOS auto-upgrade
     system.autoUpgrade = {
-      enable = true;
-      allowReboot = true;
-      flake = "github:thiagokokada/nix-configs";
+      allowReboot = lib.mkDefault true;
+      rebootWindow = {
+        lower = lib.mkDefault "02:30";
+        upper = lib.mkDefault "05:30";
+      };
+      randomizedDelaySec = lib.mkDefault "30min";
     };
   };
 }

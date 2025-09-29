@@ -89,7 +89,17 @@ in
       };
     };
 
-    system.configurationRevision = flake.rev or "dirty";
+    system = {
+      # Enable NixOS auto-upgrade
+      autoUpgrade = {
+        enable = lib.mkDefault true;
+        flake = "github:thiagokokada/nix-configs";
+        persistent = true;
+        # Not enabled by default for desktop/laptops, see nixos.server
+        # allowReboot = true;
+      };
+      configurationRevision = flake.rev or "dirty";
+    };
 
     # nixos/modules/misc/version.nix
     users.motd = lib.mkIf cfg.motd.enable ''
