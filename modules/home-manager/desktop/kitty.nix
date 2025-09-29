@@ -17,17 +17,17 @@ in
       default = config.home-manager.editor.neovim.enable;
     };
     useSuperKeybindings = lib.mkEnableOption "keybindings with Super/Command" // {
-      default = pkgs.stdenv.isDarwin;
+      default = config.home-manager.darwin.enable;
     };
     fontSize = lib.mkOption {
       type = lib.types.float;
       description = "Font size.";
-      default = if pkgs.stdenv.isDarwin then 14.0 else 12.0;
+      default = if config.home-manager.darwin.enable then 14.0 else 12.0;
     };
     opacity = lib.mkOption {
       type = lib.types.float;
       description = "Background opacity.";
-      default = if pkgs.stdenv.isDarwin then 1.0 else 0.95;
+      default = if config.home-manager.darwin.enable then 1.0 else 0.95;
     };
   };
 
@@ -98,7 +98,8 @@ in
         tab_bar_style = "powerline";
         tab_powerline_style = "round";
         tab_title_template = "{fmt.fg.red}{bell_symbol}{activity_symbol}{fmt.fg.tab}{tab.last_focused_progress_percent}[{layout_name[:1]}] {index}:{title}";
-        tab_bar_min_tabs = lib.mkIf pkgs.stdenv.isDarwin 1; # always show tabs in macOS
+        # always show tabs when not using window-manager
+        tab_bar_min_tabs = lib.mkIf (!config.home-manager.window-manager.enable) 1;
         tab_title_max_length = 30;
 
         # Misc
@@ -106,6 +107,7 @@ in
         background_opacity = toString cfg.opacity;
         clipboard_control = "write-clipboard write-primary read-clipboard read-primary";
         editor = lib.mkIf config.home-manager.window-manager.enable config.home-manager.window-manager.default.editor;
+        # ctrl+shift+l / super+l
         enabled_layouts = "tall,fat,grid,horizontal,vertical,stack";
         listen_on = "unix:/tmp/kitty";
         macos_menubar_title_max_length = 50;
@@ -119,7 +121,7 @@ in
         "mouse_map middle release ungrabbed paste_from_buffer" = "select_buffer";
 
         # Fix for Wayland slow scrolling
-        touch_scroll_multiplier = lib.mkIf pkgs.stdenv.isLinux "5.0";
+        touch_scroll_multiplier = lib.mkIf config.home-manager.desktop.enable "5.0";
       };
 
       darwinLaunchOptions = [

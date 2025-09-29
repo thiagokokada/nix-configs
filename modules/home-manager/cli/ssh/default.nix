@@ -22,7 +22,7 @@
         includes = [ "local.d/*" ];
 
         # We want to use the macOS keychain if available
-        extraConfig = lib.optionalString pkgs.stdenv.isDarwin ''
+        extraConfig = lib.optionalString config.home-manager.darwin.enable ''
           IgnoreUnknown UseKeychain
           UseKeychain yes
         '';
