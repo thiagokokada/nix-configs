@@ -512,7 +512,7 @@ in
               ''
                 -- Setup language servers.
                 -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/configs.md
-                local lspconfig = require("lspconfig")
+                -- TODO: migrate to lsp/*.lua directory
                 local servers_configs = {
                   { "bashls" },
                   { "clojure_lsp" },
@@ -612,13 +612,15 @@ in
                   { "ts_ls" },
                 }
 
-                -- for future use
-                -- lspconfig.util.default_config = {}
-                for _, server in pairs(servers_configs) do
-                  local config = lspconfig[server[1]]
-
-                  if vim.fn.executable(config.document_config.default_config.cmd[1]) ~= 0 then
-                    config.setup(server["opts"] or {})
+                for _, server in ipairs(servers_configs) do
+                  local config = vim.lsp.config[server[1]]
+                  if not config then
+                    vim.notify("No LSP config found for " .. server[1], vim.log.levels.WARN)
+                  else
+                    if config.cmd and vim.fn.executable(config.cmd[1]) == 1 then
+                      vim.lsp.config[server[1]] = server.opts or {}
+                      vim.lsp.enable(server[1])
+                    end
                   end
                 end
 
