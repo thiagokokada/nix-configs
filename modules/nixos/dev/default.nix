@@ -22,6 +22,10 @@ in
   };
 
   config = lib.mkIf config.nixos.dev.enable {
+    nixos.home.extraModules = {
+      home-manager.dev.enable = true;
+    };
+
     programs.adb.enable = true;
 
     # Added user to groups
