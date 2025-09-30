@@ -23,13 +23,8 @@ in
   config = lib.mkIf cfg.enable {
     environment.systemPackages = with pkgs; [ tailscale ];
 
-    networking.firewall = {
-      # always allow traffic from your Tailscale network
-      trustedInterfaces = [ serviceCfg.interfaceName ];
-
-      # allow the Tailscale UDP port through the firewall
-      allowedUDPPorts = [ serviceCfg.port ];
-    };
+    # always allow traffic from your Tailscale network
+    networking.firewall.trustedInterfaces = [ serviceCfg.interfaceName ];
 
     services = {
       networkd-dispatcher = lib.mkIf (cfg.net.ifaces != [ ]) {
@@ -54,6 +49,7 @@ in
       };
       tailscale = {
         enable = true;
+        openFirewall = true;
         permitCertUid = toString config.users.users.${username}.uid;
         useRoutingFeatures = lib.mkDefault "server";
         extraUpFlags = [
