@@ -7,7 +7,7 @@
 
 let
   cfg = config.nixos.games.retroarch;
-  finalPkg =
+  finalPackage =
     if (cfg.cores == "all") then
       pkgs.retroarch-full
     else
@@ -50,18 +50,17 @@ in
       ];
       description = "List of cores to include. Pass `all` to use `retroarchFull` instead.";
     };
-    package = lib.mkOption {
+    finalPackage = lib.mkOption {
       type = lib.types.package;
       description = "Final package.";
       readOnly = true;
-      internal = true;
     };
   };
 
   config = lib.mkIf cfg.enable {
-    nixos.games.retroarch.package = finalPkg;
+    nixos.games.retroarch.finalPackage = finalPackage;
 
-    environment.systemPackages = [ finalPkg ];
+    environment.systemPackages = [ finalPackage ];
 
     services.xserver.desktopManager.retroarch = {
       inherit (config.nixos.games.retroarch) package;
