@@ -87,8 +87,9 @@ nix run github:numtide/nixos-anywhere -- --flake '.#hostname' root@hostname
 Start by installing Nix:
 
 ```shell
-# Using DetSys installer since it handles macOS updates better
-curl -fsSL https://install.determinate.systems/nix | sh -s -- install
+# Using experimental installer since it handles macOS updates better
+curl --proto '=https' --tlsv1.2 -sSf -L https://artifacts.nixos.org/experimental-installer | \
+  sh -s -- install
 ```
 
 To build the Home Manager standalone and activate its configuration, run:
