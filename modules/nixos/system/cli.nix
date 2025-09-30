@@ -24,6 +24,7 @@
           glxinfo
           lm_sensors
           lshw
+          net-tools
           pciutils
           powertop
           psmisc
