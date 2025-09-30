@@ -17,29 +17,7 @@ final: prev:
   open-browser = prev.callPackage ../packages/open-browser { };
 
   neovim-standalone =
-    let
-      hostName = "neovim-standalone";
-      hm =
-        (outputs.lib.mkHomeConfig {
-          inherit hostName;
-          inherit (prev) system;
-          configuration = {
-            home-manager = {
-              cli.icons.enable = false;
-              dev.nix.enable = true;
-              editor.neovim = {
-                lsp.enable = true;
-                treeSitter.enable = true;
-              };
-            };
-            home.stateVersion = "25.11";
-          };
-        }).homeConfigurations.${hostName};
-    in
-    hm.config.programs.neovim.finalPackage.override {
-      luaRcContent = hm.config.xdg.configFile."nvim/init.lua".text;
-      wrapRc = true;
-    };
+    outputs.homeConfigurations.home-linux.config.home-manager.editor.neovim.standalonePackage;
 
   nix-cleanup = prev.callPackage ../packages/nix-cleanup { };
 

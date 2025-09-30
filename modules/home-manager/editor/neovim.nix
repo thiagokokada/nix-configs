@@ -22,9 +22,19 @@ in
     treeSitter.enable = lib.mkEnableOption "TreeSitter" // {
       default = config.home-manager.dev.enable;
     };
+    standalonePackage = lib.mkOption {
+      description = "Standalone customized package.";
+      type = lib.types.package;
+      readOnly = true;
+    };
   };
 
   config = lib.mkIf cfg.enable {
+    home-manager.editor.neovim.standalonePackage = config.programs.neovim.finalPackage.override {
+      luaRcContent = config.programs.neovim.generatedConfigs.lua;
+      wrapRc = true;
+    };
+
     home.packages =
       with pkgs;
       [
