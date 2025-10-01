@@ -27,6 +27,7 @@
     laptop.tlp.enable = true;
     system.networkd.enable = true;
     server = {
+      enable = true;
       iperf3.enable = true;
       plex.enable = true;
       rtorrent.enable = true;
