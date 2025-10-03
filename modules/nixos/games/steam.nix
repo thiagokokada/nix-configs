@@ -19,6 +19,7 @@ in
     environment.systemPackages = with pkgs; [
       gamescope
       mangohud
+      xwininfo # sh: line 1: xwininfo: command not found
     ];
 
     programs = {
