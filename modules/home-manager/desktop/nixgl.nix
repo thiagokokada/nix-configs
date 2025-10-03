@@ -23,6 +23,7 @@ in
 
     programs = with config.lib.nixGL; {
       firefox.package = lib.mkForce (wrap pkgs.firefox);
+      kitty.package = lib.mkForce (wrap pkgs.kitty);
       mpv.package = lib.mkForce (wrap pkgs.mpv);
     };
   };
