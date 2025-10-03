@@ -64,6 +64,12 @@ in
       settings = with config.theme.colors; {
         kitty_mod = lib.mkIf cfg.useSuperKeybindings "super";
 
+        # When using home-manager in standalone mode it is not always possible
+        # to change the default shell for the user, so let's force it here
+        shell = lib.mkIf (
+          config.home-manager.cli.zsh.enable && config.targets.genericLinux.enable
+        ) "${config.home.profileDirectory}/bin/zsh";
+
         # Colors
         foreground = base05;
         background = base00;
