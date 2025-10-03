@@ -4,11 +4,6 @@
   options.home-manager.crostini.enable = lib.mkEnableOption "Crostini (ChromeOS) config";
 
   config = lib.mkIf config.home-manager.crostini.enable {
-    nixGL = {
-      defaultWrapper = "mesa";
-      installScripts = [ "mesa" ];
-    };
-
     # https://nixos.wiki/wiki/Installing_Nix_on_Crostini
     xdg.configFile."systemd/user/cros-garcon.service.d/override.conf".text =
       lib.generators.toINI { listsAsDuplicateKeys = true; }
