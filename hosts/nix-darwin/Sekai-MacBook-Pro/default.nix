@@ -6,6 +6,7 @@
     extraModules = {
       home.stateVersion = "24.05";
       home-manager = {
+        cli.zsh.zprof.enable = true;
         editor.idea.enable = true;
       };
       programs.go.env = {

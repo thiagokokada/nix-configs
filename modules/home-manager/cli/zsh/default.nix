@@ -42,6 +42,7 @@ in
     enable = lib.mkEnableOption "ZSH config" // {
       default = config.home-manager.cli.enable;
     };
+    zprof.enable = lib.mkEnableOption "zsh/zprof module";
   };
 
   config = lib.mkIf cfg.enable {
@@ -97,6 +98,15 @@ in
         );
 
         initContent = lib.mkMerge [
+          # Enable zprof but don't print its output
+          # We can still call it by calling zprof manually
+          (lib.mkIf cfg.zprof.enable (
+            lib.mkOrder 400
+              # bash
+              ''
+                zmodload zsh/zprof
+              ''
+          ))
           (lib.mkOrder 1000
             # bash
             ''
