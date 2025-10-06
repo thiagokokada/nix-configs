@@ -59,6 +59,7 @@ in
             # symlinks to relative ones.
             --copy-unsafe-links
             --delete
+            --no-perms
             --no-group
             --no-owner
           )
