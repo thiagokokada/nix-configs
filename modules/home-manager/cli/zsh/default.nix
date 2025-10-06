@@ -120,6 +120,14 @@ in
               zstyle ':completion:*' matcher-list 'm:{[:lower:]}={[:upper:]}' 'm:{[:upper:]}={[:lower:]}' 'r:|=* r:|=*'
             ''
           )
+          (lib.mkOrder 1200 (
+            lib.optionalString config.home-manager.darwin.enable # bash
+              ''
+                # Set the soft ulimit to something sensible
+                # https://developer.apple.com/forums/thread/735798
+                ulimit -Sn 524288
+              ''
+          ))
           (lib.mkOrder 1300
             # bash
             ''
@@ -129,14 +137,20 @@ in
               done
             ''
           )
-          (lib.mkOrder 1500 (
-            lib.optionalString config.home-manager.darwin.enable # bash
-              ''
-                # Set the soft ulimit to something sensible
-                # https://developer.apple.com/forums/thread/735798
-                ulimit -Sn 524288
-              ''
-          ))
+          (lib.mkOrder 1400
+            # bash
+            ''
+              # defer loading until prompt is ready
+              autoload -Uz add-zsh-hook
+              add-zsh-hook -d precmd _history-substring-search-end 2>/dev/null
+              add-zsh-hook precmd () {
+                pmodload 'history-substring-search'
+                # rebind the widgets
+                zle -N history-substring-search-up
+                zle -N history-substring-search-down
+              }
+            ''
+          )
         ];
 
         prezto = {
@@ -147,7 +161,6 @@ in
             "environment"
             "terminal"
             "editor"
-            "history-substring-search"
             "directory"
             "spectrum"
             "utility"
