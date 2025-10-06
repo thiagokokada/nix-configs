@@ -118,6 +118,11 @@ in
               # prezto default matching does annoying partial matching
               # e.g.: something-|.json
               zstyle ':completion:*' matcher-list 'm:{[:lower:]}={[:upper:]}' 'm:{[:upper:]}={[:lower:]}' 'r:|=* r:|=*'
+
+              # map V in vi-mode to edit the current command line in $VISUAL
+              export VISUAL="$EDITOR"
+              bindkey -M vicmd 'V' edit-command-line
+              bindkey -M viins 'V' edit-command-line
             ''
           )
           (lib.mkOrder 1200 (
