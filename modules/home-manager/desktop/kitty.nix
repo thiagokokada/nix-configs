@@ -27,7 +27,7 @@ in
     opacity = lib.mkOption {
       type = lib.types.float;
       description = "Background opacity.";
-      default = if config.home-manager.darwin.enable then 1.0 else 0.95;
+      default = 1.0;
     };
   };
 
