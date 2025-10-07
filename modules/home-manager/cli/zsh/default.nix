@@ -144,20 +144,6 @@ in
               done
             ''
           )
-          (lib.mkOrder 1400
-            # bash
-            ''
-              # defer loading until prompt is ready
-              autoload -Uz add-zsh-hook
-              add-zsh-hook -d precmd _history-substring-search-end 2>/dev/null
-              add-zsh-hook precmd () {
-                pmodload 'history-substring-search'
-                # rebind the widgets
-                zle -N history-substring-search-up
-                zle -N history-substring-search-down
-              }
-            ''
-          )
         ];
 
         prezto = {
@@ -168,6 +154,7 @@ in
             "environment"
             "terminal"
             "editor"
+            "history-substring-search"
             "directory"
             "spectrum"
             "utility"
