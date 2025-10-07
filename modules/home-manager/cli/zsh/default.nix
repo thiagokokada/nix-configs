@@ -128,6 +128,8 @@ in
           (lib.mkOrder 1200 (
             lib.optionalString config.home-manager.darwin.enable # bash
               ''
+                # This is really slow on darwin
+                export PURE_GIT_UNTRACKED_DIRTY=0
                 # Set the soft ulimit to something sensible
                 # https://developer.apple.com/forums/thread/735798
                 ulimit -Sn 524288
