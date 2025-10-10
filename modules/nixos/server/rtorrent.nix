@@ -66,6 +66,13 @@ in
               ratio.upload.set=${cfg.ratio.size}
             ''}
 
+            ${lib.optionalString cfg.flood.enable ''
+              method.redirect=load.throw,load.normal
+              method.redirect=load.start_throw,load.start
+              method.insert=d.down.sequential,value|const,0
+              method.insert=d.down.sequential.set,value|const,0
+            ''}
+
             # Watch directory
             schedule2 = watch_directory,5,5,load.start="${directory}/Torrents/*.torrent"
             schedule2 = untied_directory,5,5,stop_untied=
