@@ -22,6 +22,9 @@ in
     gui.enable = lib.mkEnableOption "Git GUI config " // {
       default = config.home-manager.desktop.enable || config.home-manager.darwin.enable;
     };
+    mergiraf.enable = lib.mkEnableOption "Mergiraf config" // {
+      default = true;
+    };
   };
 
   config = lib.mkIf cfg.enable {
@@ -30,6 +33,9 @@ in
         with pkgs;
         lib.optionals cfg.gui.enable [
           (run-bg-alias "gk" (lib.getExe' config.programs.git.package "gitk"))
+        ]
+        ++ lib.optionals cfg.mergiraf.enable [
+          mergiraf
         ];
       shellAliases = {
         g = "git";
@@ -85,6 +91,15 @@ in
           logs = "log --show-signature";
         };
 
+        attributes = lib.mkIf cfg.mergiraf.enable [
+          "* merge=mergiraf"
+        ];
+
+        difftastic = lib.mkIf cfg.mergiraf.enable {
+          enable = true;
+          enableAsDifftool = true;
+        };
+
         ignores = [
           "*.swp"
           "*~"
@@ -128,7 +143,11 @@ in
             user = "thiagokokada";
           };
           merge = {
-            conflictstyle = "zdiff3";
+            mergiraf = lib.mkIf cfg.mergiraf.enable {
+              name = "mergiraf";
+              driver = "mergiraf merge --git %O %A %B -s %S -x %X -y %Y -p %P -l %L";
+            };
+            conflictstyle = if cfg.mergiraf.enable then "diff3" else "zdiff3";
             tool = "nvim -d";
           };
           pull.rebase = true;
