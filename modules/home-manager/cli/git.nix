@@ -95,11 +95,6 @@ in
           "* merge=mergiraf"
         ];
 
-        difftastic = lib.mkIf cfg.mergiraf.enable {
-          enable = true;
-          enableAsDifftool = true;
-        };
-
         ignores = [
           "*.swp"
           "*~"
