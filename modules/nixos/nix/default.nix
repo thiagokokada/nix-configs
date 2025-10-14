@@ -21,7 +21,9 @@ in
       default = true;
     };
     tmpOnDisk = lib.mkEnableOption "set nix's TMPDIR to /var/tmp (disk instead tmpfs)" // {
-      default = config.boot.tmp.useTmpfs;
+      # TODO: remove this once nix 2.31.0+ becomes the default
+      # https://github.com/NixOS/nixpkgs/issues/54707#issuecomment-3397189236
+      default = config.boot.tmp.useTmpfs && lib.versionAtLeast config.nix.package.version "2.31.0";
     };
   };
 
