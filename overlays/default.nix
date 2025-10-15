@@ -14,8 +14,6 @@ final: prev:
 
   inherit (inputs.gh-gfm-preview.packages.${prev.system}) gh-gfm-preview;
 
-  open-browser = prev.callPackage ../packages/open-browser { };
-
   neovim-standalone =
     let
       hostName = "neovim-standalone";
