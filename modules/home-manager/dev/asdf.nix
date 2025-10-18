@@ -6,9 +6,7 @@
 }:
 
 {
-  options.home-manager.dev.asdf.enable = lib.mkEnableOption "asdf config" // {
-    default = config.home-manager.dev.enable;
-  };
+  options.home-manager.dev.asdf.enable = lib.mkEnableOption "asdf config";
 
   config = lib.mkIf config.home-manager.dev.asdf.enable {
     home = {
