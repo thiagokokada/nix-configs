@@ -9,9 +9,7 @@ in
       default = config.nixos.desktop.enable;
     };
     lowLatency = {
-      enable = lib.mkEnableOption "low latency config" // {
-        default = config.nixos.games.enable;
-      };
+      enable = lib.mkEnableOption "low latency config";
       quantum = lib.mkOption {
         description = "Quantum.";
         type = lib.types.int;
