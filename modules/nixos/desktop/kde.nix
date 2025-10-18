@@ -28,6 +28,7 @@ in
         kdePackages.kcolorchooser
         kdePackages.kolourpaint
         kdePackages.ksystemlog
+        kdiskmark
       ]
       ++ lib.optionals cfg.sddm.enable [
         kdePackages.sddm-kcm
