@@ -12,7 +12,6 @@
 
   home-manager = {
     cli.git.gui.enable = true;
-    desktop.kitty.enable = true;
     dev.enable = true;
   };
 
