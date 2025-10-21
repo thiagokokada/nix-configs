@@ -1,4 +1,9 @@
-{ config, lib, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   inherit (config.home) username;
@@ -69,6 +74,10 @@ in
           "sidebar.position_start" = false; # true => left, false => right
           # breaks a few things, like auto dark-mode in websites
           # "privacy.resistFingerprinting" = true;
+        }
+        // lib.optionalAttrs pkgs.stdenv.isLinux {
+          # https://wiki.archlinux.org/title/Firefox#XDG_Desktop_Portal_integration
+          "widget.use-xdg-desktop-portal.file-picker" = 1;
         }
         // lib.optionalAttrs cfg.subpixelRender.enable {
           # https://pandasauce.org/get-fonts-done/
