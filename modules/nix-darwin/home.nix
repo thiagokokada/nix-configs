@@ -16,10 +16,6 @@ in
   ];
 
   config = lib.mkIf cfg.enable {
-    nix-darwin.home.extraModules = {
-      targets.darwin.linkApps.enable = false;
-    };
-
     users.users.${username}.home = lib.mkDefault "/Users/${username}";
   };
 }
