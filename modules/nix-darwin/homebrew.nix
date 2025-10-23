@@ -18,7 +18,10 @@ in
       casks = [
         "betterdisplay"
         "domzilla-caffeine"
+        "firefox"
         "google-chrome"
+        "intellij-idea-ce"
+        "kitty"
         "linearmouse"
         "rectangle"
       ];

@@ -24,14 +24,8 @@ in
   config = lib.mkIf cfg.enable {
     programs.firefox = {
       enable = true;
-      package =
-        if pkgs.stdenv.isDarwin then
-          # https://github.com/NixOS/nixpkgs/issues/451884
-          pkgs.firefox.overrideAttrs (_: {
-            gtk_modules = [ ];
-          })
-        else
-          pkgs.firefox;
+      # managed by homebrew in darwin
+      package = if pkgs.stdenv.isDarwin then null else pkgs.firefox;
       profiles.${username} = {
         settings = {
           # disable about:config warning

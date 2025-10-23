@@ -58,8 +58,9 @@ in
             '';
       };
 
-      packages = with pkgs.jetbrains; [
-        idea-community
+      # managed via homebrew in darwin
+      packages = lib.mkIf pkgs.stdenv.isLinux [
+        pkgs.jetbrains.idea-community
       ];
     };
   };
