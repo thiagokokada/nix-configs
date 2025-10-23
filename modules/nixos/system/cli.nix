@@ -24,7 +24,6 @@
           glxinfo
           lm_sensors
           lshw
-          net-tools
           pciutils
           powertop
           psmisc
@@ -46,7 +45,10 @@
         withNodeJs = false;
       };
       traceroute.enable = true;
-      zsh.enable = true;
+      zsh = {
+        enable = true;
+        enableCompletion = false;
+      };
     };
   };
 }
