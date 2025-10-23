@@ -166,7 +166,9 @@ in
       };
 
       gitui = {
-        enable = true;
+        # Broken in darwin for now
+        # https://github.com/NixOS/nixpkgs/issues/450861
+        enable = pkgs.stdenv.isLinux;
         keyConfig = builtins.readFile (
           pkgs.fetchurl {
             url = "https://raw.githubusercontent.com/extrawurst/gitui/8876c1d0f616d55a0c0957683781fd32af815ae3/vim_style_key_config.ron";
