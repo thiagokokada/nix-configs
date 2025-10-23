@@ -10,7 +10,14 @@ let
   cfg = config.home-manager.editor.idea;
 in
 {
-  options.home-manager.editor.idea.enable = lib.mkEnableOption "IntelliJ IDEA config";
+  options.home-manager.editor.idea = {
+    enable = lib.mkEnableOption "IntelliJ config";
+    packages = lib.mkOption {
+      description = "Packages to add from IntelliJ.";
+      default = with pkgs.jetbrains; [ idea-community ];
+      type = with lib.types; nullOr (listOf package);
+    };
+  };
 
   config = lib.mkIf cfg.enable {
     home = {
@@ -58,10 +65,7 @@ in
             '';
       };
 
-      # managed via homebrew in darwin
-      packages = lib.mkIf pkgs.stdenv.isLinux [
-        pkgs.jetbrains.idea-community
-      ];
+      packages = lib.mkIf (cfg.packages != null) cfg.packages;
     };
   };
 }
