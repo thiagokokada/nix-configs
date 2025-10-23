@@ -41,24 +41,16 @@ in
         bind.dnsutils
         curl
         dialog
-        diffutils
         dos2unix
         dua
         each
         ffmpeg
         file
-        findutils
-        gawk
-        gcal
-        gnugrep
-        gnumake
-        gnused
         hyperfine
         lsof
         mediainfo
         ouch
         page
-        procps
         pv
         rlwrap
         tokei
@@ -70,7 +62,6 @@ in
         archive = "${lib.getExe pkgs.ouch} compress";
         unarchive = "${lib.getExe pkgs.ouch} decompress";
         lsarchive = "${lib.getExe pkgs.ouch} list";
-        cal = lib.getExe pkgs.gcal;
         ncdu = "${lib.getExe pkgs.dua} interactive";
         sloccount = lib.getExe pkgs.tokei;
       };
