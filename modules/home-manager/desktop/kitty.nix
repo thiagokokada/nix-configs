@@ -34,8 +34,6 @@ in
   config = lib.mkIf cfg.enable {
     programs.kitty = {
       enable = true;
-      # managed by homebrew in darwin
-      package = if pkgs.stdenv.isDarwin then null else pkgs.kitty;
       actionAliases = {
         "kitty_scrollback_nvim" =
           lib.optionalString cfg.scrollback-nvim.enable "kitten ${pkgs.vimPlugins.kitty-scrollback-nvim}/python/kitty_scrollback_nvim.py";

@@ -12,6 +12,14 @@ in
   };
 
   config = lib.mkIf cfg.enable {
+    nix-darwin.home.extraModules = {
+      home-manager.editor.idea.packages = null;
+      programs = {
+        firefox.package = null;
+        kitty.package = null;
+      };
+    };
+
     homebrew = {
       enable = true;
       user = config.nix-darwin.home.username;
