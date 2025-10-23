@@ -63,8 +63,6 @@ in
 
       git = {
         enable = true;
-        userName = config.meta.fullname;
-        userEmail = config.meta.email;
         package =
           with pkgs;
           if cfg.gui.enable then
@@ -78,18 +76,6 @@ in
             }
           else
             git;
-
-        aliases = {
-          branch-default = ''!git symbolic-ref --short refs/remotes/origin/HEAD | sed "s|^origin/||"'';
-          checkout-default = ''!git checkout "$(git branch-default)"'';
-          rebase-default = ''!git rebase "$(git branch-default)"'';
-          merge-default = ''!git merge "$(git branch-default)"'';
-          branch-cleanup = ''!git branch --merged | egrep -v "(^\*|master|main|dev|development)" | xargs git branch -d #'';
-          # Restores the commit message from a failed commit for some reason
-          fix-commit = ''!git commit -F "$(git rev-parse --git-dir)/COMMIT_EDITMSG" --edit'';
-          pushf = "push --force-with-lease";
-          logs = "log --show-signature";
-        };
 
         attributes = lib.mkIf cfg.mergiraf.enable [
           "* merge=mergiraf"
@@ -109,7 +95,18 @@ in
         includes = [ { path = "~/.config/git/local"; } ];
 
         # https://blog.gitbutler.com/how-git-core-devs-configure-git/
-        extraConfig = {
+        settings = {
+          alias = {
+            branch-default = ''!git symbolic-ref --short refs/remotes/origin/HEAD | sed "s|^origin/||"'';
+            checkout-default = ''!git checkout "$(git branch-default)"'';
+            rebase-default = ''!git rebase "$(git branch-default)"'';
+            merge-default = ''!git merge "$(git branch-default)"'';
+            branch-cleanup = ''!git branch --merged | egrep -v "(^\*|master|main|dev|development)" | xargs git branch -d #'';
+            # Restores the commit message from a failed commit for some reason
+            fix-commit = ''!git commit -F "$(git rev-parse --git-dir)/COMMIT_EDITMSG" --edit'';
+            pushf = "push --force-with-lease";
+            logs = "log --show-signature";
+          };
           init.defaultBranch = "main";
           branch.sort = "-committerdate";
           color.ui = true;
@@ -161,6 +158,10 @@ in
             autoupdate = true;
           };
           tag.sort = "-version:refname";
+          user = {
+            name = config.meta.fullname;
+            inherit (config.meta) email;
+          };
           safe.bareRepository = "explicit";
         };
       };
