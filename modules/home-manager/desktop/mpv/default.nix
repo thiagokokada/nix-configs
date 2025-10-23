@@ -11,7 +11,7 @@ in
 {
   options.home-manager.desktop.mpv = {
     enable = lib.mkEnableOption "mpv config" // {
-      default = config.home-manager.desktop.enable || config.home-manager.darwin.enable;
+      default = config.home-manager.desktop.enable;
     };
     profile = lib.mkOption {
       type = with lib.types; listOf str;
@@ -19,8 +19,8 @@ in
       description = "Default mpv profile(s).";
     };
     hq.enable = lib.mkEnableOption "high-quality config (needs good CPU/GPU)";
-    vapoursynth.enable = lib.mkEnableOption "VapourSynth config" // {
-      default = pkgs.stdenv.isLinux;
+    vapoursynth.enable = lib.mkEnableOption "Vapoursynth config" // {
+      default = lib.meta.availableOn pkgs.stdenv.hostPlatform pkgs.vapoursynth;
     };
   };
 
