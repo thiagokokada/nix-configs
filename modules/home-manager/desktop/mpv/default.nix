@@ -19,8 +19,8 @@ in
       description = "Default mpv profile(s).";
     };
     hq.enable = lib.mkEnableOption "high-quality config (needs good CPU/GPU)";
-    vapoursynth.enable = lib.mkEnableOption "Vapoursynth config" // {
-      default = lib.meta.availableOn pkgs.stdenv.hostPlatform pkgs.vapoursynth;
+    vapoursynth.enable = lib.mkEnableOption "VapourSynth config" // {
+      default = pkgs.stdenv.isLinux;
     };
   };
 
