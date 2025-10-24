@@ -4,7 +4,7 @@
   nix-darwin.home = {
     username = "thiago.okada";
     extraModules = {
-      home.stateVersion = "24.05";
+      home.stateVersion = "25.11";
       home-manager = {
         cli.zsh.zprof.enable = true;
         dev.asdf.enable = true;

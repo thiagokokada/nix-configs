@@ -10,7 +10,6 @@ let
 in
 {
   imports = [
-    ./copy-apps.nix
     ./homebrew.nix
   ];
 
