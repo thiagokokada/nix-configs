@@ -76,7 +76,8 @@ in
       zram-generator = {
         inherit (cfg.zram) enable;
         settings.zram0 = {
-          zram-size = lib.mkDefault "min(ram, 8192)";
+          zram-size = lib.mkDefault "min(ram / 2, 4096)";
+          compression-algorithm = lib.mkDefault "zstd";
         };
       };
     };
