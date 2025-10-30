@@ -4,11 +4,11 @@ prefix:
   lib,
   libEx,
   flake,
-  pkgs,
   ...
 }:
 let
   cfg = config.${prefix}.home;
+  cfgHome = config.home-manager.users.${cfg.username};
 in
 {
   options.${prefix}.home = {
@@ -31,7 +31,9 @@ in
   config = lib.mkIf cfg.enable {
     # Home-Manager standalone already adds home-manager to PATH, so we
     # are adding here only for NixOS
-    environment.systemPackages = with pkgs; [ home-manager ];
+    environment.systemPackages = [
+      cfgHome.programs.home-manager.package
+    ];
 
     home-manager = rec {
       backupFileExtension = "hm-backup";

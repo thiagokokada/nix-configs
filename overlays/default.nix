@@ -10,8 +10,6 @@ final: prev:
     src = inputs.arandr;
   });
 
-  inherit (inputs.home-manager.packages.${prev.system}) home-manager;
-
   inherit (inputs.gh-gfm-preview.packages.${prev.system}) gh-gfm-preview;
 
   neovim-standalone =
