@@ -32,7 +32,7 @@
         })
       ]
       ++ lib.optionals stdenv.isLinux [
-        flake.inputs.nix-alien.packages.${pkgs.stdenv.hostPlatform.system}.nix-alien
+        nix-alien
       ];
   };
 }

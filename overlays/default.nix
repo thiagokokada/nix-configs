@@ -14,6 +14,7 @@ in
   });
 
   inherit (inputs.gh-gfm-preview.packages.${system}) gh-gfm-preview;
+  inherit (inputs.nix-alien.packages.${system}) nix-alien;
 
   neovim-standalone =
     let
