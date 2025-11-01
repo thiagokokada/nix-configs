@@ -27,10 +27,7 @@ in
       android-file-transfer
       audacious
       libreoffice-fresh
-      (mcomix.override {
-        unrarSupport = true;
-        pdfSupport = false;
-      })
+      (mcomix.override { unrarSupport = true; })
     ];
   };
 }
