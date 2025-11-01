@@ -20,7 +20,7 @@ in
     let
       hostName = "neovim-standalone";
       hm = outputs.lib.mkHomeConfig {
-        inherit hostName;
+        inherit hostName system;
         configuration = {
           home-manager = {
             cli.icons.enable = false;
