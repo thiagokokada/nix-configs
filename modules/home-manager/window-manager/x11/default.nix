@@ -36,7 +36,6 @@ in
     home.packages = with pkgs; [
       xclip
       xdotool
-      xdragon
       xorg.xdpyinfo
       xorg.xhost
       xorg.xkill
