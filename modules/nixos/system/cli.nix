@@ -21,9 +21,9 @@
         with config.boot.kernelPackages;
         [
           cpupower
-          glxinfo
           lm_sensors
           lshw
+          mesa-demos
           pciutils
           powertop
           psmisc
