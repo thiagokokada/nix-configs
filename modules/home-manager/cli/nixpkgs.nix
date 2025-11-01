@@ -31,6 +31,8 @@
           withSandboxSupport = pkgs.stdenv.isLinux;
         })
       ]
-      ++ lib.optionals stdenv.isLinux [ flake.inputs.nix-alien.packages.${pkgs.system}.nix-alien ];
+      ++ lib.optionals stdenv.isLinux [
+        flake.inputs.nix-alien.packages.${pkgs.stdenv.hostPlatform.system}.nix-alien
+      ];
   };
 }

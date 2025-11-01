@@ -1,6 +1,9 @@
 { inputs, outputs, ... }:
 final: prev:
 
+let
+  inherit (prev.stdenv.hostPlatform) system;
+in
 {
   # namespaces
   libEx = outputs.lib;
@@ -10,14 +13,13 @@ final: prev:
     src = inputs.arandr;
   });
 
-  inherit (inputs.gh-gfm-preview.packages.${prev.system}) gh-gfm-preview;
+  inherit (inputs.gh-gfm-preview.packages.${system}) gh-gfm-preview;
 
   neovim-standalone =
     let
       hostName = "neovim-standalone";
       hm = outputs.lib.mkHomeConfig {
         inherit hostName;
-        inherit (prev) system;
         configuration = {
           home-manager = {
             cli.icons.enable = false;

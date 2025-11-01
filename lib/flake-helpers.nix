@@ -40,7 +40,7 @@ in
         ];
       };
 
-      apps.${pkgs.system} = {
+      apps.${pkgs.stdenv.hostPlatform.system} = {
         "nixosActivations/${hostName}" = {
           type = "app";
           program = nixpkgs.lib.getExe (
@@ -72,7 +72,7 @@ in
         ];
       };
 
-      apps.${pkgs.system} = {
+      apps.${pkgs.stdenv.hostPlatform.system} = {
         "darwinActivations/${hostName}" = {
           type = "app";
           program = nixpkgs.lib.getExe (

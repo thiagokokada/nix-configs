@@ -24,7 +24,7 @@ in
           "x86_64-linux" = [ "aarch64-linux" ];
           "aarch64-linux" = [ "x86_64-linux" ];
         }
-        .${pkgs.system} or [ ]
+        .${pkgs.stdenv.hostPlatform.system} or [ ]
       )
       ++ lib.optionals cfg.windows.enable [
         "x86_64-windows"
