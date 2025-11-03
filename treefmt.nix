@@ -3,6 +3,7 @@
   projectRootFile = "flake.nix";
 
   programs = {
+    deadnix.enable = true;
     jsonfmt.enable = true;
     nixfmt.enable = true;
     ruff-check.enable = true;
