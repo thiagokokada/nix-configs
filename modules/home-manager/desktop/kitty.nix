@@ -116,6 +116,8 @@ in
         # ctrl+shift+l / super+l
         enabled_layouts = "tall,fat,grid,horizontal,vertical,stack";
         listen_on = "unix:/tmp/kitty";
+        macos_show_window_title_in = "window";
+        macos_quit_when_last_window_closed = true;
         macos_menubar_title_max_length = 50;
         strip_trailing_spaces = "smart";
         window_padding_width = 5;
