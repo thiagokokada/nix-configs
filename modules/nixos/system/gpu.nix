@@ -27,9 +27,6 @@ in
 
   config = lib.mkMerge [
     (lib.mkIf (maker == "amd") {
-      # Enable support for ROCm in nixpkgs
-      nixpkgs.config.rocmSupport = lib.mkIf cfg.acceleration.enable true;
-
       hardware = {
         # Needed for lact
         amdgpu.overdrive.enable = true;
@@ -49,6 +46,15 @@ in
           amd_performance_level = "high";
         };
       };
+    })
+    (lib.mkIf (maker == "amd" && cfg.acceleration.enable) {
+      # Enable support for ROCm in nixpkgs
+      nixpkgs.config.rocmSupport = true;
+
+      # OpenCL for AMD GPUs
+      hardware.graphics.extraPackages = with pkgs; [
+        rocmPackages.clr.icd
+      ];
 
       # ROCm packages
       systemd.tmpfiles.rules =
@@ -62,10 +68,11 @@ in
             ];
           };
         in
-        lib.mkIf cfg.acceleration.enable [ "L+ /opt/rocm - - - - ${rocmEnv}" ];
+        [ "L+ /opt/rocm - - - - ${rocmEnv}" ];
     })
     (
       let
+        inherit (config.hardware.nvidia.prime.offload) offloadCmdMainProgram;
         primeEnabled =
           config.hardware.nvidia.prime.offload.enable || config.hardware.nvidia.prime.reverseSync.enable;
       in
@@ -80,15 +87,16 @@ in
           };
         };
 
-        # Enable support for CUDA in nixpkgs
-        nixpkgs.config.cudaSupport = lib.mkIf cfg.acceleration.enable true;
-
         # Use nvidia-offload script in gamemode
-        environment.variables.GAMEMODERUNEXEC = lib.mkIf primeEnabled "/run/current-system/sw/bin/${config.hardware.nvidia.prime.offload.offloadCmdMainProgram}";
+        environment.variables.GAMEMODERUNEXEC = lib.mkIf primeEnabled "/run/current-system/sw/bin/${offloadCmdMainProgram}";
 
         hardware.nvidia.prime.offload.enableOffloadCmd = primeEnabled;
       }
     )
+    (lib.mkIf (maker == "nvidia" && cfg.acceleration.enable) {
+      # Enable support for CUDA in nixpkgs
+      nixpkgs.config.cudaSupport = true;
+    })
     (lib.mkIf (maker != null) {
       # GPU control application
       services.lact.enable = config.nixos.desktop.enable;
