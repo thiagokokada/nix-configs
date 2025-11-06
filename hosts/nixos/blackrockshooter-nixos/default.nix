@@ -53,10 +53,7 @@
       tailscale.enable = true;
     };
     system = {
-      gpu = {
-        maker = "amd";
-        # acceleration.enable = true;
-      };
+      gpu.maker = "amd";
       binfmt = {
         enable = true;
         windows.enable = true;
