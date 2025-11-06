@@ -55,7 +55,7 @@
     system = {
       gpu = {
         maker = "amd";
-        acceleration.enable = true;
+        # acceleration.enable = true;
       };
       binfmt = {
         enable = true;
