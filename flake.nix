@@ -23,6 +23,7 @@
     };
     chaotic-nyx.url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
     jovian-nixos.follows = "chaotic-nyx/jovian";
+    nix-flatpak.url = "github:gmodena/nix-flatpak";
 
     # helpers
     flake-compat.url = "github:edolstra/flake-compat";

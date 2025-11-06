@@ -35,13 +35,6 @@ in
       (bottles.override {
         removeWarningPopup = true;
       })
-      (heroic.override {
-        extraPkgs =
-          heroicPkgs: with heroicPkgs; [
-            gamescope
-            gamemode
-          ];
-      })
     ];
 
     programs.gamemode = {

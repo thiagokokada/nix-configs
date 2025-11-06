@@ -14,6 +14,8 @@ in
   imports = [
     flake.inputs.chaotic-nyx.nixosModules.default
     flake.inputs.jovian-nixos.nixosModules.default
+    # TODO: move this somewhere else
+    flake.inputs.nix-flatpak.nixosModules.nix-flatpak
   ];
 
   options.nixos.games.jovian = {
@@ -24,6 +26,34 @@ in
   };
 
   config = lib.mkIf cfg.enable {
+    nixos.home.extraModules = {
+      home.file."Desktop/Return-to-Gaming-Mode.desktop".source =
+        (pkgs.makeDesktopItem {
+          desktopName = "Return to Gaming Mode";
+          exec = "qdbus org.kde.Shutdown /Shutdown org.kde.Shutdown.logout";
+          icon = "steam";
+          name = "Return-to-Gaming-Mode";
+          startupNotify = false;
+          terminal = false;
+          type = "Application";
+        })
+        + "/share/applications/Return-to-Gaming-Mode.desktop";
+
+      # Automatically mount disks in Gamescope session
+      services.udiskie = {
+        enable = lib.mkDefault true;
+        # Assuming KDE here, we will already have notifications from it
+        notify = lib.mkDefault false;
+        # Disable tray otherwise this service depends on tray.target (that
+        # Gamescope session does not start)
+        tray = "never";
+      };
+
+      xdg.stateFile."steamos-session-select" = lib.mkIf cfg.bootInDesktopMode {
+        text = config.jovian.steam.desktopSession;
+      };
+    };
+
     chaotic = {
       # This will break NVIDIA Optimus, and doesn't make lots of sense if using
       # proprietary drivers anyway
@@ -51,32 +81,13 @@ in
       proton-ge-custom
     ];
 
-    nixos.home.extraModules = {
-      home.file."Desktop/Return-to-Gaming-Mode.desktop".source =
-        (pkgs.makeDesktopItem {
-          desktopName = "Return to Gaming Mode";
-          exec = "qdbus org.kde.Shutdown /Shutdown org.kde.Shutdown.logout";
-          icon = "steam";
-          name = "Return-to-Gaming-Mode";
-          startupNotify = false;
-          terminal = false;
-          type = "Application";
-        })
-        + "/share/applications/Return-to-Gaming-Mode.desktop";
-
-      # Automatically mount disks in Gamescope session
-      services.udiskie = {
-        enable = lib.mkDefault true;
-        # Assuming KDE here, we will already have notifications from it
-        notify = lib.mkDefault false;
-        # Disable tray otherwise this service depends on tray.target (that
-        # Gamescope session does not start)
-        tray = "never";
-      };
-
-      xdg.stateFile."steamos-session-select" = lib.mkIf cfg.bootInDesktopMode {
-        text = config.jovian.steam.desktopSession;
-      };
+    services.flatpak = {
+      enable = lib.mkDefault true;
+      packages = [
+        "com.heroicgameslauncher.hgl"
+        "net.retrodeck.retrodeck"
+      ];
+      update.auto.enable = true;
     };
 
     specialisation = {
