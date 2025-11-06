@@ -17,6 +17,9 @@ jobs:
           authToken: ${{ secrets.CACHIX_TOKEN }}
           extraPullNames: nix-community,chaotic-nyx
           name: thiagokokada-nix-configs
+      - name: nix-info -m
+        run: |
+          nix run '.#nix-info' -- -m
       - uses: thiagokokada/free-disk-space@main
         with:
           opt: true
