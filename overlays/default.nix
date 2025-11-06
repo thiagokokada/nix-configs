@@ -9,12 +9,22 @@ in
   libEx = outputs.lib;
 
   # custom packages
+  inherit (inputs.gh-gfm-preview.packages.${system}) gh-gfm-preview;
+  inherit (inputs.nix-alien.packages.${system}) nix-alien;
+
   arandr = prev.arandr.overrideAttrs (_: {
     src = inputs.arandr;
   });
 
-  inherit (inputs.gh-gfm-preview.packages.${system}) gh-gfm-preview;
-  inherit (inputs.nix-alien.packages.${system}) nix-alien;
+  # https://github.com/NixOS/nixpkgs/issues/459100
+  buildMozillaMatch =
+    opts:
+    (prev.buildMozillaMatch.override opts).override {
+      onnxruntime = prev.onnxruntime.override {
+        cudaSupport = false;
+        rocmSupport = false;
+      };
+    };
 
   neovim-standalone =
     let
