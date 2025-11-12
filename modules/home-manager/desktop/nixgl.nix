@@ -17,7 +17,7 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    nixGL = {
+    targets.genericLinux.nixGL = {
       inherit (flake.inputs.nixgl) packages;
     };
 

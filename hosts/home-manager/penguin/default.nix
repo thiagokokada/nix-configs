@@ -1,7 +1,7 @@
 {
   home.stateVersion = "24.05";
 
-  nixGL = {
+  targets.genericLinux.nixGL = {
     defaultWrapper = "mesa";
     installScripts = [ "mesa" ];
   };
