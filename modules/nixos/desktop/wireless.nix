@@ -14,6 +14,8 @@
     # Install Wireless related packages
     environment.systemPackages = with pkgs; [ iw ];
 
+    programs.nm-applet.enable = lib.mkDefault config.nixos.window-manager.enable;
+
     networking = {
       # Use Network Manager
       networkmanager = {

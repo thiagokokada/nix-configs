@@ -24,6 +24,8 @@
       home-manager.desktop.enable = true;
     };
 
+    programs.gnome-disks.enable = true;
+
     # Increase file handler limit
     security.pam.loginLimits = [
       {

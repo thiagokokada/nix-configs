@@ -19,12 +19,6 @@
       home-manager.window-manager.enable = true;
     };
 
-    # Programs that needs system-wide permissions to work correctly
-    programs = {
-      gnome-disks.enable = true;
-      nm-applet.enable = config.nixos.desktop.wireless.enable;
-    };
-
     services = {
       gnome.gnome-keyring.enable = true;
       graphical-desktop.enable = true;
