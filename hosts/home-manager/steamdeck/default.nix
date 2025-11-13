@@ -5,7 +5,7 @@
     stateVersion = "25.05";
   };
 
-  nixGL = {
+  targets.genericLinux.nixGL = {
     defaultWrapper = "mesa";
     installScripts = [ "mesa" ];
   };
