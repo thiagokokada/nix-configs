@@ -77,6 +77,20 @@
     system.nixos.tags = [ "with-sway" ];
   };
 
+  systemd.services.after-sleep = {
+    description = "After sleep quirks";
+    wantedBy = [ "suspend.target" ];
+    after = [ "suspend.target" ];
+    script = # bash
+      ''
+        sleep 2
+        systemctl restart NetworkManager.service
+      '';
+    serviceConfig = {
+      Type = "oneshot";
+    };
+  };
+
   networking.networkmanager = {
     connectionConfig = {
       # Disable powersave for Wi-Fi to see if this improves reliability
