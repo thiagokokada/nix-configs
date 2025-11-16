@@ -21,9 +21,7 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    environment.systemPackages = with pkgs; [ tailscale ];
-
-    # always allow traffic from your Tailscale network
+    # Always allow traffic from your Tailscale network
     networking.firewall.trustedInterfaces = [ serviceCfg.interfaceName ];
 
     services = {
@@ -56,6 +54,23 @@ in
           "--advertise-exit-node"
           "--ssh"
         ];
+      };
+    };
+
+    # XXX: it seems Tailscale in server mode doesn't handle network interfaces
+    # disappearing very well (like Wi-Fi).
+    # This hack works but it is not well advised.
+    systemd.services.after-sleep-tailscale = lib.mkIf config.networking.networkmanager.enable {
+      description = "After sleep quirks";
+      wantedBy = [ "suspend.target" ];
+      after = [ "suspend.target" ];
+      script = # bash
+        ''
+          sleep 2
+          systemctl restart tailscaled.service
+        '';
+      serviceConfig = {
+        Type = "oneshot";
       };
     };
   };
