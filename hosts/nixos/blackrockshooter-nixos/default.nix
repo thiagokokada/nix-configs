@@ -50,7 +50,6 @@
         ratio.enable = true;
       };
       ssh.enable = true;
-      tailscale.enable = true;
     };
     system = {
       gpu.maker = "amd";
