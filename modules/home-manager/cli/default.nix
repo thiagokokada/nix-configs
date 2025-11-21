@@ -54,6 +54,7 @@ in
         pv
         rlwrap
         tokei
+        watch
         wget
       ];
 
