@@ -82,8 +82,11 @@ in
         ];
 
         ignores = [
+          "**/.claude/settings.local.json"
+          "**/CLAUDE.local.md"
           "*.swp"
           "*~"
+          ".bsp/sbt.json"
           ".clj-kondo"
           ".dir-locals.el"
           ".DS_Store"
