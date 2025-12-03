@@ -64,10 +64,7 @@ in
     };
 
     programs = {
-      eza = {
-        enable = true;
-        icons = if config.home-manager.cli.icons.enable then "auto" else "never";
-      };
+      dircolors.enable = true;
       fzf = {
         enable = true;
         fileWidgetOptions = [ "--preview 'head {}'" ];
