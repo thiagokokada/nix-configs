@@ -61,12 +61,6 @@
       flake = false;
     };
 
-    # custom packages
-    arandr = {
-      url = "gitlab:thiagokokada/arandr";
-      flake = false;
-    };
-
     # yazi
     yazi-flavors = {
       url = "github:yazi-rs/flavors";

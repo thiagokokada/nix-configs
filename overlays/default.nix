@@ -9,10 +9,6 @@ in
   libEx = outputs.lib;
 
   # custom packages
-  arandr = prev.arandr.overrideAttrs (_: {
-    src = inputs.arandr;
-  });
-
   inherit (inputs.gh-gfm-preview.packages.${system}) gh-gfm-preview;
   inherit (inputs.nix-alien.packages.${system}) nix-alien;
 
