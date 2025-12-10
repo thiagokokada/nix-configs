@@ -5,12 +5,17 @@
   ...
 }:
 
+let
+  cfg = config.nixos.desktop.wireless;
+in
 {
-  options.nixos.desktop.wireless.enable = lib.mkEnableOption "Wi-Fi/Bluetooth config" // {
-    default = config.nixos.desktop.enable;
+  options.nixos.desktop.wireless = {
+    enable = lib.mkEnableOption "Wi-Fi/Bluetooth config" // {
+      default = config.nixos.desktop.enable;
+    };
   };
 
-  config = lib.mkIf config.nixos.desktop.enable {
+  config = lib.mkIf cfg.enable {
     # Install Wireless related packages
     environment.systemPackages = with pkgs; [ iw ];
 
