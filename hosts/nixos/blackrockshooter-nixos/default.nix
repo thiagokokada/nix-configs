@@ -27,7 +27,7 @@
   };
 
   boot = {
-    kernelPackages = pkgs.linuxPackages_zen;
+    kernelPackages = pkgs.linuxPackages_lqx;
     # Use the systemd-boot EFI boot loader
     loader = {
       efi.canTouchEfiVariables = true;
