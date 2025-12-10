@@ -87,6 +87,20 @@
     wifi.backend = "wpa_supplicant";
   };
 
+  systemd.services.after-sleep-nm = {
+    description = "Restart NetworkManager after sleep";
+    wantedBy = [ "suspend.target" ];
+    after = [ "suspend.target" ];
+    script = # bash
+      ''
+        sleep 2
+        systemctl restart NetworkManager.service
+      '';
+    serviceConfig = {
+      Type = "oneshot";
+    };
+  };
+
   # This value determines the NixOS release with which your system is to be
   # compatible, in order to avoid breaking some software such as database
   # servers. You should change this only after NixOS release notes say you

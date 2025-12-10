@@ -56,22 +56,5 @@ in
         ];
       };
     };
-
-    # XXX: it seems Tailscale in server mode doesn't handle network interfaces
-    # disappearing very well (like Wi-Fi).
-    # This hack works but it is not well advised.
-    systemd.services.after-sleep-tailscale = lib.mkIf config.networking.networkmanager.enable {
-      description = "After sleep quirks";
-      wantedBy = [ "suspend.target" ];
-      after = [ "suspend.target" ];
-      script = # bash
-        ''
-          sleep 2
-          systemctl restart tailscaled.service
-        '';
-      serviceConfig = {
-        Type = "oneshot";
-      };
-    };
   };
 }
