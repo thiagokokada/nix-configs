@@ -43,20 +43,11 @@ in
 
     services.swayidle = {
       enable = true;
-      events = [
-        {
-          event = "after-resume";
-          command = display "on";
-        }
-        {
-          event = "before-sleep";
-          command = swaylock;
-        }
-        {
-          event = "lock";
-          command = swaylock;
-        }
-      ];
+      events = {
+        after-resume = display "on";
+        before-sleep = swaylock;
+        lock = swaylock;
+      };
       timeouts = [
         {
           timeout = 570;
