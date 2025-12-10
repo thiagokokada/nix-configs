@@ -12,7 +12,6 @@ let
 in
 {
   imports = [
-    flake.inputs.chaotic-nyx.nixosModules.default
     flake.inputs.jovian-nixos.nixosModules.default
     # TODO: move this somewhere else
     flake.inputs.nix-flatpak.nixosModules.nix-flatpak
@@ -54,13 +53,6 @@ in
       };
     };
 
-    chaotic = {
-      # This will break NVIDIA Optimus, and doesn't make lots of sense if using
-      # proprietary drivers anyway
-      # TODO: add Intel?
-      mesa-git.enable = config.nixos.system.gpu.maker == "amd";
-    };
-
     jovian = {
       steam = {
         enable = true;
@@ -77,8 +69,7 @@ in
     };
 
     programs.steam.extraCompatPackages = with pkgs; [
-      proton-cachyos
-      proton-ge-custom
+      proton-ge-bin
     ];
 
     services.flatpak = {
@@ -104,10 +95,6 @@ in
           nixos.games.jovian.bootInDesktopMode = true;
           system.nixos.tags = [ "with-jovian-in-desktop-mode" ];
         };
-      };
-      # from chaotic.mesa-git
-      stable-mesa.configuration = {
-        boot.loader.systemd-boot.sortKey = "p_nixos";
       };
     };
   };

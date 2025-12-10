@@ -27,7 +27,7 @@
   };
 
   boot = {
-    kernelPackages = pkgs.linuxPackages_cachyos;
+    kernelPackages = pkgs.linuxPackages_zen;
     # Use the systemd-boot EFI boot loader
     loader = {
       efi.canTouchEfiVariables = true;

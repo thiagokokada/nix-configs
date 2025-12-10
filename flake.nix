@@ -21,8 +21,10 @@
       url = "github:nix-community/nixGL";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    chaotic-nyx.url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
-    jovian-nixos.follows = "chaotic-nyx/jovian";
+    jovian-nixos = {
+      url = "github:Jovian-Experiments/Jovian-NixOS";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     nix-flatpak.url = "github:gmodena/nix-flatpak";
 
     # helpers
@@ -167,12 +169,10 @@
     extra-substituters = [
       "https://nix-community.cachix.org"
       "https://thiagokokada-nix-configs.cachix.org"
-      "https://chaotic-nyx.cachix.org"
     ];
     extra-trusted-public-keys = [
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
       "thiagokokada-nix-configs.cachix.org-1:MwFfYIvEHsVOvUPSEpvJ3mA69z/NnY6LQqIQJFvNwOc="
-      "chaotic-nyx.cachix.org-1:HfnXSw4pj95iI/n17rIDy40agHj12WfF+Gqk6SonIT8="
     ];
   };
 }
