@@ -28,9 +28,8 @@
       initContent =
         # bash
         ''
-          export ASDF_NODEJS_LEGACY_FILE_DYNAMIC_STRATEGY=latest_installed
+          export PATH="''${ASDF_DATA_DIR:-''$HOME/.asdf}/shims:$PATH"
           fpath+=(${pkgs.asdf-vm}/share/zsh/site-functions)
-          source "${pkgs.asdf-vm}/share/asdf-vm/asdf.sh"
         '';
     };
   };
