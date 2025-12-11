@@ -10,6 +10,7 @@ in
 
   # custom packages
   inherit (inputs.gh-gfm-preview.packages.${system}) gh-gfm-preview;
+  inherit (inputs.gitk-go.packages.${system}) gitk-go;
   inherit (inputs.nix-alien.packages.${system}) nix-alien;
 
   neovim-standalone =

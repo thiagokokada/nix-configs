@@ -42,10 +42,14 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # gh
+    # git
     gh-gfm-preview = {
       url = "github:thiagokokada/gh-gfm-preview";
       inputs.flake-compat.follows = "flake-compat";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    gitk-go = {
+      url = "github:thiagokokada/gitk-go";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 

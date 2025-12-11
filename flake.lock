@@ -115,6 +115,26 @@
         "type": "github"
       }
     },
+    "gitk-go": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1765488634,
+        "narHash": "sha256-ARGfHp8CkIdu6XIXprssnSSoT1siUczxJTYGsBF9quI=",
+        "owner": "thiagokokada",
+        "repo": "gitk-go",
+        "rev": "5ce4e335c48d1db2ccfb8e09d6754b06818879ec",
+        "type": "github"
+      },
+      "original": {
+        "owner": "thiagokokada",
+        "repo": "gitk-go",
+        "type": "github"
+      }
+    },
     "hardware": {
       "locked": {
         "lastModified": 1764440730,
@@ -354,6 +374,7 @@
         "disko": "disko",
         "flake-compat": "flake-compat",
         "gh-gfm-preview": "gh-gfm-preview",
+        "gitk-go": "gitk-go",
         "hardware": "hardware",
         "home-manager": "home-manager",
         "intellimacs": "intellimacs",

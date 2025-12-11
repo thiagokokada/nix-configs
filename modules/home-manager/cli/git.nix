@@ -32,7 +32,8 @@ in
       packages =
         with pkgs;
         lib.optionals cfg.gui.enable [
-          (run-bg-alias "gk" (lib.getExe' config.programs.git.package "gitk"))
+          (run-bg-alias "gk" (lib.getExe pkgs.gitk-go))
+          gitk-go
         ]
         ++ lib.optionals cfg.mergiraf.enable [
           mergiraf
