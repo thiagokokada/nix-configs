@@ -122,11 +122,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1766797538,
-        "narHash": "sha256-Jxno2FlBUWghLV+qj9IEB7N82jkxoX0eNxssbisS5KE=",
+        "lastModified": 1767626983,
+        "narHash": "sha256-0UtNzctrY5/AgmTp0bAdCDg+C/xVylR3ulKFryY9Zs8=",
         "owner": "thiagokokada",
         "repo": "gitk-go",
-        "rev": "b513e66e21a7f1ea4fbfe4d0efaf0a748655ac9b",
+        "rev": "3834794970810f7797c7c95a81932c8bb1570a18",
         "type": "github"
       },
       "original": {
