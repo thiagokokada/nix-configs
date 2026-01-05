@@ -1,23 +1,23 @@
 {
   writeShellApplication,
   coreutils,
-  daemonize,
   name,
   command,
 }:
 
 writeShellApplication {
   inherit name;
+  runtimeInputs = [ coreutils ];
+  text = ''
+    cwd="$PWD"
+    cmd="$(basename ${command})"
+    tmpdir="$(mktemp "run-bg-$cmd.XXXXXX" -d --tmpdir="''${TMPDIR:-}")"
 
-  runtimeInputs = [
-    coreutils
-    daemonize
-  ];
-
-  text = # bash
-    ''
-      cmd="$(basename ${command})"
-      tmpdir="$(mktemp "run-bg-$cmd.XXXXXX" -d --tmpdir="''${TMPDIR:-}")"
-      daemonize -o "$tmpdir/stdout" -e "$tmpdir/stderr" -c "$PWD" "${command}" "$@"
-    '';
+    (
+      cd "$cwd"
+      nohup ${command} "$@" </dev/null >"$tmpdir/stdout" 2>"$tmpdir/stderr" &
+      pid=$!
+      echo "Running '$cmd' in background (pid: $pid). Logs: $tmpdir"
+    ) &
+  '';
 }
