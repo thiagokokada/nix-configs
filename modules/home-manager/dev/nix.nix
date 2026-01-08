@@ -29,7 +29,7 @@ in
       [
         nix-tree
         nix-update
-        nixfmt-rfc-style
+        nixfmt
         nurl
         nvd
         statix

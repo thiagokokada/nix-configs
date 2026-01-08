@@ -122,7 +122,7 @@
                 fd
                 neovim-standalone
                 nil
-                nixfmt-rfc-style
+                nixfmt
                 ripgrep
                 statix
               ];
