@@ -47,12 +47,10 @@ in
           layer = "top";
           position = "top";
           spacing = 3;
-          modules-left =
-            lib.optionals swayCfg.enable [
-              "sway/workspaces"
-              "sway/mode"
-            ]
-            ++ lib.optionals (!cfg.smallScreen.enable) [ "wlr/taskbar" ];
+          modules-left = lib.optionals swayCfg.enable [
+            "sway/workspaces"
+            "sway/mode"
+          ];
           modules-center = [ "clock" ];
           modules-right =
             lib.pipe
