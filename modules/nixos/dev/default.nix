@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  pkgs,
   ...
 }:
 
@@ -26,7 +27,9 @@ in
       home-manager.dev.enable = true;
     };
 
-    programs.adb.enable = true;
+    environment.systemPackages = with pkgs; [
+      android-tools
+    ];
 
     # Added user to groups
     users.users.${username}.extraGroups = [ "adbusers" ];
