@@ -99,6 +99,7 @@ in
           "image/jpeg" = "org.gnome.gThumb.desktop";
           "image/png" = "org.gnome.gThumb.desktop";
           "inode/directory" = "nemo.desktop";
+          "inode/mount-point" = "nemo.desktop";
           "text/html" = "firefox.desktop";
           "text/plain" = "nvim.desktop";
           "text/x-makefile" = "nvim.desktop";
