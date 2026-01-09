@@ -731,23 +731,15 @@ in
             type = "lua";
             config = # lua
               ''
-                require("nvim-treesitter.configs").setup {
-                  highlight = {
-                    enable = true,
-                  },
-                  incremental_selection = {
-                    enable = true,
-                    keymaps = {
-                      init_selection = "gnn",
-                      node_incremental = "grn",
-                      scope_incremental = "grc",
-                      node_decremental = "grm",
-                    },
-                  },
-                  indent = {
-                    enable = false,
-                  },
-                }
+                require('nvim-treesitter').setup {}
+
+                vim.api.nvim_create_autocmd('FileType', {
+                  pattern = '*',
+                  callback = function()
+                    pcall(vim.treesitter.start)
+                    vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+                  end,
+                })
               '';
           }
           {
