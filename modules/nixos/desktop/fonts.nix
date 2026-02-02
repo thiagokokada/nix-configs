@@ -31,6 +31,8 @@
       ];
 
       fontconfig = {
+        # fix emojis in Firefox
+        useEmbeddedBitmaps = true;
         defaultFonts = {
           monospace = [ "Noto Sans Mono" ];
           serif = [ "Noto Serif" ];
