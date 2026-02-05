@@ -1,4 +1,9 @@
-{ config, lib, ... }:
+{
+  config,
+  lib,
+  libEx,
+  ...
+}:
 
 let
   cfg = config.nixos.laptop.tlp;
@@ -12,8 +17,7 @@ in
 
   config = lib.mkIf cfg.enable {
     # This will set CPU_SCALING_GOVERNOR_ON_{AC,BAT} options in TLP
-    # 1200 is more priority than mkOptionDefault, less than mkDefault
-    powerManagement.cpuFreqGovernor = lib.mkOverride 1200 "ondemand";
+    powerManagement.cpuFreqGovernor = libEx.mkLocalOptionDefault "ondemand";
 
     # Reduce power consumption
     services.tlp = {
