@@ -7,9 +7,16 @@
 
 let
   cfg = config.home-manager.window-manager.wayland.waybar;
+  niriCfg = config.home-manager.window-manager.wayland.niri;
   swayCfg = config.home-manager.window-manager.wayland.sway;
   dunstctl = lib.getExe' pkgs.dunst "dunstctl";
   pamixer = lib.getExe pkgs.pamixer;
+  wmModulesLeft =
+    lib.optionals niriCfg.enable [ "niri/workspaces" ]
+    ++ lib.optionals swayCfg.enable [
+      "sway/workspaces"
+      "sway/mode"
+    ];
 in
 {
   options.home-manager.window-manager.wayland.waybar = {
@@ -47,10 +54,7 @@ in
           layer = "top";
           position = "top";
           spacing = 3;
-          modules-left = lib.optionals swayCfg.enable [
-            "sway/workspaces"
-            "sway/mode"
-          ];
+          modules-left = wmModulesLeft;
           modules-center = [ "clock" ];
           modules-right =
             lib.pipe
@@ -80,6 +84,10 @@ in
                 # Except the last one
                 lib.init
               ];
+          "niri/workspaces" = lib.mkIf niriCfg.enable {
+            all-outputs = true;
+            disable-click = false;
+          };
           "sway/mode".tooltip = lib.mkIf swayCfg.enable false;
           "sway/workspaces".disable-scroll-wraparound = lib.mkIf swayCfg.enable true;
           "wlr/taskbar" = {

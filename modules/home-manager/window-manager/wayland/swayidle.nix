@@ -8,7 +8,8 @@
 let
   cfg = config.home-manager.window-manager.wayland.swayidle;
   swaylock = "${lib.getExe config.programs.swaylock.package} -f";
-  swaymsg = lib.getExe' config.wayland.windowManager.sway.package "swaymsg";
+  niri = lib.getExe' pkgs.niri "niri";
+  swaymsg = lib.getExe' pkgs.sway "swaymsg";
   notify = toString (
     pkgs.writeShellScript "notify" ''
       ${lib.getExe pkgs.libnotify} -t 30000 "30 seconds to lock"
@@ -20,14 +21,18 @@ let
       pkgs.writeShellScript "display-${switch}"
         # bash
         ''
-          case "''${XDG_CURRENT_DESKTOP,,}" in
-            sway)
-              ${swaymsg} "output * power ${switch}"
-              ;;
-            *)
-              >&2 echo "Unknown desktop environment: $XDG_CURRENT_DESKTOP"
-              ;;
-          esac
+          desktop="''${XDG_CURRENT_DESKTOP,,}"
+
+          if [[ "$desktop" == *"sway"* ]]; then
+            ${swaymsg} "output * power ${switch}"
+          elif [[ "$desktop" == *"niri"* ]]; then
+            # niri turns outputs back on automatically on input.
+            if [[ "${switch}" == "off" ]]; then
+              ${niri} msg action power-off-monitors
+            fi
+          else
+            >&2 echo "Unknown desktop environment: $XDG_CURRENT_DESKTOP"
+          fi
         ''
     );
 in

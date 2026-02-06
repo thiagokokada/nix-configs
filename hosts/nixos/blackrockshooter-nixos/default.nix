@@ -70,10 +70,10 @@
     ];
   };
 
-  specialisation.sway.configuration = {
+  specialisation.window-manager.configuration = {
     boot.loader.systemd-boot.sortKey = "s_nixos";
     device.type = lib.mkForce "desktop";
-    system.nixos.tags = [ "with-sway" ];
+    system.nixos.tags = [ "with-window-manager" ];
   };
 
   networking.networkmanager = {

@@ -13,6 +13,9 @@ in
     sway.enable = lib.mkEnableOption "Sway config" // {
       default = config.nixos.window-manager.enable;
     };
+    niri.enable = lib.mkEnableOption "Niri config" // {
+      default = config.nixos.window-manager.enable;
+    };
   };
 
   config = lib.mkMerge [
@@ -57,6 +60,23 @@ in
         extraPortals = with pkgs; [ xdg-desktop-portal-gtk ];
         # Allow for screensharing in wlroots-based desktop
         wlr.enable = true;
+      };
+    })
+    (lib.mkIf cfg.niri.enable {
+      nixos.home.extraModules = {
+        home-manager.window-manager.wayland.niri.enable = true;
+      };
+
+      programs = {
+        niri.enable = true;
+        uwsm = {
+          enable = true;
+          waylandCompositors.niri = {
+            prettyName = "Niri";
+            comment = "Niri compositor managed by UWSM";
+            binPath = "/run/current-system/sw/bin/niri-session";
+          };
+        };
       };
     })
   ];

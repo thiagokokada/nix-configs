@@ -9,6 +9,7 @@
   imports = [
     ./fuzzel.nix
     ./kanshi
+    ./niri.nix
     ./sway.nix
     ./swayidle.nix
     ./swaylock.nix
