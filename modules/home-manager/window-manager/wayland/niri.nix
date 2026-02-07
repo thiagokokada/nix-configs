@@ -197,7 +197,7 @@ in
             // https://yalter.github.io/niri/Configuration:-Layout
             layout {
                 // Set gaps around windows in logical pixels.
-                gaps 16
+                gaps 8
 
                 // When to center a column when changing focus, options are:
                 // - "never", default behavior, focusing an off-screen column will keep at the left
@@ -245,7 +245,7 @@ in
                     // off
 
                     // How many logical pixels the ring extends out from the windows.
-                    width 4
+                    width 2
 
                     // Colors can be set in a variety of ways:
                     // - CSS named colors: "red"
@@ -283,7 +283,7 @@ in
                     // If you enable the border, you probably want to disable the focus ring.
                     off
 
-                    width 4
+                    width 2
                     active-color "#ffc87f"
                     inactive-color "#505050"
 
@@ -653,7 +653,7 @@ in
                 // maximize-window-to-edges doesn't: the window expands to the edges of the screen.
                 // This bind corresponds to normal window maximizing,
                 // e.g. by double-clicking on the titlebar.
-                Mod+M { maximize-window-to-edges; }
+                Mod+M hotkey-overlay-title="Maximize Window" { maximize-window-to-edges; }
 
                 // Expand the focused column to space not taken up by other fully visible columns.
                 // Makes the column "fill the rest of the space".
