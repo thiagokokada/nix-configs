@@ -85,11 +85,14 @@ in
                 lib.init
               ];
           "niri/workspaces" = lib.mkIf niriCfg.enable {
-            all-outputs = true;
             disable-click = false;
           };
-          "sway/mode".tooltip = lib.mkIf swayCfg.enable false;
-          "sway/workspaces".disable-scroll-wraparound = lib.mkIf swayCfg.enable true;
+          "sway/mode" = lib.mkIf swayCfg.enable {
+            tooltip = false;
+          };
+          "sway/workspaces" = lib.mkIf swayCfg.enable {
+            disable-scroll-wraparound = true;
+          };
           "wlr/taskbar" = {
             icon-size = 24;
             format = "{icon}";
