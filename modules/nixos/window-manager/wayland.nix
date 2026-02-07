@@ -68,7 +68,8 @@ in
       };
 
       programs = {
-        niri.enable = true;
+        # Manage the session with uwsm, so we can't use upstream module
+        # niri.enable = true;
         uwsm = {
           enable = true;
           waylandCompositors.niri = {
@@ -77,6 +78,44 @@ in
             binPath = "/run/current-system/sw/bin/niri-session";
           };
         };
+      };
+
+      # Copy of the upstream module
+      environment.systemPackages = [
+        pkgs.niri
+      ];
+
+      # Required for xdg-desktop-portal-gnome's FileChooser to work properly
+      services.dbus.packages = [
+        pkgs.nautilus
+      ];
+
+      services = {
+        # Recommended by upstream
+        # https://github.com/YaLTeR/niri/wiki/Important-Software#portals
+        gnome.gnome-keyring.enable = lib.mkDefault true;
+      };
+
+      systemd.packages = [ pkgs.niri ];
+
+      xdg.portal = {
+        enable = true;
+
+        # NOTE: `configPackages` is ignored when `xdg.portal.config.niri` is defined.
+        config.niri = {
+          default = [
+            "gnome"
+            "gtk"
+          ];
+          "org.freedesktop.impl.portal.Access" = "gtk";
+          # "org.freedesktop.impl.portal.FileChooser" = "gtk";
+          "org.freedesktop.impl.portal.Notification" = "gtk";
+          "org.freedesktop.impl.portal.Secret" = "gnome-keyring";
+        };
+
+        # Recommended by upstream, required for screencast support
+        # https://github.com/YaLTeR/niri/wiki/Important-Software#portals
+        extraPortals = [ pkgs.xdg-desktop-portal-gnome ];
       };
     })
   ];
