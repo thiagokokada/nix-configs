@@ -70,7 +70,7 @@
     ];
   };
 
-  specialisation.window-manager.configuration = {
+  specialisation.window-manager-mode.configuration = {
     boot.loader.systemd-boot.sortKey = "s_nixos";
     device.type = lib.mkForce "desktop";
     system.nixos.tags = [ "with-window-manager" ];
