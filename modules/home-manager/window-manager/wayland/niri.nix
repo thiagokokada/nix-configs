@@ -74,8 +74,6 @@ in
             // Find the full list of options on the wiki:
             // https://yalter.github.io/niri/Configuration:-Input
             input {
-                workspace-auto-back-and-forth
-
                 keyboard {
                     xkb {
                         // You can set rules, model, layout, variant and options.
@@ -140,6 +138,8 @@ in
                 // Focus windows and outputs automatically when moving the mouse into them.
                 // Setting max-scroll-amount="0%" makes it work only on windows already fully on screen.
                 // focus-follows-mouse max-scroll-amount="0%"
+
+                workspace-auto-back-and-forth
             }
 
             // You can configure outputs by their name, which you can find
@@ -202,7 +202,7 @@ in
                 // - "always", the focused column will always be centered.
                 // - "on-overflow", focusing a column will center it if it doesn't fit
                 //   together with the previously focused column.
-                center-focused-column "never"
+                center-focused-column "always"
 
                 // You can customize the widths that "switch-preset-column-width" (Mod+R) toggles between.
                 preset-column-widths {
@@ -526,21 +526,21 @@ in
                 Mod+Shift+K     { focus-monitor-up; }
                 Mod+Shift+L     { focus-monitor-right; }
 
-                Mod+Shift+Ctrl+Left  { move-column-to-monitor-left; }
-                Mod+Shift+Ctrl+Down  { move-column-to-monitor-down; }
-                Mod+Shift+Ctrl+Up    { move-column-to-monitor-up; }
-                Mod+Shift+Ctrl+Right { move-column-to-monitor-right; }
-                Mod+Shift+Ctrl+H     { move-column-to-monitor-left; }
-                Mod+Shift+Ctrl+J     { move-column-to-monitor-down; }
-                Mod+Shift+Ctrl+K     { move-column-to-monitor-up; }
-                Mod+Shift+Ctrl+L     { move-column-to-monitor-right; }
+                Mod+Shift+Ctrl+Left  { move-workspace-to-monitor-left; }
+                Mod+Shift+Ctrl+Down  { move-workspace-to-monitor-down; }
+                Mod+Shift+Ctrl+Up    { move-workspace-to-monitor-up; }
+                Mod+Shift+Ctrl+Right { move-workspace-to-monitor-right; }
+                Mod+Shift+Ctrl+H     { move-workspace-to-monitor-left; }
+                Mod+Shift+Ctrl+J     { move-workspace-to-monitor-down; }
+                Mod+Shift+Ctrl+K     { move-workspace-to-monitor-up; }
+                Mod+Shift+Ctrl+L     { move-workspace-to-monitor-right; }
 
                 // Alternatively, there are commands to move just a single window:
                 // Mod+Shift+Ctrl+Left  { move-window-to-monitor-left; }
                 // ...
 
-                // And you can also move a whole workspace to another monitor:
-                // Mod+Shift+Ctrl+Left  { move-workspace-to-monitor-left; }
+                // And you can also move a single column to another monitor:
+                // Mod+Shift+Ctrl+Left  { move-column-to-monitor-left; }
                 // ...
 
                 Mod+Page_Down      { focus-workspace-down; }
