@@ -6,6 +6,7 @@
 }:
 let
   cfg = config.home-manager.window-manager.wayland.niri;
+  menu = lib.getExe config.programs.fuzzel.package;
   inherit (config.home-manager.window-manager.default) terminal;
   inherit (config.home-manager.window-manager.default) browser;
   wallpaperMode = config.theme.wallpaper.scale;
@@ -326,7 +327,7 @@ in
 
             hotkey-overlay {
                 // Uncomment this line to disable the "Important Hotkeys" pop-up at startup.
-                // skip-at-startup
+                skip-at-startup
             }
 
             // Uncomment this line to ask the clients to omit their client-side decorations if possible.
@@ -414,12 +415,11 @@ in
 
                 // Suggested binds for running programs: terminal, app launcher, screen locker.
                 // Mod+T hotkey-overlay-title="Open a Terminal: alacritty" { spawn "alacritty"; }
-                Mod+D hotkey-overlay-title="Run an Application: fuzzel" { spawn "fuzzel"; }
-                Super+Alt+L hotkey-overlay-title="Lock the Screen: swaylock" { spawn "swaylock"; }
-                Mod+Return hotkey-overlay-title="Open a Terminal" { spawn-sh ${json terminal}; }
-                Mod+N hotkey-overlay-title="Open a browser" { spawn-sh ${json browser}; }
-                Mod+Shift+Q repeat=false { close-window; }
-                Alt+F4 repeat=false { close-window; }
+                Mod+D hotkey-overlay-title="Run an Application" { spawn-sh ${json menu}; }
+                // This bind will always work, even when using a virtual machine.
+                Super+Alt+L hotkey-overlay-title="Lock the Screen" allow-inhibiting=false { spawn "systemd-run" "--user" "loginctl" "lock-session"; }
+                Mod+Return hotkey-overlay-title="Open Terminal" { spawn-sh ${json terminal}; }
+                Mod+N hotkey-overlay-title="Open Browser" { spawn-sh ${json browser}; }
 
                 // Use spawn-sh to run a shell command. Do this if you need pipes, multiple commands, etc.
                 // Note: the entire command goes as a single argument. It's passed verbatim to `sh -c`.
@@ -445,8 +445,8 @@ in
                 // Example brightness key mappings for brightnessctl.
                 // You can use regular spawn with multiple arguments too (to avoid going through "sh"),
                 // but you need to manually put each argument in separate "" quotes.
-                XF86MonBrightnessUp allow-when-locked=true { spawn-sh ${json "light -A 5%"}; }
-                XF86MonBrightnessDown allow-when-locked=true { spawn-sh ${json "light -U 5%"}; }
+                XF86MonBrightnessUp allow-when-locked=true { spawn "light" "-A" "5%"; }
+                XF86MonBrightnessDown allow-when-locked=true { spawn "light" "-U" "5%"; }
 
                 // Open/close the Overview: a zoomed-out view of workspaces and windows.
                 // You can also move the mouse into the top-left hot corner,
@@ -592,7 +592,7 @@ in
                 // Mod+Ctrl+1 { move-window-to-workspace 1; }
 
                 // Switches focus between the current and the previous workspace.
-                Mod+Tab { focus-workspace-previous; }
+                Mod+Tab hotkey-overlay-title="Switch Focus Between Workspaces" { focus-workspace-previous; }
 
                 // The following binds move the focused window in and out of a column.
                 // If the window is alone, they will consume it into the nearby column to the side.
