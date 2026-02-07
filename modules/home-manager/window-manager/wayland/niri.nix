@@ -9,12 +9,14 @@ let
   menu = lib.getExe config.programs.fuzzel.package;
   systemctl = lib.getExe' pkgs.systemd "systemctl";
   loginctl = lib.getExe' pkgs.systemd "loginctl";
+  niri = lib.getExe' pkgs.niri "niri";
   niriPowerMenu = pkgs.writeShellApplication {
     name = "niri-power-menu";
     runtimeInputs = [ pkgs.systemd ];
     text = ''
       action="$(
         printf '%s\n' \
+          Exit \
           Lock-screen \
           Suspend \
           Sleep \
@@ -24,6 +26,7 @@ let
       )"
 
       case "$action" in
+        Exit) ${niri} msg action quit ;;
         Lock-screen) ${loginctl} lock-session ;;
         Suspend) ${systemctl} suspend ;;
         Sleep) ${systemctl} sleep ;;
@@ -355,6 +358,7 @@ in
 
             // To run a shell command (with variables, pipes, etc.), use spawn-sh-at-startup:
             // spawn-sh-at-startup "qs -c ~/source/qs/MyAwesomeShell"
+            spawn-sh-at-startup "xrdb -merge ~/.Xresources"
 
             hotkey-overlay {
                 // Uncomment this line to disable the "Important Hotkeys" pop-up at startup.
