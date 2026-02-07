@@ -13,8 +13,8 @@ in
     enable = lib.mkEnableOption "Kanshi config" // {
       default = config.home-manager.window-manager.wayland.enable;
     };
-    extraSettings = lib.mkOption {
-      description = "Additional hooks.";
+    settings = lib.mkOption {
+      description = "Kanshi settings";
       type = lib.types.listOf lib.types.attrs;
       default =
         let
@@ -31,7 +31,7 @@ in
 
     services.kanshi = {
       enable = true;
-      settings = cfg.extraSettings;
+      inherit (cfg) settings;
     };
 
     systemd.user.services.kanshi = {

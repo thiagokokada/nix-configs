@@ -181,16 +181,6 @@ in
                 // automatically.
                 position x=1280 y=0
             }
-            // FIXME: find a better way to define a default scale
-            output "eDP-1" {
-                scale ${toString (config.theme.fonts.dpi / 100.0)}
-            }
-            output "DP-1" {
-                scale ${toString (config.theme.fonts.dpi / 100.0)}
-            }
-            output "HDMI-A-1" {
-                scale ${toString (config.theme.fonts.dpi / 100.0)}
-            }
 
             // Settings that influence how windows are positioned and sized.
             // Find more information on the wiki:

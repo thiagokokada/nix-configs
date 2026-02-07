@@ -19,7 +19,7 @@ in
     dpi = lib.mkOption {
       type = lib.types.int;
       description = "Font dpi.";
-      default = 135;
+      default = 150;
     };
 
     gui = lib.mkOption {
