@@ -7,11 +7,38 @@
 let
   cfg = config.home-manager.window-manager.wayland.niri;
   menu = lib.getExe config.programs.fuzzel.package;
+  systemctl = lib.getExe' pkgs.systemd "systemctl";
+  loginctl = lib.getExe' pkgs.systemd "loginctl";
+  niriPowerMenu = pkgs.writeShellApplication {
+    name = "niri-power-menu";
+    runtimeInputs = [ pkgs.systemd ];
+    text = ''
+      action="$(
+        printf '%s\n' \
+          Lock-screen \
+          Suspend \
+          Sleep \
+          Hibernate \
+          Reboot \
+          Shutdown | ${menu} -d
+      )"
+
+      case "$action" in
+        Lock-screen) ${loginctl} lock-session ;;
+        Suspend) ${systemctl} suspend ;;
+        Sleep) ${systemctl} sleep ;;
+        Hibernate) ${systemctl} hibernate ;;
+        Reboot) ${systemctl} reboot ;;
+        Shutdown) ${systemctl} poweroff ;;
+        *) exit 0 ;;
+      esac
+    '';
+  };
   inherit (config.home-manager.window-manager.default) terminal;
   inherit (config.home-manager.window-manager.default) browser;
   wallpaperMode = config.theme.wallpaper.scale;
   xkbOptions = lib.concatStringsSep "," config.home.keyboard.options;
-  json = builtins.toJSON;
+  quote = builtins.toJSON;
 in
 {
   options.home-manager.window-manager.wayland.niri = {
@@ -27,7 +54,11 @@ in
   config = lib.mkIf cfg.enable {
     home.packages =
       with pkgs;
-      [ cfg.package ] ++ lib.optionals cfg.xwayland.enable [ xwayland-satellite ];
+      [
+        cfg.package
+        niriPowerMenu
+      ]
+      ++ lib.optionals cfg.xwayland.enable [ xwayland-satellite ];
 
     xdg.configFile."niri/config.kdl".source =
       let
@@ -57,9 +88,9 @@ in
                         // If this section is empty, niri will fetch xkb settings
                         // from org.freedesktop.locale1. You can control these using
                         // localectl set-x11-keymap.
-                        ${lib.optionalString (layout != null) "layout ${json layout}"}
-                        ${lib.optionalString (variant != null) "variant ${json variant}"}
-                        ${lib.optionalString (xkbOptions != "") "options ${json xkbOptions}"}
+                        ${lib.optionalString (layout != null) "layout ${quote layout}"}
+                        ${lib.optionalString (variant != null) "variant ${quote variant}"}
+                        ${lib.optionalString (xkbOptions != "") "options ${quote xkbOptions}"}
                     }
 
                     // Enable numlock on startup, omitting this setting disables it.
@@ -415,11 +446,12 @@ in
 
                 // Suggested binds for running programs: terminal, app launcher, screen locker.
                 // Mod+T hotkey-overlay-title="Open a Terminal: alacritty" { spawn "alacritty"; }
-                Mod+D hotkey-overlay-title="Run an Application" { spawn-sh ${json menu}; }
-                // This bind will always work, even when using a virtual machine.
-                Super+Alt+L hotkey-overlay-title="Lock the Screen" allow-inhibiting=false { spawn "systemd-run" "--user" "loginctl" "lock-session"; }
-                Mod+Return hotkey-overlay-title="Open Terminal" { spawn-sh ${json terminal}; }
-                Mod+N hotkey-overlay-title="Open Browser" { spawn-sh ${json browser}; }
+                Mod+D hotkey-overlay-title="Run an Application" { spawn-sh ${quote menu}; }
+                Mod+Return hotkey-overlay-title="Open Terminal" { spawn-sh ${quote terminal}; }
+                Mod+N hotkey-overlay-title="Open Browser" { spawn-sh ${quote browser}; }
+                // Those bindings will always work, even when using a virtual machine.
+                Mod+Shift+Escape hotkey-overlay-title="Power Menu" allow-inhibiting=false { spawn ${quote (lib.getExe niriPowerMenu)}; }
+                Super+Alt+L hotkey-overlay-title="Lock the Screen" allow-inhibiting=false { spawn ${quote loginctl} "lock-session"; }
 
                 // Use spawn-sh to run a shell command. Do this if you need pipes, multiple commands, etc.
                 // Note: the entire command goes as a single argument. It's passed verbatim to `sh -c`.
@@ -430,17 +462,17 @@ in
                 // The allow-when-locked=true property makes them work even when the session is locked.
                 // Using spawn-sh allows to pass multiple arguments together with the command.
                 // "-l 1.0" limits the volume to 100%.
-                XF86AudioRaiseVolume allow-when-locked=true { spawn-sh ${json "${lib.getExe pkgs.pamixer} --set-limit 150 --allow-boost -i 5"}; }
-                XF86AudioLowerVolume allow-when-locked=true { spawn-sh ${json "${lib.getExe pkgs.pamixer} --set-limit 150 --allow-boost -d 5"}; }
-                XF86AudioMute        allow-when-locked=true { spawn-sh ${json "${lib.getExe pkgs.pamixer} --toggle-mute"}; }
-                XF86AudioMicMute     allow-when-locked=true { spawn-sh ${json "${lib.getExe pkgs.pamixer} --toggle-mute --default-source"}; }
+                XF86AudioRaiseVolume allow-when-locked=true { spawn-sh ${quote "${lib.getExe pkgs.pamixer} --set-limit 150 --allow-boost -i 5"}; }
+                XF86AudioLowerVolume allow-when-locked=true { spawn-sh ${quote "${lib.getExe pkgs.pamixer} --set-limit 150 --allow-boost -d 5"}; }
+                XF86AudioMute        allow-when-locked=true { spawn-sh ${quote "${lib.getExe pkgs.pamixer} --toggle-mute"}; }
+                XF86AudioMicMute     allow-when-locked=true { spawn-sh ${quote "${lib.getExe pkgs.pamixer} --toggle-mute --default-source"}; }
 
                 // Example media keys mapping using playerctl.
                 // This will work with any MPRIS-enabled media player.
-                XF86AudioPlay        allow-when-locked=true { spawn-sh ${json "${lib.getExe pkgs.playerctl} play-pause"}; }
-                XF86AudioStop        allow-when-locked=true { spawn-sh ${json "${lib.getExe pkgs.playerctl} stop"}; }
-                XF86AudioPrev        allow-when-locked=true { spawn-sh ${json "${lib.getExe pkgs.playerctl} previous"}; }
-                XF86AudioNext        allow-when-locked=true { spawn-sh ${json "${lib.getExe pkgs.playerctl} next"}; }
+                XF86AudioPlay        allow-when-locked=true { spawn-sh ${quote "${lib.getExe pkgs.playerctl} play-pause"}; }
+                XF86AudioStop        allow-when-locked=true { spawn-sh ${quote "${lib.getExe pkgs.playerctl} stop"}; }
+                XF86AudioPrev        allow-when-locked=true { spawn-sh ${quote "${lib.getExe pkgs.playerctl} previous"}; }
+                XF86AudioNext        allow-when-locked=true { spawn-sh ${quote "${lib.getExe pkgs.playerctl} next"}; }
 
                 // Example brightness key mappings for brightnessctl.
                 // You can use regular spawn with multiple arguments too (to avoid going through "sh"),
@@ -684,7 +716,7 @@ in
             }
 
             cursor {
-                xcursor-theme ${json config.xsession.pointerCursor.name}
+                xcursor-theme ${quote config.xsession.pointerCursor.name}
                 xcursor-size ${toString config.xsession.pointerCursor.size}
             }
 
@@ -694,7 +726,7 @@ in
                 _JAVA_AWT_WM_NONREPARENTING "1"
             }
 
-            spawn-at-startup ${json (lib.getExe pkgs.swaybg)} "-i" ${json config.theme.wallpaper.path} "-m" ${json wallpaperMode}
+            spawn-at-startup ${quote (lib.getExe pkgs.swaybg)} "-i" ${quote config.theme.wallpaper.path} "-m" ${quote wallpaperMode}
           '';
       in
       pkgs.writeTextFile {
