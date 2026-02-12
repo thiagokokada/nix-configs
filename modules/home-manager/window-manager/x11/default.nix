@@ -36,11 +36,11 @@ in
     home.packages = with pkgs; [
       xclip
       xdotool
-      xorg.xdpyinfo
-      xorg.xhost
-      xorg.xkill
-      xorg.xrandr
-      xorg.xset
+      xdpyinfo
+      xhost
+      xkill
+      xrandr
+      xset
     ];
 
     # Compatibility with xinit/sx
@@ -59,7 +59,7 @@ in
       enable = true;
       initExtra =
         let
-          xrandr = lib.getExe pkgs.xorg.xrandr;
+          xrandr = lib.getExe pkgs.xrandr;
         in
         lib.concatStringsSep "\n" [
           # NVIDIA sync
