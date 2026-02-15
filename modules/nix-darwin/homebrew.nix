@@ -37,7 +37,7 @@ in
 
     home-manager.users.${username}.home-manager.darwin.homebrew = {
       enable = true;
-      prefix = lib.removeSuffix "/bin" config.homebrew.brewPrefix;
+      inherit (config.homebrew) prefix;
     };
   };
 }
