@@ -90,6 +90,7 @@ in
           ".DS_Store"
           ".lsp"
           ".projectile"
+          ".run"
           "Thumbs.db"
         ];
 
