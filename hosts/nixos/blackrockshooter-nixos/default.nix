@@ -40,7 +40,10 @@
   fonts.fontconfig.subpixel.rgba = "rgb";
 
   nixos = {
-    games.enable = true;
+    games = {
+      enable = true;
+      rocksmith.enable = true;
+    };
     home.restoreBackups = true;
     server = {
       plex.enable = true;

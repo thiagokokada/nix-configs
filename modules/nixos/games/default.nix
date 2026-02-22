@@ -15,6 +15,7 @@ in
     ./osu.nix
     ./ratbag.nix
     ./retroarch.nix
+    ./rocksmith.nix
     ./steam.nix
   ];
 
