@@ -74,24 +74,6 @@
         "type": "github"
       }
     },
-    "flake-parts": {
-      "inputs": {
-        "nixpkgs-lib": "nixpkgs-lib"
-      },
-      "locked": {
-        "lastModified": 1769996383,
-        "narHash": "sha256-AnYjnFWgS49RlqX7LrC4uA+sCCDBj0Ry/WOJ5XWAsa0=",
-        "owner": "hercules-ci",
-        "repo": "flake-parts",
-        "rev": "57928607ea566b5db3ad13af0e57e921e6b12381",
-        "type": "github"
-      },
-      "original": {
-        "owner": "hercules-ci",
-        "repo": "flake-parts",
-        "type": "github"
-      }
-    },
     "flake-utils": {
       "inputs": {
         "systems": "systems_2"
@@ -225,22 +207,6 @@
         "type": "github"
       }
     },
-    "linux-rocksmith": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1770193064,
-        "narHash": "sha256-zUB01bYNLFV2rXXFYuFRZNsZ877G/5ZqanOYPH61m7g=",
-        "ref": "refs/heads/main",
-        "rev": "cacf26501491cdb4eb83844776758fa74f5998e4",
-        "revCount": 228,
-        "type": "git",
-        "url": "https://codeberg.org/nizo/linux-rocksmith"
-      },
-      "original": {
-        "type": "git",
-        "url": "https://codeberg.org/nizo/linux-rocksmith"
-      }
-    },
     "nix-alien": {
       "inputs": {
         "flake-compat": [
@@ -323,31 +289,6 @@
         "type": "github"
       }
     },
-    "nix-gaming": {
-      "inputs": {
-        "flake-parts": [
-          "nixos-rocksmith",
-          "flake-parts"
-        ],
-        "nixpkgs": [
-          "nixos-rocksmith",
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1770864286,
-        "narHash": "sha256-Rn72AgREDFGwmM48ZkclcbuWTDzaYjF0vRnv8FbgcCE=",
-        "owner": "fufexan",
-        "repo": "nix-gaming",
-        "rev": "3e3d8bd317bfa04c2d27b05630b2b9be77c23297",
-        "type": "github"
-      },
-      "original": {
-        "owner": "fufexan",
-        "repo": "nix-gaming",
-        "type": "github"
-      }
-    },
     "nix-github-actions": {
       "inputs": {
         "nixpkgs": [
@@ -412,30 +353,6 @@
         "type": "github"
       }
     },
-    "nixos-rocksmith": {
-      "inputs": {
-        "flake-parts": "flake-parts",
-        "linux-rocksmith": "linux-rocksmith",
-        "nix-gaming": "nix-gaming",
-        "nixpkgs": [
-          "nixpkgs"
-        ],
-        "rs-linux-autoconnect": "rs-linux-autoconnect"
-      },
-      "locked": {
-        "lastModified": 1771024829,
-        "narHash": "sha256-8JTLx19LMkeqJOmnGO33aex9w5lV1D2A530I1T/B6Gc=",
-        "owner": "re1n0",
-        "repo": "nixos-rocksmith",
-        "rev": "dccc0dce70be1f9107d08636ff3644bb289701b3",
-        "type": "github"
-      },
-      "original": {
-        "owner": "re1n0",
-        "repo": "nixos-rocksmith",
-        "type": "github"
-      }
-    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1771369470,
@@ -449,21 +366,6 @@
         "owner": "NixOS",
         "ref": "nixos-unstable",
         "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
-    "nixpkgs-lib": {
-      "locked": {
-        "lastModified": 1769909678,
-        "narHash": "sha256-cBEymOf4/o3FD5AZnzC3J9hLbiZ+QDT/KDuyHXVJOpM=",
-        "owner": "nix-community",
-        "repo": "nixpkgs.lib",
-        "rev": "72716169fe93074c333e8d0173151350670b824c",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nix-community",
-        "repo": "nixpkgs.lib",
         "type": "github"
       }
     },
@@ -486,26 +388,9 @@
           "nix-index-database"
         ],
         "nixgl": "nixgl",
-        "nixos-rocksmith": "nixos-rocksmith",
         "nixpkgs": "nixpkgs",
         "treefmt-nix": "treefmt-nix",
         "yazi-flavors": "yazi-flavors"
-      }
-    },
-    "rs-linux-autoconnect": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1753454170,
-        "narHash": "sha256-Uk4J2ZGHZFI6RX7pmGbdgxUWWdOegsNtJLc/aeBnj54=",
-        "owner": "KczBen",
-        "repo": "rs-linux-autoconnect",
-        "rev": "09a3f0fd0492573dd48468ab413626edd0cba757",
-        "type": "github"
-      },
-      "original": {
-        "owner": "KczBen",
-        "repo": "rs-linux-autoconnect",
-        "type": "github"
       }
     },
     "systems": {

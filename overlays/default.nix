@@ -50,6 +50,4 @@ in
   run-bg-alias = name: command: prev.callPackage ../packages/run-bg-alias { inherit name command; };
 
   wallpapers = final.callPackage ../packages/wallpapers { };
-
-  wineasio = prev.callPackage ../packages/wineasio { };
 }

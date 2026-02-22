@@ -25,10 +25,6 @@
       url = "github:Jovian-Experiments/Jovian-NixOS";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nixos-rocksmith = {
-      url = "github:re1n0/nixos-rocksmith";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     nix-flatpak.url = "github:gmodena/nix-flatpak";
 
     # helpers
