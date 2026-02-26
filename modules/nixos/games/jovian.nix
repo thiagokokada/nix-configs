@@ -47,10 +47,13 @@ in
         # Gamescope session does not start)
         tray = "never";
       };
+    };
 
-      xdg.stateFile."steamos-session-select" = lib.mkIf cfg.bootInDesktopMode {
-        text = config.jovian.steam.desktopSession;
-      };
+    environment.etc."sddm.conf.d/z-jovian-login-override.conf" = lib.mkIf cfg.bootInDesktopMode {
+      text = ''
+        [Autologin]
+        Session=${config.jovian.steam.desktopSession}.desktop
+      '';
     };
 
     jovian = {
