@@ -13,9 +13,6 @@ in
     enable = lib.mkEnableOption "KDE config" // {
       default = config.device.type == "steam-machine";
     };
-    sddm.enable = lib.mkEnableOption "KDE config" // {
-      default = config.device.type != "steam-machine";
-    };
   };
 
   config = lib.mkIf cfg.enable {
@@ -45,10 +42,10 @@ in
     services = {
       desktopManager.plasma6.enable = true;
       displayManager = {
-        defaultSession = "plasma";
+        defaultSession = lib.mkDefault "plasma";
         sddm = {
-          inherit (cfg.sddm) enable;
-          wayland.enable = cfg.sddm.enable;
+          enable = lib.mkDefault true;
+          wayland.enable = lib.mkDefault true;
         };
       };
     };
