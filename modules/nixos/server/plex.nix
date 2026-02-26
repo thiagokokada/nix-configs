@@ -1,8 +1,16 @@
-{ config, lib, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   inherit (config.nixos.home) username;
   inherit (config.device.media) directory;
+  inherit (config.services.plex) user;
+  plexPreferences = "/var/lib/plex/Plex Media Server/Preferences.xml";
+  plexPreferencesBackup = "${plexPreferences}.bak";
 in
 with config.users.users.${username};
 {
@@ -20,6 +28,46 @@ with config.users.users.${username};
       openFirewall = true;
       accelerationDevices = [ "*" ];
       inherit group;
+    };
+
+    systemd.services."plex-preferences-guard" = {
+      description = "Validate, backup, and recover Plex Preferences.xml";
+      before = [ "plex.service" ];
+      after = [ "local-fs.target" ];
+      path = [ pkgs.coreutils ];
+      serviceConfig = {
+        Type = "oneshot";
+      };
+      script = ''
+        set -eu
+
+        preferences='${plexPreferences}'
+        backup='${plexPreferencesBackup}'
+
+        if [ -s "$preferences" ]; then
+          cp -f "$preferences" "$backup"
+          chown ${user}:${group} "$backup"
+          chmod 0600 "$backup"
+          exit 0
+        fi
+
+        if [ -e "$preferences" ] && [ -s "$backup" ]; then
+          cp -f "$backup" "$preferences"
+          chown ${user}:${group} "$preferences"
+          chmod 0600 "$preferences"
+          exit 0
+        fi
+
+        if [ -e "$preferences" ]; then
+          echo "Plex Preferences.xml is empty and no valid backup exists at $backup" >&2
+          exit 1
+        fi
+      '';
+    };
+
+    systemd.services.plex = {
+      requires = [ "plex-preferences-guard.service" ];
+      after = [ "plex-preferences-guard.service" ];
     };
 
     systemd.tmpfiles.rules = [
