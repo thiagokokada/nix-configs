@@ -58,7 +58,6 @@ in
         enable = true;
         autoStart = true;
         user = username;
-        desktopSession = config.services.displayManager.defaultSession;
         environment = {
           STEAM_EXTRA_COMPAT_TOOLS_PATHS =
             lib.makeSearchPathOutput "steamcompattool" ""

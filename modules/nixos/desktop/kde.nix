@@ -25,10 +25,8 @@ in
         kdePackages.kcolorchooser
         kdePackages.kolourpaint
         kdePackages.ksystemlog
-        kdiskmark
-      ]
-      ++ lib.optionals cfg.sddm.enable [
         kdePackages.sddm-kcm
+        kdiskmark
       ]
       ++ lib.optionals config.services.flatpak.enable [
         kdePackages.discover
@@ -36,6 +34,8 @@ in
       ++ lib.optionals config.services.smartd.enable [
         kdePackages.plasma-disks
       ];
+
+    jovian.steam.desktopSession = "plasma";
 
     programs.kdeconnect.enable = true;
 
