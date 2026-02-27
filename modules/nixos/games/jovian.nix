@@ -29,7 +29,7 @@ in
       home.file."Desktop/Return-to-Gaming-Mode.desktop".source =
         (pkgs.makeDesktopItem {
           desktopName = "Return to Gaming Mode";
-          exec = "qdbus org.kde.Shutdown /Shutdown org.kde.Shutdown.logout";
+          exec = "steamosctl switch-to-game-mode";
           icon = "steam";
           name = "Return-to-Gaming-Mode";
           startupNotify = false;
