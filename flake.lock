@@ -157,11 +157,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1772164835,
-        "narHash": "sha256-zRcwrZDeBfYipqv/7K7TqsfPb87LFU6b7JhoNUGSnvQ=",
+        "lastModified": 1772218752,
+        "narHash": "sha256-G8nArvOTZXU8DRvrzAdz3Elcj6kA/vMtvY9mrGLATtA=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "2a39b0828bbffce0d73769a61e46e780488d098b",
+        "rev": "f3a30376bb9eb2f6f61816be7d6ed954b6d2a3b9",
         "type": "github"
       },
       "original": {
@@ -355,11 +355,11 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1772197845,
-        "narHash": "sha256-olbCBhg8OuVcaQGQGmxTf/1d0zJ9v4bZAGRQzvZ/pnQ=",
+        "lastModified": 1772239479,
+        "narHash": "sha256-/l1kqmrtK8X3RnM9ayl5g3ZK5dU7C8zRxe+DmQz4V+s=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "50aa2a9fc5fc9bde7170a167a74b6c357e714ac3",
+        "rev": "f5b24530896e3b8867f25e6fa45f3945dcffb6f9",
         "type": "github"
       },
       "original": {
@@ -446,11 +446,11 @@
     "yazi-flavors": {
       "flake": false,
       "locked": {
-        "lastModified": 1771727517,
-        "narHash": "sha256-lzts4koNg0l0tMkPku8lpb2X4juBs72NREwzca3UCLs=",
+        "lastModified": 1772244070,
+        "narHash": "sha256-GCaG+Uzv/cIHGxVmnxnHw2Ps63qnU9PB6vYMj0k/55g=",
         "owner": "yazi-rs",
         "repo": "flavors",
-        "rev": "3001521a0885fc281d0456df5a28394dec850dc6",
+        "rev": "575a48f5ff410a0d383907a9efdfb6d37e44764b",
         "type": "github"
       },
       "original": {
