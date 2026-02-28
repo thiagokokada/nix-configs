@@ -35,6 +35,7 @@ in
       iperf3.enable = true;
       ssh.enable = true;
       tailscale.enable = true;
+      watchdogd.enable = true;
       duckdns-updater = {
         enable = true;
         ipv6.enable = true;

@@ -33,6 +33,7 @@
       samba.enable = true;
       ssh.enable = true;
       tailscale.enable = true;
+      watchdogd.enable = true;
       duckdns-updater = {
         enable = true;
         certs.enable = true;

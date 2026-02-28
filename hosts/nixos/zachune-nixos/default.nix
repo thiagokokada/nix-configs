@@ -36,6 +36,7 @@ in
         root.enableLogin = true;
       };
       tailscale.enable = true;
+      watchdogd.enable = true;
     };
   };
 
