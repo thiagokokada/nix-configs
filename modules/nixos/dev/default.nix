@@ -1,15 +1,8 @@
-{
-  config,
-  lib,
-  pkgs,
-  ...
-}:
+{ config, lib, ... }:
 
-let
-  inherit (config.nixos.home) username;
-in
 {
   imports = [
+    ./android.nix
     ./ollama.nix
     ./virtualisation
   ];
@@ -26,12 +19,5 @@ in
     nixos.home.extraModules = {
       home-manager.dev.enable = true;
     };
-
-    environment.systemPackages = with pkgs; [
-      android-tools
-    ];
-
-    # Added user to groups
-    users.users.${username}.extraGroups = [ "adbusers" ];
   };
 }
