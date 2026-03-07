@@ -40,6 +40,7 @@
   fonts.fontconfig.subpixel.rgba = "rgb";
 
   nixos = {
+    dev.android.studio.enable = true;
     games.enable = true;
     home.restoreBackups = true;
     server = {
