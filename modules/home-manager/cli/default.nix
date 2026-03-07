@@ -17,7 +17,6 @@ in
     ./jujutsu.nix
     ./nixpkgs.nix
     ./ssh
-    ./tmux.nix
     ./yazi.nix
     ./zellij.nix
     ./zsh

@@ -14,5 +14,9 @@
         show_release_notes = false;
       };
     };
+
+    home.shellAliases = {
+      tmux = lib.getExe config.programs.zellij.package;
+    };
   };
 }
