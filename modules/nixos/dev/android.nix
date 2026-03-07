@@ -24,7 +24,7 @@ in
         android-tools
       ]
       ++ lib.optionals cfg.studio.enable [
-        android-studio-full
+        android-studio
       ];
 
     nixpkgs.config.android_sdk.accept_license = cfg.studio.enable;
