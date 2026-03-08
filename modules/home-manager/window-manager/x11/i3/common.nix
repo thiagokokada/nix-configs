@@ -6,10 +6,10 @@
   fullScreenShot,
   menu,
   msg,
+  brightnessctl ? (lib.getExe pkgs.brightnessctl),
   browser ? config.home-manager.window-manager.default.browser,
   dunstctl ? (lib.getExe' pkgs.dunst "dunstctl"),
   fileManager ? config.home-manager.window-manager.default.fileManager,
-  light ? "light", # needs to be installed system-wide
   pamixer ? (lib.getExe pkgs.pamixer),
   playerctl ? (lib.getExe pkgs.playerctl),
   terminal ? config.home-manager.window-manager.default.terminal,
@@ -257,8 +257,8 @@ in
       "XF86AudioMute" = "exec --no-startup-id ${pamixer} --toggle-mute";
       "XF86AudioMicMute" = "exec --no-startup-id ${pamixer} --toggle-mute --default-source";
 
-      "XF86MonBrightnessUp" = "exec --no-startup-id ${light} -A 5%";
-      "XF86MonBrightnessDown" = "exec --no-startup-id ${light} -U 5%";
+      "XF86MonBrightnessUp" = "exec --no-startup-id ${brightnessctl} --class=backlight set +5%";
+      "XF86MonBrightnessDown" = "exec --no-startup-id ${brightnessctl} --class=backlight set -5%";
 
       "XF86AudioPlay" = "exec --no-startup-id ${playerctl} play-pause";
       "XF86AudioStop" = "exec --no-startup-id ${playerctl} stop";

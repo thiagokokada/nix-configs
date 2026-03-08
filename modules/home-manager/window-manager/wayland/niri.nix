@@ -471,8 +471,8 @@ in
                 // Example brightness key mappings for brightnessctl.
                 // You can use regular spawn with multiple arguments too (to avoid going through "sh"),
                 // but you need to manually put each argument in separate "" quotes.
-                XF86MonBrightnessUp allow-when-locked=true { spawn "light" "-A" "5%"; }
-                XF86MonBrightnessDown allow-when-locked=true { spawn "light" "-U" "5%"; }
+                XF86MonBrightnessUp allow-when-locked=true { spawn-sh ${quote "${lib.getExe pkgs.brightnessctl} --class=backlight set +5%"}; }
+                XF86MonBrightnessDown allow-when-locked=true { spawn-sh ${quote "${lib.getExe pkgs.brightnessctl} --class=backlight set -5%"}; }
 
                 // Open/close the Overview: a zoomed-out view of workspaces and windows.
                 // You can also move the mouse into the top-left hot corner,

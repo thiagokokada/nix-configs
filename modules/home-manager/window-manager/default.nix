@@ -73,6 +73,7 @@ in
 
   config = lib.mkIf cfg.enable {
     home.packages = with pkgs; [
+      brightnessctl
       desktop-file-utils
       evince
       file-roller
