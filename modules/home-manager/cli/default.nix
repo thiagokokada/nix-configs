@@ -70,7 +70,29 @@ in
     programs = {
       aria2.enable = true;
       jq.enable = true;
-      less.enable = true;
+      less = {
+        enable = true;
+        # Fix issue with Kitty
+        # https://github.com/NixOS/nixpkgs/pull/490763
+        package = pkgs.less.overrideAttrs (_: rec {
+          version = "692";
+          src = pkgs.fetchurl {
+            url = "https://www.greenwoodsoftware.com/less/less-${version}.tar.gz";
+            hash = "sha256-YTAPYDeY7PHXeGVweJ8P8/WhrPB1pvufdWg30WbjfRQ=";
+          };
+        });
+        options = {
+          chop-long-lines = true;
+          hilite-search = true;
+          hilite-unread = true;
+          ignore-case = true;
+          LONG-PROMPT = true;
+          no-init = true;
+          RAW-CONTROL-CHARS = true;
+          wheel-lines = 3;
+          window = 4;
+        };
+      };
       ripgrep.enable = true;
     };
   };
