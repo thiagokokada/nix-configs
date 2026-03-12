@@ -191,6 +191,8 @@ in
         ];
 
         sessionVariables = {
+          # Fix colors in less
+          GROFF_NO_SGR = 1;
           # Reduce time to wait for multi-key sequences
           KEYTIMEOUT = 1;
           # Set right prompt to show time
