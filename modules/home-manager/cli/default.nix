@@ -87,6 +87,7 @@ in
           hilite-unread = true;
           ignore-case = true;
           LONG-PROMPT = true;
+          mouse = true;
           no-init = true;
           RAW-CONTROL-CHARS = true;
           wheel-lines = 3;
