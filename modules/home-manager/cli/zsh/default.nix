@@ -117,10 +117,6 @@ in
               # remove prezto LESS configuration
               unset LESS
 
-              # prezto default matching does annoying partial matching
-              # e.g.: something-|.json
-              zstyle ':completion:*' matcher-list 'm:{[:lower:]}={[:upper:]}' 'm:{[:upper:]}={[:lower:]}' 'r:|=* r:|=*'
-
               # map V in vi-mode to edit the current command line in $VISUAL
               export VISUAL="$EDITOR"
               bindkey -M vicmd 'V' edit-command-line
@@ -166,6 +162,13 @@ in
             "prompt"
             "autosuggestions"
           ];
+          extraConfig = # bash
+            ''
+              zstyle ':prezto:environment:termcap' color 'no'
+              # prezto default matching does annoying partial matching
+              # e.g.: something-|.json
+              zstyle ':completion:*' matcher-list 'm:{[:lower:]}={[:upper:]}' 'm:{[:upper:]}={[:lower:]}' 'r:|=* r:|=*'
+            '';
         };
 
         plugins = with pkgs; [
@@ -191,8 +194,6 @@ in
         ];
 
         sessionVariables = {
-          # Fix colors in less
-          GROFF_NO_SGR = 1;
           # Reduce time to wait for multi-key sequences
           KEYTIMEOUT = 1;
           # Set right prompt to show time

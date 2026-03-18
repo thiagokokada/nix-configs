@@ -57,6 +57,12 @@ in
         wget
       ];
 
+      sessionVariables = {
+        # https://felipec.wordpress.com/2021/06/05/adventures-with-man-color/
+        MANPAGER = "less --use-color -Dd+r -Du+b";
+        MANROFFOPT = "-c";
+      };
+
       shellAliases = {
         # For muscle memory...
         archive = "${lib.getExe pkgs.ouch} compress";
