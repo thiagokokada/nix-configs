@@ -6,9 +6,7 @@
 }:
 
 {
-  options.home-manager.dev.clojure.enable = lib.mkEnableOption "Clojure config" // {
-    default = config.home-manager.dev.enable;
-  };
+  options.home-manager.dev.clojure.enable = lib.mkEnableOption "Clojure config";
 
   config = lib.mkIf config.home-manager.dev.clojure.enable {
     home.packages = with pkgs; [
