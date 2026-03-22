@@ -9,7 +9,6 @@
   imports = [
     ./asdf.nix
     ./claude-code.nix
-    ./clojure.nix
     ./codex.nix
     ./go.nix
     ./lua.nix
