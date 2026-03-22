@@ -112,6 +112,8 @@ in
             ''
               # fix "no matches found" when using glob characters
               setopt no_nomatch
+              # disable partial match
+              unsetopt completeinword
               # disable clock
               unset RPROMPT
               # remove prezto LESS configuration
@@ -165,9 +167,6 @@ in
           extraConfig = # bash
             ''
               zstyle ':prezto:environment:termcap' color 'no'
-              # prezto default matching does annoying partial matching
-              # e.g.: something-|.json
-              zstyle ':completion:*' matcher-list 'm:{[:lower:]}={[:upper:]}' 'm:{[:upper:]}={[:lower:]}' 'r:|=* r:|=*'
             '';
         };
 
