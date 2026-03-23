@@ -7,11 +7,11 @@
 
 {
   imports = [
-    ./asdf.nix
     ./claude-code.nix
     ./codex.nix
     ./go.nix
     ./lua.nix
+    ./mise.nix
     ./nix.nix
     ./node.nix
     ./python.nix
