@@ -116,8 +116,13 @@ in
         enable = lib.mkDefault true;
         flake = "github:thiagokokada/nix-configs";
         persistent = true;
-        # Not enabled by default for desktop/laptops, see nixos.server
-        # allowReboot = true;
+        # Enabled by default only in servers
+        allowReboot = lib.mkDefault (config.device.type == "server");
+        rebootWindow = {
+          lower = lib.mkDefault "02:30";
+          upper = lib.mkDefault "05:30";
+        };
+        randomizedDelaySec = lib.mkDefault "30min";
       };
       configurationRevision = flake.rev or "dirty";
     };

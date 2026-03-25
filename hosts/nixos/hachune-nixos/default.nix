@@ -26,7 +26,6 @@
     desktop.wireless.enable = false;
     laptop.tlp.enable = true;
     server = {
-      enable = true;
       iperf3.enable = true;
       plex.enable = true;
       rtorrent.enable = true;
