@@ -4,9 +4,7 @@ let
   cfg = config.home-manager.dev.claude-code;
 in
 {
-  options.home-manager.dev.claude-code.enable = lib.mkEnableOption "Claude Code config" // {
-    default = config.home-manager.dev.enable;
-  };
+  options.home-manager.dev.claude-code.enable = lib.mkEnableOption "Claude Code config";
 
   config = lib.mkIf cfg.enable {
     programs.claude-code = {
