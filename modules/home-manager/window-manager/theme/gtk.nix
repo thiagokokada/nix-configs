@@ -34,6 +34,8 @@
       };
     };
 
+    gtk.gtk4.theme = config.gtk.theme;
+
     services.xsettingsd = {
       enable = true;
       settings = with config; {
