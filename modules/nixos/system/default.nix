@@ -25,23 +25,46 @@ in
     motd.enable = lib.mkEnableOption "show message of the day" // {
       default = true;
     };
-    zram.enable = lib.mkEnableOption "page compression" // {
-      default = true;
+    pageCompression = {
+      enable = lib.mkOption {
+        description = "Page compression strategy.";
+        type = lib.types.enum [
+          "none"
+          "zram"
+          "zswap"
+        ];
+        default = "zram";
+      };
+      algorithm = lib.mkOption {
+        description = "Page compression algorithm.";
+        type = lib.types.str;
+        default = "zstd";
+      };
+      memoryPercent = lib.mkOption {
+        description = "Maximum amount of memory (in percentage) that can be used.";
+        type = lib.types.int;
+        default = 50;
+      };
     };
   };
 
   config = lib.mkIf cfg.enable {
     boot = {
-      initrd.systemd.enable = lib.mkDefault true;
+      initrd = {
+        systemd.enable = lib.mkDefault true;
+        kernelModules = lib.mkIf (cfg.pageCompression.enable == "zswap") [ "z3fold" ];
+      };
+
+      kernelParams = lib.mkIf (cfg.pageCompression.enable == "zswap") [
+        "zswap.compressor=${cfg.pageCompression.algorithm}"
+        "zswap.enabled=1"
+        "zswap.max_pool_percent=${toString cfg.pageCompression.memoryPercent}"
+        "zswap.zpool=z3fold"
+      ];
 
       kernel.sysctl = {
         # Enable Magic keys
         "kernel.sysrq" = 1;
-        # https://wiki.archlinux.org/title/Zram#Optimizing_swap_on_zram
-        "vm.swappiness" = lib.mkIf cfg.zram.enable 180;
-        "vm.watermark_boost_factor" = lib.mkIf cfg.zram.enable 0;
-        "vm.watermark_scale_factor" = lib.mkIf cfg.zram.enable 125;
-        "vm.page-cluster" = lib.mkIf cfg.zram.enable 0;
       };
 
       # Disable boot editor for security
@@ -72,14 +95,6 @@ in
         enable = true;
         interval = "weekly";
       };
-
-      zram-generator = {
-        inherit (cfg.zram) enable;
-        settings.zram0 = {
-          zram-size = lib.mkDefault "min(ram / 2, 4096)";
-          compression-algorithm = lib.mkDefault "zstd";
-        };
-      };
     };
 
     systemd = {
@@ -106,5 +121,11 @@ in
     users.motd = lib.mkIf cfg.motd.enable ''
       Welcome to '${config.networking.hostName}' running NixOS ${config.system.nixos.version}!
     '';
+
+    # Enable zram to have better memory management
+    zramSwap = lib.mkIf (cfg.pageCompression.enable == "zram") {
+      enable = true;
+      inherit (cfg.pageCompression) algorithm memoryPercent;
+    };
   };
 }

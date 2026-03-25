@@ -43,6 +43,10 @@
     };
     system = {
       binfmt.enable = true;
+      pageCompression = {
+        enable = "zswap";
+        memoryPercent = 30;
+      };
     };
   };
 
