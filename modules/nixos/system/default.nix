@@ -33,17 +33,17 @@ in
           "zram"
           "zswap"
         ];
-        default = "zram";
+        default = "zswap";
       };
       algorithm = lib.mkOption {
         description = "Page compression algorithm.";
         type = lib.types.str;
-        default = "zstd";
+        default = "lzo";
       };
       memoryPercent = lib.mkOption {
         description = "Maximum amount of memory (in percentage) that can be used.";
         type = lib.types.int;
-        default = 50;
+        default = 25;
       };
     };
   };
@@ -52,19 +52,24 @@ in
     boot = {
       initrd = {
         systemd.enable = lib.mkDefault true;
-        kernelModules = lib.mkIf (cfg.pageCompression.enable == "zswap") [ "z3fold" ];
       };
 
       kernelParams = lib.mkIf (cfg.pageCompression.enable == "zswap") [
         "zswap.compressor=${cfg.pageCompression.algorithm}"
         "zswap.enabled=1"
         "zswap.max_pool_percent=${toString cfg.pageCompression.memoryPercent}"
-        "zswap.zpool=z3fold"
       ];
 
       kernel.sysctl = {
         # Enable Magic keys
         "kernel.sysrq" = 1;
+      }
+      // lib.optionalAttrs (cfg.pageCompression.enable == "zram") {
+        # https://wiki.archlinux.org/title/Zram#Optimizing_swap_on_zram
+        "vm.swappiness" = lib.mkIf cfg.zram.enable 180;
+        "vm.watermark_boost_factor" = lib.mkIf cfg.zram.enable 0;
+        "vm.watermark_scale_factor" = lib.mkIf cfg.zram.enable 125;
+        "vm.page-cluster" = lib.mkIf cfg.zram.enable 0;
       };
 
       # Disable boot editor for security
