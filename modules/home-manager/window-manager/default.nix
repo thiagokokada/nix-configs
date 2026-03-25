@@ -92,6 +92,8 @@ in
       # Some applications like to overwrite this file, so let's just force it
       configFile."mimeapps.list".force = true;
 
+      userDirs.setSessionVariables = false;
+
       mimeApps = {
         enable = true;
         defaultApplications = {
