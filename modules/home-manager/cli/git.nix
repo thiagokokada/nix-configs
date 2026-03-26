@@ -98,17 +98,19 @@ in
 
         # https://blog.gitbutler.com/how-git-core-devs-configure-git/
         settings = {
-          alias = {
-            branch-default = ''!git symbolic-ref --short refs/remotes/origin/HEAD | sed "s|^origin/||"'';
-            checkout-default = ''!git checkout "$(git branch-default)"'';
-            rebase-default = ''!git rebase "$(git branch-default)"'';
-            merge-default = ''!git merge "$(git branch-default)"'';
-            branch-cleanup = ''!git branch --merged | egrep -v "(^\*|master|main|dev|development)" | xargs git branch -d #'';
-            # Restores the commit message from a failed commit for some reason
-            fix-commit = ''!git commit -F "$(git rev-parse --git-dir)/COMMIT_EDITMSG" --edit'';
-            pushf = "push --force-with-lease";
-            logs = "log --show-signature";
-          };
+          alias =
+            let
+              git = lib.getExe config.programs.git.package;
+              awk = lib.getExe pkgs.gawk;
+              xargs = lib.getExe' pkgs.findutils "xargs";
+            in
+            {
+              branch-cleanup = ''!${git} fetch --prune && ${git} for-each-ref --format '%(refname:short) %(upstream:track)' refs/heads | ${awk} '$2 == "[gone]" {print $1}' | ${xargs} -r git branch -D'';
+              # Restores the commit message from a failed commit for some reason
+              fix-commit = ''!${git} commit -F "$(${git} rev-parse --git-dir)/COMMIT_EDITMSG" --edit'';
+              pushf = "push --force-with-lease";
+              logs = "log --show-signature";
+            };
           init.defaultBranch = "main";
           branch.sort = "-committerdate";
           color.ui = true;
