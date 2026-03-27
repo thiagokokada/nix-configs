@@ -1,11 +1,11 @@
 {
   actions = {
     # https://github.com/marketplace/actions/cachix
-    cachix-action = "cachix/cachix-action@v16";
+    cachix-action = "cachix/cachix-action@v17";
     # https://github.com/marketplace/actions/checkout
-    checkout = "actions/checkout@v5";
+    checkout = "actions/checkout@v6";
     # https://github.com/marketplace/actions/create-pull-request
-    create-pull-request = "peter-evans/create-pull-request@v7";
+    create-pull-request = "peter-evans/create-pull-request@v8";
     # https://github.com/marketplace/actions/free-disk-space-ubuntu
     free-disk-space = "thiagokokada/free-disk-space@main";
     # https://github.com/marketplace/actions/install-nix

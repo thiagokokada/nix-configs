@@ -5,14 +5,14 @@ jobs:
   update-flakes-x86_64-linux:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - uses: cachix/install-nix-action@v31
         with:
           extra_nix_config: |-
             accept-flake-config = true
             access-tokens = github.com=${{ secrets.GITHUB_TOKEN }}
           nix_path: nixpkgs=channel:nixos-unstable
-      - uses: cachix/cachix-action@v16
+      - uses: cachix/cachix-action@v17
         with:
           authToken: ${{ secrets.CACHIX_TOKEN }}
           extraPullNames: nix-community,chaotic-nyx
@@ -42,7 +42,7 @@ jobs:
           nix build --print-build-logs '.#nixosConfigurations.sankyuu-nixos.config.system.build.toplevel'
           nix build --print-build-logs '.#nixosConfigurations.zachune-nixos.config.system.build.toplevel'
       - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v7
+        uses: peter-evans/create-pull-request@v8
         with:
           body: |
             ## Run report
