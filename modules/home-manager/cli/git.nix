@@ -96,6 +96,8 @@ in
 
         includes = [ { path = "~/.config/git/local"; } ];
 
+        signing.format = "openpgp";
+
         # https://blog.gitbutler.com/how-git-core-devs-configure-git/
         settings = {
           alias =
