@@ -13,6 +13,7 @@ in
 {
   imports = [
     ./diff.nix
+    ./nix-ld.nix
     ./remote-builders.nix
   ];
 
