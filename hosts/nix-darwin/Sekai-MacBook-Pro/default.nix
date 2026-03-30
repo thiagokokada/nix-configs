@@ -9,8 +9,9 @@
         cli.zsh.zprof.enable = true;
         editor.idea.enable = true;
       };
-      programs.go.env = {
-        GOPRIVATE = "github.com/flowcommerce/*";
+      programs = {
+        go.env.GOPRIVATE = "github.com/flowcommerce/*";
+        mise.globalConfig.settings.trusted_config_paths = [ "~/Global-e" ];
       };
     };
   };
