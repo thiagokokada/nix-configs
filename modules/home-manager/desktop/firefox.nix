@@ -33,13 +33,8 @@ in
           # skip welcome page for new profiles
           "browser.startup.firstrunSkipsHomepage" = true;
           # disable AI features
-          "browser.ml.chat.enabled" = false;
-          "browser.ml.chat.menu" = false;
-          "browser.ml.chat.page" = false;
-          "browser.ml.chat.shortcuts" = false;
-          "browser.ml.chat.sidebar" = false;
-          "browser.ml.enable" = false;
-          "browser.ml.linkPreview.enabled" = false;
+          "browser.ai.control.default" = "blocked";
+          "browser.ai.control.translations" = "available";
           # don't mess up with paste
           "dom.event.clipboardevents.enabled" = false;
           # handpicked settings from: https://github.com/arkenfox/user.js/blob/master/user.js
