@@ -7,7 +7,10 @@
       home.stateVersion = "25.11";
       home-manager = {
         cli.zsh.zprof.enable = true;
-        editor.idea.enable = true;
+        editor.idea = {
+          enable = true;
+          packages = null;
+        };
       };
       programs = {
         go.env.GOPRIVATE = "github.com/flowcommerce/*";
@@ -15,6 +18,8 @@
       };
     };
   };
+
+  homebrew.casks = [ "intellij-idea" ];
 
   system.keyboard = {
     enableKeyMapping = true;

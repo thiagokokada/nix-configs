@@ -13,7 +13,6 @@ in
 
   config = lib.mkIf cfg.enable {
     nix-darwin.home.extraModules = {
-      home-manager.editor.idea.packages = null;
       programs = {
         firefox.package = null;
         kitty.package = null;
@@ -28,7 +27,6 @@ in
         "domzilla-caffeine"
         "firefox"
         "google-chrome"
-        "intellij-idea-ce"
         "kitty"
         "linearmouse"
         "rectangle"
