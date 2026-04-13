@@ -167,6 +167,7 @@ in
           extraConfig = # bash
             ''
               zstyle ':prezto:environment:termcap' color 'no'
+              zstyle ':prompt:pure:prompt:success' color 39 # miku color
             '';
         };
 
