@@ -53,7 +53,13 @@ in
         enable = true;
 
         autocd = true;
-        autosuggestion.enable = true;
+        autosuggestion = {
+          enable = true;
+          strategy = [
+            "history"
+            "completion"
+          ];
+        };
         completionInit = ""; # set by zim-completion
         defaultKeymap = "viins";
         dotDir = config.home.homeDirectory;
@@ -66,6 +72,8 @@ in
           ignoreDups = true;
           ignoreSpace = true;
           share = true;
+          size = 10000;
+          save = 20000;
         };
         historySubstringSearch.enable = true;
         setOptions = [
