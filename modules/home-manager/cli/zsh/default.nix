@@ -54,9 +54,10 @@ in
 
         autocd = true;
         autosuggestion.enable = true;
+        completionInit = ""; # set by zim-completion
         defaultKeymap = "viins";
         dotDir = config.home.homeDirectory;
-        enableCompletion = false;
+        enableCompletion = true;
         enableVteIntegration = true;
         history = {
           append = true;
