@@ -7,7 +7,6 @@
 }:
 
 let
-  inherit (config.programs.zsh) dotDir;
   cfg = config.home-manager.cli.zsh;
 in
 {
@@ -20,31 +19,10 @@ in
 
   config = lib.mkIf cfg.enable {
     home = {
-      file =
-        let
-          libZsh = import (flake.inputs.home-manager + "/modules/programs/zsh/lib.nix") {
-            inherit config lib;
-          };
-          compileZshConfig =
-            filename:
-            pkgs.runCommand filename
-              {
-                name = "${filename}-zwc";
-                nativeBuildInputs = [ pkgs.zsh ];
-              }
-              ''
-                cp "${config.home.file.${libZsh.dotDirRel + "/" + filename}.source}" "${filename}"
-                zsh -c 'zcompile "${filename}"'
-                cp "${filename}.zwc" "$out"
-              '';
-        in
-        {
-          # disable login banner
-          ".hushlogin".text = "";
-          ".zprofile.zwc".source = compileZshConfig ".zprofile";
-          ".zshenv.zwc".source = compileZshConfig ".zshenv";
-          ".zshrc.zwc".source = compileZshConfig ".zshrc";
-        };
+      file = {
+        # disable login banner
+        ".hushlogin".text = "";
+      };
 
       packages =
         with pkgs;
@@ -72,7 +50,7 @@ in
         autosuggestion.enable = true;
         defaultKeymap = "viins";
         dotDir = config.home.homeDirectory;
-        enableCompletion = true;
+        enableCompletion = false;
         enableVteIntegration = true;
         history = {
           append = true;
@@ -82,29 +60,7 @@ in
           ignoreSpace = true;
           share = true;
         };
-        historySubstringSearch = {
-          enable = true;
-        };
-
-        completionInit = # bash
-          ''
-            # Load and initialize the completion system ignoring insecure directories with a
-            # cache time of 20 hours, so it should almost always regenerate the first time a
-            # shell is opened each day.
-            autoload -Uz compinit
-            _comp_path="${dotDir}/.zcompdump"
-            # #q expands globs in conditional expressions
-            if [[ $_comp_path(#qNmh-20) ]]; then
-              # -C (skip function check) implies -i (skip security check).
-              compinit -C -d "$_comp_path"
-            else
-              mkdir -p "$_comp_path:h"
-              compinit -i -d "$_comp_path"
-              # Keep $_comp_path younger than cache time even if it isn't regenerated.
-              touch "$_comp_path"
-            fi
-            unset _comp_path
-          '';
+        historySubstringSearch.enable = true;
 
         envExtra = lib.mkBefore (
           lib.optionalString config.home-manager.darwin.enable
@@ -141,6 +97,12 @@ in
               unsetopt COMPLETE_IN_WORD   # Do not complete from both ends of a word.
               unsetopt MENU_COMPLETE      # Do not autoselect the first completion entry.
               unsetopt FLOW_CONTROL       # Disable start/stop characters in shell editor.
+              setopt AUTO_CD              # Perform cd to a directory if the typed command is invalid, but is a directory.
+              setopt AUTO_PUSHD           # Make cd push the old directory to the directory stack.
+              setopt PUSHD_IGNORE_DUPS    # Don't push multiple copies of the same directory to the stack.
+              setopt PUSHD_SILENT         # Don't print the directory stack after pushd or popd.
+              setopt EXTENDED_GLOB        # Treat `#`, `~`, and `^` as patterns for filename globbing.
+              setopt INTERACTIVE_COMMENTS # Allow comments starting with `#` in the interactive shell.
 
               # Map V in vi-mode to edit the current command line in $VISUAL
               bindkey -M vicmd 'V' edit-command-line
@@ -148,14 +110,6 @@ in
               # Pure related options
               unset RPROMPT # disable clock
               zstyle ':prompt:pure:prompt:success' color 39 # miku color
-
-              # Defaults.
-              zstyle ':completion:*:default' list-colors ''${(s.:.)LS_COLORS}
-              zstyle ':completion:*:default' list-prompt '%S%M matches%s'
-
-              # Use caching to make completion for commands usable.
-              zstyle ':completion::complete:*' use-cache on
-              zstyle ':completion::complete:*' cache-path "${dotDir}/.zcompdump"
             ''
           )
           (lib.mkOrder 1200 (
@@ -185,58 +139,43 @@ in
             typeset -gU cdpath fpath mailpath path
           '';
 
-        plugins =
-          let
-            compileZshPlugin =
-              plugin:
-              plugin
-              // {
-                src =
-                  pkgs.runCommand "${plugin.name}-zwc"
-                    {
-                      nativeBuildInputs = [ pkgs.zsh ];
-                    }
-                    ''
-                      cp -rT ${plugin.src} "$out"
-                      chmod -R u+w "$out"
-                      cd "$out"
-
-                      find . -type f -name '*.zsh' | while IFS= read -r file; do
-                        zsh -fc "zcompile \"$file\""
-                      done
-                    '';
-              };
-          in
-          map compileZshPlugin (
-            with pkgs;
-            [
-              # manually creating some integrations since this is faster than calling
-              # the program during startup
-              {
-                name = "nix-your-shell";
-                src = pkgs.runCommand "nix-your-shell" { buildInputs = [ pkgs.nix-your-shell ]; } ''
-                  mkdir -p $out
-                  nix-your-shell --absolute zsh > $out/nix-your-shell.plugin.zsh
-                '';
-              }
-              {
-                name = "zsh-fast-syntax-highlighting";
-                file = "share/zsh/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh";
-                src = zsh-fast-syntax-highlighting;
-              }
-              {
-                name = "zsh-autopair";
-                file = "share/zsh/zsh-autopair/autopair.zsh";
-                src = zsh-autopair;
-              }
-              {
-                name = "pure-prompt";
-                file = "share/zsh/site-functions/prompt_pure_setup";
-                completions = [ "share/zsh/site-functions" ];
-                src = pure-prompt;
-              }
-            ]
-          );
+        plugins = with pkgs; [
+          # manually creating some integrations since this is faster than calling
+          # the program during startup
+          {
+            name = "nix-your-shell";
+            src = pkgs.runCommand "nix-your-shell" { buildInputs = [ pkgs.nix-your-shell ]; } ''
+              mkdir -p $out
+              nix-your-shell --absolute zsh > $out/nix-your-shell.plugin.zsh
+            '';
+          }
+          {
+            name = "zim-completion";
+            src = flake.inputs.zim-completion;
+            file = "init.zsh";
+          }
+          {
+            name = "zim-input";
+            src = flake.inputs.zim-input;
+            file = "init.zsh";
+          }
+          {
+            name = "zsh-fast-syntax-highlighting";
+            file = "share/zsh/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh";
+            src = zsh-fast-syntax-highlighting;
+          }
+          {
+            name = "zsh-autopair";
+            file = "share/zsh/zsh-autopair/autopair.zsh";
+            src = zsh-autopair;
+          }
+          {
+            name = "pure-prompt";
+            file = "share/zsh/site-functions/prompt_pure_setup";
+            completions = [ "share/zsh/site-functions" ];
+            src = pure-prompt;
+          }
+        ];
 
         sessionVariables = {
           # Reduce time to wait for multi-key sequences

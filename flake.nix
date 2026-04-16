@@ -64,6 +64,16 @@
       url = "github:yazi-rs/flavors";
       flake = false;
     };
+
+    # zsh
+    zim-completion = {
+      url = "github:zimfw/completion";
+      flake = false;
+    };
+    zim-input = {
+      url = "github:zimfw/input";
+      flake = false;
+    };
   };
 
   outputs =

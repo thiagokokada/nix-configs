@@ -10,9 +10,7 @@ in
 
   config = lib.mkIf cfg.enable {
     programs.zsh = {
-      # Needed otherwise ZSH has no Nix environment setup
       enable = true;
-      # Managed by zim-completion
       enableCompletion = false;
     };
   };
