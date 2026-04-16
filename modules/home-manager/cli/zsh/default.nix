@@ -48,7 +48,28 @@ in
   config = lib.mkIf cfg.enable {
     home = {
       # disable login banner
-      file.".hushlogin".text = "";
+      file =
+        let
+          compileZshConfig =
+            filename:
+            pkgs.runCommand filename
+              {
+                name = "${filename}-zwc";
+                nativeBuildInputs = [ pkgs.zsh ];
+              }
+              ''
+                cp "${config.home.file.${"./" + filename}.source}" "${filename}"
+                zsh -c 'zcompile "${filename}"'
+                cp "${filename}.zwc" "$out"
+              '';
+        in
+        {
+          ".hushlogin".text = "";
+          ".zprofile.zwc".source = compileZshConfig ".zprofile";
+          ".zshenv.zwc".source = compileZshConfig ".zshenv";
+          ".zshrc.zwc".source = compileZshConfig ".zshrc";
+        };
+
       packages =
         with pkgs;
         [
@@ -157,33 +178,58 @@ in
             typeset -gU cdpath fpath mailpath path
           '';
 
-        plugins = with pkgs; [
-          # manually creating some integrations since this is faster than calling
-          # the program during startup
-          {
-            name = "nix-your-shell";
-            src = pkgs.runCommand "nix-your-shell" { buildInputs = [ pkgs.nix-your-shell ]; } ''
-              mkdir -p $out
-              nix-your-shell --absolute zsh > $out/nix-your-shell.plugin.zsh
-            '';
-          }
-          {
-            name = "zsh-fast-syntax-highlighting";
-            file = "share/zsh/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh";
-            src = zsh-fast-syntax-highlighting;
-          }
-          {
-            name = "zsh-autopair";
-            file = "share/zsh/zsh-autopair/autopair.zsh";
-            src = zsh-autopair;
-          }
-          {
-            name = "pure-prompt";
-            file = "share/zsh/site-functions/prompt_pure_setup";
-            completions = [ "share/zsh/site-functions" ];
-            src = pure-prompt;
-          }
-        ];
+        plugins =
+          let
+            compileZshPlugin =
+              plugin:
+              plugin
+              // {
+                src =
+                  pkgs.runCommand "${plugin.name}-zwc"
+                    {
+                      nativeBuildInputs = [ pkgs.zsh ];
+                    }
+                    ''
+                      cp -rT ${plugin.src} "$out"
+                      chmod -R u+w "$out"
+                      cd "$out"
+
+                      find . -type f -name '*.zsh' | while IFS= read -r file; do
+                        zsh -fc "zcompile \"$file\""
+                      done
+                    '';
+              };
+          in
+          map compileZshPlugin (
+            with pkgs;
+            [
+              # manually creating some integrations since this is faster than calling
+              # the program during startup
+              {
+                name = "nix-your-shell";
+                src = pkgs.runCommand "nix-your-shell" { buildInputs = [ pkgs.nix-your-shell ]; } ''
+                  mkdir -p $out
+                  nix-your-shell --absolute zsh > $out/nix-your-shell.plugin.zsh
+                '';
+              }
+              {
+                name = "zsh-fast-syntax-highlighting";
+                file = "share/zsh/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh";
+                src = zsh-fast-syntax-highlighting;
+              }
+              {
+                name = "zsh-autopair";
+                file = "share/zsh/zsh-autopair/autopair.zsh";
+                src = zsh-autopair;
+              }
+              {
+                name = "pure-prompt";
+                file = "share/zsh/site-functions/prompt_pure_setup";
+                completions = [ "share/zsh/site-functions" ];
+                src = pure-prompt;
+              }
+            ]
+          );
 
         sessionVariables = {
           # Reduce time to wait for multi-key sequences
