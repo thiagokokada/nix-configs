@@ -68,6 +68,36 @@ in
           share = true;
         };
         historySubstringSearch.enable = true;
+        setOptions = [
+          # Fix "no matches found" when using glob characters
+          "NO_NOMATCH"
+          # Move cursor to the end of a completed word.
+          "ALWAYS_TO_END"
+          # Perform path search even on command names with slashes.
+          "PATH_DIRS"
+          # Show completion menu on a successive tab press.
+          "AUTO_MENU"
+          # Automatically list choices on ambiguous completion.
+          "AUTO_LIST"
+          # If completed parameter is a directory, add a trailing slash.
+          "AUTO_PARAM_SLASH"
+          # Treat `#`, `~`, and `^` as patterns for filename globbing.
+          "EXTENDED_GLOB"
+          # Do not complete from both ends of a word.
+          "NO_COMPLETE_IN_WORD"
+          # Do not autoselect the first completion entry.
+          "NO_MENU_COMPLETE"
+          # Disable start/stop characters in shell editor.
+          "NO_FLOW_CONTROL"
+          # Make cd push the old directory to the directory stack.
+          "AUTO_PUSHD"
+          # Don't push multiple copies of the same directory to the stack.
+          "PUSHD_IGNORE_DUPS"
+          # Don't print the directory stack after pushd or popd.
+          "PUSHD_SILENT"
+          # Allow comments starting with `#` in the interactive shell.
+          "INTERACTIVE_COMMENTS"
+        ];
 
         envExtra = lib.mkBefore (
           lib.optionalString config.home-manager.darwin.enable
@@ -94,23 +124,6 @@ in
           (lib.mkOrder 1000
             # bash
             ''
-              setopt NO_NOMATCH           # Fix "no matches found" when using glob characters
-              setopt ALWAYS_TO_END        # Move cursor to the end of a completed word.
-              setopt PATH_DIRS            # Perform path search even on command names with slashes.
-              setopt AUTO_MENU            # Show completion menu on a successive tab press.
-              setopt AUTO_LIST            # Automatically list choices on ambiguous completion.
-              setopt AUTO_PARAM_SLASH     # If completed parameter is a directory, add a trailing slash.
-              setopt EXTENDED_GLOB        # Needed for file modification glob modifiers with compinit.
-              unsetopt COMPLETE_IN_WORD   # Do not complete from both ends of a word.
-              unsetopt MENU_COMPLETE      # Do not autoselect the first completion entry.
-              unsetopt FLOW_CONTROL       # Disable start/stop characters in shell editor.
-              setopt AUTO_CD              # Perform cd to a directory if the typed command is invalid, but is a directory.
-              setopt AUTO_PUSHD           # Make cd push the old directory to the directory stack.
-              setopt PUSHD_IGNORE_DUPS    # Don't push multiple copies of the same directory to the stack.
-              setopt PUSHD_SILENT         # Don't print the directory stack after pushd or popd.
-              setopt EXTENDED_GLOB        # Treat `#`, `~`, and `^` as patterns for filename globbing.
-              setopt INTERACTIVE_COMMENTS # Allow comments starting with `#` in the interactive shell.
-
               # Map V in vi-mode to edit the current command line in $VISUAL
               bindkey -M vicmd 'V' edit-command-line
 
