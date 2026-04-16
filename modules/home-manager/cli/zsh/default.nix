@@ -8,35 +8,6 @@
 let
   inherit (config.programs.zsh) dotDir;
   cfg = config.home-manager.cli.zsh;
-  get-ip = pkgs.writeShellApplication {
-    name = "get-ip";
-    runtimeInputs = with pkgs; [ curl ];
-    text = "curl -Ss --fail https://ipapi.co/yaml";
-  };
-  realise-symlink = pkgs.writeShellApplication {
-    name = "realise-symlink";
-    runtimeInputs = with pkgs; [ coreutils ];
-    text = ''
-      for file in "$@"; do
-        if [[ -L "$file" ]]; then
-          if [[ -d "$file" ]]; then
-            tmpdir="''${file}.tmp"
-            mkdir -p "$tmpdir"
-            cp --verbose --recursive "$file"/* "$tmpdir"
-            unlink "$file"
-            mv "$tmpdir" "$file"
-            chmod --changes --recursive +w "$file"
-          else
-            cp --verbose --remove-destination "$(readlink "$file")" "$file"
-            chmod --changes +w "$file"
-          fi
-        else
-          >&2 echo "Not a symlink: $file"
-          exit 1
-        fi
-      done
-    '';
-  };
 in
 {
   options.home-manager.cli.zsh = {
@@ -73,10 +44,7 @@ in
 
       packages =
         with pkgs;
-        [
-          get-ip
-          realise-symlink
-        ]
+        [ realise-symlink ]
         ++ lib.optionals (!config.home-manager.darwin.enable) [
           (run-bg-alias "open" (lib.getExe' xdg-utils "xdg-open"))
         ];
