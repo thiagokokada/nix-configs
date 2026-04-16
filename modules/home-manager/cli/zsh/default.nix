@@ -109,14 +109,13 @@ in
 
               # Pure related options
               unset RPROMPT # disable clock
-              zstyle ':prompt:pure:prompt:success' color 39 # miku color
+              zstyle :prompt:pure:prompt:success color 39 # miku color
+              zstyle :prompt:pure:git:fetch only_upstream yes
             ''
           )
           (lib.mkOrder 1200 (
             lib.optionalString config.home-manager.darwin.enable # bash
               ''
-                # This is really slow on darwin
-                export PURE_GIT_UNTRACKED_DIRTY=0
                 # Set the soft ulimit to something sensible
                 # https://developer.apple.com/forums/thread/735798
                 ulimit -Sn 524288
