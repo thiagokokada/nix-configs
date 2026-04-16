@@ -93,5 +93,11 @@ in
       };
       ripgrep.enable = true;
     };
+
+    xdg = {
+      enable = true;
+      # Add ~/.local/bin to PATH
+      localBinInPath = true;
+    };
   };
 }

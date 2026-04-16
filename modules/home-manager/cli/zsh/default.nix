@@ -73,9 +73,13 @@ in
       zoxide.enable = true;
       zsh = {
         enable = true;
-        autocd = true;
-        defaultKeymap = "viins";
 
+        autocd = true;
+        autosuggestion.enable = true;
+        defaultKeymap = "viins";
+        dotDir = config.home.homeDirectory;
+        enableCompletion = true;
+        enableVteIntegration = true;
         history = {
           append = true;
           expireDuplicatesFirst = true;
@@ -83,6 +87,9 @@ in
           ignoreDups = true;
           ignoreSpace = true;
           share = true;
+        };
+        historySubstringSearch = {
+          enable = true;
         };
 
         envExtra = lib.mkBefore (
@@ -116,12 +123,11 @@ in
               unsetopt completeinword
               # disable clock
               unset RPROMPT
-              # remove prezto LESS configuration
-              unset LESS
 
               # map V in vi-mode to edit the current command line in $VISUAL
-              export VISUAL="$EDITOR"
               bindkey -M vicmd 'V' edit-command-line
+
+              zstyle ':prompt:pure:prompt:success' color 39 # miku color
             ''
           )
           (lib.mkOrder 1200 (
@@ -145,31 +151,11 @@ in
           )
         ];
 
-        prezto = {
-          enable = true;
-          editor = {
-            dotExpansion = false;
-            keymap = "vi";
-          };
-          prompt.theme = "pure";
-          pmodules = [
-            "environment"
-            "terminal"
-            "editor"
-            "history-substring-search"
-            "directory"
-            "spectrum"
-            "utility"
-            "completion"
-            "prompt"
-            "autosuggestions"
-          ];
-          extraConfig = # bash
-            ''
-              zstyle ':prezto:environment:termcap' color 'no'
-              zstyle ':prompt:pure:prompt:success' color 39 # miku color
-            '';
-        };
+        profileExtra = # bash
+          ''
+            # Ensure path arrays do not contain duplicates.
+            typeset -gU cdpath fpath mailpath path
+          '';
 
         plugins = with pkgs; [
           # manually creating some integrations since this is faster than calling
@@ -191,6 +177,12 @@ in
             file = "share/zsh/zsh-autopair/autopair.zsh";
             src = zsh-autopair;
           }
+          {
+            name = "pure-prompt";
+            file = "share/zsh/site-functions/prompt_pure_setup";
+            completions = [ "share/zsh/site-functions" ];
+            src = pure-prompt;
+          }
         ];
 
         sessionVariables = {
@@ -203,6 +195,8 @@ in
         shellAliases = {
           # https://unix.stackexchange.com/questions/335648/why-does-the-reset-command-include-a-delay
           reset = "${lib.getExe' pkgs.ncurses "tput"} reset";
+          ls = "${lib.getExe' pkgs.coreutils "ls"} --color=auto";
+          ll = "${lib.getExe' pkgs.coreutils "ls"} -l --color=auto";
         };
       };
     };
