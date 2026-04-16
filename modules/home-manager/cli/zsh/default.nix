@@ -36,13 +36,19 @@ in
     };
 
     programs = {
-      dircolors.enable = true;
+      dircolors = {
+        enable = true;
+        enableZshIntegration = false;
+      };
       fzf = {
         enable = true;
         fileWidgetOptions = [ "--preview 'head {}'" ];
         historyWidgetOptions = [ "--sort" ];
       };
-      zoxide.enable = true;
+      zoxide = {
+        enable = true;
+        enableZshIntegration = false;
+      };
       zsh = {
         enable = true;
 
@@ -139,15 +145,6 @@ in
           '';
 
         plugins = with pkgs; [
-          # manually creating some integrations since this is faster than calling
-          # the program during startup
-          {
-            name = "nix-your-shell";
-            src = pkgs.runCommand "nix-your-shell" { buildInputs = [ pkgs.nix-your-shell ]; } ''
-              mkdir -p $out
-              nix-your-shell --absolute zsh > $out/nix-your-shell.plugin.zsh
-            '';
-          }
           {
             name = "zim-completion";
             src = flake.inputs.zim-completion;
@@ -173,6 +170,29 @@ in
             file = "share/zsh/site-functions/prompt_pure_setup";
             completions = [ "share/zsh/site-functions" ];
             src = pure-prompt;
+          }
+          # manually creating some integrations since this is faster than calling
+          # the program during startup
+          {
+            name = "dircolors";
+            src = pkgs.runCommand "nix-your-shell-zsh" { buildInputs = [ pkgs.coreutils ]; } ''
+              mkdir -p $out
+              dircolors -b ${config.home.file.".dir_colors".source} > $out/dircolors.plugin.zsh
+            '';
+          }
+          {
+            name = "nix-your-shell";
+            src = pkgs.runCommand "nix-your-shell-zsh" { buildInputs = [ pkgs.nix-your-shell ]; } ''
+              mkdir -p $out
+              nix-your-shell --absolute zsh > $out/nix-your-shell.plugin.zsh
+            '';
+          }
+          {
+            name = "zoxide";
+            src = pkgs.runCommand "zoxide-zsh" { buildInputs = [ pkgs.zoxide ]; } ''
+              mkdir -p $out
+              zoxide init zsh > $out/zoxide.plugin.zsh
+            '';
           }
         ];
 

@@ -1,4 +1,9 @@
-{ config, lib, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   cfg = config.home-manager.dev.mise;
@@ -17,28 +22,41 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    programs.mise = {
-      enable = true;
-      globalConfig = {
-        settings = {
-          always_keep_download = false;
-          always_keep_install = false;
-          java.shorthand_vendor = cfg.java.defaultVendor;
-          idiomatic_version_file_enable_tools = [
-            "java"
-            "node"
-            "python"
-            "ruby"
-          ];
-          trusted_config_paths = [ "~/Projects" ];
+    programs = {
+      mise = {
+        enable = true;
+        enableZshIntegration = false;
+        globalConfig = {
+          settings = {
+            always_keep_download = false;
+            always_keep_install = false;
+            java.shorthand_vendor = cfg.java.defaultVendor;
+            idiomatic_version_file_enable_tools = [
+              "java"
+              "node"
+              "python"
+              "ruby"
+            ];
+            trusted_config_paths = [ "~/Projects" ];
+          };
+          # Workaround the fact that mise resolves `.java-version` set to just the
+          # base number (e.g., `17`) to Oracle Java instead of the
+          # `settings.java.shorthand_vendor`
+          tool_alias.java.versions = lib.genAttrs javaAliasVersions (
+            version: "${cfg.java.defaultVendor}-${version}"
+          );
         };
-        # Workaround the fact that mise resolves `.java-version` set to just the
-        # base number (e.g., `17`) to Oracle Java instead of the
-        # `settings.java.shorthand_vendor`
-        tool_alias.java.versions = lib.genAttrs javaAliasVersions (
-          version: "${cfg.java.defaultVendor}-${version}"
-        );
       };
+
+      zsh.plugins = [
+        {
+          name = "mise";
+          src = pkgs.runCommand "mise-zsh" { buildInputs = [ pkgs.mise ]; } ''
+            mkdir -p $out
+            mise activate zsh > $out/mise.plugin.zsh
+          '';
+        }
+      ];
     };
   };
 }
