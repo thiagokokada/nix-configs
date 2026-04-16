@@ -2,6 +2,7 @@
   config,
   pkgs,
   lib,
+  flake,
   ...
 }:
 
@@ -21,6 +22,9 @@ in
     home = {
       file =
         let
+          libZsh = import (flake.inputs.home-manager + "/modules/programs/zsh/lib.nix") {
+            inherit config lib;
+          };
           compileZshConfig =
             filename:
             pkgs.runCommand filename
@@ -29,7 +33,7 @@ in
                 nativeBuildInputs = [ pkgs.zsh ];
               }
               ''
-                cp "${config.home.file.${"./" + filename}.source}" "${filename}"
+                cp "${config.home.file.${libZsh.dotDirRel + "/" + filename}.source}" "${filename}"
                 zsh -c 'zcompile "${filename}"'
                 cp "${filename}.zwc" "$out"
               '';
