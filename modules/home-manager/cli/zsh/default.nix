@@ -139,12 +139,6 @@ in
           )
         ];
 
-        profileExtra = # bash
-          ''
-            # Ensure path arrays do not contain duplicates.
-            typeset -gU cdpath fpath mailpath path
-          '';
-
         plugins = with pkgs; [
           {
             name = "zim-completion";
