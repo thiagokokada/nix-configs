@@ -128,6 +128,13 @@ in
         copy_on_select = "select_buffer";
         "mouse_map middle release ungrabbed paste_from_buffer" = "select_buffer";
 
+        # Keep Kitty text selection on plain left even when app grabs mouse
+        # e.g., allow `less --mouse` to work and still select text with mouse
+        "mouse_map left press ungrabbed,grabbed mouse_selection" = "normal";
+        "mouse_map left doublepress ungrabbed,grabbed mouse_selection" = "word";
+        "mouse_map left triplepress ungrabbed,grabbed mouse_selection" = "line";
+        "mouse_map right press ungrabbed,grabbed mouse_selection" = "extend";
+
         # Fix for Wayland slow scrolling
         touch_scroll_multiplier = lib.mkIf config.home-manager.desktop.enable "5.0";
       };
