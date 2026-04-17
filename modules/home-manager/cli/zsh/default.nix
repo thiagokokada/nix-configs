@@ -75,17 +75,15 @@ in
               local LC_ALL=C
               local zold_dat
               local -i zdump_dat=1
-              local lockfd
 
               zstyle -s ':zim:completion' dumpfile zdumpfile || zdumpfile="''${ZDOTDIR:-$HOME}/.zcompdump"
               lockfile="''${zdumpfile}.lock"
 
               zmodload -F zsh/system b:zsystem || return 0
               : >| "$lockfile" || return 0
-              exec {lockfd}<>"$lockfile" || return 0
 
               # Do not wait. If another refresh is already running, just exit.
-              zsystem flock -t 0 -f lockfd || return 0
+              zsystem flock -t 0 -f lockfd "$lockfile" || return 0
 
               zcomps=(''${^fpath}/^([^_]*|*~|*.zwc)(N))
               if (( ''${#zcomps} )); then
@@ -97,8 +95,8 @@ in
 
               if [[ -e ''${zdumpfile}.dat ]]; then
                 zmodload -F zsh/system b:sysread || return 0
-                sysread -i $(( ''${#znew_dat} )) zold_dat < "''${zdumpfile}.dat" || true
-                if [[ "$zold_dat" == "$znew_dat" ]]; then
+                sysread -s $(( ''${#znew_dat} )) zold_dat < "''${zdumpfile}.dat" || true
+                if [[ "$zold_dat" == "$znew_dat" && -e ''${zdumpfile}.zwc ]]; then
                   zdump_dat=0
                 fi
               fi
