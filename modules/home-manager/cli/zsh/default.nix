@@ -116,6 +116,10 @@ in
               if [ -e '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh' ]; then
                 . '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh'
               fi
+
+              # Set the soft ulimit to something sensible
+              # https://developer.apple.com/forums/thread/735798
+              ulimit -Sn 524288
             ''
         );
 
@@ -141,14 +145,6 @@ in
               zstyle :prompt:pure:git:fetch only_upstream yes
             ''
           )
-          (lib.mkOrder 1200 (
-            lib.optionalString config.home-manager.darwin.enable # bash
-              ''
-                # Set the soft ulimit to something sensible
-                # https://developer.apple.com/forums/thread/735798
-                ulimit -Sn 524288
-              ''
-          ))
           (lib.mkOrder 1300
             # bash
             ''
