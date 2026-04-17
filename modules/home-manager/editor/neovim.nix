@@ -305,7 +305,6 @@ in
                 require('mini.diff').setup {}
                 require('mini.git').setup {}
                 require('mini.jump').setup {}
-                require('mini.starter').setup {}
                 require('mini.statusline').setup {
                   use_icons = enable_icons,
                 }
