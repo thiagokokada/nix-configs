@@ -60,7 +60,58 @@ in
             "completion"
           ];
         };
-        completionInit = ""; # set by zim-completion
+        completionInit =
+          # bash
+          ''
+            # Fast startup: use existing dump immediately.
+            autoload -Uz compinit
+            compinit -C -d "''${ZDOTDIR:-$HOME}/.zcompdump"
+
+            (
+              emulate -L zsh -o extended_glob
+
+              local zdumpfile lockfile
+              local -a zcomps zmtimes
+              local LC_ALL=C
+              local zold_dat
+              local -i zdump_dat=1
+              local lockfd
+
+              zstyle -s ':zim:completion' dumpfile zdumpfile || zdumpfile="''${ZDOTDIR:-$HOME}/.zcompdump"
+              lockfile="''${zdumpfile}.lock"
+
+              zmodload -F zsh/system b:zsystem || return 0
+              : >| "$lockfile" || return 0
+              exec {lockfd}<>"$lockfile" || return 0
+
+              # Do not wait. If another refresh is already running, just exit.
+              zsystem flock -t 0 -f lockfd || return 0
+
+              zcomps=(''${^fpath}/^([^_]*|*~|*.zwc)(N))
+              if (( ''${#zcomps} )); then
+                zmodload -F zsh/stat b:zstat || return 0
+                zstat -A zmtimes +mtime -- ''${zcomps} || return 0
+              fi
+
+              local -r znew_dat="$ZSH_VERSION"$'\0'"''${(pj:\0:)zcomps}"$'\0'"''${(pj:\0:)zmtimes}"
+
+              if [[ -e ''${zdumpfile}.dat ]]; then
+                zmodload -F zsh/system b:sysread || return 0
+                sysread -i $(( ''${#znew_dat} )) zold_dat < "''${zdumpfile}.dat" || true
+                if [[ "$zold_dat" == "$znew_dat" ]]; then
+                  zdump_dat=0
+                fi
+              fi
+
+              (( zdump_dat )) || return 0
+
+              command rm -f -- "''${zdumpfile}"{,.dat,.zwc,.zwc.old,.old} 2>/dev/null || true
+              autoload -Uz compinit || return 0
+              compinit -C -d "$zdumpfile" || return 0
+              print -rn -- "$znew_dat" >| "''${zdumpfile}.dat" || return 0
+              zcompile "$zdumpfile" 2>/dev/null || true
+            ) >/dev/null 2>&1 &!
+          '';
         defaultKeymap = "viins";
         dotDir = config.home.homeDirectory;
         enableCompletion = true;
@@ -93,6 +144,8 @@ in
           "AUTO_PARAM_SLASH"
           # Treat `#`, `~`, and `^` as patterns for filename globbing.
           "EXTENDED_GLOB"
+          # Case insenstive glob
+          "NO_CASE_GLOB"
           # Do not complete from both ends of a word.
           "NO_COMPLETE_IN_WORD"
           # Do not autoselect the first completion entry.
@@ -107,6 +160,10 @@ in
           "PUSHD_SILENT"
           # Allow comments starting with `#` in the interactive shell.
           "INTERACTIVE_COMMENTS"
+          # Completion is done from both ends of the cursor.
+          "COMPLETE_IN_WORD"
+          # Don't beep on ambiguous completions.
+          "NO_LIST_BEEP"
         ];
 
         envExtra = lib.mkBefore (
@@ -146,6 +203,76 @@ in
               zstyle :prompt:pure:git:fetch only_upstream yes
             ''
           )
+          (lib.mkOrder 1200
+            # Inspired by zim-completion
+            # https://github.com/zimfw/completion/blob/8d3e0f4e6272f4d3bad659eaa13929f9dd96f123/init.zsh
+            # bash
+            ''
+              # Enable caching
+              zstyle ':completion::complete:*' use-cache on
+
+              # Group matches and describe.
+              zstyle ':completion:*' menu select
+              zstyle ':completion:*:matches' group yes
+              zstyle ':completion:*:options' description yes
+              zstyle ':completion:*:options' auto-description '%d'
+              zstyle ':completion:*:corrections' format '%F{green}-- %d (errors: %e) --%f'
+              zstyle ':completion:*:descriptions' format '%F{yellow}-- %d --%f'
+              zstyle ':completion:*:messages' format '%F{purple}-- %d --%f'
+              zstyle ':completion:*:warnings' format '%F{red}-- no matches found --%f'
+              zstyle ':completion:*' group-name ""
+              zstyle ':completion:*' verbose yes
+              # This is actually "smart" case sensitivity. Case insensitive is 'm:{[:lower:][:upper:]}={[:upper:][:lower:]}'
+              # which is broken in Zsh 5.9. See https://www.zsh.org/mla/workers/2022/msg01229.html
+              zstyle ':completion:*' matcher-list 'm:{[:lower:]}={[:upper:]}' '+r:|[._-]=* r:|=*' '+l:|=*'
+
+              # Insert a TAB character instead of performing completion when left buffer is empty.
+              zstyle ':completion:*' insert-tab false
+
+              # Ignore useless commands and functions
+              zstyle ':completion:*:functions' ignored-patterns '(_*|pre(cmd|exec)|prompt_*)'
+              # Array completion element sorting.
+              zstyle ':completion:*:*:-subscript-:*' tag-order 'indexes' 'parameters'
+
+              # Directories
+              zstyle ':completion:*:default' list-colors ''${(s.:.)LS_COLORS}
+              zstyle ':completion:*:*:cd:*:directory-stack' menu yes select
+              zstyle ':completion:*' squeeze-slashes true
+
+              # History
+              zstyle ':completion:*:history-words' stop yes
+              zstyle ':completion:*:history-words' remove-all-dups yes
+              zstyle ':completion:*:history-words' list false
+              zstyle ':completion:*:history-words' menu yes
+
+              # Populate hostname completion.
+              zstyle -e ':completion:*:hosts' hosts 'reply=(
+                ''${=''${=''${=''${''${(f)"$(cat {/etc/ssh/ssh_,~/.ssh/}known_hosts{,2} 2>/dev/null)"}%%[#| ]*}//\]:[0-9]*/ }//,/ }//\[/ }
+                ''${=''${(f)"$(cat /etc/hosts 2>/dev/null; (( ''${+commands[ypcat]} )) && ypcat hosts 2>/dev/null)"}%%(\#)*}
+                ''${=''${''${''${''${(@M)''${(f)"$(cat ~/.ssh/config{,.d/*(N)} 2>/dev/null)"}:#Host *}#Host }:#*\**}:#*\?*}}
+              )'
+
+              # Don't complete uninteresting users...
+              zstyle ':completion:*:*:*:users' ignored-patterns \
+                '_*' adm amanda apache avahi beaglidx bin cacti canna clamav daemon dbus \
+                distcache dovecot fax ftp games gdm gkrellmd gopher hacluster haldaemon \
+                halt hsqldb ident junkbust ldap lp mail mailman mailnull mldonkey mysql \
+                nagios named netdump news nfsnobody nobody nscd ntp nut nx openvpn \
+                operator pcap postfix postgres privoxy pulse pvm quagga radvd rpc rpcuser \
+                rpm shutdown squid sshd sync uucp vcsa xfs
+
+              # ... unless we really want to.
+              zstyle ':completion:*' single-ignored show
+
+              # Ignore multiple entries.
+              zstyle ':completion:*:(rm|kill|diff):*' ignore-line other
+              zstyle ':completion:*:rm:*' file-patterns '*:all-files'
+
+              # Man
+              zstyle ':completion:*:manuals' separate-sections true
+              zstyle ':completion:*:manuals.(^1*)' insert-sections true
+            ''
+          )
           (lib.mkOrder 1300
             # bash
             ''
@@ -158,11 +285,6 @@ in
         ];
 
         plugins = with pkgs; [
-          {
-            name = "zim-completion";
-            src = flake.inputs.zim-completion;
-            file = "init.zsh";
-          }
           {
             name = "zim-input";
             src = flake.inputs.zim-input;
