@@ -199,6 +199,7 @@ in
               bindkey -M vicmd 'V' edit-command-line
 
               # Pure related options
+              unset RPROMPT # disable clock
               zstyle :prompt:pure:prompt:success color 39 # miku color
               zstyle :prompt:pure:git:fetch only_upstream yes
             ''
