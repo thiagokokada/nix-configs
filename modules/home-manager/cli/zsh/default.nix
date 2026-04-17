@@ -75,6 +75,8 @@ in
           size = 10000;
           save = 20000;
         };
+        # Reduce time to wait for multi-key sequences
+        localVariables.KEYTIMEOUT = 1;
         historySubstringSearch.enable = true;
         setOptions = [
           # Fix "no matches found" when using glob characters
@@ -140,7 +142,6 @@ in
               bindkey -M vicmd 'V' edit-command-line
 
               # Pure related options
-              unset RPROMPT # disable clock
               zstyle :prompt:pure:prompt:success color 39 # miku color
               zstyle :prompt:pure:git:fetch only_upstream yes
             ''
@@ -207,13 +208,6 @@ in
             '';
           }
         ];
-
-        sessionVariables = {
-          # Reduce time to wait for multi-key sequences
-          KEYTIMEOUT = 1;
-          # Set right prompt to show time
-          RPROMPT = "%F{8}%*";
-        };
 
         shellAliases = {
           # https://unix.stackexchange.com/questions/335648/why-does-the-reset-command-include-a-delay
