@@ -66,6 +66,10 @@
     };
 
     # zsh
+    zim-completion = {
+      url = "github:zimfw/completion";
+      flake = false;
+    };
     zim-input = {
       url = "github:zimfw/input";
       flake = false;

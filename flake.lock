@@ -328,6 +328,7 @@
         "nixpkgs": "nixpkgs",
         "treefmt-nix": "treefmt-nix",
         "yazi-flavors": "yazi-flavors",
+        "zim-completion": "zim-completion",
         "zim-input": "zim-input"
       }
     },
@@ -379,6 +380,22 @@
       "original": {
         "owner": "yazi-rs",
         "repo": "flavors",
+        "type": "github"
+      }
+    },
+    "zim-completion": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1774617348,
+        "narHash": "sha256-xBurErM7KMMDObN3zPwTSOvKqXl9FDZxGfxugwlX/fk=",
+        "owner": "zimfw",
+        "repo": "completion",
+        "rev": "8d3e0f4e6272f4d3bad659eaa13929f9dd96f123",
+        "type": "github"
+      },
+      "original": {
+        "owner": "zimfw",
+        "repo": "completion",
         "type": "github"
       }
     },
