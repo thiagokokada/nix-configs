@@ -47,7 +47,10 @@
       traceroute.enable = true;
       zsh = {
         enable = true;
+        enableLsColors = false;
         enableCompletion = false;
+        promptInit = "";
+        setOptions = lib.mkForce [ ];
       };
     };
   };
