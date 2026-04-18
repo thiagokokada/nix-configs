@@ -26,7 +26,10 @@ in
 
       packages =
         with pkgs;
-        [ realise-symlink ]
+        [
+          nix-your-shell
+          realise-symlink
+        ]
         ++ lib.optionals (!config.home-manager.darwin.enable) [
           (run-bg-alias "open" (lib.getExe' xdg-utils "xdg-open"))
         ];
@@ -189,7 +192,7 @@ in
           # the program during startup
           {
             name = "dircolors";
-            src = pkgs.runCommand "nix-your-shell-zsh" { buildInputs = [ pkgs.coreutils ]; } ''
+            src = pkgs.runCommand "dircolors-zsh" { buildInputs = [ pkgs.coreutils ]; } ''
               mkdir -p $out
               dircolors -b ${config.home.file.".dir_colors".source} > $out/dircolors.plugin.zsh
             '';
@@ -198,7 +201,7 @@ in
             name = "nix-your-shell";
             src = pkgs.runCommand "nix-your-shell-zsh" { buildInputs = [ pkgs.nix-your-shell ]; } ''
               mkdir -p $out
-              nix-your-shell --absolute zsh > $out/nix-your-shell.plugin.zsh
+              nix-your-shell zsh > $out/nix-your-shell.plugin.zsh
             '';
           }
           {
