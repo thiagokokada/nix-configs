@@ -53,10 +53,11 @@ in
       # calls mise during every prompt
       # https://mise.jdx.dev/dev-tools/shims.html#shims-vs-path
       zsh.profileExtra =
-        # bash
-        ''
-          export PATH="/Users/thiago.okada/.local/share/mise/shims:$PATH"
-        '';
+        lib.mkOrder 200
+          # bash
+          ''
+            export PATH="/Users/thiago.okada/.local/share/mise/shims:$PATH"
+          '';
     };
   };
 }
