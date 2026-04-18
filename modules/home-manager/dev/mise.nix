@@ -1,9 +1,4 @@
-{
-  config,
-  lib,
-  pkgs,
-  ...
-}:
+{ config, lib, ... }:
 
 let
   cfg = config.home-manager.dev.mise;
@@ -22,6 +17,13 @@ in
   };
 
   config = lib.mkIf cfg.enable {
+    home.activation.miseReshim =
+      lib.hm.dag.entryAfter [ "linkGeneration" ]
+        # bash
+        ''
+          ${lib.getExe config.programs.mise.package} reshim
+        '';
+
     programs = {
       mise = {
         enable = true;
@@ -47,16 +49,14 @@ in
           );
         };
       };
-
-      zsh.plugins = [
-        {
-          name = "mise";
-          src = pkgs.runCommand "mise-zsh" { buildInputs = [ pkgs.mise ]; } ''
-            mkdir -p $out
-            mise activate zsh > $out/mise.plugin.zsh
-          '';
-        }
-      ];
+      # Adding mise shims to PATH instead of using shell hook, since the later
+      # calls mise during every prompt
+      # https://mise.jdx.dev/dev-tools/shims.html#shims-vs-path
+      zsh.profileExtra =
+        # bash
+        ''
+          export PATH="/Users/thiago.okada/.local/share/mise/shims:$PATH"
+        '';
     };
   };
 }
