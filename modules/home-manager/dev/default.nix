@@ -25,7 +25,7 @@
     home.packages = with pkgs; [
       bash-language-server
       expect
-      markdown-oxide
+      marksman
       shellcheck
     ];
 

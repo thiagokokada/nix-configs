@@ -549,7 +549,7 @@ in
                   { "html" },
                   { "jsonls" },
                   { "lua_ls" },
-                  { "markdown_oxide" },
+                  { "marksman" },
                   { "nil_ls",
                     opts = {
                       settings = {
