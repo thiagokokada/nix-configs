@@ -181,9 +181,16 @@ in
         (lib.optionalString cfg.treeSitter.enable
           # lua
           ''
-            vim.api.nvim_create_autocmd('FileType', {
-              pattern = '*',
+            local large_buffer_guard = require("large_buffer_guard")
+
+            vim.api.nvim_create_autocmd("FileType", {
+              pattern = "*",
               callback = function(ev)
+                if large_buffer_guard.is_large_buffer(ev.buf) then
+                  large_buffer_guard.notify_large_buffer_mode(ev.buf, "treesitter")
+                  pcall(vim.treesitter.stop, ev.buf)
+                  return
+                end
                 pcall(vim.treesitter.start, ev.buf)
               end,
             })
@@ -196,6 +203,18 @@ in
       plugins =
         with pkgs.vimPlugins;
         [
+          {
+            plugin = pkgs.vimUtils.buildVimPlugin {
+              pname = "large-buffer-guard-nvim";
+              version = "unstable";
+              src = ./plugins/large-buffer-guard-nvim;
+            };
+            type = "lua";
+            config = # lua
+              ''
+                require("large_buffer_guard").setup {}
+              '';
+          }
           {
             plugin = dial-nvim;
             type = "lua";
@@ -540,6 +559,8 @@ in
                 -- Setup language servers.
                 -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/configs.md
                 -- TODO: migrate to lsp/*.lua directory
+                local large_buffer_guard = require("large_buffer_guard")
+
                 local servers_configs = {
                   { "bashls" },
                   { "clojure_lsp" },
@@ -656,7 +677,7 @@ in
                     end
 
                     if executable == true or executable == nil or vim.fn.executable(executable) == 1 then
-                      vim.lsp.config[server[1]] = server.opts or {}
+                      vim.lsp.config[server[1]] = large_buffer_guard.wrap_lsp_config(server[1], server.opts)
                       vim.lsp.enable(server[1])
                     end
                   end
@@ -737,6 +758,7 @@ in
               config = # lua
                 ''
                   local ufo = require("ufo")
+                  local large_buffer_guard = require("large_buffer_guard")
 
                   vim.o.foldcolumn = '0'
                   vim.o.foldlevel = 99
@@ -747,6 +769,9 @@ in
                   vim.keymap.set('n', 'zM', ufo.closeAllFolds, { desc = "Close all folds" })
                   ufo.setup {
                     provider_selector = function(bufnr, filetype, buftype)
+                      if large_buffer_guard.is_large_buffer(bufnr) then
+                        return {'indent'}
+                      end
                       return {'treesitter', 'indent'}
                     end
                   }

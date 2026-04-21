@@ -4,7 +4,7 @@
   imports = [
     ./helix.nix
     ./idea.nix
-    ./neovim.nix
+    ./neovim
   ];
 
   options.home-manager.editor.enable = lib.mkEnableOption "editor config" // {
