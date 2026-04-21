@@ -149,34 +149,6 @@ in
             desc = "Enable spellcheck for defined filetypes",
           })
 
-          local function preview_markdown()
-            local file = vim.fn.expand("%")
-            local on_exit_cb = function(out)
-              print("Markdown preview process exited with code:", out.code)
-            end
-            local process = vim.system(
-              {"${lib.getExe pkgs.gh-gfm-preview}", file},
-              on_exit_cb
-            )
-
-            vim.api.nvim_create_autocmd({ "BufUnload", "BufDelete" }, {
-              buffer = vim.api.nvim_get_current_buf(),
-              callback = function()
-                process:kill("sigterm")
-                -- timeout (in ms), will call KILL upon timeout
-                process:wait(500)
-              end,
-            })
-          end
-
-          vim.api.nvim_create_autocmd({ "FileType" }, {
-            pattern = { "markdown" },
-            callback = function()
-              vim.keymap.set("n", "<Leader>P", preview_markdown, {
-                desc = "Markdown preview", buffer = true
-              })
-            end,
-          })
         ''
         (lib.optionalString cfg.treeSitter.enable
           # lua
@@ -305,6 +277,20 @@ in
                 }
 
                 vim.keymap.set({"n", "x"}, "gx", "<CMD>Browse<CR>", { desc = "Open in Browse" })
+              '';
+          }
+          {
+            plugin = pkgs.vimUtils.buildVimPlugin {
+              pname = "markdown-preview-nvim";
+              version = "unstable";
+              src = ./plugins/markdown-preview-nvim;
+            };
+            type = "lua";
+            config = # lua
+              ''
+                require("markdown_preview").setup {
+                  command = { "${lib.getExe pkgs.gh-gfm-preview}" },
+                }
               '';
           }
           {
