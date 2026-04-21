@@ -10,6 +10,8 @@ let
   enableIcons = config.home-manager.cli.icons.enable;
   toLua = lib.generators.toLua { };
   cfg = config.home-manager.editor.neovim;
+  treesitterGrammars = lib.attrValues pkgs.vimPlugins.nvim-treesitter.parsers;
+  treesitterQueries = map (p: p.associatedQuery) treesitterGrammars;
 in
 {
   options.home-manager.editor.neovim = {
@@ -66,7 +68,8 @@ in
       vimAlias = true;
       vimdiffAlias = true;
 
-      initLua = # lua
+      initLua = lib.concatStringsSep "\n" [
+        # lua
         ''
           -- general config
           vim.g.mapleader = ' '
@@ -174,7 +177,19 @@ in
               })
             end,
           })
-        '';
+        ''
+        (lib.optionalString cfg.treeSitter.enable
+          # lua
+          ''
+            vim.api.nvim_create_autocmd('FileType', {
+              pattern = '*',
+              callback = function(ev)
+                pcall(vim.treesitter.start, ev.buf)
+              end,
+            })
+          ''
+        )
+      ];
 
       # To install non-packaged plugins, use
       # pkgs.vimUtils.buildVimPlugin { }
@@ -714,52 +729,41 @@ in
               '';
           }
         ]
-        ++ lib.optionals cfg.treeSitter.enable [
-          {
-            plugin = nvim-ufo;
-            type = "lua";
-            config = # lua
-              ''
-                local ufo = require("ufo")
+        ++ lib.optionals cfg.treeSitter.enable (
+          [
+            {
+              plugin = nvim-ufo;
+              type = "lua";
+              config = # lua
+                ''
+                  local ufo = require("ufo")
 
-                vim.o.foldcolumn = '0'
-                vim.o.foldlevel = 99
-                vim.o.foldlevelstart = 99
-                vim.o.foldenable = true
+                  vim.o.foldcolumn = '0'
+                  vim.o.foldlevel = 99
+                  vim.o.foldlevelstart = 99
+                  vim.o.foldenable = true
 
-                vim.keymap.set('n', 'zR', ufo.openAllFolds, { desc = "Open all folds" })
-                vim.keymap.set('n', 'zM', ufo.closeAllFolds, { desc = "Close all folds" })
-                ufo.setup {
-                  provider_selector = function(bufnr, filetype, buftype)
-                    return {'treesitter', 'indent'}
-                  end
-                }
-              '';
-          }
-          {
-            plugin = nvim-treesitter.withAllGrammars;
-            type = "lua";
-            config = # lua
-              ''
-                require('nvim-treesitter').setup {}
-
-                vim.api.nvim_create_autocmd('FileType', {
-                  pattern = '*',
-                  callback = function()
-                    pcall(vim.treesitter.start)
-                  end,
-                })
-              '';
-          }
-          {
-            plugin = nvim-ts-autotag;
-            type = "lua";
-            config = # lua
-              ''
-                require("nvim-ts-autotag").setup {}
-              '';
-          }
-        ];
+                  vim.keymap.set('n', 'zR', ufo.openAllFolds, { desc = "Open all folds" })
+                  vim.keymap.set('n', 'zM', ufo.closeAllFolds, { desc = "Close all folds" })
+                  ufo.setup {
+                    provider_selector = function(bufnr, filetype, buftype)
+                      return {'treesitter', 'indent'}
+                    end
+                  }
+                '';
+            }
+            {
+              plugin = nvim-ts-autotag;
+              type = "lua";
+              config = # lua
+                ''
+                  require("nvim-ts-autotag").setup {}
+                '';
+            }
+          ]
+          ++ treesitterGrammars
+          ++ treesitterQueries
+        );
     };
 
     xdg.desktopEntries.nvim = lib.mkIf config.home-manager.desktop.enable {
