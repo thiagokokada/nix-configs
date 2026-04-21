@@ -629,7 +629,18 @@ in
                   if not config then
                     vim.notify("No LSP config found for " .. server[1], vim.log.levels.WARN)
                   else
-                    if config.cmd and vim.fn.executable(config.cmd[1]) == 1 then
+                    local cmd = config.cmd
+                    local executable = nil
+
+                    if type(cmd) == "table" then
+                      executable = cmd[1]
+                    elseif type(cmd) == "string" then
+                      executable = cmd
+                    elseif type(cmd) == "function" then
+                      executable = true
+                    end
+
+                    if executable == true or executable == nil or vim.fn.executable(executable) == 1 then
                       vim.lsp.config[server[1]] = server.opts or {}
                       vim.lsp.enable(server[1])
                     end
