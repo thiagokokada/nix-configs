@@ -33,9 +33,6 @@ in
         ++ lib.optionals (!config.home-manager.darwin.enable) [
           (run-bg-alias "open" (lib.getExe' xdg-utils "xdg-open"))
         ];
-
-      sessionPath = [ "$HOME/.local/bin" ];
-      sessionSearchVariables.MANPATH = lib.mkAfter [ ":" ];
     };
 
     programs = {
