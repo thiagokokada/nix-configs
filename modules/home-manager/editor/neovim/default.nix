@@ -519,7 +519,6 @@ in
           lexima-vim
           mkdir-nvim
           vim-advanced-sorters
-          vim-nix
         ]
         ++ lib.optionals config.home-manager.desktop.kitty.enable [
           {
