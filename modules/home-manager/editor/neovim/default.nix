@@ -188,6 +188,14 @@ in
               '';
           }
           {
+            plugin = catppuccin-nvim;
+            type = "lua";
+            config = # lua
+              ''
+                vim.cmd.colorscheme("catppuccin-mocha")
+              '';
+          }
+          {
             plugin = dial-nvim;
             type = "lua";
             config = # lua
@@ -506,14 +514,6 @@ in
             config = # lua
               ''
                 require("remember").setup {}
-              '';
-          }
-          {
-            plugin = tokyonight-nvim;
-            type = "lua";
-            config = # lua
-              ''
-                vim.cmd.colorscheme("tokyonight-moon")
               '';
           }
           lexima-vim
