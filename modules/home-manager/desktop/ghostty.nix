@@ -85,6 +85,17 @@ in
           ];
         }
         // lib.optionalAttrs pkgs.stdenv.hostPlatform.isLinux {
+          gtk-custom-css =
+            pkgs.writeText "ghostty-gtk-custom-css"
+              # css
+              ''
+                tabbar {
+                  margin: -16px;
+                }
+                tabbar tabbox {
+                  transform: translateY(-8px);
+                }
+              '';
           window-titlebar-background = base01;
           window-titlebar-foreground = base04;
         }
