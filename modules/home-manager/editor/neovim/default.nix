@@ -73,8 +73,8 @@ in
         # lua
         ''
           -- general config
-          vim.g.mapleader = ' '
-          vim.g.maplocalleader = ','
+          vim.g.mapleader = " "
+          vim.g.maplocalleader = ","
 
           -- bytecompile lua modules
           vim.loader.enable()
@@ -99,10 +99,10 @@ in
           vim.cmd.aunmenu { [[PopUp.-1-]] }
 
           -- make Esc enter Normal mode in Term
-          vim.keymap.set('t', '<Esc>', [[<C-\><C-n>]])
-          vim.keymap.set('t', '<M-[>', [[<C-\><C-n>]])
-          vim.keymap.set('t', '<C-v><Esc>', [[<C-\><C-n>]])
-          vim.keymap.set('n', '<Leader>T', '<cmd>:terminal<CR>', { desc = "Terminal" })
+          vim.keymap.set("t", "<Esc>", [[<C-\><C-n>]])
+          vim.keymap.set("t", "<M-[>", [[<C-\><C-n>]])
+          vim.keymap.set("t", "<C-v><Esc>", [[<C-\><C-n>]])
+          vim.keymap.set("n", "<Leader>T", "<cmd>:terminal<CR>", { desc = "Terminal" })
           -- disable line numbers in terminal
           vim.api.nvim_create_autocmd({ "TermOpen" }, {
             command = "setlocal nonumber",
@@ -110,19 +110,19 @@ in
           })
 
           -- unsets the 'last search pattern'
-          vim.keymap.set('n', '<C-g>', '<cmd>:noh<CR>', { desc = "Clear highlight" })
+          vim.keymap.set("n", "<C-g>", "<cmd>:noh<CR>", { desc = "Clear highlight" })
 
           -- completion
-          vim.keymap.set({'i', 'c'}, '<C-j>', function()
-            return vim.fn.pumvisible() ~= 0 and '<C-n>' or '<C-j>'
+          vim.keymap.set({"i", "c"}, "<C-j>", function()
+            return vim.fn.pumvisible() ~= 0 and "<C-n>" or "<C-j>"
           end, { expr = true })
-          vim.keymap.set({'i', 'c'}, '<C-k>', function()
-            return vim.fn.pumvisible() ~= 0 and '<C-p>' or '<C-k>'
+          vim.keymap.set({"i", "c"}, "<C-k>", function()
+            return vim.fn.pumvisible() ~= 0 and "<C-p>" or "<C-k>"
           end, { expr = true })
-          vim.keymap.set({'i', 'c'}, '<CR>', function()
-            return vim.fn.pumvisible() ~= 0 and '<C-y>' or '<CR>'
+          vim.keymap.set({"i", "c"}, "<CR>", function()
+            return vim.fn.pumvisible() ~= 0 and "<C-y>" or "<CR>"
           end, { expr = true })
-          vim.keymap.set('i', '<C-Space>', '<C-x><C-o>')
+          vim.keymap.set("i", "<C-Space>", "<C-x><C-o>")
 
           -- enable syntaxcomplete if omnifunc is unavailable
           vim.api.nvim_create_autocmd({ "FileType" }, {
