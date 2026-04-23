@@ -45,10 +45,6 @@ in
         fileWidgetOptions = [ "--preview 'head {}'" ];
         historyWidgetOptions = [ "--sort" ];
       };
-      zoxide = {
-        enable = true;
-        enableZshIntegration = false;
-      };
       zsh = {
         enable = true;
 
@@ -202,11 +198,9 @@ in
             '';
           }
           {
-            name = "zoxide";
-            src = pkgs.runCommand "zoxide-zsh" { buildInputs = [ pkgs.zoxide ]; } ''
-              mkdir -p $out
-              zoxide init zsh > $out/zoxide.plugin.zsh
-            '';
+            name = "zsh-z";
+            file = "share/zsh-z/zsh-z.plugin.zsh";
+            src = zsh-z;
           }
         ];
 
