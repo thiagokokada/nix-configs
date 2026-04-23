@@ -15,7 +15,7 @@ in
 
   options.home-manager.darwin = {
     enable = lib.mkEnableOption "Darwin (macOS) config" // {
-      default = pkgs.stdenv.isDarwin;
+      default = pkgs.stdenv.hostPlatform.isDarwin;
     };
   };
 

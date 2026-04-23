@@ -37,7 +37,9 @@ in
     programs.ghostty = {
       enable = true;
       enableZshIntegration = config.programs.zsh.enable;
-      package = lib.mkDefault (if pkgs.stdenv.isDarwin then pkgs.ghostty-bin else pkgs.ghostty);
+      package = lib.mkDefault (
+        if pkgs.stdenv.hostPlatform.isDarwin then pkgs.ghostty-bin else pkgs.ghostty
+      );
       settings =
         with config.theme.colors;
         {

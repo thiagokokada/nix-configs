@@ -66,11 +66,11 @@ in
           if cfg.gui.enable then
             gitFull.override {
               # Disable unnecessary features since this will generate a rebuild
-              svnSupport = !stdenv.isDarwin;
-              sendEmailSupport = !stdenv.isDarwin;
+              svnSupport = !stdenv.hostPlatform.isDarwin;
+              sendEmailSupport = !stdenv.hostPlatform.isDarwin;
               # Use SSH from macOS instead with support for Keyring
               # https://github.com/NixOS/nixpkgs/issues/62353
-              withSsh = !stdenv.isDarwin;
+              withSsh = !stdenv.hostPlatform.isDarwin;
             }
           else
             git;
