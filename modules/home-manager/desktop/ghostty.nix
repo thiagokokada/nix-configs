@@ -84,14 +84,14 @@ in
             "${ghosttyMod}+0=goto_tab:10"
           ];
         }
+        // lib.optionalAttrs pkgs.stdenv.hostPlatform.isLinux {
+          window-titlebar-background = base01;
+          window-titlebar-foreground = base04;
+        }
         // lib.optionalAttrs pkgs.stdenv.hostPlatform.isDarwin {
           font-thicken = true;
           font-thicken-strength = 100;
-        }
-        // lib.optionalAttrs pkgs.stdenv.hostPlatform.isLinux {
-          window-theme = "ghostty";
-          window-titlebar-background = base01;
-          window-titlebar-foreground = base04;
+          macos-titlebar-style = "tabs";
         };
     };
   };
