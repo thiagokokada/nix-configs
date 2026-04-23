@@ -62,6 +62,9 @@ in
           split-inherit-working-directory = true;
           window-inherit-font-size = true;
           window-show-tab-bar = "auto";
+          maximize = true;
+
+          link-previews = true;
 
           keybind = [
             "${ghosttyMod}+t=new_tab"
