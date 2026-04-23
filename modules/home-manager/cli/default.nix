@@ -78,6 +78,7 @@ in
 
     programs = {
       aria2.enable = true;
+      fd.enable = true;
       jq.enable = true;
       less = {
         enable = true;

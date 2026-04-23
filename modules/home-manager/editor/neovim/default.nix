@@ -39,24 +39,25 @@ in
       wrapRc = true;
     };
 
-    home.packages =
-      with pkgs;
-      [
-        fd
-        ripgrep
-      ]
-      ++ lib.optionals stdenv.isLinux [
-        fswatch
-        # For clipboard=unnamedplus
-        wl-clipboard
-        xclip
-      ]
-      ++ lib.optionals enableIcons [
-        config.theme.fonts.symbols.package
-      ];
+    home.packages = lib.optionals enableIcons [
+      config.theme.fonts.symbols.package
+    ];
 
     programs.neovim = {
       enable = true;
+
+      extraPackages =
+        with pkgs;
+        [
+          fd
+          ripgrep
+        ]
+        ++ lib.optionals stdenv.isLinux [
+          fswatch
+          # For clipboard=unnamedplus
+          wl-clipboard
+          xclip
+        ];
 
       defaultEditor = true;
 

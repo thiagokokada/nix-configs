@@ -123,11 +123,9 @@
           {
             devShells.default = pkgs.mkShell {
               packages = with pkgs; [
-                fd
                 neovim-standalone
                 nil
                 nixfmt
-                ripgrep
                 statix
               ];
             };
