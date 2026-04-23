@@ -150,6 +150,9 @@ in
             desc = "Enable spellcheck for defined filetypes",
           })
 
+          -- undotree
+          vim.cmd.packadd("nvim.undotree")
+          vim.keymap.set("n", "<Leader>u", require("undotree").open)
         ''
         (lib.optionalString cfg.treeSitter.enable
           # lua
