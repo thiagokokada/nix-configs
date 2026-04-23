@@ -19,7 +19,7 @@ in
         "nil"
       ];
       description = "Nix language server.";
-      default = "nil";
+      default = "nixd";
     };
   };
 
