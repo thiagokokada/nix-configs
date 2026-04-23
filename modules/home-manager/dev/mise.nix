@@ -56,7 +56,7 @@ in
         lib.mkOrder 200
           # bash
           ''
-            export PATH="/Users/thiago.okada/.local/share/mise/shims:$PATH"
+            export PATH="$HOME/.local/share/mise/shims:$PATH"
           '';
     };
   };
