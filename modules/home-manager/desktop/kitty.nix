@@ -24,11 +24,6 @@ in
       description = "Font size.";
       default = if config.home-manager.darwin.enable then 14.0 else 12.0;
     };
-    opacity = lib.mkOption {
-      type = lib.types.float;
-      description = "Background opacity.";
-      default = 1.0;
-    };
   };
 
   config = lib.mkIf cfg.enable {
@@ -110,7 +105,6 @@ in
 
         # Misc
         allow_remote_control = "socket-only";
-        background_opacity = toString cfg.opacity;
         clipboard_control = "write-clipboard write-primary read-clipboard read-primary";
         editor = lib.mkIf config.home-manager.window-manager.enable config.home-manager.window-manager.default.editor;
         # ctrl+shift+l / super+l
