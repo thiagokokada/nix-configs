@@ -14,7 +14,7 @@
     programs.chromium = {
       enable = true;
       package = pkgs.google-chrome;
-      extensions = [
+      extensions = lib.optionals config.home-manager.darwin.enable [
         { id = "cjpalhdlnbpafiamejdnhcphjbkeiagm"; } # ublock origin
         { id = "hfjbmagddngcpeloejdejnfgbamkjaeg"; } # vimium-c
       ];

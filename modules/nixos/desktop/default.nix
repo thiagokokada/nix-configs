@@ -8,6 +8,7 @@
 {
   imports = [
     ./audio.nix
+    ./chromium.nix
     ./fonts.nix
     ./kde.nix
     ./locale.nix
