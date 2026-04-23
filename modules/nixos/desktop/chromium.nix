@@ -16,8 +16,8 @@
       enablePlasmaBrowserIntegration = lib.mkDefault config.nixos.desktop.kde.enable;
       defaultSearchProviderSearchURL = "https://duckduckgo.com/?q={searchTerms}";
       extensions = [
-        { id = "cjpalhdlnbpafiamejdnhcphjbkeiagm"; } # ublock origin
-        { id = "hfjbmagddngcpeloejdejnfgbamkjaeg"; } # vimium-c
+        "cjpalhdlnbpafiamejdnhcphjbkeiagm" # ublock origin
+        "hfjbmagddngcpeloejdejnfgbamkjaeg" # vimium-c
       ];
       initialPrefs = {
         "sync_promo" = {
