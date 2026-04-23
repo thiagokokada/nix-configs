@@ -47,7 +47,7 @@ in
 
           Should allow starting programs as parameter.
         '';
-        default = lib.getExe config.programs.kitty.package;
+        default = lib.getExe config.programs.ghostty.package;
       };
     };
     systemd.service = {
