@@ -101,10 +101,6 @@ in
 
                 tabbar tabbox tab {
                   min-height: 20px;
-                }
-
-                tabbar tabbox tab:selected,
-                tabbar tabbox tab:hover {
                   margin-top: 4px;
                   margin-bottom: 4px;
                 }
