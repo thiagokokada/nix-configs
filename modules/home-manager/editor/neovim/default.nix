@@ -542,6 +542,14 @@ in
         ]
         ++ lib.optionals cfg.lsp.enable [
           {
+            plugin = inc-rename-nvim;
+            type = "lua";
+            config = # lua
+              ''
+                require("inc_rename").setup {}
+              '';
+          }
+          {
             plugin = nvim-lspconfig;
             type = "lua";
             config = # lua
@@ -673,50 +681,6 @@ in
                   end
                 end
 
-                -- https://gist.github.com/RaafatTurki/64d89abf326e9fce6eb717f7c1f8a97e
-                function LspRename()
-                  local curr_name = vim.fn.expand("<cword>")
-                  local value = vim.fn.input("LSP Rename: ", curr_name)
-                  local lsp_params = vim.lsp.util.make_position_params()
-
-                  if not value or #value == 0 or curr_name == value then return end
-
-                  -- request lsp rename
-                  lsp_params.newName = value
-                  vim.lsp.buf_request(0, "textDocument/rename", lsp_params, function(_, res, ctx, _)
-                    if not res then return end
-
-                    -- apply renames
-                    local client = vim.lsp.get_client_by_id(ctx.client_id)
-                    vim.lsp.util.apply_workspace_edit(res, client.offset_encoding)
-
-                    -- print renames
-                    local changed_files_count = 0
-                    local changed_instances_count = 0
-
-                    if (res.documentChanges) then
-                      for _, changed_file in pairs(res.documentChanges) do
-                        changed_files_count = changed_files_count + 1
-                        changed_instances_count = changed_instances_count + #changed_file.edits
-                      end
-                    elseif (res.changes) then
-                      for _, changed_file in pairs(res.changes) do
-                        changed_instances_count = changed_instances_count + #changed_file
-                        changed_files_count = changed_files_count + 1
-                      end
-                    end
-
-                    -- compose the right print message
-                    print(string.format("renamed %s instance%s in %s file%s. %s",
-                      changed_instances_count,
-                      changed_instances_count == 1 and "" or "s",
-                      changed_files_count,
-                      changed_files_count == 1 and "" or "s",
-                      changed_files_count > 1 and "To save them run ':wa'" or ""
-                    ))
-                  end)
-                end
-
                 local fzf = require("fzf-lua")
                 -- Use LspAttach autocommand to only map the following keys
                 -- after the language server attaches to the current buffer
@@ -732,7 +696,9 @@ in
                     vim.keymap.set("n", "<Leader>ld", fzf.diagnostics_document, { desc = "LSP document diagnostics" })
                     vim.keymap.set("n", "<Leader>ls", fzf.lsp_document_symbols, { desc = "LSP document symbols" })
                     vim.keymap.set("n", "<Leader>lt", fzf.lsp_typedefs, { desc = "LSP type definitions" })
-                    vim.keymap.set("n", "<Leader>lr", LspRename, { desc = "LSP rename" })
+                    vim.keymap.set("n", "<leader>lr", function()
+                      return ":IncRename " .. vim.fn.expand("<cword>")
+                    end, { expr = true })
                     vim.keymap.set("n", "<Leader>lf", function() vim.lsp.buf.format { async = true } end, { desc = "LSP format" })
                     vim.keymap.set("n", "<Leader>la", fzf.lsp_code_actions, { desc = "LSP code action" })
                   end,
