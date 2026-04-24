@@ -33,29 +33,21 @@ in
 
   config = lib.mkIf cfg.enable (
     let
+      inherit (config.programs) neovim;
       standalonePackage =
-        (config.programs.neovim.finalPackage.override {
+        (neovim.finalPackage.override {
           extraName = "-standalone";
-          plugins = map (p: p.plugin or p) config.programs.neovim.finalPackage.plugins;
-          neovimRcContent = config.programs.neovim.extraConfig;
-          luaRcContent = config.programs.neovim.initLua;
+          neovimRcContent = neovim.extraConfig;
+          luaRcContent = neovim.initLua;
           wrapRc = true;
         }).overrideAttrs
           {
-            packpathDirs.myNeovimPackages = config.programs.neovim.finalPackage.vimPackage;
+            packpathDirs.myNeovimPackages = neovim.finalPackage.vimPackage;
           };
-      checkPackage = pkgs.runCommand "neovim-config-check" { } ''
+      checkPackage = pkgs.runCommandLocal "neovim-config-check" { } ''
         set -eu
 
-        tmpdir="$(mktemp -d)"
-        trap 'rm -rf "$tmpdir"' EXIT
-
-        export HOME="$tmpdir/home"
-        export XDG_DATA_HOME="$tmpdir/xdg/data"
-        export XDG_STATE_HOME="$tmpdir/xdg/state"
-        export XDG_CACHE_HOME="$tmpdir/xdg/cache"
-
-        mkdir -p "$HOME" "$XDG_DATA_HOME" "$XDG_STATE_HOME" "$XDG_CACHE_HOME"
+        export HOME="$(mktemp -d)"
         cd "$HOME"
 
         ${lib.getExe standalonePackage} --headless \
