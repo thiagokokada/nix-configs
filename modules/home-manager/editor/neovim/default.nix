@@ -36,7 +36,7 @@ in
       standalonePackage =
         (config.programs.neovim.finalPackage.override {
           extraName = "-standalone";
-          plugins = map (p: if p ? plugin then p.plugin else p) config.programs.neovim.finalPackage.plugins;
+          plugins = map (p: p.plugin or p) config.programs.neovim.finalPackage.plugins;
           neovimRcContent = config.programs.neovim.extraConfig;
           luaRcContent = config.programs.neovim.initLua;
           wrapRc = true;
