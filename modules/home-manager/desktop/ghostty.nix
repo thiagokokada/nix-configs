@@ -85,6 +85,36 @@ in
           ];
         }
         // lib.optionalAttrs pkgs.stdenv.hostPlatform.isLinux {
+          gtk-custom-css = toString (
+            pkgs.writeText "ghostty-linux-tabs.css"
+              # css
+              ''
+                /* Ghostty GTK tabs on top: shrink from the bottom, don't push into the titlebar. */
+                tabbar {
+                  margin-top: 0;
+                  margin-bottom: -16px;
+                }
+
+                tabbar tabbox {
+                  transform: translateY(-8px);
+                }
+
+                tabbar tabbox tab {
+                  min-height: 20px;
+                }
+
+                tabbar tabbox tab:selected,
+                tabbar tabbox tab:hover {
+                  margin-top: 4px;
+                  margin-bottom: 4px;
+                }
+
+                tabbar tabbox button,
+                windowcontrols button {
+                  min-height: 20px;
+                }
+              ''
+          );
           window-titlebar-background = base01;
           window-titlebar-foreground = base04;
         }
