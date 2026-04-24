@@ -99,8 +99,7 @@ in
         vimAlias = true;
         vimdiffAlias = true;
 
-        initLua = lib.concatStringsSep "\n" [
-          # lua
+        initLua = # lua
           ''
             -- general config
             vim.g.mapleader = " "
@@ -183,26 +182,7 @@ in
             -- undotree
             vim.cmd.packadd("nvim.undotree")
             vim.keymap.set("n", "<Leader>u", require("undotree").open)
-          ''
-          (lib.optionalString cfg.treeSitter.enable
-            # lua
-            ''
-              local large_buffer_guard = require("large_buffer_guard")
-
-              vim.api.nvim_create_autocmd("FileType", {
-                pattern = "*",
-                callback = function(ev)
-                  if large_buffer_guard.is_large_buffer(ev.buf) then
-                    large_buffer_guard.notify_large_buffer_mode(ev.buf, "treesitter")
-                    pcall(vim.treesitter.stop, ev.buf)
-                    return
-                  end
-                  pcall(vim.treesitter.start, ev.buf)
-                end,
-              })
-            ''
-          )
-        ];
+          '';
 
         # To install non-packaged plugins, use
         # pkgs.vimUtils.buildVimPlugin { }
@@ -738,6 +718,25 @@ in
           ]
           ++ lib.optionals cfg.treeSitter.enable (
             [
+              {
+                plugin = pkgs.writeText "nvim-treesitter-dummy" "";
+                type = "lua";
+                config = ''
+                  local large_buffer_guard = require("large_buffer_guard")
+
+                  vim.api.nvim_create_autocmd("FileType", {
+                    pattern = "*",
+                    callback = function(ev)
+                      if large_buffer_guard.is_large_buffer(ev.buf) then
+                        large_buffer_guard.notify_large_buffer_mode(ev.buf, "treesitter")
+                        pcall(vim.treesitter.stop, ev.buf)
+                        return
+                      end
+                      pcall(vim.treesitter.start, ev.buf)
+                    end,
+                  })
+                '';
+              }
               {
                 plugin = nvim-ufo;
                 type = "lua";
