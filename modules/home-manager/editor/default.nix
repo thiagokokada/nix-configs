@@ -2,7 +2,6 @@
 
 {
   imports = [
-    ./helix.nix
     ./idea.nix
     ./neovim
   ];
