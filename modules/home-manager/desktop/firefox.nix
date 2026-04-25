@@ -24,6 +24,7 @@ in
   config = lib.mkIf cfg.enable {
     programs.firefox = {
       enable = true;
+      configPath = ".mozilla/firefox";
       profiles.${username} = {
         settings = {
           # disable about:config warning
