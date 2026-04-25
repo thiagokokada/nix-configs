@@ -11,6 +11,27 @@
   };
 
   config = lib.mkIf config.nixos.system.cli.enable {
+    nixos.home.extraModules = {
+      programs = {
+        man.package = null;
+        # mandoc doesn't expand columns by default
+        zsh.initContent =
+          # bash
+          ''
+            man() {
+              ${lib.getExe pkgs.mandoc} -O width="$(${lib.getExe' pkgs.ncurses "tput"} cols)" "$@"
+            }
+          '';
+      };
+    };
+
+    # https://github.com/NixOS/nixpkgs/issues/513348
+    documentation.man = {
+      cache.enable = true;
+      man-db.enable = false;
+      mandoc.enable = true;
+    };
+
     # CLI packages.
     environment = {
       # To get zsh completion for system packages

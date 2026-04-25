@@ -64,7 +64,7 @@ in
         MANROFFOPT = "-c";
       };
       sessionPath = [ "$HOME/.local/bin" ];
-      sessionSearchVariables.MANPATH = lib.mkAfter [ ":" ];
+      sessionSearchVariables.MANPATH = lib.mkAfter [ "${config.home.profileDirectory}/share/man" ];
 
       shellAliases = {
         # For muscle memory...
