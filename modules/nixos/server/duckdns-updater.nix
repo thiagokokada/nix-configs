@@ -142,7 +142,7 @@ in
         inherit group;
         inherit (config.meta) email;
         dnsProvider = lib.mkIf (!cfg.certs.useHttpServer) "duckdns";
-        credentialsFile = lib.mkIf (!cfg.certs.useHttpServer) cfg.environmentFile;
+        credentialFiles.DUCKDNS_TOKEN_FILE = lib.mkIf (!cfg.certs.useHttpServer) cfg.environmentFile;
         listenHTTP = lib.mkIf cfg.certs.useHttpServer ":${toString httpPort}";
         postRun = ''
           ${lib.getBin pkgs.openssl}/bin/openssl pkcs12 -export -out bundle.pfx -inkey key.pem -in cert.pem -passout pass:
