@@ -711,7 +711,12 @@ in
           ++ lib.optionals cfg.treeSitter.enable (
             [
               {
-                plugin = pkgs.writeText "nvim-treesitter-dummy" "";
+                plugin = pkgs.vimUtils.buildVimPlugin rec {
+                  pname = "treesitter-config-dummy";
+                  version = "unstable";
+                  src = pkgs.writeText pname "";
+                  dontUnpack = true;
+                };
                 type = "lua";
                 config = ''
                   local large_buffer_guard = require("large_buffer_guard")
