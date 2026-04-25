@@ -54,7 +54,6 @@ in
           font-size = cfg.fontSize;
 
           confirm-close-surface = false;
-          copy-on-select = "clipboard";
           scrollback-limit = 10000;
 
           window-padding-x = 5;
