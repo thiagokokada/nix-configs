@@ -32,9 +32,6 @@ in
     environment.systemPackages = with pkgs; [
       goverlay
       mangohud
-      (bottles.override {
-        removeWarningPopup = true;
-      })
     ];
 
     programs.gamemode = {
