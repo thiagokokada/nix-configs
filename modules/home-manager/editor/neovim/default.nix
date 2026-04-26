@@ -182,15 +182,44 @@ in
           with pkgs.vimPlugins;
           [
             {
-              plugin = pkgs.vimUtils.buildVimPlugin {
-                pname = "large-buffer-guard-nvim";
-                version = "unstable";
-                src = ./plugins/large-buffer-guard-nvim;
-              };
+              plugin = snacks-nvim;
               type = "lua";
               config = # lua
                 ''
-                  require("large_buffer_guard").setup {}
+                  local snacks = require("snacks")
+
+                  -- Setup early so file-open autocmds like bigfile are active first.
+                  snacks.setup {
+                    bigfile = {
+                      enabled = true,
+                      notify = true,
+                    },
+                    gitbrowse = {
+                      enabled = true,
+                    },
+                  }
+
+                  vim.keymap.set({ "n", "v" }, "<Leader>gr", function()
+                    snacks.gitbrowse.open { what = "repo" }
+                  end, { desc = "Open in GitHub repo" })
+                  vim.keymap.set("n", "<Leader>gf", function()
+                    snacks.gitbrowse.open { what = "file" }
+                  end, { desc = "Open in GitHub file" })
+                  vim.keymap.set("v", "<Leader>gf", function()
+                    snacks.gitbrowse.open { what = "file" }
+                  end, { desc = "Open in GitHub lines" })
+
+                  vim.api.nvim_create_autocmd("User", {
+                    pattern = "OilActionsPost",
+                    callback = function(event)
+                      local actions = event.data and event.data.actions or {}
+                      for _, action in ipairs(actions) do
+                        if action.type == "move" then
+                          snacks.rename.on_rename_file(action.src_url, action.dest_url)
+                        end
+                      end
+                    end,
+                  })
                 '';
             }
             {
@@ -502,19 +531,6 @@ in
                 '';
             }
             {
-              plugin = openingh-nvim;
-              type = "lua";
-              config = # lua
-                ''
-                  -- for repository page
-                  vim.keymap.set({'n', 'v'}, '<Leader>gr', ":OpenInGHRepo <CR>", { silent = true, desc = "Open in GitHub repo" })
-
-                  -- for current file page
-                  vim.keymap.set('n', '<Leader>gf', ":OpenInGHFile <CR>", { silent = true, desc = "Open in GitHub file" })
-                  vim.keymap.set('v', '<Leader>gf', ":OpenInGHFileLines <CR>", { silent = true, desc = "Open in GitHub lines" })
-                '';
-            }
-            {
               plugin = remember-nvim;
               type = "lua";
               config = # lua
@@ -559,8 +575,6 @@ in
                   -- Setup language servers.
                   -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/configs.md
                   -- TODO: migrate to lsp/*.lua directory
-                  local large_buffer_guard = require("large_buffer_guard")
-
                   local servers_configs = {
                     { "bashls" },
                     { "clojure_lsp" },
@@ -677,7 +691,9 @@ in
                       end
 
                       if executable == true or executable == nil or vim.fn.executable(executable) == 1 then
-                        vim.lsp.config[server[1]] = large_buffer_guard.wrap_lsp_config(server[1], server.opts)
+                        if server.opts then
+                          vim.lsp.config(server[1], server.opts)
+                        end
                         vim.lsp.enable(server[1])
                       end
                     end
@@ -719,13 +735,10 @@ in
                 };
                 type = "lua";
                 config = ''
-                  local large_buffer_guard = require("large_buffer_guard")
-
                   vim.api.nvim_create_autocmd("FileType", {
                     pattern = "*",
                     callback = function(ev)
-                      if large_buffer_guard.is_large_buffer(ev.buf) then
-                        large_buffer_guard.notify_large_buffer_mode(ev.buf, "treesitter")
+                      if vim.bo[ev.buf].filetype == "bigfile" then
                         pcall(vim.treesitter.stop, ev.buf)
                         return
                       end
@@ -740,7 +753,6 @@ in
                 config = # lua
                   ''
                     local ufo = require("ufo")
-                    local large_buffer_guard = require("large_buffer_guard")
 
                     vim.o.foldcolumn = '0'
                     vim.o.foldlevel = 99
@@ -751,7 +763,7 @@ in
                     vim.keymap.set('n', 'zM', ufo.closeAllFolds, { desc = "Close all folds" })
                     ufo.setup {
                       provider_selector = function(bufnr, filetype, buftype)
-                        if large_buffer_guard.is_large_buffer(bufnr) then
+                        if filetype == "bigfile" then
                           return {'indent'}
                         end
                         return {'treesitter', 'indent'}
