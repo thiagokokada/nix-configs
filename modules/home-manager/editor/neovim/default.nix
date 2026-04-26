@@ -181,161 +181,7 @@ in
         plugins =
           with pkgs.vimPlugins;
           [
-            {
-              plugin = snacks-nvim;
-              type = "lua";
-              config = # lua
-                ''
-                  local snacks = require("snacks")
-
-                  -- Setup early so file-open autocmds like bigfile are active first.
-                  snacks.setup {
-                    bigfile = {
-                      enabled = true,
-                      notify = true,
-                    },
-                    gitbrowse = {
-                      enabled = true,
-                    },
-                  }
-
-                  vim.keymap.set({ "n", "v" }, "<Leader>gr", function()
-                    snacks.gitbrowse.open { what = "repo" }
-                  end, { desc = "Open in GitHub repo" })
-                  vim.keymap.set("n", "<Leader>gf", function()
-                    snacks.gitbrowse.open { what = "file" }
-                  end, { desc = "Open in GitHub file" })
-                  vim.keymap.set("v", "<Leader>gf", function()
-                    snacks.gitbrowse.open { what = "file" }
-                  end, { desc = "Open in GitHub lines" })
-
-                  vim.api.nvim_create_autocmd("User", {
-                    pattern = "OilActionsPost",
-                    callback = function(event)
-                      local actions = event.data and event.data.actions or {}
-                      for _, action in ipairs(actions) do
-                        if action.type == "move" then
-                          snacks.rename.on_rename_file(action.src_url, action.dest_url)
-                        end
-                      end
-                    end,
-                  })
-                '';
-            }
-            {
-              plugin = catppuccin-nvim;
-              type = "lua";
-              config = # lua
-                ''
-                  vim.cmd.colorscheme("catppuccin-mocha")
-                '';
-            }
-            {
-              plugin = dial-nvim;
-              type = "lua";
-              config = # lua
-                ''
-                  local dial_map = require("dial.map")
-                  vim.keymap.set("n", "<C-a>", function()
-                      dial_map.manipulate("increment", "normal")
-                  end, { desc = "Increment" })
-                  vim.keymap.set("n", "<C-x>", function()
-                      dial_map.manipulate("decrement", "normal")
-                  end, { desc = "Decrement" })
-                  vim.keymap.set("n", "g<C-a>", function()
-                      dial_map.manipulate("increment", "gnormal")
-                  end, { desc = "Increment" })
-                  vim.keymap.set("n", "g<C-x>", function()
-                      dial_map.manipulate("decrement", "gnormal")
-                  end, { desc = "Decrement" })
-                  vim.keymap.set("v", "<C-a>", function()
-                      dial_map.manipulate("increment", "visual")
-                  end, { desc = "Increment" })
-                  vim.keymap.set("v", "<C-x>", function()
-                      dial_map.manipulate("decrement", "visual")
-                  end, { desc = "Decrement" })
-                  vim.keymap.set("v", "g<C-a>", function()
-                      dial_map.manipulate("increment", "gvisual")
-                  end, { desc = "Increment" })
-                  vim.keymap.set("v", "g<C-x>", function()
-                      dial_map.manipulate("decrement", "gvisual")
-                  end, { desc = "Decrement" })
-                '';
-            }
-            {
-              plugin = fzf-lua;
-              type = "lua";
-              config = # lua
-                ''
-                  local enable_icons = ${toLua enableIcons}
-                  local fzf = require("fzf-lua")
-                  fzf.setup {
-                    "telescope",
-                    defaults = {
-                      file_icons = enable_icons,
-                      git_icons = enable_icons,
-                      silent = true,
-                    },
-                    winopts = {
-                      height = 0.4,
-                      width = 1.0,
-                      row = 1.0,
-                    },
-                    fzf_opts = {
-                      ["--layout"] = "reverse",
-                    },
-                  }
-
-                  vim.keymap.set("n", "<Leader><Leader>", fzf.files, { desc = "Find files" })
-                  vim.keymap.set("n", "<Leader>/", fzf.live_grep, { desc = "Live grep" })
-                  vim.keymap.set("n", "<Leader>*", fzf.grep_cword, { desc = "Grep word under cursor" })
-                  vim.keymap.set("n", "<Leader>b", fzf.buffers, { desc = "Buffers" })
-                  vim.keymap.set("n", "<Leader>c", fzf.commands, { desc = "Commands" })
-                  vim.keymap.set("n", "<Leader>gc", fzf.git_commits, { desc = "Git commits" })
-                  vim.keymap.set("n", "<Leader>gC", fzf.git_bcommits, { desc = "Git buffer commits" })
-                  vim.keymap.set("n", "<Leader>gb", fzf.git_branches, { desc = "Git branches" })
-                  vim.keymap.set("n", "<Leader>gs", fzf.git_status, { desc = "Git status" })
-                  vim.keymap.set("n", "<Leader>gS", fzf.git_stash, { desc = "Git stash" })
-                  vim.keymap.set("n", "z=", fzf.spell_suggest, { desc = "Spell suggest" })
-                '';
-            }
-            {
-              plugin = guess-indent-nvim;
-              type = "lua";
-              config = # lua
-                ''
-                  require("guess-indent").setup {}
-                  vim.keymap.set("n", "<Leader>i", "<CMD>GuessIndent<CR>", { desc = "Guess indent" })
-                '';
-            }
-            {
-              plugin = gx-nvim;
-              type = "lua";
-              config = # lua
-                ''
-                  require("gx").setup {
-                    handler_options = {
-                      search_engine = "duckduckgo"
-                    }
-                  }
-
-                  vim.keymap.set({"n", "x"}, "gx", "<CMD>Browse<CR>", { desc = "Open in Browse" })
-                '';
-            }
-            {
-              plugin = pkgs.vimUtils.buildVimPlugin {
-                pname = "markdown-preview-nvim";
-                version = "unstable";
-                src = ./plugins/markdown-preview-nvim;
-              };
-              type = "lua";
-              config = # lua
-                ''
-                  require("markdown_preview").setup {
-                    command = { "${lib.getExe pkgs.gh-gfm-preview}" },
-                  }
-                '';
-            }
+            # plugin collections
             {
               plugin = mini-nvim;
               type = "lua";
@@ -477,6 +323,163 @@ in
                   vim.keymap.set('n', '<Leader>wl', trailspace.trim_last_lines, { desc = "Trim last lines" })
                 '';
             }
+            {
+              plugin = snacks-nvim;
+              type = "lua";
+              config = # lua
+                ''
+                  local snacks = require("snacks")
+
+                  snacks.setup {
+                    bigfile = {
+                      enabled = true,
+                      notify = true,
+                    },
+                    gitbrowse = {
+                      enabled = true,
+                    },
+                  }
+
+                  vim.keymap.set({ "n", "v" }, "<Leader>gr", function()
+                    snacks.gitbrowse.open { what = "repo" }
+                  end, { desc = "Open in GitHub repo" })
+                  vim.keymap.set("n", "<Leader>gf", function()
+                    snacks.gitbrowse.open { what = "file" }
+                  end, { desc = "Open in GitHub file" })
+                  vim.keymap.set("v", "<Leader>gf", function()
+                    snacks.gitbrowse.open { what = "file" }
+                  end, { desc = "Open in GitHub lines" })
+
+                  vim.api.nvim_create_autocmd("User", {
+                    pattern = "OilActionsPost",
+                    callback = function(event)
+                      local actions = event.data and event.data.actions or {}
+                      for _, action in ipairs(actions) do
+                        if action.type == "move" then
+                          snacks.rename.on_rename_file(action.src_url, action.dest_url)
+                        end
+                      end
+                    end,
+                  })
+                '';
+            }
+            # theme
+            {
+              plugin = catppuccin-nvim;
+              type = "lua";
+              config = # lua
+                ''
+                  vim.cmd.colorscheme("catppuccin-mocha")
+                '';
+            }
+            # other
+            {
+              plugin = dial-nvim;
+              type = "lua";
+              config = # lua
+                ''
+                  local dial_map = require("dial.map")
+                  vim.keymap.set("n", "<C-a>", function()
+                      dial_map.manipulate("increment", "normal")
+                  end, { desc = "Increment" })
+                  vim.keymap.set("n", "<C-x>", function()
+                      dial_map.manipulate("decrement", "normal")
+                  end, { desc = "Decrement" })
+                  vim.keymap.set("n", "g<C-a>", function()
+                      dial_map.manipulate("increment", "gnormal")
+                  end, { desc = "Increment" })
+                  vim.keymap.set("n", "g<C-x>", function()
+                      dial_map.manipulate("decrement", "gnormal")
+                  end, { desc = "Decrement" })
+                  vim.keymap.set("v", "<C-a>", function()
+                      dial_map.manipulate("increment", "visual")
+                  end, { desc = "Increment" })
+                  vim.keymap.set("v", "<C-x>", function()
+                      dial_map.manipulate("decrement", "visual")
+                  end, { desc = "Decrement" })
+                  vim.keymap.set("v", "g<C-a>", function()
+                      dial_map.manipulate("increment", "gvisual")
+                  end, { desc = "Increment" })
+                  vim.keymap.set("v", "g<C-x>", function()
+                      dial_map.manipulate("decrement", "gvisual")
+                  end, { desc = "Decrement" })
+                '';
+            }
+            {
+              plugin = fzf-lua;
+              type = "lua";
+              config = # lua
+                ''
+                  local enable_icons = ${toLua enableIcons}
+                  local fzf = require("fzf-lua")
+                  fzf.setup {
+                    "telescope",
+                    defaults = {
+                      file_icons = enable_icons,
+                      git_icons = enable_icons,
+                      silent = true,
+                    },
+                    winopts = {
+                      height = 0.4,
+                      width = 1.0,
+                      row = 1.0,
+                    },
+                    fzf_opts = {
+                      ["--layout"] = "reverse",
+                    },
+                  }
+
+                  vim.keymap.set("n", "<Leader><Leader>", fzf.files, { desc = "Find files" })
+                  vim.keymap.set("n", "<Leader>/", fzf.live_grep, { desc = "Live grep" })
+                  vim.keymap.set("n", "<Leader>*", fzf.grep_cword, { desc = "Grep word under cursor" })
+                  vim.keymap.set("n", "<Leader>b", fzf.buffers, { desc = "Buffers" })
+                  vim.keymap.set("n", "<Leader>c", fzf.commands, { desc = "Commands" })
+                  vim.keymap.set("n", "<Leader>gc", fzf.git_commits, { desc = "Git commits" })
+                  vim.keymap.set("n", "<Leader>gC", fzf.git_bcommits, { desc = "Git buffer commits" })
+                  vim.keymap.set("n", "<Leader>gb", fzf.git_branches, { desc = "Git branches" })
+                  vim.keymap.set("n", "<Leader>gs", fzf.git_status, { desc = "Git status" })
+                  vim.keymap.set("n", "<Leader>gS", fzf.git_stash, { desc = "Git stash" })
+                  vim.keymap.set("n", "z=", fzf.spell_suggest, { desc = "Spell suggest" })
+                '';
+            }
+            {
+              plugin = guess-indent-nvim;
+              type = "lua";
+              config = # lua
+                ''
+                  require("guess-indent").setup {}
+                  vim.keymap.set("n", "<Leader>i", "<CMD>GuessIndent<CR>", { desc = "Guess indent" })
+                '';
+            }
+            {
+              plugin = gx-nvim;
+              type = "lua";
+              config = # lua
+                ''
+                  require("gx").setup {
+                    handler_options = {
+                      search_engine = "duckduckgo"
+                    }
+                  }
+
+                  vim.keymap.set({"n", "x"}, "gx", "<CMD>Browse<CR>", { desc = "Open in Browse" })
+                '';
+            }
+            {
+              plugin = pkgs.vimUtils.buildVimPlugin {
+                pname = "markdown-preview-nvim";
+                version = "unstable";
+                src = ./plugins/markdown-preview-nvim;
+              };
+              type = "lua";
+              config = # lua
+                ''
+                  require("markdown_preview").setup {
+                    command = { "${lib.getExe pkgs.gh-gfm-preview}" },
+                  }
+                '';
+            }
+
             {
               plugin = neogit;
               type = "lua";
