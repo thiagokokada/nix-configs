@@ -141,6 +141,13 @@ in
               unset RPROMPT # disable clock
               zstyle :prompt:pure:prompt:success color 39 # miku color
               zstyle :prompt:pure:git:fetch only_upstream yes
+
+              # Realias zsh-z to use fzf
+              unalias z
+              z() {
+                [ $# -gt 0 ] && zshz "$*" && return
+                cd "$(zshz -l 2>&1 | fzf --height 40% --nth 2.. --reverse --inline-info +s --tac --query "''${*##-* }" | sed 's/^[0-9,.]* *//')"
+              }
             ''
           )
           (lib.mkOrder 1300
