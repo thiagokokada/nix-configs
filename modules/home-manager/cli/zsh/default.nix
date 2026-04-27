@@ -73,7 +73,11 @@ in
         };
         # Reduce time to wait for multi-key sequences
         localVariables.KEYTIMEOUT = 1;
-        historySubstringSearch.enable = true;
+        historySubstringSearch = {
+          enable = true;
+          searchUpKey = [ "$terminfo[kcud1]" ];
+          searchDownKey = [ "$terminfo[kcuu1]" ];
+        };
         setOptions = [
           # Fix "no matches found" when using glob characters
           "NO_NOMATCH"
@@ -150,7 +154,23 @@ in
               }
             ''
           )
+          # history-substring-search module order is 1250
+          # https://github.com/nix-community/home-manager/blob/7f8bbc93d63401e41368d6ddc46a4f631610fa90/modules/programs/zsh/history.nix#L227
           (lib.mkOrder 1300
+            # bash
+            ''
+              # Keep substring search consistent in both insert and command mode.
+              ${lib.concatMapStringsSep "\n" (
+                upKey: ''bindkey -M viins "${upKey}" history-substring-search-up''
+              ) (lib.toList config.programs.zsh.historySubstringSearch.searchUpKey)}
+              ${lib.concatMapStringsSep "\n" (
+                downKey: ''bindkey -M viins "${downKey}" history-substring-search-down''
+              ) (lib.toList config.programs.zsh.historySubstringSearch.searchDownKey)}
+              bindkey -M vicmd "k" history-substring-search-up
+              bindkey -M vicmd "j" history-substring-search-down
+            ''
+          )
+          (lib.mkOrder 1400
             # bash
             ''
               # source contents from ~/.zshrc.d/*.zsh
