@@ -7,6 +7,17 @@
 
 let
   cfg = config.home-manager.cli.man;
+
+  wrappedPackage = pkgs.symlinkJoin {
+    name = "${pkgs.mandoc.name}-wrapped";
+    paths = [ pkgs.mandoc ];
+    nativeBuildInputs = [ pkgs.makeWrapper ];
+    postBuild = ''
+      rm -f "$out/bin/man"
+      makeWrapper ${lib.getExe pkgs.mandoc} "$out/bin/man" \
+        --run 'if [ -t 1 ]; then cols="$(${lib.getExe' pkgs.ncurses "tput"} cols 2>/dev/null || true)"; if [ -n "$cols" ]; then set -- -O "width=$cols" "$@"; fi; fi'
+    '';
+  };
 in
 {
   options.home-manager.cli.man = {
@@ -16,7 +27,7 @@ in
 
     package = lib.mkOption {
       type = lib.types.package;
-      default = pkgs.mandoc;
+      default = wrappedPackage;
       description = "The `mandoc` package to use for manpage lookup and indexing.";
     };
 
@@ -27,8 +38,8 @@ in
 
   config = lib.mkIf cfg.enable {
     programs.man = {
+      inherit (cfg) package;
       enable = true;
-      package = cfg.package;
       generateCaches = false;
     };
 
