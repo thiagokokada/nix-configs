@@ -15,6 +15,7 @@ in
     ./htop.nix
     ./irssi.nix
     ./jujutsu.nix
+    ./man.nix
     ./nixpkgs.nix
     ./ssh
     ./yazi.nix
@@ -61,10 +62,8 @@ in
         DO_NOT_TRACK = 1;
         # https://felipec.wordpress.com/2021/06/05/adventures-with-man-color/
         MANPAGER = "less --use-color -Dd+r -Du+b";
-        MANROFFOPT = "-c";
       };
       sessionPath = [ "$HOME/.local/bin" ];
-      sessionSearchVariables.MANPATH = lib.mkAfter [ "${config.home.profileDirectory}/share/man" ];
 
       shellAliases = {
         # For muscle memory...
