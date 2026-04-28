@@ -738,10 +738,26 @@ in
                 };
                 type = "lua";
                 config = ''
+                  vim.g.treesitter_disable_filetypes = {
+                    bigfile = true,
+                  }
+
+                  vim.g.treesitter_disable_filenames = {
+                    [".bash_history"] = true,
+                    [".zsh_history"] = true,
+                    [".Rhistory"] = true,
+                  }
+
                   vim.api.nvim_create_autocmd("FileType", {
                     pattern = "*",
                     callback = function(ev)
-                      if vim.bo[ev.buf].filetype == "bigfile" then
+                      local filetype = vim.bo[ev.buf].filetype
+                      local name = vim.api.nvim_buf_get_name(ev.buf)
+                      local basename = vim.fs.basename(name)
+
+                      if vim.g.treesitter_disable_filetypes[filetype]
+                        or vim.g.treesitter_disable_filenames[basename]
+                      then
                         pcall(vim.treesitter.stop, ev.buf)
                         return
                       end
