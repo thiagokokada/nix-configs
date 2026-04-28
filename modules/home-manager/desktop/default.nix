@@ -6,7 +6,7 @@
 }:
 
 let
-  cfg = config.home-manager.window-manager;
+  cfg = config.home-manager.desktop;
 in
 {
   imports = [
