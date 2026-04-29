@@ -13,6 +13,11 @@ in
   inherit (inputs.gitk-go.packages.${system}) gitk-go;
   inherit (inputs.nix-alien.packages.${system}) nix-alien;
 
+  # https://github.com/NixOS/nixpkgs/issues/507531
+  direnv = prev.direnv.overrideAttrs (_: {
+    doCheck = !prev.stdenv.isDarwin;
+  });
+
   neovim-standalone =
     let
       hostName = "neovim-standalone";
