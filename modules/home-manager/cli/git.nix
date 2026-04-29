@@ -144,7 +144,14 @@ in
               driver = "mergiraf merge --git %O %A %B -s %S -x %X -y %Y -p %P -l %L";
             };
             conflictstyle = if cfg.mergiraf.enable then "diff3" else "zdiff3";
-            tool = "nvim -d";
+            tool = "nvimdiff";
+          };
+          mergetool = {
+            prompt = false;
+            keepBackup = false;
+          };
+          "mergetool \"nvimdiff\"" = {
+            layout = "LOCAL,BASE,REMOTE / MERGED";
           };
           pull.rebase = true;
           push = {
