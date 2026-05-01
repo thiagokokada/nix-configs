@@ -7,12 +7,12 @@
   };
 
   home-manager = {
-    crostini.enable = true;
+    # crostini.enable = true;
     cli.git.gui.enable = true;
     desktop.mpv.enable = true;
-    dev = {
-      enable = true;
-      nix.languageServer = "nil";
-    };
+    # dev = {
+    #   enable = true;
+    #   nix.languageServer = "nil";
+    # };
   };
 }
