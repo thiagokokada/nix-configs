@@ -9,7 +9,6 @@ prefix:
 let
   cfg = config.${prefix}.home;
   cfgHome = config.home-manager.users.${cfg.username};
-  hostName = config.networking.hostName or "generic";
 in
 {
   options.${prefix}.home = {
@@ -24,7 +23,7 @@ in
     };
     extraModules = lib.mkOption {
       description = "Extra modules to import.";
-      type = with lib.types; coercedTo attrs (x: [ x ]) (coercedTo path (x: [ x ]) (listOf anything));
+      type = with lib.types; coercedTo attrs (x: [ x ]) (listOf attrs);
       default = [ ];
     };
   };
@@ -44,7 +43,7 @@ in
         inherit (config) meta device theme;
         imports = [ flake.outputs.homeModules.default ] ++ cfg.extraModules;
         home-manager = {
-          inherit hostName;
+          inherit (config.networking) hostName;
           meta.restoreBackups = lib.mkIf cfg.restoreBackups { inherit backupFileExtension; };
         };
       };

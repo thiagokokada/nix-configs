@@ -86,7 +86,6 @@ in
           "*~"
           ".bsp/sbt.json"
           ".clj-kondo"
-          ".codex"
           ".dir-locals.el"
           ".DS_Store"
           ".lsp"
