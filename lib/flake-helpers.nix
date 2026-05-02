@@ -3,6 +3,7 @@
   nixpkgs,
   nix-darwin,
   home-manager,
+  system-manager,
   ...
 }:
 
@@ -106,5 +107,41 @@ in
         program = "${self.outputs.homeConfigurations.${hostName}.activationPackage}/activate";
         meta.description = "Home activation script for ${hostName}";
       };
+    };
+
+  mkSystemManagerConfig =
+    {
+      hostName,
+      configuration,
+      system,
+    }:
+    {
+      systemConfigs.${hostName} = system-manager.lib.makeSystemConfig {
+        overlays = [ self.outputs.overlays.default ];
+        modules = [
+          home-manager.nixosModules.home-manager
+          self.outputs.systemModules.default
+          {
+            nixpkgs.hostPlatform = system;
+          }
+          configuration
+        ];
+        inherit specialArgs;
+      };
+
+      apps.${system}."systemActivations/${hostName}" =
+        let
+          pkgs = self.outputs.legacyPackages.${system};
+          system-manager-bin = system-manager.packages.${system}.default;
+        in
+        {
+          type = "app";
+          program = nixpkgs.lib.getExe (
+            pkgs.writeShellScriptBin "activate-system-manager" ''
+              ${nixpkgs.lib.getExe' system-manager-bin "system-manager"} switch --sudo --flake '${self}#${hostName}'
+            ''
+          );
+          meta.description = "system-manager activation script for ${hostName}";
+        };
     };
 }

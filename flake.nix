@@ -17,6 +17,11 @@
       url = "github:nix-darwin/nix-darwin";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    system-manager = {
+      url = "github:numtide/system-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.flake-compat.follows = "flake-compat";
+    };
     nixgl = {
       url = "github:nix-community/nixGL";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -107,6 +112,7 @@
           darwinModules.default = import ./modules/nix-darwin;
           homeModules.default = import ./modules/home-manager;
           nixosModules.default = import ./modules/nixos;
+          systemModules.default = import ./modules/system-manager;
           overlays.default = import ./overlays self;
         }
 
@@ -153,6 +159,16 @@
             configuration = ./hosts/nix-darwin/${hostName};
           }
         ) ./hosts/nix-darwin)
+      ++
+        # system-manager configs
+        (libEx.mapDir (
+          hostName:
+          libEx.mkSystemManagerConfig {
+            inherit hostName;
+            configuration = ./hosts/system-manager/${hostName};
+            system = import ./hosts/system-manager/${hostName}/system.nix;
+          }
+        ) ./hosts/system-manager)
       ++
         # Home-Manager configs
         (libEx.mapDir (

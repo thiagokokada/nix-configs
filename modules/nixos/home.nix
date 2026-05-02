@@ -1,8 +1,8 @@
 {
   config,
   lib,
-  flake,
   pkgs,
+  flake,
   ...
 }:
 
