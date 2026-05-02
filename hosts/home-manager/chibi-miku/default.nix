@@ -3,10 +3,7 @@
 {
   home.stateVersion = "26.05";
 
-  targets.genericLinux.nixGL = {
-    defaultWrapper = "mesa";
-    installScripts = [ "mesa" ];
-  };
+  targets.genericLinux.enable = true;
 
   home-manager = {
     cli = {
@@ -14,8 +11,10 @@
       git.gui.enable = true;
     };
     desktop = {
-      mpv.enable = true;
       fonts.fontconfig.enable = true;
+      ghostty.enable = true;
+      mpv.enable = true;
+      nixgl.enable = false;
     };
     dev = {
       enable = true;
