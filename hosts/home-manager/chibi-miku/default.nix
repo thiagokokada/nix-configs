@@ -1,4 +1,4 @@
-{ lib, ... }:
+{ ... }:
 
 {
   home.stateVersion = "26.05";
@@ -6,17 +6,6 @@
   targets.genericLinux.nixGL = {
     defaultWrapper = "mesa";
     installScripts = [ "mesa" ];
-  };
-
-  dconf.settings = with lib.hm.gvariant; {
-    "org.gnome.mutter" = {
-      "experimental-features" = mkArray type.string [
-        # Enable fractional scaling
-        "scale-monitor-buffer"
-        # Enable xwayland native scaling
-        "xwayland-native-scaling"
-      ];
-    };
   };
 
   home-manager = {
