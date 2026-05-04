@@ -21,4 +21,11 @@
       nix.languageServer = "nil";
     };
   };
+
+  # Remap '+C t ç
+  home.file.".XCompose".text = ''
+    include "%L"
+    <dead_acute> <c> : "ç" U00E7
+    <dead_acute> <C> : "Ç" U00C7
+  '';
 }
