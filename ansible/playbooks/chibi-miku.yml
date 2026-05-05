@@ -5,12 +5,13 @@
 
   vars:
     required_packages:
-      - git
-      - curl
-      - sudo
-      - gnome-tweaks
-      - dconf-editor
       - build-base
+      - curl
+      - dconf-editor
+      - distrobox
+      - git
+      - gnome-tweaks
+      - sudo
       - tailscale
       - tailscale-systemd
 
