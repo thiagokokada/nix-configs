@@ -1,0 +1,49 @@
+---
+- name: Check whether Nix is installed
+  ansible.builtin.stat:
+    path: "{{ nix_binary }}"
+  register: nix_binary_stat
+
+- name: Download NixOS nix-installer
+  ansible.builtin.get_url:
+    url: "{{ nix_installer_url }}"
+    dest: /tmp/nix-installer
+    owner: root
+    group: root
+    mode: "0755"
+  when: not nix_binary_stat.stat.exists
+
+- name: Install Nix with the NixOS nix-installer
+  ansible.builtin.command:
+    cmd: >-
+      sh /tmp/nix-installer install linux
+      --init systemd
+      --enable-flakes
+      --no-confirm
+  args:
+    creates: "{{ nix_binary }}"
+  when: not nix_binary_stat.stat.exists
+
+- name: Ensure Nix configuration directory exists
+  ansible.builtin.file:
+    path: /etc/nix
+    state: directory
+    owner: root
+    group: root
+    mode: "0755"
+
+- name: Ensure Nix daemon configuration is present
+  ansible.builtin.blockinfile:
+    path: "{{ nix_conf_path }}"
+    create: true
+    owner: root
+    group: root
+    mode: "0644"
+    marker: "# {mark} ANSIBLE MANAGED NIX CONFIG"
+    block: |
+      build-users-group = nixbld
+      experimental-features = nix-command flakes
+      trusted-users = {{ nix_trusted_users }}
+      builders-use-substitutes = true
+
+  notify: Restart Nix daemon

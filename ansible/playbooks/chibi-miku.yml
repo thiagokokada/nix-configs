@@ -4,7 +4,7 @@
   become: true
 
   vars:
-    laptop_packages:
+    required_packages:
       - git
       - curl
       - sudo
@@ -14,69 +14,32 @@
       - tailscale
       - tailscale-systemd
 
-    nix_installer_url: https://artifacts.nixos.org/nix-installer
-    nix_binary: /nix/var/nix/profiles/default/bin/nix
     laptop_files_dir: "{{ playbook_dir | dirname }}/files"
 
     masked_services:
       - cros-keyboard-map.service
       - iio-sensor-proxy.service
 
-  tasks:
+    absent_packages:
+      - doas
+      - doas-sudo-shim
+
+  roles:
+    - role: nix
+
+  pre_tasks:
+    - name: Ensure conflicting packages are absent
+      community.general.apk:
+        name: "{{ absent_packages }}"
+        state: absent
+
     - name: Ensure required apk packages are installed
       community.general.apk:
-        name: "{{ laptop_packages }}"
+        name: "{{ required_packages }}"
         state: present
         update_cache: true
 
-    - name: Check whether Nix is installed
-      ansible.builtin.stat:
-        path: "{{ nix_binary }}"
-      register: nix_binary_stat
-
-    - name: Download NixOS nix-installer
-      ansible.builtin.get_url:
-        url: "{{ nix_installer_url }}"
-        dest: /tmp/nix-installer
-        owner: root
-        group: root
-        mode: "0755"
-      when: not nix_binary_stat.stat.exists
-
-    - name: Install Nix with the NixOS nix-installer
-      ansible.builtin.command:
-        cmd: >-
-          sh /tmp/nix-installer install linux
-          --init systemd
-          --enable-flakes
-          --no-confirm
-      args:
-        creates: "{{ nix_binary }}"
-      when: not nix_binary_stat.stat.exists
-
-    - name: Ensure Nix configuration directory exists
-      ansible.builtin.file:
-        path: /etc/nix
-        state: directory
-        owner: root
-        group: root
-        mode: "0755"
-
-    - name: Ensure Nix daemon configuration is present
-      ansible.builtin.blockinfile:
-        path: /etc/nix/nix.custom.conf
-        create: true
-        owner: root
-        group: root
-        mode: "0644"
-        marker: "# {mark} ANSIBLE MANAGED LAPTOP NIX CONFIG"
-        block: |
-          build-users-group = nixbld
-          experimental-features = nix-command flakes
-          trusted-users = root @wheel
-          builders-use-substitutes = true
-      notify: Restart Nix daemon
-
+  tasks:
     - name: Mask unwanted systemd services
       ansible.builtin.systemd_service:
         name: "{{ item }}"
@@ -141,12 +104,6 @@
         mode: "0644"
 
   handlers:
-    - name: Restart Nix daemon
-      ansible.builtin.systemd_service:
-        name: nix-daemon.service
-        state: restarted
-      failed_when: false
-
     - name: Update libwacom db
       ansible.builtin.command: libwacom-update-db
       changed_when: true
