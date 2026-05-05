@@ -11,13 +11,7 @@
     shellcheck.enable = true;
     shfmt.enable = true;
     yamllint.enable = true;
-    statix = {
-      enable = true;
-      disabled-lints = [
-        "empty_pattern"
-        "repeated_keys"
-      ];
-    };
+    statix.enable = true;
   };
 
   settings = {
