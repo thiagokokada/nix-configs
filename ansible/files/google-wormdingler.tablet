@@ -1,0 +1,13 @@
+[Device]
+Name=hid-over-i2c 0603:604A Stylus
+ModelName=
+DeviceMatch=i2c|0603|604a
+Class=ISDV4
+Width=5.35433
+Height=8.54331
+IntegratedIn=Display;System
+Styli=@generic-no-eraser
+
+[Features]
+Stylus=true
+Touch=false

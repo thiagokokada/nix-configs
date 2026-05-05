@@ -121,13 +121,22 @@
             treefmtEval = treefmt-nix.lib.evalModule pkgs ./treefmt.nix;
           in
           {
-            devShells.default = pkgs.mkShell {
-              packages = with pkgs; [
-                neovim-standalone
-                nil
-                nixfmt
-                statix
-              ];
+            devShells = {
+              default = pkgs.mkShell {
+                packages = with pkgs; [
+                  neovim-standalone
+                  nil
+                  nixfmt
+                  statix
+                ];
+              };
+              ansible = pkgs.mkShell {
+                packages = with pkgs; [
+                  ansible
+                  ansible-lint
+                  yamllint
+                ];
+              };
             };
             checks.formatting = treefmtEval.config.build.check self;
             formatter = treefmtEval.config.build.wrapper;

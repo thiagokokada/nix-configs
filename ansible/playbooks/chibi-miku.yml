@@ -1,0 +1,152 @@
+---
+- name: Set up chibi-miku
+  hosts: all
+  become: true
+
+  vars:
+    laptop_packages:
+      - git
+      - curl
+      - sudo
+      - gnome-tweaks
+      - dconf-editor
+      - build-base
+      - tailscale
+      - tailscale-systemd
+
+    nix_installer_url: https://artifacts.nixos.org/nix-installer
+    nix_binary: /nix/var/nix/profiles/default/bin/nix
+    laptop_files_dir: "{{ playbook_dir | dirname }}/files"
+
+    masked_services:
+      - cros-keyboard-map.service
+      - iio-sensor-proxy.service
+
+  tasks:
+    - name: Ensure required apk packages are installed
+      community.general.apk:
+        name: "{{ laptop_packages }}"
+        state: present
+        update_cache: true
+
+    - name: Check whether Nix is installed
+      ansible.builtin.stat:
+        path: "{{ nix_binary }}"
+      register: nix_binary_stat
+
+    - name: Download NixOS nix-installer
+      ansible.builtin.get_url:
+        url: "{{ nix_installer_url }}"
+        dest: /tmp/nix-installer
+        owner: root
+        group: root
+        mode: "0755"
+      when: not nix_binary_stat.stat.exists
+
+    - name: Install Nix with the NixOS nix-installer
+      ansible.builtin.command:
+        cmd: >-
+          sh /tmp/nix-installer install linux
+          --init systemd
+          --enable-flakes
+          --no-confirm
+      args:
+        creates: "{{ nix_binary }}"
+      when: not nix_binary_stat.stat.exists
+
+    - name: Ensure Nix configuration directory exists
+      ansible.builtin.file:
+        path: /etc/nix
+        state: directory
+        owner: root
+        group: root
+        mode: "0755"
+
+    - name: Ensure Nix daemon configuration is present
+      ansible.builtin.blockinfile:
+        path: /etc/nix/nix.custom.conf
+        create: true
+        owner: root
+        group: root
+        mode: "0644"
+        marker: "# {mark} ANSIBLE MANAGED LAPTOP NIX CONFIG"
+        block: |
+          build-users-group = nixbld
+          experimental-features = nix-command flakes
+          trusted-users = root @wheel
+          builders-use-substitutes = true
+      notify: Restart Nix daemon
+
+    - name: Mask unwanted systemd services
+      ansible.builtin.systemd_service:
+        name: "{{ item }}"
+        masked: true
+      loop: "{{ masked_services }}"
+
+    - name: Stop unwanted systemd services if they are loaded
+      ansible.builtin.systemd_service:
+        name: "{{ item }}"
+        state: stopped
+        enabled: false
+      loop: "{{ masked_services }}"
+      failed_when: false
+
+    - name: Ensure keyd configuration directory exists
+      ansible.builtin.file:
+        path: /etc/keyd
+        state: directory
+        owner: root
+        group: root
+        mode: "0755"
+
+    - name: Install keyd default configuration
+      ansible.builtin.copy:
+        src: "{{ laptop_files_dir }}/keyd-default.conf"
+        dest: /etc/keyd/default.conf
+        owner: root
+        group: root
+        mode: "0644"
+
+    - name: Ensure libwacom configuration directory exists
+      ansible.builtin.file:
+        path: /etc/libwacom
+        state: directory
+        owner: root
+        group: root
+        mode: "0755"
+
+    - name: Install Wormdingler libwacom tablet definition
+      ansible.builtin.copy:
+        src: "{{ laptop_files_dir }}/google-wormdingler.tablet"
+        dest: /etc/libwacom/google-wormdingler.tablet
+        owner: root
+        group: root
+        mode: "0644"
+      notify: Update libwacom db
+
+    - name: Ensure libinput quirks directory exists
+      ansible.builtin.file:
+        path: /etc/libinput
+        state: directory
+        owner: root
+        group: root
+        mode: "0755"
+
+    - name: Install local libinput overrides
+      ansible.builtin.copy:
+        src: "{{ laptop_files_dir }}/local-overrides.quirks"
+        dest: /etc/libinput/local-overrides.quirks
+        owner: root
+        group: root
+        mode: "0644"
+
+  handlers:
+    - name: Restart Nix daemon
+      ansible.builtin.systemd_service:
+        name: nix-daemon.service
+        state: restarted
+      failed_when: false
+
+    - name: Update libwacom db
+      ansible.builtin.command: libwacom-update-db
+      changed_when: true

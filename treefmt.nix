@@ -10,6 +10,7 @@
     ruff-format.enable = true;
     shellcheck.enable = true;
     shfmt.enable = true;
+    yamllint.enable = true;
     statix = {
       enable = true;
       disabled-lints = [

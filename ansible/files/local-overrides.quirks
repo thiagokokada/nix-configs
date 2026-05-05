@@ -1,0 +1,17 @@
+[Google Chromebook Wormdingler Stylus Digitizer]
+MatchUdevType=tablet
+MatchDeviceTree=*wormdingler*
+MatchBus=i2c
+ModelChromebook=1
+AttrPressureRange=1100:1000
+
+[Google Chromebook Wormdingler Touch Digitizer]
+MatchName=hid-over-i2c 0603:604A
+AttrPalmSizeThreshold=14
+
+[Google Chromebook Wormdingler Stylus Digitizer]
+MatchUdevType=tablet
+MatchDeviceTree=*wormdingler*
+MatchBus=i2c
+ModelChromebook=1
+AttrTabletSmoothing=0
