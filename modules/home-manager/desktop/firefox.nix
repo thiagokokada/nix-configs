@@ -17,7 +17,11 @@ in
     };
     subpixelRender.enable = lib.mkEnableOption "subpixel render" // {
       default =
-        (!config.home-manager.darwin.enable) && cfgFc.antialiasing && cfgFc.subpixelRendering != "none";
+        (!config.home-manager.darwin.enable)
+        && cfgFc.antialiasing != null
+        && cfgFc.antialiasing
+        && cfgFc.subpixelRendering != null
+        && cfgFc.subpixelRendering != "none";
     };
   };
 
