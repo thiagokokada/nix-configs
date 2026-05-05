@@ -12,6 +12,7 @@ in
   imports = [
     ./btop.nix
     ./git.nix
+    ./gnu.nix
     ./htop.nix
     ./irssi.nix
     ./jujutsu.nix

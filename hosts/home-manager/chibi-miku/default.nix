@@ -7,8 +7,9 @@
 
   home-manager = {
     cli = {
-      icons.enable = true;
       git.gui.enable = true;
+      gnu.enable = true;
+      icons.enable = true;
     };
     desktop = {
       fonts.fontconfig.enable = true;
