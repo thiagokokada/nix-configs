@@ -13,7 +13,11 @@
     desktop = {
       fonts.fontconfig.enable = true;
       ghostty.enable = true;
-      mpv.enable = true;
+      mpv = {
+        enable = true;
+        profile = [ ];
+        vapoursynth.enable = false;
+      };
       nixgl.enable = false;
     };
     dev = {
@@ -28,4 +32,9 @@
     <dead_acute> <c> : "ç" U00E7
     <dead_acute> <C> : "Ç" U00C7
   '';
+
+  programs.mpv.config = {
+    hwdec = "v4l2m2m-copy";
+    vo = "gpu";
+  };
 }
