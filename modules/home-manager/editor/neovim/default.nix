@@ -12,6 +12,13 @@ let
   cfg = config.home-manager.editor.neovim;
   treesitterGrammars = lib.attrValues pkgs.vimPlugins.nvim-treesitter.parsers;
   treesitterQueries = map (p: p.associatedQuery) treesitterGrammars;
+  # Build a single package so we link this once
+  treesitterPackage = pkgs.buildEnv {
+    pname = "treesitter-parsers-and-queries";
+    version = "unstable";
+    paths = treesitterGrammars ++ treesitterQueries;
+    ignoreCollisions = true;
+  };
 in
 {
   options.home-manager.editor.neovim = {
@@ -727,81 +734,72 @@ in
                 '';
             }
           ]
-          ++ lib.optionals cfg.treeSitter.enable (
-            [
-              {
-                plugin = pkgs.vimUtils.buildVimPlugin rec {
-                  pname = "treesitter-config-dummy";
-                  version = "unstable";
-                  src = pkgs.writeText pname "";
-                  dontUnpack = true;
-                };
-                type = "lua";
-                config = ''
-                  vim.g.treesitter_disable_filetypes = {
-                    bigfile = true,
-                  }
+          ++ lib.optionals cfg.treeSitter.enable [
+            {
+              plugin = treesitterPackage;
+              type = "lua";
+              config = ''
+                vim.g.treesitter_disable_filetypes = {
+                  bigfile = true,
+                }
 
-                  vim.g.treesitter_disable_filenames = {
-                    [".bash_history"] = true,
-                    [".zsh_history"] = true,
-                    [".Rhistory"] = true,
-                  }
+                vim.g.treesitter_disable_filenames = {
+                  [".bash_history"] = true,
+                  [".zsh_history"] = true,
+                  [".Rhistory"] = true,
+                }
 
-                  vim.api.nvim_create_autocmd("FileType", {
-                    pattern = "*",
-                    callback = function(ev)
-                      local filetype = vim.bo[ev.buf].filetype
-                      local name = vim.api.nvim_buf_get_name(ev.buf)
-                      local basename = vim.fs.basename(name)
+                vim.api.nvim_create_autocmd("FileType", {
+                  pattern = "*",
+                  callback = function(ev)
+                    local filetype = vim.bo[ev.buf].filetype
+                    local name = vim.api.nvim_buf_get_name(ev.buf)
+                    local basename = vim.fs.basename(name)
 
-                      if vim.g.treesitter_disable_filetypes[filetype]
-                        or vim.g.treesitter_disable_filenames[basename]
-                      then
-                        pcall(vim.treesitter.stop, ev.buf)
-                        return
+                    if vim.g.treesitter_disable_filetypes[filetype]
+                      or vim.g.treesitter_disable_filenames[basename]
+                    then
+                      pcall(vim.treesitter.stop, ev.buf)
+                      return
+                    end
+                    pcall(vim.treesitter.start, ev.buf)
+                  end,
+                })
+              '';
+            }
+            {
+              plugin = nvim-ufo;
+              type = "lua";
+              config = # lua
+                ''
+                  local ufo = require("ufo")
+
+                  vim.o.foldcolumn = '0'
+                  vim.o.foldlevel = 99
+                  vim.o.foldlevelstart = 99
+                  vim.o.foldenable = true
+
+                  vim.keymap.set('n', 'zR', ufo.openAllFolds, { desc = "Open all folds" })
+                  vim.keymap.set('n', 'zM', ufo.closeAllFolds, { desc = "Close all folds" })
+                  ufo.setup {
+                    provider_selector = function(bufnr, filetype, buftype)
+                      if filetype == "bigfile" then
+                        return {'indent'}
                       end
-                      pcall(vim.treesitter.start, ev.buf)
-                    end,
-                  })
+                      return {'treesitter', 'indent'}
+                    end
+                  }
                 '';
-              }
-              {
-                plugin = nvim-ufo;
-                type = "lua";
-                config = # lua
-                  ''
-                    local ufo = require("ufo")
-
-                    vim.o.foldcolumn = '0'
-                    vim.o.foldlevel = 99
-                    vim.o.foldlevelstart = 99
-                    vim.o.foldenable = true
-
-                    vim.keymap.set('n', 'zR', ufo.openAllFolds, { desc = "Open all folds" })
-                    vim.keymap.set('n', 'zM', ufo.closeAllFolds, { desc = "Close all folds" })
-                    ufo.setup {
-                      provider_selector = function(bufnr, filetype, buftype)
-                        if filetype == "bigfile" then
-                          return {'indent'}
-                        end
-                        return {'treesitter', 'indent'}
-                      end
-                    }
-                  '';
-              }
-              {
-                plugin = nvim-ts-autotag;
-                type = "lua";
-                config = # lua
-                  ''
-                    require("nvim-ts-autotag").setup {}
-                  '';
-              }
-            ]
-            ++ treesitterGrammars
-            ++ treesitterQueries
-          );
+            }
+            {
+              plugin = nvim-ts-autotag;
+              type = "lua";
+              config = # lua
+                ''
+                  require("nvim-ts-autotag").setup {}
+                '';
+            }
+          ];
       };
 
       xdg.desktopEntries.nvim = lib.mkIf config.home-manager.desktop.enable {
