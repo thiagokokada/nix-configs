@@ -10,8 +10,9 @@
       icons.enable = true;
     };
     desktop = {
-      fonts.fontconfig.enable = true;
-      ghostty.enable = true;
+      enable = true;
+      chromium.enable = false;
+      firefox.enable = false;
       mpv = {
         enable = true;
         profile = [ ];
