@@ -21,7 +21,10 @@
       "home-linux"
       "steamdeck"
     ];
-    aarch64-linux.hostNames = [ "penguin" ];
+    aarch64-linux.hostNames = [
+      "chibi-miku"
+      "penguin"
+    ];
     aarch64-darwin.hostNames = [ "home-macos" ];
   };
 

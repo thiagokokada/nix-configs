@@ -50,8 +50,10 @@ jobs:
           tool-cache: true
           usrlocal: true
           usrmisc: true
-      - name: 'Build Home-Manager configs for: penguin'
-        run: nix build --print-build-logs '.#homeConfigurations.penguin.activationPackage'
+      - name: 'Build Home-Manager configs for: chibi-miku, penguin'
+        run: |-
+          nix build --print-build-logs '.#homeConfigurations.chibi-miku.activationPackage'
+          nix build --print-build-logs '.#homeConfigurations.penguin.activationPackage'
       - name: 'Build NixOS configs for: zatsune-nixos'
         run: nix build --print-build-logs '.#nixosConfigurations.zatsune-nixos.config.system.build.toplevel'
 name: update-flakes-after
