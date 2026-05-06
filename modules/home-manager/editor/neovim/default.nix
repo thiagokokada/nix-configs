@@ -345,6 +345,9 @@ in
                     gitbrowse = {
                       enabled = true,
                     },
+                    image = {
+                      enabled = true,
+                    },
                   }
 
                   vim.keymap.set({ "n", "v" }, "<Leader>gr", function()
