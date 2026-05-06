@@ -15,7 +15,9 @@ in
     enable = lib.mkEnableOption "home config" // {
       default = true;
     };
-    restoreBackups = lib.mkEnableOption "restore backup files before activation";
+    restoreBackups = lib.mkEnableOption ''
+      restore Home Manager backup files for paths that were managed by the
+      previous generation but are missing from the current one'';
     username = lib.mkOption {
       description = "Main username.";
       type = lib.types.str;
