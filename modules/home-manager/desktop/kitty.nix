@@ -56,82 +56,88 @@ in
         inherit (config.theme.fonts.symbols) package name;
         size = cfg.fontSize;
       };
-      settings = with config.theme.colors; {
-        kitty_mod = lib.mkIf cfg.useSuperKeybindings "super";
+      settings =
+        with config.theme.colors;
+        {
+          kitty_mod = lib.mkIf cfg.useSuperKeybindings "super";
 
-        # When using home-manager in standalone mode it is not always possible
-        # to change the default shell for the user, so let's force it here
-        shell = lib.mkIf (
-          config.home-manager.cli.zsh.enable && config.targets.genericLinux.enable
-        ) "${config.home.profileDirectory}/bin/zsh";
+          # When using home-manager in standalone mode it is not always possible
+          # to change the default shell for the user, so let's force it here
+          shell = lib.mkIf (
+            config.home-manager.cli.zsh.enable && config.targets.genericLinux.enable
+          ) "${config.home.profileDirectory}/bin/zsh";
 
-        # Colors
-        foreground = base05;
-        background = base00;
-        selection_background = base02;
-        selection_foreground = base05;
-        url_color = base04;
-        cursor = base05;
-        active_border_color = base01;
-        inactive_border_color = base03;
-        active_tab_background = base01;
-        active_tab_foreground = base04;
-        inactive_tab_background = base00;
-        inactive_tab_foreground = base05;
-        tab_bar_background = base00;
+          # Colors
+          foreground = base05;
+          background = base00;
+          selection_background = base02;
+          selection_foreground = base05;
+          url_color = base04;
+          cursor = base05;
+          active_border_color = base01;
+          inactive_border_color = base03;
+          active_tab_background = base01;
+          active_tab_foreground = base04;
+          inactive_tab_background = base00;
+          inactive_tab_foreground = base05;
+          tab_bar_background = base00;
 
-        # Scrollback
-        scrollback_lines = 10000;
+          # Scrollback
+          scrollback_lines = 10000;
 
-        # Reduce lag
-        sync_to_monitor = false;
-        repaint_delay = 10;
-        input_delay = 0;
+          # Reduce lag
+          sync_to_monitor = false;
+          repaint_delay = 10;
+          input_delay = 0;
 
-        # Bell
-        visual_bell_duration = "0.0";
-        enable_audio_bell = false;
-        window_alert_on_bell = true;
-        bell_on_tab = true;
+          # Bell
+          visual_bell_duration = "0.0";
+          enable_audio_bell = false;
+          window_alert_on_bell = true;
+          bell_on_tab = true;
 
-        # Tabs
-        tab_bar_edge = "top";
-        tab_bar_style = "powerline";
-        tab_powerline_style = "round";
-        tab_title_template = "{fmt.fg.red}{bell_symbol}{activity_symbol}{fmt.fg.tab}{tab.last_focused_progress_percent}[{layout_name[:1]}] {index}:{title}";
-        # always show tabs when not using window-manager
-        tab_bar_min_tabs = lib.mkIf (!config.home-manager.window-manager.enable) 1;
-        tab_title_max_length = 30;
+          # Tabs
+          tab_bar_edge = "top";
+          tab_bar_style = "powerline";
+          tab_powerline_style = "round";
+          tab_title_template = "{fmt.fg.red}{bell_symbol}{activity_symbol}{fmt.fg.tab}{tab.last_focused_progress_percent}[{layout_name[:1]}] {index}:{title}";
+          # always show tabs when not using window-manager
+          tab_bar_min_tabs = lib.mkIf (!config.home-manager.window-manager.enable) 1;
+          tab_title_max_length = 30;
 
-        # Misc
-        allow_remote_control = "socket-only";
-        clipboard_control = "write-clipboard write-primary read-clipboard read-primary";
-        editor = lib.mkIf config.home-manager.window-manager.enable config.home-manager.window-manager.default.editor;
-        # ctrl+shift+l / super+l
-        enabled_layouts = "tall,fat,grid,horizontal,vertical,stack";
-        listen_on = "unix:/tmp/kitty";
-        macos_show_window_title_in = "window";
-        macos_quit_when_last_window_closed = true;
-        macos_menubar_title_max_length = 50;
-        strip_trailing_spaces = "smart";
-        window_padding_width = 5;
-        confirm_os_window_close = 0;
+          # Misc
+          clipboard_control = "write-clipboard write-primary read-clipboard read-primary";
+          editor = lib.mkIf config.home-manager.window-manager.enable config.home-manager.window-manager.default.editor;
+          # ctrl+shift+l / super+l
+          enabled_layouts = "tall,fat,grid,horizontal,vertical,stack";
+          macos_show_window_title_in = "window";
+          macos_quit_when_last_window_closed = true;
+          macos_menubar_title_max_length = 50;
+          strip_trailing_spaces = "smart";
+          window_padding_width = 5;
+          confirm_os_window_close = 0;
 
-        # Simulate middle-click copy-and-paste, but instead of copying to
-        # clipboard it copies to a private buffer
-        copy_on_select = "select_buffer";
-        "mouse_map middle release ungrabbed paste_from_buffer" = "select_buffer";
+          # Simulate middle-click copy-and-paste, but instead of copying to
+          # clipboard it copies to a private buffer
+          copy_on_select = "select_buffer";
+          "mouse_map middle release ungrabbed paste_from_buffer" = "select_buffer";
 
-        # Keep Kitty text selection on plain left even when app grabs mouse
-        # e.g., allow `less --mouse` to work and still select text with mouse
-        "mouse_map left press ungrabbed,grabbed mouse_selection" = "normal";
-        "mouse_map left doublepress ungrabbed,grabbed mouse_selection" = "word";
-        "mouse_map left triplepress ungrabbed,grabbed mouse_selection" = "line";
-        "mouse_map right press ungrabbed,grabbed mouse_selection" = "extend";
+          # Keep Kitty text selection on plain left even when app grabs mouse
+          # e.g., allow `less --mouse` to work and still select text with mouse
+          "mouse_map left press ungrabbed,grabbed mouse_selection" = "normal";
+          "mouse_map left doublepress ungrabbed,grabbed mouse_selection" = "word";
+          "mouse_map left triplepress ungrabbed,grabbed mouse_selection" = "line";
+          "mouse_map right press ungrabbed,grabbed mouse_selection" = "extend";
 
-        # Fix for Wayland slow scrolling
-        touch_scroll_multiplier = lib.mkIf config.home-manager.desktop.enable "5.0";
-      };
+          # Fix for Wayland slow scrolling
+          touch_scroll_multiplier = lib.mkIf config.home-manager.desktop.enable "5.0";
+        }
+        // lib.optionalAttrs cfg.scrollback-nvim.enable {
+          allow_remote_control = "socket-only";
+          listen_on = "unix:/tmp/kitty";
+          shell_integration = true;
+
+        };
 
       darwinLaunchOptions = [
         "--single-instance"

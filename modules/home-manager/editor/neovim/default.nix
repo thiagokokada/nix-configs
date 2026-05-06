@@ -213,6 +213,9 @@ in
                       windows = true,
                       move_with_alt = true,
                     },
+                    autocommands = {
+                      basic = false,
+                    },
                   }
                   require('mini.completion').setup {
                     delay = { completion = 10^7, info = 10^7, signature = 10^7 },
@@ -556,7 +559,7 @@ in
             vim-advanced-sorters
             vim-nix
           ]
-          ++ lib.optionals config.home-manager.desktop.kitty.enable [
+          ++ lib.optionals config.home-manager.desktop.kitty.scrollback-nvim.enable [
             {
               plugin = kitty-scrollback-nvim;
               type = "lua";
