@@ -1,0 +1,8 @@
+ACTION=="remove", GOTO="sensor_end"
+
+SUBSYSTEM=="iio", KERNEL=="iio*", SUBSYSTEMS=="platform",
+  ATTRS{modalias}=="platform:cros-ec-accel",
+  ENV{ACCEL_MOUNT_MATRIX}="0, 1, 0; -1, 0, 0; 0, 0, -1",
+  GOTO="sensor_end"
+
+LABEL="sensor_end"

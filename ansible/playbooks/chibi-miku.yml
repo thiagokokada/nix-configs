@@ -6,6 +6,7 @@
   vars:
     required_packages:
       - build-base
+      - cros-keyboard-map # keyd
       - curl
       - dconf-editor
       - distrobox
@@ -41,12 +42,6 @@
         update_cache: true
 
   tasks:
-    - name: Mask unwanted systemd services
-      ansible.builtin.systemd_service:
-        name: "{{ item }}"
-        masked: true
-      loop: "{{ masked_services }}"
-
     - name: Stop unwanted systemd services if they are loaded
       ansible.builtin.systemd_service:
         name: "{{ item }}"
@@ -54,6 +49,12 @@
         enabled: false
       loop: "{{ masked_services }}"
       failed_when: false
+
+    - name: Mask unwanted systemd services
+      ansible.builtin.systemd_service:
+        name: "{{ item }}"
+        masked: true
+      loop: "{{ masked_services }}"
 
     - name: Ensure keyd configuration directory exists
       ansible.builtin.file:
@@ -67,6 +68,23 @@
       ansible.builtin.copy:
         src: "{{ laptop_files_dir }}/keyd-default.conf"
         dest: /etc/keyd/default.conf
+        owner: root
+        group: root
+        mode: "0644"
+      notify: Restart keyd
+
+    - name: Ensure udev configuration directory exists
+      ansible.builtin.file:
+        path: /etc/udev/rules.d
+        state: directory
+        owner: root
+        group: root
+        mode: "0755"
+
+    - name: Install udev rotation definition
+      ansible.builtin.copy:
+        src: "{{ laptop_files_dir }}/61-cros-ec-accel.rules"
+        dest: /etc/udev/rules.d/61-cros-ec-accel.rules
         owner: root
         group: root
         mode: "0644"
@@ -105,6 +123,11 @@
         mode: "0644"
 
   handlers:
+    - name: Restart keyd
+      ansible.builtin.systemd_service:
+        name: "keyd"
+        state: restarted
+
     - name: Update libwacom db
       ansible.builtin.command: libwacom-update-db
       changed_when: true
