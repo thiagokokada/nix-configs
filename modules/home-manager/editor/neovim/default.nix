@@ -131,10 +131,26 @@ in
             vim.keymap.set("t", "<M-[>", [[<C-\><C-n>]])
             vim.keymap.set("t", "<C-v><Esc>", [[<C-\><C-n>]])
             vim.keymap.set("n", "<Leader>T", "<cmd>:terminal<CR>", { desc = "Terminal" })
+
             -- disable line numbers in terminal
             vim.api.nvim_create_autocmd({ "TermOpen" }, {
-              command = "setlocal nonumber",
-              pattern = { "*" },
+              pattern = { "term://*" },
+              callback = function()
+                vim.cmd.setlocal("nonumber")
+              end,
+            })
+
+            -- trigger insert mode in terminal
+            vim.api.nvim_create_autocmd('TermOpen', {
+              pattern = "term://*",
+              callback = function(data)
+                if vim.env.KITTY_SCROLLBACK_NVIM == 'true' then
+                  return
+                end
+                if vim.api.nvim_get_current_buf() == data.buf and vim.bo.buftype == "terminal" then
+                  vim.cmd.startinsert()
+                end
+              end,
             })
 
             -- unsets the 'last search pattern'
@@ -176,6 +192,15 @@ in
                 vim.opt_local.spell = true
               end,
               desc = "Enable spellcheck for defined filetypes",
+            })
+
+            -- highlight on yank
+            vim.api.nvim_create_autocmd({ "TextYankPost" }, {
+              pattern = { "*" },
+              callback = function()
+                vim.hl.on_yank()
+              end,
+              desc = "Highlight yanked text"
             })
 
             -- undotree
