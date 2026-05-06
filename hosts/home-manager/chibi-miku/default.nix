@@ -13,10 +13,8 @@
       enable = true;
       chromium.enable = false;
       firefox.enable = false;
-      mpv = {
-        enable = true;
-        vapoursynth.enable = false;
-      };
+      kitty.fontSize = 11.0;
+      mpv.vapoursynth.enable = false;
       nixgl.enable = false;
     };
     dev = {
