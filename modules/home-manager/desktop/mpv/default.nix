@@ -15,7 +15,7 @@ in
     };
     profile = lib.mkOption {
       type = with lib.types; listOf str;
-      default = [ "high-quality" ];
+      default = [ ];
       description = "Default mpv profile(s).";
     };
     hq.enable = lib.mkEnableOption "high-quality config (needs good CPU/GPU)";
@@ -39,8 +39,6 @@ in
 
       config = {
         profile = lib.mkIf (cfg.profile != [ ]) cfg.profile;
-        osd-font-size = 14;
-        osd-level = 3;
         slang = "enUS,enGB,en,eng,ptBR,pt,por";
         alang = "ja,jpn,enUS,enGB,en,eng,ptBR,pt,por";
       };

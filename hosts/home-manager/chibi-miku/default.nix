@@ -15,7 +15,6 @@
       firefox.enable = false;
       mpv = {
         enable = true;
-        profile = [ ];
         vapoursynth.enable = false;
       };
       nixgl.enable = false;
