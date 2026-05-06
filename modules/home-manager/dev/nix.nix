@@ -27,11 +27,11 @@ in
     home.packages =
       with pkgs;
       [
+        dix
         nix-tree
         nix-update
         nixfmt
         nurl
-        nvd
         statix
       ]
       ++ lib.optionals (cfg.languageServer == "nil") [ nil ]

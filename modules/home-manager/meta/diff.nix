@@ -20,7 +20,7 @@ in
         ''
           export PATH="${lib.makeBinPath [ config.nix.package ]}:$PATH"
           if [[ -n "''${oldGenPath:-}" ]] && [[ -n "''${newGenPath:-}" ]]; then
-            ${lib.getExe pkgs.nvd} diff "$oldGenPath" "$newGenPath" || true
+            ${lib.getExe pkgs.dix} "$oldGenPath" "$newGenPath" || true
           fi
         '';
   };

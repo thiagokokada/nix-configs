@@ -20,7 +20,7 @@ in
         export PATH="${lib.makeBinPath [ config.nix.package ]}:$PATH"
         if [[ -e '/run/current-system' ]]; then
           echo "showing changes compared to /run/current-system..."
-          ${lib.getExe pkgs.nvd} diff '/run/current-system' "$systemConfig" || true
+          ${lib.getExe pkgs.dix} '/run/current-system' "$systemConfig" || true
         fi
       '';
   };
