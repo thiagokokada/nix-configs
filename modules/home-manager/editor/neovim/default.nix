@@ -63,806 +63,812 @@ in
         touch "$out"
       '';
     in
-    {
-      home-manager.editor.neovim.standalonePackage = standalonePackage;
+    lib.mkMerge [
+      {
+        home-manager.editor.neovim.standalonePackage = standalonePackage;
 
-      home.checks = [ checkPackage ];
+        home.checks = [ checkPackage ];
 
-      home.packages = lib.optionals enableIcons [
-        config.theme.fonts.symbols.package
-      ];
+        home.packages = lib.optionals enableIcons [
+          config.theme.fonts.symbols.package
+        ];
 
-      programs.neovim = {
-        enable = true;
+        programs.neovim = lib.mkMerge [
+          {
+            enable = true;
 
-        extraPackages =
-          with pkgs;
-          [
-            fd
-            ripgrep
-          ]
-          ++ lib.optionals stdenv.isLinux [
-            fswatch
-            # For clipboard=unnamedplus
-            wl-clipboard
-            xclip
-          ];
+            extraPackages =
+              with pkgs;
+              [
+                fd
+                ripgrep
+              ]
+              ++ lib.optionals stdenv.isLinux [
+                fswatch
+                # For clipboard=unnamedplus
+                wl-clipboard
+                xclip
+              ];
 
-        defaultEditor = true;
+            defaultEditor = true;
 
-        withRuby = false;
-        withNodeJs = false;
-        withPython3 = false;
+            withRuby = false;
+            withNodeJs = false;
+            withPython3 = false;
 
-        viAlias = true;
-        vimAlias = true;
-        vimdiffAlias = true;
+            viAlias = true;
+            vimAlias = true;
+            vimdiffAlias = true;
 
-        initLua = # lua
-          ''
-            -- general config
-            vim.g.mapleader = " "
-            vim.g.maplocalleader = ","
+            initLua = # lua
+              ''
+                -- general config
+                vim.g.mapleader = " "
+                vim.g.maplocalleader = ","
 
-            -- bytecompile lua modules
-            vim.loader.enable()
+                -- bytecompile lua modules
+                vim.loader.enable()
 
-            -- load .exrc, .nvimrc and .nvim.lua local files
-            vim.opt.exrc = true
+                -- load .exrc, .nvimrc and .nvim.lua local files
+                vim.opt.exrc = true
 
-            -- highlight current line (enabled by mini.basics)
-            vim.opt.cursorline = false
+                -- highlight current line (enabled by mini.basics)
+                vim.opt.cursorline = false
 
-            -- copy and paste use the system clipboard
-            vim.opt.clipboard:append { "unnamedplus" }
+                -- copy and paste use the system clipboard
+                vim.opt.clipboard:append { "unnamedplus" }
 
-            -- show vertical colum
-            vim.opt.colorcolumn:append { 81, 121 }
+                -- show vertical colum
+                vim.opt.colorcolumn:append { 81, 121 }
 
-            -- avoid swapfile warning
-            vim.opt.shortmess:append { A = true }
+                -- avoid swapfile warning
+                vim.opt.shortmess:append { A = true }
 
-            -- disable "How to disable mouse" menu
-            vim.cmd.aunmenu { [[PopUp.How-to\ disable\ mouse]] }
-            vim.cmd.aunmenu { [[PopUp.-1-]] }
+                -- disable "How to disable mouse" menu
+                vim.cmd.aunmenu { [[PopUp.How-to\ disable\ mouse]] }
+                vim.cmd.aunmenu { [[PopUp.-1-]] }
 
-            -- make Esc enter Normal mode in Term
-            vim.keymap.set("t", "<Esc>", [[<C-\><C-n>]])
-            vim.keymap.set("t", "<M-[>", [[<C-\><C-n>]])
-            vim.keymap.set("t", "<C-v><Esc>", [[<C-\><C-n>]])
-            vim.keymap.set("n", "<Leader>T", "<cmd>:terminal<CR>", { desc = "Terminal" })
+                -- make Esc enter Normal mode in Term
+                vim.keymap.set("t", "<Esc>", [[<C-\><C-n>]])
+                vim.keymap.set("t", "<M-[>", [[<C-\><C-n>]])
+                vim.keymap.set("t", "<C-v><Esc>", [[<C-\><C-n>]])
+                vim.keymap.set("n", "<Leader>T", "<cmd>:terminal<CR>", { desc = "Terminal" })
 
-            -- disable line numbers in terminal
-            vim.api.nvim_create_autocmd({ "TermOpen" }, {
-              pattern = { "term://*" },
-              callback = function()
-                vim.cmd.setlocal("nonumber")
-              end,
-            })
-
-            -- trigger insert mode in terminal
-            vim.api.nvim_create_autocmd('TermOpen', {
-              pattern = "term://*",
-              callback = function(data)
-                if vim.env.KITTY_SCROLLBACK_NVIM == 'true' then
-                  return
-                end
-                if vim.api.nvim_get_current_buf() == data.buf and vim.bo.buftype == "terminal" then
-                  vim.cmd.startinsert()
-                end
-              end,
-            })
-
-            -- unsets the 'last search pattern'
-            vim.keymap.set("n", "<C-g>", "<cmd>:noh<CR>", { desc = "Clear highlight" })
-
-            -- completion
-            vim.keymap.set({"i", "c"}, "<C-j>", function()
-              return vim.fn.pumvisible() ~= 0 and "<C-n>" or "<C-j>"
-            end, { expr = true })
-            vim.keymap.set({"i", "c"}, "<C-k>", function()
-              return vim.fn.pumvisible() ~= 0 and "<C-p>" or "<C-k>"
-            end, { expr = true })
-            vim.keymap.set({"i", "c"}, "<CR>", function()
-              return vim.fn.pumvisible() ~= 0 and "<C-y>" or "<CR>"
-            end, { expr = true })
-            vim.keymap.set("i", "<C-Space>", "<C-x><C-o>")
-
-            -- enable syntaxcomplete if omnifunc is unavailable
-            vim.api.nvim_create_autocmd({ "FileType" }, {
-              command = 'if &omnifunc == "" | setlocal omnifunc=syntaxcomplete#Complete | endif',
-              pattern = { "*" },
-            })
-
-            -- reload file if changed
-            vim.opt.autoread = true
-            vim.api.nvim_create_autocmd({ "BufEnter", "CursorHold", "CursorHoldI", "FocusGained" }, {
-              command = "if mode() != 'c' | checktime | endif",
-              pattern = { "*" },
-            })
-
-            -- autoindent when starting a new line with 'o' or 'O'
-            vim.opt.autoindent = true
-            vim.opt.formatoptions:append { o = true, j = true }
-
-            -- create an autocommand to enable spellcheck for specified file types
-            vim.api.nvim_create_autocmd({ "FileType" }, {
-              pattern = { "text", "plaintex", "typst", "gitcommit", "markdown" },
-              callback = function()
-                vim.opt_local.spell = true
-              end,
-              desc = "Enable spellcheck for defined filetypes",
-            })
-
-            -- highlight on yank
-            vim.api.nvim_create_autocmd({ "TextYankPost" }, {
-              pattern = { "*" },
-              callback = function()
-                vim.hl.on_yank()
-              end,
-              desc = "Highlight yanked text"
-            })
-
-            -- undotree
-            vim.cmd.packadd("nvim.undotree")
-            vim.keymap.set("n", "<Leader>u", require("undotree").open)
-          '';
-
-        # To install non-packaged plugins, use
-        # pkgs.vimUtils.buildVimPlugin { }
-        plugins =
-          with pkgs.vimPlugins;
-          [
-            # plugin collections
-            {
-              plugin = mini-nvim;
-              type = "lua";
-              config = # lua
-                ''
-                  ${lib.optionalString enableIcons # lua
-                    ''
-                      local icons = require('mini.icons')
-                      icons.setup {}
-                      icons.mock_nvim_web_devicons()
-                    ''
-                  }
-                  local enable_icons = ${toLua enableIcons}
-
-                  require('mini.ai').setup {
-                    -- HACK: not recommended in docs so not sure if safe or not
-                    n_lines = 10^3,
-                  }
-                  require('mini.align').setup {}
-                  require('mini.basics').setup {
-                    mappings = {
-                      windows = true,
-                      move_with_alt = true,
-                    },
-                    autocommands = {
-                      basic = false,
-                    },
-                  }
-                  require('mini.completion').setup {
-                    delay = { completion = 10^7, info = 10^7, signature = 10^7 },
-                    lsp_completion = { source_func = 'omnifunc' }
-                  }
-                  require('mini.diff').setup {}
-                  require('mini.git').setup {}
-                  require('mini.jump').setup {}
-                  require('mini.statusline').setup {
-                    use_icons = enable_icons,
-                  }
-                  require('mini.tabline').setup {
-                    show_icons = enable_icons,
-                  }
-                  -- mini.tabline sets showtabline = 2, always showing tabline
-                  -- I prefer to only have it if we have more than one tab
-                  vim.opt.showtabline = 1
-
-                  require('mini.surround').setup {
-                    mappings = {
-                      add = "ys",
-                      delete = "ds",
-                      find = "",
-                      find_left = "",
-                      highlight = "",
-                      replace = "cs",
-                      update_n_lines = "",
-
-                      -- Add this only if you don't want to use extended mappings
-                      suffix_last = "",
-                      suffix_next = "",
-                    },
-                    search_method = "cover_or_next",
-                    -- HACK: not recommended in docs so not sure if safe or not
-                    n_lines = 10^3,
-                  }
-                  -- Remap adding surrounding to Visual mode selection
-                  vim.keymap.del('x', 'ys')
-                  vim.keymap.set('x', 'S', [[:<C-u>lua MiniSurround.add('visual')<CR>]], { silent = true })
-                  -- Make special mapping for "add surrounding for line"
-                  vim.keymap.set('n', 'yss', 'ys_', { remap = true })
-
-                  local miniclue = require('mini.clue')
-                  miniclue.setup {
-                    triggers = {
-                      -- Leader triggers
-                      { mode = 'n', keys = '<Leader>' },
-                      { mode = 'x', keys = '<Leader>' },
-
-                      -- Built-in completion
-                      { mode = 'i', keys = '<C-x>' },
-
-                      -- `g` key
-                      { mode = 'n', keys = 'g' },
-                      { mode = 'x', keys = 'g' },
-
-                      -- Marks
-                      { mode = 'n', keys = "'" },
-                      { mode = 'n', keys = '`' },
-                      { mode = 'x', keys = "'" },
-                      { mode = 'x', keys = '`' },
-
-                      -- Registers
-                      { mode = 'n', keys = '"' },
-                      { mode = 'x', keys = '"' },
-                      { mode = 'i', keys = '<C-r>' },
-                      { mode = 'c', keys = '<C-r>' },
-
-                      -- Window commands
-                      { mode = 'n', keys = '<C-w>' },
-
-                      -- `z` key
-                      { mode = 'n', keys = 'z' },
-                      { mode = 'x', keys = 'z' },
-                    },
-
-                    clues = {
-                      miniclue.gen_clues.builtin_completion(),
-                      miniclue.gen_clues.g(),
-                      miniclue.gen_clues.marks(),
-                      miniclue.gen_clues.registers(),
-                      miniclue.gen_clues.windows(),
-                      miniclue.gen_clues.z(),
-                      { mode = 'n', keys = '<Leader>g', desc = '+Git' },
-                      { mode = 'n', keys = '<Leader>l', desc = '+LSP' },
-                      { mode = 'n', keys = '<Leader>t', desc = '+Test' },
-                      { mode = 'n', keys = '<Leader>w', desc = '+Whitespace' },
-                    },
-
-                    window = {
-                      config = {
-                        width = 'auto',
-                      },
-                      delay = 300,
-                    },
-                  }
-
-                  local hi_words = require('mini.extra').gen_highlighter.words
-                  local hipatterns = require('mini.hipatterns')
-                  hipatterns.setup {
-                    highlighters = {
-                      fixme = hi_words({ 'FIXME' }, 'MiniHipatternsFixme'),
-                      hack = hi_words({ 'HACK' }, 'MiniHipatternsHack'),
-                      todo = hi_words({ 'TODO' }, 'MiniHipatternsTodo'),
-                      note = hi_words({ 'TODO' }, 'MiniHipatternsNote'),
-                      xxx = hi_words({ 'XXX' }, 'MiniHipatternsFixme'),
-                      -- Highlight hex color strings (`#rrggbb`) using that color
-                      hex_color = hipatterns.gen_highlighter.hex_color(),
-                    },
-                  }
-
-                  local trailspace = require('mini.trailspace')
-                  trailspace.setup {}
-                  vim.keymap.set('n', '<Leader>ww', trailspace.trim, { desc = "Trim whitespace" })
-                  vim.keymap.set('n', '<Leader>wl', trailspace.trim_last_lines, { desc = "Trim last lines" })
-                '';
-            }
-            {
-              plugin = snacks-nvim;
-              type = "lua";
-              config = # lua
-                ''
-                  local snacks = require("snacks")
-
-                  snacks.setup {
-                    bigfile = {
-                      enabled = true,
-                      notify = true,
-                    },
-                    gitbrowse = {
-                      enabled = true,
-                    },
-                    image = {
-                      enabled = true,
-                    },
-                  }
-
-                  vim.keymap.set({ "n", "v" }, "<Leader>gr", function()
-                    snacks.gitbrowse.open { what = "repo" }
-                  end, { desc = "Open in GitHub repo" })
-                  vim.keymap.set("n", "<Leader>gf", function()
-                    snacks.gitbrowse.open { what = "file" }
-                  end, { desc = "Open in GitHub file" })
-                  vim.keymap.set("v", "<Leader>gf", function()
-                    snacks.gitbrowse.open { what = "file" }
-                  end, { desc = "Open in GitHub lines" })
-
-                  vim.api.nvim_create_autocmd("User", {
-                    pattern = "OilActionsPost",
-                    callback = function(event)
-                      local actions = event.data and event.data.actions or {}
-                      for _, action in ipairs(actions) do
-                        if action.type == "move" then
-                          snacks.rename.on_rename_file(action.src_url, action.dest_url)
-                        end
-                      end
-                    end,
-                  })
-                '';
-            }
-            # theme
-            {
-              plugin = catppuccin-nvim;
-              type = "lua";
-              config = # lua
-                ''
-                  vim.cmd.colorscheme("catppuccin-mocha")
-                '';
-            }
-            # other
-            {
-              plugin = dial-nvim;
-              type = "lua";
-              config = # lua
-                ''
-                  local dial_map = require("dial.map")
-                  vim.keymap.set("n", "<C-a>", function()
-                      dial_map.manipulate("increment", "normal")
-                  end, { desc = "Increment" })
-                  vim.keymap.set("n", "<C-x>", function()
-                      dial_map.manipulate("decrement", "normal")
-                  end, { desc = "Decrement" })
-                  vim.keymap.set("n", "g<C-a>", function()
-                      dial_map.manipulate("increment", "gnormal")
-                  end, { desc = "Increment" })
-                  vim.keymap.set("n", "g<C-x>", function()
-                      dial_map.manipulate("decrement", "gnormal")
-                  end, { desc = "Decrement" })
-                  vim.keymap.set("v", "<C-a>", function()
-                      dial_map.manipulate("increment", "visual")
-                  end, { desc = "Increment" })
-                  vim.keymap.set("v", "<C-x>", function()
-                      dial_map.manipulate("decrement", "visual")
-                  end, { desc = "Decrement" })
-                  vim.keymap.set("v", "g<C-a>", function()
-                      dial_map.manipulate("increment", "gvisual")
-                  end, { desc = "Increment" })
-                  vim.keymap.set("v", "g<C-x>", function()
-                      dial_map.manipulate("decrement", "gvisual")
-                  end, { desc = "Decrement" })
-                '';
-            }
-            {
-              plugin = fzf-lua;
-              type = "lua";
-              config = # lua
-                ''
-                  local enable_icons = ${toLua enableIcons}
-                  local fzf = require("fzf-lua")
-                  fzf.setup {
-                    "telescope",
-                    defaults = {
-                      file_icons = enable_icons,
-                      git_icons = enable_icons,
-                      silent = true,
-                    },
-                    winopts = {
-                      height = 0.4,
-                      width = 1.0,
-                      row = 1.0,
-                    },
-                    fzf_opts = {
-                      ["--layout"] = "reverse",
-                    },
-                  }
-
-                  vim.keymap.set("n", "<Leader><Leader>", fzf.files, { desc = "Find files" })
-                  vim.keymap.set("n", "<Leader>/", fzf.live_grep, { desc = "Live grep" })
-                  vim.keymap.set("n", "<Leader>*", fzf.grep_cword, { desc = "Grep word under cursor" })
-                  vim.keymap.set("n", "<Leader>b", fzf.buffers, { desc = "Buffers" })
-                  vim.keymap.set("n", "<Leader>c", fzf.commands, { desc = "Commands" })
-                  vim.keymap.set("n", "<Leader>gc", fzf.git_commits, { desc = "Git commits" })
-                  vim.keymap.set("n", "<Leader>gC", fzf.git_bcommits, { desc = "Git buffer commits" })
-                  vim.keymap.set("n", "<Leader>gb", fzf.git_branches, { desc = "Git branches" })
-                  vim.keymap.set("n", "<Leader>gs", fzf.git_status, { desc = "Git status" })
-                  vim.keymap.set("n", "<Leader>gS", fzf.git_stash, { desc = "Git stash" })
-                  vim.keymap.set("n", "z=", fzf.spell_suggest, { desc = "Spell suggest" })
-                '';
-            }
-            {
-              plugin = guess-indent-nvim;
-              type = "lua";
-              config = # lua
-                ''
-                  require("guess-indent").setup {}
-                  vim.keymap.set("n", "<Leader>i", "<CMD>GuessIndent<CR>", { desc = "Guess indent" })
-                '';
-            }
-            {
-              plugin = gx-nvim;
-              type = "lua";
-              config = # lua
-                ''
-                  require("gx").setup {
-                    handler_options = {
-                      search_engine = "duckduckgo"
-                    }
-                  }
-
-                  vim.keymap.set({"n", "x"}, "gx", "<CMD>Browse<CR>", { desc = "Open in Browse" })
-                '';
-            }
-            {
-              plugin = pkgs.vimUtils.buildVimPlugin {
-                pname = "markdown-preview-nvim";
-                version = "unstable";
-                src = ./plugins/markdown-preview-nvim;
-              };
-              type = "lua";
-              config = # lua
-                ''
-                  require("markdown_preview").setup {
-                    command = { "${lib.getExe pkgs.gh-gfm-preview}" },
-                  }
-                '';
-            }
-
-            {
-              plugin = neogit;
-              type = "lua";
-              config = # lua
-                ''
-                  local neogit = require('neogit')
-                  neogit.setup {}
-                  vim.keymap.set("n", "<Leader>gg", neogit.open, { desc = "Neogit" })
-                '';
-            }
-            {
-              plugin = neotest;
-              type = "lua";
-              config = # lua
-                ''
-                  local neotest = require("neotest")
-
-                  neotest.setup {
-                    adapters = {
-                      require("neotest-go") {},
-                      require("neotest-python") {},
-                    },
-                  }
-
-                  vim.keymap.set("n", "<Leader>tt", neotest.run.run, { desc = "Test nearest" })
-                  vim.keymap.set("n", "<Leader>ta", neotest.run.attach, { desc = "Attach nearest" })
-                  vim.keymap.set("n", "<Leader>ts", neotest.run.stop, { desc = "Stop test" })
-                  vim.keymap.set("n", "<Leader>tT", function() neotest.run.run(vim.fn.expand("%")) end, { desc = "Test file" })
-                '';
-            }
-            neotest-python
-            neotest-go
-            {
-              plugin = oil-nvim;
-              type = "lua";
-              config = # lua
-                ''
-                  local oil = require("oil")
-                  oil.setup {
-                    columns = {
-                      ${lib.optionalString enableIcons (toLua "icons")}
-                    },
-                    skip_confirm_for_simple_edits = true,
-                    constrain_cursor = "name",
-                    watch_for_changes = true,
-                    lsp_file_methods = {
-                      autosave_changes = true,
-                    },
-                  }
-
-                  vim.keymap.set("n", "-", oil.open, { desc = "Open parent directory" })
-                '';
-            }
-            {
-              plugin = remember-nvim;
-              type = "lua";
-              config = # lua
-                ''
-                  require("remember").setup {}
-                '';
-            }
-            lexima-vim
-            mkdir-nvim
-            vim-advanced-sorters
-            vim-nix
-          ]
-          ++ lib.optionals config.home-manager.desktop.kitty.scrollback-nvim.enable [
-            {
-              plugin = kitty-scrollback-nvim;
-              type = "lua";
-              config = # lua
-                ''
-                  require("kitty-scrollback").setup {
-                    status_window = {
-                      autoclose = true,
-                      show_timer = true,
-                    },
-                  }
-                '';
-            }
-          ]
-          ++ lib.optionals cfg.lsp.enable [
-            {
-              plugin = inc-rename-nvim;
-              type = "lua";
-              config = # lua
-                ''
-                  require("inc_rename").setup {}
-                '';
-            }
-            {
-              plugin = nvim-lspconfig;
-              type = "lua";
-              config = # lua
-                ''
-                  -- Setup language servers.
-                  -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/configs.md
-                  -- TODO: migrate to lsp/*.lua directory
-                  local servers_configs = {
-                    { "bashls" },
-                    { "clojure_lsp" },
-                    { "cssls" },
-                    { "eslint" },
-                    { "gopls" },
-                    { "html" },
-                    { "jsonls" },
-                    { "lua_ls" },
-                    { "marksman" },
-                    { "nil_ls",
-                      opts = {
-                        settings = {
-                          ["nil"] = {
-                            formatting = {
-                              command = { "nixfmt" },
-                            },
-                            nix = {
-                              flake = {
-                                autoArchive = false,
-                              },
-                            },
-                          },
-                        },
-                      },
-                    },
-                    { "nixd",
-                      opts = {
-                        settings = {
-                          ["nixd"] = {
-                            formatting = {
-                              command = { "nixfmt" },
-                            },
-                            options = {
-                              nixos = {
-                                expr = [[
-                                  (let
-                                    pkgs = import "${flake.inputs.nixpkgs}" { };
-                                    inherit (pkgs) lib;
-                                  in (lib.evalModules {
-                                    modules = (import "${flake.inputs.nixpkgs}/nixos/modules/module-list.nix");
-                                    check = false;
-                                  })).options
-                                ]],
-                              },
-                              nix_darwin = {
-                                expr = [[
-                                  (let
-                                    pkgs = import "${flake.inputs.nixpkgs}" { };
-                                    inherit (pkgs) lib;
-                                  in (lib.evalModules {
-                                    modules = (import "${flake.inputs.nix-darwin}/modules/module-list.nix");
-                                    check = false;
-                                  })).options
-                                ]],
-                              },
-                              home_manager = {
-                                expr = [[
-                                  (let
-                                    pkgs = import "${flake.inputs.nixpkgs}" { };
-                                    lib = import "${flake.inputs.home-manager}/modules/lib/stdlib-extended.nix" pkgs.lib;
-                                  in (lib.evalModules {
-                                    modules =  (import "${flake.inputs.home-manager}/modules/modules.nix") {
-                                      inherit lib pkgs;
-                                      check = false;
-                                    };
-                                  })).options
-                                ]],
-                              },
-                            },
-                            diagnostic = {
-                              suppress = {
-                                "sema-escaping-with"
-                              },
-                            },
-                          },
-                        },
-                      },
-                    },
-                    { "pyright",
-                      opts = {
-                        settings = {
-                          pyright = {
-                            -- Using Ruff's import organizer
-                              disableOrganizeImports = true,
-                          },
-                          python = {
-                            analysis = {
-                              -- Ignore all files for analysis to exclusively use Ruff for linting
-                                ignore = { '*' },
-                            },
-                          },
-                        },
-                      },
-                    },
-                    { "ruff" },
-                    { "ts_ls" },
-                  }
-
-                  for _, server in ipairs(servers_configs) do
-                    local config = vim.lsp.config[server[1]]
-                    if not config then
-                      vim.notify("No LSP config found for " .. server[1], vim.log.levels.WARN)
-                    else
-                      local cmd = config.cmd
-                      local executable = nil
-
-                      if type(cmd) == "table" then
-                        executable = cmd[1]
-                      elseif type(cmd) == "string" then
-                        executable = cmd
-                      elseif type(cmd) == "function" then
-                        executable = true
-                      end
-
-                      if executable == true or executable == nil or vim.fn.executable(executable) == 1 then
-                        if server.opts then
-                          vim.lsp.config(server[1], server.opts)
-                        end
-                        vim.lsp.enable(server[1])
-                      end
-                    end
-                  end
-
-                  local fzf = require("fzf-lua")
-                  -- Use LspAttach autocommand to only map the following keys
-                  -- after the language server attaches to the current buffer
-                  vim.api.nvim_create_autocmd("LspAttach", {
-                    group = vim.api.nvim_create_augroup("UserLspConfig", {}),
-                    callback = function(ev)
-                      -- Buffer local mappings.
-                      -- See `:help vim.lsp.*` for documentation on any of the below functions
-                      -- or fzf-lua documentation
-                      vim.keymap.set("n", "gD", fzf.lsp_references, { desc = "LSP references" })
-                      vim.keymap.set("n", "gd", fzf.lsp_definitions, { desc = "LSP definitions" })
-                      vim.keymap.set("n", "gi", fzf.lsp_implementations, { desc = "LSP implementations" })
-                      vim.keymap.set("n", "<Leader>ld", fzf.diagnostics_document, { desc = "LSP document diagnostics" })
-                      vim.keymap.set("n", "<Leader>ls", fzf.lsp_document_symbols, { desc = "LSP document symbols" })
-                      vim.keymap.set("n", "<Leader>lt", fzf.lsp_typedefs, { desc = "LSP type definitions" })
-                      vim.keymap.set("n", "<leader>lr", function()
-                        return ":IncRename " .. vim.fn.expand("<cword>")
-                      end, { expr = true })
-                      vim.keymap.set("n", "<Leader>lf", function() vim.lsp.buf.format { async = true } end, { desc = "LSP format" })
-                      vim.keymap.set("n", "<Leader>la", fzf.lsp_code_actions, { desc = "LSP code action" })
-                    end,
-                  })
-                '';
-            }
-          ]
-          ++ lib.optionals cfg.treeSitter.enable [
-            {
-              plugin = treesitterPackage;
-              type = "lua";
-              config = ''
-                vim.g.treesitter_disable_filetypes = {
-                  bigfile = true,
-                }
-
-                vim.g.treesitter_disable_filenames = {
-                  [".bash_history"] = true,
-                  [".zsh_history"] = true,
-                  [".Rhistory"] = true,
-                }
-
-                vim.api.nvim_create_autocmd("FileType", {
-                  pattern = "*",
-                  callback = function(ev)
-                    local filetype = vim.bo[ev.buf].filetype
-                    local name = vim.api.nvim_buf_get_name(ev.buf)
-                    local basename = vim.fs.basename(name)
-
-                    if vim.g.treesitter_disable_filetypes[filetype]
-                      or vim.g.treesitter_disable_filenames[basename]
-                    then
-                      pcall(vim.treesitter.stop, ev.buf)
-                      return
-                    end
-                    pcall(vim.treesitter.start, ev.buf)
+                -- disable line numbers in terminal
+                vim.api.nvim_create_autocmd({ "TermOpen" }, {
+                  pattern = { "term://*" },
+                  callback = function()
+                    vim.cmd.setlocal("nonumber")
                   end,
                 })
-              '';
-            }
-            {
-              plugin = nvim-ufo;
-              type = "lua";
-              config = # lua
-                ''
-                  local ufo = require("ufo")
 
-                  vim.o.foldcolumn = '0'
-                  vim.o.foldlevel = 99
-                  vim.o.foldlevelstart = 99
-                  vim.o.foldenable = true
-
-                  vim.keymap.set('n', 'zR', ufo.openAllFolds, { desc = "Open all folds" })
-                  vim.keymap.set('n', 'zM', ufo.closeAllFolds, { desc = "Close all folds" })
-                  ufo.setup {
-                    provider_selector = function(bufnr, filetype, buftype)
-                      if filetype == "bigfile" then
-                        return {'indent'}
-                      end
-                      return {'treesitter', 'indent'}
+                -- trigger insert mode in terminal
+                vim.api.nvim_create_autocmd('TermOpen', {
+                  pattern = "term://*",
+                  callback = function(data)
+                    if vim.env.KITTY_SCROLLBACK_NVIM == 'true' then
+                      return
                     end
-                  }
-                '';
-            }
-            {
-              plugin = nvim-ts-autotag;
-              type = "lua";
-              config = # lua
-                ''
-                  require("nvim-ts-autotag").setup {}
-                '';
-            }
-          ];
-      };
+                    if vim.api.nvim_get_current_buf() == data.buf and vim.bo.buftype == "terminal" then
+                      vim.cmd.startinsert()
+                    end
+                  end,
+                })
 
-      xdg.desktopEntries.nvim = lib.mkIf config.home-manager.desktop.enable {
-        name = "Neovim";
-        genericName = "Text Editor";
-        comment = "Edit text files";
-        exec = "nvim %F";
-        icon = "nvim";
-        mimeType = [
-          "application/x-shellscript"
-          "text/english"
-          "text/plain"
-          "text/x-c"
-          "text/x-c++"
-          "text/x-c++hdr"
-          "text/x-c++src"
-          "text/x-chdr"
-          "text/x-csrc"
-          "text/x-java"
-          "text/x-makefile"
-          "text/x-moc"
-          "text/x-pascal"
-          "text/x-tcl"
-          "text/x-tex"
+                -- unsets the 'last search pattern'
+                vim.keymap.set("n", "<C-g>", "<cmd>:noh<CR>", { desc = "Clear highlight" })
+
+                -- completion
+                vim.keymap.set({"i", "c"}, "<C-j>", function()
+                  return vim.fn.pumvisible() ~= 0 and "<C-n>" or "<C-j>"
+                end, { expr = true })
+                vim.keymap.set({"i", "c"}, "<C-k>", function()
+                  return vim.fn.pumvisible() ~= 0 and "<C-p>" or "<C-k>"
+                end, { expr = true })
+                vim.keymap.set({"i", "c"}, "<CR>", function()
+                  return vim.fn.pumvisible() ~= 0 and "<C-y>" or "<CR>"
+                end, { expr = true })
+                vim.keymap.set("i", "<C-Space>", "<C-x><C-o>")
+
+                -- enable syntaxcomplete if omnifunc is unavailable
+                vim.api.nvim_create_autocmd({ "FileType" }, {
+                  command = 'if &omnifunc == "" | setlocal omnifunc=syntaxcomplete#Complete | endif',
+                  pattern = { "*" },
+                })
+
+                -- reload file if changed
+                vim.opt.autoread = true
+                vim.api.nvim_create_autocmd({ "BufEnter", "CursorHold", "CursorHoldI", "FocusGained" }, {
+                  command = "if mode() != 'c' | checktime | endif",
+                  pattern = { "*" },
+                })
+
+                -- autoindent when starting a new line with 'o' or 'O'
+                vim.opt.autoindent = true
+                vim.opt.formatoptions:append { o = true, j = true }
+
+                -- create an autocommand to enable spellcheck for specified file types
+                vim.api.nvim_create_autocmd({ "FileType" }, {
+                  pattern = { "text", "plaintex", "typst", "gitcommit", "markdown" },
+                  callback = function()
+                    vim.opt_local.spell = true
+                  end,
+                  desc = "Enable spellcheck for defined filetypes",
+                })
+
+                -- highlight on yank
+                vim.api.nvim_create_autocmd({ "TextYankPost" }, {
+                  pattern = { "*" },
+                  callback = function()
+                    vim.hl.on_yank()
+                  end,
+                  desc = "Highlight yanked text"
+                })
+
+                -- undotree
+                vim.cmd.packadd("nvim.undotree")
+                vim.keymap.set("n", "<Leader>u", require("undotree").open)
+              '';
+
+            plugins = with pkgs.vimPlugins; [
+              # plugin collections
+              {
+                plugin = mini-nvim;
+                type = "lua";
+                config = # lua
+                  ''
+                    ${lib.optionalString enableIcons # lua
+                      ''
+                        local icons = require('mini.icons')
+                        icons.setup {}
+                        icons.mock_nvim_web_devicons()
+                      ''
+                    }
+                    local enable_icons = ${toLua enableIcons}
+
+                    require('mini.ai').setup {
+                      -- HACK: not recommended in docs so not sure if safe or not
+                      n_lines = 10^3,
+                    }
+                    require('mini.align').setup {}
+                    require('mini.basics').setup {
+                      mappings = {
+                        windows = true,
+                        move_with_alt = true,
+                      },
+                      autocommands = {
+                        basic = false,
+                      },
+                    }
+                    require('mini.completion').setup {
+                      delay = { completion = 10^7, info = 10^7, signature = 10^7 },
+                      lsp_completion = { source_func = 'omnifunc' }
+                    }
+                    require('mini.diff').setup {}
+                    require('mini.git').setup {}
+                    require('mini.jump').setup {}
+                    require('mini.statusline').setup {
+                      use_icons = enable_icons,
+                    }
+                    require('mini.tabline').setup {
+                      show_icons = enable_icons,
+                    }
+                    -- mini.tabline sets showtabline = 2, always showing tabline
+                    -- I prefer to only have it if we have more than one tab
+                    vim.opt.showtabline = 1
+
+                    require('mini.surround').setup {
+                      mappings = {
+                        add = "ys",
+                        delete = "ds",
+                        find = "",
+                        find_left = "",
+                        highlight = "",
+                        replace = "cs",
+                        update_n_lines = "",
+
+                        -- Add this only if you don't want to use extended mappings
+                        suffix_last = "",
+                        suffix_next = "",
+                      },
+                      search_method = "cover_or_next",
+                      -- HACK: not recommended in docs so not sure if safe or not
+                      n_lines = 10^3,
+                    }
+                    -- Remap adding surrounding to Visual mode selection
+                    vim.keymap.del('x', 'ys')
+                    vim.keymap.set('x', 'S', [[:<C-u>lua MiniSurround.add('visual')<CR>]], { silent = true })
+                    -- Make special mapping for "add surrounding for line"
+                    vim.keymap.set('n', 'yss', 'ys_', { remap = true })
+
+                    local miniclue = require('mini.clue')
+                    miniclue.setup {
+                      triggers = {
+                        -- Leader triggers
+                        { mode = 'n', keys = '<Leader>' },
+                        { mode = 'x', keys = '<Leader>' },
+
+                        -- Built-in completion
+                        { mode = 'i', keys = '<C-x>' },
+
+                        -- `g` key
+                        { mode = 'n', keys = 'g' },
+                        { mode = 'x', keys = 'g' },
+
+                        -- Marks
+                        { mode = 'n', keys = "'" },
+                        { mode = 'n', keys = '`' },
+                        { mode = 'x', keys = "'" },
+                        { mode = 'x', keys = '`' },
+
+                        -- Registers
+                        { mode = 'n', keys = '"' },
+                        { mode = 'x', keys = '"' },
+                        { mode = 'i', keys = '<C-r>' },
+                        { mode = 'c', keys = '<C-r>' },
+
+                        -- Window commands
+                        { mode = 'n', keys = '<C-w>' },
+
+                        -- `z` key
+                        { mode = 'n', keys = 'z' },
+                        { mode = 'x', keys = 'z' },
+                      },
+
+                      clues = {
+                        miniclue.gen_clues.builtin_completion(),
+                        miniclue.gen_clues.g(),
+                        miniclue.gen_clues.marks(),
+                        miniclue.gen_clues.registers(),
+                        miniclue.gen_clues.windows(),
+                        miniclue.gen_clues.z(),
+                        { mode = 'n', keys = '<Leader>g', desc = '+Git' },
+                        { mode = 'n', keys = '<Leader>l', desc = '+LSP' },
+                        { mode = 'n', keys = '<Leader>t', desc = '+Test' },
+                        { mode = 'n', keys = '<Leader>w', desc = '+Whitespace' },
+                      },
+
+                      window = {
+                        config = {
+                          width = 'auto',
+                        },
+                        delay = 300,
+                      },
+                    }
+
+                    local hi_words = require('mini.extra').gen_highlighter.words
+                    local hipatterns = require('mini.hipatterns')
+                    hipatterns.setup {
+                      highlighters = {
+                        fixme = hi_words({ 'FIXME' }, 'MiniHipatternsFixme'),
+                        hack = hi_words({ 'HACK' }, 'MiniHipatternsHack'),
+                        todo = hi_words({ 'TODO' }, 'MiniHipatternsTodo'),
+                        note = hi_words({ 'TODO' }, 'MiniHipatternsNote'),
+                        xxx = hi_words({ 'XXX' }, 'MiniHipatternsFixme'),
+                        -- Highlight hex color strings (`#rrggbb`) using that color
+                        hex_color = hipatterns.gen_highlighter.hex_color(),
+                      },
+                    }
+
+                    local trailspace = require('mini.trailspace')
+                    trailspace.setup {}
+                    vim.keymap.set('n', '<Leader>ww', trailspace.trim, { desc = "Trim whitespace" })
+                    vim.keymap.set('n', '<Leader>wl', trailspace.trim_last_lines, { desc = "Trim last lines" })
+                  '';
+              }
+              {
+                plugin = snacks-nvim;
+                type = "lua";
+                config = # lua
+                  ''
+                    local snacks = require("snacks")
+
+                    snacks.setup {
+                      bigfile = {
+                        enabled = true,
+                        notify = true,
+                      },
+                      gitbrowse = {
+                        enabled = true,
+                      },
+                      image = {
+                        enabled = true,
+                      },
+                    }
+
+                    vim.keymap.set({ "n", "v" }, "<Leader>gr", function()
+                      snacks.gitbrowse.open { what = "repo" }
+                    end, { desc = "Open in GitHub repo" })
+                    vim.keymap.set("n", "<Leader>gf", function()
+                      snacks.gitbrowse.open { what = "file" }
+                    end, { desc = "Open in GitHub file" })
+                    vim.keymap.set("v", "<Leader>gf", function()
+                      snacks.gitbrowse.open { what = "file" }
+                    end, { desc = "Open in GitHub lines" })
+
+                    vim.api.nvim_create_autocmd("User", {
+                      pattern = "OilActionsPost",
+                      callback = function(event)
+                        local actions = event.data and event.data.actions or {}
+                        for _, action in ipairs(actions) do
+                          if action.type == "move" then
+                            snacks.rename.on_rename_file(action.src_url, action.dest_url)
+                          end
+                        end
+                      end,
+                    })
+                  '';
+              }
+              # theme
+              {
+                plugin = catppuccin-nvim;
+                type = "lua";
+                config = # lua
+                  ''
+                    vim.cmd.colorscheme("catppuccin-mocha")
+                  '';
+              }
+              # other
+              {
+                plugin = dial-nvim;
+                type = "lua";
+                config = # lua
+                  ''
+                    local dial_map = require("dial.map")
+                    vim.keymap.set("n", "<C-a>", function()
+                        dial_map.manipulate("increment", "normal")
+                    end, { desc = "Increment" })
+                    vim.keymap.set("n", "<C-x>", function()
+                        dial_map.manipulate("decrement", "normal")
+                    end, { desc = "Decrement" })
+                    vim.keymap.set("n", "g<C-a>", function()
+                        dial_map.manipulate("increment", "gnormal")
+                    end, { desc = "Increment" })
+                    vim.keymap.set("n", "g<C-x>", function()
+                        dial_map.manipulate("decrement", "gnormal")
+                    end, { desc = "Decrement" })
+                    vim.keymap.set("v", "<C-a>", function()
+                        dial_map.manipulate("increment", "visual")
+                    end, { desc = "Increment" })
+                    vim.keymap.set("v", "<C-x>", function()
+                        dial_map.manipulate("decrement", "visual")
+                    end, { desc = "Decrement" })
+                    vim.keymap.set("v", "g<C-a>", function()
+                        dial_map.manipulate("increment", "gvisual")
+                    end, { desc = "Increment" })
+                    vim.keymap.set("v", "g<C-x>", function()
+                        dial_map.manipulate("decrement", "gvisual")
+                    end, { desc = "Decrement" })
+                  '';
+              }
+              {
+                plugin = fzf-lua;
+                type = "lua";
+                config = # lua
+                  ''
+                    local enable_icons = ${toLua enableIcons}
+                    local fzf = require("fzf-lua")
+                    fzf.setup {
+                      "telescope",
+                      defaults = {
+                        file_icons = enable_icons,
+                        git_icons = enable_icons,
+                        silent = true,
+                      },
+                      winopts = {
+                        height = 0.4,
+                        width = 1.0,
+                        row = 1.0,
+                      },
+                      fzf_opts = {
+                        ["--layout"] = "reverse",
+                      },
+                    }
+
+                    vim.keymap.set("n", "<Leader><Leader>", fzf.files, { desc = "Find files" })
+                    vim.keymap.set("n", "<Leader>/", fzf.live_grep, { desc = "Live grep" })
+                    vim.keymap.set("n", "<Leader>*", fzf.grep_cword, { desc = "Grep word under cursor" })
+                    vim.keymap.set("n", "<Leader>b", fzf.buffers, { desc = "Buffers" })
+                    vim.keymap.set("n", "<Leader>c", fzf.commands, { desc = "Commands" })
+                    vim.keymap.set("n", "<Leader>gc", fzf.git_commits, { desc = "Git commits" })
+                    vim.keymap.set("n", "<Leader>gC", fzf.git_bcommits, { desc = "Git buffer commits" })
+                    vim.keymap.set("n", "<Leader>gb", fzf.git_branches, { desc = "Git branches" })
+                    vim.keymap.set("n", "<Leader>gs", fzf.git_status, { desc = "Git status" })
+                    vim.keymap.set("n", "<Leader>gS", fzf.git_stash, { desc = "Git stash" })
+                    vim.keymap.set("n", "z=", fzf.spell_suggest, { desc = "Spell suggest" })
+                  '';
+              }
+              {
+                plugin = guess-indent-nvim;
+                type = "lua";
+                config = # lua
+                  ''
+                    require("guess-indent").setup {}
+                    vim.keymap.set("n", "<Leader>i", "<CMD>GuessIndent<CR>", { desc = "Guess indent" })
+                  '';
+              }
+              {
+                plugin = gx-nvim;
+                type = "lua";
+                config = # lua
+                  ''
+                    require("gx").setup {
+                      handler_options = {
+                        search_engine = "duckduckgo"
+                      }
+                    }
+
+                    vim.keymap.set({"n", "x"}, "gx", "<CMD>Browse<CR>", { desc = "Open in Browse" })
+                  '';
+              }
+              {
+                plugin = pkgs.vimUtils.buildVimPlugin {
+                  pname = "markdown-preview-nvim";
+                  version = "unstable";
+                  src = ./plugins/markdown-preview-nvim;
+                };
+                type = "lua";
+                config = # lua
+                  ''
+                    require("markdown_preview").setup {
+                      command = { "${lib.getExe pkgs.gh-gfm-preview}" },
+                    }
+                  '';
+              }
+              {
+                plugin = neogit;
+                type = "lua";
+                config = # lua
+                  ''
+                    local neogit = require('neogit')
+                    neogit.setup {}
+                    vim.keymap.set("n", "<Leader>gg", neogit.open, { desc = "Neogit" })
+                  '';
+              }
+              {
+                plugin = neotest;
+                type = "lua";
+                config = # lua
+                  ''
+                    local neotest = require("neotest")
+
+                    neotest.setup {
+                      adapters = {
+                        require("neotest-go") {},
+                        require("neotest-python") {},
+                      },
+                    }
+
+                    vim.keymap.set("n", "<Leader>tt", neotest.run.run, { desc = "Test nearest" })
+                    vim.keymap.set("n", "<Leader>ta", neotest.run.attach, { desc = "Attach nearest" })
+                    vim.keymap.set("n", "<Leader>ts", neotest.run.stop, { desc = "Stop test" })
+                    vim.keymap.set("n", "<Leader>tT", function() neotest.run.run(vim.fn.expand("%")) end, { desc = "Test file" })
+                  '';
+              }
+              neotest-python
+              neotest-go
+              {
+                plugin = oil-nvim;
+                type = "lua";
+                config = # lua
+                  ''
+                    local oil = require("oil")
+                    oil.setup {
+                      columns = {
+                        ${lib.optionalString enableIcons (toLua "icons")}
+                      },
+                      skip_confirm_for_simple_edits = true,
+                      constrain_cursor = "name",
+                      watch_for_changes = true,
+                      lsp_file_methods = {
+                        autosave_changes = true,
+                      },
+                    }
+
+                    vim.keymap.set("n", "-", oil.open, { desc = "Open parent directory" })
+                  '';
+              }
+              {
+                plugin = remember-nvim;
+                type = "lua";
+                config = # lua
+                  ''
+                    require("remember").setup {}
+                  '';
+              }
+              lexima-vim
+              mkdir-nvim
+              vim-advanced-sorters
+              vim-nix
+            ];
+          }
+          (lib.mkIf config.home-manager.desktop.kitty.scrollback-nvim.enable {
+            plugins = with pkgs.vimPlugins; [
+              {
+                plugin = kitty-scrollback-nvim;
+                type = "lua";
+                config = # lua
+                  ''
+                    require("kitty-scrollback").setup {
+                      status_window = {
+                        autoclose = true,
+                        show_timer = true,
+                      },
+                    }
+                  '';
+              }
+            ];
+          })
+          (lib.mkIf cfg.lsp.enable {
+            plugins = with pkgs.vimPlugins; [
+              {
+                plugin = inc-rename-nvim;
+                type = "lua";
+                config = # lua
+                  ''
+                    require("inc_rename").setup {}
+                  '';
+              }
+              {
+                plugin = nvim-lspconfig;
+                type = "lua";
+                config = # lua
+                  ''
+                    -- Setup language servers.
+                    -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/configs.md
+                    -- TODO: migrate to lsp/*.lua directory
+                    local servers_configs = {
+                      { "bashls" },
+                      { "clojure_lsp" },
+                      { "cssls" },
+                      { "eslint" },
+                      { "gopls" },
+                      { "html" },
+                      { "jsonls" },
+                      { "lua_ls" },
+                      { "marksman" },
+                      { "nil_ls",
+                        opts = {
+                          settings = {
+                            ["nil"] = {
+                              formatting = {
+                                command = { "nixfmt" },
+                              },
+                              nix = {
+                                flake = {
+                                  autoArchive = false,
+                                },
+                              },
+                            },
+                          },
+                        },
+                      },
+                      { "nixd",
+                        opts = {
+                          settings = {
+                            ["nixd"] = {
+                              formatting = {
+                                command = { "nixfmt" },
+                              },
+                              options = {
+                                nixos = {
+                                  expr = [[
+                                    (let
+                                      pkgs = import "${flake.inputs.nixpkgs}" { };
+                                      inherit (pkgs) lib;
+                                    in (lib.evalModules {
+                                      modules = (import "${flake.inputs.nixpkgs}/nixos/modules/module-list.nix");
+                                      check = false;
+                                    })).options
+                                  ]],
+                                },
+                                nix_darwin = {
+                                  expr = [[
+                                    (let
+                                      pkgs = import "${flake.inputs.nixpkgs}" { };
+                                      inherit (pkgs) lib;
+                                    in (lib.evalModules {
+                                      modules = (import "${flake.inputs.nix-darwin}/modules/module-list.nix");
+                                      check = false;
+                                    })).options
+                                  ]],
+                                },
+                                home_manager = {
+                                  expr = [[
+                                    (let
+                                      pkgs = import "${flake.inputs.nixpkgs}" { };
+                                      lib = import "${flake.inputs.home-manager}/modules/lib/stdlib-extended.nix" pkgs.lib;
+                                    in (lib.evalModules {
+                                      modules =  (import "${flake.inputs.home-manager}/modules/modules.nix") {
+                                        inherit lib pkgs;
+                                        check = false;
+                                      };
+                                    })).options
+                                  ]],
+                                },
+                              },
+                              diagnostic = {
+                                suppress = {
+                                  "sema-escaping-with"
+                                },
+                              },
+                            },
+                          },
+                        },
+                      },
+                      { "pyright",
+                        opts = {
+                          settings = {
+                            pyright = {
+                              -- Using Ruff's import organizer
+                                disableOrganizeImports = true,
+                            },
+                            python = {
+                              analysis = {
+                                -- Ignore all files for analysis to exclusively use Ruff for linting
+                                  ignore = { '*' },
+                              },
+                            },
+                          },
+                        },
+                      },
+                      { "ruff" },
+                      { "ts_ls" },
+                    }
+
+                    for _, server in ipairs(servers_configs) do
+                      local config = vim.lsp.config[server[1]]
+                      if not config then
+                        vim.notify("No LSP config found for " .. server[1], vim.log.levels.WARN)
+                      else
+                        local cmd = config.cmd
+                        local executable = nil
+
+                        if type(cmd) == "table" then
+                          executable = cmd[1]
+                        elseif type(cmd) == "string" then
+                          executable = cmd
+                        elseif type(cmd) == "function" then
+                          executable = true
+                        end
+
+                        if executable == true or executable == nil or vim.fn.executable(executable) == 1 then
+                          if server.opts then
+                            vim.lsp.config(server[1], server.opts)
+                          end
+                          vim.lsp.enable(server[1])
+                        end
+                      end
+                    end
+
+                    local fzf = require("fzf-lua")
+                    -- Use LspAttach autocommand to only map the following keys
+                    -- after the language server attaches to the current buffer
+                    vim.api.nvim_create_autocmd("LspAttach", {
+                      group = vim.api.nvim_create_augroup("UserLspConfig", {}),
+                      callback = function(ev)
+                        -- Buffer local mappings.
+                        -- See `:help vim.lsp.*` for documentation on any of the below functions
+                        -- or fzf-lua documentation
+                        vim.keymap.set("n", "gD", fzf.lsp_references, { desc = "LSP references" })
+                        vim.keymap.set("n", "gd", fzf.lsp_definitions, { desc = "LSP definitions" })
+                        vim.keymap.set("n", "gi", fzf.lsp_implementations, { desc = "LSP implementations" })
+                        vim.keymap.set("n", "<Leader>ld", fzf.diagnostics_document, { desc = "LSP document diagnostics" })
+                        vim.keymap.set("n", "<Leader>ls", fzf.lsp_document_symbols, { desc = "LSP document symbols" })
+                        vim.keymap.set("n", "<Leader>lt", fzf.lsp_typedefs, { desc = "LSP type definitions" })
+                        vim.keymap.set("n", "<leader>lr", function()
+                          return ":IncRename " .. vim.fn.expand("<cword>")
+                        end, { expr = true })
+                        vim.keymap.set("n", "<Leader>lf", function() vim.lsp.buf.format { async = true } end, { desc = "LSP format" })
+                        vim.keymap.set("n", "<Leader>la", fzf.lsp_code_actions, { desc = "LSP code action" })
+                      end,
+                    })
+                  '';
+              }
+            ];
+          })
+          (lib.mkIf cfg.treeSitter.enable {
+            plugins = with pkgs.vimPlugins; [
+              {
+                plugin = treesitterPackage;
+                type = "lua";
+                config = ''
+                  vim.g.treesitter_disable_filetypes = {
+                    bigfile = true,
+                  }
+
+                  vim.g.treesitter_disable_filenames = {
+                    [".bash_history"] = true,
+                    [".zsh_history"] = true,
+                    [".Rhistory"] = true,
+                  }
+
+                  vim.api.nvim_create_autocmd("FileType", {
+                    pattern = "*",
+                    callback = function(ev)
+                      local filetype = vim.bo[ev.buf].filetype
+                      local name = vim.api.nvim_buf_get_name(ev.buf)
+                      local basename = vim.fs.basename(name)
+
+                      if vim.g.treesitter_disable_filetypes[filetype]
+                        or vim.g.treesitter_disable_filenames[basename]
+                      then
+                        pcall(vim.treesitter.stop, ev.buf)
+                        return
+                      end
+                      pcall(vim.treesitter.start, ev.buf)
+                    end,
+                  })
+                '';
+              }
+              {
+                plugin = nvim-ufo;
+                type = "lua";
+                config = # lua
+                  ''
+                    local ufo = require("ufo")
+
+                    vim.o.foldcolumn = '0'
+                    vim.o.foldlevel = 99
+                    vim.o.foldlevelstart = 99
+                    vim.o.foldenable = true
+
+                    vim.keymap.set('n', 'zR', ufo.openAllFolds, { desc = "Open all folds" })
+                    vim.keymap.set('n', 'zM', ufo.closeAllFolds, { desc = "Close all folds" })
+                    ufo.setup {
+                      provider_selector = function(bufnr, filetype, buftype)
+                        if filetype == "bigfile" then
+                          return {'indent'}
+                        end
+                        return {'treesitter', 'indent'}
+                      end
+                    }
+                  '';
+              }
+              {
+                plugin = nvim-ts-autotag;
+                type = "lua";
+                config = # lua
+                  ''
+                    require("nvim-ts-autotag").setup {}
+                  '';
+              }
+            ];
+          })
         ];
-        terminal = true;
-        type = "Application";
-        categories = [
-          "Utility"
-          "TextEditor"
-        ];
-      };
-    }
+      }
+      (lib.mkIf config.home-manager.desktop.enable {
+        xdg.desktopEntries.nvim = {
+          name = "Neovim";
+          genericName = "Text Editor";
+          comment = "Edit text files";
+          exec = "nvim %F";
+          icon = "nvim";
+          mimeType = [
+            "application/x-shellscript"
+            "text/english"
+            "text/plain"
+            "text/x-c"
+            "text/x-c++"
+            "text/x-c++hdr"
+            "text/x-c++src"
+            "text/x-chdr"
+            "text/x-csrc"
+            "text/x-java"
+            "text/x-makefile"
+            "text/x-moc"
+            "text/x-pascal"
+            "text/x-tcl"
+            "text/x-tex"
+          ];
+          terminal = true;
+          type = "Application";
+          categories = [
+            "Utility"
+            "TextEditor"
+          ];
+        };
+      })
+    ]
   );
 }
