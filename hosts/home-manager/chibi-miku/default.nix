@@ -23,6 +23,15 @@
     };
   };
 
+  dconf.settings = {
+    "org/gnome/mutter" = {
+      experimental-features = [
+        "scale-monitor-framebuffer"
+        "xwayland-native-scaling"
+      ];
+    };
+  };
+
   # Remap '+C t ç
   home.file.".XCompose".text = ''
     include "%L"
