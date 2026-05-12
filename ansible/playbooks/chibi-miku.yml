@@ -6,17 +6,23 @@
   vars:
     required_packages:
       - build-base
-      - cros-keyboard-map # keyd
       - curl
       - dconf-editor
       - distrobox
       - git
       - gnome-tweaks
+      - irqbalance
+      - irqbalance-systemd
+      - keyd
       - sudo
       - tailscale
       - tailscale-systemd
 
     laptop_files_dir: "{{ playbook_dir | dirname }}/files"
+
+    enabled_services:
+      - irqbalance.service
+      - tailscaled.service
 
     masked_services:
       - cros-keyboard-map.service
@@ -42,19 +48,20 @@
         update_cache: true
 
   tasks:
-    - name: Stop unwanted systemd services if they are loaded
+    - name: Mask unwanted systemd services
       ansible.builtin.systemd_service:
         name: "{{ item }}"
         state: stopped
         enabled: false
-      loop: "{{ masked_services }}"
-      failed_when: false
-
-    - name: Mask unwanted systemd services
-      ansible.builtin.systemd_service:
-        name: "{{ item }}"
         masked: true
       loop: "{{ masked_services }}"
+
+    - name: Enable services
+      ansible.builtin.systemd_service:
+        name: "{{ item }}"
+        state: started
+        enabled: true
+      loop: "{{ enabled_services }}"
 
     - name: Ensure keyd configuration directory exists
       ansible.builtin.file:
