@@ -555,7 +555,7 @@ in
                     local oil = require("oil")
                     oil.setup {
                       columns = {
-                        ${lib.optionalString enableIcons (toLua "icons")}
+                        ${lib.optionalString enableIcons (toLua "icon")}
                       },
                       skip_confirm_for_simple_edits = true,
                       constrain_cursor = "name",
