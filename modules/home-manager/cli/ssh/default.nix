@@ -27,9 +27,9 @@
           UseKeychain yes
         '';
 
-        matchBlocks = {
+        settings = {
           "*" = {
-            addKeysToAgent = "yes";
+            addKeysToAgent = true;
             compression = true;
             forwardAgent = true;
             serverAliveCountMax = 2;
