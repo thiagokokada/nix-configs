@@ -129,6 +129,14 @@
         group: root
         mode: "0644"
 
+    - name: Install touchscreen-reset sleep hack
+      ansible.builtin.copy:
+        src: "{{ laptop_files_dir }}/touchscreen-reset.sh"
+        dest: /lib/systemd/system-sleep/touchscreen-reset.sh
+        owner: root
+        group: root
+        mode: "0755"
+
   handlers:
     - name: Restart keyd
       ansible.builtin.systemd_service:
