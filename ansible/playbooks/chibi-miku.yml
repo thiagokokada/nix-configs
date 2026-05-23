@@ -18,7 +18,7 @@
       - tailscale
       - tailscale-systemd
 
-    laptop_files_dir: "{{ playbook_dir | dirname }}/files"
+    laptop_files_dir: "{{ playbook_dir | dirname }}/files/chibi-miku"
 
     enabled_services:
       - irqbalance.service
