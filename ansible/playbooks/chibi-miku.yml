@@ -37,9 +37,9 @@
     - role: luizgavalda.gnome_extensions
       vars:
         gnome_extension_ids:
-          - 307 # Dash to Dock
-          - 517 # Caffeine
-          - 5389 # Screen Rotate
+          - 307  # Dash to Dock
+          - 517  # Caffeine
+          - 5389  # Screen Rotate
 
   pre_tasks:
     - name: Ensure conflicting packages are absent
