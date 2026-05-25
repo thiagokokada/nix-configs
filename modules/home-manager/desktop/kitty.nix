@@ -91,10 +91,14 @@ in
           input_delay = 0;
 
           # Bell
-          visual_bell_duration = "0.0";
+          bell_on_tab = "🔔 ";
           enable_audio_bell = false;
+          visual_bell_duration = "0.0";
           window_alert_on_bell = true;
-          bell_on_tab = true;
+          macos_dock_badge_on_bell = true;
+
+          # Notification
+          notify_on_cmd_finish = "unfocused";
 
           # Tabs
           tab_bar_edge = "top";
@@ -136,7 +140,6 @@ in
           allow_remote_control = "socket-only";
           listen_on = "unix:/tmp/kitty";
           shell_integration = true;
-
         };
 
       darwinLaunchOptions = [
