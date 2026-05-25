@@ -621,7 +621,6 @@ in
                     -- TODO: migrate to lsp/*.lua directory
                     local servers_configs = {
                       { "bashls" },
-                      { "clojure_lsp" },
                       { "cssls" },
                       { "eslint" },
                       { "gopls" },
