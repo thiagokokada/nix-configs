@@ -158,11 +158,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1780037506,
-        "narHash": "sha256-z7lnxUsYex11x73HiRCzRZDYF2OGqnB0QqouMYcHSX4=",
+        "lastModified": 1780129573,
+        "narHash": "sha256-6/S2FvBz+dxEgPfRU7dK+ycLYzRU7L8aN+GjDRyVs/E=",
         "owner": "Jovian-Experiments",
         "repo": "Jovian-NixOS",
-        "rev": "aee8bab39b309b038c14f216538e6141f28808c6",
+        "rev": "8f97d1dee8c0971b01cd6b17ccf913e8bb70f5d5",
         "type": "github"
       },
       "original": {
@@ -386,11 +386,11 @@
     "yazi-flavors": {
       "flake": false,
       "locked": {
-        "lastModified": 1779517698,
-        "narHash": "sha256-IK0Ye/EPjOGC+//HpjExVTAKfXtlgOrYbFLrhy/DF6k=",
+        "lastModified": 1780204176,
+        "narHash": "sha256-qWNArjWuxWL+rOjLzyIniW5hJgWiAWTCgXmMXJpaWZE=",
         "owner": "yazi-rs",
         "repo": "flavors",
-        "rev": "36c49acfd7d3924bd751fd74e37b6ff438af691a",
+        "rev": "0f9204bc948c8313963f5c9d571a82edc201f8aa",
         "type": "github"
       },
       "original": {
