@@ -54,7 +54,6 @@ in
           font-size = cfg.fontSize;
 
           confirm-close-surface = false;
-          scrollback-limit = 10000;
 
           window-padding-x = 5;
           window-padding-y = 5;
