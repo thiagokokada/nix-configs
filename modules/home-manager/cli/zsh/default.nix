@@ -205,7 +205,7 @@ in
           {
             name = "pure-prompt";
             file = "share/zsh/site-functions/prompt_pure_setup";
-            completions = [ "share/zsh/site-functions" ];
+            functions = [ "share/zsh/site-functions" ];
             src = pure-prompt;
           }
           # manually creating some integrations since this is faster than calling
