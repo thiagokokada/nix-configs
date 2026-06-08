@@ -54,7 +54,6 @@
     };
 
     services = {
-      dbus.implementation = "broker";
       flatpak.enable = true;
       scx = {
         enable = true;

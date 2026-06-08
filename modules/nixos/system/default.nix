@@ -50,10 +50,6 @@ in
 
   config = lib.mkIf cfg.enable {
     boot = {
-      initrd = {
-        systemd.enable = lib.mkDefault true;
-      };
-
       kernelParams = lib.mkIf (cfg.pageCompression.enable == "zswap") [
         "zswap.compressor=${cfg.pageCompression.algorithm}"
         "zswap.enabled=1"
