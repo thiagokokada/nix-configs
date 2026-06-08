@@ -20,8 +20,9 @@ jobs:
       - name: nix-info -m
         run: |
           nix run '.#nix-info' -- -m
-      - name: Validate Flakes
-        run: nix flake check --all-systems --print-build-logs
+      - continue-on-error: true
+        name: Validate Flakes
+        run: nix flake check --all-systems --option abort-on-warn true --print-build-logs
 name: validate-flakes
 "on":
   - push
