@@ -1,3 +1,5 @@
+{ lib, ... }:
+
 {
   home.stateVersion = "26.05";
 
@@ -32,6 +34,11 @@
         "scale-monitor-framebuffer"
         "xwayland-native-scaling"
       ];
+    };
+    "org/gnome/desktop/wm/keybindings" = {
+      # Unbind Ctrl+Space/Ctrl+Shift+Space to change keyboard layout
+      switch-input-source = lib.hm.gvariant.mkEmptyArray lib.hm.gvariant.type.string;
+      switch-input-source-backward = lib.hm.gvariant.mkEmptyArray lib.hm.gvariant.type.string;
     };
   };
 
