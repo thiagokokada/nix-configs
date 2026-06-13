@@ -49,9 +49,10 @@ in
         hyperfine
         lsof
         mediainfo
-        ouch
+        ouch-rar
         page
         pv
+        rar
         rlwrap
         tokei
         viu
@@ -68,9 +69,9 @@ in
 
       shellAliases = {
         # For muscle memory...
-        archive = "${lib.getExe pkgs.ouch} compress";
-        unarchive = "${lib.getExe pkgs.ouch} decompress";
-        lsarchive = "${lib.getExe pkgs.ouch} list";
+        archive = "${lib.getExe pkgs.ouch-rar} compress";
+        unarchive = "${lib.getExe pkgs.ouch-rar} decompress";
+        lsarchive = "${lib.getExe pkgs.ouch-rar} list";
         ncdu = "${lib.getExe pkgs.dua} interactive";
         sloccount = lib.getExe pkgs.tokei;
       };
