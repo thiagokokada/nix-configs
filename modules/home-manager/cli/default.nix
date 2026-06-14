@@ -52,7 +52,6 @@ in
         ouch-rar
         page
         pv
-        rar
         rlwrap
         tokei
         viu
