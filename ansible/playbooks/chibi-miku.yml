@@ -86,6 +86,12 @@
         mode: "0644"
       notify: Restart keyd
 
+    - name: Remove generated ChromeOS keyd configuration
+      ansible.builtin.file:
+        path: /etc/keyd/cros.conf
+        state: absent
+      notify: Restart keyd
+
     - name: Ensure udev configuration directory exists
       ansible.builtin.file:
         path: /etc/udev/rules.d
