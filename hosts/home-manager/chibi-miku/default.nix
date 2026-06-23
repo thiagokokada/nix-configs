@@ -29,12 +29,6 @@
   };
 
   dconf.settings = {
-    "org/gnome/mutter" = {
-      experimental-features = [
-        "scale-monitor-framebuffer"
-        "xwayland-native-scaling"
-      ];
-    };
     "org/gnome/desktop/wm/keybindings" = {
       # Unbind Ctrl+Space/Ctrl+Shift+Space to change keyboard layout
       switch-input-source = lib.hm.gvariant.mkEmptyArray lib.hm.gvariant.type.string;
