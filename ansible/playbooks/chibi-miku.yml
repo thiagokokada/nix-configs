@@ -20,6 +20,16 @@
 
     laptop_files_dir: "{{ playbook_dir | dirname }}/files/chibi-miku"
 
+    kernel_workaround_package: linux-postmarketos-qcom-sc7180
+    kernel_workaround_version: 6.12.35-r11
+    kernel_workaround_apk: >-
+      {{ kernel_workaround_package }}-{{ kernel_workaround_version }}.apk
+    kernel_workaround_url: >-
+      http://mirror.postmarketos.org/postmarketos/v25.12/aarch64/{{ kernel_workaround_apk }}
+    kernel_workaround_path: "/var/cache/apk/{{ kernel_workaround_apk }}"
+    kernel_workaround_checksum: >-
+      sha256:69151fb4be033a1bd104c720c03182235290134e6c754c2a5f9c5a28b15afe00
+
     enabled_services:
       - irqbalance.service
       - tailscaled.service
@@ -39,6 +49,42 @@
         update_cache: true
 
   tasks:
+    - name: Check installed postmarketOS kernel package
+      ansible.builtin.command: apk list --installed "{{ kernel_workaround_package }}"
+      register: installed_kernel_package
+      changed_when: false
+
+    - name: Download postmarketOS 25.12 kernel package
+      ansible.builtin.get_url:
+        url: "{{ kernel_workaround_url }}"
+        dest: "{{ kernel_workaround_path }}"
+        checksum: "{{ kernel_workaround_checksum }}"
+        owner: root
+        group: root
+        mode: "0644"
+      when: kernel_workaround_version not in installed_kernel_package.stdout
+
+    # Temporary workaround for linux-postmarketos-qcom-sc7180 6.18 suspend
+    # resuming after about 10 seconds on Google Wormdingler.
+    # https://gitlab.postmarketos.org/postmarketOS/pmaports/-/work_items/4659
+    - name: Install postmarketOS 25.12 kernel package
+      ansible.builtin.command:
+        argv:
+          - apk
+          - add
+          - --allow-untrusted
+          - "{{ kernel_workaround_path }}"
+      when: kernel_workaround_version not in installed_kernel_package.stdout
+
+    - name: Pin postmarketOS kernel package version
+      ansible.builtin.lineinfile:
+        path: /etc/apk/world
+        regexp: "^{{ kernel_workaround_package | regex_escape }}([<>=~].*)?$"
+        line: "{{ kernel_workaround_package }}={{ kernel_workaround_version }}"
+        owner: root
+        group: root
+        mode: "0644"
+
     - name: Mask unwanted systemd services
       ansible.builtin.systemd_service:
         name: "{{ item }}"
