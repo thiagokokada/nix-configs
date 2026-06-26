@@ -191,6 +191,30 @@
         mode: "0644"
       notify: Restart systemd-resolved
 
+    - name: Ensure logind.conf.d directory exists
+      ansible.builtin.file:
+        path: /etc/systemd/logind.conf.d
+        state: directory
+        owner: root
+        group: root
+        mode: "0755"
+
+    - name: Configure logind power key handling
+      ansible.builtin.copy:
+        dest: /etc/systemd/logind.conf.d/99-chibi-miku-power.conf
+        owner: root
+        group: root
+        mode: "0644"
+        content: |
+          [Login]
+          HandlePowerKey=suspend
+          HandleSuspendKey=suspend
+          HandleHibernateKey=hibernate
+          HandleLidSwitch=suspend
+          HandleLidSwitchExternalPower=suspend
+          HandleLidSwitchDocked=suspend
+      notify: Restart systemd-logind
+
     - name: Ensure libinput quirks directory exists
       ansible.builtin.file:
         path: /etc/libinput
@@ -224,6 +248,11 @@
     - name: Restart systemd-resolved
       ansible.builtin.systemd_service:
         name: "systemd-resolved"
+        state: restarted
+
+    - name: Restart systemd-logind
+      ansible.builtin.systemd_service:
+        name: "systemd-logind"
         state: restarted
 
     - name: Update libwacom db
