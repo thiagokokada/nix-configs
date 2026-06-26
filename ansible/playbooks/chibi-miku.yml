@@ -8,7 +8,6 @@
       - ansible
       - build-base
       - curl
-      - dconf-editor
       - distrobox
       - git
       - gnome-tweaks
@@ -36,7 +35,7 @@
 
     masked_services:
       - cros-keyboard-map.service
-      - iio-sensor-proxy.service
+      # - iio-sensor-proxy.service
 
   roles:
     - role: nix
@@ -99,6 +98,25 @@
         state: started
         enabled: true
       loop: "{{ enabled_services }}"
+
+    - name: Ensure plasmalogin configuration directory exists
+      ansible.builtin.file:
+        path: /etc/plasmalogin.conf.d
+        state: directory
+        owner: root
+        group: root
+        mode: "0755"
+
+    - name: Configure plasmalogin autologin
+      ansible.builtin.copy:
+        dest: /etc/plasmalogin.conf.d/autologin.conf
+        owner: root
+        group: root
+        mode: "0644"
+        content: |
+          [Autologin]
+          User=thiagoko
+          Session=plasma.desktop
 
     - name: Ensure keyd configuration directory exists
       ansible.builtin.file:
