@@ -15,6 +15,7 @@
       - irqbalance
       - irqbalance-systemd
       - keyd
+      - patch
       - tailscale
       - tailscale-systemd
 
@@ -99,6 +100,43 @@
         state: started
         enabled: true
       loop: "{{ enabled_services }}"
+
+    - name: Ensure ALSA configuration directory exists
+      ansible.builtin.file:
+        path: /etc/alsa
+        state: directory
+        owner: root
+        group: root
+        mode: "0755"
+
+    - name: Install Wormdingler ALSA UCM patch
+      ansible.builtin.copy:
+        src: "{{ laptop_files_dir }}/sc7180-no-headphones.patch"
+        dest: /etc/alsa/sc7180-no-headphones.patch
+        owner: root
+        group: root
+        mode: "0644"
+
+    - name: Ensure apk commit hooks directory exists
+      ansible.builtin.file:
+        path: /etc/apk/commit_hooks.d
+        state: directory
+        owner: root
+        group: root
+        mode: "0755"
+
+    - name: Install Wormdingler ALSA UCM apk commit hook
+      ansible.builtin.copy:
+        src: "{{ laptop_files_dir }}/alsa-ucm-sc7180.sh"
+        dest: /etc/apk/commit_hooks.d/alsa-ucm-sc7180.sh
+        owner: root
+        group: root
+        mode: "0755"
+
+    - name: Apply Wormdingler ALSA UCM patch
+      ansible.builtin.command: /etc/apk/commit_hooks.d/alsa-ucm-sc7180.sh
+      register: alsa_ucm_patch
+      changed_when: "'patching file' in alsa_ucm_patch.stdout"
 
     - name: Ensure keyd configuration directory exists
       ansible.builtin.file:

@@ -1,0 +1,73 @@
+@@ -18,39 +18,9 @@
+ 	}
+ }
+ 
+-SectionDevice."Headphones" {
+-	Comment "Headphones"
+-
+-	EnableSequence [
+-		cset "name='HPOL Playback Switch' 1"
+-		cset "name='HPOR Playback Switch' 1"
+-		cset "name='Stereo1 DAC MIXL DAC L1 Switch' 1"
+-		cset "name='Stereo1 DAC MIXR DAC R1 Switch' 1"
+-	]
+-
+-	DisableSequence [
+-		cset "name='HPOL Playback Switch' 0"
+-		cset "name='HPOR Playback Switch' 0"
+-		cset "name='Stereo1 DAC MIXL DAC L1 Switch' 0"
+-		cset "name='Stereo1 DAC MIXR DAC R1 Switch' 0"
+-	]
+-
+-	Value {
+-		PlaybackPCM "hw:${CardId},0"
+-		PlaybackPriority 200
+-		PlaybackMasterElem "DAC1"
+-		PlaybackMixerElem "Headphone"
+-		PlaybackVolume "Headphone Playback Volume"
+-	}
+-}
+-
+ SectionDevice."Mic" {
+ 	Comment "Internal Microphone"
+ 
+-	ConflictingDevice [
+-		"Headset"
+-	]
+-
+ 	EnableSequence [
+ 		cset "name='IF1 01 ADC Swap Mux' 1"
+ 		cset "name='Stereo1 ADC L2 Mux' 1"
+@@ -69,32 +39,6 @@
+ 	Value {
+ 		CapturePCM "hw:${CardId},0"
+ 		CapturePriority 100
+-		CaptureMixerElem "STO1 ADC"
+-		CaptureVolume "STO1 ADC Capture Volume"
+-	}
+-}
+-
+-SectionDevice."Headset" {
+-	Comment "Headset Microphone"
+-
+-	EnableSequence [
+-		cset "name='IF1 01 ADC Swap Mux' 2"
+-		cset "name='Stereo1 ADC L1 Mux' 1"
+-		cset "name='Stereo1 ADC R1 Mux' 1"
+-		cset "name='Stereo1 ADC MIXL ADC1 Switch' 1"
+-		cset "name='Stereo1 ADC MIXR ADC1 Switch' 1"
+-	]
+-
+-	DisableSequence [
+-		cset "name='Stereo1 ADC L1 Mux' 0"
+-		cset "name='Stereo1 ADC R1 Mux' 0"
+-		cset "name='Stereo1 ADC MIXL ADC1 Switch' 0"
+-		cset "name='Stereo1 ADC MIXR ADC1 Switch' 0"
+-	]
+-
+-	Value {
+-		CapturePCM "hw:${CardId},0"
+-		CapturePriority 200
+ 		CaptureMixerElem "STO1 ADC"
+ 		CaptureVolume "STO1 ADC Capture Volume"
+ 	}
