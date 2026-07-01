@@ -177,6 +177,14 @@
         group: root
         mode: "0644"
 
+    - name: Disable Hammer keyboard wakeups
+      ansible.builtin.copy:
+        src: "{{ laptop_files_dir }}/62-hammer-wakeup.rules"
+        dest: /etc/udev/rules.d/62-hammer-wakeup.rules
+        owner: root
+        group: root
+        mode: "0644"
+
     - name: Ensure libwacom configuration directory exists
       ansible.builtin.file:
         path: /etc/libwacom
