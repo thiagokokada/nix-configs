@@ -1,3 +1,0 @@
-# Disable wake from the detachable/base keyboard. On Wormdingler, lid close can
-# generate a Hammer power-key event that immediately wakes the system again.
-ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="18d1", ATTR{idProduct}=="5057", ATTR{product}=="Hammer", ATTR{power/wakeup}="disabled"

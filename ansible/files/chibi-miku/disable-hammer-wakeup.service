@@ -1,0 +1,11 @@
+[Unit]
+Description=Disable Hammer keyboard wakeups
+After=systemd-udev-settle.service
+Wants=systemd-udev-settle.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/disable-hammer-wakeup
+
+[Install]
+WantedBy=multi-user.target
