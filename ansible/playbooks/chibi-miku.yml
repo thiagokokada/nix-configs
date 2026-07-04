@@ -185,20 +185,13 @@
         group: root
         mode: "0755"
 
-    - name: Install Hammer wakeup systemd service
+    - name: Install Hammer wakeup udev rule
       ansible.builtin.copy:
-        src: "{{ laptop_files_dir }}/disable-hammer-wakeup.service"
-        dest: /etc/systemd/system/disable-hammer-wakeup.service
+        src: "{{ laptop_files_dir }}/99-hammer-wakeup.rules"
+        dest: /etc/udev/rules.d/99-hammer-wakeup.rules
         owner: root
         group: root
         mode: "0644"
-
-    - name: Enable Hammer wakeup systemd service
-      ansible.builtin.systemd_service:
-        name: disable-hammer-wakeup.service
-        enabled: true
-        state: started
-        daemon_reload: true
 
     - name: Ensure libwacom configuration directory exists
       ansible.builtin.file:

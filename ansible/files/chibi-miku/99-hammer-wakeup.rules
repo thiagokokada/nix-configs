@@ -1,0 +1,3 @@
+# Disable wake from the detachable/base keyboard after the Hammer HID driver
+# binds, because the USB add event is too early and wake gets re-enabled later.
+ACTION=="bind", SUBSYSTEM=="hid", ENV{HID_ID}=="0003:000018D1:00005057", RUN+="/usr/local/bin/disable-hammer-wakeup"
