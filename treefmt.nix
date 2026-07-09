@@ -10,7 +10,12 @@
     ruff-format.enable = true;
     shellcheck.enable = true;
     shfmt.enable = true;
-    yamllint.enable = true;
+    yamllint = {
+      enable = true;
+      settings = {
+        line-length = false;
+      };
+    };
     statix.enable = true;
   };
 
@@ -60,7 +65,7 @@
               text = ''
                 rm -rf "${resultDir}"
                 mkdir -p "${resultDir}"
-                for dir in ${builtins.toString ghActionsYAMLs}; do
+                for dir in ${toString ghActionsYAMLs}; do
                   cp -f $dir/*.yml "${resultDir}"
                 done
                 echo Done!
