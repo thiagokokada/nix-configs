@@ -710,8 +710,8 @@ in
             }
 
             cursor {
-                xcursor-theme ${quote config.xsession.pointerCursor.name}
-                xcursor-size ${toString config.xsession.pointerCursor.size}
+                xcursor-theme ${quote config.home.pointerCursor.name}
+                xcursor-size ${toString config.home.pointerCursor.size}
             }
 
             environment {

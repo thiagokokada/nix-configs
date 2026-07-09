@@ -75,7 +75,7 @@ let
         };
       };
 
-      extraConfig = with config.xsession.pointerCursor; ''
+      extraConfig = with config.home.pointerCursor; ''
         hide_edge_borders --i3 smart
 
         # XCURSOR_SIZE

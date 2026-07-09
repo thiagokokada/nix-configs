@@ -43,7 +43,7 @@
         # instead of *.ini files
         "Net/IconThemeName" = gtk.iconTheme.name;
         "Net/ThemeName" = gtk.theme.name;
-        "Gtk/CursorThemeName" = xsession.pointerCursor.name;
+        "Gtk/CursorThemeName" = home.pointerCursor.name;
       };
     };
   };
