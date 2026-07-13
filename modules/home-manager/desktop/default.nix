@@ -26,6 +26,7 @@ in
   config = lib.mkIf cfg.enable {
     home.packages = with pkgs; [
       audacious
+      calibre
       libreoffice-fresh
       (mcomix.override { unrarSupport = true; })
     ];
