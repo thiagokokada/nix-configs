@@ -6,6 +6,7 @@
   pkgs,
   lib,
   flake,
+  config,
   ...
 }:
 
@@ -86,6 +87,11 @@
     # pin 2.4GHz, so go back to wpa_supplicant
     wifi.backend = "wpa_supplicant";
   };
+
+  # Needed for Crosspoint development
+  # TODO: move this somewhere else
+  services.udev.packages = with pkgs; [ platformio-core.udev ];
+  users.users.${config.nixos.home.username}.extraGroups = [ "dialout" ];
 
   # This value determines the NixOS release with which your system is to be
   # compatible, in order to avoid breaking some software such as database
