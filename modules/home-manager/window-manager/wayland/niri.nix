@@ -360,7 +360,7 @@ in
             // Additionally, clients will be informed that they are tiled, removing some client-side rounded corners.
             // This option will also fix border/focus ring drawing behind some semitransparent windows.
             // After enabling or disabling this, you need to restart the apps for this to take effect.
-            // prefer-no-csd
+            prefer-no-csd
 
             // You can change the path where screenshots are saved.
             // A ~ at the front will be expanded to the home directory.
