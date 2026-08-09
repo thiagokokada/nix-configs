@@ -25,12 +25,18 @@
         name = "Noto Sans";
       };
       iconTheme = {
-        package = pkgs.nordzy-icon-theme;
-        name = "Nordzy-dark";
+        package = pkgs.catppuccin-papirus-folders.override {
+          accent = "blue";
+          flavor = "mocha";
+        };
+        name = "Papirus-Dark";
       };
       theme = {
-        name = "Nordic-bluish-accent";
-        package = pkgs.nordic;
+        name = "catppuccin-mocha-blue-standard";
+        package = pkgs.catppuccin-gtk.override {
+          accents = [ "blue" ];
+          variant = "mocha";
+        };
       };
     };
 

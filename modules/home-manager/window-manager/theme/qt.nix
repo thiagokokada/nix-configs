@@ -19,12 +19,19 @@
 
     xdg.configFile = {
       "Kvantum/kvantum.kvconfig".text = lib.generators.toINI { } {
-        General.theme = "Nordic-bluish-solid";
+        General.theme = "catppuccin-mocha-blue";
       };
-      "Kvantum" = {
-        source = "${pkgs.nordic}/share/Kvantum";
-        recursive = true;
-      };
+      "Kvantum" =
+        let
+          package = pkgs.catppuccin-kvantum.override {
+            accent = "blue";
+            variant = "mocha";
+          };
+        in
+        {
+          source = "${package}/share/Kvantum";
+          recursive = true;
+        };
       "qt5ct/qt5ct.conf".text = lib.generators.toINI { } {
         Appearance = {
           style = "kvantum-dark";
