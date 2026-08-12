@@ -4,7 +4,10 @@
   inputs = {
     # main
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    hardware.url = "github:NixOS/nixos-hardware";
+    hardware = {
+      url = "github:NixOS/nixos-hardware";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     disko = {
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
