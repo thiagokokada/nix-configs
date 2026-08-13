@@ -92,10 +92,6 @@
   # Needed for Crosspoint development
   services.udev.packages = with pkgs; [ platformio-core.udev ];
   users.users.${config.nixos.home.username}.extraGroups = [ "dialout" ];
-  # Calibre server
-  networking.firewall = {
-    allowedTCPPorts = [ 9090 ];
-  };
 
   # This value determines the NixOS release with which your system is to be
   # compatible, in order to avoid breaking some software such as database

@@ -8,6 +8,7 @@
 {
   imports = [
     ./audio.nix
+    ./calibre.nix
     ./chromium.nix
     ./fonts.nix
     ./kde.nix
@@ -41,6 +42,18 @@
         value = "524288";
       }
     ];
+
+    # Calibre server
+    networking.firewall = {
+      allowedTCPPorts = [ 9090 ];
+      allowedUDPPorts = [
+        54982
+        48123
+        39001
+        44044
+        59678
+      ];
+    };
 
     systemd = {
       settings.Manager = {
