@@ -35,8 +35,6 @@ in
         kdePackages.plasma-disks
       ];
 
-    jovian.steam.desktopSession = "plasma";
-
     programs.kdeconnect.enable = true;
 
     services = {

@@ -60,6 +60,7 @@ in
       steam = {
         enable = true;
         autoStart = true;
+        desktopSession = "plasma";
         user = username;
         environment = {
           STEAM_EXTRA_COMPAT_TOOLS_PATHS =
