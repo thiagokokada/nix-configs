@@ -40,10 +40,8 @@
     };
   };
 
-  # Used for firmware updates
-  services = {
-    fwupd.enable = true;
-  };
+  # For fingerprint scanner
+  services.fprintd.enable = true;
 
   time.timeZone = "Europe/Dublin";
 
