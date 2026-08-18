@@ -29,6 +29,7 @@
   nixos = {
     desktop.kde.enable = true;
     window-manager.enable = false;
+    games.steam.enable = true;
     server = {
       ssh.enable = true;
       tailscale.enable = true;
