@@ -42,6 +42,8 @@
 
   # For fingerprint scanner
   services.fprintd.enable = true;
+  # Stops SDDM from prompting for fingerprint
+  security.pam.services.login.fprintAuth = false;
 
   time.timeZone = "Europe/Dublin";
 
