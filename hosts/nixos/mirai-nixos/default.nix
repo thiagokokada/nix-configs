@@ -3,6 +3,7 @@
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
 {
+  config,
   pkgs,
   flake,
   ...
@@ -34,16 +35,25 @@
     };
   };
 
-  # For fingerprint scanner
-  services.fprintd.enable = true;
+  services = {
+    # For fingerprint scanner
+    fprintd.enable = true;
+    logind.settings.Login = {
+      HibernateDelaySec = "2h";
+    };
+    displayManager = {
+      autoLogin = {
+        enable = true;
+        user = config.nixos.home.username;
+      };
+    };
+  };
+
   # Stops SDDM from prompting for fingerprint
   security.pam.services.login.fprintAuth = false;
   # https://nwildner.com/posts/2024-06-05-dell-laptop-suspend/
   systemd.sleep.settings.Sleep = {
     SuspendState = "freeze";
-  };
-  services.logind.settings.Login = {
-    HibernateDelaySec = "2h";
   };
 
   time.timeZone = "Europe/Dublin";
