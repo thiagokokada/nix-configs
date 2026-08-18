@@ -14,7 +14,6 @@ in
     ./gammastep.nix
     ./theme
     ./wayland
-    ./x11
   ];
 
   options.home-manager.window-manager = {

@@ -78,13 +78,7 @@ in
       in
       lib.mkIf (maker == "nvidia") {
         nixos.home.extraModules = {
-          home-manager.window-manager.x11.nvidia = {
-            enable = true;
-            prime = {
-              sync = { inherit (config.hardware.nvidia.prime.sync) enable; };
-              offload = { inherit (config.hardware.nvidia.prime.offload) enable; };
-            };
-          };
+          home-manager.window-manager.wayland.sway.nvidia.enable = true;
         };
 
         # Use nvidia-offload script in gamemode
