@@ -42,6 +42,9 @@
   systemd.sleep.settings.Sleep = {
     SuspendState = "freeze";
   };
+  services.logind.settings.Login = {
+    HibernateDelaySec = "2h";
+  };
 
   time.timeZone = "Europe/Dublin";
 
