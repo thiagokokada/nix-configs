@@ -81,7 +81,7 @@ in
           # breaks a few things, like auto dark-mode in websites
           # "privacy.resistFingerprinting" = true;
         }
-        // lib.optionalAttrs pkgs.stdenv.isLinux {
+        // lib.optionalAttrs pkgs.stdenv.hostPlatform.isLinux {
           # https://wiki.archlinux.org/title/Firefox#XDG_Desktop_Portal_integration
           "widget.use-xdg-desktop-portal.file-picker" = 1;
         }

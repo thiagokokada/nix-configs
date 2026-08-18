@@ -15,7 +15,7 @@ in
 
   # https://github.com/NixOS/nixpkgs/issues/507531
   direnv = prev.direnv.overrideAttrs (_: {
-    doCheck = !prev.stdenv.isDarwin;
+    doCheck = !prev.stdenv.hostPlatform.isDarwin;
   });
 
   neovim-standalone =

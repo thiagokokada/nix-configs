@@ -17,7 +17,7 @@
       ssh = {
         enable = true;
         enableDefaultConfig = false;
-        package = with pkgs; lib.mkIf stdenv.isLinux openssh;
+        package = with pkgs; lib.mkIf stdenv.hostPlatform.isLinux openssh;
 
         includes = [ "local.d/*" ];
 
@@ -58,6 +58,6 @@
 
     # Start SSH agent via systemd (Linux-only)
     # Since this is a systemd user service, it stays between sessions
-    services.ssh-agent.enable = lib.mkIf pkgs.stdenv.isLinux true;
+    services.ssh-agent.enable = pkgs.stdenv.hostPlatform.isLinux;
   };
 }

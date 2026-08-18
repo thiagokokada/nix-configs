@@ -19,7 +19,7 @@ in
       default = true;
     };
     autoExpire.enable = lib.mkEnableOption "auto expire Home-Manager generations" // {
-      default = pkgs.stdenv.isLinux;
+      default = pkgs.stdenv.hostPlatform.isLinux;
     };
   };
 

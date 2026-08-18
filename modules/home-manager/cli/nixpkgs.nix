@@ -28,10 +28,10 @@
         nix-output-monitor
         (nixpkgs-review.override {
           withNom = true;
-          withSandboxSupport = pkgs.stdenv.isLinux;
+          withSandboxSupport = pkgs.stdenv.hostPlatform.isLinux;
         })
       ]
-      ++ lib.optionals stdenv.isLinux [
+      ++ lib.optionals stdenv.hostPlatform.isLinux [
         nix-alien
       ];
   };
