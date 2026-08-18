@@ -4,7 +4,6 @@
   imports = [
     ./greetd.nix
     ./wayland.nix
-    ./xserver.nix
   ];
 
   options.nixos.window-manager.enable = lib.mkEnableOption "window-manager config" // {

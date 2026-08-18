@@ -12,6 +12,7 @@
     ./chromium.nix
     ./fonts.nix
     ./kde.nix
+    ./keyboard.nix
     ./locale.nix
     ./plymouth.nix
     ./tailscale.nix

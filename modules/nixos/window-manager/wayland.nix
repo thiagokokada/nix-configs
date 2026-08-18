@@ -25,6 +25,7 @@ in
       };
 
       programs = {
+        dconf.enable = true;
         sway = {
           # Make Sway available for display managers and make things like swaylock work
           inherit (cfg.sway) enable;
@@ -91,6 +92,17 @@ in
       ];
 
       services = {
+        # Enable libinput
+        libinput = {
+          enable = true;
+          touchpad = {
+            naturalScrolling = true;
+            tapping = true;
+          };
+          mouse = {
+            accelProfile = "flat";
+          };
+        };
         # Recommended by upstream
         # https://github.com/YaLTeR/niri/wiki/Important-Software#portals
         gnome.gnome-keyring.enable = lib.mkDefault true;
