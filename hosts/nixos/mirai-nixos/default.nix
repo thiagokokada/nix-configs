@@ -44,6 +44,10 @@
   services.fprintd.enable = true;
   # Stops SDDM from prompting for fingerprint
   security.pam.services.login.fprintAuth = false;
+  # https://nwildner.com/posts/2024-06-05-dell-laptop-suspend/
+  systemd.sleep.settings.Sleep = {
+    SuspendState = "freeze";
+  };
 
   time.timeZone = "Europe/Dublin";
 
