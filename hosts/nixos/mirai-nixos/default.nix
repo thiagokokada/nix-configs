@@ -16,14 +16,7 @@
     flake.inputs.hardware.nixosModules.framework-intel-core-ultra-series3
   ];
 
-  device = {
-    type = "laptop";
-    net.ifaces = [
-      "enp2s0f0"
-      "enp5s0"
-      "wlan0"
-    ];
-  };
+  device.type = "laptop";
 
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
