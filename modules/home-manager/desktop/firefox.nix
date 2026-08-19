@@ -46,8 +46,9 @@ in
           # ads
           "browser.newtabpage.activity-stream.feeds.section.topstories" = false;
           "browser.newtabpage.activity-stream.showSponsored" = false;
-          "browser.newtabpage.activity-stream.showSponsoredTopSites" = false;
           "browser.newtabpage.activity-stream.showSponsoredCheckboxes" = false;
+          "browser.newtabpage.activity-stream.showSponsoredTopSites" = false;
+          "browser.newtabpage.activity-stream.system.showWeatherOptIn" = false;
           "browser.urlbar.suggest.quicksuggest.sponsored" = false;
           # clear default topsites, does not block you from adding your own
           "browser.newtabpage.activity-stream.default.sites" = "";
@@ -74,16 +75,8 @@ in
           "app.normandy.enabled" = false;
           # crash report
           "browser.tabs.crashReporting.sendReport" = false;
-          # sidebar
-          "sidebar.verticalTabs" = true;
-          "sidebar.verticalTabs.dragToPinPromo.dismissed" = true;
-          "sidebar.position_start" = false; # true => left, false => right
           # breaks a few things, like auto dark-mode in websites
           # "privacy.resistFingerprinting" = true;
-        }
-        // lib.optionalAttrs pkgs.stdenv.hostPlatform.isLinux {
-          # https://wiki.archlinux.org/title/Firefox#XDG_Desktop_Portal_integration
-          "widget.use-xdg-desktop-portal.file-picker" = 1;
         }
         // lib.optionalAttrs cfg.subpixelRender.enable {
           # https://pandasauce.org/get-fonts-done/
