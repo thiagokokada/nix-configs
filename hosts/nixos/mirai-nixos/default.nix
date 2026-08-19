@@ -22,8 +22,9 @@
   boot.kernelPackages = pkgs.linuxPackages_latest;
   boot.initrd.kernelModules = [ "xe" ];
 
-  # Use the systemd-boot EFI boot loader
-  boot.loader.systemd-boot.enable = true;
+  boot.loader.limine.enable = true;
+  boot.loader.limine.secureBoot.enable = true;
+  boot.loader.limine.secureBoot.autoEnrollKeys.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
   nixos = {
