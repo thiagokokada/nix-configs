@@ -40,6 +40,9 @@
   services = {
     # For fingerprint scanner
     fprintd.enable = true;
+    logind.settings.Login = {
+      HibernateDelaySec = "2h";
+    };
     displayManager = {
       autoLogin = {
         enable = true;
