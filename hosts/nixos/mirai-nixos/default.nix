@@ -37,8 +37,16 @@
     };
   };
 
-  # For fingerprint scanner
-  services.fprintd.enable = true;
+  services = {
+    # For fingerprint scanner
+    fprintd.enable = true;
+    displayManager = {
+      autoLogin = {
+        enable = true;
+        user = config.nixos.home.username;
+      };
+    };
+  };
 
   # Stops SDDM from prompting for fingerprint
   security.pam.services.login.fprintAuth = false;
