@@ -28,6 +28,7 @@
   boot.loader.efi.canTouchEfiVariables = true;
 
   nixos = {
+    dev.platformio.enable = true;
     desktop.kde.enable = true;
     window-manager.enable = false;
     games.steam.enable = true;
@@ -35,6 +36,7 @@
       ssh.enable = true;
       tailscale.enable = true;
     };
+    system.gpu.maker = "intel";
   };
 
   services = {
