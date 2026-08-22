@@ -4,6 +4,7 @@
   imports = [
     ./android.nix
     ./ollama.nix
+    ./platformio.nix
     ./virtualisation
   ];
 

@@ -41,7 +41,10 @@
   fonts.fontconfig.subpixel.rgba = "rgb";
 
   nixos = {
-    dev.android.studio.enable = true;
+    dev = {
+      android.studio.enable = true;
+      platformio.enable = true;
+    };
     games.enable = true;
     home.restoreBackups = true;
     server = {
@@ -87,11 +90,6 @@
     # pin 2.4GHz, so go back to wpa_supplicant
     wifi.backend = "wpa_supplicant";
   };
-
-  # TODO: move this somewhere else
-  # Needed for Crosspoint development
-  services.udev.packages = with pkgs; [ platformio-core.udev ];
-  users.users.${config.nixos.home.username}.extraGroups = [ "dialout" ];
 
   # This value determines the NixOS release with which your system is to be
   # compatible, in order to avoid breaking some software such as database
