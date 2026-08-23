@@ -25,7 +25,7 @@ in
   config = lib.mkIf cfg.enable {
     home.packages = with pkgs; [
       audacious
-      libreoffice-fresh
+      libreoffice-stable
       (mcomix.override { unrarSupport = true; })
     ];
   };
