@@ -30,7 +30,7 @@ for more information about what remote builders are.
 To setup it:
 
 ```console
-$ nix eval --raw .#nixosConfigurations.sankyuu-nixos.config.environment.etc."nix/machines".text | sudo tee -a /etc/nix/machines
+$ nix eval --raw .#nixosConfigurations.blackrockshooter-nixos.config.environment.etc."nix/machines".text | sudo tee -a /etc/nix/machines
 ```
 
 This will populate `/etc/nix/machines` file.
