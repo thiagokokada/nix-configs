@@ -12,6 +12,7 @@
 {
   imports = [
     ./disk-config.nix
+    ./easyeffects.nix
     ./hardware-configuration.nix
     flake.inputs.disko.nixosModules.disko
     flake.inputs.hardware.nixosModules.framework-intel-core-ultra-series3
