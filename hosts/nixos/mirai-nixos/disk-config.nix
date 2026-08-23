@@ -24,6 +24,7 @@
                 name = "encrypted";
                 extraOpenArgs = [ ];
                 settings.allowDiscards = true;
+                settings.crypttabExtraOpts = [ "tries=10" ];
                 content = {
                   type = "lvm_pv";
                   vg = "pool";
