@@ -11,6 +11,7 @@ in
 {
   imports = [
     ./chromium.nix
+    ./easyeffects
     ./firefox.nix
     ./fonts
     ./kitty.nix
