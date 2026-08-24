@@ -45,5 +45,15 @@ in
       # Who really cares about GNOME games?
       gnome.games.enable = false;
     };
+
+    # GNOME's power menu always requests a regular suspend. On laptops,
+    # redirect that request to systemd's suspend-then-hibernate operation.
+    systemd.services.systemd-suspend = lib.mkIf config.nixos.laptop.enable {
+      overrideStrategy = "asDropin";
+      serviceConfig.ExecStart = [
+        ""
+        "${config.systemd.package}/lib/systemd/systemd-sleep suspend-then-hibernate"
+      ];
+    };
   };
 }
