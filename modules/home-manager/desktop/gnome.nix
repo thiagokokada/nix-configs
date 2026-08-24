@@ -11,7 +11,7 @@ let
     appindicator
     caffeine
     dash-to-dock
-    hibernate-status-button
+    hibernate-power-menu
   ];
 in
 {
