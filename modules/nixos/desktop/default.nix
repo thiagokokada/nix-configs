@@ -11,6 +11,7 @@
     ./calibre.nix
     ./chromium.nix
     ./fonts.nix
+    ./gnome.nix
     ./kde.nix
     ./keyboard.nix
     ./locale.nix

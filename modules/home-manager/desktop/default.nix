@@ -14,6 +14,7 @@ in
     ./easyeffects
     ./firefox.nix
     ./fonts
+    ./gnome.nix
     ./kitty.nix
     ./mpv
     ./nixgl.nix

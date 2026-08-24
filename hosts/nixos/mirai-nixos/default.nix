@@ -29,7 +29,7 @@
 
   nixos = {
     dev.platformio.enable = true;
-    desktop.kde.enable = true;
+    desktop.gnome.enable = true;
     window-manager.enable = false;
     games.steam.enable = true;
     server = {

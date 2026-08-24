@@ -1,5 +1,3 @@
-{ lib, ... }:
-
 {
   home.stateVersion = "26.05";
 
@@ -13,6 +11,7 @@
     };
     desktop = {
       enable = true;
+      gnome.enable = true;
       chromium.enable = false;
       firefox.enable = false;
       kitty.fontSize = 11.0;
@@ -25,14 +24,6 @@
     dev = {
       enable = true;
       nix.languageServer = "nil";
-    };
-  };
-
-  dconf.settings = {
-    "org/gnome/desktop/wm/keybindings" = {
-      # Unbind Ctrl+Space/Ctrl+Shift+Space to change keyboard layout
-      switch-input-source = lib.hm.gvariant.mkEmptyArray lib.hm.gvariant.type.string;
-      switch-input-source-backward = lib.hm.gvariant.mkEmptyArray lib.hm.gvariant.type.string;
     };
   };
 
