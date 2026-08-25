@@ -50,6 +50,10 @@ in
       "org/gnome/shell" = {
         enabled-extensions = map (extension: extension.extensionUuid) extensions;
       };
+
+      "org/gnome/settings-daemon/plugins/power" = {
+        ambient-enabled = false;
+      };
     };
   };
 }
