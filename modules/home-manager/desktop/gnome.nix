@@ -12,7 +12,6 @@ let
     caffeine
     dash-to-dock
     hibernate-power-menu
-    notification-banner-position
   ];
 in
 {
