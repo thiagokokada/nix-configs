@@ -42,8 +42,11 @@ in
         gdm.enable = lib.mkDefault true;
       };
 
-      # Who really cares about GNOME games?
-      gnome.games.enable = false;
+      gnome = {
+        gnome-keyring.enable = true;
+        # Who really cares about GNOME games?
+        games.enable = false;
+      };
     };
 
     # GNOME's power menu always requests a regular suspend. On laptops,
