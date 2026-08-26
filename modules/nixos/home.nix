@@ -23,6 +23,7 @@ in
 
     # Define a user account. Don't forget to set a password with ‘passwd’
     users.users.${cfg.username} = {
+      description = config.meta.fullname;
       isNormalUser = true;
       uid = 1000;
       extraGroups = [
@@ -30,7 +31,7 @@ in
         "video"
       ];
       shell = pkgs.zsh;
-      password = "changeme";
+      initialPassword = "changeme";
     };
   };
 }
