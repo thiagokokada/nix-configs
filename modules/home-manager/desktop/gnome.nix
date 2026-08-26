@@ -8,7 +8,6 @@
 let
   cfg = config.home-manager.desktop.gnome;
   extensions = with pkgs.gnomeExtensions; [
-    adaptive-brightness
     appindicator
     caffeine
     dash-to-dock
@@ -50,6 +49,10 @@ in
 
       "org/gnome/shell" = {
         enabled-extensions = map (extension: extension.extensionUuid) extensions;
+      };
+
+      "org/gnome/settings-daemon/plugins/power" = {
+        ambient-enabled = false;
       };
     };
   };
