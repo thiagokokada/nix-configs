@@ -87,14 +87,12 @@ in
     specialisation = {
       game-mode = lib.mkIf cfg.bootInDesktopMode {
         configuration = {
-          boot.loader.systemd-boot.sortKey = "o_nixos";
           nixos.games.jovian.bootInDesktopMode = false;
           system.nixos.tags = [ "with-jovian-in-game-mode" ];
         };
       };
       desktop-mode = lib.mkIf (!cfg.bootInDesktopMode) {
         configuration = {
-          boot.loader.systemd-boot.sortKey = "o_nixos";
           nixos.games.jovian.bootInDesktopMode = true;
           system.nixos.tags = [ "with-jovian-in-desktop-mode" ];
         };

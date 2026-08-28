@@ -31,9 +31,7 @@
     # Use the systemd-boot EFI boot loader
     loader = {
       efi.canTouchEfiVariables = true;
-      systemd-boot = {
-        enable = true;
-      };
+      limine.enable = true;
     };
   };
 
@@ -74,7 +72,6 @@
   };
 
   specialisation.window-manager-mode.configuration = {
-    boot.loader.systemd-boot.sortKey = "s_nixos";
     device.type = lib.mkForce "desktop";
     system.nixos.tags = [ "with-window-manager" ];
   };
