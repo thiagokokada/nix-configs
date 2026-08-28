@@ -2,12 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{
-  config,
-  pkgs,
-  flake,
-  ...
-}:
+{ pkgs, flake, ... }:
 
 {
   imports = [
@@ -23,8 +18,13 @@
   boot.initrd.kernelModules = [ "xe" ];
 
   boot.loader.limine.enable = true;
-  boot.loader.limine.secureBoot.enable = true;
   boot.loader.limine.secureBoot.autoEnrollKeys.enable = true;
+  boot.loader.limine.secureBoot.enable = true;
+  boot.loader.limine.style = {
+    interface.resolution = "2880x1920";
+    wallpapers = [ pkgs.nixos-artwork.wallpapers.binary-blue.gnomeFilePath ];
+    wallpaperStyle = "centered";
+  };
   boot.loader.efi.canTouchEfiVariables = true;
 
   nixos = {
