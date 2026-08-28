@@ -27,7 +27,8 @@
   };
 
   boot = {
-    kernelPackages = pkgs.linuxPackages_latest;
+    # TODO: go back to latest once scx is fixed
+    kernelPackages = pkgs.linuxPackages_6_18;
     # Use the systemd-boot EFI boot loader
     loader = {
       efi.canTouchEfiVariables = true;
@@ -74,17 +75,6 @@
   specialisation.window-manager-mode.configuration = {
     device.type = lib.mkForce "desktop";
     system.nixos.tags = [ "with-window-manager" ];
-  };
-
-  networking.networkmanager = {
-    connectionConfig = {
-      # Disable powersave for Wi-Fi to see if this improves reliability
-      "wifi.powersave" = 2;
-    };
-    # iwd doesn't allow for pinning a specific BSSID (i.e., router by MAC),
-    # but since mt7925e is kinda buggy right now we need this support to
-    # pin 2.4GHz, so go back to wpa_supplicant
-    wifi.backend = "wpa_supplicant";
   };
 
   # This value determines the NixOS release with which your system is to be
