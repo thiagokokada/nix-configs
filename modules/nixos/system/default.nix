@@ -2,6 +2,7 @@
   config,
   lib,
   flake,
+  pkgs,
   ...
 }:
 
@@ -68,8 +69,21 @@ in
         "vm.page-cluster" = lib.mkIf cfg.zram.enable 0;
       };
 
-      # Disable boot editor for security
-      loader.systemd-boot.editor = false;
+      loader = {
+        limine = {
+          secureBoot = {
+            autoEnrollKeys.enable = true;
+            autoGenerateKeys = true;
+          };
+          style = {
+            wallpapers = [ pkgs.nixos-artwork.wallpapers.binary-blue.gnomeFilePath ];
+            wallpaperStyle = "centered";
+          };
+        };
+
+        # Disable boot editor for security
+        systemd-boot.editor = false;
+      };
 
       # Enable NTFS support
       supportedFilesystems = [ "ntfs" ];

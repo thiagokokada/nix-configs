@@ -14,18 +14,18 @@
 
   device.type = "laptop";
 
-  boot.kernelPackages = pkgs.linuxPackages_latest;
-  boot.initrd.kernelModules = [ "xe" ];
-
-  boot.loader.limine.enable = true;
-  boot.loader.limine.secureBoot.autoEnrollKeys.enable = true;
-  boot.loader.limine.secureBoot.enable = true;
-  boot.loader.limine.style = {
-    interface.resolution = "2880x1920";
-    wallpapers = [ pkgs.nixos-artwork.wallpapers.binary-blue.gnomeFilePath ];
-    wallpaperStyle = "centered";
+  boot = {
+    kernelPackages = pkgs.linuxPackages_latest;
+    initrd.kernelModules = [ "xe" ];
+    loader = {
+      efi.canTouchEfiVariables = true;
+      limine = {
+        enable = true;
+        secureBoot.enable = true;
+        style.interface.resolution = "2880x1920";
+      };
+    };
   };
-  boot.loader.efi.canTouchEfiVariables = true;
 
   nixos = {
     dev.platformio.enable = true;

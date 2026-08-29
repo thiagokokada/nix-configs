@@ -29,10 +29,13 @@
   boot = {
     # TODO: go back to latest once scx is fixed
     kernelPackages = pkgs.linuxPackages_6_18;
-    # Use the systemd-boot EFI boot loader
     loader = {
       efi.canTouchEfiVariables = true;
-      limine.enable = true;
+      limine = {
+        enable = true;
+        secureBoot.enable = true;
+        style.interface.resolution = "3440x1440";
+      };
     };
   };
 
