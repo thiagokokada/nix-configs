@@ -6,7 +6,6 @@
 }:
 
 let
-  inherit (config.nixos.home) username;
   cfg = config.nixos.dev.virtualisation;
 in
 {
@@ -29,9 +28,8 @@ in
         enable = true;
         dockerCompat = true;
         dockerSocket.enable = true;
+        defaultNetwork.settings.dns_enabled = true;
       };
     };
-
-    users.users.${username}.extraGroups = [ "podman" ];
   };
 }
