@@ -9,7 +9,6 @@ In `/etc/nix/nix.conf` file:
 ```
 build-users-group = nixbld
 experimental-features = nix-command flakes
-trusted-users = [ root @sudo ] # or @wheel/@admin
 builders-use-substitutes = true
 ```
 

@@ -37,10 +37,7 @@ in
           "extra-trusted-public-keys" = "trusted-public-keys";
         } flake.outputs.internal.configs.nix)
         {
-          trusted-users = [
-            "root"
-            "@admin"
-          ];
+          auto-optimise-store = true;
         }
       ];
     };

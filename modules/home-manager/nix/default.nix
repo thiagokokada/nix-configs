@@ -25,10 +25,6 @@ in
       sessionVariables.NIX_PATH = "nixpkgs=${flake.inputs.nixpkgs}";
     };
 
-    # To make cachix work you need add the current user as a trusted-user on Nix
-    # sudo echo "trusted-users = $(whoami)" >> /etc/nix/nix.conf
-    # Another option is to add a group by prefixing it by @, e.g.:
-    # sudo echo "trusted-users = @wheel" >> /etc/nix/nix.conf
     nix = {
       package = lib.mkDefault pkgs.nix;
       settings = flake.outputs.internal.configs.nix;

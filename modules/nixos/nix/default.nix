@@ -51,10 +51,6 @@ in
           "extra-trusted-public-keys" = "trusted-public-keys";
         } flake.outputs.internal.configs.nix)
         {
-          trusted-users = [
-            "root"
-            "@wheel"
-          ];
           auto-optimise-store = true;
         }
       ];

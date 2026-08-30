@@ -43,7 +43,6 @@
     block: |
       build-users-group = nixbld
       experimental-features = nix-command flakes
-      trusted-users = {{ nix_trusted_users }}
       builders-use-substitutes = true
 
   notify: Restart Nix daemon
