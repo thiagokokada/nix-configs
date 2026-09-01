@@ -133,13 +133,6 @@
                   statix
                 ];
               };
-              ansible = pkgs.mkShell {
-                packages = with pkgs; [
-                  ansible
-                  ansible-lint
-                  yamllint
-                ];
-              };
             };
             checks.formatting = treefmtEval.config.build.check self;
             formatter = treefmtEval.config.build.wrapper;

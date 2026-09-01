@@ -1,4 +1,0 @@
----
-nix_installer_url: https://artifacts.nixos.org/nix-installer
-nix_binary: /nix/var/nix/profiles/default/bin/nix
-nix_conf_path: /etc/nix/nix.custom.conf

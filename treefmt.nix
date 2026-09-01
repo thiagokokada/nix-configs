@@ -28,8 +28,6 @@
       "*.zsh"
       # auto-generated
       ".github/workflows/*.yml"
-      # third-party
-      "ansible/roles/luizgavalda.gnome_extensions/**/*.yml"
     ];
     formatter = {
       github-actions =
