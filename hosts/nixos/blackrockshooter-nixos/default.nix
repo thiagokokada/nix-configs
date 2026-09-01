@@ -70,9 +70,6 @@
   services = {
     # Used for firmware updates
     fwupd.enable = true;
-    ollama.loadModels = [
-      "deepseek-r1:14b"
-    ];
   };
 
   specialisation.window-manager-mode.configuration = {
