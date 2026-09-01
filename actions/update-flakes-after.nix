@@ -35,7 +35,7 @@ with utils;
         with steps;
         withSharedSteps [
           freeDiskSpaceStep
-          (buildHomeManagerConfigurations { inherit (home-manager.aarch64-linux) hostNames; })
+          # (buildHomeManagerConfigurations { inherit (home-manager.aarch64-linux) hostNames; })
           (buildNixOSConfigurations { inherit (nixos.aarch64-linux) hostNames; })
         ];
     };
