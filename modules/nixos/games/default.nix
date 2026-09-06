@@ -64,9 +64,6 @@ in
           };
         };
       };
-
-      # Alternative driver for Xbox One/Series S/Series X controllers
-      xpadneo.enable = true;
     };
   };
 }
