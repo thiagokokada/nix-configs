@@ -52,8 +52,21 @@ in
 
     hardware = {
       graphics.enable32Bit = true;
+
+      # Reduce latency for Xbox Series controllers
+      # https://github.com/atar-axis/xpadneo/blob/master/docs/TROUBLESHOOTING.md#gamepad-does-not-connect-properly
+      bluetooth = {
+        settings = {
+          LE = {
+            MinConnectionInterval = 7;
+            MaxConnectionInterval = 9;
+            ConnectionLatency = 0;
+          };
+        };
+      };
+
       # Alternative driver for Xbox One/Series S/Series X controllers
-      xone.enable = true;
+      xpadneo.enable = true;
     };
   };
 }
