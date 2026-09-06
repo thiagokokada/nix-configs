@@ -16,10 +16,6 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    # Work around KWin's wl_fixes v2 regression with Mesa 26.2.
-    # https://bugzilla.mozilla.org/show_bug.cgi?id=2064274
-    environment.sessionVariables.MOZ_ENABLE_WAYLAND = "0";
-
     environment.systemPackages =
       with pkgs;
       [
