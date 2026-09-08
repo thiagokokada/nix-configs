@@ -87,9 +87,6 @@ in
           iommu-script
         ];
 
-      # Very likely we want the desktop session if we are using libvirt
-      nixos.games.jovian.bootInDesktopMode = true;
-
       # Disable early KMS
       # TODO: make this works for other GPU makers
       jovian.hardware.amd.gpu.enableEarlyModesetting = false;
