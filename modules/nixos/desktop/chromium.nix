@@ -25,5 +25,13 @@
         };
       };
     };
+
+    services = {
+      # Allow Chromium WebHID/WebUSB access for the active local session.
+      udev.extraRules = ''
+        SUBSYSTEM=="hidraw", KERNEL=="hidraw*", MODE="0660", TAG+="uaccess"
+        SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", MODE="0660", TAG+="uaccess"
+      '';
+    };
   };
 }
