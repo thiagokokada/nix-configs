@@ -26,6 +26,7 @@ in
     motd.enable = lib.mkEnableOption "show message of the day" // {
       default = true;
     };
+    limine.enableMemtest86 = lib.mkEnableOption "memtest86 for Limine bootloader";
     pageCompression = {
       enable = lib.mkOption {
         description = "Page compression strategy.";
@@ -71,6 +72,16 @@ in
 
       loader = {
         limine = {
+          # Using proprietary memtest86 version since it is Secure Boot signed
+          additionalFiles = lib.mkIf cfg.limine.enableMemtest86 {
+            "efi/memtest86/memtest86.efi" = "${pkgs.memtest86-efi}/BOOTX64.efi";
+          };
+          extraEntries = lib.mkIf cfg.limine.enableMemtest86 ''
+            /memtest86
+              protocol: efi_chainload
+              image_path: boot():/efi/memtest86/memtest86.efi
+          '';
+          panicOnChecksumMismatch = true;
           secureBoot = {
             autoEnrollKeys.enable = true;
             autoGenerateKeys = true;

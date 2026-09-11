@@ -57,6 +57,7 @@
       ssh.enable = true;
     };
     system = {
+      limine.enableMemtest86 = true;
       gpu.maker = "amd";
       binfmt = {
         enable = true;
