@@ -24,7 +24,6 @@
 
   nixos = {
     desktop.wireless.enable = false;
-    laptop.tlp.enable = true;
     server = {
       iperf3.enable = true;
       plex.enable = true;
@@ -46,6 +45,8 @@
 
   # Use ultrawide wallpaper
   theme.wallpaper.path = pkgs.wallpapers.hatsune-miku_stylized-ultrawide;
+
+  services.tlp.enable = true;
 
   # This value determines the NixOS release with which your system is to be
   # compatible, in order to avoid breaking some software such as database

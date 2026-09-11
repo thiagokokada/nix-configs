@@ -1,10 +1,6 @@
 { config, lib, ... }:
 
 {
-  imports = [
-    ./tlp.nix
-  ];
-
   options.nixos.laptop.enable = lib.mkEnableOption "laptop config" // {
     default = config.device.type == "laptop";
   };
@@ -19,6 +15,10 @@
     services = {
       # For battery status reporting
       upower.enable = true;
+      # Replacement for power-profiles-daemon
+      tuned.enable = true;
+      power-profiles-daemon.enable = false;
+      tlp.enable = false;
 
       logind = {
         settings.Login = {

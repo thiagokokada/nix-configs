@@ -27,7 +27,6 @@
   nixos = {
     dev.platformio.enable = true;
     desktop.gnome.enable = true;
-    laptop.tlp.enable = true;
     games.steam.enable = true;
     server = {
       ssh.enable = true;
@@ -41,8 +40,6 @@
   services = {
     # For fingerprint scanner
     fprintd.enable = true;
-    # Using TLP
-    power-profiles-daemon.enable = false;
   };
 
   # https://nwildner.com/posts/2024-06-05-dell-laptop-suspend/
