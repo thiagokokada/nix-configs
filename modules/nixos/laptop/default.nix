@@ -17,8 +17,6 @@
       upower.enable = true;
       # Replacement for power-profiles-daemon
       tuned.enable = true;
-      power-profiles-daemon.enable = false;
-      tlp.enable = false;
 
       logind = {
         settings.Login = {
