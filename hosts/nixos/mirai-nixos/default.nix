@@ -17,13 +17,10 @@
   boot = {
     kernelPackages = pkgs.linuxPackages_latest;
     initrd.kernelModules = [ "xe" ];
-    loader = {
-      efi.canTouchEfiVariables = true;
-      limine = {
-        enable = true;
-        secureBoot.enable = true;
-        style.interface.resolution = "2880x1920";
-      };
+    loader.limine = {
+      enable = true;
+      secureBoot.enable = true;
+      style.interface.resolution = "2880x1920";
     };
   };
 
@@ -37,6 +34,7 @@
       tailscale.enable = true;
     };
     system.gpu.maker = "intel";
+    system.limine.enableMemtest86Plus = true;
     window-manager.enable = false;
   };
 

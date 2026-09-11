@@ -30,7 +30,6 @@
     # TODO: go back to latest once scx is fixed
     kernelPackages = pkgs.linuxPackages_6_18;
     loader = {
-      efi.canTouchEfiVariables = true;
       limine = {
         enable = true;
         secureBoot.enable = true;
@@ -57,12 +56,12 @@
       ssh.enable = true;
     };
     system = {
-      limine.enableMemtest86 = true;
-      gpu.maker = "amd";
       binfmt = {
         enable = true;
         windows.enable = true;
       };
+      gpu.maker = "amd";
+      limine.enableMemtest86Plus = true;
     };
   };
 
