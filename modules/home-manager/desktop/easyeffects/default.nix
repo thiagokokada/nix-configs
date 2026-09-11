@@ -33,6 +33,11 @@ in
             type = lib.types.attrs;
             default = { };
           };
+          presetFiles = lib.mkOption {
+            description = "EasyEffects preset JSON files to install without reformatting";
+            type = lib.types.attrsOf (lib.types.attrsOf lib.types.path);
+            default = { };
+          };
           autoload = lib.mkOption {
             description = "Mapping of output device profiles to preset names";
             type = lib.types.attrsOf lib.types.str;
@@ -56,6 +61,13 @@ in
       enable = true;
       extraPresets = cfg.settings.presets;
     };
+
+    xdg.dataFile = lib.concatMapAttrs (
+      preset: pipelines:
+      lib.mapAttrs' (
+        pipeline: source: lib.nameValuePair "easyeffects/${pipeline}/${preset}.json" { inherit source; }
+      ) pipelines
+    ) cfg.settings.presetFiles;
 
     xdg.configFile = lib.mapAttrs' (
       profile: preset:
