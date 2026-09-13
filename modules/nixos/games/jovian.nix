@@ -21,6 +21,7 @@ in
     enable = lib.mkEnableOption "Jovian-NixOS config" // {
       default = config.device.type == "steam-machine";
     };
+    bootInDesktopMode = lib.mkEnableOption "boot in desktop mode";
   };
 
   config = lib.mkIf cfg.enable {
@@ -46,6 +47,13 @@ in
         # Gamescope session does not start)
         tray = "never";
       };
+    };
+
+    environment.etc."sddm.conf.d/z-jovian-login-override.conf" = lib.mkIf cfg.bootInDesktopMode {
+      text = ''
+        [Autologin]
+        Session=${config.jovian.steam.desktopSession}.desktop
+      '';
     };
 
     jovian = {
@@ -74,6 +82,21 @@ in
         "net.retrodeck.retrodeck"
       ];
       update.auto.enable = true;
+    };
+
+    specialisation = {
+      game-mode = lib.mkIf cfg.bootInDesktopMode {
+        configuration = {
+          nixos.games.jovian.bootInDesktopMode = false;
+          system.nixos.tags = [ "with-jovian-in-game-mode" ];
+        };
+      };
+      desktop-mode = lib.mkIf (!cfg.bootInDesktopMode) {
+        configuration = {
+          nixos.games.jovian.bootInDesktopMode = true;
+          system.nixos.tags = [ "with-jovian-in-desktop-mode" ];
+        };
+      };
     };
   };
 }
