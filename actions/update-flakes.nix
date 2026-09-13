@@ -8,7 +8,7 @@ with constants;
   on = {
     schedule = [
       {
-        cron = "40 4 * * 0,2,4,6";
+        cron = "40 0 * * 0,2,4,6";
         timezone = "Europe/Dublin";
       }
     ];
