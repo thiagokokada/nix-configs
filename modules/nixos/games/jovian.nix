@@ -68,6 +68,8 @@ in
               config.programs.steam.extraCompatPackages;
         };
       };
+      # Using zswap instead
+      steamos.enableZram = false;
       hardware.has.amd.gpu = config.nixos.system.gpu.maker == "amd";
     };
 
