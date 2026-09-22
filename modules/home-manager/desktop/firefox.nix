@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  pkgs,
   ...
 }:
 
@@ -45,8 +46,9 @@ in
           # ads
           "browser.newtabpage.activity-stream.feeds.section.topstories" = false;
           "browser.newtabpage.activity-stream.showSponsored" = false;
-          "browser.newtabpage.activity-stream.showSponsoredTopSites" = false;
           "browser.newtabpage.activity-stream.showSponsoredCheckboxes" = false;
+          "browser.newtabpage.activity-stream.showSponsoredTopSites" = false;
+          "browser.newtabpage.activity-stream.system.showWeatherOptIn" = false;
           "browser.urlbar.suggest.quicksuggest.sponsored" = false;
           # clear default topsites, does not block you from adding your own
           "browser.newtabpage.activity-stream.default.sites" = "";
@@ -76,7 +78,7 @@ in
           # sidebar
           "sidebar.verticalTabs" = true;
           "sidebar.verticalTabs.dragToPinPromo.dismissed" = true;
-          "sidebar.position_start" = false; # true => left, false => right
+          # "sidebar.position_start" = false; # true => left, false => right
           # breaks a few things, like auto dark-mode in websites
           # "privacy.resistFingerprinting" = true;
         }
