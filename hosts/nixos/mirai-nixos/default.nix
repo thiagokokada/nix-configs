@@ -26,7 +26,7 @@
 
   nixos = {
     dev.platformio.enable = true;
-    desktop.gnome.enable = true;
+    desktop.kde.enable = true;
     games.steam.enable = true;
     server = {
       ssh.enable = true;

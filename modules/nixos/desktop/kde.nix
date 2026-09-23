@@ -47,5 +47,8 @@ in
         };
       };
     };
+
+    # https://wiki.nixos.org/wiki/SDDM#Disable_fprint_for_login
+    security.pam.services.login.fprintAuth = false;
   };
 }
