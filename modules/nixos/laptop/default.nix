@@ -13,11 +13,6 @@
 
     # Enable laptop specific services
     services = {
-      # For battery status reporting
-      upower.enable = true;
-      # Replacement for power-profiles-daemon
-      tuned.enable = true;
-
       logind = {
         settings.Login = {
           HandlePowerKey = "suspend-then-hibernate";
@@ -26,6 +21,16 @@
           HandleLidSwitchDocked = lib.mkDefault "ignore";
           HandleLidSwitchExternalPower = lib.mkDefault "lock";
         };
+      };
+
+      # For battery status reporting
+      upower.enable = true;
+
+      power-profiles-daemon.enable = false;
+      tlp = {
+        enable = true;
+        # Replacement for power-profiles-daemon
+        pd.enable = true;
       };
     };
   };
