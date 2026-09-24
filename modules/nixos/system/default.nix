@@ -33,6 +33,8 @@ in
       kernel.sysctl = {
         # Enable Magic keys
         "kernel.sysrq" = 1;
+        # https://docs.kernel.org/admin-guide/sysctl/vm.html#swappiness
+        "vm.swappiness" = lib.mkDefault 100;
       };
 
       loader = {
