@@ -40,6 +40,10 @@
   services = {
     # For fingerprint scanner
     fprintd.enable = true;
+
+    # The HDMI card uses usbhid, which TLP excludes from autosuspend by default.
+    # Allow this card to suspend when idle.
+    tlp.settings.USB_ALLOWLIST = "32ac:0002";
   };
 
   # https://nwildner.com/posts/2024-06-05-dell-laptop-suspend/
