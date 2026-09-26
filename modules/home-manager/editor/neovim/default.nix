@@ -118,7 +118,7 @@ in
                 -- copy and paste use the system clipboard
                 vim.opt.clipboard:append { "unnamedplus" }
 
-                -- show vertical colum
+                -- show vertical column
                 vim.opt.colorcolumn:append { 81, 121 }
 
                 -- avoid swapfile warning

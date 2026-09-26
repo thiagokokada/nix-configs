@@ -10,13 +10,13 @@
     ruff-format.enable = true;
     shellcheck.enable = true;
     shfmt.enable = true;
+    statix.enable = true;
     yamllint = {
       enable = true;
       settings = {
         line-length = false;
       };
     };
-    statix.enable = true;
   };
 
   settings = {
