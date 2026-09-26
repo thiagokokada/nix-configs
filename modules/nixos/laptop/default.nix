@@ -31,6 +31,10 @@
         enable = true;
         # Replacement for power-profiles-daemon
         pd.enable = true;
+        settings = {
+          "TLP_PROFILE_AC" = "BAL";
+          "TLP_PROFILE_BAT" = "SAV";
+        };
       };
     };
   };
