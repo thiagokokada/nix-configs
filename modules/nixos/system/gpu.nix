@@ -70,6 +70,20 @@ in
         in
         [ "L+ /opt/rocm - - - - ${rocmEnv}" ];
     })
+
+    (lib.mkIf (maker == "intel") {
+      hardware.graphics.extraPackages = with pkgs; [
+        # Required for modern Intel GPUs (Xe iGPU and ARC)
+        intel-media-driver # VA-API (iHD) userspace
+        vpl-gpu-rt # oneVPL (QSV) runtime
+      ];
+    })
+    (lib.mkIf (maker == "intel" && cfg.acceleration.enable) {
+      hardware.graphics.extraPackages = with pkgs; [
+        intel-compute-runtime # OpenCL (NEO) + Level Zero for Arc/Xe
+      ];
+    })
+
     (
       let
         inherit (config.hardware.nvidia.prime.offload) offloadCmdMainProgram;
@@ -91,6 +105,7 @@ in
       # Enable support for CUDA in nixpkgs
       nixpkgs.config.cudaSupport = true;
     })
+
     (lib.mkIf (maker != null) {
       # GPU control application
       services.lact.enable = config.nixos.desktop.enable;
