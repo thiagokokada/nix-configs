@@ -35,7 +35,10 @@ in
         kdePackages.plasma-disks
       ];
 
-    programs.kdeconnect.enable = true;
+    programs = {
+      kde-pim.enable = false;
+      kdeconnect.enable = true;
+    };
 
     services = {
       desktopManager.plasma6.enable = true;
