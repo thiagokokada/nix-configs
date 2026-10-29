@@ -23,8 +23,8 @@ in
       user = config.nix-darwin.home.username;
       casks = [
         "domzilla-caffeine"
-        "firefox"
-        "google-chrome"
+        # "firefox"
+        # "google-chrome"
         "linearmouse"
         "rectangle"
       ];
