@@ -17,7 +17,6 @@ in
     ./gnome.nix
     ./kitty.nix
     ./mpv
-    ./nixgl.nix
   ];
 
   options.home-manager.desktop = {
