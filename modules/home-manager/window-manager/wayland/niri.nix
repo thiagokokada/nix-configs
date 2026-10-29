@@ -7,12 +7,11 @@
 let
   cfg = config.home-manager.window-manager.wayland.niri;
   menu = lib.getExe config.programs.fuzzel.package;
-  systemctl = lib.getExe' pkgs.systemd "systemctl";
-  loginctl = lib.getExe' pkgs.systemd "loginctl";
+  systemctl = "systemctl";
+  loginctl = "loginctl";
   niri = lib.getExe' pkgs.niri "niri";
   niriPowerMenu = pkgs.writeShellApplication {
     name = "niri-power-menu";
-    runtimeInputs = [ pkgs.systemd ];
     text = ''
       action="$(
         printf '%s\n' \
