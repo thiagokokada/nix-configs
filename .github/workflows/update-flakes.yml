@@ -21,11 +21,6 @@ jobs:
         run: |
           nix run '.#nix-info' -- -m
       - uses: thiagokokada/free-disk-space@main
-        with:
-          opt: true
-          tool-cache: true
-          usrlocal: true
-          usrmisc: true
       - name: Update flake.lock
         run: |
           git config user.name "${{ github.actor }}"

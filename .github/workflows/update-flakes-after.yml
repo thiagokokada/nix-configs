@@ -45,11 +45,6 @@ jobs:
         run: |
           nix run '.#nix-info' -- -m
       - uses: thiagokokada/free-disk-space@main
-        with:
-          opt: true
-          tool-cache: true
-          usrlocal: true
-          usrmisc: true
       - name: 'Build NixOS configs for: zatsune-nixos'
         run: nix build --print-build-logs '.#nixosConfigurations.zatsune-nixos.config.system.build.toplevel'
 name: update-flakes-after

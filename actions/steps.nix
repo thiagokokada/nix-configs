@@ -8,12 +8,6 @@ with utils;
 rec {
   freeDiskSpaceStep = {
     uses = actions.free-disk-space;
-    "with" = {
-      opt = true;
-      tool-cache = true;
-      usrlocal = true;
-      usrmisc = true;
-    };
   };
 
   checkoutStep = {
