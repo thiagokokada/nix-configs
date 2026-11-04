@@ -58,23 +58,23 @@
         "type": "github"
       }
     },
-    "gitk-go": {
+    "gitk-rs": {
       "inputs": {
         "nixpkgs": [
           "nixpkgs"
         ]
       },
       "locked": {
-        "lastModified": 1787852003,
-        "narHash": "sha256-Hj9+4Y1q5qH7ntzXrO1Oqp3hszTdjNQG5ETzDramDds=",
+        "lastModified": 1793820216,
+        "narHash": "sha256-yCX3Pa6gxlfzjJh+PuWfKID9D/+KYWg4ckF2EZU7G3Y=",
         "owner": "thiagokokada",
-        "repo": "gitk-go",
-        "rev": "fc472ac7040d6982daa123c3577e684a198ad9b4",
+        "repo": "gitk-rs",
+        "rev": "608d8cc1f73d654c42975d9ab9c3ed11e52a9408",
         "type": "github"
       },
       "original": {
         "owner": "thiagokokada",
-        "repo": "gitk-go",
+        "repo": "gitk-rs",
         "type": "github"
       }
     },
@@ -274,7 +274,7 @@
         "disko": "disko",
         "flake-compat": "flake-compat",
         "gh-gfm-preview": "gh-gfm-preview",
-        "gitk-go": "gitk-go",
+        "gitk-rs": "gitk-rs",
         "hardware": "hardware",
         "home-manager": "home-manager",
         "intellimacs": "intellimacs",

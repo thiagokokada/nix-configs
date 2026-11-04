@@ -10,7 +10,7 @@ in
 
   # custom packages
   inherit (inputs.gh-gfm-preview.packages.${system}) gh-gfm-preview;
-  inherit (inputs.gitk-go.packages.${system}) gitk-go;
+  inherit (inputs.gitk-rs.packages.${system}) gitk-rs;
   inherit (inputs.nix-alien.packages.${system}) nix-alien;
 
   # https://github.com/NixOS/nixpkgs/issues/507531

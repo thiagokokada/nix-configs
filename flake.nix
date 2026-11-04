@@ -47,8 +47,8 @@
       inputs.flake-compat.follows = "flake-compat";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    gitk-go = {
-      url = "github:thiagokokada/gitk-go";
+    gitk-rs = {
+      url = "github:thiagokokada/gitk-rs";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
