@@ -25,7 +25,9 @@ in
             postBuild = ''
               rm $out/bin/codex
               makeWrapper ${lib.getExe codex} $out/bin/codex \
-                --add-flags "-c check_for_update_on_startup=false"
+                --add-flags "-c check_for_update_on_startup=false" \
+                --add-flags "-c approval_policy=on-request" \
+                --add-flags "-c approvals_reviewer=auto_review"
             '';
           };
       in
