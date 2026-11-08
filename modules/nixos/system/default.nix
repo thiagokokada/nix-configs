@@ -95,7 +95,7 @@ in
         };
         randomizedDelaySec = lib.mkDefault "30min";
       };
-      configurationRevision = flake.rev or "dirty";
+      configurationRevision = flake.shortRev or flake.dirtyShortRev or "unknown";
     };
 
     # nixos/modules/misc/version.nix
