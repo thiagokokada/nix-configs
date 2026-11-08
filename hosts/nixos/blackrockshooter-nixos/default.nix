@@ -27,8 +27,7 @@
   };
 
   boot = {
-    # TODO: go back to latest once scx is fixed
-    kernelPackages = pkgs.linuxPackages_6_18;
+    kernelPackages = pkgs.linuxPackages_latest;
     loader = {
       limine = {
         enable = true;
