@@ -11,6 +11,10 @@ let
   inherit (config.services.plex) user;
   plexPreferences = "/var/lib/plex/Plex Media Server/Preferences.xml";
   plexPreferencesBackup = "${plexPreferences}.bak";
+  inhibitorPython = pkgs.python3.withPackages (ps: [ ps.dbus-python ]);
+  inhibitorScript = pkgs.writeText "plex-inhibit-sleep.py" (
+    builtins.readFile ./plex-inhibit-sleep.py
+  );
 in
 with config.users.users.${username};
 {
@@ -68,6 +72,36 @@ with config.users.users.${username};
     systemd.services.plex = {
       requires = [ "plex-preferences-guard.service" ];
       after = [ "plex-preferences-guard.service" ];
+    };
+
+    systemd.services.plex-inhibit-sleep = {
+      description = "Inhibit sleep during Plex playback";
+      wantedBy = [
+        "multi-user.target"
+        "plex.service"
+      ];
+      bindsTo = [ "plex.service" ];
+      after = [
+        "plex.service"
+        "systemd-logind.service"
+      ];
+      wants = [ "systemd-logind.service" ];
+      serviceConfig = {
+        ExecStart = "${inhibitorPython}/bin/python ${inhibitorScript} ${lib.escapeShellArg plexPreferences}";
+        Restart = "on-failure";
+        RestartSec = 15;
+        # Root can read Plex's private token and acquire logind inhibitors
+        # without an interactive polkit authorization.
+        ProtectSystem = "strict";
+        ProtectHome = true;
+        PrivateTmp = true;
+        NoNewPrivileges = true;
+        CapabilityBoundingSet = [ "CAP_DAC_READ_SEARCH" ];
+        RestrictAddressFamilies = [
+          "AF_UNIX"
+          "AF_INET"
+        ];
+      };
     };
 
     systemd.tmpfiles.rules = [
