@@ -112,16 +112,6 @@ To build the Home Manager standalone and activate its configuration, run:
 nix run '.#homeActivations/<hostname>'
 ```
 
-### Packages
-
-This repository also exports its modified `nixpkgs`, so it can be used to run
-my custom packages. For example, to use my customized `neovim` without
-installing:
-
-```
-nix run '.#neovim-standalone'
-```
-
 ## Explore
 
 You can explore all outputs from this configuration by using:

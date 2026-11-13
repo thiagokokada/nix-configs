@@ -13,30 +13,6 @@ in
   inherit (inputs.gitk-rs.packages.${system}) gitk-rs;
   inherit (inputs.nix-alien.packages.${system}) nix-alien;
 
-  neovim-standalone =
-    let
-      hostName = "neovim-standalone";
-      hm = outputs.lib.mkHomeConfig {
-        inherit hostName system;
-        configuration = {
-          home-manager = {
-            cli.icons.enable = false;
-            dev = {
-              enable = true;
-              nix.enable = true;
-            };
-            editor.neovim = {
-              enable = true;
-              lsp.enable = true;
-              treeSitter.enable = true;
-            };
-          };
-          home.stateVersion = "25.11";
-        };
-      };
-    in
-    hm.homeConfigurations.${hostName}.config.home-manager.editor.neovim.standalonePackage;
-
   nix-cleanup = prev.callPackage ../packages/nix-cleanup { };
 
   nixos-cleanup = final.nix-cleanup.override { isNixOS = true; };

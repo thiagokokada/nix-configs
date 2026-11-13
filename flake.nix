@@ -123,8 +123,7 @@
             devShells = {
               default = pkgs.mkShell {
                 packages = with pkgs; [
-                  neovim-standalone
-                  nil
+                  neovim
                   nixfmt
                   statix
                 ];
