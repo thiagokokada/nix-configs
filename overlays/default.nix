@@ -13,18 +13,6 @@ in
   inherit (inputs.gitk-rs.packages.${system}) gitk-rs;
   inherit (inputs.nix-alien.packages.${system}) nix-alien;
 
-  # https://github.com/NixOS/nixpkgs/pull/584667
-  codex = prev.codex.overrideAttrs (old: {
-    buildInputs =
-      old.buildInputs
-      ++ (with prev; [
-        aws-lc
-        oniguruma
-        sqlite
-        zstd
-      ]);
-  });
-
   neovim-standalone =
     let
       hostName = "neovim-standalone";
