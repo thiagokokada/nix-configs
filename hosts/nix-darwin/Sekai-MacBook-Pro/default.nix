@@ -1,6 +1,13 @@
 {
   nixpkgs.hostPlatform = "aarch64-darwin";
 
+  # GateIQ rewrites /etc/zshenv as a regular file when adding its CA exports.
+  # Keep the Nix-generated content separate so subsequent activations succeed.
+  # One-time setup: replace the old Nix section in /etc/zshenv with
+  #   source /etc/zshenv.nix-darwin
+  # while preserving the GateIQ managed block after it.
+  environment.etc."zshenv".target = "zshenv.nix-darwin";
+
   nix-darwin.home = {
     username = "thiago.okada";
     extraModules = {
